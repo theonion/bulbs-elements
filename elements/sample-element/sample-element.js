@@ -1,5 +1,5 @@
 import React from 'react';
-import { register } from './../core';
+import { register } from '../core';
 
 export default class SampleElement extends React.Component {
   render () {
