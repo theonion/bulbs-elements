@@ -63,6 +63,8 @@ entries['dist/vendor'] = [
   'react',
   'react-dom',
   'document-register-element',
+  'document-register-element/build/innerHTML',
+  'dom4',
   'camelcase',
   './elements/core',
 ];

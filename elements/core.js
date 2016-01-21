@@ -1,10 +1,15 @@
+import 'dom4';
 import 'document-register-element';
+import 'document-register-element/build/innerHTML';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import camelcase from 'camelcase';
 
+function BaseElement () {}
+BaseElement.prototype = HTMLElement.prototype;
+
 export function register (tagName, ReactComponent) {
-  class ReactWrapper extends HTMLElement {
+  class ReactWrapper extends BaseElement {
     createdCallback () {
       ReactDOM.render(React.createElement(ReactComponent, this.attributesHash), this);
     }
@@ -19,5 +24,6 @@ export function register (tagName, ReactComponent) {
       return attributes;
     }
   }
+
   document.registerElement(tagName, ReactWrapper);
 }

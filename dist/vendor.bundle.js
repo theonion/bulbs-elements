@@ -99,9 +99,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
+	__webpack_require__(162);
 	__webpack_require__(160);
-	__webpack_require__(159);
 	__webpack_require__(161);
+	__webpack_require__(159);
+	__webpack_require__(163);
 	module.exports = __webpack_require__(158);
 
 
@@ -19706,7 +19708,11 @@
 
 	__webpack_require__(159);
 
-	var _reactDom = __webpack_require__(160);
+	__webpack_require__(160);
+
+	__webpack_require__(161);
+
+	var _reactDom = __webpack_require__(162);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -19714,7 +19720,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _camelcase = __webpack_require__(161);
+	var _camelcase = __webpack_require__(163);
 
 	var _camelcase2 = _interopRequireDefault(_camelcase);
 
@@ -19726,9 +19732,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function BaseElement() {}
+	BaseElement.prototype = HTMLElement.prototype;
+
 	function register(tagName, ReactComponent) {
-	  var ReactWrapper = function (_HTMLElement) {
-	    _inherits(ReactWrapper, _HTMLElement);
+	  var ReactWrapper = function (_BaseElement) {
+	    _inherits(ReactWrapper, _BaseElement);
 
 	    function ReactWrapper() {
 	      _classCallCheck(this, ReactWrapper);
@@ -19755,7 +19764,7 @@
 	    }]);
 
 	    return ReactWrapper;
-	  }(HTMLElement);
+	  }(BaseElement);
 
 	  document.registerElement(tagName, ReactWrapper);
 	}
@@ -19764,11 +19773,539 @@
 /* 159 */
 /***/ function(module, exports) {
 
+	/*!
+	Copyright (C) 2013-2015 by Andrea Giammarchi - @WebReflection
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+	*/
+	(function(window){'use strict';
+	  /* jshint loopfunc: true, noempty: false*/
+	  // http://www.w3.org/TR/dom/#element
+
+	  function createDocumentFragment() {
+	    return document.createDocumentFragment();
+	  }
+
+	  function createElement(nodeName) {
+	    return document.createElement(nodeName);
+	  }
+
+	  function mutationMacro(nodes) {
+	    if (nodes.length === 1) {
+	      return textNodeIfString(nodes[0]);
+	    }
+	    for (var
+	      fragment = createDocumentFragment(),
+	      list = slice.call(nodes),
+	      i = 0; i < nodes.length; i++
+	    ) {
+	      fragment.appendChild(textNodeIfString(list[i]));
+	    }
+	    return fragment;
+	  }
+
+	  function textNodeIfString(node) {
+	    return typeof node === 'string' ? document.createTextNode(node) : node;
+	  }
+
+	  for(var
+	    head,
+	    property,
+	    TemporaryPrototype,
+	    TemporaryTokenList,
+	    wrapVerifyToken,
+	    document = window.document,
+	    defineProperty = Object.defineProperty || function (object, property, descriptor) {
+	      object.__defineGetter__(property, descriptor.get);
+	    },
+	    indexOf = [].indexOf || function indexOf(value){
+	      var length = this.length;
+	      while(length--) {
+	        if (this[length] === value) {
+	          break;
+	        }
+	      }
+	      return length;
+	    },
+	    // http://www.w3.org/TR/domcore/#domtokenlist
+	    verifyToken = function (token) {
+	      if (!token) {
+	        throw 'SyntaxError';
+	      } else if (spaces.test(token)) {
+	        throw 'InvalidCharacterError';
+	      }
+	      return token;
+	    },
+	    DOMTokenList = function (node) {
+	      var
+	        className = node.className,
+	        isSVG = typeof className === 'object',
+	        value = (isSVG ? className.baseVal : className).replace(trim, '')
+	      ;
+	      if (value.length) {
+	        properties.push.apply(
+	          this,
+	          value.split(spaces)
+	        );
+	      }
+	      this._isSVG = isSVG;
+	      this._ = node;
+	    },
+	    classListDescriptor = {
+	      get: function get() {
+	        return new DOMTokenList(this);
+	      },
+	      set: function(){}
+	    },
+	    uid = 'dom4-tmp-'.concat(Math.random() * +new Date()).replace('.','-'),
+	    trim = /^\s+|\s+$/g,
+	    spaces = /\s+/,
+	    SPACE = '\x20',
+	    CLASS_LIST = 'classList',
+	    toggle = function toggle(token, force) {
+	      if (this.contains(token)) {
+	        if (!force) {
+	          // force is not true (either false or omitted)
+	          this.remove(token);
+	        }
+	      } else if(force === undefined || force) {
+	        force = true;
+	        this.add(token);
+	      }
+	      return !!force;
+	    },
+	    DocumentFragment = window.DocumentFragment,
+	    Node = window.Node,
+	    NodePrototype = (Node || Element).prototype,
+	    CharacterData = window.CharacterData || Node,
+	    CharacterDataPrototype = CharacterData && CharacterData.prototype,
+	    DocumentType = window.DocumentType,
+	    DocumentTypePrototype = DocumentType && DocumentType.prototype,
+	    ElementPrototype = (window.Element || Node || window.HTMLElement).prototype,
+	    HTMLSelectElement = window.HTMLSelectElement || createElement('select').constructor,
+	    selectRemove = HTMLSelectElement.prototype.remove,
+	    ShadowRoot = window.ShadowRoot,
+	    SVGElement = window.SVGElement,
+	    // normalizes multiple ids as CSS query
+	    idSpaceFinder = / /g,
+	    idSpaceReplacer = '\\ ',
+	    createQueryMethod = function (methodName) {
+	      var createArray = methodName === 'querySelectorAll';
+	      return function (css) {
+	        var a, i, id, query, nl, selectors, node = this.parentNode;
+	        if (node) {
+	          for (
+	            id = this.getAttribute('id') || uid,
+	            query = id === uid ? id : id.replace(idSpaceFinder, idSpaceReplacer),
+	            selectors = css.split(','),
+	            i = 0; i < selectors.length; i++
+	          ) {
+	            selectors[i] = '#' + query + ' ' + selectors[i];
+	          }
+	          css = selectors.join(',');
+	        }
+	        if (id === uid) this.setAttribute('id', id);
+	        nl = (node || this)[methodName](css);
+	        if (id === uid) this.removeAttribute('id');
+	        // return a list
+	        if (createArray) {
+	          i = nl.length;
+	          a = new Array(i);
+	          while (i--) a[i] = nl[i];
+	        }
+	        // return node or null
+	        else {
+	          a = nl;
+	        }
+	        return a;
+	      };
+	    },
+	    addQueryAndAll = function (where) {
+	      if (!('query' in where)) {
+	        where.query = ElementPrototype.query;
+	      }
+	      if (!('queryAll' in where)) {
+	        where.queryAll = ElementPrototype.queryAll;
+	      }
+	    },
+	    properties = [
+	      'matches', (
+	        ElementPrototype.matchesSelector ||
+	        ElementPrototype.webkitMatchesSelector ||
+	        ElementPrototype.khtmlMatchesSelector ||
+	        ElementPrototype.mozMatchesSelector ||
+	        ElementPrototype.msMatchesSelector ||
+	        ElementPrototype.oMatchesSelector ||
+	        function matches(selector) {
+	          var parentNode = this.parentNode;
+	          return !!parentNode && -1 < indexOf.call(
+	            parentNode.querySelectorAll(selector),
+	            this
+	          );
+	        }
+	      ),
+	      'closest', function closest(selector) {
+	        var parentNode = this, matches;
+	        while (
+	          // document has no .matches
+	          (matches = parentNode && parentNode.matches) &&
+	          !parentNode.matches(selector)
+	        ) {
+	          parentNode = parentNode.parentNode;
+	        }
+	        return matches ? parentNode : null;
+	      },
+	      'prepend', function prepend() {
+	        var firstChild = this.firstChild,
+	            node = mutationMacro(arguments);
+	        if (firstChild) {
+	          this.insertBefore(node, firstChild);
+	        } else {
+	          this.appendChild(node);
+	        }
+	      },
+	      'append', function append() {
+	        this.appendChild(mutationMacro(arguments));
+	      },
+	      'before', function before() {
+	        var parentNode = this.parentNode;
+	        if (parentNode) {
+	          parentNode.insertBefore(
+	            mutationMacro(arguments), this
+	          );
+	        }
+	      },
+	      'after', function after() {
+	        var parentNode = this.parentNode,
+	            nextSibling = this.nextSibling,
+	            node = mutationMacro(arguments);
+	        if (parentNode) {
+	          if (nextSibling) {
+	            parentNode.insertBefore(node, nextSibling);
+	          } else {
+	            parentNode.appendChild(node);
+	          }
+	        }
+	      },
+	      // WARNING - DEPRECATED - use .replaceWith() instead
+	      'replace', function replace() {
+	        this.replaceWith.apply(this, arguments);
+	      },
+	      'replaceWith', function replaceWith() {
+	        var parentNode = this.parentNode;
+	        if (parentNode) {
+	          parentNode.replaceChild(
+	            mutationMacro(arguments),
+	            this
+	          );
+	        }
+	      },
+	      'remove', function remove() {
+	        var parentNode = this.parentNode;
+	        if (parentNode) {
+	          parentNode.removeChild(this);
+	        }
+	      },
+	      'query', createQueryMethod('querySelector'),
+	      'queryAll', createQueryMethod('querySelectorAll')
+	    ],
+	    slice = properties.slice,
+	    i = properties.length; i; i -= 2
+	  ) {
+	    property = properties[i - 2];
+	    if (!(property in ElementPrototype)) {
+	      ElementPrototype[property] = properties[i - 1];
+	    }
+	    if (property === 'remove') {
+	      // see https://github.com/WebReflection/dom4/issues/19
+	      HTMLSelectElement.prototype[property] = function () {
+	        return 0 < arguments.length ?
+	          selectRemove.apply(this, arguments) :
+	          ElementPrototype.remove.call(this);
+	      };
+	    }
+	    // see https://github.com/WebReflection/dom4/issues/18
+	    if (/before|after|replace|remove/.test(property)) {
+	      if (CharacterData && !(property in CharacterDataPrototype)) {
+	        CharacterDataPrototype[property] = properties[i - 1];
+	      }
+	      if (DocumentType && !(property in DocumentTypePrototype)) {
+	        DocumentTypePrototype[property] = properties[i - 1];
+	      }
+	    }
+	  }
+
+	  // bring query and queryAll to the document too
+	  addQueryAndAll(document);
+
+	  // brings query and queryAll to fragments as well
+	  if (DocumentFragment) {
+	    addQueryAndAll(DocumentFragment.prototype);
+	  } else {
+	    try {
+	      addQueryAndAll(createDocumentFragment().constructor.prototype);
+	    } catch(o_O) {}
+	  }
+
+	  // bring query and queryAll to the ShadowRoot too
+	  if (ShadowRoot) {
+	    addQueryAndAll(ShadowRoot.prototype);
+	  }
+
+	  // most likely an IE9 only issue
+	  // see https://github.com/WebReflection/dom4/issues/6
+	  if (!createElement('a').matches('a')) {
+	    ElementPrototype[property] = function(matches){
+	      return function (selector) {
+	        return matches.call(
+	          this.parentNode ?
+	            this :
+	            createDocumentFragment().appendChild(this),
+	          selector
+	        );
+	      };
+	    }(ElementPrototype[property]);
+	  }
+
+	  // used to fix both old webkit and SVG
+	  DOMTokenList.prototype = {
+	    length: 0,
+	    add: function add() {
+	      for(var j = 0, token; j < arguments.length; j++) {
+	        token = arguments[j];
+	        if(!this.contains(token)) {
+	          properties.push.call(this, property);
+	        }
+	      }
+	      if (this._isSVG) {
+	        this._.setAttribute('class', '' + this);
+	      } else {
+	        this._.className = '' + this;
+	      }
+	    },
+	    contains: (function(indexOf){
+	      return function contains(token) {
+	        i = indexOf.call(this, property = verifyToken(token));
+	        return -1 < i;
+	      };
+	    }([].indexOf || function (token) {
+	      i = this.length;
+	      while(i-- && this[i] !== token){}
+	      return i;
+	    })),
+	    item: function item(i) {
+	      return this[i] || null;
+	    },
+	    remove: function remove() {
+	      for(var j = 0, token; j < arguments.length; j++) {
+	        token = arguments[j];
+	        if(this.contains(token)) {
+	          properties.splice.call(this, i, 1);
+	        }
+	      }
+	      if (this._isSVG) {
+	        this._.setAttribute('class', '' + this);
+	      } else {
+	        this._.className = '' + this;
+	      }
+	    },
+	    toggle: toggle,
+	    toString: function toString() {
+	      return properties.join.call(this, SPACE);
+	    }
+	  };
+
+	  if (SVGElement && !(CLASS_LIST in SVGElement.prototype)) {
+	    defineProperty(SVGElement.prototype, CLASS_LIST, classListDescriptor);
+	  }
+
+	  // http://www.w3.org/TR/dom/#domtokenlist
+	  // iOS 5.1 has completely screwed this property
+	  // classList in ElementPrototype is false
+	  // but it's actually there as getter
+	  if (!(CLASS_LIST in document.documentElement)) {
+	    defineProperty(ElementPrototype, CLASS_LIST, classListDescriptor);
+	  } else {
+	    // iOS 5.1 and Nokia ASHA do not support multiple add or remove
+	    // trying to detect and fix that in here
+	    TemporaryTokenList = createElement('div')[CLASS_LIST];
+	    TemporaryTokenList.add('a', 'b', 'a');
+	    if ('a\x20b' != TemporaryTokenList) {
+	      // no other way to reach original methods in iOS 5.1
+	      TemporaryPrototype = TemporaryTokenList.constructor.prototype;
+	      if (!('add' in TemporaryPrototype)) {
+	        // ASHA double fails in here
+	        TemporaryPrototype = window.TemporaryTokenList.prototype;
+	      }
+	      wrapVerifyToken = function (original) {
+	        return function () {
+	          var i = 0;
+	          while (i < arguments.length) {
+	            original.call(this, arguments[i++]);
+	          }
+	        };
+	      };
+	      TemporaryPrototype.add = wrapVerifyToken(TemporaryPrototype.add);
+	      TemporaryPrototype.remove = wrapVerifyToken(TemporaryPrototype.remove);
+	      // toggle is broken too ^_^ ... let's fix it
+	      TemporaryPrototype.toggle = toggle;
+	    }
+	  }
+
+	  if (!('contains' in NodePrototype)) {
+	    defineProperty(NodePrototype, 'contains', {
+	      value: function (el) {
+	        while (el && el !== this) el = el.parentNode;
+	        return this === el;
+	      }
+	    });
+	  }
+
+	  if (!('head' in document)) {
+	    defineProperty(document, 'head', {
+	      get: function () {
+	        return head || (
+	          head = document.getElementsByTagName('head')[0]
+	        );
+	      }
+	    });
+	  }
+
+	  // requestAnimationFrame partial polyfill
+	  (function () {
+	    for (var
+	      raf,
+	      rAF = window.requestAnimationFrame,
+	      cAF = window.cancelAnimationFrame,
+	      prefixes = ['o', 'ms', 'moz', 'webkit'],
+	      i = prefixes.length;
+	      !cAF && i--;
+	    ) {
+	      rAF = rAF || window[prefixes[i] + 'RequestAnimationFrame'];
+	      cAF = window[prefixes[i] + 'CancelAnimationFrame'] ||
+	            window[prefixes[i] + 'CancelRequestAnimationFrame'];
+	    }
+	    if (!cAF) {
+	      // some FF apparently implemented rAF but no cAF 
+	      if (rAF) {
+	        raf = rAF;
+	        rAF = function (callback) {
+	          var goOn = true;
+	          raf(function () {
+	            if (goOn) callback.apply(this, arguments);
+	          });
+	          return function () {
+	            goOn = false;
+	          };
+	        };
+	        cAF = function (id) {
+	          id();
+	        };
+	      } else {
+	        rAF = function (callback) {
+	          return setTimeout(callback, 15, 15);
+	        };
+	        cAF = function (id) {
+	          clearTimeout(id);
+	        };
+	      }
+	    }
+	    window.requestAnimationFrame = rAF;
+	    window.cancelAnimationFrame = cAF;
+	  }());
+
+	  // http://www.w3.org/TR/dom/#customevent
+	  try{new window.CustomEvent('?');}catch(o_O){
+	    window.CustomEvent = function(
+	      eventName,
+	      defaultInitDict
+	    ){
+
+	      // the infamous substitute
+	      function CustomEvent(type, eventInitDict) {
+	        /*jshint eqnull:true */
+	        var event = document.createEvent(eventName);
+	        if (typeof type != 'string') {
+	          throw new Error('An event name must be provided');
+	        }
+	        if (eventName == 'Event') {
+	          event.initCustomEvent = initCustomEvent;
+	        }
+	        if (eventInitDict == null) {
+	          eventInitDict = defaultInitDict;
+	        }
+	        event.initCustomEvent(
+	          type,
+	          eventInitDict.bubbles,
+	          eventInitDict.cancelable,
+	          eventInitDict.detail
+	        );
+	        return event;
+	      }
+
+	      // attached at runtime
+	      function initCustomEvent(
+	        type, bubbles, cancelable, detail
+	      ) {
+	        /*jshint validthis:true*/
+	        this.initEvent(type, bubbles, cancelable);
+	        this.detail = detail;
+	      }
+
+	      // that's it
+	      return CustomEvent;
+	    }(
+	      // is this IE9 or IE10 ?
+	      // where CustomEvent is there
+	      // but not usable as construtor ?
+	      window.CustomEvent ?
+	        // use the CustomEvent interface in such case
+	        'CustomEvent' : 'Event',
+	        // otherwise the common compatible one
+	      {
+	        bubbles: false,
+	        cancelable: false,
+	        detail: null
+	      }
+	    );
+	  }
+
+	}(window));
+
+/***/ },
+/* 160 */
+/***/ function(module, exports) {
+
 	/*! (C) WebReflection Mit Style License */
 	(function(e,t,n,r){"use strict";function rt(e,t){for(var n=0,r=e.length;n<r;n++)vt(e[n],t)}function it(e){for(var t=0,n=e.length,r;t<n;t++)r=e[t],nt(r,b[ot(r)])}function st(e){return function(t){j(t)&&(vt(t,e),rt(t.querySelectorAll(w),e))}}function ot(e){var t=e.getAttribute("is"),n=e.nodeName.toUpperCase(),r=S.call(y,t?v+t.toUpperCase():d+n);return t&&-1<r&&!ut(n,t)?-1:r}function ut(e,t){return-1<w.indexOf(e+'[is="'+t+'"]')}function at(e){var t=e.currentTarget,n=e.attrChange,r=e.attrName,i=e.target;Q&&(!i||i===t)&&t.attributeChangedCallback&&r!=="style"&&e.prevValue!==e.newValue&&t.attributeChangedCallback(r,n===e[a]?null:e.prevValue,n===e[l]?null:e.newValue)}function ft(e){var t=st(e);return function(e){X.push(t,e.target)}}function lt(e){K&&(K=!1,e.currentTarget.removeEventListener(h,lt)),rt((e.target||t).querySelectorAll(w),e.detail===o?o:s),B&&pt()}function ct(e,t){var n=this;q.call(n,e,t),G.call(n,{target:n})}function ht(e,t){D(e,t),et?et.observe(e,z):(J&&(e.setAttribute=ct,e[i]=Z(e),e.addEventListener(p,G)),e.addEventListener(c,at)),e.createdCallback&&Q&&(e.created=!0,e.createdCallback(),e.created=!1)}function pt(){for(var e,t=0,n=F.length;t<n;t++)e=F[t],E.contains(e)||(n--,F.splice(t--,1),vt(e,o))}function dt(e){throw new Error("A "+e+" type is already registered")}function vt(e,t){var n,r=ot(e);-1<r&&(tt(e,b[r]),r=0,t===s&&!e[s]?(e[o]=!1,e[s]=!0,r=1,B&&S.call(F,e)<0&&F.push(e)):t===o&&!e[o]&&(e[s]=!1,e[o]=!0,r=1),r&&(n=e[t+"Callback"])&&n.call(e))}if(r in t)return;var i="__"+r+(Math.random()*1e5>>0),s="attached",o="detached",u="extends",a="ADDITION",f="MODIFICATION",l="REMOVAL",c="DOMAttrModified",h="DOMContentLoaded",p="DOMSubtreeModified",d="<",v="=",m=/^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$/,g=["ANNOTATION-XML","COLOR-PROFILE","FONT-FACE","FONT-FACE-SRC","FONT-FACE-URI","FONT-FACE-FORMAT","FONT-FACE-NAME","MISSING-GLYPH"],y=[],b=[],w="",E=t.documentElement,S=y.indexOf||function(e){for(var t=this.length;t--&&this[t]!==e;);return t},x=n.prototype,T=x.hasOwnProperty,N=x.isPrototypeOf,C=n.defineProperty,k=n.getOwnPropertyDescriptor,L=n.getOwnPropertyNames,A=n.getPrototypeOf,O=n.setPrototypeOf,M=!!n.__proto__,_=n.create||function mt(e){return e?(mt.prototype=e,new mt):this},D=O||(M?function(e,t){return e.__proto__=t,e}:L&&k?function(){function e(e,t){for(var n,r=L(t),i=0,s=r.length;i<s;i++)n=r[i],T.call(e,n)||C(e,n,k(t,n))}return function(t,n){do e(t,n);while((n=A(n))&&!N.call(n,t));return t}}():function(e,t){for(var n in t)e[n]=t[n];return e}),P=e.MutationObserver||e.WebKitMutationObserver,H=(e.HTMLElement||e.Element||e.Node).prototype,B=!N.call(H,E),j=B?function(e){return e.nodeType===1}:function(e){return N.call(H,e)},F=B&&[],I=H.cloneNode,q=H.setAttribute,R=H.removeAttribute,U=t.createElement,z=P&&{attributes:!0,characterData:!0,attributeOldValue:!0},W=P||function(e){J=!1,E.removeEventListener(c,W)},X,V=e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.msRequestAnimationFrame||function(e){setTimeout(e,10)},$=!1,J=!0,K=!0,Q=!0,G,Y,Z,et,tt,nt;O||M?(tt=function(e,t){N.call(t,e)||ht(e,t)},nt=ht):(tt=function(e,t){e[i]||(e[i]=n(!0),ht(e,t))},nt=tt),B?(J=!1,function(){var e=k(H,"addEventListener"),t=e.value,n=function(e){var t=new CustomEvent(c,{bubbles:!0});t.attrName=e,t.prevValue=this.getAttribute(e),t.newValue=null,t[l]=t.attrChange=2,R.call(this,e),this.dispatchEvent(t)},r=function(e,t){var n=this.hasAttribute(e),r=n&&this.getAttribute(e),i=new CustomEvent(c,{bubbles:!0});q.call(this,e,t),i.attrName=e,i.prevValue=n?r:null,i.newValue=t,n?i[f]=i.attrChange=1:i[a]=i.attrChange=0,this.dispatchEvent(i)},s=function(e){var t=e.currentTarget,n=t[i],r=e.propertyName,s;n.hasOwnProperty(r)&&(n=n[r],s=new CustomEvent(c,{bubbles:!0}),s.attrName=n.name,s.prevValue=n.value||null,s.newValue=n.value=t[r]||null,s.prevValue==null?s[a]=s.attrChange=0:s[f]=s.attrChange=1,t.dispatchEvent(s))};e.value=function(e,o,u){e===c&&this.attributeChangedCallback&&this.setAttribute!==r&&(this[i]={className:{name:"class",value:this.className}},this.setAttribute=r,this.removeAttribute=n,t.call(this,"propertychange",s)),t.call(this,e,o,u)},C(H,"addEventListener",e)}()):P||(E.addEventListener(c,W),E.setAttribute(i,1),E.removeAttribute(i),J&&(G=function(e){var t=this,n,r,s;if(t===e.target){n=t[i],t[i]=r=Z(t);for(s in r){if(!(s in n))return Y(0,t,s,n[s],r[s],a);if(r[s]!==n[s])return Y(1,t,s,n[s],r[s],f)}for(s in n)if(!(s in r))return Y(2,t,s,n[s],r[s],l)}},Y=function(e,t,n,r,i,s){var o={attrChange:e,currentTarget:t,attrName:n,prevValue:r,newValue:i};o[s]=e,at(o)},Z=function(e){for(var t,n,r={},i=e.attributes,s=0,o=i.length;s<o;s++)t=i[s],n=t.name,n!=="setAttribute"&&(r[n]=t.value);return r})),t[r]=function(n,r){c=n.toUpperCase(),$||($=!0,P?(et=function(e,t){function n(e,t){for(var n=0,r=e.length;n<r;t(e[n++]));}return new P(function(r){for(var i,s,o,u=0,a=r.length;u<a;u++)i=r[u],i.type==="childList"?(n(i.addedNodes,e),n(i.removedNodes,t)):(s=i.target,Q&&s.attributeChangedCallback&&i.attributeName!=="style"&&(o=s.getAttribute(i.attributeName),o!==i.oldValue&&s.attributeChangedCallback(i.attributeName,i.oldValue,o)))})}(st(s),st(o)),et.observe(t,{childList:!0,subtree:!0})):(X=[],V(function E(){while(X.length)X.shift().call(null,X.shift());V(E)}),t.addEventListener("DOMNodeInserted",ft(s)),t.addEventListener("DOMNodeRemoved",ft(o))),t.addEventListener(h,lt),t.addEventListener("readystatechange",lt),t.createElement=function(e,n){var r=U.apply(t,arguments),i=""+e,s=S.call(y,(n?v:d)+(n||i).toUpperCase()),o=-1<s;return n&&(r.setAttribute("is",n=n.toLowerCase()),o&&(o=ut(i.toUpperCase(),n))),Q=!t.createElement.innerHTMLHelper,o&&nt(r,b[s]),r},H.cloneNode=function(e){var t=I.call(this,!!e),n=ot(t);return-1<n&&nt(t,b[n]),e&&it(t.querySelectorAll(w)),t}),-2<S.call(y,v+c)+S.call(y,d+c)&&dt(n);if(!m.test(c)||-1<S.call(g,c))throw new Error("The type "+n+" is invalid");var i=function(){return f?t.createElement(l,c):t.createElement(l)},a=r||x,f=T.call(a,u),l=f?r[u].toUpperCase():c,c,p;return f&&-1<S.call(y,d+l)&&dt(l),p=y.push((f?v:d)+c)-1,w=w.concat(w.length?",":"",f?l+'[is="'+n.toLowerCase()+'"]':l),i.prototype=b[p]=T.call(a,"prototype")?a.prototype:_(H),rt(t.querySelectorAll(w),s),i}})(window,document,Object,"registerElement");
 
 /***/ },
-/* 160 */
+/* 161 */
+/***/ function(module, exports) {
+
+	/*! (C) WebReflection Mit Style License */
+	// see https://github.com/WebReflection/document-register-element/issues/21#issuecomment-102020311
+	var innerHTML=function(e){var t="extends",n=e.registerElement,r=e.createElement("div"),i="document-register-element",s=n.innerHTML,o,u;if(s)return s;try{n.call(e,i,{prototype:Object.create(HTMLElement.prototype,{createdCallback:{value:Object}})}),r.innerHTML="<"+i+"></"+i+">";if("createdCallback"in r.querySelector(i))return n.innerHTML=function(e,t){return e.innerHTML=t,e}}catch(a){}return u=[],o=function(t){if("createdCallback"in t||"attachedCallback"in t||"detachedCallback"in t||"attributeChangedCallback"in t)return;e.createElement.innerHTMLHelper=!0;for(var n=t.parentNode,r=t.getAttribute("is"),i=t.nodeName,s=e.createElement.apply(e,r?[i,r]:[i]),o=t.attributes,u=0,a=o.length,f,l;u<a;u++)f=o[u],s.setAttribute(f.name,f.value);s.createdCallback&&(s.created=!0,s.createdCallback(),s.created=!1);while(l=t.firstChild)s.appendChild(l);e.createElement.innerHTMLHelper=!1,n&&n.replaceChild(s,t)},(e.registerElement=function(i,s){var o=(s[t]?s[t]+'[is="'+i+'"]':i).toLowerCase();return u.indexOf(o)<0&&u.push(o),n.apply(e,arguments)}).innerHTML=function(e,t){e.innerHTML=t;for(var n=e.querySelectorAll(u.join(",")),r=n.length;r--;o(n[r]));return e}}(document);
+
+/***/ },
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19777,7 +20314,7 @@
 
 
 /***/ },
-/* 161 */
+/* 163 */
 /***/ function(module, exports) {
 
 	'use strict';
