@@ -42,6 +42,7 @@
     "yaml-loader": "^0.1.0"
   },
   "dependencies": {
+    "camelcase": "^2.0.1",
     "document-register-element": "^0.5.4",
     "react": "^0.14.6",
     "react-dom": "^0.14.6"

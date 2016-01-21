@@ -36,7 +36,6 @@ webpackJsonp([0],[
 	  _createClass(SampleElement, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -49,6 +48,11 @@ webpackJsonp([0],[
 	          'p',
 	          null,
 	          'It is so effin SICK!'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'prop-text' },
+	          this.props.thisProp
 	        )
 	      );
 	    }
@@ -59,38 +63,13 @@ webpackJsonp([0],[
 
 	exports.default = SampleElement;
 
+	SampleElement.propTypes = {
+	  thisProp: _react2.default.PropTypes.string
+	};
+
 	SampleElement.displayName = 'SampleElement';
 
 	(0, _core.register)('sample-element', SampleElement);
-
-	/*
-	//
-	//
-	//
-	//# bulbs-elements/lib/core
-	//
-	//
-	//
-	//function register(elementName, reactClass) {
-	//  class ElementClass extends HTMLElement {
-	//    createdCallback () {
-	//      React.render(this, reactClass, this.attributes);
-	//    }
-	//  }
-	//  document.register(elementName, ElementClass);
-	//}
-	//
-	//
-	//##
-	//core = require('bulbs-elements/lib/core');
-	//core.register('sample-element', require('bulbs-elements/dist/sample-element'))
-	//
-	//<sample-element id="foo" bar="{ votes: [1,2,3]}"></sample-element>
-	//
-	//
-	//##
-	//css built by itself too
-	*/
 
 /***/ }
 ]);

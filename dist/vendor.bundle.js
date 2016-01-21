@@ -101,6 +101,7 @@
 	__webpack_require__(1);
 	__webpack_require__(160);
 	__webpack_require__(159);
+	__webpack_require__(161);
 	module.exports = __webpack_require__(158);
 
 
@@ -19713,6 +19714,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _camelcase = __webpack_require__(161);
+
+	var _camelcase2 = _interopRequireDefault(_camelcase);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19734,7 +19739,18 @@
 	    _createClass(ReactWrapper, [{
 	      key: 'createdCallback',
 	      value: function createdCallback() {
-	        _reactDom2.default.render(_react2.default.createElement(ReactComponent, this.attributes), this);
+	        _reactDom2.default.render(_react2.default.createElement(ReactComponent, this.attributesHash), this);
+	      }
+	    }, {
+	      key: 'attributesHash',
+	      get: function get() {
+	        var attributes = {};
+	        for (var index = 0; index < this.attributes.length; index = index + 1) {
+	          var attribute = this.attributes[index];
+	          var key = (0, _camelcase2.default)(attribute.name);
+	          attributes[key] = attribute.value;
+	        }
+	        return attributes;
 	      }
 	    }]);
 
@@ -19758,6 +19774,47 @@
 	'use strict';
 
 	module.exports = __webpack_require__(3);
+
+
+/***/ },
+/* 161 */
+/***/ function(module, exports) {
+
+	'use strict';
+	module.exports = function () {
+		var str = [].map.call(arguments, function (str) {
+			return str.trim();
+		}).filter(function (str) {
+			return str.length;
+		}).join('-');
+
+		if (!str.length) {
+			return '';
+		}
+
+		if (str.length === 1) {
+			return str;
+		}
+
+		if (!(/[_.\- ]+/).test(str)) {
+			if (str === str.toUpperCase()) {
+				return str.toLowerCase();
+			}
+
+			if (str[0] !== str[0].toLowerCase()) {
+				return str[0].toLowerCase() + str.slice(1);
+			}
+
+			return str;
+		}
+
+		return str
+		.replace(/^[_.\- ]+/, '')
+		.toLowerCase()
+		.replace(/[_.\- ]+(\w|$)/g, function (m, p1) {
+			return p1.toUpperCase();
+		});
+	};
 
 
 /***/ }
