@@ -1,18 +1,14 @@
 import { assert } from 'chai';
+import { testElement } from '../core';
 
-describe('SampleElement', function () {
-  beforeEach(function (done) {
-    this.container = document.createElement('div');
-    this.container.innerHTML = '<sample-element this-prop="HEY"></sample-element>';
-    this.element = this.container.querySelector('sample-element');
-    document.body.appendChild(this.container);
-    requestAnimationFrame(function () {
-      done();
+testElement('SampleElement', function () {
+  beforeEach(function () {
+    this.element = this.renderElement({
+      tag: 'sample-element',
+      props: {
+        'this-prop': "HEY"
+      }
     });
-  });
-
-  afterEach(function () {
-    document.body.removeChild(this.container);
   });
 
   it('has a title', function () {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { register } from '../core';
 
 export default class SampleElement extends React.Component {
@@ -14,7 +14,7 @@ export default class SampleElement extends React.Component {
 }
 
 SampleElement.propTypes = {
-  thisProp: React.PropTypes.string,
+  thisProp: PropTypes.string,
 };
 
 SampleElement.displayName = 'SampleElement';

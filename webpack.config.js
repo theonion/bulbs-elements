@@ -14,10 +14,10 @@ var stylelint    = require('stylelint');
   We expect to find the following structure:
 
   * `elements/element-a/element-a.js`
-  * `elements/element-a/test/element-a.js`
+  * `elements/element-a/element-a.test.js`
 
   * `elements/element-b/element-b.js`
-  * `elements/element-b/test/element-b.js`
+  * `elements/element-b/element-b.test.js`
 
 
   This means that there are two elements
@@ -53,7 +53,7 @@ var entries = {};
 elementDirs.forEach(function (dir) {
   var elementName = path.basename(dir);
   var elementEntryPoint = path.join(dir, elementName + '.js');
-  var testEntryPoint = path.join(dir, 'test', elementName + '.js');
+  var testEntryPoint = path.join(dir, elementName + '.test.js');
   entries['dist/' + elementName] = elementEntryPoint;
   entries['test/' + elementName] = testEntryPoint;
 });
@@ -62,10 +62,12 @@ elementDirs.forEach(function (dir) {
 entries['dist/vendor'] = [
   'react',
   'react-dom',
+  'classnames',
   'document-register-element',
   'document-register-element/build/innerHTML',
   'dom4',
   'camelcase',
+  'object-map-to-array',
   './elements/core',
 ];
 

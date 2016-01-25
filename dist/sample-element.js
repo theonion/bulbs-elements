@@ -1,4 +1,4 @@
-webpackJsonp([0],[
+webpackJsonp([1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -64,7 +64,7 @@ webpackJsonp([0],[
 	exports.default = SampleElement;
 
 	SampleElement.propTypes = {
-	  thisProp: _react2.default.PropTypes.string
+	  thisProp: _react.PropTypes.string
 	};
 
 	SampleElement.displayName = 'SampleElement';

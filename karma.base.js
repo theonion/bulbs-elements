@@ -6,6 +6,7 @@ module.exports = {
   // frameworks to use
   // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
   frameworks: [
+    'chai-spies',
     'chai',
     'mocha',
     'fixture',
