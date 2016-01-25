@@ -11,12 +11,16 @@ Store.defineFields(PollStore, {
     initialState: {
       answers: [],
     },
+    // accepts a JSON payload of poll data
     setPollData: new Action(function (state, payload) {
       return JSON.parse(payload);
     }),
   }),
   selectedAnswer: new Field({
     initialState: null,
+    // payload should be an answer object
+    // If same answer is selected twice, the selection will be toggled
+    //    to null.
     selectAnswer: new Action(function (state, payload) {
       return state === payload ? null : payload;
     }),
