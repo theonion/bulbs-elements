@@ -130,7 +130,7 @@ export class PromiseField extends Field {
     } = this.callbacks;
 
     if (this._actions) {
-      return; 
+      return;
     }
 
     let actions = this._actions = {
@@ -149,7 +149,6 @@ export class PromiseField extends Field {
       }),
       [`${this.key}Error`]: new Action (function (state, payload) {
         state.active = false;
-        state.error = error;
         return error.invoke(state, payload);
       }),
       [`${this.key}Reset`]: new Action (function (state, payload) {

@@ -5,9 +5,9 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
@@ -30,93 +30,6 @@ webpackJsonp([0],{
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function CroppedImage() {
-	  return _react2.default.createElement('img', null);
-	}
-	function Answer(props) {
-	  var answer = props.answer;
-	  var selectAnswer = props.selectAnswer;
-	  var selectedAnswer = props.selectedAnswer;
-
-	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
-	    selected: answer === selectedAnswer
-	  });
-
-	  return _react2.default.createElement(
-	    'li',
-	    {
-	      className: className,
-	      onClick: selectAnswer.bind(null, answer)
-	    },
-	    answer.answer_text
-	  );
-	}
-
-	Answer.propTypes = {
-	  answer: _react.PropTypes.object.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired
-	};
-
-	function PollCover(props) {
-	  var poll = props.poll;
-
-	  return _react2.default.createElement(
-	    'header',
-	    { className: 'bulbs-poll-cover' },
-	    poll.thumbnail ? _react2.default.createElement(CroppedImage, { image: poll.thumbnail }) : undefined,
-	    _react2.default.createElement(
-	      'h1',
-	      { className: 'bulbs-poll-title' },
-	      poll.question_text
-	    )
-	  );
-	}
-
-	PollCover.propTypes = {
-	  poll: _react.PropTypes.object.isRequired
-	};
-
-	function VoteButton(props) {
-	  function handleClick() {
-	    if (props.selectedAnswer) {
-	      props.voteRequest(props.selectedAnswer);
-	    }
-	  }
-
-	  return _react2.default.createElement(
-	    'button',
-	    {
-	      className: 'bulbs-poll-vote',
-	      onClick: handleClick
-	    },
-	    'Vote'
-	  );
-	}
-
-	VoteButton.propTypes = {
-	  selectedAnswer: _react.PropTypes.object,
-	  voteRequest: _react.PropTypes.func
-	};
-
-	function PollAnswers(props) {
-	  return _react2.default.createElement(
-	    'ul',
-	    { className: 'bulbs-poll-answers' },
-	    props.answers.map(function (answer, index) {
-	      return _react2.default.createElement(Answer, _extends({
-	        key: index,
-	        answer: answer
-	      }, props));
-	    })
-	  );
-	}
-
-	PollAnswers.propTypes = {
-	  answers: _react.PropTypes.array.isRequired,
-	  selectedAnswer: _react.PropTypes.object,
-	  selectAnswer: _react.PropTypes.func.isRequired
-	};
 
 	var BulbsPoll = function (_BulbsElement) {
 	  _inherits(BulbsPoll, _BulbsElement);
@@ -146,7 +59,7 @@ webpackJsonp([0],{
 	        'div',
 	        { className: 'bulbs-poll' },
 	        _react2.default.createElement(PollCover, { poll: poll }),
-	        _react2.default.createElement(PollAnswers, {
+	        _react2.default.createElement(Answers, {
 	          answers: poll.answers,
 	          selectAnswer: selectAnswer,
 	          selectedAnswer: selectedAnswer
@@ -169,6 +82,94 @@ webpackJsonp([0],{
 	};
 
 	BulbsPoll.displayName = 'BulbsPoll';
+
+	function CroppedImage() {
+	  return _react2.default.createElement('img', null);
+	}
+
+	function PollCover(props) {
+	  var poll = props.poll;
+
+	  return _react2.default.createElement(
+	    'header',
+	    { className: 'bulbs-poll-cover' },
+	    poll.thumbnail ? _react2.default.createElement(CroppedImage, { image: poll.thumbnail }) : undefined,
+	    _react2.default.createElement(
+	      'h1',
+	      { className: 'bulbs-poll-title' },
+	      poll.question_text
+	    )
+	  );
+	}
+
+	PollCover.propTypes = {
+	  poll: _react.PropTypes.object.isRequired
+	};
+
+	function Answers(props) {
+	  return _react2.default.createElement(
+	    'ul',
+	    { className: 'bulbs-poll-answers' },
+	    props.answers.map(function (answer, index) {
+	      return _react2.default.createElement(Answer, _extends({
+	        key: index,
+	        answer: answer
+	      }, props));
+	    })
+	  );
+	}
+
+	Answers.propTypes = {
+	  answers: _react.PropTypes.array.isRequired,
+	  selectedAnswer: _react.PropTypes.object,
+	  selectAnswer: _react.PropTypes.func.isRequired
+	};
+
+	function Answer(props) {
+	  var answer = props.answer;
+	  var selectAnswer = props.selectAnswer;
+	  var selectedAnswer = props.selectedAnswer;
+
+	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
+	    selected: answer === selectedAnswer
+	  });
+
+	  return _react2.default.createElement(
+	    'li',
+	    {
+	      className: className,
+	      onClick: selectAnswer.bind(null, answer)
+	    },
+	    answer.answer_text
+	  );
+	}
+
+	Answer.propTypes = {
+	  answer: _react.PropTypes.object.isRequired,
+	  selectAnswer: _react.PropTypes.func.isRequired
+	};
+
+	function VoteButton(props) {
+	  function handleClick() {
+	    if (props.selectedAnswer) {
+	      props.voteRequest(props.selectedAnswer);
+	    }
+	  }
+
+	  return _react2.default.createElement(
+	    'button',
+	    {
+	      className: 'bulbs-poll-vote',
+	      onClick: handleClick
+	    },
+	    'Vote'
+	  );
+	}
+
+	VoteButton.propTypes = {
+	  selectedAnswer: _react.PropTypes.object,
+	  voteRequest: _react.PropTypes.func
+	};
 
 	(0, _core.register)('bulbs-poll', BulbsPoll);
 
@@ -233,7 +234,7 @@ webpackJsonp([0],{
 	      return state;
 	    }),
 	    error: new _store.Action(function (state, payload) {
-	      state.error = error;
+	      state.error = payload;
 	      return state;
 	    })
 	  })
@@ -460,7 +461,6 @@ webpackJsonp([0],{
 	        return success.invoke(state, payload);
 	      })), _defineProperty(_actions, this.key + 'Error', new Action(function (state, payload) {
 	        state.active = false;
-	        state.error = error;
 	        return error.invoke(state, payload);
 	      })), _defineProperty(_actions, this.key + 'Reset', new Action(function (state, payload) {
 	        return {

@@ -35,7 +35,7 @@ Store.defineFields(PollStore, {
       return state;
     }),
     error: new Action(function (state, payload) {
-      state.error = error;
+      state.error = payload;
       return state;
     }),
   })
