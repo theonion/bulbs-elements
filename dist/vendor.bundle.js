@@ -21964,11 +21964,10 @@
 	    key: 'dispatch',
 	    value: function dispatch(action, payload) {
 	      console.time('dispatch');
-	      var nextState = this.state ? Object.assign(this.state) : this.state;
+	      var nextState = this.state ? Object.assign({}, this.state) : this.state;
 	      var actionState = this.getStateForAction(action, nextState);
-	
-	      var actionNextState = undefined;
-	      actionNextState = action.invoke(actionState, payload, this);
+	      var actionNextState = Object.assign({}, actionState);
+	      actionNextState = action.invoke(actionNextState, payload, this);
 	      this.setStateForAction(action, nextState, actionNextState);
 	      this.state = nextState;
 	      this.component.setState(this.state);
@@ -21984,8 +21983,7 @@
 	  }, {
 	    key: 'getStateForAction',
 	    value: function getStateForAction(action, state) {
-	      var field = state[action.fieldKey];
-	      return field ? Object.assign(field) : field;
+	      return state[action.fieldKey];
 	    }
 	  }, {
 	    key: 'setStateForAction',

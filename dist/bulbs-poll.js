@@ -192,7 +192,7 @@ webpackJsonp([0],{
 	var SelectedAnswerField = new _store.Field({
 	  initialState: null,
 	  selectAnswer: new _store.Action(function (state, answer) {
-	    return state === answer ? null : answer;
+	    return state && state.id === answer.id ? null : answer;
 	  })
 	});
 	
