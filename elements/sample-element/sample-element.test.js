@@ -1,13 +1,13 @@
 import { assert } from 'chai';
-import { testElement } from '../core';
+import testElement from 'bulbs-elements/test/element';
 
 testElement('SampleElement', function () {
   beforeEach(function () {
     this.element = this.renderElement({
       tag: 'sample-element',
       props: {
-        'this-prop': "HEY"
-      }
+        'this-prop': 'HEY',
+      },
     });
   });
 

@@ -4,108 +4,393 @@ webpackJsonp([0],{
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+	
 	var _react = __webpack_require__(1);
-
+	
 	var _react2 = _interopRequireDefault(_react);
-
-	var _core = __webpack_require__(158);
-
-	var _store = __webpack_require__(166);
-
+	
+	var _register = __webpack_require__(158);
+	
+	var _register2 = _interopRequireDefault(_register);
+	
+	var _bulbsElement = __webpack_require__(170);
+	
+	var _bulbsElement2 = _interopRequireDefault(_bulbsElement);
+	
+	var _store = __webpack_require__(172);
+	
 	var _store2 = _interopRequireDefault(_store);
-
-	var _classnames = __webpack_require__(168);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
+	
+	var _question = __webpack_require__(178);
+	
+	var _question2 = _interopRequireDefault(_question);
+	
+	var _results = __webpack_require__(179);
+	
+	var _results2 = _interopRequireDefault(_results);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
+	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+	
 	var BulbsPoll = function (_BulbsElement) {
 	  _inherits(BulbsPoll, _BulbsElement);
-
+	
 	  function BulbsPoll() {
 	    _classCallCheck(this, BulbsPoll);
-
+	
 	    return _possibleConstructorReturn(this, Object.getPrototypeOf(BulbsPoll).apply(this, arguments));
 	  }
-
+	
 	  _createClass(BulbsPoll, [{
 	    key: 'initialDispatch',
 	    value: function initialDispatch() {
-	      this.store.actions.setPollData(this.props.pollData);
+	      this.store.actions.fetchPollData(this.props.src);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _store$actions = this.store.actions;
-	      var selectAnswer = _store$actions.selectAnswer;
-	      var voteRequest = _store$actions.voteRequest;
-	      var _state = this.state;
-	      var poll = _state.poll;
-	      var selectedAnswer = _state.selectedAnswer;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'bulbs-poll' },
-	        _react2.default.createElement(PollCover, { poll: poll }),
-	        _react2.default.createElement(Answers, {
-	          answers: poll.answers,
-	          selectAnswer: selectAnswer,
-	          selectedAnswer: selectedAnswer
-	        }),
-	        _react2.default.createElement(VoteButton, {
-	          selectedAnswer: selectedAnswer,
-	          voteRequest: voteRequest
-	        })
-	      );
+	      return _react2.default.createElement(_question2.default, {
+	        actions: this.store.actions,
+	        data: this.state
+	      });
 	    }
 	  }]);
-
+	
 	  return BulbsPoll;
-	}(_core.BulbsElement);
-
+	}(_bulbsElement2.default);
+	
 	BulbsPoll.store = _store2.default;
-
+	
 	BulbsPoll.propTypes = {
-	  pollData: _react.PropTypes.string.isRequired
+	  src: _react.PropTypes.string.isRequired
 	};
+	
+	(0, _register2.default)('bulbs-poll', BulbsPoll);
 
-	BulbsPoll.displayName = 'BulbsPoll';
+/***/ },
 
-	function CroppedImage() {
-	  return _react2.default.createElement('img', null);
-	}
+/***/ 172:
+/***/ function(module, exports, __webpack_require__) {
 
-	function PollCover(props) {
-	  var poll = props.poll;
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(173);
+	
+	var _poll = __webpack_require__(175);
+	
+	var _poll2 = _interopRequireDefault(_poll);
+	
+	var _selectedAnswer = __webpack_require__(176);
+	
+	var _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);
+	
+	var _vote = __webpack_require__(177);
+	
+	var _vote2 = _interopRequireDefault(_vote);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PollStore = function (_Store) {
+	  _inherits(PollStore, _Store);
+	
+	  function PollStore() {
+	    _classCallCheck(this, PollStore);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PollStore).apply(this, arguments));
+	  }
+	
+	  return PollStore;
+	}(_store.Store);
+	
+	exports.default = PollStore;
+	
+	_store.Store.defineFields(PollStore, {
+	  poll: _poll2.default,
+	  selectedAnswer: _selectedAnswer2.default,
+	  vote: _vote2.default
+	});
 
+/***/ },
+
+/***/ 175:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(173);
+	
+	var PollField = new _store.Field({
+	  initialState: {
+	    data: {
+	      answers: []
+	    },
+	    requestInFlight: false
+	  },
+	  fetchPollData: new _store.Action(function (state, src, store) {
+	    var request = this.request(src);
+	
+	    request.success(store.actions.fetchPollDataSuccess);
+	    request.failure(store.actions.fetchPollDataFailure);
+	    request.error(store.actions.fetchPollDataError);
+	
+	    state.requestInFlight = true;
+	    return state;
+	  }),
+	  fetchPollDataSuccess: new _store.Action(function (state, data) {
+	    state.data = data;
+	    state.requestInFlight = false;
+	    return state;
+	  }),
+	  fetchPollDataFailure: new _store.Action(function (state, failure) {
+	    state.failure = failure;
+	    state.requestInFlight = false;
+	    return state;
+	  }),
+	  fetchPollDataError: new _store.Action(function (state, error) {
+	    state.requestError = error;
+	    state.requestInFlight = false;
+	    return state;
+	  })
+	});
+	
+	exports.default = PollField;
+
+/***/ },
+
+/***/ 176:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(173);
+	
+	var SelectedAnswerField = new _store.Field({
+	  initialState: null,
+	  selectAnswer: new _store.Action(function (state, answer) {
+	    return state === answer ? null : answer;
+	  })
+	});
+	
+	exports.default = SelectedAnswerField;
+
+/***/ },
+
+/***/ 177:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(173);
+	
+	var VoteField = new _store.Field({
+	  initialState: {},
+	  getCachedVoteData: new _store.Action(function (state, poll) {
+	    state.data = localStorage.getItem('bulbs-poll:vote:' + poll.data.id);
+	    return state;
+	  }),
+	  makeVoteRequest: new _store.Action(function (state, answer, store) {
+	    var poll = store.state.poll;
+	
+	    fetch('http://onion.soadhead.com/api/polls/' + poll.data.id, {
+	      method: 'post',
+	      headers: {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify({
+	        /* convert answer into vote data */
+	      })
+	    }).then(function (response) {
+	      if (response.status < 300) {
+	        return response.json().then(store.actions.voteRequestSuccess);
+	      } else if (response.status >= 400) {
+	        return response.json().then(store.actions.voteRequestFailure);
+	      }
+	    }).catch(store.actions.voteRequestError);
+	
+	    state.requestInFlight = true;
+	    return state;
+	  }),
+	  voteRequestSuccess: new _store.Action(function (state, data) {
+	    state.data = data.vote;
+	    state.requestInFlight = false;
+	    return state;
+	  }),
+	  voteRequestFailure: new _store.Action(function (state, failure) {
+	    state.failure = failure;
+	    state.requestInFlight = false;
+	  }),
+	  voteRequestError: new _store.Action(function (state, error) {
+	    state.requestInFlight = false;
+	    state.requestError = error;
+	    return state;
+	  })
+	});
+	
+	exports.default = VoteField;
+
+/***/ },
+
+/***/ 178:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Question;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _cover = __webpack_require__(180);
+	
+	var _cover2 = _interopRequireDefault(_cover);
+	
+	var _answers = __webpack_require__(182);
+	
+	var _answers2 = _interopRequireDefault(_answers);
+	
+	var _voteButton = __webpack_require__(184);
+	
+	var _voteButton2 = _interopRequireDefault(_voteButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Question(props) {
+	  var _props$actions = props.actions;
+	  var selectAnswer = _props$actions.selectAnswer;
+	  var makeVoteRequest = _props$actions.makeVoteRequest;
+	  var _props$data = props.data;
+	  var poll = _props$data.poll;
+	  var selectedAnswer = _props$data.selectedAnswer;
+	  var vote = _props$data.vote;
+	
+	  var voteButton = null;
+	  if (!vote.data) {
+	    voteButton = _react2.default.createElement(_voteButton2.default, {
+	      selectedAnswer: selectedAnswer,
+	      makeVoteRequest: makeVoteRequest
+	    });
+	  }
+	
 	  return _react2.default.createElement(
-	    'header',
-	    { className: 'bulbs-poll-cover' },
-	    poll.thumbnail ? _react2.default.createElement(CroppedImage, { image: poll.thumbnail }) : undefined,
-	    _react2.default.createElement(
-	      'h1',
-	      { className: 'bulbs-poll-title' },
-	      poll.question_text
-	    )
+	    'div',
+	    { className: 'bulbs-poll' },
+	    _react2.default.createElement(_cover2.default, { poll: poll }),
+	    _react2.default.createElement(_answers2.default, {
+	      answers: poll.data.answers,
+	      selectAnswer: selectAnswer,
+	      selectedAnswer: selectedAnswer
+	    }),
+	    voteButton
 	  );
 	}
 
-	PollCover.propTypes = {
+/***/ },
+
+/***/ 179:
+/***/ function(module, exports) {
+
+	"use strict";
+
+/***/ },
+
+/***/ 180:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Cover;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _croppedImage = __webpack_require__(181);
+	
+	var _croppedImage2 = _interopRequireDefault(_croppedImage);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Cover(props) {
+	  var poll = props.poll;
+	
+	  return _react2.default.createElement(
+	    'header',
+	    { className: 'bulbs-poll-cover' },
+	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : null,
+	    _react2.default.createElement(
+	      'h1',
+	      { className: 'bulbs-poll-title' },
+	      poll.data.question_text
+	    )
+	  );
+	}
+	
+	Cover.propTypes = {
 	  poll: _react.PropTypes.object.isRequired
 	};
 
+/***/ },
+
+/***/ 182:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Answers;
+	exports.Answer = Answer;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(183);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function Answers(props) {
 	  return _react2.default.createElement(
 	    'ul',
@@ -118,22 +403,22 @@ webpackJsonp([0],{
 	    })
 	  );
 	}
-
+	
 	Answers.propTypes = {
 	  answers: _react.PropTypes.array.isRequired,
-	  selectedAnswer: _react.PropTypes.object,
-	  selectAnswer: _react.PropTypes.func.isRequired
+	  selectAnswer: _react.PropTypes.func.isRequired,
+	  selectedAnswer: _react.PropTypes.object
 	};
-
+	
 	function Answer(props) {
 	  var answer = props.answer;
 	  var selectAnswer = props.selectAnswer;
 	  var selectedAnswer = props.selectedAnswer;
-
+	
 	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
 	    selected: answer === selectedAnswer
 	  });
-
+	
 	  return _react2.default.createElement(
 	    'li',
 	    {
@@ -143,348 +428,54 @@ webpackJsonp([0],{
 	    answer.answer_text
 	  );
 	}
-
+	
 	Answer.propTypes = {
 	  answer: _react.PropTypes.object.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired
+	  selectAnswer: _react.PropTypes.func.isRequired,
+	  selectedAnswer: _react.PropTypes.object
 	};
 
+/***/ },
+
+/***/ 184:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = VoteButton;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function VoteButton(props) {
 	  function handleClick() {
 	    if (props.selectedAnswer) {
-	      props.voteRequest(props.selectedAnswer);
+	      props.makeVoteRequest(props.selectedAnswer);
 	    }
 	  }
-
+	
 	  return _react2.default.createElement(
-	    'button',
+	    "button",
 	    {
-	      className: 'bulbs-poll-vote',
+	      className: "bulbs-poll-vote",
 	      onClick: handleClick
 	    },
-	    'Vote'
+	    "Vote"
 	  );
 	}
-
+	
 	VoteButton.propTypes = {
-	  selectedAnswer: _react.PropTypes.object,
-	  voteRequest: _react.PropTypes.func
-	};
-
-	(0, _core.register)('bulbs-poll', BulbsPoll);
-
-/***/ },
-
-/***/ 166:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _store = __webpack_require__(167);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var PollStore = function (_Store) {
-	  _inherits(PollStore, _Store);
-
-	  function PollStore() {
-	    _classCallCheck(this, PollStore);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PollStore).apply(this, arguments));
-	  }
-
-	  return PollStore;
-	}(_store.Store);
-
-	exports.default = PollStore;
-
-	_store.Store.defineFields(PollStore, {
-	  poll: new _store.Field({
-	    initialState: {
-	      answers: []
-	    },
-	    setPollData: new _store.Action(function (state, payload) {
-	      return JSON.parse(payload);
-	    })
-	  }),
-	  selectedAnswer: new _store.Field({
-	    initialState: null,
-	    selectAnswer: new _store.Action(function (state, payload) {
-	      return state === payload ? null : payload;
-	    })
-	  }),
-	  vote: new _store.PromiseField({
-	    generate: function generate(state, payload) {
-	      return fetch('http://onion.sodahead/api/polls/:id', payload);
-	    },
-	    success: new _store.Action(function (state, payload) {
-	      if (payload.status < 300) {
-	        state.data = payload.json();
-	      } else if (payload.status >= 400) {
-	        state.failure = payload.json();
-	      }
-	      return state;
-	    }),
-	    error: new _store.Action(function (state, payload) {
-	      state.error = payload;
-	      return state;
-	    })
-	  })
-	});
-
-/***/ },
-
-/***/ 167:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.Action = exports.PromiseField = exports.Field = exports.Store = undefined;
-
-	var _objectMapToArray = __webpack_require__(165);
-
-	var _objectMapToArray2 = _interopRequireDefault(_objectMapToArray);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DuplicateActionError = function (_Error) {
-	  _inherits(DuplicateActionError, _Error);
-
-	  function DuplicateActionError() {
-	    _classCallCheck(this, DuplicateActionError);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DuplicateActionError).apply(this, arguments));
-	  }
-
-	  return DuplicateActionError;
-	}(Error);
-
-	var Store = exports.Store = function () {
-	  function Store(component) {
-	    _classCallCheck(this, Store);
-
-	    this.dispatch = this.dispatch.bind(this);
-	    this.actions = this.collectActions();
-	    this.state = this.collectInitialState();
-	    this.component = component;
-	    this.component.state = this.state;
-	    console.log('%cCREATED STORE', 'color:green');
-	  }
-
-	  _createClass(Store, [{
-	    key: 'dispatch',
-	    value: function dispatch(action, payload) {
-	      console.time('dispatch');
-	      var nextState = this.state ? Object.assign(this.state) : this.state;
-	      var actionState = this.getStateForAction(action, nextState);
-
-	      var actionNextState = undefined;
-	      if (action instanceof Function) {
-	        actionNextState = action(actionState, payload, this.dispatch);
-	      } else if (action instanceof Action) {
-	        actionNextState = action.invoke(actionState, payload, this.dispatch);
-	      }
-	      this.setStateForAction(action, nextState, actionNextState);
-	      this.state = nextState;
-	      this.component.setState(this.state);
-	      console.groupCollapsed('DISPATCH %c' + action.type + ' %c=> %c' + action.fieldKey, 'color:green', 'color:auto', 'color:blue');
-	      console.timeEnd('dispatch');
-	      console.log('PAYLOAD: ', payload);
-	      console.log('PREV VALUE: ', actionState);
-	      console.log('NEXT VALUE: ', actionNextState);
-	      console.log('PREV STORE: ', this.state);
-	      console.log('NEXT STORE: ', nextState);
-	      console.groupEnd();
-	    }
-	  }, {
-	    key: 'getStateForAction',
-	    value: function getStateForAction(action, state) {
-	      var field = state[action.fieldKey];
-	      return field ? Object.assign(field) : field;
-	    }
-	  }, {
-	    key: 'setStateForAction',
-	    value: function setStateForAction(action, state, actionState) {
-	      state[action.fieldKey] = actionState;
-	    }
-	  }, {
-	    key: 'eachField',
-	    value: function eachField(callback) {
-	      (0, _objectMapToArray2.default)(this.constructor.fields, callback);
-	    }
-	  }, {
-	    key: 'collectActions',
-	    value: function collectActions() {
-	      var _this2 = this;
-
-	      var fields = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	      var actions = {};
-	      this.eachField(function (field) {
-	        (0, _objectMapToArray2.default)(field.actions, function (action, key) {
-	          if (actions.hasOwnProperty(key)) {
-	            throw new DuplicateActionError(_this2, key);
-	          }
-	          actions[key] = function (payload) {
-	            _this2.dispatch(action, payload);
-	          };
-	        });
-	      });
-	      return actions;
-	    }
-	  }, {
-	    key: 'collectInitialState',
-	    value: function collectInitialState() {
-	      var initialState = {};
-	      this.eachField(function (field, key) {
-	        return initialState[key] = field.initialState;
-	      });
-	      return initialState;
-	    }
-	  }]);
-
-	  return Store;
-	}();
-
-	Store.defineFields = function (StoreClass, fields) {
-	  (0, _objectMapToArray2.default)(fields, function (field, fieldKey) {
-	    field.key = fieldKey;
-	    (0, _objectMapToArray2.default)(field.actions, function (action, actionKey) {
-	      action.fieldKey = fieldKey;
-	      action.type = actionKey;
-	    });
-	  });
-	  StoreClass.fields = fields;
-	};
-
-	var Field = exports.Field = function () {
-	  function Field(props) {
-	    _classCallCheck(this, Field);
-
-	    this._props = props;
-	    this.initialState = this._props.initialState || null;
-	  }
-
-	  _createClass(Field, [{
-	    key: 'props',
-	    set: function set(props) {
-	      return this._props = props;
-	    },
-	    get: function get() {
-	      return this._props;
-	    }
-	  }, {
-	    key: 'actions',
-	    get: function get() {
-	      var actions = {};
-	      (0, _objectMapToArray2.default)(this.props, function (prop, key) {
-	        if (key !== 'initialState') {
-	          actions[key] = prop;
-	        }
-	      });
-	      return actions;
-	    }
-	  }]);
-
-	  return Field;
-	}();
-
-	var PromiseField = exports.PromiseField = function (_Field) {
-	  _inherits(PromiseField, _Field);
-
-	  function PromiseField(callbacks) {
-	    _classCallCheck(this, PromiseField);
-
-	    var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(PromiseField).call(this, {
-	      initialState: {
-	        active: false
-	      }
-	    }));
-
-	    _this3.callbacks = callbacks;
-	    return _this3;
-	  }
-
-	  _createClass(PromiseField, [{
-	    key: 'generateActions',
-	    value: function generateActions() {
-	      var _actions;
-
-	      var _callbacks = this.callbacks;
-	      var generate = _callbacks.generate;
-	      var success = _callbacks.success;
-	      var error = _callbacks.error;
-
-	      if (this._actions) {
-	        return;
-	      }
-
-	      var actions = this._actions = (_actions = {}, _defineProperty(_actions, this.key + 'Request', new Action(function () {
-	        var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-	        var _this4 = this;
-
-	        var payload = arguments[1];
-	        var dispatch = arguments[2];
-
-	        var promise = generate(state, payload).then(function (response) {
-	          return dispatch(actions[_this4.fieldKey + 'Success'], response);
-	        }).catch(function (error) {
-	          return dispatch(actions[_this4.fieldKey + 'Error'], error);
-	        });
-	        state.active = true;
-	        state.promise = promise;
-	        return state;
-	      })), _defineProperty(_actions, this.key + 'Success', new Action(function (state, payload) {
-	        state.active = false;
-	        return success.invoke(state, payload);
-	      })), _defineProperty(_actions, this.key + 'Error', new Action(function (state, payload) {
-	        state.active = false;
-	        return error.invoke(state, payload);
-	      })), _defineProperty(_actions, this.key + 'Reset', new Action(function (state, payload) {
-	        return {
-	          active: false
-	        };
-	      })), _actions);
-	    }
-	  }, {
-	    key: 'actions',
-	    get: function get() {
-	      this.generateActions();
-	      return this._actions;
-	    }
-	  }]);
-
-	  return PromiseField;
-	}(Field);
-
-	var Action = exports.Action = function Action(handler) {
-	  _classCallCheck(this, Action);
-
-	  this.invoke = handler;
+	  makeVoteRequest: _react.PropTypes.func,
+	  selectedAnswer: _react.PropTypes.object
 	};
 
 /***/ }
 
 });
+//# sourceMappingURL=bulbs-poll.js.map

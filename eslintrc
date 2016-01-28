@@ -4,6 +4,8 @@
     "it": true,
     "beforeEach": true,
     "afterEach": true,
+    "context": true,
+    "chai": true,
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
@@ -153,7 +155,7 @@
     "array-bracket-spacing": [1, "never"],
     "brace-style": [1, "stroustrup", { "allowSingleLine": true }],
     "camelcase": [1, { "properties": "always" }],
-    "comma-spacing": [1, { "before": false, "after": true }],
+    "comma-spacing": [0, { "before": false, "after": true }],
     "comma-style": [1, "last"],
     "computed-property-spacing": 0,
     "consistent-this": 0,
@@ -225,7 +227,7 @@
     // "babel/space-in-brackets": 1, // deprecated
 
     /* React */
-    "react/display-name": 1,
+    "react/display-name": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-undef": 1,

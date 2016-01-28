@@ -47,6 +47,12 @@ var stylelint    = require('stylelint');
 */
 var elementsDir = path.join(__dirname, '/elements');
 var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
+var libDir = path.join(__dirname, '/lib');
+
+var includeDirs = [
+  elementsDir,
+  libDir,
+];
 
 var entries = {};
 
@@ -65,28 +71,39 @@ entries['dist/vendor'] = [
   'classnames',
   'document-register-element',
   'document-register-element/build/innerHTML',
+  'es6-promise',
+  'isomorphic-fetch',
   'dom4',
   'camelcase',
   'object-map-to-array',
-  './elements/core',
+  './lib/bulbs-elements/register',
+  './lib/bulbs-elements/store',
+  './lib/bulbs-elements/bulbs-element',
+  './lib/bulbs-elements/components/cropped-image',
 ];
 
 module.exports = {
+  devtool: 'source-map',
   entry: entries,
   output: {
-      path: path.join(__dirname),
-      filename: '[name].js',
+    path: path.join(__dirname),
+    filename: '[name].js',
   },
   plugins: [
     //new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin("dist/vendor", "dist/vendor.bundle.js"),
   ],
+  resolve: {
+    modulesDirectories: [
+      'node_modules',
+      'lib',
+    ],
+  },
   module: {
     preLoaders: [{
       test: /\.js$/,
       loader: 'eslint-loader',
-      include: elementsDir,
-
+      include: includeDirs,
     }],
     loaders: [{
       test: /\.scss$/,
@@ -96,22 +113,22 @@ module.exports = {
         'postcss-loader',
         'sass'
       ],
-      include: elementsDir,
+      include: includeDirs,
     },{
-      test: /\.js/,
+      test: /\.(js)$/,
       loader: 'babel',
       query: {
         presets: ['react', 'es2015'],
       },
-      include: elementsDir,
+      include: includeDirs,
     },{
       test: /\.yaml/,
       loaders: ['json', 'yaml'],
-      include: elementsDir,
+      include: includeDirs,
     },{
       test: /\.json/,
       loaders: ['json'],
-      include: elementsDir,
+      include: includeDirs,
     }]
   },
   postcss: function () {

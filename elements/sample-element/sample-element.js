@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { register } from '../core';
+import register from 'bulbs-elements/register';
 
 export default class SampleElement extends React.Component {
   render () {

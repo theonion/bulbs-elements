@@ -16,6 +16,11 @@ module.exports = {
   // list of files / patterns to load in the browser
   files: [
     'dist/vendor.bundle.js',
+    {
+      pattern: 'test/*.js.map',
+      included: false,
+      served: true,
+    },
     'dist/*.js',
     'test/*.js',
   ],
