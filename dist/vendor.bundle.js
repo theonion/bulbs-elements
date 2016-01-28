@@ -21812,7 +21812,8 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BulbsElement).call(this, props));
 	
 	    var StoreConstructor = _this.constructor.store;
-	    _this.store = new StoreConstructor(_this);
+	    _this.store = new StoreConstructor();
+	    _this.store.subscribeComponent(_this);
 	    setImmediate(_this.initialDispatch.bind(_this));
 	    return _this;
 	  }
@@ -21949,18 +21950,32 @@
 	}(Error);
 	
 	var Store = exports.Store = function () {
-	  function Store(component) {
+	  function Store() {
 	    _classCallCheck(this, Store);
 	
 	    this.dispatch = this.dispatch.bind(this);
 	    this.actions = this.collectActions();
 	    this.state = this.collectInitialState();
-	    this.component = component;
-	    this.component.state = this.state;
+	    this.components = [];
 	    console.log('%cCREATED STORE', 'color:green');
 	  }
 	
 	  _createClass(Store, [{
+	    key: 'subscribeComponent',
+	    value: function subscribeComponent(component) {
+	      this.components.push(component);
+	      component.state = this.state;
+	    }
+	  }, {
+	    key: 'deliverSubscriptions',
+	    value: function deliverSubscriptions() {
+	      var _this2 = this;
+	
+	      this.components.forEach(function (component) {
+	        component.setState(_this2.state);
+	      });
+	    }
+	  }, {
 	    key: 'dispatch',
 	    value: function dispatch(action, payload) {
 	      console.time('dispatch');
@@ -21970,7 +21985,7 @@
 	      actionNextState = action.invoke(actionNextState, payload, this);
 	      this.setStateForAction(action, nextState, actionNextState);
 	      this.state = nextState;
-	      this.component.setState(this.state);
+	      this.deliverSubscriptions();
 	      console.groupCollapsed('DISPATCH %c' + action.type + ' %c=> %c' + action.fieldKey, 'color:green', 'color:auto', 'color:blue');
 	      console.timeEnd('dispatch');
 	      console.log('PAYLOAD: ', payload);
@@ -21998,16 +22013,16 @@
 	  }, {
 	    key: 'collectActions',
 	    value: function collectActions() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var actions = {};
 	      this.eachField(function (field) {
 	        (0, _objectMapToArray2.default)(field.actions, function (action, key) {
 	          if (actions.hasOwnProperty(key)) {
-	            throw new DuplicateActionError(_this2, key);
+	            throw new DuplicateActionError(_this3, key);
 	          }
 	          actions[key] = function (payload) {
-	            _this2.dispatch(action, payload);
+	            _this3.dispatch(action, payload);
 	          };
 	        });
 	      });
@@ -22073,7 +22088,7 @@
 	
 	var ActionRequest = function () {
 	  function ActionRequest(url, options) {
-	    var _this3 = this;
+	    var _this4 = this;
 	
 	    _classCallCheck(this, ActionRequest);
 	
@@ -22084,19 +22099,19 @@
 	    this.promise.then(function (response) {
 	      if (response.status < 300) {
 	        return response.json().then(function (data) {
-	          _this3.successCallbacks.forEach(function (callback) {
+	          _this4.successCallbacks.forEach(function (callback) {
 	            callback(data);
 	          });
 	        });
 	      } else if (response.status >= 400) {
 	        return response.json().then(function (data) {
-	          _this3.failureCallbacks.forEach(function (callback) {
+	          _this4.failureCallbacks.forEach(function (callback) {
 	            callback(data);
 	          });
 	        });
 	      }
 	    }).catch(function (error) {
-	      _this3.errorCallbacks.forEach(function (callback) {
+	      _this4.errorCallbacks.forEach(function (callback) {
 	        callback(error);
 	      });
 	    });

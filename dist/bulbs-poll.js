@@ -220,7 +220,7 @@ webpackJsonp([0],{
 	  makeVoteRequest: new _store.Action(function (state, answer, store) {
 	    var poll = store.state.poll;
 	
-	    fetch('http://onion.soadhead.com/api/polls/' + poll.data.id, {
+	    var request = this.request('http://onion.soadhead.com/api/polls/' + poll.data.id, {
 	      method: 'post',
 	      headers: {
 	        'Accept': 'application/json',
@@ -229,13 +229,11 @@ webpackJsonp([0],{
 	      body: JSON.stringify({
 	        /* convert answer into vote data */
 	      })
-	    }).then(function (response) {
-	      if (response.status < 300) {
-	        return response.json().then(store.actions.voteRequestSuccess);
-	      } else if (response.status >= 400) {
-	        return response.json().then(store.actions.voteRequestFailure);
-	      }
-	    }).catch(store.actions.voteRequestError);
+	    });
+	
+	    request.success(store.actions.fetchPollDataSuccess);
+	    request.failure(store.actions.fetchPollDataFailure);
+	    request.error(store.actions.fetchPollDataError);
 	
 	    state.requestInFlight = true;
 	    return state;

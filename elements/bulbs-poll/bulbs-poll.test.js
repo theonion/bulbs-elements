@@ -76,10 +76,10 @@ testElement('BulbsPoll', function () {
   context('voteRequestError', function () {
   });
 
-  context('voteRequestSuccess OK', function () {
+  context('voteRequestSuccess', function () {
     beforeEach(function () {
       let { voteRequestSuccess } = this.actions;
-      voteRequestSuccess({
+      this.voteRequestSuccess({
         "vote":{
           "answer":{
             "id":12058768
@@ -105,6 +105,12 @@ testElement('BulbsPoll', function () {
     });
   });
 
+  context('voteRequestFailure', function () {
+    beforeEach(function () {
+      let { voteRequestFailure } = this.actions;
+      voteRequestFailure
+    });
+  });
   context('voteRequestSuccess FAILURE', function () {
     beforeEach(function () {
       let { voteRequestSuccess } = this.actions;
