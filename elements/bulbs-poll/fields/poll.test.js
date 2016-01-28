@@ -1,18 +1,80 @@
 import { assert } from 'chai';
 import PollField from './poll';
+import PollStore from '../store';
+
+let store = new PollStore();
 
 describe('PollField', function () {
-  beforeEach(function () {
-    this.field = PollField
+  let { actions } = PollField;
+
+  it('initialState', function () {
+    assert.deepEqual(PollField.initialState, {
+      data: {
+        answers: [],
+      },
+      requestInFlight: false,
+    });
   });
 
-  describe('initialState');
+  describe('fetchPollData', function () {
+    let src = 'http://example.tld/poll/:id';
+    let requestSpy = chai.spy.on(actions.fetchPollData, 'request');
 
-  describe('fetchPollData');
+    afterEach(function () {
+      requestSpy.reset();
+    });
 
-  describe('fetchPollDataSuccess');
+    it('makes GET request to the poll endpoint', function () {
+      let nextState = actions.fetchPollData.invoke({}, src, store);
+      requestSpy.should.have.been.called.with(src, {
+        success: store.actions.fetchPollDataSuccess,
+        failure: store.actions.fetchPollDataFailure,
+        error: store.actions.fetchPollDataError,
+      });
+    });
 
-  describe('fetchPollDataFailure');
+    it('sets requestInFlight to true', function () {
+      let nextState = actions.fetchPollData.invoke({}, src, store);
+      assert.isTrue(nextState.requestInFlight);
+    });
+  });
 
-  describe('fetchPollDataError');
+  describe('fetchPollDataSuccess', function () {
+    it('sets requestInFlight to false', function () {
+      let nextState = actions.fetchPollDataSuccess.invoke({}, {});
+      assert.isFalse(nextState.requestInFlight);
+    });
+
+    it('sets state.data', function () {
+      let success = {};
+      let nextState = actions.fetchPollDataSuccess.invoke({}, success);
+      assert.equal(nextState.data, success);
+    });
+  });
+
+  describe('fetchPollDataFailure', function () {
+    it('sets requestInFlight to false', function () {
+      let nextState = actions.fetchPollDataFailure.invoke({}, {});
+      assert.isFalse(nextState.requestInFlight);
+    });
+
+    it('sets state.failure', function () {
+      let failure = {};
+      let nextState = actions.fetchPollDataFailure.invoke({}, failure);
+      assert.equal(nextState.requestFailure, failure);
+    });
+  });
+
+  describe('fetchPollDataError', function () {
+    it('sets requestInFlight to false', function () {
+      let nextState = actions.fetchPollDataError.invoke({}, {});
+      assert.isFalse(nextState.requestInFlight);
+    });
+
+    it('sets state.error', function () {
+      let error = {};
+      let nextState = actions.fetchPollDataError.invoke({}, error);
+      assert.equal(nextState.requestError, error);
+    });
+  });
 });

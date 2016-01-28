@@ -17,12 +17,17 @@ module.exports = {
   files: [
     'dist/vendor.bundle.js',
     {
-      pattern: 'test/*.js.map',
+      pattern: 'dist/*.js.map',
+      included: false,
+      served: true,
+    },
+    {
+      pattern: '.test/**/*.js.map',
       included: false,
       served: true,
     },
     'dist/*.js',
-    'test/*.js',
+    '.test/**/*.js',
   ],
 
 

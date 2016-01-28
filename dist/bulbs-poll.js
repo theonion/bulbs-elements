@@ -1,4 +1,4 @@
-webpackJsonp([0],{
+webpackJsonp([6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -7,27 +7,27 @@ webpackJsonp([0],{
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(54);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _register = __webpack_require__(158);
+	var _register = __webpack_require__(210);
 	
 	var _register2 = _interopRequireDefault(_register);
 	
-	var _bulbsElement = __webpack_require__(170);
+	var _bulbsElement = __webpack_require__(222);
 	
 	var _bulbsElement2 = _interopRequireDefault(_bulbsElement);
 	
-	var _store = __webpack_require__(172);
+	var _store = __webpack_require__(51);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _question = __webpack_require__(178);
+	var _question = __webpack_require__(223);
 	
 	var _question2 = _interopRequireDefault(_question);
 	
-	var _results = __webpack_require__(179);
+	var _results = __webpack_require__(229);
 	
 	var _results2 = _interopRequireDefault(_results);
 	
@@ -76,7 +76,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 172:
+/***/ 49:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85,17 +85,65 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(173);
+	var _store = __webpack_require__(50);
 	
-	var _poll = __webpack_require__(175);
+	var PollField = new _store.Field({
+	  initialState: {
+	    data: {
+	      answers: []
+	    },
+	    requestInFlight: false
+	  },
+	  fetchPollData: new _store.Action(function (state, src, store) {
+	    var request = this.request(src, {
+	      success: store.actions.fetchPollDataSuccess,
+	      failure: store.actions.fetchPollDataFailure,
+	      error: store.actions.fetchPollDataError
+	    });
+	    state.requestInFlight = true;
+	    return state;
+	  }),
+	  fetchPollDataSuccess: new _store.Action(function (state, data) {
+	    state.data = data;
+	    state.requestInFlight = false;
+	    return state;
+	  }),
+	  fetchPollDataFailure: new _store.Action(function (state, failure) {
+	    state.requestFailure = failure;
+	    state.requestInFlight = false;
+	    return state;
+	  }),
+	  fetchPollDataError: new _store.Action(function (state, error) {
+	    state.requestError = error;
+	    state.requestInFlight = false;
+	    return state;
+	  })
+	});
+	
+	exports.default = PollField;
+
+/***/ },
+
+/***/ 51:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(50);
+	
+	var _poll = __webpack_require__(49);
 	
 	var _poll2 = _interopRequireDefault(_poll);
 	
-	var _selectedAnswer = __webpack_require__(176);
+	var _selectedAnswer = __webpack_require__(52);
 	
 	var _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);
 	
-	var _vote = __webpack_require__(177);
+	var _vote = __webpack_require__(53);
 	
 	var _vote2 = _interopRequireDefault(_vote);
 	
@@ -129,7 +177,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 175:
+/***/ 52:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -138,56 +186,7 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(173);
-	
-	var PollField = new _store.Field({
-	  initialState: {
-	    data: {
-	      answers: []
-	    },
-	    requestInFlight: false
-	  },
-	  fetchPollData: new _store.Action(function (state, src, store) {
-	    var request = this.request(src);
-	
-	    request.success(store.actions.fetchPollDataSuccess);
-	    request.failure(store.actions.fetchPollDataFailure);
-	    request.error(store.actions.fetchPollDataError);
-	
-	    state.requestInFlight = true;
-	    return state;
-	  }),
-	  fetchPollDataSuccess: new _store.Action(function (state, data) {
-	    state.data = data;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  fetchPollDataFailure: new _store.Action(function (state, failure) {
-	    state.failure = failure;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  fetchPollDataError: new _store.Action(function (state, error) {
-	    state.requestError = error;
-	    state.requestInFlight = false;
-	    return state;
-	  })
-	});
-	
-	exports.default = PollField;
-
-/***/ },
-
-/***/ 176:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _store = __webpack_require__(173);
+	var _store = __webpack_require__(50);
 	
 	var SelectedAnswerField = new _store.Field({
 	  initialState: null,
@@ -200,7 +199,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 177:
+/***/ 53:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -209,7 +208,7 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(173);
+	var _store = __webpack_require__(50);
 	
 	var VoteField = new _store.Field({
 	  initialState: {},
@@ -220,7 +219,7 @@ webpackJsonp([0],{
 	  makeVoteRequest: new _store.Action(function (state, answer, store) {
 	    var poll = store.state.poll;
 	
-	    var request = this.request('http://onion.soadhead.com/api/polls/' + poll.data.id, {
+	    var request = this.request('http://onion.sodahead.com/api/polls/' + poll.data.id, {
 	      method: 'post',
 	      headers: {
 	        'Accept': 'application/json',
@@ -228,12 +227,11 @@ webpackJsonp([0],{
 	      },
 	      body: JSON.stringify({
 	        /* convert answer into vote data */
-	      })
+	      }),
+	      success: store.actions.voteRequestSuccess,
+	      failure: store.actions.voteRequestFailure,
+	      error: store.actions.voteRequestError
 	    });
-	
-	    request.success(store.actions.fetchPollDataSuccess);
-	    request.failure(store.actions.fetchPollDataFailure);
-	    request.error(store.actions.fetchPollDataError);
 	
 	    state.requestInFlight = true;
 	    return state;
@@ -244,8 +242,9 @@ webpackJsonp([0],{
 	    return state;
 	  }),
 	  voteRequestFailure: new _store.Action(function (state, failure) {
-	    state.failure = failure;
+	    state.requestFailure = failure;
 	    state.requestInFlight = false;
+	    return state;
 	  }),
 	  voteRequestError: new _store.Action(function (state, error) {
 	    state.requestInFlight = false;
@@ -258,7 +257,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 178:
+/***/ 223:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -268,19 +267,19 @@ webpackJsonp([0],{
 	});
 	exports.default = Question;
 	
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(54);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cover = __webpack_require__(180);
+	var _cover = __webpack_require__(224);
 	
 	var _cover2 = _interopRequireDefault(_cover);
 	
-	var _answers = __webpack_require__(182);
+	var _answers = __webpack_require__(226);
 	
 	var _answers2 = _interopRequireDefault(_answers);
 	
-	var _voteButton = __webpack_require__(184);
+	var _voteButton = __webpack_require__(228);
 	
 	var _voteButton2 = _interopRequireDefault(_voteButton);
 	
@@ -318,14 +317,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 179:
-/***/ function(module, exports) {
-
-	"use strict";
-
-/***/ },
-
-/***/ 180:
+/***/ 224:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -335,11 +327,11 @@ webpackJsonp([0],{
 	});
 	exports.default = Cover;
 	
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(54);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _croppedImage = __webpack_require__(181);
+	var _croppedImage = __webpack_require__(225);
 	
 	var _croppedImage2 = _interopRequireDefault(_croppedImage);
 	
@@ -366,7 +358,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 182:
+/***/ 226:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -379,11 +371,11 @@ webpackJsonp([0],{
 	exports.default = Answers;
 	exports.Answer = Answer;
 	
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(54);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(183);
+	var _classnames = __webpack_require__(227);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -435,7 +427,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 184:
+/***/ 228:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -445,7 +437,7 @@ webpackJsonp([0],{
 	});
 	exports.default = VoteButton;
 	
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(54);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -472,6 +464,13 @@ webpackJsonp([0],{
 	  makeVoteRequest: _react.PropTypes.func,
 	  selectedAnswer: _react.PropTypes.object
 	};
+
+/***/ },
+
+/***/ 229:
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 

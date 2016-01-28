@@ -8,12 +8,11 @@ const PollField = new Field({
     requestInFlight: false,
   },
   fetchPollData: new Action(function (state, src, store) {
-    let request = this.request(src);
-
-    request.success(store.actions.fetchPollDataSuccess);
-    request.failure(store.actions.fetchPollDataFailure);
-    request.error(store.actions.fetchPollDataError);
-
+    let request = this.request(src, {
+      success: store.actions.fetchPollDataSuccess,
+      failure: store.actions.fetchPollDataFailure,
+      error: store.actions.fetchPollDataError,
+    });
     state.requestInFlight = true;
     return state;
   }),
@@ -23,7 +22,7 @@ const PollField = new Field({
     return state;
   }),
   fetchPollDataFailure: new Action(function (state, failure) {
-    state.failure = failure;
+    state.requestFailure = failure;
     state.requestInFlight = false;
     return state;
   }),

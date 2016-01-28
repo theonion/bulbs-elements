@@ -3,15 +3,15 @@ var Van = require("van")
 
 var van = new Van({
   scripts: {
-    webpack: 'node_modules/.bin/webpack --watch', 
+    webpack: 'node_modules/.bin/webpack --watch --colors',
     karma: 'node_modules/.bin/karma start',
   }
 });
 
-// spawn the child processes and interleave output 
+// spawn the child processes and interleave output
 van.start();
 
 process.on('SIGINT', function() {
-  // send a kill signal to each child process 
+  // send a kill signal to each child process
   van.stop();
 });

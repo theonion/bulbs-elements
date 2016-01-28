@@ -7,44 +7,6 @@ var autoprefixer = require('autoprefixer');
 var initial      = require('postcss-initial');
 var stylelint    = require('stylelint');
 
-/*
-  Builds webpack entry configuration based on directories
-  found in the `/elements` directory.
-
-  We expect to find the following structure:
-
-  * `elements/element-a/element-a.js`
-  * `elements/element-a/element-a.test.js`
-
-  * `elements/element-b/element-b.js`
-  * `elements/element-b/element-b.test.js`
-
-
-  This means that there are two elements
-
-  * <element-a>
-  * <element-b>
-
-  This will return the following configuration:
-
-  ```js
-  {
-    'dist/element-a': 'elements/element-a/element-a.js',
-    'test/element-a': 'elements/element-a/test/element-a.js',
-    'dist/element-b': 'elements/element-b/element-b.js',
-    'test/element-b': 'elements/element-b/test/element-b.js',
-  }
-  ```
-
-  This configuration interacts with our webpack setting for `output'
-  and results in built elements in the dist and test folder:
-
-  * `dist/element-a.js`
-  * `dist/element-b.js`
-
-  * `test/element-a.js`
-  * `test/element-b.js`
-*/
 var elementsDir = path.join(__dirname, '/elements');
 var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
 var libDir = path.join(__dirname, '/lib');
@@ -59,9 +21,12 @@ var entries = {};
 elementDirs.forEach(function (dir) {
   var elementName = path.basename(dir);
   var elementEntryPoint = path.join(dir, elementName + '.js');
-  var testEntryPoint = path.join(dir, elementName + '.test.js');
   entries['dist/' + elementName] = elementEntryPoint;
-  entries['test/' + elementName] = testEntryPoint;
+});
+
+var testFiles = glob.sync('{elements,lib}/**/*.test.js');
+testFiles.forEach(function (file) {
+  entries['.test/'+file.replace(/\.js$/, '')] = path.join(__dirname, file);
 });
 
 // We will vendor common dependencies of our elements.
