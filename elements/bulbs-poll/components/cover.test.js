@@ -26,12 +26,13 @@ describe('Cover', function () {
     it('renders a cover without a thumbnail', function () {
       let poll = {
         data: {
-          question_text: 'Question?
+          question_text: 'Question?',
         },
       };
 
       assertJSXEqual(<Cover poll={poll} />,
         <header className="bulbs-poll-cover">
+          { null }
           <h1 className="bulbs-poll-title">Question?</h1>
         </header>
       );

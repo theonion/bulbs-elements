@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":".test/elements/bulbs-poll/bulbs-poll.test","2":".test/elements/bulbs-poll/fields/poll.test","3":".test/elements/bulbs-poll/fields/selected-answer.test","4":".test/elements/bulbs-poll/fields/vote.test","5":".test/elements/sample-element/sample-element.test","6":"dist/bulbs-poll","7":"dist/sample-element"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":".test/elements/bulbs-poll/bulbs-poll.test","1":".test/elements/bulbs-poll/components/cover.test","2":".test/elements/bulbs-poll/fields/poll.test","3":".test/elements/bulbs-poll/fields/selected-answer.test","4":".test/elements/bulbs-poll/fields/vote.test","5":".test/elements/sample-element/sample-element.test","6":"dist/bulbs-poll","7":"dist/sample-element"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -20737,7 +20737,7 @@
 /* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license

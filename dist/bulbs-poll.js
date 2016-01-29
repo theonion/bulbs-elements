@@ -102,7 +102,7 @@ webpackJsonp([6],{
 	  return _react2.default.createElement(
 	    'header',
 	    { className: 'bulbs-poll-cover' },
-	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : null,
+	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : undefined,
 	    _react2.default.createElement(
 	      'h1',
 	      { className: 'bulbs-poll-title' },

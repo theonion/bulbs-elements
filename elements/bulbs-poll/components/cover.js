@@ -6,7 +6,7 @@ export default function Cover (props) {
   return (
     <header className="bulbs-poll-cover">
       {
-        poll.data.thumbnail ? <CroppedImage image={poll.data.thumbnail} /> : null
+        poll.data.thumbnail ? <CroppedImage image={poll.data.thumbnail} /> : undefined
       }
       <h1 className="bulbs-poll-title">
         { poll.data.question_text }
