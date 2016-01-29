@@ -42,6 +42,7 @@
     "phantomjs": "^1.9.19",
     "postcss-initial": "^1.4.0",
     "postcss-loader": "^0.8.0",
+    "react-addons-test-utils": "^0.14.7",
     "stylelint": "^4.0.0",
     "van": "0.0.4",
     "webpack": "^1.12.11",

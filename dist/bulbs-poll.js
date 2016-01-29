@@ -7,27 +7,27 @@ webpackJsonp([6],{
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(54);
+	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _register = __webpack_require__(210);
+	var _register = __webpack_require__(216);
 	
 	var _register2 = _interopRequireDefault(_register);
 	
-	var _bulbsElement = __webpack_require__(222);
+	var _bulbsElement = __webpack_require__(228);
 	
 	var _bulbsElement2 = _interopRequireDefault(_bulbsElement);
 	
-	var _store = __webpack_require__(51);
+	var _store = __webpack_require__(213);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _question = __webpack_require__(223);
+	var _question = __webpack_require__(229);
 	
 	var _question2 = _interopRequireDefault(_question);
 	
-	var _results = __webpack_require__(229);
+	var _results = __webpack_require__(233);
 	
 	var _results2 = _interopRequireDefault(_results);
 	
@@ -84,8 +84,49 @@ webpackJsonp([6],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = Cover;
 	
-	var _store = __webpack_require__(50);
+	var _react = __webpack_require__(50);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _croppedImage = __webpack_require__(206);
+	
+	var _croppedImage2 = _interopRequireDefault(_croppedImage);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Cover(props) {
+	  var poll = props.poll;
+	
+	  return _react2.default.createElement(
+	    'header',
+	    { className: 'bulbs-poll-cover' },
+	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : null,
+	    _react2.default.createElement(
+	      'h1',
+	      { className: 'bulbs-poll-title' },
+	      poll.data.question_text
+	    )
+	  );
+	}
+	
+	Cover.propTypes = {
+	  poll: _react.PropTypes.object.isRequired
+	};
+
+/***/ },
+
+/***/ 211:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _store = __webpack_require__(212);
 	
 	var PollField = new _store.Field({
 	  initialState: {
@@ -124,7 +165,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 51:
+/***/ 213:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -133,17 +174,17 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(50);
+	var _store = __webpack_require__(212);
 	
-	var _poll = __webpack_require__(49);
+	var _poll = __webpack_require__(211);
 	
 	var _poll2 = _interopRequireDefault(_poll);
 	
-	var _selectedAnswer = __webpack_require__(52);
+	var _selectedAnswer = __webpack_require__(214);
 	
 	var _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);
 	
-	var _vote = __webpack_require__(53);
+	var _vote = __webpack_require__(215);
 	
 	var _vote2 = _interopRequireDefault(_vote);
 	
@@ -177,7 +218,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 52:
+/***/ 214:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -186,7 +227,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(50);
+	var _store = __webpack_require__(212);
 	
 	var SelectedAnswerField = new _store.Field({
 	  initialState: null,
@@ -199,7 +240,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 53:
+/***/ 215:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -208,7 +249,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(50);
+	var _store = __webpack_require__(212);
 	
 	var VoteField = new _store.Field({
 	  initialState: {},
@@ -257,7 +298,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 223:
+/***/ 229:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -267,19 +308,19 @@ webpackJsonp([6],{
 	});
 	exports.default = Question;
 	
-	var _react = __webpack_require__(54);
+	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cover = __webpack_require__(224);
+	var _cover = __webpack_require__(49);
 	
 	var _cover2 = _interopRequireDefault(_cover);
 	
-	var _answers = __webpack_require__(226);
+	var _answers = __webpack_require__(230);
 	
 	var _answers2 = _interopRequireDefault(_answers);
 	
-	var _voteButton = __webpack_require__(228);
+	var _voteButton = __webpack_require__(232);
 	
 	var _voteButton2 = _interopRequireDefault(_voteButton);
 	
@@ -317,48 +358,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 224:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Cover;
-	
-	var _react = __webpack_require__(54);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _croppedImage = __webpack_require__(225);
-	
-	var _croppedImage2 = _interopRequireDefault(_croppedImage);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Cover(props) {
-	  var poll = props.poll;
-	
-	  return _react2.default.createElement(
-	    'header',
-	    { className: 'bulbs-poll-cover' },
-	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : null,
-	    _react2.default.createElement(
-	      'h1',
-	      { className: 'bulbs-poll-title' },
-	      poll.data.question_text
-	    )
-	  );
-	}
-	
-	Cover.propTypes = {
-	  poll: _react.PropTypes.object.isRequired
-	};
-
-/***/ },
-
-/***/ 226:
+/***/ 230:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -371,11 +371,11 @@ webpackJsonp([6],{
 	exports.default = Answers;
 	exports.Answer = Answer;
 	
-	var _react = __webpack_require__(54);
+	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(227);
+	var _classnames = __webpack_require__(231);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -427,7 +427,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 228:
+/***/ 232:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -437,7 +437,7 @@ webpackJsonp([6],{
 	});
 	exports.default = VoteButton;
 	
-	var _react = __webpack_require__(54);
+	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -467,7 +467,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 229:
+/***/ 233:
 /***/ function(module, exports) {
 
 	"use strict";

@@ -10,11 +10,11 @@ webpackJsonp([7],[
 	  value: true
 	});
 	
-	var _react = __webpack_require__(54);
+	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _register = __webpack_require__(210);
+	var _register = __webpack_require__(216);
 	
 	var _register2 = _interopRequireDefault(_register);
 	
