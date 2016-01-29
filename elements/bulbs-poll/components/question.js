@@ -16,14 +16,6 @@ export default function Question (props) {
     vote,
   } = props.data;
 
-  let voteButton = null;
-  if (!vote.data) {
-    voteButton = <VoteButton
-      selectedAnswer={selectedAnswer}
-      makeVoteRequest={makeVoteRequest}
-    />;
-  }
-
   return (
     <div className="bulbs-poll">
       <Cover poll={poll} />
@@ -32,7 +24,10 @@ export default function Question (props) {
         selectAnswer={selectAnswer}
         selectedAnswer={selectedAnswer}
       />
-      { voteButton }
+      <VoteButton
+        selectedAnswer={selectedAnswer}
+        makeVoteRequest={makeVoteRequest}
+      />
     </div>
   );
 }

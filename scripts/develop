@@ -1,17 +1,55 @@
 #!/usr/bin/env node
-var Van = require("van")
+var Van = require('van')
+var watch = require('watch');
+var webpack, karma, watcher;
+var path = require('path');
+var paths = ['../elements', '../lib'];
 
-var van = new Van({
-  scripts: {
-    webpack: 'node_modules/.bin/webpack --watch --colors',
-    karma: 'node_modules/.bin/karma start',
-  }
+paths.forEach(function (_path) {
+  watch.createMonitor(path.resolve(__dirname, _path), function (monitor) {
+    monitor.on('created', function () {
+      webpack.stop();
+      startWebpack();
+    });
+    monitor.on('removed', function () {
+      webpack.stop();
+      startWebpack();
+    });
+
+    process.on('SIGINT', function () {
+      monitor.stop();
+    });
+  });
 });
 
-// spawn the child processes and interleave output
-van.start();
+function startKarma () {
+  console.log('Starting Karma');
+  karma = new Van({
+    scripts: {
+      karma: 'node_modules/.bin/karma start',
+    }
+  });
+  karma.start();
+}
+
+function startWebpack () {
+  console.log('Starting Webpack');
+  webpack = new Van({
+    scripts: {
+      wepback: 'node_modules/.bin/webpack --watch --color',
+    }
+  });
+  webpack.start();
+  webpack.finish = function () {
+    console.log('Stopped a webpack process');
+  };
+}
+
+startKarma();
+startWebpack();
 
 process.on('SIGINT', function() {
   // send a kill signal to each child process
-  van.stop();
+  karma.stop();
+  webpack.stop();
 });

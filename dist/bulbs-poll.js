@@ -1,4 +1,4 @@
-webpackJsonp([6],{
+webpackJsonp([10],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -11,23 +11,23 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _register = __webpack_require__(216);
+	var _register = __webpack_require__(236);
 	
 	var _register2 = _interopRequireDefault(_register);
 	
-	var _bulbsElement = __webpack_require__(228);
+	var _bulbsElement = __webpack_require__(248);
 	
 	var _bulbsElement2 = _interopRequireDefault(_bulbsElement);
 	
-	var _store = __webpack_require__(213);
+	var _store = __webpack_require__(233);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _question = __webpack_require__(229);
+	var _question = __webpack_require__(249);
 	
 	var _question2 = _interopRequireDefault(_question);
 	
-	var _results = __webpack_require__(233);
+	var _results = __webpack_require__(250);
 	
 	var _results2 = _interopRequireDefault(_results);
 	
@@ -84,13 +84,103 @@ webpackJsonp([6],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = Answer;
+	
+	var _react = __webpack_require__(50);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(206);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Answer(props) {
+	  var answer = props.answer;
+	  var selectAnswer = props.selectAnswer;
+	  var selectedAnswer = props.selectedAnswer;
+	
+	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
+	    selected: answer === selectedAnswer
+	  });
+	
+	  return _react2.default.createElement(
+	    'li',
+	    {
+	      className: className,
+	      onClick: selectAnswer.bind(null, answer)
+	    },
+	    answer.answer_text
+	  );
+	}
+	
+	Answer.propTypes = {
+	  answer: _react.PropTypes.object.isRequired,
+	  selectAnswer: _react.PropTypes.func.isRequired,
+	  selectedAnswer: _react.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 227:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Answers;
+	
+	var _react = __webpack_require__(50);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _answer = __webpack_require__(49);
+	
+	var _answer2 = _interopRequireDefault(_answer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Answers(props) {
+	  return _react2.default.createElement(
+	    'ul',
+	    { className: 'bulbs-poll-answers' },
+	    props.answers.map(function (answer, index) {
+	      return _react2.default.createElement(_answer2.default, _extends({
+	        key: index,
+	        answer: answer
+	      }, props));
+	    })
+	  );
+	}
+	
+	Answers.propTypes = {
+	  answers: _react.PropTypes.array.isRequired,
+	  selectAnswer: _react.PropTypes.func.isRequired,
+	  selectedAnswer: _react.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 228:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.default = Cover;
 	
 	var _react = __webpack_require__(50);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _croppedImage = __webpack_require__(206);
+	var _croppedImage = __webpack_require__(229);
 	
 	var _croppedImage2 = _interopRequireDefault(_croppedImage);
 	
@@ -117,7 +207,47 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 211:
+/***/ 230:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = VoteButton;
+	
+	var _react = __webpack_require__(50);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function VoteButton(props) {
+	  function handleClick() {
+	    if (props.selectedAnswer) {
+	      props.makeVoteRequest(props.selectedAnswer);
+	    }
+	  }
+	
+	  return _react2.default.createElement(
+	    "button",
+	    {
+	      className: "bulbs-poll-vote",
+	      onClick: handleClick
+	    },
+	    "Vote"
+	  );
+	}
+	
+	VoteButton.propTypes = {
+	  makeVoteRequest: _react.PropTypes.func,
+	  selectedAnswer: _react.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 231:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -126,7 +256,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(212);
+	var _store = __webpack_require__(232);
 	
 	var PollField = new _store.Field({
 	  initialState: {
@@ -165,7 +295,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 213:
+/***/ 233:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -174,17 +304,17 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(212);
+	var _store = __webpack_require__(232);
 	
-	var _poll = __webpack_require__(211);
+	var _poll = __webpack_require__(231);
 	
 	var _poll2 = _interopRequireDefault(_poll);
 	
-	var _selectedAnswer = __webpack_require__(214);
+	var _selectedAnswer = __webpack_require__(234);
 	
 	var _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);
 	
-	var _vote = __webpack_require__(215);
+	var _vote = __webpack_require__(235);
 	
 	var _vote2 = _interopRequireDefault(_vote);
 	
@@ -218,7 +348,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 214:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -227,7 +357,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(212);
+	var _store = __webpack_require__(232);
 	
 	var SelectedAnswerField = new _store.Field({
 	  initialState: null,
@@ -240,7 +370,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 215:
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -249,7 +379,7 @@ webpackJsonp([6],{
 	  value: true
 	});
 	
-	var _store = __webpack_require__(212);
+	var _store = __webpack_require__(232);
 	
 	var VoteField = new _store.Field({
 	  initialState: {},
@@ -298,7 +428,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 229:
+/***/ 249:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -312,15 +442,15 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _cover = __webpack_require__(49);
+	var _cover = __webpack_require__(228);
 	
 	var _cover2 = _interopRequireDefault(_cover);
 	
-	var _answers = __webpack_require__(230);
+	var _answers = __webpack_require__(227);
 	
 	var _answers2 = _interopRequireDefault(_answers);
 	
-	var _voteButton = __webpack_require__(232);
+	var _voteButton = __webpack_require__(230);
 	
 	var _voteButton2 = _interopRequireDefault(_voteButton);
 	
@@ -335,14 +465,6 @@ webpackJsonp([6],{
 	  var selectedAnswer = _props$data.selectedAnswer;
 	  var vote = _props$data.vote;
 	
-	  var voteButton = null;
-	  if (!vote.data) {
-	    voteButton = _react2.default.createElement(_voteButton2.default, {
-	      selectedAnswer: selectedAnswer,
-	      makeVoteRequest: makeVoteRequest
-	    });
-	  }
-	
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'bulbs-poll' },
@@ -352,122 +474,16 @@ webpackJsonp([6],{
 	      selectAnswer: selectAnswer,
 	      selectedAnswer: selectedAnswer
 	    }),
-	    voteButton
-	  );
-	}
-
-/***/ },
-
-/***/ 230:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Answers;
-	exports.Answer = Answer;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(231);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Answers(props) {
-	  return _react2.default.createElement(
-	    'ul',
-	    { className: 'bulbs-poll-answers' },
-	    props.answers.map(function (answer, index) {
-	      return _react2.default.createElement(Answer, _extends({
-	        key: index,
-	        answer: answer
-	      }, props));
+	    _react2.default.createElement(_voteButton2.default, {
+	      selectedAnswer: selectedAnswer,
+	      makeVoteRequest: makeVoteRequest
 	    })
 	  );
 	}
-	
-	Answers.propTypes = {
-	  answers: _react.PropTypes.array.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired,
-	  selectedAnswer: _react.PropTypes.object
-	};
-	
-	function Answer(props) {
-	  var answer = props.answer;
-	  var selectAnswer = props.selectAnswer;
-	  var selectedAnswer = props.selectedAnswer;
-	
-	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
-	    selected: answer === selectedAnswer
-	  });
-	
-	  return _react2.default.createElement(
-	    'li',
-	    {
-	      className: className,
-	      onClick: selectAnswer.bind(null, answer)
-	    },
-	    answer.answer_text
-	  );
-	}
-	
-	Answer.propTypes = {
-	  answer: _react.PropTypes.object.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired,
-	  selectedAnswer: _react.PropTypes.object
-	};
 
 /***/ },
 
-/***/ 232:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = VoteButton;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function VoteButton(props) {
-	  function handleClick() {
-	    if (props.selectedAnswer) {
-	      props.makeVoteRequest(props.selectedAnswer);
-	    }
-	  }
-	
-	  return _react2.default.createElement(
-	    "button",
-	    {
-	      className: "bulbs-poll-vote",
-	      onClick: handleClick
-	    },
-	    "Vote"
-	  );
-	}
-	
-	VoteButton.propTypes = {
-	  makeVoteRequest: _react.PropTypes.func,
-	  selectedAnswer: _react.PropTypes.object
-	};
-
-/***/ },
-
-/***/ 233:
+/***/ 250:
 /***/ function(module, exports) {
 
 	"use strict";

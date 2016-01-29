@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		8:0
+/******/ 		12:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":".test/elements/bulbs-poll/bulbs-poll.test","1":".test/elements/bulbs-poll/components/cover.test","2":".test/elements/bulbs-poll/fields/poll.test","3":".test/elements/bulbs-poll/fields/selected-answer.test","4":".test/elements/bulbs-poll/fields/vote.test","5":".test/elements/sample-element/sample-element.test","6":"dist/bulbs-poll","7":"dist/sample-element"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":".test/elements/bulbs-poll/bulbs-poll.test","1":".test/elements/bulbs-poll/components/answer.test","2":".test/elements/bulbs-poll/components/answers.test","3":".test/elements/bulbs-poll/components/cover.test","4":".test/elements/bulbs-poll/components/question.test","5":".test/elements/bulbs-poll/components/vote-button.test","6":".test/elements/bulbs-poll/fields/poll.test","7":".test/elements/bulbs-poll/fields/selected-answer.test","8":".test/elements/bulbs-poll/fields/vote.test","9":".test/elements/sample-element/sample-element.test","10":"dist/bulbs-poll","11":"dist/sample-element"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -99,19 +99,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(50);
-	__webpack_require__(226);
-	__webpack_require__(231);
-	__webpack_require__(218);
-	__webpack_require__(219);
-	__webpack_require__(220);
-	__webpack_require__(224);
-	__webpack_require__(217);
-	__webpack_require__(227);
+	__webpack_require__(246);
+	__webpack_require__(206);
+	__webpack_require__(238);
+	__webpack_require__(239);
+	__webpack_require__(240);
+	__webpack_require__(244);
+	__webpack_require__(237);
+	__webpack_require__(247);
 	__webpack_require__(47);
-	__webpack_require__(216);
-	__webpack_require__(212);
-	__webpack_require__(228);
-	module.exports = __webpack_require__(206);
+	__webpack_require__(236);
+	__webpack_require__(232);
+	__webpack_require__(248);
+	module.exports = __webpack_require__(229);
 
 
 /***/ },
@@ -9516,6 +9516,7 @@
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9549,8 +9550,6 @@
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 	
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9561,7 +9560,11 @@
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 	
@@ -13410,7 +13413,10 @@
 	      }
 	    });
 	
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+	
 	    return nativeProps;
 	  }
 	
@@ -18883,7 +18889,7 @@
 	
 	'use strict';
 	
-	module.exports = '0.14.6';
+	module.exports = '0.14.7';
 
 /***/ },
 /* 195 */
@@ -19849,6 +19855,82 @@
 /* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -19867,12 +19949,9 @@
 	}
 
 /***/ },
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */
+/* 230 */,
+/* 231 */,
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20112,10 +20191,10 @@
 	}();
 
 /***/ },
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20127,19 +20206,19 @@
 	});
 	exports.default = register;
 	
-	__webpack_require__(217);
+	__webpack_require__(237);
 	
-	__webpack_require__(218);
+	__webpack_require__(238);
 	
-	__webpack_require__(219);
+	__webpack_require__(239);
 	
-	var _es6Promise = __webpack_require__(220);
+	var _es6Promise = __webpack_require__(240);
 	
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 	
-	__webpack_require__(224);
+	__webpack_require__(244);
 	
-	var _reactDom = __webpack_require__(226);
+	var _reactDom = __webpack_require__(246);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
@@ -20147,7 +20226,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _camelcase = __webpack_require__(227);
+	var _camelcase = __webpack_require__(247);
 	
 	var _camelcase2 = _interopRequireDefault(_camelcase);
 	
@@ -20199,7 +20278,7 @@
 	}
 
 /***/ },
-/* 217 */
+/* 237 */
 /***/ function(module, exports) {
 
 	/*!
@@ -20320,7 +20399,7 @@
 	      }
 	      return !!force;
 	    },
-	    DocumentFragment = window.DocumentFragment,
+	    DocumentFragmentPrototype = window.DocumentFragment && DocumentFragment.prototype,
 	    Node = window.Node,
 	    NodePrototype = (Node || Element).prototype,
 	    CharacterData = window.CharacterData || Node,
@@ -20471,12 +20550,24 @@
 	      };
 	    }
 	    // see https://github.com/WebReflection/dom4/issues/18
-	    if (/before|after|replace|remove/.test(property)) {
+	    if (/^(?:before|after|replace|replaceWith|remove)$/.test(property)) {
 	      if (CharacterData && !(property in CharacterDataPrototype)) {
 	        CharacterDataPrototype[property] = properties[i - 1];
 	      }
 	      if (DocumentType && !(property in DocumentTypePrototype)) {
 	        DocumentTypePrototype[property] = properties[i - 1];
+	      }
+	    }
+	    // see https://github.com/WebReflection/dom4/pull/26
+	    if (/^(?:append|prepend)$/.test(property)) {
+	      if (DocumentFragmentPrototype) {
+	        if (!(property in DocumentFragmentPrototype)) {
+	          DocumentFragmentPrototype[property] = properties[i - 1];
+	        }
+	      } else {
+	        try {
+	          createDocumentFragment().constructor.prototype[property] = properties[i - 1];
+	        } catch(o_O) {}
 	      }
 	    }
 	  }
@@ -20485,8 +20576,8 @@
 	  addQueryAndAll(document);
 	
 	  // brings query and queryAll to fragments as well
-	  if (DocumentFragment) {
-	    addQueryAndAll(DocumentFragment.prototype);
+	  if (DocumentFragmentPrototype) {
+	    addQueryAndAll(DocumentFragmentPrototype);
 	  } else {
 	    try {
 	      addQueryAndAll(createDocumentFragment().constructor.prototype);
@@ -20719,14 +20810,14 @@
 	}(window));
 
 /***/ },
-/* 218 */
+/* 238 */
 /***/ function(module, exports) {
 
 	/*! (C) WebReflection Mit Style License */
 	(function(e,t,n,r){"use strict";function rt(e,t){for(var n=0,r=e.length;n<r;n++)vt(e[n],t)}function it(e){for(var t=0,n=e.length,r;t<n;t++)r=e[t],nt(r,b[ot(r)])}function st(e){return function(t){j(t)&&(vt(t,e),rt(t.querySelectorAll(w),e))}}function ot(e){var t=e.getAttribute("is"),n=e.nodeName.toUpperCase(),r=S.call(y,t?v+t.toUpperCase():d+n);return t&&-1<r&&!ut(n,t)?-1:r}function ut(e,t){return-1<w.indexOf(e+'[is="'+t+'"]')}function at(e){var t=e.currentTarget,n=e.attrChange,r=e.attrName,i=e.target;Q&&(!i||i===t)&&t.attributeChangedCallback&&r!=="style"&&e.prevValue!==e.newValue&&t.attributeChangedCallback(r,n===e[a]?null:e.prevValue,n===e[l]?null:e.newValue)}function ft(e){var t=st(e);return function(e){X.push(t,e.target)}}function lt(e){K&&(K=!1,e.currentTarget.removeEventListener(h,lt)),rt((e.target||t).querySelectorAll(w),e.detail===o?o:s),B&&pt()}function ct(e,t){var n=this;q.call(n,e,t),G.call(n,{target:n})}function ht(e,t){D(e,t),et?et.observe(e,z):(J&&(e.setAttribute=ct,e[i]=Z(e),e.addEventListener(p,G)),e.addEventListener(c,at)),e.createdCallback&&Q&&(e.created=!0,e.createdCallback(),e.created=!1)}function pt(){for(var e,t=0,n=F.length;t<n;t++)e=F[t],E.contains(e)||(n--,F.splice(t--,1),vt(e,o))}function dt(e){throw new Error("A "+e+" type is already registered")}function vt(e,t){var n,r=ot(e);-1<r&&(tt(e,b[r]),r=0,t===s&&!e[s]?(e[o]=!1,e[s]=!0,r=1,B&&S.call(F,e)<0&&F.push(e)):t===o&&!e[o]&&(e[s]=!1,e[o]=!0,r=1),r&&(n=e[t+"Callback"])&&n.call(e))}if(r in t)return;var i="__"+r+(Math.random()*1e5>>0),s="attached",o="detached",u="extends",a="ADDITION",f="MODIFICATION",l="REMOVAL",c="DOMAttrModified",h="DOMContentLoaded",p="DOMSubtreeModified",d="<",v="=",m=/^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$/,g=["ANNOTATION-XML","COLOR-PROFILE","FONT-FACE","FONT-FACE-SRC","FONT-FACE-URI","FONT-FACE-FORMAT","FONT-FACE-NAME","MISSING-GLYPH"],y=[],b=[],w="",E=t.documentElement,S=y.indexOf||function(e){for(var t=this.length;t--&&this[t]!==e;);return t},x=n.prototype,T=x.hasOwnProperty,N=x.isPrototypeOf,C=n.defineProperty,k=n.getOwnPropertyDescriptor,L=n.getOwnPropertyNames,A=n.getPrototypeOf,O=n.setPrototypeOf,M=!!n.__proto__,_=n.create||function mt(e){return e?(mt.prototype=e,new mt):this},D=O||(M?function(e,t){return e.__proto__=t,e}:L&&k?function(){function e(e,t){for(var n,r=L(t),i=0,s=r.length;i<s;i++)n=r[i],T.call(e,n)||C(e,n,k(t,n))}return function(t,n){do e(t,n);while((n=A(n))&&!N.call(n,t));return t}}():function(e,t){for(var n in t)e[n]=t[n];return e}),P=e.MutationObserver||e.WebKitMutationObserver,H=(e.HTMLElement||e.Element||e.Node).prototype,B=!N.call(H,E),j=B?function(e){return e.nodeType===1}:function(e){return N.call(H,e)},F=B&&[],I=H.cloneNode,q=H.setAttribute,R=H.removeAttribute,U=t.createElement,z=P&&{attributes:!0,characterData:!0,attributeOldValue:!0},W=P||function(e){J=!1,E.removeEventListener(c,W)},X,V=e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.msRequestAnimationFrame||function(e){setTimeout(e,10)},$=!1,J=!0,K=!0,Q=!0,G,Y,Z,et,tt,nt;O||M?(tt=function(e,t){N.call(t,e)||ht(e,t)},nt=ht):(tt=function(e,t){e[i]||(e[i]=n(!0),ht(e,t))},nt=tt),B?(J=!1,function(){var e=k(H,"addEventListener"),t=e.value,n=function(e){var t=new CustomEvent(c,{bubbles:!0});t.attrName=e,t.prevValue=this.getAttribute(e),t.newValue=null,t[l]=t.attrChange=2,R.call(this,e),this.dispatchEvent(t)},r=function(e,t){var n=this.hasAttribute(e),r=n&&this.getAttribute(e),i=new CustomEvent(c,{bubbles:!0});q.call(this,e,t),i.attrName=e,i.prevValue=n?r:null,i.newValue=t,n?i[f]=i.attrChange=1:i[a]=i.attrChange=0,this.dispatchEvent(i)},s=function(e){var t=e.currentTarget,n=t[i],r=e.propertyName,s;n.hasOwnProperty(r)&&(n=n[r],s=new CustomEvent(c,{bubbles:!0}),s.attrName=n.name,s.prevValue=n.value||null,s.newValue=n.value=t[r]||null,s.prevValue==null?s[a]=s.attrChange=0:s[f]=s.attrChange=1,t.dispatchEvent(s))};e.value=function(e,o,u){e===c&&this.attributeChangedCallback&&this.setAttribute!==r&&(this[i]={className:{name:"class",value:this.className}},this.setAttribute=r,this.removeAttribute=n,t.call(this,"propertychange",s)),t.call(this,e,o,u)},C(H,"addEventListener",e)}()):P||(E.addEventListener(c,W),E.setAttribute(i,1),E.removeAttribute(i),J&&(G=function(e){var t=this,n,r,s;if(t===e.target){n=t[i],t[i]=r=Z(t);for(s in r){if(!(s in n))return Y(0,t,s,n[s],r[s],a);if(r[s]!==n[s])return Y(1,t,s,n[s],r[s],f)}for(s in n)if(!(s in r))return Y(2,t,s,n[s],r[s],l)}},Y=function(e,t,n,r,i,s){var o={attrChange:e,currentTarget:t,attrName:n,prevValue:r,newValue:i};o[s]=e,at(o)},Z=function(e){for(var t,n,r={},i=e.attributes,s=0,o=i.length;s<o;s++)t=i[s],n=t.name,n!=="setAttribute"&&(r[n]=t.value);return r})),t[r]=function(n,r){c=n.toUpperCase(),$||($=!0,P?(et=function(e,t){function n(e,t){for(var n=0,r=e.length;n<r;t(e[n++]));}return new P(function(r){for(var i,s,o,u=0,a=r.length;u<a;u++)i=r[u],i.type==="childList"?(n(i.addedNodes,e),n(i.removedNodes,t)):(s=i.target,Q&&s.attributeChangedCallback&&i.attributeName!=="style"&&(o=s.getAttribute(i.attributeName),o!==i.oldValue&&s.attributeChangedCallback(i.attributeName,i.oldValue,o)))})}(st(s),st(o)),et.observe(t,{childList:!0,subtree:!0})):(X=[],V(function E(){while(X.length)X.shift().call(null,X.shift());V(E)}),t.addEventListener("DOMNodeInserted",ft(s)),t.addEventListener("DOMNodeRemoved",ft(o))),t.addEventListener(h,lt),t.addEventListener("readystatechange",lt),t.createElement=function(e,n){var r=U.apply(t,arguments),i=""+e,s=S.call(y,(n?v:d)+(n||i).toUpperCase()),o=-1<s;return n&&(r.setAttribute("is",n=n.toLowerCase()),o&&(o=ut(i.toUpperCase(),n))),Q=!t.createElement.innerHTMLHelper,o&&nt(r,b[s]),r},H.cloneNode=function(e){var t=I.call(this,!!e),n=ot(t);return-1<n&&nt(t,b[n]),e&&it(t.querySelectorAll(w)),t}),-2<S.call(y,v+c)+S.call(y,d+c)&&dt(n);if(!m.test(c)||-1<S.call(g,c))throw new Error("The type "+n+" is invalid");var i=function(){return f?t.createElement(l,c):t.createElement(l)},a=r||x,f=T.call(a,u),l=f?r[u].toUpperCase():c,c,p;return f&&-1<S.call(y,d+l)&&dt(l),p=y.push((f?v:d)+c)-1,w=w.concat(w.length?",":"",f?l+'[is="'+n.toLowerCase()+'"]':l),i.prototype=b[p]=T.call(a,"prototype")?a.prototype:_(H),rt(t.querySelectorAll(w),s),i}})(window,document,Object,"registerElement");
 
 /***/ },
-/* 219 */
+/* 239 */
 /***/ function(module, exports) {
 
 	/*! (C) WebReflection Mit Style License */
@@ -20734,7 +20825,7 @@
 	var innerHTML=function(e){var t="extends",n=e.registerElement,r=e.createElement("div"),i="document-register-element",s=n.innerHTML,o,u;if(s)return s;try{n.call(e,i,{prototype:Object.create(HTMLElement.prototype,{createdCallback:{value:Object}})}),r.innerHTML="<"+i+"></"+i+">";if("createdCallback"in r.querySelector(i))return n.innerHTML=function(e,t){return e.innerHTML=t,e}}catch(a){}return u=[],o=function(t){if("createdCallback"in t||"attachedCallback"in t||"detachedCallback"in t||"attributeChangedCallback"in t)return;e.createElement.innerHTMLHelper=!0;for(var n=t.parentNode,r=t.getAttribute("is"),i=t.nodeName,s=e.createElement.apply(e,r?[i,r]:[i]),o=t.attributes,u=0,a=o.length,f,l;u<a;u++)f=o[u],s.setAttribute(f.name,f.value);s.createdCallback&&(s.created=!0,s.createdCallback(),s.created=!1);while(l=t.firstChild)s.appendChild(l);e.createElement.innerHTMLHelper=!1,n&&n.replaceChild(s,t)},(e.registerElement=function(i,s){var o=(s[t]?s[t]+'[is="'+i+'"]':i).toLowerCase();return u.indexOf(o)<0&&u.push(o),n.apply(e,arguments)}).innerHTML=function(e,t){e.innerHTML=t;for(var n=e.querySelectorAll(u.join(",")),r=n.length;r--;o(n[r]));return e}}(document);
 
 /***/ },
-/* 220 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
@@ -20868,7 +20959,7 @@
 	    function lib$es6$promise$asap$$attemptVertx() {
 	      try {
 	        var r = require;
-	        var vertx = __webpack_require__(222);
+	        var vertx = __webpack_require__(242);
 	        lib$es6$promise$asap$$vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	        return lib$es6$promise$asap$$useVertxTimer();
 	      } catch(e) {
@@ -21693,7 +21784,7 @@
 	    };
 	
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(223)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(243)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return lib$es6$promise$umd$$ES6Promise; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = lib$es6$promise$umd$$ES6Promise;
@@ -21705,10 +21796,10 @@
 	}).call(this);
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45), (function() { return this; }()), __webpack_require__(221)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45), (function() { return this; }()), __webpack_require__(241)(module)))
 
 /***/ },
-/* 221 */
+/* 241 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -21724,32 +21815,32 @@
 
 
 /***/ },
-/* 222 */
+/* 242 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 223 */
+/* 243 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 224 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(225);
+	__webpack_require__(245);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 225 */
+/* 245 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -22144,7 +22235,7 @@
 
 
 /***/ },
-/* 226 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22153,10 +22244,29 @@
 
 
 /***/ },
-/* 227 */
+/* 247 */
 /***/ function(module, exports) {
 
 	'use strict';
+	
+	function preserveCamelCase(str) {
+		var isLastCharLower = false;
+	
+		for (var i = 0; i < str.length; i++) {
+			var c = str.charAt(i);
+	
+			if (isLastCharLower && c.toUpperCase() === c) {
+				str = str.substr(0, i) + '-' + str.substr(i);
+				isLastCharLower = false;
+				i++;
+			} else {
+				isLastCharLower = (c.toLowerCase() === c);
+			}
+		}
+	
+		return str;
+	}
+	
 	module.exports = function () {
 		var str = [].map.call(arguments, function (str) {
 			return str.trim();
@@ -22184,6 +22294,8 @@
 			return str;
 		}
 	
+		str = preserveCamelCase(str);
+	
 		return str
 		.replace(/^[_.\- ]+/, '')
 		.toLowerCase()
@@ -22194,7 +22306,7 @@
 
 
 /***/ },
-/* 228 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
@@ -22242,62 +22354,6 @@
 	
 	exports.default = BulbsElement;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44).setImmediate))
-
-/***/ },
-/* 229 */,
-/* 230 */,
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-	
-	(function () {
-		'use strict';
-	
-		var hasOwn = {}.hasOwnProperty;
-	
-		function classNames () {
-			var classes = [];
-	
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-	
-				var argType = typeof arg;
-	
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-	
-			return classes.join(' ');
-		}
-	
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
 
 /***/ }
 /******/ ]);
