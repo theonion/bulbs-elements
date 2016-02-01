@@ -1,967 +1,123 @@
 webpackJsonp([10],{
 
 /***/ 0:
+/*!*******************************************!*\
+  !*** ./elements/bulbs-poll/bulbs-poll.js ***!
+  \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
-	
-	var _index = __webpack_require__(238);
-	
-	var _index2 = _interopRequireDefault(_index);
-	
-	var _index3 = __webpack_require__(244);
-	
-	var _index4 = _interopRequireDefault(_index3);
-	
-	var _react2 = __webpack_require__(50);
-	
-	var _react3 = _interopRequireDefault(_react2);
-	
-	var _index5 = __webpack_require__(245);
-	
-	var _index6 = _interopRequireDefault(_index5);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _register = __webpack_require__(288);
-	
-	var _register2 = _interopRequireDefault(_register);
-	
-	var _bulbsElement = __webpack_require__(299);
-	
-	var _bulbsElement2 = _interopRequireDefault(_bulbsElement);
-	
-	var _store = __webpack_require__(234);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _question = __webpack_require__(230);
-	
-	var _question2 = _interopRequireDefault(_question);
-	
-	var _results = __webpack_require__(300);
-	
-	var _results2 = _interopRequireDefault(_results);
-	
-	__webpack_require__(301);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _components = {
-	  BulbsPoll: {
-	    displayName: 'BulbsPoll'
-	  }
-	};
-	
-	var _UsersCollinmillerCodeBulbsElementsNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-	  filename: '/Users/collinmiller/Code/bulbs-elements/elements/bulbs-poll/bulbs-poll.js',
-	  components: _components,
-	  locals: [module],
-	  imports: [_react3.default]
-	});
-	
-	var _UsersCollinmillerCodeBulbsElementsNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-	  filename: '/Users/collinmiller/Code/bulbs-elements/elements/bulbs-poll/bulbs-poll.js',
-	  components: _components,
-	  locals: [],
-	  imports: [_react3.default, _index2.default]
-	});
-	
-	function _wrapComponent(id) {
-	  return function (Component) {
-	    return _UsersCollinmillerCodeBulbsElementsNode_modulesReactTransformHmrLibIndexJs2(_UsersCollinmillerCodeBulbsElementsNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
-	  };
-	}
-	
-	var BulbsPoll = _wrapComponent('BulbsPoll')(function (_BulbsElement) {
-	  _inherits(BulbsPoll, _BulbsElement);
-	
-	  function BulbsPoll() {
-	    _classCallCheck(this, BulbsPoll);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(BulbsPoll).apply(this, arguments));
-	  }
-	
-	  _createClass(BulbsPoll, [{
-	    key: 'initialDispatch',
-	    value: function initialDispatch() {
-	      this.store.actions.fetchPollData(this.props.src);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react3.default.createElement(_question2.default, {
-	        actions: this.store.actions,
-	        data: this.state
-	      });
-	    }
-	  }]);
-	
-	  return BulbsPoll;
-	}(_bulbsElement2.default));
-	
-	BulbsPoll.displayName = 'BulbsPoll';
-	
-	BulbsPoll.store = _store2.default;
-	
-	BulbsPoll.propTypes = {
-	  src: _react2.PropTypes.string.isRequired
-	};
-	
-	(0, _register2.default)('bulbs-poll', BulbsPoll);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(237)(module)))
+	eval("'use strict';\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _register = __webpack_require__(/*! bulbs-elements/register */ 237);\n\nvar _register2 = _interopRequireDefault(_register);\n\nvar _bulbsElement = __webpack_require__(/*! bulbs-elements/bulbs-element */ 249);\n\nvar _bulbsElement2 = _interopRequireDefault(_bulbsElement);\n\nvar _store = __webpack_require__(/*! ./store */ 234);\n\nvar _store2 = _interopRequireDefault(_store);\n\nvar _question = __webpack_require__(/*! ./components/question */ 230);\n\nvar _question2 = _interopRequireDefault(_question);\n\nvar _results = __webpack_require__(/*! ./components/results */ 250);\n\nvar _results2 = _interopRequireDefault(_results);\n\n__webpack_require__(/*! ./styles.scss */ 251);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar BulbsPoll = function (_BulbsElement) {\n  _inherits(BulbsPoll, _BulbsElement);\n\n  function BulbsPoll() {\n    _classCallCheck(this, BulbsPoll);\n\n    return _possibleConstructorReturn(this, Object.getPrototypeOf(BulbsPoll).apply(this, arguments));\n  }\n\n  _createClass(BulbsPoll, [{\n    key: 'initialDispatch',\n    value: function initialDispatch() {\n      this.store.actions.fetchPollData(this.props.src);\n    }\n  }, {\n    key: 'render',\n    value: function render() {\n      return _react2.default.createElement(_question2.default, {\n        actions: this.store.actions,\n        data: this.state\n      });\n    }\n  }]);\n\n  return BulbsPoll;\n}(_bulbsElement2.default);\n\nBulbsPoll.displayName = 'BulbsPoll';\n\nBulbsPoll.store = _store2.default;\n\nBulbsPoll.propTypes = {\n  src: _react.PropTypes.string.isRequired\n};\n\n(0, _register2.default)('bulbs-poll', BulbsPoll);//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy9lbGVtZW50cy9idWxicy1wb2xsL2J1bGJzLXBvbGwuanM/ZjBkZCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QsIHsgUHJvcFR5cGVzIH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IHJlZ2lzdGVyIGZyb20gJ2J1bGJzLWVsZW1lbnRzL3JlZ2lzdGVyJztcbmltcG9ydCBCdWxic0VsZW1lbnQgZnJvbSAnYnVsYnMtZWxlbWVudHMvYnVsYnMtZWxlbWVudCc7XG5cbmltcG9ydCBQb2xsU3RvcmUgZnJvbSAnLi9zdG9yZSc7XG5cbmltcG9ydCBQb2xsUXVlc3Rpb24gZnJvbSAnLi9jb21wb25lbnRzL3F1ZXN0aW9uJztcbmltcG9ydCBQb2xsUmVzdWx0cyBmcm9tICcuL2NvbXBvbmVudHMvcmVzdWx0cyc7XG5cbmltcG9ydCAnLi9zdHlsZXMuc2Nzcyc7XG5cbmNsYXNzIEJ1bGJzUG9sbCBleHRlbmRzIEJ1bGJzRWxlbWVudCB7XG4gIGluaXRpYWxEaXNwYXRjaCAoKSB7XG4gICAgdGhpcy5zdG9yZS5hY3Rpb25zLmZldGNoUG9sbERhdGEodGhpcy5wcm9wcy5zcmMpO1xuICB9XG5cbiAgcmVuZGVyICgpIHtcbiAgICByZXR1cm4gPFBvbGxRdWVzdGlvblxuICAgICAgYWN0aW9ucz17dGhpcy5zdG9yZS5hY3Rpb25zfVxuICAgICAgZGF0YT17dGhpcy5zdGF0ZX1cbiAgICAvPlxuICB9XG59XG5cbkJ1bGJzUG9sbC5kaXNwbGF5TmFtZSA9ICdCdWxic1BvbGwnO1xuXG5CdWxic1BvbGwuc3RvcmUgPSBQb2xsU3RvcmU7XG5cbkJ1bGJzUG9sbC5wcm9wVHlwZXMgPSB7XG4gIHNyYzogUHJvcFR5cGVzLnN0cmluZy5pc1JlcXVpcmVkLFxufTtcblxucmVnaXN0ZXIoJ2J1bGJzLXBvbGwnLCBCdWxic1BvbGwpO1xuXG5cblxuLyoqIFdFQlBBQ0sgRk9PVEVSICoqXG4gKiogZWxlbWVudHMvYnVsYnMtcG9sbC9idWxicy1wb2xsLmpzXG4gKiovIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQVdBOzs7Ozs7Ozs7OztBQUNBO0FBQ0E7Ozs7QUFHQTtBQUNBO0FBQ0E7QUFDQTtBQUZBOzs7O0FBTkE7OztBQWFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBQ0E7QUFHQSIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 
 /***/ 49:
+/*!**************************************************!*\
+  !*** ./elements/bulbs-poll/components/answer.js ***!
+  \**************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Answer;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(206);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Answer(props) {
-	  var answer = props.answer;
-	  var selectAnswer = props.selectAnswer;
-	  var selectedAnswer = props.selectedAnswer;
-	
-	  var isSelected = answer.id === selectedAnswer.id;
-	  var className = (0, _classnames2.default)('bulbs-poll-answer', {
-	    selected: isSelected
-	  });
-	
-	  return _react2.default.createElement(
-	    'li',
-	    {
-	      className: className,
-	      onClick: selectAnswer.bind(null, answer)
-	    },
-	    _react2.default.createElement(
-	      'svg',
-	      { width: '20px', height: '20px' },
-	      _react2.default.createElement('circle', { cx: '10', cy: '10', r: '8', fill: 'none', stroke: 'black', strokeWidth: '2px' }),
-	      _react2.default.createElement('circle', { cx: '10', cy: '10', r: '5', fill: isSelected ? 'black' : 'none' })
-	    ),
-	    answer.answer_text
-	  );
-	}
-	
-	Answer.propTypes = {
-	  answer: _react.PropTypes.object.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired,
-	  selectedAnswer: _react.PropTypes.object
-	};
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = Answer;\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _classnames = __webpack_require__(/*! classnames */ 206);\n\nvar _classnames2 = _interopRequireDefault(_classnames);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction Answer(props) {\n  var answer = props.answer;\n  var selectAnswer = props.selectAnswer;\n  var selectedAnswer = props.selectedAnswer;\n\n  var isSelected = answer.id === selectedAnswer.id;\n  var className = (0, _classnames2.default)('bulbs-poll-answer', {\n    selected: isSelected\n  });\n\n  return _react2.default.createElement(\n    'li',\n    {\n      className: className,\n      onClick: selectAnswer.bind(null, answer)\n    },\n    _react2.default.createElement(\n      'svg',\n      { width: '20px', height: '20px' },\n      _react2.default.createElement('circle', { cx: '10', cy: '10', r: '8', fill: 'none', stroke: 'black', strokeWidth: '2px' }),\n      _react2.default.createElement('circle', { cx: '10', cy: '10', r: '5', fill: isSelected ? 'black' : 'none' })\n    ),\n    answer.answer_text\n  );\n}\n\nAnswer.propTypes = {\n  answer: _react.PropTypes.object.isRequired,\n  selectAnswer: _react.PropTypes.func.isRequired,\n  selectedAnswer: _react.PropTypes.object\n};//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNDkuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vZWxlbWVudHMvYnVsYnMtcG9sbC9jb21wb25lbnRzL2Fuc3dlci5qcz8wYWEwIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBQcm9wVHlwZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgY2xhc3NuYW1lcyBmcm9tICdjbGFzc25hbWVzJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQW5zd2VyIChwcm9wcykge1xuICBsZXQge1xuICAgIGFuc3dlcixcbiAgICBzZWxlY3RBbnN3ZXIsXG4gICAgc2VsZWN0ZWRBbnN3ZXIsXG4gIH0gPSBwcm9wcztcblxuXG4gIGxldCBpc1NlbGVjdGVkID0gYW5zd2VyLmlkID09PSBzZWxlY3RlZEFuc3dlci5pZDtcbiAgbGV0IGNsYXNzTmFtZSA9IGNsYXNzbmFtZXMoJ2J1bGJzLXBvbGwtYW5zd2VyJywge1xuICAgIHNlbGVjdGVkOiBpc1NlbGVjdGVkLFxuICB9KTtcblxuICByZXR1cm4gKFxuICAgIDxsaVxuICAgICAgY2xhc3NOYW1lPXtjbGFzc05hbWV9XG4gICAgICBvbkNsaWNrPXtzZWxlY3RBbnN3ZXIuYmluZChudWxsLCBhbnN3ZXIpfVxuICAgID5cbiAgICAgIDxzdmcgd2lkdGg9XCIyMHB4XCIgaGVpZ2h0PVwiMjBweFwiPlxuICAgICAgICA8Y2lyY2xlIGN4PVwiMTBcIiBjeT1cIjEwXCIgcj1cIjhcIiBmaWxsPVwibm9uZVwiIHN0cm9rZT1cImJsYWNrXCIgc3Ryb2tlV2lkdGg9XCIycHhcIiAvPlxuICAgICAgICA8Y2lyY2xlIGN4PVwiMTBcIiBjeT1cIjEwXCIgcj1cIjVcIiBmaWxsPXtpc1NlbGVjdGVkID8gJ2JsYWNrJyA6ICdub25lJyB9IC8+XG4gICAgICA8L3N2Zz5cbiAgICAgIHsgYW5zd2VyLmFuc3dlcl90ZXh0IH1cbiAgICA8L2xpPlxuICApO1xufVxuXG5BbnN3ZXIucHJvcFR5cGVzID0ge1xuICBhbnN3ZXI6IFByb3BUeXBlcy5vYmplY3QuaXNSZXF1aXJlZCxcbiAgc2VsZWN0QW5zd2VyOiBQcm9wVHlwZXMuZnVuYy5pc1JlcXVpcmVkLFxuICBzZWxlY3RlZEFuc3dlcjogUHJvcFR5cGVzLm9iamVjdCxcbn07XG5cblxuXG4vKiogV0VCUEFDSyBGT09URVIgKipcbiAqKiBlbGVtZW50cy9idWxicy1wb2xsL2NvbXBvbmVudHMvYW5zd2VyLmpzXG4gKiovIl0sIm1hcHBpbmdzIjoiOzs7OztBQUdBO0FBQ0E7Ozs7Ozs7Ozs7O0FBREE7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBQ0E7QUFDQTtBQURBO0FBQ0E7QUFHQTs7O0FBRUE7QUFDQTtBQUZBO0FBSUE7O0FBQUE7QUFDQTtBQUNBO0FBTkE7QUFRQTtBQVRBO0FBYkE7QUFDQTtBQTBCQTtBQUNBO0FBQ0E7QUFDQTtBQUhBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ },
 
 /***/ 227:
+/*!***************************************************!*\
+  !*** ./elements/bulbs-poll/components/answers.js ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Answers;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _answer = __webpack_require__(49);
-	
-	var _answer2 = _interopRequireDefault(_answer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Answers(props) {
-	  return _react2.default.createElement(
-	    'ul',
-	    { className: 'bulbs-poll-answers' },
-	    props.answers.map(function (answer, index) {
-	      return _react2.default.createElement(_answer2.default, _extends({
-	        key: index,
-	        answer: answer
-	      }, props));
-	    })
-	  );
-	}
-	
-	Answers.propTypes = {
-	  answers: _react.PropTypes.array.isRequired,
-	  selectAnswer: _react.PropTypes.func.isRequired,
-	  selectedAnswer: _react.PropTypes.object
-	};
+	eval("'use strict';\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = Answers;\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _answer = __webpack_require__(/*! ./answer */ 49);\n\nvar _answer2 = _interopRequireDefault(_answer);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction Answers(props) {\n  return _react2.default.createElement(\n    'ul',\n    { className: 'bulbs-poll-answers' },\n    props.answers.map(function (answer, index) {\n      return _react2.default.createElement(_answer2.default, _extends({\n        key: index,\n        answer: answer\n      }, props));\n    })\n  );\n}\n\nAnswers.propTypes = {\n  answers: _react.PropTypes.array.isRequired,\n  selectAnswer: _react.PropTypes.func.isRequired,\n  selectedAnswer: _react.PropTypes.object\n};//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjI3LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvY29tcG9uZW50cy9hbnN3ZXJzLmpzP2E4YmIiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7IFByb3BUeXBlcyB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBBbnN3ZXIgZnJvbSAnLi9hbnN3ZXInO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBBbnN3ZXJzIChwcm9wcykge1xuICByZXR1cm4gKFxuICAgIDx1bCBjbGFzc05hbWU9XCJidWxicy1wb2xsLWFuc3dlcnNcIj5cbiAgICAgIHtcbiAgICAgICAgcHJvcHMuYW5zd2Vycy5tYXAoKGFuc3dlciwgaW5kZXgpID0+IHtcbiAgICAgICAgICByZXR1cm4gPEFuc3dlclxuICAgICAgICAgICAga2V5PXtpbmRleH1cbiAgICAgICAgICAgIGFuc3dlcj17YW5zd2VyfVxuICAgICAgICAgICAgey4uLnByb3BzfVxuICAgICAgICAgIC8+O1xuICAgICAgICB9KVxuICAgICAgfVxuICAgIDwvdWw+XG4gICk7XG59XG5cbkFuc3dlcnMucHJvcFR5cGVzID0ge1xuICBhbnN3ZXJzOiBQcm9wVHlwZXMuYXJyYXkuaXNSZXF1aXJlZCxcbiAgc2VsZWN0QW5zd2VyOiBQcm9wVHlwZXMuZnVuYy5pc1JlcXVpcmVkLFxuICBzZWxlY3RlZEFuc3dlcjogUHJvcFR5cGVzLm9iamVjdCxcbn07XG5cblxuXG4vKiogV0VCUEFDSyBGT09URVIgKipcbiAqKiBlbGVtZW50cy9idWxicy1wb2xsL2NvbXBvbmVudHMvYW5zd2Vycy5qc1xuICoqLyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUdBO0FBQ0E7Ozs7Ozs7Ozs7O0FBREE7QUFDQTs7QUFDQTtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFKQTtBQUhBO0FBREE7QUFDQTtBQWVBO0FBQ0E7QUFDQTtBQUNBO0FBSEEiLCJzb3VyY2VSb290IjoiIn0=");
 
 /***/ },
 
 /***/ 228:
+/*!*************************************************!*\
+  !*** ./elements/bulbs-poll/components/cover.js ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = Cover;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _croppedImage = __webpack_require__(229);
-	
-	var _croppedImage2 = _interopRequireDefault(_croppedImage);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Cover(props) {
-	  var poll = props.poll;
-	
-	  return _react2.default.createElement(
-	    'header',
-	    { className: 'bulbs-poll-cover' },
-	    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : undefined,
-	    _react2.default.createElement(
-	      'h1',
-	      { className: 'bulbs-poll-cover-title' },
-	      poll.data.question_text
-	    )
-	  );
-	}
-	
-	Cover.propTypes = {
-	  poll: _react.PropTypes.object.isRequired
-	};
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = Cover;\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _croppedImage = __webpack_require__(/*! bulbs-elements/components/cropped-image */ 229);\n\nvar _croppedImage2 = _interopRequireDefault(_croppedImage);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction Cover(props) {\n  var poll = props.poll;\n\n  return _react2.default.createElement(\n    'header',\n    { className: 'bulbs-poll-cover' },\n    poll.data.thumbnail ? _react2.default.createElement(_croppedImage2.default, { image: poll.data.thumbnail }) : undefined,\n    _react2.default.createElement(\n      'h1',\n      { className: 'bulbs-poll-cover-title' },\n      poll.data.question_text\n    )\n  );\n}\n\nCover.propTypes = {\n  poll: _react.PropTypes.object.isRequired\n};//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjI4LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvY29tcG9uZW50cy9jb3Zlci5qcz8xYTkyIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBQcm9wVHlwZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgQ3JvcHBlZEltYWdlIGZyb20gJ2J1bGJzLWVsZW1lbnRzL2NvbXBvbmVudHMvY3JvcHBlZC1pbWFnZSc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIENvdmVyIChwcm9wcykge1xuICBsZXQgeyBwb2xsIH0gPSBwcm9wcztcbiAgcmV0dXJuIChcbiAgICA8aGVhZGVyIGNsYXNzTmFtZT1cImJ1bGJzLXBvbGwtY292ZXJcIj5cbiAgICAgIHtcbiAgICAgICAgcG9sbC5kYXRhLnRodW1ibmFpbCA/IDxDcm9wcGVkSW1hZ2UgaW1hZ2U9e3BvbGwuZGF0YS50aHVtYm5haWx9IC8+IDogdW5kZWZpbmVkXG4gICAgICB9XG4gICAgICA8aDEgY2xhc3NOYW1lPVwiYnVsYnMtcG9sbC1jb3Zlci10aXRsZVwiPlxuICAgICAgICB7IHBvbGwuZGF0YS5xdWVzdGlvbl90ZXh0IH1cbiAgICAgIDwvaDE+XG4gICAgPC9oZWFkZXI+XG4gICk7XG59XG5cbkNvdmVyLnByb3BUeXBlcyA9IHtcbiAgcG9sbDogUHJvcFR5cGVzLm9iamVjdC5pc1JlcXVpcmVkLFxufTtcblxuXG5cblxuLyoqIFdFQlBBQ0sgRk9PVEVSICoqXG4gKiogZWxlbWVudHMvYnVsYnMtcG9sbC9jb21wb25lbnRzL2NvdmVyLmpzXG4gKiovIl0sIm1hcHBpbmdzIjoiOzs7OztBQUdBO0FBQ0E7Ozs7Ozs7Ozs7O0FBREE7QUFDQTtBQUNBO0FBQUE7O0FBQ0E7QUFFQTtBQUVBOztBQUFBO0FBQ0E7QUFMQTtBQURBO0FBRkE7QUFDQTtBQWFBO0FBQ0E7QUFEQSIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 
 /***/ 230:
+/*!****************************************************!*\
+  !*** ./elements/bulbs-poll/components/question.js ***!
+  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.RequestError = RequestError;
-	exports.default = Question;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _cover = __webpack_require__(228);
-	
-	var _cover2 = _interopRequireDefault(_cover);
-	
-	var _answers = __webpack_require__(227);
-	
-	var _answers2 = _interopRequireDefault(_answers);
-	
-	var _voteButton = __webpack_require__(231);
-	
-	var _voteButton2 = _interopRequireDefault(_voteButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function RequestError(_ref) {
-	  var error = _ref.error;
-	  var children = _ref.children;
-	  var reset = _ref.reset;
-	
-	  if (error) {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'bulbs-poll-network-error' },
-	      _react2.default.createElement(
-	        'p',
-	        null,
-	        children
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: reset },
-	        'OK'
-	      )
-	    );
-	  } else {
-	    return _react2.default.createElement('div', null);
-	  }
-	}
-	
-	function Question(props) {
-	  var _props$actions = props.actions;
-	  var selectAnswer = _props$actions.selectAnswer;
-	  var makeVoteRequest = _props$actions.makeVoteRequest;
-	  var resetFetchPollData = _props$actions.resetFetchPollData;
-	  var resetVoteRequest = _props$actions.resetVoteRequest;
-	  var _props$data = props.data;
-	  var poll = _props$data.poll;
-	  var selectedAnswer = _props$data.selectedAnswer;
-	  var vote = _props$data.vote;
-	
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(_cover2.default, { poll: poll }),
-	    _react2.default.createElement(
-	      RequestError,
-	      {
-	        error: poll.requestError,
-	        reset: resetFetchPollData
-	      },
-	      'Could not connect to network when fetching poll data.'
-	    ),
-	    _react2.default.createElement(
-	      RequestError,
-	      {
-	        error: vote.requestError,
-	        reset: resetVoteRequest
-	      },
-	      'Could not connect to network when placing your vote.'
-	    ),
-	    _react2.default.createElement(_answers2.default, {
-	      answers: poll.data.answers,
-	      selectAnswer: selectAnswer,
-	      selectedAnswer: selectedAnswer
-	    }),
-	    _react2.default.createElement(_voteButton2.default, {
-	      selectedAnswer: selectedAnswer,
-	      makeVoteRequest: makeVoteRequest
-	    })
-	  );
-	}
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.RequestError = RequestError;\nexports.default = Question;\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _cover = __webpack_require__(/*! ./cover */ 228);\n\nvar _cover2 = _interopRequireDefault(_cover);\n\nvar _answers = __webpack_require__(/*! ./answers */ 227);\n\nvar _answers2 = _interopRequireDefault(_answers);\n\nvar _voteButton = __webpack_require__(/*! ./vote-button */ 231);\n\nvar _voteButton2 = _interopRequireDefault(_voteButton);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction RequestError(_ref) {\n  var error = _ref.error;\n  var children = _ref.children;\n  var reset = _ref.reset;\n\n  if (error) {\n    return _react2.default.createElement(\n      'div',\n      { className: 'bulbs-poll-network-error' },\n      _react2.default.createElement(\n        'p',\n        null,\n        children\n      ),\n      _react2.default.createElement(\n        'button',\n        { onClick: reset },\n        'OK'\n      )\n    );\n  } else {\n    return _react2.default.createElement('div', null);\n  }\n}\n\nfunction Question(props) {\n  var _props$actions = props.actions;\n  var selectAnswer = _props$actions.selectAnswer;\n  var makeVoteRequest = _props$actions.makeVoteRequest;\n  var resetFetchPollData = _props$actions.resetFetchPollData;\n  var resetVoteRequest = _props$actions.resetVoteRequest;\n  var _props$data = props.data;\n  var poll = _props$data.poll;\n  var selectedAnswer = _props$data.selectedAnswer;\n  var vote = _props$data.vote;\n\n  return _react2.default.createElement(\n    'div',\n    null,\n    _react2.default.createElement(_cover2.default, { poll: poll }),\n    _react2.default.createElement(\n      RequestError,\n      {\n        error: poll.requestError,\n        reset: resetFetchPollData\n      },\n      'Could not connect to network when fetching poll data.'\n    ),\n    _react2.default.createElement(\n      RequestError,\n      {\n        error: vote.requestError,\n        reset: resetVoteRequest\n      },\n      'Could not connect to network when placing your vote.'\n    ),\n    _react2.default.createElement(_answers2.default, {\n      answers: poll.data.answers,\n      selectAnswer: selectAnswer,\n      selectedAnswer: selectedAnswer\n    }),\n    _react2.default.createElement(_voteButton2.default, {\n      selectedAnswer: selectedAnswer,\n      makeVoteRequest: makeVoteRequest\n    })\n  );\n}//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjMwLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvY29tcG9uZW50cy9xdWVzdGlvbi5qcz9iMjI0Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBQcm9wVHlwZXMgfSBmcm9tICdyZWFjdCc7XG5cbmltcG9ydCBDb3ZlciBmcm9tICcuL2NvdmVyJztcbmltcG9ydCBBbnN3ZXJzIGZyb20gJy4vYW5zd2Vycyc7XG5pbXBvcnQgVm90ZUJ1dHRvbiBmcm9tICcuL3ZvdGUtYnV0dG9uJztcblxuZXhwb3J0IGZ1bmN0aW9uIFJlcXVlc3RFcnJvciAoeyBlcnJvciwgY2hpbGRyZW4sIHJlc2V0IH0pIHtcbiAgaWYgKGVycm9yKSB7XG4gICAgcmV0dXJuIChcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYnVsYnMtcG9sbC1uZXR3b3JrLWVycm9yXCI+XG4gICAgICAgIDxwPlxuICAgICAgICAgIHsgY2hpbGRyZW4gfVxuICAgICAgICA8L3A+XG4gICAgICAgIDxidXR0b24gb25DbGljaz17cmVzZXR9Pk9LPC9idXR0b24+XG4gICAgICA8L2Rpdj5cbiAgICApO1xuICB9XG4gIGVsc2Uge1xuICAgIHJldHVybiA8ZGl2IC8+XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUXVlc3Rpb24gKHByb3BzKSB7XG4gIGxldCB7XG4gICAgc2VsZWN0QW5zd2VyLFxuICAgIG1ha2VWb3RlUmVxdWVzdCxcbiAgICByZXNldEZldGNoUG9sbERhdGEsXG4gICAgcmVzZXRWb3RlUmVxdWVzdCxcbiAgfSA9IHByb3BzLmFjdGlvbnM7XG5cbiAgbGV0IHtcbiAgICBwb2xsLFxuICAgIHNlbGVjdGVkQW5zd2VyLFxuICAgIHZvdGUsXG4gIH0gPSBwcm9wcy5kYXRhO1xuXG4gIHJldHVybiAoXG4gICAgPGRpdj5cbiAgICAgIDxDb3ZlciBwb2xsPXtwb2xsfSAvPlxuICAgICAgPFJlcXVlc3RFcnJvclxuICAgICAgICBlcnJvcj17cG9sbC5yZXF1ZXN0RXJyb3J9XG4gICAgICAgIHJlc2V0PXtyZXNldEZldGNoUG9sbERhdGF9XG4gICAgICA+XG4gICAgICAgIENvdWxkIG5vdCBjb25uZWN0IHRvIG5ldHdvcmsgd2hlbiBmZXRjaGluZyBwb2xsIGRhdGEuXG4gICAgICA8L1JlcXVlc3RFcnJvcj5cblxuICAgICAgPFJlcXVlc3RFcnJvclxuICAgICAgICBlcnJvcj17dm90ZS5yZXF1ZXN0RXJyb3J9XG4gICAgICAgIHJlc2V0PXtyZXNldFZvdGVSZXF1ZXN0fVxuICAgICAgPlxuICAgICAgICBDb3VsZCBub3QgY29ubmVjdCB0byBuZXR3b3JrIHdoZW4gcGxhY2luZyB5b3VyIHZvdGUuXG4gICAgICA8L1JlcXVlc3RFcnJvcj5cblxuICAgICAgPEFuc3dlcnNcbiAgICAgICAgYW5zd2Vycz17cG9sbC5kYXRhLmFuc3dlcnN9XG4gICAgICAgIHNlbGVjdEFuc3dlcj17c2VsZWN0QW5zd2VyfVxuICAgICAgICBzZWxlY3RlZEFuc3dlcj17c2VsZWN0ZWRBbnN3ZXJ9XG4gICAgICAvPlxuICAgICAgPFZvdGVCdXR0b25cbiAgICAgICAgc2VsZWN0ZWRBbnN3ZXI9e3NlbGVjdGVkQW5zd2VyfVxuICAgICAgICBtYWtlVm90ZVJlcXVlc3Q9e21ha2VWb3RlUmVxdWVzdH1cbiAgICAgIC8+XG4gICAgPC9kaXY+XG4gICk7XG5cbn1cblxuXG5cbi8qKiBXRUJQQUNLIEZPT1RFUiAqKlxuICoqIGVsZW1lbnRzL2J1bGJzLXBvbGwvY29tcG9uZW50cy9xdWVzdGlvbi5qc1xuICoqLyJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFNQTtBQWdCQTtBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBakJBO0FBQUE7QUFBQTtBQUFBO0FBQ0E7QUFBQTtBQUNBOztBQUNBO0FBQ0E7OztBQUNBO0FBRkE7QUFJQTs7QUFBQTs7QUFKQTtBQURBO0FBREE7QUFXQTtBQVhBO0FBREE7QUFDQTtBQWVBO0FBTUE7QUFKQTtBQUNBO0FBQ0E7QUFDQTtBQU9BO0FBSEE7QUFDQTtBQUNBO0FBQ0E7QUFFQTs7O0FBRUE7QUFDQTtBQUFBOztBQUNBO0FBQ0E7QUFGQTs7QUFGQTtBQVNBO0FBQUE7O0FBQ0E7QUFDQTtBQUZBOztBQVRBO0FBZ0JBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTtBQUNBO0FBQ0E7QUFGQTtBQXRCQTtBQWRBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ },
 
 /***/ 231:
+/*!*******************************************************!*\
+  !*** ./elements/bulbs-poll/components/vote-button.js ***!
+  \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = VoteButton;
-	
-	var _react = __webpack_require__(50);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(206);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function VoteButton(props) {
-	  var selectedAnswer = props.selectedAnswer;
-	
-	  function handleClick() {
-	    if (selectedAnswer) {
-	      props.makeVoteRequest(selectedAnswer);
-	    }
-	  }
-	
-	  var classes = (0, _classnames2.default)('bulbs-poll-vote', {});
-	
-	  return _react2.default.createElement(
-	    'button',
-	    {
-	      className: classes,
-	      onClick: handleClick,
-	      disabled: !selectedAnswer.id
-	    },
-	    'Vote'
-	  );
-	}
-	
-	VoteButton.propTypes = {
-	  makeVoteRequest: _react.PropTypes.func,
-	  selectedAnswer: _react.PropTypes.object
-	};
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = VoteButton;\n\nvar _react = __webpack_require__(/*! react */ 50);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _classnames = __webpack_require__(/*! classnames */ 206);\n\nvar _classnames2 = _interopRequireDefault(_classnames);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction VoteButton(props) {\n  var selectedAnswer = props.selectedAnswer;\n\n  function handleClick() {\n    if (selectedAnswer) {\n      props.makeVoteRequest(selectedAnswer);\n    }\n  }\n\n  var classes = (0, _classnames2.default)('bulbs-poll-vote', {});\n\n  return _react2.default.createElement(\n    'button',\n    {\n      className: classes,\n      onClick: handleClick,\n      disabled: !selectedAnswer.id\n    },\n    'Vote'\n  );\n}\n\nVoteButton.propTypes = {\n  makeVoteRequest: _react.PropTypes.func,\n  selectedAnswer: _react.PropTypes.object\n};//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjMxLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvY29tcG9uZW50cy92b3RlLWJ1dHRvbi5qcz85NmNiIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCwgeyBQcm9wVHlwZXMgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgY2xhc3NuYW1lcyBmcm9tICdjbGFzc25hbWVzJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gVm90ZUJ1dHRvbiAocHJvcHMpIHtcbiAgbGV0IHsgc2VsZWN0ZWRBbnN3ZXIgfSA9IHByb3BzO1xuXG4gIGZ1bmN0aW9uIGhhbmRsZUNsaWNrICgpIHtcbiAgICBpZiAoc2VsZWN0ZWRBbnN3ZXIpIHtcbiAgICAgIHByb3BzLm1ha2VWb3RlUmVxdWVzdChzZWxlY3RlZEFuc3dlcik7XG4gICAgfVxuICB9XG5cbiAgbGV0IGNsYXNzZXMgPSBjbGFzc25hbWVzKCdidWxicy1wb2xsLXZvdGUnLCB7XG4gICAgXG4gIH0pO1xuXG4gIHJldHVybiAoXG4gICAgPGJ1dHRvblxuICAgICAgY2xhc3NOYW1lPXtjbGFzc2VzfVxuICAgICAgb25DbGljaz17aGFuZGxlQ2xpY2t9XG4gICAgICBkaXNhYmxlZD17IXNlbGVjdGVkQW5zd2VyLmlkfVxuICAgID5cbiAgICAgIFZvdGVcbiAgICA8L2J1dHRvbj5cbiAgKTtcbn1cblxuVm90ZUJ1dHRvbi5wcm9wVHlwZXMgPSB7XG4gIG1ha2VWb3RlUmVxdWVzdDogUHJvcFR5cGVzLmZ1bmMsXG4gIHNlbGVjdGVkQW5zd2VyOiBQcm9wVHlwZXMub2JqZWN0LFxufTtcblxuXG5cblxuLyoqIFdFQlBBQ0sgRk9PVEVSICoqXG4gKiogZWxlbWVudHMvYnVsYnMtcG9sbC9jb21wb25lbnRzL3ZvdGUtYnV0dG9uLmpzXG4gKiovIl0sIm1hcHBpbmdzIjoiOzs7OztBQUdBO0FBQ0E7Ozs7Ozs7Ozs7O0FBREE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBREE7QUFEQTtBQUNBO0FBS0E7QUFDQTtBQUdBOzs7QUFFQTtBQUNBO0FBQ0E7QUFIQTs7QUFEQTtBQWJBO0FBQ0E7QUF1QkE7QUFDQTtBQUNBO0FBRkEiLCJzb3VyY2VSb290IjoiIn0=");
 
 /***/ },
 
 /***/ 232:
+/*!********************************************!*\
+  !*** ./elements/bulbs-poll/fields/poll.js ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _store = __webpack_require__(233);
-	
-	var PollField = new _store.Field({
-	  initialState: {
-	    data: {
-	      answers: []
-	    },
-	    requestInFlight: false
-	  },
-	  fetchPollData: new _store.Action(function (state, src, store) {
-	    src || (src = store.src);
-	    store.src = src;
-	    var request = this.request(src, {
-	      success: store.actions.fetchPollDataSuccess,
-	      failure: store.actions.fetchPollDataFailure,
-	      error: store.actions.fetchPollDataError
-	    });
-	    state.requestInFlight = true;
-	    return state;
-	  }),
-	  fetchPollDataSuccess: new _store.Action(function (state, data) {
-	    state.data = data;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  fetchPollDataFailure: new _store.Action(function (state, failure) {
-	    state.requestFailure = failure;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  fetchPollDataError: new _store.Action(function (state, error) {
-	    state.requestError = error;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  resetFetchPollData: new _store.Action(function (state, _null, store) {
-	    state.requestInFlight = false;
-	    state.requestFailure = undefined;
-	    state.requestError = undefined;
-	    setImmediate(store.actions.fetchPollData);
-	    return state;
-	  })
-	});
-	
-	exports.default = PollField;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44).setImmediate))
+	eval("/* WEBPACK VAR INJECTION */(function(setImmediate) {'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _store = __webpack_require__(/*! bulbs-elements/store */ 233);\n\nvar PollField = new _store.Field({\n  initialState: {\n    data: {\n      answers: []\n    },\n    requestInFlight: false\n  },\n  fetchPollData: new _store.Action(function (state, src, store) {\n    src || (src = store.src);\n    store.src = src;\n    var request = this.request(src, {\n      success: store.actions.fetchPollDataSuccess,\n      failure: store.actions.fetchPollDataFailure,\n      error: store.actions.fetchPollDataError\n    });\n    state.requestInFlight = true;\n    return state;\n  }),\n  fetchPollDataSuccess: new _store.Action(function (state, data) {\n    state.data = data;\n    state.requestInFlight = false;\n    return state;\n  }),\n  fetchPollDataFailure: new _store.Action(function (state, failure) {\n    state.requestFailure = failure;\n    state.requestInFlight = false;\n    return state;\n  }),\n  fetchPollDataError: new _store.Action(function (state, error) {\n    state.requestError = error;\n    state.requestInFlight = false;\n    return state;\n  }),\n  resetFetchPollData: new _store.Action(function (state, _null, store) {\n    state.requestInFlight = false;\n    state.requestFailure = undefined;\n    state.requestError = undefined;\n    setImmediate(store.actions.fetchPollData);\n    return state;\n  })\n});\n\nexports.default = PollField;\n/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/timers-browserify/main.js */ 44).setImmediate))//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjMyLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvZmllbGRzL3BvbGwuanM/MjM4NCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBGaWVsZCwgQWN0aW9uIH0gZnJvbSAnYnVsYnMtZWxlbWVudHMvc3RvcmUnO1xuXG5jb25zdCBQb2xsRmllbGQgPSBuZXcgRmllbGQoe1xuICBpbml0aWFsU3RhdGU6IHtcbiAgICBkYXRhOiB7XG4gICAgICBhbnN3ZXJzOiBbXSxcbiAgICB9LFxuICAgIHJlcXVlc3RJbkZsaWdodDogZmFsc2UsXG4gIH0sXG4gIGZldGNoUG9sbERhdGE6IG5ldyBBY3Rpb24oZnVuY3Rpb24gKHN0YXRlLCBzcmMsIHN0b3JlKSB7XG4gICAgc3JjIHx8IChzcmMgPSBzdG9yZS5zcmMpO1xuICAgIHN0b3JlLnNyYyA9IHNyYztcbiAgICBsZXQgcmVxdWVzdCA9IHRoaXMucmVxdWVzdChzcmMsIHtcbiAgICAgIHN1Y2Nlc3M6IHN0b3JlLmFjdGlvbnMuZmV0Y2hQb2xsRGF0YVN1Y2Nlc3MsXG4gICAgICBmYWlsdXJlOiBzdG9yZS5hY3Rpb25zLmZldGNoUG9sbERhdGFGYWlsdXJlLFxuICAgICAgZXJyb3I6IHN0b3JlLmFjdGlvbnMuZmV0Y2hQb2xsRGF0YUVycm9yLFxuICAgIH0pO1xuICAgIHN0YXRlLnJlcXVlc3RJbkZsaWdodCA9IHRydWU7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbiAgZmV0Y2hQb2xsRGF0YVN1Y2Nlc3M6IG5ldyBBY3Rpb24oZnVuY3Rpb24gKHN0YXRlLCBkYXRhKSB7XG4gICAgc3RhdGUuZGF0YSA9IGRhdGE7XG4gICAgc3RhdGUucmVxdWVzdEluRmxpZ2h0ID0gZmFsc2U7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbiAgZmV0Y2hQb2xsRGF0YUZhaWx1cmU6IG5ldyBBY3Rpb24oZnVuY3Rpb24gKHN0YXRlLCBmYWlsdXJlKSB7XG4gICAgc3RhdGUucmVxdWVzdEZhaWx1cmUgPSBmYWlsdXJlO1xuICAgIHN0YXRlLnJlcXVlc3RJbkZsaWdodCA9IGZhbHNlO1xuICAgIHJldHVybiBzdGF0ZTtcbiAgfSksXG4gIGZldGNoUG9sbERhdGFFcnJvcjogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUsIGVycm9yKSB7XG4gICAgc3RhdGUucmVxdWVzdEVycm9yID0gZXJyb3I7XG4gICAgc3RhdGUucmVxdWVzdEluRmxpZ2h0ID0gZmFsc2U7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbiAgcmVzZXRGZXRjaFBvbGxEYXRhOiBuZXcgQWN0aW9uKGZ1bmN0aW9uIChzdGF0ZSwgX251bGwsIHN0b3JlKSB7XG4gICAgc3RhdGUucmVxdWVzdEluRmxpZ2h0ID0gZmFsc2U7XG4gICAgc3RhdGUucmVxdWVzdEZhaWx1cmUgPSB1bmRlZmluZWQ7XG4gICAgc3RhdGUucmVxdWVzdEVycm9yID0gdW5kZWZpbmVkO1xuICAgIHNldEltbWVkaWF0ZShzdG9yZS5hY3Rpb25zLmZldGNoUG9sbERhdGEpO1xuICAgIHJldHVybiBzdGF0ZTtcbiAgfSksXG59KTtcblxuZXhwb3J0IGRlZmF1bHQgUG9sbEZpZWxkO1xuXG5cblxuLyoqIFdFQlBBQ0sgRk9PVEVSICoqXG4gKiogZWxlbWVudHMvYnVsYnMtcG9sbC9maWVsZHMvcG9sbC5qc1xuICoqLyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBR0E7QUFKQTtBQU1BO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTtBQUNBO0FBVEE7QUFXQTtBQUNBO0FBQ0E7QUFDQTtBQUhBO0FBS0E7QUFDQTtBQUNBO0FBQ0E7QUFIQTtBQUtBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFMQTtBQWpDQTtBQUNBO0FBeUNBOyIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 
 /***/ 234:
+/*!**************************************!*\
+  !*** ./elements/bulbs-poll/store.js ***!
+  \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _store = __webpack_require__(233);
-	
-	var _poll = __webpack_require__(232);
-	
-	var _poll2 = _interopRequireDefault(_poll);
-	
-	var _selectedAnswer = __webpack_require__(235);
-	
-	var _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);
-	
-	var _vote = __webpack_require__(236);
-	
-	var _vote2 = _interopRequireDefault(_vote);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PollStore = function (_Store) {
-	  _inherits(PollStore, _Store);
-	
-	  function PollStore() {
-	    _classCallCheck(this, PollStore);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PollStore).apply(this, arguments));
-	  }
-	
-	  return PollStore;
-	}(_store.Store);
-	
-	exports.default = PollStore;
-	
-	_store.Store.defineFields(PollStore, {
-	  poll: _poll2.default,
-	  selectedAnswer: _selectedAnswer2.default,
-	  vote: _vote2.default
-	});
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _store = __webpack_require__(/*! bulbs-elements/store */ 233);\n\nvar _poll = __webpack_require__(/*! ./fields/poll */ 232);\n\nvar _poll2 = _interopRequireDefault(_poll);\n\nvar _selectedAnswer = __webpack_require__(/*! ./fields/selected-answer */ 235);\n\nvar _selectedAnswer2 = _interopRequireDefault(_selectedAnswer);\n\nvar _vote = __webpack_require__(/*! ./fields/vote */ 236);\n\nvar _vote2 = _interopRequireDefault(_vote);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar PollStore = function (_Store) {\n  _inherits(PollStore, _Store);\n\n  function PollStore() {\n    _classCallCheck(this, PollStore);\n\n    return _possibleConstructorReturn(this, Object.getPrototypeOf(PollStore).apply(this, arguments));\n  }\n\n  return PollStore;\n}(_store.Store);\n\nexports.default = PollStore;\n\n_store.Store.defineFields(PollStore, {\n  poll: _poll2.default,\n  selectedAnswer: _selectedAnswer2.default,\n  vote: _vote2.default\n});//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjM0LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvc3RvcmUuanM/M2RiMiJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBTdG9yZSB9IGZyb20gJ2J1bGJzLWVsZW1lbnRzL3N0b3JlJztcblxuaW1wb3J0IFBvbGxGaWVsZCBmcm9tICcuL2ZpZWxkcy9wb2xsJztcbmltcG9ydCBTZWxlY3RlZEFuc3dlckZpZWxkIGZyb20gJy4vZmllbGRzL3NlbGVjdGVkLWFuc3dlcic7XG5pbXBvcnQgVm90ZUZpZWxkIGZyb20gJy4vZmllbGRzL3ZvdGUnO1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBQb2xsU3RvcmUgZXh0ZW5kcyBTdG9yZSB7IH1cblxuU3RvcmUuZGVmaW5lRmllbGRzKFBvbGxTdG9yZSwge1xuICBwb2xsOiBQb2xsRmllbGQsXG4gIHNlbGVjdGVkQW5zd2VyOiBTZWxlY3RlZEFuc3dlckZpZWxkLFxuICB2b3RlOiBWb3RlRmllbGQsXG59KTtcblxuXG5cbi8qKiBXRUJQQUNLIEZPT1RFUiAqKlxuICoqIGVsZW1lbnRzL2J1bGJzLXBvbGwvc3RvcmUuanNcbiAqKi8iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFNQTs7Ozs7Ozs7Ozs7Ozs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUhBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ },
 
 /***/ 235:
+/*!*******************************************************!*\
+  !*** ./elements/bulbs-poll/fields/selected-answer.js ***!
+  \*******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _store = __webpack_require__(233);
-	
-	var SelectedAnswerField = new _store.Field({
-	  initialState: {},
-	  selectAnswer: new _store.Action(function (state, answer) {
-	    return state && state.id === answer.id ? {} : answer;
-	  })
-	});
-	
-	exports.default = SelectedAnswerField;
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _store = __webpack_require__(/*! bulbs-elements/store */ 233);\n\nvar SelectedAnswerField = new _store.Field({\n  initialState: {},\n  selectAnswer: new _store.Action(function (state, answer) {\n    return state && state.id === answer.id ? {} : answer;\n  })\n});\n\nexports.default = SelectedAnswerField;//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjM1LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvZmllbGRzL3NlbGVjdGVkLWFuc3dlci5qcz8yOGRkIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEZpZWxkLCBBY3Rpb24gfSBmcm9tICdidWxicy1lbGVtZW50cy9zdG9yZSc7XG5cbmNvbnN0IFNlbGVjdGVkQW5zd2VyRmllbGQgPSBuZXcgRmllbGQoe1xuICBpbml0aWFsU3RhdGU6IHt9LFxuICBzZWxlY3RBbnN3ZXI6IG5ldyBBY3Rpb24oZnVuY3Rpb24gKHN0YXRlLCBhbnN3ZXIpIHtcbiAgICByZXR1cm4gKHN0YXRlICYmIHN0YXRlLmlkID09PSBhbnN3ZXIuaWQpID8ge30gOiBhbnN3ZXI7XG4gIH0pLFxufSk7XG5cbmV4cG9ydCBkZWZhdWx0IFNlbGVjdGVkQW5zd2VyRmllbGQ7XG5cblxuXG4vKiogV0VCUEFDSyBGT09URVIgKipcbiAqKiBlbGVtZW50cy9idWxicy1wb2xsL2ZpZWxkcy9zZWxlY3RlZC1hbnN3ZXIuanNcbiAqKi8iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFEQTtBQUZBO0FBQ0E7QUFNQSIsInNvdXJjZVJvb3QiOiIifQ==");
 
 /***/ },
 
 /***/ 236:
+/*!********************************************!*\
+  !*** ./elements/bulbs-poll/fields/vote.js ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _store = __webpack_require__(233);
-	
-	var VoteField = new _store.Field({
-	  initialState: {},
-	  getCachedVoteData: new _store.Action(function (state, poll) {
-	    state.data = localStorage.getItem('bulbs-poll:vote:' + poll.data.id);
-	    return state;
-	  }),
-	  makeVoteRequest: new _store.Action(function (state, answer, store) {
-	    var poll = store.state.poll;
-	
-	    var request = this.request('http://onion.sodahead.com/api/polls/' + poll.data.id, {
-	      method: 'post',
-	      headers: {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      },
-	      body: JSON.stringify({
-	        /* convert answer into vote data */
-	      }),
-	      success: store.actions.voteRequestSuccess,
-	      failure: store.actions.voteRequestFailure,
-	      error: store.actions.voteRequestError
-	    });
-	
-	    state.requestInFlight = true;
-	    return state;
-	  }),
-	  voteRequestSuccess: new _store.Action(function (state, data) {
-	    state.data = data.vote;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  voteRequestFailure: new _store.Action(function (state, failure) {
-	    state.requestFailure = failure;
-	    state.requestInFlight = false;
-	    return state;
-	  }),
-	  voteRequestError: new _store.Action(function (state, error) {
-	    state.requestInFlight = false;
-	    state.requestError = error;
-	    return state;
-	  }),
-	  resetVoteRequest: new _store.Action(function (state) {
-	    state.requestInFlight = false;
-	    state.requestFailure = undefined;
-	    state.requestError = undefined;
-	    return state;
-	  })
-	});
-	
-	exports.default = VoteField;
+	eval("'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _store = __webpack_require__(/*! bulbs-elements/store */ 233);\n\nvar VoteField = new _store.Field({\n  initialState: {},\n  getCachedVoteData: new _store.Action(function (state, poll) {\n    state.data = localStorage.getItem('bulbs-poll:vote:' + poll.data.id);\n    return state;\n  }),\n  makeVoteRequest: new _store.Action(function (state, answer, store) {\n    var poll = store.state.poll;\n\n    var request = this.request('http://onion.sodahead.com/api/polls/' + poll.data.id, {\n      method: 'post',\n      headers: {\n        'Accept': 'application/json',\n        'Content-Type': 'application/json'\n      },\n      body: JSON.stringify({\n        /* convert answer into vote data */\n      }),\n      success: store.actions.voteRequestSuccess,\n      failure: store.actions.voteRequestFailure,\n      error: store.actions.voteRequestError\n    });\n\n    state.requestInFlight = true;\n    return state;\n  }),\n  voteRequestSuccess: new _store.Action(function (state, data) {\n    state.data = data.vote;\n    state.requestInFlight = false;\n    return state;\n  }),\n  voteRequestFailure: new _store.Action(function (state, failure) {\n    state.requestFailure = failure;\n    state.requestInFlight = false;\n    return state;\n  }),\n  voteRequestError: new _store.Action(function (state, error) {\n    state.requestInFlight = false;\n    state.requestError = error;\n    return state;\n  }),\n  resetVoteRequest: new _store.Action(function (state) {\n    state.requestInFlight = false;\n    state.requestFailure = undefined;\n    state.requestError = undefined;\n    return state;\n  })\n});\n\nexports.default = VoteField;//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjM2LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL2VsZW1lbnRzL2J1bGJzLXBvbGwvZmllbGRzL3ZvdGUuanM/Mjg4MCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBGaWVsZCwgQWN0aW9uIH0gZnJvbSAnYnVsYnMtZWxlbWVudHMvc3RvcmUnO1xuXG5jb25zdCBWb3RlRmllbGQgPSBuZXcgRmllbGQoe1xuICBpbml0aWFsU3RhdGU6IHt9LFxuICBnZXRDYWNoZWRWb3RlRGF0YTogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUsIHBvbGwpIHtcbiAgICBzdGF0ZS5kYXRhID0gbG9jYWxTdG9yYWdlLmdldEl0ZW0oYGJ1bGJzLXBvbGw6dm90ZToke3BvbGwuZGF0YS5pZH1gKTtcbiAgICByZXR1cm4gc3RhdGU7XG4gIH0pLFxuICBtYWtlVm90ZVJlcXVlc3Q6IG5ldyBBY3Rpb24oZnVuY3Rpb24gKHN0YXRlLCBhbnN3ZXIsIHN0b3JlKSB7XG4gICAgbGV0IHsgcG9sbCB9ID0gc3RvcmUuc3RhdGU7XG4gICAgbGV0IHJlcXVlc3QgPSB0aGlzLnJlcXVlc3QoYGh0dHA6Ly9vbmlvbi5zb2RhaGVhZC5jb20vYXBpL3BvbGxzLyR7cG9sbC5kYXRhLmlkfWAsIHtcbiAgICAgIG1ldGhvZDogJ3Bvc3QnLFxuICAgICAgaGVhZGVyczoge1xuICAgICAgICAnQWNjZXB0JzogJ2FwcGxpY2F0aW9uL2pzb24nLFxuICAgICAgICAnQ29udGVudC1UeXBlJzogJ2FwcGxpY2F0aW9uL2pzb24nLFxuICAgICAgfSxcbiAgICAgIGJvZHk6IEpTT04uc3RyaW5naWZ5KHtcbiAgICAgICAgLyogY29udmVydCBhbnN3ZXIgaW50byB2b3RlIGRhdGEgKi9cbiAgICAgIH0pLFxuICAgICAgc3VjY2Vzczogc3RvcmUuYWN0aW9ucy52b3RlUmVxdWVzdFN1Y2Nlc3MsXG4gICAgICBmYWlsdXJlOiBzdG9yZS5hY3Rpb25zLnZvdGVSZXF1ZXN0RmFpbHVyZSxcbiAgICAgIGVycm9yOiBzdG9yZS5hY3Rpb25zLnZvdGVSZXF1ZXN0RXJyb3IsXG4gICAgfSk7XG5cbiAgICBzdGF0ZS5yZXF1ZXN0SW5GbGlnaHQgPSB0cnVlO1xuICAgIHJldHVybiBzdGF0ZTtcbiAgfSksXG4gIHZvdGVSZXF1ZXN0U3VjY2VzczogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUsIGRhdGEpIHtcbiAgICBzdGF0ZS5kYXRhID0gZGF0YS52b3RlO1xuICAgIHN0YXRlLnJlcXVlc3RJbkZsaWdodCA9IGZhbHNlO1xuICAgIHJldHVybiBzdGF0ZTtcbiAgfSksXG4gIHZvdGVSZXF1ZXN0RmFpbHVyZTogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUsIGZhaWx1cmUpIHtcbiAgICBzdGF0ZS5yZXF1ZXN0RmFpbHVyZSA9IGZhaWx1cmU7XG4gICAgc3RhdGUucmVxdWVzdEluRmxpZ2h0ID0gZmFsc2U7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbiAgdm90ZVJlcXVlc3RFcnJvcjogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUsIGVycm9yKSB7XG4gICAgc3RhdGUucmVxdWVzdEluRmxpZ2h0ID0gZmFsc2U7XG4gICAgc3RhdGUucmVxdWVzdEVycm9yID0gZXJyb3I7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbiAgcmVzZXRWb3RlUmVxdWVzdDogbmV3IEFjdGlvbihmdW5jdGlvbiAoc3RhdGUpIHtcbiAgICBzdGF0ZS5yZXF1ZXN0SW5GbGlnaHQgPSBmYWxzZTtcbiAgICBzdGF0ZS5yZXF1ZXN0RmFpbHVyZSA9IHVuZGVmaW5lZDtcbiAgICBzdGF0ZS5yZXF1ZXN0RXJyb3IgPSB1bmRlZmluZWQ7XG4gICAgcmV0dXJuIHN0YXRlO1xuICB9KSxcbn0pO1xuXG5leHBvcnQgZGVmYXVsdCBWb3RlRmllbGQ7XG5cblxuXG4vKiogV0VCUEFDSyBGT09URVIgKipcbiAqKiBlbGVtZW50cy9idWxicy1wb2xsL2ZpZWxkcy92b3RlLmpzXG4gKiovIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFGQTtBQUlBO0FBQ0E7QUFDQTtBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFGQTtBQUlBOztBQUFBO0FBR0E7QUFDQTtBQUNBO0FBWEE7QUFDQTtBQWFBO0FBQ0E7QUFqQkE7QUFtQkE7QUFDQTtBQUNBO0FBQ0E7QUFIQTtBQUtBO0FBQ0E7QUFDQTtBQUNBO0FBSEE7QUFLQTtBQUNBO0FBQ0E7QUFDQTtBQUhBO0FBS0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUpBO0FBeENBO0FBQ0E7QUErQ0EiLCJzb3VyY2VSb290IjoiIn0=");
 
 /***/ },
 
-/***/ 300:
+/***/ 250:
+/*!***************************************************!*\
+  !*** ./elements/bulbs-poll/components/results.js ***!
+  \***************************************************/
 /***/ function(module, exports) {
 
-	"use strict";
+	eval("\"use strict\";//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjUwLmpzIiwic291cmNlcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ },
 
-/***/ 301:
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(302);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(304)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./styles.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/postcss-loader/index.js!./../../node_modules/sass-loader/index.js!./styles.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-
-/***/ 302:
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(303)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "bulbs-poll {\n  display: block;\n  font-family: sans-serif;\n  border-top: 2px solid green;\n  background: #fafafa;\n  padding: 1em; }\n  bulbs-poll > div {\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n  bulbs-poll .bulbs-poll-cover {\n    margin: 1em; }\n  bulbs-poll .bulbs-poll-answers {\n    margin: 0;\n    padding: 0; }\n  bulbs-poll .bulbs-poll-answer {\n    background: lightgray;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    list-style: none;\n    margin: 1em;\n    padding: 1em; }\n    bulbs-poll .bulbs-poll-answer svg {\n      margin-right: 1em; }\n  bulbs-poll .bulbs-poll-vote {\n    -webkit-align-self: center;\n        -ms-flex-item-align: center;\n            align-self: center;\n    background-color: lightgray;\n    border-radius: 8px;\n    border: none;\n    cursor: pointer;\n    padding: .5em 1.5em;\n    font-size: 1.5em; }\n    bulbs-poll .bulbs-poll-vote[disabled] {\n      cursor: not-allowed; }\n", ""]);
-	
-	// exports
-
-
-/***/ },
-
-/***/ 303:
+/***/ 251:
+/*!*****************************************!*\
+  !*** ./elements/bulbs-poll/styles.scss ***!
+  \*****************************************/
 /***/ function(module, exports) {
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-	
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-	
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-
-/***/ 304:
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-	
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-	
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-	
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-	
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-	
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-	
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-	
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-	
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-	
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-	
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-	
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-	
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-	
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-	
-		update(obj);
-	
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-	
-	var replaceText = (function () {
-		var textStore = [];
-	
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-	
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-	
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-	
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-	
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-	
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-	
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		var sourceMap = obj.sourceMap;
-	
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-	
-		var blob = new Blob([css], { type: "text/css" });
-	
-		var oldSrc = linkElement.href;
-	
-		linkElement.href = URL.createObjectURL(blob);
-	
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
+	eval("// removed by extract-text-webpack-plugin//@ sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjUxLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vZWxlbWVudHMvYnVsYnMtcG9sbC9zdHlsZXMuc2Nzcz9mZGI0Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIHJlbW92ZWQgYnkgZXh0cmFjdC10ZXh0LXdlYnBhY2stcGx1Z2luXG5cblxuLyoqKioqKioqKioqKioqKioqXG4gKiogV0VCUEFDSyBGT09URVJcbiAqKiAuL2VsZW1lbnRzL2J1bGJzLXBvbGwvc3R5bGVzLnNjc3NcbiAqKiBtb2R1bGUgaWQgPSAyNTFcbiAqKiBtb2R1bGUgY2h1bmtzID0gMTBcbiAqKi8iXSwibWFwcGluZ3MiOiJBQUFBIiwic291cmNlUm9vdCI6IiJ9");
 
 /***/ }
 
 });
-//# sourceMappingURL=bulbs-poll.js.map

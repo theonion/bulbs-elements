@@ -36,7 +36,8 @@ function startWebpack () {
   console.log('Starting Webpack');
   webpack = new Van({
     scripts: {
-      webpack: 'node_modules/.bin/webpack --watch --color',
+      webpackBuild: 'scripts/webpack-dev-build',
+      webpackServe: 'scripts/webpack-dev-server',
     }
   });
   webpack.start();

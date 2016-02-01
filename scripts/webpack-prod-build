@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+export NODE_ENV=production
+node_modules/.bin/webpack \
+  --color \
+  --optimize-minimize \
+  --devtool source-map \
+  --config webpack.config.prod.js

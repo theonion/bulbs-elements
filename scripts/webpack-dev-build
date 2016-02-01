@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+export NODE_ENV=development
+node_modules/.bin/webpack \
+  --devtool cheap-module-eval-source-map \
+  --watch \
+  --color \
+  --output-pathinfo \
+  --config webpack.config.dev.js

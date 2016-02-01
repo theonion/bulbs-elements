@@ -1,0 +1,19 @@
+{
+  "name": "bulbs-elements",
+  "description": "Some registerable components for bulbs content types.",
+  "main": "dist/bulbs-elements.js",
+  "authors": [
+    "Onion Product Team <webtech@theonion.com>"
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/theonion/bulbs-elements",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

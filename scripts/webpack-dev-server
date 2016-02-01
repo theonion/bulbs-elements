@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+export NODE_ENV=hot
+node_modules/.bin/webpack-dev-server \
+  --devtool cheap-module-eval-source-map \
+  --inline \
+  --hot \
+  --watch \
+  --color \
+  --output-pathinfo \
+  --history-api-fallback \
+  --content-base examples/ \
+  --output-path / \
+  --config webpack.config.hot.js \
+  --quiet \
+  --lazy \
