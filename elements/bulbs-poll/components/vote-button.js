@@ -1,16 +1,24 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames';
 
 export default function VoteButton (props) {
+  let { selectedAnswer } = props;
+
   function handleClick () {
-    if (props.selectedAnswer) {
-      props.makeVoteRequest(props.selectedAnswer);
+    if (selectedAnswer) {
+      props.makeVoteRequest(selectedAnswer);
     }
   }
 
+  let classes = classnames('bulbs-poll-vote', {
+    
+  });
+
   return (
     <button
-      className="bulbs-poll-vote"
+      className={classes}
       onClick={handleClick}
+      disabled={!selectedAnswer.id}
     >
       Vote
     </button>

@@ -8,7 +8,7 @@ export default function Cover (props) {
       {
         poll.data.thumbnail ? <CroppedImage image={poll.data.thumbnail} /> : undefined
       }
-      <h1 className="bulbs-poll-title">
+      <h1 className="bulbs-poll-cover-title">
         { poll.data.question_text }
       </h1>
     </header>

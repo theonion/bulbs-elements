@@ -7,6 +7,8 @@ import PollStore from './store';
 import PollQuestion from './components/question';
 import PollResults from './components/results';
 
+import './styles.scss';
+
 class BulbsPoll extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchPollData(this.props.src);
@@ -19,6 +21,8 @@ class BulbsPoll extends BulbsElement {
     />
   }
 }
+
+BulbsPoll.displayName = 'BulbsPoll';
 
 BulbsPoll.store = PollStore;
 

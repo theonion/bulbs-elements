@@ -4,16 +4,28 @@ let examples = {
     'Basic Example': {
       render: function () {
         return `
-          <h1>Almost a poll</h1>
-          <bulbs-poll>
+          <bulbs-poll
+            src="http://localhost:8080/fixtures/bulbs-poll/poll-data.json"
+          >
           </bulbs-poll>
         `;
       },
     },
-    'Example 2': {
+    'Cover Image': {
       render: function () {
         return `
-          Maybe React?
+          <bulbs-poll
+            src="http://localhost:8080/fixtures/bulbs-poll/poll-data-cover-image.json"
+          >
+          </bulbs-poll>
+        `;
+      },
+    },
+    'Request Error': {
+      render: function () {
+        return `
+          <bulbs-poll src="httx://not-a-valid-url:oldsport/">
+          </bulbs-poll>
         `;
       }
     }

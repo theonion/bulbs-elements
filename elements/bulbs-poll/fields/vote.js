@@ -40,6 +40,12 @@ const VoteField = new Field({
     state.requestError = error;
     return state;
   }),
+  resetVoteRequest: new Action(function (state) {
+    state.requestInFlight = false;
+    state.requestFailure = undefined;
+    state.requestError = undefined;
+    return state;
+  }),
 });
 
 export default VoteField;

@@ -4,12 +4,7 @@ import examples from './data';
 export default class Component extends React.Component {
   render () {
     return (
-      <div>
-        <h1>
-          {this.props.params.element} {this.props.params.example}
-        </h1>
-        <div dangerouslySetInnerHTML={this.renderExample()} />
-      </div>
+      <div dangerouslySetInnerHTML={this.renderExample()} />
     );
   }
 

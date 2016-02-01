@@ -16,7 +16,7 @@ describe('<Cover>', function () {
       assertJSXEqual(this.test.title, <Cover poll={poll} />,
         <header className="bulbs-poll-cover">
           <CroppedImage image={poll.data.thumbnail} />
-          <h1 className="bulbs-poll-title">Question?</h1>
+          <h1 className="bulbs-poll-cover-title">Question?</h1>
         </header>
       );
     });
@@ -33,7 +33,7 @@ describe('<Cover>', function () {
       assertJSXEqual(this.test.title, <Cover poll={poll} />,
         <header className="bulbs-poll-cover">
           { null }
-          <h1 className="bulbs-poll-title">Question?</h1>
+          <h1 className="bulbs-poll-cover-title">Question?</h1>
         </header>
       );
     });

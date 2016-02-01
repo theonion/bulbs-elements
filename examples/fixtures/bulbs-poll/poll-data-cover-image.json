@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "question_text": "How — ARE you?",
+  "answers": [
+    {
+      "answer_text": "answer A",
+      "id": 1
+    }, {
+      "answer_text": "answer B",
+      "id": 2
+    }
+  ]
+}

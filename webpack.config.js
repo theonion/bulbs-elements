@@ -49,10 +49,10 @@ entries['dist/vendor'] = [
   './lib/bulbs-elements/components/cropped-image',
 ];
 
-entries['examples'] = [
-  './examples/examples.js',
-  'react-router',
-]
+//entries['examples'] = [
+//  './examples/examples.js',
+//  'react-router',
+//];
 
 module.exports = {
   devtool: 'source-map',

@@ -1,9 +1,9 @@
 import { Field, Action } from 'bulbs-elements/store';
 
 const SelectedAnswerField = new Field({
-  initialState: null,
+  initialState: {},
   selectAnswer: new Action(function (state, answer) {
-    return (state && state.id === answer.id) ? null : answer;
+    return (state && state.id === answer.id) ? {} : answer;
   }),
 });
 

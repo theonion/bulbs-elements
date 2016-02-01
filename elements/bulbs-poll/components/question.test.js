@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Question from './question';
+import Question, { RequestError } from './question';
 import Cover from './cover';
 import Answers from './answers';
 import VoteButton from './vote-button';
@@ -14,20 +14,34 @@ describe('<Question>', function () {
 
     let answers = [];
     let selectedAnswer = {};
-    let poll = { data: { answers }};
+    let pollRequestError = {};
+    let poll = {
+      data: {
+        answers,
+      },
+      requestError: pollRequestError,
+    };
+
+    let voteRequestError = {};
+    let vote = {
+      data: {},
+      requestError: voteRequestError,
+    };
 
     let props = {
       actions: {
         selectAnswer, makeVoteRequest,
       },
       data: {
-        poll, answers, selectedAnswer,
+        vote, poll, answers, selectedAnswer,
       },
     };
 
     assertJSXEqual(this.test.title, <Question {...props} />,
-      <div className="bulbs-poll">
+      <div>
         <Cover poll={poll} />
+        <RequestError error={pollRequestError} />
+        <RequestError error={voteRequestError} />
         <Answers
           answers={answers}
           selectAnswer={selectAnswer}

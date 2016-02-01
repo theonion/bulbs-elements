@@ -21,7 +21,7 @@ describe('<VoteButton>', function () {
   context('without selectedAnswer', function () {
     it('renders inactive vote button', function () {
       let props = {
-        selectedAnswer: null,
+        selectedAnswer: {},
         makeVoteRequest: function () {},
       };
 

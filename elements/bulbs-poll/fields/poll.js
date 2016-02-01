@@ -8,6 +8,8 @@ const PollField = new Field({
     requestInFlight: false,
   },
   fetchPollData: new Action(function (state, src, store) {
+    src || (src = store.src);
+    store.src = src;
     let request = this.request(src, {
       success: store.actions.fetchPollDataSuccess,
       failure: store.actions.fetchPollDataFailure,
@@ -29,6 +31,13 @@ const PollField = new Field({
   fetchPollDataError: new Action(function (state, error) {
     state.requestError = error;
     state.requestInFlight = false;
+    return state;
+  }),
+  resetFetchPollData: new Action(function (state, _null, store) {
+    state.requestInFlight = false;
+    state.requestFailure = undefined;
+    state.requestError = undefined;
+    setImmediate(store.actions.fetchPollData);
     return state;
   }),
 });

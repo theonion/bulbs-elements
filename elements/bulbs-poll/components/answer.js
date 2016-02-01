@@ -8,8 +8,10 @@ export default function Answer (props) {
     selectedAnswer,
   } = props;
 
+
+  let isSelected = answer.id === selectedAnswer.id;
   let className = classnames('bulbs-poll-answer', {
-    selected: answer === selectedAnswer,
+    selected: isSelected,
   });
 
   return (
@@ -17,6 +19,10 @@ export default function Answer (props) {
       className={className}
       onClick={selectAnswer.bind(null, answer)}
     >
+      <svg width="20px" height="20px">
+        <circle cx="10" cy="10" r="8" fill="none" stroke="black" strokeWidth="2px" />
+        <circle cx="10" cy="10" r="5" fill={isSelected ? 'black' : 'none' } />
+      </svg>
       { answer.answer_text }
     </li>
   );

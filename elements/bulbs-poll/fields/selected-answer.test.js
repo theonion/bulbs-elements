@@ -5,7 +5,7 @@ describe('SelectedAnswerField', function () {
   let { actions } = SelectedAnswerField;
 
   it('initialState', function () {
-    assert.isNull(SelectedAnswerField.initialState);
+    assert.deepEqual(SelectedAnswerField.initialState, {});
   });
 
   describe('selectAnswer', function () {
@@ -25,7 +25,7 @@ describe('SelectedAnswerField', function () {
 
     it('returns null if answer selected again', function () {
       let nextState = selectAnswer.invoke(answer1, answer1);
-      assert.equal(nextState, null);
+      assert.deepEqual(nextState, {});
     });
   });
 });
