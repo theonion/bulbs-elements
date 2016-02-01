@@ -8,7 +8,7 @@ const VoteField = new Field({
   }),
   makeVoteRequest: new Action(function (state, answer, store) {
     let { poll } = store.state;
-    let request = this.request(`http://onion.sodahead.com/api/polls/${poll.data.id}`, {
+    this.request(`http://onion.sodahead.com/api/polls/${poll.data.id}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -42,8 +42,8 @@ const VoteField = new Field({
   }),
   resetVoteRequest: new Action(function (state) {
     state.requestInFlight = false;
-    state.requestFailure = undefined;
-    state.requestError = undefined;
+    delete state.requestFailure;
+    delete state.requestError;
     return state;
   }),
 });

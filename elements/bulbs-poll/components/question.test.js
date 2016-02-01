@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Question, { RequestError } from './question';
+import Question from './question';
+import RequestError from './request-error';
 import Cover from './cover';
 import Answers from './answers';
 import VoteButton from './vote-button';

@@ -25,7 +25,7 @@ describe('PollField', function () {
     });
 
     it('makes GET request to the poll endpoint', function () {
-      let nextState = actions.fetchPollData.invoke({}, src, store);
+      actions.fetchPollData.invoke({}, src, store);
       requestSpy.should.have.been.called.with(src, {
         success: store.actions.fetchPollDataSuccess,
         failure: store.actions.fetchPollDataFailure,

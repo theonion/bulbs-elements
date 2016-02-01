@@ -1,5 +1,5 @@
-import { assert } from 'chai';
-import testElement from 'bulbs-elements/test/element';
+//import { assert } from 'chai';
+//import testElement from 'bulbs-elements/test/element';
 
 //testElement('SampleElement', function () {
 //  beforeEach(function () {

@@ -88,7 +88,7 @@
     "no-alert": 1,
     "no-caller": 1,
     "no-div-regex": 1,
-    "no-else-return": 1,
+    "no-else-return": 0,
     "no-empty-label": 1,
     "no-eq-null": 0,
     "no-eval": 1,
@@ -140,7 +140,7 @@
     "no-undef": 1,
     "no-undefined": 1,
     "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
-    "no-use-before-define": 1,
+    "no-use-before-define": 0,
 
     /* Node.js */
     "handle-callback-err": 1,
@@ -154,7 +154,7 @@
     /* Stylistic Issues */
     "array-bracket-spacing": [1, "never"],
     "brace-style": [1, "stroustrup", { "allowSingleLine": true }],
-    "camelcase": [1, { "properties": "always" }],
+    "camelcase": [0, { "properties": "always" }],
     "comma-spacing": [0, { "before": false, "after": true }],
     "comma-style": [1, "last"],
     "computed-property-spacing": 0,
@@ -184,7 +184,7 @@
     "no-unneeded-ternary": 1,
     "object-curly-spacing": 0, // see Babel section
     "one-var": [1, "never"],
-    "operator-assignment": [1, "never"],
+    "operator-assignment": [0, "never"],
     "padded-blocks": [0, "never"],
     "quote-props": [0, "as-needed"],
     "quotes": [1, "single"],
@@ -198,7 +198,7 @@
     "space-infix-ops": 1,
     "space-return-throw-case": 1,
     "space-unary-ops": 0,
-    "spaced-comment": [1, "always"],
+    "spaced-comment": [0, "always"],
     "wrap-regex": 1,
 
     /* ECMAScript 6 */
@@ -215,7 +215,7 @@
     "max-params": 0,
     "max-statements": 0,
     "no-bitwise": 1,
-    "no-plusplus": 1,
+    "no-plusplus": 0,
 
     /* Babel */
     // "babel/block-scoped-var": 1,

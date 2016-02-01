@@ -9,7 +9,7 @@ describe('<Cover>', function () {
       let poll = {
         data: {
           thumbnail: {},
-          question_text: 'Question?'
+          question_text: 'Question?',
         },
       };
 

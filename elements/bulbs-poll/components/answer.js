@@ -8,7 +8,6 @@ export default function Answer (props) {
     selectedAnswer,
   } = props;
 
-
   let isSelected = answer.id === selectedAnswer.id;
   let className = classnames('bulbs-poll-answer', {
     selected: isSelected,

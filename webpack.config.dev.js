@@ -21,7 +21,6 @@ config.module.loaders = [
   loaders.yaml,
   loaders.json,
   loaders.sassExtractor,
-  loaders.eslint,
 ];
 
 config.module.preLoaders = [

@@ -7,7 +7,7 @@ describe('<VoteButton>', function () {
     it('renders active vote button', function () {
       let props = {
         selectedAnswer: { id: 1 },
-        makeVoteRequest: function () {},
+        makeVoteRequest () {},
       };
 
       assertJSXEqual(this.test.title, <VoteButton {...props} />,
@@ -22,7 +22,7 @@ describe('<VoteButton>', function () {
     it('renders inactive vote button', function () {
       let props = {
         selectedAnswer: {},
-        makeVoteRequest: function () {},
+        makeVoteRequest () {},
       };
 
       assertJSXEqual(this.test.title, <VoteButton {...props} />,

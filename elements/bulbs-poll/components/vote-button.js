@@ -11,7 +11,7 @@ export default function VoteButton (props) {
   }
 
   let classes = classnames('bulbs-poll-vote', {
-    
+
   });
 
   return (

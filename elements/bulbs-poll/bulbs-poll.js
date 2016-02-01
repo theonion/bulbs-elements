@@ -5,7 +5,7 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 import PollStore from './store';
 
 import PollQuestion from './components/question';
-import PollResults from './components/results';
+// import PollResults from './components/results';
 
 import './styles.scss';
 
@@ -18,7 +18,7 @@ class BulbsPoll extends BulbsElement {
     return <PollQuestion
       actions={this.store.actions}
       data={this.state}
-    />
+    />;
   }
 }
 

@@ -3,22 +3,7 @@ import React, { PropTypes } from 'react';
 import Cover from './cover';
 import Answers from './answers';
 import VoteButton from './vote-button';
-
-export function RequestError ({ error, children, reset }) {
-  if (error) {
-    return (
-      <div className="bulbs-poll-network-error">
-        <p>
-          { children }
-        </p>
-        <button onClick={reset}>OK</button>
-      </div>
-    );
-  }
-  else {
-    return <div />
-  }
-}
+import RequestError from './request-error';
 
 export default function Question (props) {
   let {
@@ -62,5 +47,9 @@ export default function Question (props) {
       />
     </div>
   );
-
 }
+
+Question.propTypes = {
+  actions: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+};

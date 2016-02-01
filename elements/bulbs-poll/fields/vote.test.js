@@ -28,8 +28,9 @@ describe('VoteField', function () {
           id: 1,
         },
       };
-      let nextState = actions.makeVoteRequest.invoke({}, {}, store);
       let url = 'http://onion.sodahead.com/api/polls/1';
+
+      actions.makeVoteRequest.invoke({}, {}, store);
 
       requestSpy.should.have.been.called.with(url, {
         method: 'post',
