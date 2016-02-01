@@ -17,6 +17,4 @@ SampleElement.propTypes = {
   thisProp: PropTypes.string,
 };
 
-SampleElement.displayName = 'SampleElement';
-
 register('sample-element', SampleElement);

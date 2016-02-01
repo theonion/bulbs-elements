@@ -1,0 +1,56 @@
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px);
+
+body, html,
+ol, ul, li, p,
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+body, html, #mount {
+  width: 100%;
+  height: 100%;
+}
+
+#mount {
+  display: flex;
+}
+
+.examples-index {
+  display: flex;
+  flex-grow: 1;
+}
+
+.examples-index-list {
+  min-width: 200px;
+  font-family: 'Slabo 27px', serif;
+  background: pink;
+  min-height: 100%;
+
+  ul, li {
+    list-style: none;
+  }
+}
+
+.examples-index-pane {
+  overflow: auto;
+  flex-grow: 1;
+}
+
+.examples-example-group {
+  padding-bottom: 1em;
+}
+
+.examples-example {
+  padding-left: 0.5em;
+
+  > a {
+    padding: 0 .5em
+  }
+
+  > a.active {
+    background: #333;
+    color: #fafafa;
+  }
+
+}

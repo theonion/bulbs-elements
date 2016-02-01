@@ -10,10 +10,12 @@ var stylelint    = require('stylelint');
 var elementsDir = path.join(__dirname, '/elements');
 var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
 var libDir = path.join(__dirname, '/lib');
+var examplesDir = path.join(__dirname, '/examples');
 
 var includeDirs = [
   elementsDir,
   libDir,
+  examplesDir,
 ];
 
 var entries = {};
@@ -47,16 +49,21 @@ entries['dist/vendor'] = [
   './lib/bulbs-elements/components/cropped-image',
 ];
 
+entries['examples'] = [
+  './examples/examples.js',
+  'react-router',
+]
+
 module.exports = {
   devtool: 'source-map',
   entry: entries,
   output: {
     path: path.join(__dirname),
     filename: '[name].js',
+    publicPath: '/',
   },
   plugins: [
-    //new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin("dist/vendor", "dist/vendor.bundle.js"),
+    new webpack.optimize.CommonsChunkPlugin('dist/vendor', 'dist/vendor.bundle.js'),
   ],
   resolve: {
     modulesDirectories: [
@@ -66,7 +73,7 @@ module.exports = {
   },
   module: {
     preLoaders: [{
-      test: /\.js$/,
+      test: /\.jsx$/,
       loader: 'eslint-loader',
       include: includeDirs,
     }],
@@ -82,9 +89,6 @@ module.exports = {
     },{
       test: /\.(js)$/,
       loader: 'babel',
-      query: {
-        presets: ['react', 'es2015'],
-      },
       include: includeDirs,
     },{
       test: /\.yaml/,
@@ -98,9 +102,9 @@ module.exports = {
   },
   postcss: function () {
     return  [
-      stylelint({
-        'extends': 'stylelint-config-standard'
-      }),
+      //stylelint({
+      //  'extends': 'stylelint-config-standard'
+      //}),
       autoprefixer,
       initial,
     ];

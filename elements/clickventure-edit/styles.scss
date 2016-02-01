@@ -1,0 +1,48 @@
+clickventure-edit {
+  display: block;
+  height: 600px;
+  overflow: hidden;
+
+  > div {
+    display: flex;
+    height: 100%;
+
+    .clickventure-edit-nodes-list {
+      width: 250px;
+      overflow: auto;
+    }
+
+    .clickventure-edit-nodes-list-item {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+      background-color: #fff;
+      border: 3px #e0e0e0 solid;
+      display: flex;
+      font-size: 12px;
+      height: 50px;
+
+      &-selected {
+        outline: 2px solid teal;
+
+        .clickventure-edit-nodes-list-item-status {
+          background-color: teal;
+        }
+      }
+    }
+
+    .clickventure-edit-nodes-list-item-status {
+      flex-basis: 8%;
+      height: 100%;
+      background-color: lightgray;
+
+      &-start {
+        background-color: lightblue;
+      }
+
+      &-finish{
+        background-color: lightgreen;
+      }
+    }
+  }
+}

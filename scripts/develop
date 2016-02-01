@@ -36,7 +36,7 @@ function startWebpack () {
   console.log('Starting Webpack');
   webpack = new Van({
     scripts: {
-      wepback: 'node_modules/.bin/webpack --watch --color',
+      wepback: 'node_modules/.bin/webpack-dev-server --inline --hot --watch --color --history-api-fallback --content-base examples/ --output-path /',
     }
   });
   webpack.start();

@@ -14,7 +14,7 @@ describe('<Question>', function () {
 
     let answers = [];
     let selectedAnswer = {};
-    let poll = { data: { answers } };
+    let poll = { data: { answers }};
 
     let props = {
       actions: {
