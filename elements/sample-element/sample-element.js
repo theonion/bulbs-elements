@@ -1,20 +1,47 @@
 import React, { PropTypes } from 'react';
+import BulbsElement from 'bulbs-elements/bulbs-element';
 import register from 'bulbs-elements/register';
+import './sample-element.scss';
 
-export default class SampleElement extends React.Component {
+import SampleElementStore from './store';
+
+class SampleElement extends BulbsElement {
+  initialDispatch () {
+    this.store.actions.initialAction();
+  }
+
   render () {
+    let {
+      sample,
+    } = this.state;
+
     return (
       <div>
-        <h1>Check out this SICK example!</h1>
-        <p>It is so effin SICK!</p>
-        <span className="prop-text">{ this.props.thisProp }</span>
+        <h1>Check out this sick example!</h1>
+        <h2>Check out these things:</h2>
+        <hr/>
+        <ul>
+          {
+            sample.things.map((thing, index) => {
+              return <li key={index}>
+                { thing }
+              </li>;
+            })
+          }
+        </ul>
       </div>
     );
   }
 }
 
+SampleElement.displayName = 'SampleElement';
+
+SampleElement.store = SampleElementStore;
+
 SampleElement.propTypes = {
-  thisProp: PropTypes.string,
+
 };
 
 register('sample-element', SampleElement);
+
+export default SampleElement;

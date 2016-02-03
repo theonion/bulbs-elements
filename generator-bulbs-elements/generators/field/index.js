@@ -38,7 +38,7 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     var templateProps = {
-      fieldName: inflection.classify(this.porps.fieldName),
+      fieldName: inflection.classify(this.props.fieldName),
       fieldPathName: inflection.dasherize(this.props.fieldName),
       fieldClassName: inflection.classify(this.props.fieldName, false),
       elementName: this.props.elementName,

@@ -13,3 +13,5 @@ let examples = {
     },
   },
 };
+
+export default examples;

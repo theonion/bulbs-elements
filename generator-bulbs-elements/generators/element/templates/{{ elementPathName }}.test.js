@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
-import testElement from 'bulbs-elemnets/test/element';
+import testElement from 'bulbs-elements/test/element';
 
 testElement('<<%= elementName %>>', function () {
 	beforeEach(function (done) {
@@ -16,6 +16,6 @@ testElement('<<%= elementName %>>', function () {
 	});
 
 	it('renders an <<%= elementName %>>', function () {
-		assert.equal(this.element.tagName, '<%= elementName %>');
+		assert.equal(this.element.tagName.toLowerCase(), '<%= elementName %>');
 	});
 });

@@ -4,11 +4,14 @@ let examples = {
     'Basic Example': {
       render: function () {
         return `
-          <sample-element></sample-element>
+          <sample-element
+            attribute="value"
+          >
+          </sample-element
         `;
       },
-    }
-  }
+    },
+  },
 };
 
 export default examples;

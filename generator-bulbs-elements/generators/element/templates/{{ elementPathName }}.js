@@ -32,4 +32,4 @@ class <%= elementClassName %> extends BulbsElement {
 
 register('<%= elementName %>', <%= elementClassName %>);
 
-export default <%= elementClassName %>
+export default <%= elementClassName %>;
