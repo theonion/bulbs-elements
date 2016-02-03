@@ -7,7 +7,7 @@ export default function Result (props) {
     answer,
     poll,
   } = props;
-  let percentResult = `${(answer.total_votes / poll.total_votes) * 100}%`;
+  let percentResult = `${(answer.total_votes / poll.data.total_votes) * 100}%`;
 
   return (
     <div className={className}>
@@ -15,12 +15,14 @@ export default function Result (props) {
         className='bulbs-poll-answer-bar'
         style={{ width: percentResult }}
       />
-      <p className='bulbs-poll-answer-title'>
+      <div className='bulbs-poll-answer-title'>
         <span className='bulbs-poll-answer-result'>
           { percentResult }
         </span>
-        { answer.answer_text }
-      </p>
+        <p>
+          { answer.answer_text }
+        </p>
+      </div>
     </div>
   );
 }

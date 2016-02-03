@@ -12,7 +12,9 @@ describe('<bulbs-poll> <Result>', function () {
           sodahead_id: 1,
         },
         poll: {
-          total_votes: 200,
+          data: {
+            total_votes: 200,
+          },
         },
       };
 
@@ -22,12 +24,12 @@ describe('<bulbs-poll> <Result>', function () {
             className='bulbs-poll-answer-bar'
             style={{ width: '25%' }}
           />
-          <p className='bulbs-poll-answer-title'>
+          <div className='bulbs-poll-answer-title'>
             <span className='bulbs-poll-answer-result'>
               25%
             </span>
-            the answer
-          </p>
+            <p>the answer</p>
+          </div>
         </div>
       );
     });

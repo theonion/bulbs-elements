@@ -11,5 +11,4 @@ node_modules/.bin/webpack-dev-server \
   --content-base examples/ \
   --output-path / \
   --config webpack.config.hot.js \
-  --quiet \
-  --lazy \
+  --quiet

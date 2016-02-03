@@ -1,12 +1,15 @@
 {
   "id": 1,
   "question_text": "How — ARE you?",
+  "total_votes": 200,
   "answers": [
     {
       "answer_text": "answer A",
+      "total_votes": 50,
       "id": 1
     }, {
       "answer_text": "answer B",
+      "total_votes": 150,
       "id": 2
     }
   ]

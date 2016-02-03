@@ -38,17 +38,54 @@ bulbs-poll {
     }
   }
 
+  .bulbs-poll-result {
+    background: lightgray;
+    display: flex;
+    margin-bottom: 0;
+    margin: 1em;
+    padding: 1em;
+    position: relative;
+  }
+
+  .bulbs-poll-results-list {
+    display: flex;
+    flex-direction: column;
+  }
+
   .bulbs-poll-vote {
     align-self: center;
     background-color: lightgray;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    padding: .5em 1.5em;
     font-size: 1.5em;
+    padding: .5em 1.5em;
 
     &[disabled] {
       cursor: not-allowed;
     }
+  }
+
+  .bulbs-poll-answer {
+    position: relative;
+  }
+
+  .bulbs-poll-answer-bar {
+    background-color: lightblue;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+  }
+
+  .bulbs-poll-answer-result {
+    float: right;
+    font-size: 0.8em;
+  }
+
+  .bulbs-poll-answer-title {
+    flex-grow: 1;
+    z-index: 1;
   }
 }

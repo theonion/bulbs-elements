@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
+import Cover from './cover';
 import Result from './result';
 
 export default function Results (props) {
@@ -11,15 +12,18 @@ export default function Results (props) {
 
   return (
     <div className={className}>
-      {
-        poll.answers.map((answer, index) => {
-          return <Result
-            key={index}
-            answer={answer}
-            poll={poll}
-          />;
-        })
-      }
+      <Cover poll={poll} />
+      <div className='bulbs-poll-results-list'>
+        {
+          poll.data.answers.map((answer, index) => {
+            return <Result
+              key={index}
+              answer={answer}
+              poll={poll}
+            />;
+          })
+        }
+      </div>
     </div>
   );
 }

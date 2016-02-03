@@ -1,7 +1,7 @@
 let examples = {
   element: 'bulbs-poll',
   examples: {
-    'Basic Example': {
+    'Standard Example': {
       render: function () {
         return `
           <bulbs-poll
@@ -27,9 +27,23 @@ let examples = {
           <bulbs-poll src="httx://not-a-valid-url:oldsport/">
           </bulbs-poll>
         `;
-      }
-    }
+      },
+    },
+    'Results': {
+      render: function () {
+        localStorage.setItem('bulbs-poll:example:vote', JSON.stringify({
+          id: 293849,
+          total_votes: 23,
+        }));
+        return `
+          <bulbs-poll
+            src="http://localhost:8080/fixtures/bulbs-poll/poll-data.json"
+            poll-id="example"
+          >
+          </bulbs-poll>
+        `;
+      },
+    },
   },
 };
-
 export default examples;
