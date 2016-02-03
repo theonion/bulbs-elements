@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import SelectedAnswerField from './selected-answer';
 
-describe('SelectedAnswerField', function () {
+describe('<bulbs-poll> SelectedAnswerField', function () {
   let { actions } = SelectedAnswerField;
 
   it('initialState', function () {

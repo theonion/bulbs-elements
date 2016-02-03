@@ -22,6 +22,7 @@ export default function Question (props) {
   return (
     <div>
       <Cover poll={poll} />
+
       <RequestError
         error={poll.requestError}
         reset={resetFetchPollData}
@@ -41,6 +42,7 @@ export default function Question (props) {
         selectAnswer={selectAnswer}
         selectedAnswer={selectedAnswer}
       />
+
       <VoteButton
         selectedAnswer={selectedAnswer}
         makeVoteRequest={makeVoteRequest}

@@ -11,14 +11,19 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     this.log(onionsay(
-      'Generate a ' + chalk.green('bulbs-elements') + ' and sharpen the knife.'
+      'Generate a ' + chalk.green('bulbs-element state field')
     ));
 
     var prompts = [{
       type: 'input',
-      name: 'name',
-      message: 'What is the name of this element? eg: bulbs-poll. This will become the tag name: <bulbs-poll />',
+      name: 'elementName',
+      message: 'What element is this field for? eg: bulbs-poll.',
       required: true
+    }, {
+      type: 'input',
+      name: 'fieldName',
+      message: 'What is the name of this field? eg: `selectedWidget`',
+      required: true,
     }];
 
     this.prompt(prompts, function (props) {
@@ -28,18 +33,20 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   paths: function () {
-    this.destinationRoot(path.join(__dirname, '../../../elements', inflection.dasherize(this.props.name)));
+    this.destinationRoot(path.join(__dirname, '../../../elements', this.props.elementName, 'fields'));
   },
 
   writing: function () {
     var templateProps = {
-      elementName: inflection.dasherize(this.props.name),
-      elementPathName: inflection.dasherize(this.props.name),
-      elementClassName: inflection.classify(this.props.name.replace('-', '_'), false)
+      fieldName: inflection.classify(this.porps.fieldName),
+      fieldPathName: inflection.dasherize(this.props.fieldName),
+      fieldClassName: inflection.classify(this.props.fieldName, false),
+      elementName: this.props.elementName,
     };
     common.copyDirectory(this, templateProps);
   },
 
   install: function () {
+    console.log(chalk.green('Be sure to add your field to the element store at.'));
   }
 });

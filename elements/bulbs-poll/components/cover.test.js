@@ -3,7 +3,7 @@ import React from 'react';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
-describe('<Cover>', function () {
+describe('<bulbs-poll> <Cover>', function () {
   context('with a thumbnail', function () {
     it('renders a cover with a thumbnail', function () {
       let poll = {

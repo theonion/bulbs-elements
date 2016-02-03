@@ -8,7 +8,7 @@ import VoteButton from './vote-button';
 
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
-describe('<Question>', function () {
+describe('<bulbs-poll> <Question>', function () {
   it('renders the question', function () {
     let selectAnswer = function () {};
     let makeVoteRequest = function () {};

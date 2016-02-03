@@ -4,7 +4,7 @@ import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 // import { assert } from 'chai';
 
-describe('<Answers>', function () {
+describe('<bulbs-poll> <Answers>', function () {
   context('with no answers', function () {
     it('renders no answers', function () {
       let answers = [];

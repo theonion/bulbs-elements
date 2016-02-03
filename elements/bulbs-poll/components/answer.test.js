@@ -2,7 +2,7 @@ import Answer from './answer';
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
-describe('<Answer>', function () {
+describe('<bulbs-poll> <Answer>', function () {
   context('answer is not the selected answer', function () {
     it('renders answer as selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };

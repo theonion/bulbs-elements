@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
-import register from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import './<%= elementName %>.scss';
+import register from 'bulbs-elements/register';
+import './<%= elementPathName %>.scss';
 
 import <%= elementClassName %>Store from './store';
 
 class <%= elementClassName %> extends BulbsElement {
   initialDispatch () {
+    // Dispatch  your initial store actions here, they will
+    // trigger when the element is created.
+    // (good for fetching data from a cache, or network)
     // this.store.actions.initialAction();
   }
 
@@ -29,3 +32,4 @@ class <%= elementClassName %> extends BulbsElement {
 
 register('<%= elementName %>', <%= elementClassName %>);
 
+export default <%= elementClassName %>

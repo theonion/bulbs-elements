@@ -4,7 +4,7 @@ import PollStore from '../store';
 
 let store = new PollStore();
 
-describe('PollField', function () {
+describe('<bulbs-poll> PollField', function () {
   let { actions } = PollField;
 
   it('initialState', function () {

@@ -1,21 +1,31 @@
 import { Field, Action } from 'bulbs-elements/store';
 
+function cacheKey (pollId) {
+  return `bulbs-poll:${pollId}:vote`;
+}
+
 const VoteField = new Field({
-  initialState: {},
-  getCachedVoteData: new Action(function (state, poll) {
-    state.data = localStorage.getItem(`bulbs-poll:vote:${poll.data.id}`);
+  initialState: {
+    voted: false,
+  },
+  getCachedVoteData: new Action(function (state, pollId) {
+    let value = localStorage.getItem(cacheKey(pollId));
+    if (value) {
+      state.voted = true;
+      state.data = JSON.parse(value);
+    }
     return state;
   }),
   makeVoteRequest: new Action(function (state, answer, store) {
     let { poll } = store.state;
-    this.request(`http://onion.sodahead.com/api/polls/${poll.data.id}`, {
+    this.request(`https://onion.sodahead.com/api/polls/${poll.data.id}/vote/`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        /* convert answer into vote data */
+        answer: answer.sodahead_id,
       }),
       success: store.actions.voteRequestSuccess,
       failure: store.actions.voteRequestFailure,
@@ -25,8 +35,11 @@ const VoteField = new Field({
     state.requestInFlight = true;
     return state;
   }),
-  voteRequestSuccess: new Action(function (state, data) {
-    state.data = data.vote;
+  voteRequestSuccess: new Action(function (state, data, store) {
+    let { poll } = store.state;
+    localStorage.setItem(cacheKey(poll.data.id), JSON.stringify(data.vote));
+    state.voted = true;
+    state.data = data;
     state.requestInFlight = false;
     return state;
   }),

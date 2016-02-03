@@ -2,7 +2,7 @@ import VoteButton from './vote-button';
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
-describe('<VoteButton>', function () {
+describe('<bulbs-poll> <VoteButton>', function () {
   context('with selectedAnswer', function () {
     it('renders active vote button', function () {
       let props = {
