@@ -18,7 +18,6 @@ class BulbsPoll extends BulbsElement {
   render () {
     if (this.state.vote.voted) {
       return <PollResults
-        actions={this.store.actions}
         data={this.state}
       />;
     }
@@ -36,8 +35,8 @@ BulbsPoll.displayName = 'BulbsPoll';
 BulbsPoll.store = PollStore;
 
 BulbsPoll.propTypes = {
-  src: PropTypes.string.isRequired,
   pollId: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
 };
 
 register('bulbs-poll', BulbsPoll);

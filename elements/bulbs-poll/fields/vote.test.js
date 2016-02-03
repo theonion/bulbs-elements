@@ -34,9 +34,9 @@ describe('<bulbs-poll> VoteField', function () {
       let nextState = actions.getCachedVoteData.invoke({}, 1);
       assert.deepEqual(nextState, {
         voted: true,
-        data: data,
+        data,
       });
-    })
+    });
   });
 
   describe('makeVoteRequest', function() {
@@ -91,7 +91,7 @@ describe('<bulbs-poll> VoteField', function () {
     it('caches response data', function () {
       let vote = { id: 1 };
       let success = { vote };
-      let nextState = actions.voteRequestSuccess.invoke({}, success, store);
+      actions.voteRequestSuccess.invoke({}, success, store);
       assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:1:vote')), vote);
     });
   });
