@@ -44,6 +44,19 @@ let examples = {
         `;
       },
     },
+    'avclub local': {
+      render: function () {
+        let pollId = '230932';
+        localStorage.removeItem(`bulbs-poll:${pollId}:vote`);
+        return `
+          <bulbs-poll
+            src="http://avclub.local/poll/${pollId}.json"
+            poll-id="${pollId}"
+          >
+          </bulbs-poll>
+        `;
+      },
+    }
   },
 };
 export default examples;

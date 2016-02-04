@@ -18,15 +18,13 @@ const VoteField = new Field({
   }),
   makeVoteRequest: new Action(function (state, answer, store) {
     let { poll } = store.state;
-    this.request(`https://onion.sodahead.com/api/polls/${poll.data.id}/vote/`, {
+    this.request(`https://onion.sodahead.com/api/polls/${poll.data.sodahead_id}/vote/`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        answer: answer.sodahead_id,
-      }),
+      body: `answer=${answer.sodahead_id}`,
       success: store.actions.voteRequestSuccess,
       failure: store.actions.voteRequestFailure,
       error: store.actions.voteRequestError,
@@ -38,8 +36,9 @@ const VoteField = new Field({
   voteRequestSuccess: new Action(function (state, data, store) {
     let { poll } = store.state;
     localStorage.setItem(cacheKey(poll.data.id), JSON.stringify(data.vote));
+    store.actions.setPollTotalVotes(data.poll.totalVotes);
     state.voted = true;
-    state.data = data;
+    state.data = data.vote;
     state.requestInFlight = false;
     return state;
   }),

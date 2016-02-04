@@ -7,7 +7,9 @@ export default function Result (props) {
     answer,
     poll,
   } = props;
-  let percentResult = `${(answer.total_votes / poll.data.total_votes) * 100}%`;
+  let { total_votes } = answer;
+  let percent = (total_votes / poll.data.total_votes) * 100
+  let percentResult = `${percent.toFixed(0)}%`;
 
   return (
     <div className={className}>

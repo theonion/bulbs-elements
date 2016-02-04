@@ -2,15 +2,19 @@ import { assert } from 'chai';
 import VoteField from './vote';
 import PollStore from '../store';
 
-let store = new PollStore();
-store.state.poll = {
-  data: {
-    id: 1,
-  },
-};
 
 describe('<bulbs-poll> VoteField', function () {
+  let store = new PollStore;
   let { actions } = VoteField;
+
+  beforeEach(function () {
+    store.state.poll = {
+      data: {
+        id: 1,
+        sodahead_id: 10,
+      },
+    };
+  });
 
   afterEach(function () {
     localStorage.clear();
@@ -47,7 +51,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('makes a POST request to the vote endpoint', function () {
-      let url = 'https://onion.sodahead.com/api/polls/1/vote/';
+      let url = 'https://onion.sodahead.com/api/polls/10/vote/';
       let answer = {
         sodahead_id: 123456789,
       };
@@ -60,9 +64,7 @@ describe('<bulbs-poll> VoteField', function () {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          answer: 123456789,
-        }),
+        body: `answer=123456789`,
         success: store.actions.voteRequestSuccess,
         failure: store.actions.voteRequestFailure,
         error: store.actions.voteRequestError,
@@ -76,23 +78,38 @@ describe('<bulbs-poll> VoteField', function () {
   });
 
   describe('voteRequestSuccess', function() {
+    let nextState, vote, poll, success;
+    let actionSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
+
+    beforeEach(function () {
+      vote = { id: 1 };
+      poll = { id: 1, totalVotes: 1 };
+      success = { vote, poll };
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
+    });
+
+    afterEach(function () {
+      actionSpy.reset();
+    });
+
     it('sets requestInFlight to false', function () {
-      let nextState = actions.voteRequestSuccess.invoke({}, {}, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('sets state.voted to true', function () {
-      let vote = {};
-      let success = { vote };
-      let nextState = actions.voteRequestSuccess.invoke({}, success, store);
       assert.equal(nextState.voted, true);
     });
 
     it('caches response data', function () {
-      let vote = { id: 1 };
-      let success = { vote };
-      actions.voteRequestSuccess.invoke({}, success, store);
       assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:1:vote')), vote);
+    });
+
+    it('sets state.data', function () {
+      assert.deepEqual(nextState.data, vote);
+    });
+
+    it('calls setPollTotalVotes', function () {
+      actionSpy.should.have.been.called.once.with(1);
     });
   });
 

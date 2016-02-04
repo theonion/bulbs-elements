@@ -77,4 +77,14 @@ describe('<bulbs-poll> PollField', function () {
       assert.equal(nextState.requestError, error);
     });
   });
+
+  describe('setPollTotalVotes', function () {
+    it('sets the total_votes field of poll.data', function () {
+      let startState = {
+        data: {},
+      };
+      let nextState = actions.setPollTotalVotes.invoke(startState, 10);
+      assert.equal(nextState.data.total_votes, 10);
+    });
+  });
 });
