@@ -12,7 +12,7 @@ import './styles.scss';
 class BulbsPoll extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchPollData(this.props.src);
-    this.store.actions.getCachedVoteData(this.props.pollId);
+    this.store.actions.getCachedVoteData(this.props.src);
   }
 
   render () {

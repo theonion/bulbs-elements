@@ -1,5 +1,4 @@
 import { assert } from 'chai';
-import fetchMock from 'fetch-mock';
 import testElement from 'bulbs-elements/test/element';
 
 testElement('<sample-element>', function () {
@@ -9,7 +8,7 @@ testElement('<sample-element>', function () {
       tag: 'sample-element',
       props: {
         // src: '/whatever.json',
-      }
+      },
     });
 
     this.actions = this.element.reactElement.store.actions;

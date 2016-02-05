@@ -4,7 +4,7 @@ const SampleField = new Field({
   initialState: {
     things: [],
   },
-  initialAction: new Action(function (state, payload) {
+  initialAction: new Action(function () {
     return {
       things: [
         'Thing One',

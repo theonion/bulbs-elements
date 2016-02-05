@@ -2,9 +2,8 @@ import { assert } from 'chai';
 import VoteField from './vote';
 import PollStore from '../store';
 
-
 describe('<bulbs-poll> VoteField', function () {
-  let store = new PollStore;
+  let store = new PollStore();
   let { actions } = VoteField;
 
   beforeEach(function () {
@@ -76,10 +75,12 @@ describe('<bulbs-poll> VoteField', function () {
       assert.isTrue(nextState.requestInFlight);
     });
   });
-
   describe('voteRequestSuccess', function() {
-    let nextState, vote, poll, success;
-    let actionSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
+    let nextState;
+    let vote;
+    let poll;
+    let success;
+    let setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
 
     beforeEach(function () {
       vote = { id: 1 };
@@ -89,7 +90,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     afterEach(function () {
-      actionSpy.reset();
+      setPollTotalVotesSpy.reset();
     });
 
     it('sets requestInFlight to false', function () {
@@ -109,7 +110,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('calls setPollTotalVotes', function () {
-      actionSpy.should.have.been.called.once.with(1);
+      setPollTotalVotesSpy.should.have.been.called.once.with(1);
     });
   });
 

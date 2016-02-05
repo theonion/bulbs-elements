@@ -8,8 +8,8 @@ const PollField = new Field({
     requestInFlight: false,
   },
   setPollTotalVotes: new Action(function (state, count) {
-      state.data.total_votes = count;
-      return state;
+    state.data.total_votes = count;
+    return state;
   }),
   fetchPollData: new Action(function (state, src, store) {
     src || (src = store.src);
@@ -22,7 +22,7 @@ const PollField = new Field({
     state.requestInFlight = true;
     return state;
   }),
-  fetchPollDataSuccess: new Action(function (state, data, store) {
+  fetchPollDataSuccess: new Action(function (state, data) {
     state.data = data;
     state.requestInFlight = false;
     return state;
