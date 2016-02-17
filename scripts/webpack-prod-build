@@ -4,4 +4,5 @@ node_modules/.bin/webpack \
   --color \
   --optimize-minimize \
   --devtool source-map \
+  --progress \
   --config webpack.config.prod.js

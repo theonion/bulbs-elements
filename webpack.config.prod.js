@@ -7,6 +7,7 @@ var config = Object.assign({}, webpackBase.config);
 config.plugins = [
   plugins.chunker,
   plugins.sassExtractor,
+  plugins.uglify,
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('production'),

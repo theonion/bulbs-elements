@@ -54,6 +54,11 @@ var sassExtractor = new ExtractTextPlugin('[name].css');
 exports.plugins = {
   chunker: new webpack.optimize.CommonsChunkPlugin('dist/vendor', 'dist/vendor.bundle.js'),
   sassExtractor: sassExtractor,
+  uglify: new webpack.optimize.UglifyJsPlugin({
+    compress: {
+        warnings: false
+    }
+  }),
 };
 
 exports.loaders = {

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -e
+LOG_PREFIX="[RELEASE] [$(date)]"
+function secho {
+  echo "$LOG_PREFIX $1"
+}
+
+TAG=$1
+
+if [ -z $TAG ]; then
+  secho "You must provide a tag to scripts/tag-and-release"
+  secho "   e.g. scripts/tag-and-release 0.3.12"
+  exit 1
+fi
+
+secho "Checking out detached HEAD"
+git checkout origin/master --quiet
+
+secho "Cleaning dist folder..."
+rm -rf "dist/*"
+
+secho "Running scripts/webpack-prod-build"
+scripts/webpack-prod-build
+
+secho "Adding dist to detached HEAD"
+git add -f "dist/*"
+
+secho "Tagging and Releasing"
+git commit --quiet -m "production build for release tag: $TAG"
+# git tag $TAG
+# git push origin $TAG
+
+secho "Resetting local checkout"
+git checkout - --quiet
+
+node_modules/.bin/onionsay "NEW VERSION: $TAG"
