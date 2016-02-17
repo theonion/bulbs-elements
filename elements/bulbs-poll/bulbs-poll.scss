@@ -1,4 +1,11 @@
-@mixin reset {
+$accent-color: green;
+$low-contrast: lightgray;
+$highlight-color: lightblue;
+
+// First we do some resetting.
+// This has to be in it's own block because the production build
+// likes to re-order/combine things.
+bulbs-poll {
   all: initial;
   box-sizing: border-box;
 
@@ -8,13 +15,7 @@
   }
 }
 
-$accent-color: green;
-$low-contrast: lightgray;
-$highlight-color: lightblue;
-
 bulbs-poll {
-  @include reset;
-
   display: block;
   font-family: sans-serif;
   border-top: 2px solid $accent-color;
