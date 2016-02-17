@@ -91,9 +91,7 @@ exports.loaders = {
     test: /\.scss$/,
     loader: sassExtractor.extract(
       'style-loader',
-      'css-loader',
-      'postcss-loader',
-      'sass-loader'
+      'css-loader!postcss-loader!sass-loader'
     ),
     include: includeDirs,
   },
@@ -126,8 +124,11 @@ exports.config = {
       //stylelint({
       //  'extends': 'stylelint-config-standard'
       //}),
+      initial({
+        reset: 'all',
+        replace: true,
+      }),
       autoprefixer,
-      initial,
     ];
   },
 };

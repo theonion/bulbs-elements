@@ -34,7 +34,6 @@ const VoteField = new Field({
     return state;
   }),
   voteRequestSuccess: new Action(function (state, data, store) {
-    let { poll } = store.state;
     localStorage.setItem(cacheKey(store.state.src), JSON.stringify(data.vote));
     store.actions.setPollTotalVotes(data.poll.totalVotes);
     store.actions.updateAnswerVoteCount(data.vote);

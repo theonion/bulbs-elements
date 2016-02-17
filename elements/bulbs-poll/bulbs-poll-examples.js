@@ -33,14 +33,14 @@ let examples = {
     },
     'Results': {
       render: function () {
-        localStorage.setItem('bulbs-poll:example:vote', JSON.stringify({
+        let src = 'http://localhost:8080/fixtures/bulbs-poll/poll-data.json';
+        localStorage.setItem(`bulbs-poll:${src}:vote`, JSON.stringify({
           id: 293849,
           total_votes: 23,
         }));
         return `
           <bulbs-poll
-            src="http://localhost:8080/fixtures/bulbs-poll/poll-data.json"
-            poll-id="example"
+            src="${src}"
           >
           </bulbs-poll>
         `;
@@ -49,11 +49,11 @@ let examples = {
     'avclub local': {
       render: function () {
         let pollId = '230936';
-        //localStorage.removeItem(`bulbs-poll:${pollId}:vote`);
+        let src = `http://avclub.local/poll/${pollId}.json`;
+        //localStorage.removeItem(`bulbs-poll:${src}:vote`);
         return `
           <bulbs-poll
-            src="http://avclub.local/poll/${pollId}.json"
-            poll-id="${pollId}"
+            src="${src}"
           >
           </bulbs-poll>
         `;

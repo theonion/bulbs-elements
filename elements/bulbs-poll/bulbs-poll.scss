@@ -1,20 +1,37 @@
+@mixin reset {
+  all: initial;
+  box-sizing: border-box;
+
+  & * {
+    all: initial;
+    box-sizing: border-box;
+  }
+}
+
+$accent-color: green;
+$low-contrast: lightgray;
+$highlight-color: lightblue;
+
 bulbs-poll {
+  @include reset;
+
   display: block;
   font-family: sans-serif;
-  border-top: 2px solid green;
+  border-top: 2px solid $accent-color;
   background: #fafafa;
   padding: 1em;
 
- > div {
+  > div {
     display: flex;
     flex-direction: column;
   }
-}
+
   .bulbs-poll-cover {
     margin: 1em;
   }
 
   .bulbs-poll-cover-title {
+
   }
 
   .bulbs-poll-cover-image {
@@ -27,11 +44,15 @@ bulbs-poll {
   }
 
   .bulbs-poll-answer {
-    background: lightgray;
+    &, & * {
+      cursor: pointer;
+    }
+    background: $low-contrast;
     display: flex;
     list-style: none;
     margin: 1em;
     padding: 1em;
+    user-select: none;
 
     svg {
       margin-right: 1em;
@@ -39,7 +60,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-result {
-    background: lightgray;
+    background: $low-contrast;
     display: flex;
     margin-bottom: 0;
     margin: 1em;
@@ -54,7 +75,7 @@ bulbs-poll {
 
   .bulbs-poll-vote {
     align-self: center;
-    background-color: lightgray;
+    background-color: $low-contrast;
     border-radius: 8px;
     border: none;
     cursor: pointer;
@@ -71,7 +92,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-answer-bar {
-    background-color: lightblue;
+    background-color: $highlight-color;
     height: 100%;
     left: 0;
     position: absolute;
@@ -88,4 +109,4 @@ bulbs-poll {
     flex-grow: 1;
     z-index: 1;
   }
-
+}

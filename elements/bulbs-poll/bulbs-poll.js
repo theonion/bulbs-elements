@@ -36,7 +36,6 @@ BulbsPoll.displayName = 'BulbsPoll';
 BulbsPoll.store = PollStore;
 
 BulbsPoll.propTypes = {
-  pollId: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
 };
 
