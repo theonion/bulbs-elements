@@ -35,8 +35,9 @@ const VoteField = new Field({
   }),
   voteRequestSuccess: new Action(function (state, data, store) {
     let { poll } = store.state;
-    localStorage.setItem(cacheKey(poll.data.id), JSON.stringify(data.vote));
+    localStorage.setItem(cacheKey(store.state.src), JSON.stringify(data.vote));
     store.actions.setPollTotalVotes(data.poll.totalVotes);
+    store.actions.updateAnswerVoteCount(data.vote);
     state.voted = true;
     state.data = data.vote;
     state.requestInFlight = false;

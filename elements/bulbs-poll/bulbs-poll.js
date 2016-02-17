@@ -10,12 +10,8 @@ import PollResults from './components/results';
 import './bulbs-poll.scss';
 
 class BulbsPoll extends BulbsElement {
-  constructor (props) {
-    console.log('BulbsPoll');
-    super(props);
-  }
-
   initialDispatch () {
+    this.store.actions.setSrc(this.props.src);
     this.store.actions.fetchPollData(this.props.src);
     this.store.actions.getCachedVoteData(this.props.src);
   }

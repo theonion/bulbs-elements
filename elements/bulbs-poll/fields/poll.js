@@ -11,6 +11,22 @@ const PollField = new Field({
     state.data.total_votes = count;
     return state;
   }),
+  updateAnswerVoteCount: new Action(function (state, vote) {
+    let answer = state.data.answers.find((eachAnswer) => {
+      return eachAnswer.sodahead_id === vote.answer.id;
+    });
+
+    let nextAnswer = Object.assign({}, answer);
+    let answerIndex = state.data.answers.indexOf(answer);
+    nextAnswer.total_votes = vote.answer.totalVotes;
+    state.data.answers = [
+      ...state.data.answers.slice(0, answerIndex),
+      nextAnswer,
+      ...state.data.answers.slice(answerIndex + 1),
+    ];
+
+    return state;
+  }),
   fetchPollData: new Action(function (state, src, store) {
     src || (src = store.src);
     store.src = src;

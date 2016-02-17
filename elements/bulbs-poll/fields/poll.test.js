@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import fetchMock from 'fetch-mock';
 import PollField from './poll';
 import PollStore from '../bulbs-poll-store';
 
@@ -20,8 +21,14 @@ describe('<bulbs-poll> PollField', function () {
     let src = 'http://example.tld/poll/:id';
     let requestSpy = chai.spy.on(actions.fetchPollData, 'request');
 
+    beforeEach(function () {
+      // just preventing making a network call here
+      fetchMock.mock(src, {});
+    });
+
     afterEach(function () {
       requestSpy.reset();
+      fetchMock.restore();
     });
 
     it('makes GET request to the poll endpoint', function () {

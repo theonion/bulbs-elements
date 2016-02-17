@@ -47,6 +47,11 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    console.log(chalk.green('Be sure to add your field to the element store at.'));
+    console.log(
+      chalk.green('Be sure to add your field to the element store at:')
+    );
+    console.log(
+      chalk.blue(this.destinationPath('../'+inflection.dasherize(this.props.elementName)+'-store.js'))
+    );
   }
 });

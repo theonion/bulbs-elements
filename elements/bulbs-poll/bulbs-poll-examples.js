@@ -48,7 +48,7 @@ let examples = {
     },
     'avclub local': {
       render: function () {
-        let pollId = '230933';
+        let pollId = '230936';
         //localStorage.removeItem(`bulbs-poll:${pollId}:vote`);
         return `
           <bulbs-poll

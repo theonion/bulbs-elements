@@ -10,5 +10,4 @@ node_modules/.bin/webpack-dev-server \
   --history-api-fallback \
   --content-base examples/ \
   --output-path / \
-  --config webpack.config.hot.js \
-  --quiet
+  --config webpack.config.hot.js

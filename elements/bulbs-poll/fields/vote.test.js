@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import fetchMock from 'fetch-mock';
 import VoteField from './vote';
 import PollStore from '../bulbs-poll-store';
 
@@ -11,8 +12,11 @@ describe('<bulbs-poll> VoteField', function () {
       data: {
         id: 1,
         sodahead_id: 10,
+        answers: [],
       },
     };
+
+    store.state.src = 'STATE-SRC';
   });
 
   afterEach(function () {
@@ -44,13 +48,19 @@ describe('<bulbs-poll> VoteField', function () {
 
   describe('makeVoteRequest', function() {
     let requestSpy = chai.spy.on(actions.makeVoteRequest, 'request');
+    let url = 'https://onion.sodahead.com/api/polls/10/vote/';
+
+    beforeEach(function () {
+      // not testing response, just avoiding an http call
+      fetchMock.mock(url, {});
+    });
 
     afterEach(function () {
       requestSpy.reset();
+      fetchMock.restore();
     });
 
     it('makes a POST request to the vote endpoint', function () {
-      let url = 'https://onion.sodahead.com/api/polls/10/vote/';
       let answer = {
         sodahead_id: 123456789,
       };
@@ -83,7 +93,7 @@ describe('<bulbs-poll> VoteField', function () {
     let setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
 
     beforeEach(function () {
-      vote = { id: 1 };
+      vote = { id: 1, answer: { } };
       poll = { id: 1, totalVotes: 1 };
       success = { vote, poll };
       nextState = actions.voteRequestSuccess.invoke({}, success, store);
@@ -102,7 +112,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('caches response data', function () {
-      assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:1:vote')), vote);
+      assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:STATE-SRC:vote')), vote);
     });
 
     it('sets state.data', function () {
