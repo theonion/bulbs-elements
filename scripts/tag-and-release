@@ -14,21 +14,21 @@ if [ -z $TAG ]; then
 fi
 
 secho "Checking out detached HEAD"
-git checkout origin/master --quiet
+git checkout $(git rev-parse HEAD) --quiet
 
 secho "Cleaning dist folder..."
-rm -rf "dist/*"
+rm -rf 'dist/*'
 
 secho "Running scripts/webpack-prod-build"
 scripts/webpack-prod-build
 
 secho "Adding dist to detached HEAD"
-git add -f "dist/*"
+git add -f 'dist/*'
 
 secho "Tagging and Releasing"
-git commit --quiet -m "production build for release tag: $TAG"
-#git tag $TAG
-#git push origin $TAG
+git commit --allow-empty --quiet -m "production build for release tag: $TAG"
+git tag $TAG
+git push origin $TAG
 
 node_modules/.bin/onionsay "NEW VERSION: $TAG"
 
