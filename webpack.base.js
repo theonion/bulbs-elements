@@ -56,7 +56,7 @@ exports.plugins = {
   sassExtractor: sassExtractor,
   uglify: new webpack.optimize.UglifyJsPlugin({
     compress: {
-        warnings: false
+      warnings: false
     }
   }),
 };
