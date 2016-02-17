@@ -3,7 +3,7 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 import register from 'bulbs-elements/register';
 import './<%= elementPathName %>.scss';
 
-import <%= elementClassName %>Store from './store';
+import <%= elementClassName %>Store from './<%= elementPathName %>-store';
 
 class <%= elementClassName %> extends BulbsElement {
   initialDispatch () {

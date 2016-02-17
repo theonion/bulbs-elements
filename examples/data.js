@@ -1,6 +1,6 @@
 import inflection from 'inflection';
 
-let context = require.context('../elements', true, /^\.\/[^\/]+\/examples\.js$/);
+let context = require.context('../elements', true, /^\.\/[^\/]+\/.+-examples\.js$/);
 let examples = context.keys().map(context).map((example) => example.default);
 let data = [];
 

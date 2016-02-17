@@ -6,3 +6,4 @@ karma_html/
 *.log
 benchmark/
 .test/
+dist/

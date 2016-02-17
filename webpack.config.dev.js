@@ -36,5 +36,4 @@ testFiles.forEach(function (file) {
   config.entry['.test/'+file.replace(/\.js$/, '')] = path.join(__dirname, file);
 });
 
-
 module.exports = config;

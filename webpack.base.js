@@ -26,6 +26,11 @@ elementDirs.forEach(function (dir) {
   entries['dist/' + elementName] = elementEntryPoint;
 });
 
+glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
+  var elementName = path.basename(path.dirname(cmsFile));
+  entries['dist/' + elementName + '.bulbs-cms'] = cmsFile;
+});
+
 // We will vendor common dependencies of our elements.
 entries['dist/vendor'] = [
   'react',

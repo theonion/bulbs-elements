@@ -2,14 +2,19 @@ import React, { PropTypes } from 'react';
 import register from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
-import PollStore from './store';
+import PollStore from './bulbs-poll-store';
 
 import PollQuestion from './components/question';
 import PollResults from './components/results';
 
-import './styles.scss';
+import './bulbs-poll.scss';
 
 class BulbsPoll extends BulbsElement {
+  constructor (props) {
+    console.log('BulbsPoll');
+    super(props);
+  }
+
   initialDispatch () {
     this.store.actions.fetchPollData(this.props.src);
     this.store.actions.getCachedVoteData(this.props.src);

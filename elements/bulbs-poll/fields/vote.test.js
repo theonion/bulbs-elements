@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import VoteField from './vote';
-import PollStore from '../store';
+import PollStore from '../bulbs-poll-store';
 
 describe('<bulbs-poll> VoteField', function () {
   let store = new PollStore();

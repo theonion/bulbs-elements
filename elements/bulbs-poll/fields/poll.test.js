@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import PollField from './poll';
-import PollStore from '../store';
+import PollStore from '../bulbs-poll-store';
 
 let store = new PollStore();
 

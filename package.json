@@ -86,6 +86,8 @@
     "react-proptypes-url-validator": "0.0.1",
     "redux": "^3.0.5",
     "redux-actions": "^0.9.1",
-    "redux-logger": "^2.3.2"
+    "redux-logger": "^2.3.2",
+    "vdom-virtualize": "^1.0.5",
+    "virtual-dom": "^2.1.1"
   }
 }
