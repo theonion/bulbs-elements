@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 set -e
+
+# This script:
+# * takes a single argument: scripts/tag-and-release TAG
+# * moves dist/ to .dist/
+# * checks out HEAD as a detached head
+# * runs a production build
+# * creates a git tag named TAG
+# * pushes that tag to github
+# * checks out the branch you started on
+# * deletes dist/
+# * restores .dist/ to dist/
+
+mv dist/ .dist/ || true
+
+function  cleanup_at_exit {
+  secho "Resetting local checkout"
+  git checkout - --quiet
+  rm -rf dist/ || true
+  mv .dist/ dist/ || true
+}
+trap cleanup_at_exit EXIT
+
 LOG_PREFIX="[RELEASE] [$(date)]"
 function secho {
   echo "$LOG_PREFIX $1"
@@ -16,9 +38,6 @@ fi
 secho "Checking out detached HEAD"
 git checkout $(git rev-parse HEAD) --quiet
 
-secho "Cleaning dist folder..."
-rm -rf 'dist/*'
-
 secho "Running scripts/webpack-prod-build"
 scripts/webpack-prod-build
 
@@ -32,5 +51,3 @@ git push origin $TAG
 
 node_modules/.bin/onionsay "NEW VERSION: $TAG"
 
-secho "Resetting local checkout"
-git checkout - --quiet
