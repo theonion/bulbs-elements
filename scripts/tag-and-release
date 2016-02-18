@@ -27,13 +27,12 @@ function secho {
   echo "$LOG_PREFIX $1"
 }
 
-TAG=$1
-
-if [ -z $TAG ]; then
-  secho "You must provide a tag to scripts/tag-and-release"
-  secho "   e.g. scripts/tag-and-release 0.3.12"
-  exit 1
-fi
+TAG=$(cat package.json \
+  | grep version \
+  | head -1 \
+  | awk -F: '{ print $2 }' \
+  | sed 's/[",]//g' \
+  | tr -d '[[:space:]]')
 
 secho "Checking out detached HEAD"
 git checkout $(git rev-parse HEAD) --quiet
