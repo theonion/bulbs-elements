@@ -12,6 +12,7 @@ const PollField = new Field({
     return state;
   }),
   updateAnswerVoteCount: new Action(function (state, vote) {
+    state.data = Object.assign({}, state.data);
     let answer = state.data.answers.find((eachAnswer) => {
       return eachAnswer.sodahead_id === vote.answer.id;
     });
@@ -24,6 +25,35 @@ const PollField = new Field({
       nextAnswer,
       ...state.data.answers.slice(answerIndex + 1),
     ];
+
+    return state;
+  }),
+  markWinningAnswers: new Action(function (state) {
+    let highScore = 0;
+    let winningAnswers = [];
+
+    state.data = Object.assign({}, state.data);
+
+    state.data.answers.forEach((eachAnswer) => {
+      if (eachAnswer.total_votes === highScore) {
+        winningAnswers.push(eachAnswer);
+      }
+      else if (eachAnswer.total_votes > highScore) {
+        highScore = eachAnswer.total_votes;
+        winningAnswers = [eachAnswer];
+      }
+    });
+
+    state.data.answers = state.data.answers.map((eachAnswer) => {
+      if (winningAnswers.indexOf(eachAnswer) === -1) {
+        return eachAnswer;
+      }
+      else {
+        let markedAnswer = Object.assign({}, eachAnswer);
+        markedAnswer.winning = true;
+        return markedAnswer;
+      }
+    });
 
     return state;
   }),

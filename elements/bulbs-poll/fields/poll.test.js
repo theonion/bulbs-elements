@@ -17,6 +17,105 @@ describe('<bulbs-poll> PollField', function () {
     });
   });
 
+  describe('setPollTotalVotes', function () {
+    it('sets data.total_votes', function () {
+      let state = {
+        data: {},
+      };
+      let nextState = actions.setPollTotalVotes.invoke(state, 15);
+      assert.equal(nextState.data.total_votes, 15);
+    });
+  });
+
+  describe('updateAnswerVoteCount', function () {
+    let vote = {
+      answer: {
+        id: '2',
+        totalVotes: 10,
+      },
+    };
+    let state = {
+      data: {
+        answers: [
+          { sodahead_id: '1' },
+          { sodahead_id: '2' },
+          { sodahead_id: '3' },
+        ],
+      },
+    };
+    let nextState;
+
+    beforeEach(function () {
+      nextState = actions.updateAnswerVoteCount.invoke(Object.assign({}, state), vote);
+    });
+
+    it('updates the matching answer\'s vote count', function () {
+      assert.equal(nextState.data.answers[1].total_votes, 10);
+    });
+
+    it('makes a copy of the matching answer', function () {
+      assert.isTrue(state.data.answers[0] === nextState.data.answers[0]);
+      assert.isFalse(state.data.answers[1] === nextState.data.answers[1]);
+    });
+  });
+
+  describe('markWinningAnswers', function () {
+    context('single winning answer', function () {
+      let state = {
+        data: {
+          answers: [
+            { total_votes: 10 },
+            { total_votes: 5 },
+            { total_votes: 0 },
+          ],
+        },
+      };
+      let nextState;
+
+      beforeEach(function () {
+        nextState = actions.markWinningAnswers.invoke(Object.assign({}, state));
+      });
+
+      it('marks the winning answer as winning', function () {
+        assert.isTrue(nextState.data.answers[0].winning);
+      });
+
+      it('makes a copy of the winning answer', function () {
+        assert.isFalse(state.data.answers[0] === nextState.data.answers[0]);
+        assert.isTrue(state.data.answers[1] === nextState.data.answers[1]);
+        assert.isTrue(state.data.answers[2] === nextState.data.answers[2]);
+      });
+    });
+
+    context('multiple winning answers', function () {
+      let state = {
+        data: {
+          answers: [
+            { total_votes: 10 },
+            { total_votes: 5 },
+            { total_votes: 10 },
+          ],
+        },
+      };
+      let nextState;
+
+      beforeEach(function () {
+        nextState = actions.markWinningAnswers.invoke(Object.assign({}, state));
+      });
+
+      it('marks the tying answers as winning', function () {
+        assert.isTrue(nextState.data.answers[0].winning);
+        assert.isTrue(nextState.data.answers[2].winning);
+      })
+
+      it('makes a copy of the tying answers', function () {
+        assert.isFalse(state.data.answers[0] === nextState.data.answers[0]);
+        assert.isTrue(state.data.answers[1] === nextState.data.answers[1]);
+        assert.isFalse(state.data.answers[2] === nextState.data.answers[2]);
+      });
+    });
+  });
+
   describe('fetchPollData', function () {
     let src = 'http://example.tld/poll/:id';
     let requestSpy = chai.spy.on(actions.fetchPollData, 'request');
