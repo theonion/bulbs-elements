@@ -8,11 +8,18 @@ const VoteField = new Field({
   initialState: {
     voted: false,
   },
-  getCachedVoteData: new Action(function (state, pollId) {
-    let value = localStorage.getItem(cacheKey(pollId));
+  getCachedVoteData: new Action(function (state, pollKey, store) {
+    let value = localStorage.getItem(cacheKey(pollKey));
     if (value) {
       state.voted = true;
       state.data = JSON.parse(value);
+      setImmediate(() => {
+        let selectedAnswer = store.state.poll.data.answers.find((answer) => {
+          return answer.sodahead_id === state.data.answer.id;
+        });
+        console.log('selectedAnswer', selectedAnswer);
+        store.actions.selectAnswer(selectedAnswer);
+      })
     }
     return state;
   }),

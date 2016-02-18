@@ -4,15 +4,19 @@ import VoteField from './vote';
 import PollStore from '../bulbs-poll-store';
 
 describe('<bulbs-poll> VoteField', function () {
-  let store = new PollStore();
   let { actions } = VoteField;
+  let store;
 
   beforeEach(function () {
+    store = new PollStore();
     store.state.poll = {
       data: {
         id: 1,
         sodahead_id: 10,
-        answers: [],
+        answers: [{
+          id: 15,
+          sodahead_id: 20,
+        }],
       },
     };
 
@@ -31,18 +35,31 @@ describe('<bulbs-poll> VoteField', function () {
 
   describe('getCachedVoteData', function () {
     it('ignores when localstorage value is blank', function () {
-      let nextState = actions.getCachedVoteData.invoke({}, 1);
+      let nextState = actions.getCachedVoteData.invoke({}, 1, store);
       assert.deepEqual(nextState, {});
     });
 
     it('gets the value from localstorage', function () {
-      let data = { its: 'data' };
+      let data = { answer: { id: 20 } };
       localStorage.setItem('bulbs-poll:1:vote', JSON.stringify(data));
-      let nextState = actions.getCachedVoteData.invoke({}, 1);
+      let nextState = actions.getCachedVoteData.invoke({}, 1, store);
       assert.deepEqual(nextState, {
         voted: true,
         data,
       });
+    });
+
+    it('sets the selected answer', function (done) {
+      let data = { answer: { id: 20 } };
+      localStorage.setItem('bulbs-poll:1:vote', JSON.stringify(data));
+      let nextState = actions.getCachedVoteData.invoke({}, 1, store);
+      setImmediate(() => {
+        assert.deepEqual(store.state.selectedAnswer, {
+          id: 15,
+          sodahead_id: 20,
+        });
+        done();
+      })
     });
   });
 
@@ -90,9 +107,10 @@ describe('<bulbs-poll> VoteField', function () {
     let vote;
     let poll;
     let success;
-    let setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
+    let setPollTotalVotesSpy;
 
     beforeEach(function () {
+      setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
       vote = { id: 1, answer: { } };
       poll = { id: 1, totalVotes: 1 };
       success = { vote, poll };

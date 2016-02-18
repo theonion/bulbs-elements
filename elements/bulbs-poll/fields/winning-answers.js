@@ -2,7 +2,7 @@ import { Field, Action } from 'bulbs-elements/store';
 
 const WinningAnswersField = new Field({
   initialState: [],
-  collectWinningAnswers: new Action(function (state, answers=[]) {
+  collectWinningAnswers: new Action(function (state, answers = []) {
     let highScore = 0;
     let winningAnswers = [];
 

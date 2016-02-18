@@ -61,7 +61,6 @@ module.exports = {
   // enable / disable colors in the output (reporters and logs)
   colors: true,
 
-
   // enable / disable watching file and executing tests whenever any file changes
   autoWatch: true,
 

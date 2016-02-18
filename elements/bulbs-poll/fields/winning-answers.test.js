@@ -23,7 +23,7 @@ describe('<bulbs-poll> WinningAnswersField', function () {
 
       it('collects the winning answer', function () {
         assert.deepEqual(nextState, [
-          answers[0]
+          answers[0],
         ]);
       });
     });
@@ -45,7 +45,7 @@ describe('<bulbs-poll> WinningAnswersField', function () {
           answers[0],
           answers[2],
         ]);
-      })
+      });
     });
   });
 });

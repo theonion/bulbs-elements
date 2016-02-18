@@ -19,6 +19,7 @@ describe('<bulbs-poll> <Results>', function () {
           ],
         },
       };
+
       let props = {
         data: {
           poll,

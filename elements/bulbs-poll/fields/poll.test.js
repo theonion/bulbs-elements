@@ -59,7 +59,6 @@ describe('<bulbs-poll> PollField', function () {
     });
   });
 
-
   describe('fetchPollData', function () {
     let src = 'http://example.tld/poll/:id';
     let requestSpy = chai.spy.on(actions.fetchPollData, 'request');

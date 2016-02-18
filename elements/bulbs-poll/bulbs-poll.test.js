@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+//import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
 import testElement from 'bulbs-elements/test/element';
 
@@ -6,7 +6,6 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
   let setSrcSpy;
   let fetchPollDataSpy;
   let getCachedVoteDataSpy;
-  let collectWinningAnswersSpy;
   let pollEndpoint;
 
   beforeEach(function (done) {
@@ -24,7 +23,7 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
           id: 2,
           sodahead_id: 'answer_03',
           answer_text: 'answer B',
-        }]
+        }],
       },
     });
     this.element = this.renderElement({
@@ -39,9 +38,7 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
     setSrcSpy = chai.spy.on(this.actions, 'setSrc');
     fetchPollDataSpy = chai.spy.on(this.actions, 'fetchPollData');
     getCachedVoteDataSpy = chai.spy.on(this.actions, 'getCachedVoteData');
-    collectWinningAnswersSpy = chai.spy.on(this.actions, 'collectWinningAnswers');
   });
-
 
   it('invokes setSrc', function () {
     setSrcSpy.should.have.been.called.with(pollEndpoint);
