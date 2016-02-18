@@ -28,35 +28,6 @@ const PollField = new Field({
 
     return state;
   }),
-  markWinningAnswers: new Action(function (state) {
-    let highScore = 0;
-    let winningAnswers = [];
-
-    state.data = Object.assign({}, state.data);
-
-    state.data.answers.forEach((eachAnswer) => {
-      if (eachAnswer.total_votes === highScore) {
-        winningAnswers.push(eachAnswer);
-      }
-      else if (eachAnswer.total_votes > highScore) {
-        highScore = eachAnswer.total_votes;
-        winningAnswers = [eachAnswer];
-      }
-    });
-
-    state.data.answers = state.data.answers.map((eachAnswer) => {
-      if (winningAnswers.indexOf(eachAnswer) === -1) {
-        return eachAnswer;
-      }
-      else {
-        let markedAnswer = Object.assign({}, eachAnswer);
-        markedAnswer.winning = true;
-        return markedAnswer;
-      }
-    });
-
-    return state;
-  }),
   fetchPollData: new Action(function (state, src, store) {
     src || (src = store.src);
     store.src = src;
@@ -69,9 +40,12 @@ const PollField = new Field({
     state.requestInFlight = true;
     return state;
   }),
-  fetchPollDataSuccess: new Action(function (state, data) {
+  fetchPollDataSuccess: new Action(function (state, data, store) {
     state.data = data;
     state.requestInFlight = false;
+    setImmediate(() => {
+      store.actions.collectWinningAnswers(store.state.poll.data.answers);
+    });
     return state;
   }),
   fetchPollDataFailure: new Action(function (state, failure) {

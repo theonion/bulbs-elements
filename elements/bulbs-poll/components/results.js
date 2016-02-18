@@ -8,6 +8,7 @@ export default function Results (props) {
   let className = classnames('bulbs-poll-results', {});
   let {
     poll,
+    winningAnswers,
   } = props.data;
 
   return (
@@ -20,6 +21,7 @@ export default function Results (props) {
               key={index}
               answer={answer}
               poll={poll}
+              winningAnswers={winningAnswers}
             />;
           })
         }

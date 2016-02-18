@@ -9,6 +9,7 @@ describe('<bulbs-poll> <Results>', function () {
     it('renders vote results', function () {
       let answer1 = {};
       let answer2 = {};
+      let winningAnswers = [answer1];
       let poll = {
         data: {
           total_votes: 10,
@@ -21,6 +22,7 @@ describe('<bulbs-poll> <Results>', function () {
       let props = {
         data: {
           poll,
+          winningAnswers,
         },
       };
 
@@ -28,8 +30,16 @@ describe('<bulbs-poll> <Results>', function () {
         <div className='bulbs-poll-results'>
           <Cover poll={poll} />
           <div className='bulbs-poll-results-list'>
-            <Result poll={poll} answer={answer1} />
-            <Result poll={poll} answer={answer2} />
+            <Result
+              poll={poll}
+              answer={answer1}
+              winningAnswers={winningAnswers}
+            />
+            <Result
+              poll={poll}
+              answer={answer2}
+              winningAnswers={winningAnswers}
+            />
           </div>
         </div>
       );

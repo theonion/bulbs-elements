@@ -59,62 +59,6 @@ describe('<bulbs-poll> PollField', function () {
     });
   });
 
-  describe('markWinningAnswers', function () {
-    context('single winning answer', function () {
-      let state = {
-        data: {
-          answers: [
-            { total_votes: 10 },
-            { total_votes: 5 },
-            { total_votes: 0 },
-          ],
-        },
-      };
-      let nextState;
-
-      beforeEach(function () {
-        nextState = actions.markWinningAnswers.invoke(Object.assign({}, state));
-      });
-
-      it('marks the winning answer as winning', function () {
-        assert.isTrue(nextState.data.answers[0].winning);
-      });
-
-      it('makes a copy of the winning answer', function () {
-        assert.isFalse(state.data.answers[0] === nextState.data.answers[0]);
-        assert.isTrue(state.data.answers[1] === nextState.data.answers[1]);
-        assert.isTrue(state.data.answers[2] === nextState.data.answers[2]);
-      });
-    });
-
-    context('multiple winning answers', function () {
-      let state = {
-        data: {
-          answers: [
-            { total_votes: 10 },
-            { total_votes: 5 },
-            { total_votes: 10 },
-          ],
-        },
-      };
-      let nextState;
-
-      beforeEach(function () {
-        nextState = actions.markWinningAnswers.invoke(Object.assign({}, state));
-      });
-
-      it('marks the tying answers as winning', function () {
-        assert.isTrue(nextState.data.answers[0].winning);
-        assert.isTrue(nextState.data.answers[2].winning);
-      })
-
-      it('makes a copy of the tying answers', function () {
-        assert.isFalse(state.data.answers[0] === nextState.data.answers[0]);
-        assert.isTrue(state.data.answers[1] === nextState.data.answers[1]);
-        assert.isFalse(state.data.answers[2] === nextState.data.answers[2]);
-      });
-    });
-  });
 
   describe('fetchPollData', function () {
     let src = 'http://example.tld/poll/:id';
@@ -148,13 +92,13 @@ describe('<bulbs-poll> PollField', function () {
 
   describe('fetchPollDataSuccess', function () {
     it('sets requestInFlight to false', function () {
-      let nextState = actions.fetchPollDataSuccess.invoke({}, {});
+      let nextState = actions.fetchPollDataSuccess.invoke({}, {}, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('sets state.data', function () {
       let success = {};
-      let nextState = actions.fetchPollDataSuccess.invoke({}, success);
+      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
       assert.equal(nextState.data, success);
     });
   });

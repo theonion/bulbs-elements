@@ -6,7 +6,7 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
   let setSrcSpy;
   let fetchPollDataSpy;
   let getCachedVoteDataSpy;
-  let markWinningAnswersSpy;
+  let collectWinningAnswersSpy;
   let pollEndpoint;
 
   beforeEach(function (done) {
@@ -39,9 +39,7 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
     setSrcSpy = chai.spy.on(this.actions, 'setSrc');
     fetchPollDataSpy = chai.spy.on(this.actions, 'fetchPollData');
     getCachedVoteDataSpy = chai.spy.on(this.actions, 'getCachedVoteData');
-    markWinningAnswersSpy = chai.spy.on(this.actions, 'markWinningAnswers');
-
-    this.element.reactElement.initialDispatch();
+    collectWinningAnswersSpy = chai.spy.on(this.actions, 'collectWinningAnswers');
   });
 
 
@@ -55,9 +53,5 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
 
   it('invokes getCachedVoteData', function () {
     getCachedVoteDataSpy.should.have.been.called.with(pollEndpoint);
-  });
-
-  it('invokes markWinningAnswers', function () {
-    markWinningAnswersSpy.should.have.been.called();
   });
 });

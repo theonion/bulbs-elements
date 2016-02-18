@@ -16,6 +16,7 @@ describe('<bulbs-poll> <Result>', function () {
             total_votes: 300,
           },
         },
+        winningAnswers: [],
       };
 
       assertJSXEqual(this.test.title, <Result {...props} />,
@@ -49,6 +50,9 @@ describe('<bulbs-poll> <Result>', function () {
             total_votes: 300,
           },
         },
+        winningAnswers: [{
+          sodahead_id: 1,
+        }],
       };
 
       assertJSXEqual(this.test.title, <Result {...props} />,

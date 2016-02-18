@@ -5,9 +5,13 @@ export default function Result (props) {
   let {
     answer,
     poll,
+    winningAnswers,
   } = props;
+  let isWinningAnswer = winningAnswers.find((winningAnswer) => {
+    return winningAnswer.sodahead_id === answer.sodahead_id;
+  });
   let className = classnames('bulbs-poll-result', {
-    'bulbs-poll-result-winning': answer.winning,
+    'bulbs-poll-result-winning': isWinningAnswer,
   });
   let { total_votes } = answer;
   let percent = (total_votes / poll.data.total_votes) * 100;
@@ -34,4 +38,5 @@ export default function Result (props) {
 Result.propTypes = {
   answer: PropTypes.object.isRequired,
   poll: PropTypes.object.isRequired,
+  winningAnswers: PropTypes.array.isRequired,
 };
