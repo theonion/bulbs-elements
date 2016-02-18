@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "0.1.0-rc3.1",
+  "version": "0.1.0-rc3.2",
   "description": "Some registerable components for bulbs content types.",
   "main": "index.js",
   "scripts": {
