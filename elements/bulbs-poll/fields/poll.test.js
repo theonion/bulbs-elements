@@ -34,6 +34,7 @@ describe('<bulbs-poll> PollField', function () {
     it('makes GET request to the poll endpoint', function () {
       actions.fetchPollData.invoke({}, src, store);
       requestSpy.should.have.been.called.with(src, {
+        credentials: 'include',
         success: store.actions.fetchPollDataSuccess,
         failure: store.actions.fetchPollDataFailure,
         error: store.actions.fetchPollDataError,

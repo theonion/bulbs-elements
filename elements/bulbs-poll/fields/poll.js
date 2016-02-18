@@ -31,6 +31,7 @@ const PollField = new Field({
     src || (src = store.src);
     store.src = src;
     this.request(src, {
+      credentials: 'include',
       success: store.actions.fetchPollDataSuccess,
       failure: store.actions.fetchPollDataFailure,
       error: store.actions.fetchPollDataError,
