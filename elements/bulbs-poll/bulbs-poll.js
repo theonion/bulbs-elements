@@ -14,6 +14,7 @@ class BulbsPoll extends BulbsElement {
     this.store.actions.setSrc(this.props.src);
     this.store.actions.fetchPollData(this.props.src);
     this.store.actions.getCachedVoteData(this.props.src);
+    this.store.actions.markWinningAnswers();
   }
 
   render () {

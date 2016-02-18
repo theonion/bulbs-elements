@@ -26,7 +26,7 @@ module.exports = {
       included: false,
       served: true,
     },
-    'dist/*.js',
+    'dist/!(bulbs-poll.bulbs-cms).js',
     '.test/**/*.js',
   ],
 

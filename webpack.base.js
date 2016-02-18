@@ -116,6 +116,8 @@ exports.config = {
       'node_modules',
       'lib',
     ],
+    alias: {
+    },
   },
   module: {
   },
