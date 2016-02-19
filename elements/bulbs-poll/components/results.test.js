@@ -46,9 +46,9 @@ describe('<bulbs-poll> <Results>', function () {
               winningAnswers={winningAnswers}
             />
           </div>
-          <p className='bulbs-poll-thank-you'>
+          <div className='bulbs-poll-thank-you'>
             Thanks for voting!
-          </p>
+          </div>
         </div>
       );
     });

@@ -13,7 +13,7 @@ export default function Result (props) {
     return winningAnswer.sodahead_id === answer.sodahead_id;
   });
 
-  let isVoteAnswer = vote.data && vote.data.answer.id === answer.sodahead_id ? true : false;
+  let isVoteAnswer = !!(vote.data && vote.data.answer.id === answer.sodahead_id);
 
   let className = classnames('bulbs-poll-result', {
     'bulbs-poll-result-winning': isWinningAnswer,
@@ -30,13 +30,13 @@ export default function Result (props) {
         style={{ width: percentResult }}
       />
       <div className='bulbs-poll-answer-title'>
+        <SelectionMarker isSelected={isVoteAnswer}/>
+        <span className='bulbs-poll-answer-text'>
+          { answer.answer_text }
+        </span>
         <span className='bulbs-poll-answer-result'>
           { percentResult }
         </span>
-        <p>
-          <SelectionMarker isSelected={isVoteAnswer}/>
-          { answer.answer_text }
-        </p>
       </div>
     </div>
   );

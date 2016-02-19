@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 export default function SelectionMarker (props) {
   let {
-    isSelected
+    isSelected,
   } = props;
 
   return (
@@ -11,7 +11,7 @@ export default function SelectionMarker (props) {
       <circle cx="10" cy="10" r="5" fill={isSelected ? 'black' : 'none' } />
     </svg>
   );
-};
+}
 
 SelectionMarker.propTypes = {
   isSelected: PropTypes.bool,

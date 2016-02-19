@@ -8,7 +8,7 @@ const VoteField = new Field({
   initialState: {
     voted: false,
   },
-  getCachedVoteData: new Action(function (state, pollKey, store) {
+  getCachedVoteData: new Action(function (state, pollKey) {
     let value = localStorage.getItem(cacheKey(pollKey));
     if (value) {
       state.voted = true;

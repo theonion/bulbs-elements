@@ -15,7 +15,7 @@ describe('<bulbs-poll> <SelectionMarker>', function () {
           <circle cx="10" cy="10" r="5" fill="black" />
         </svg>
       );
-    })
+    });
   });
 
   context('is not selected', function () {
@@ -30,6 +30,6 @@ describe('<bulbs-poll> <SelectionMarker>', function () {
           <circle cx="10" cy="10" r="5" fill="none" />
         </svg>
       );
-    })
+    });
   });
 });

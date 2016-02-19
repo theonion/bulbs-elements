@@ -28,13 +28,13 @@ describe('<bulbs-poll> <Result>', function () {
             style={{ width: '33%' }}
           />
           <div className='bulbs-poll-answer-title'>
+            <SelectionMarker isSelected={false}/>
+            <span className='bulbs-poll-answer-text'>
+              the answer
+            </span>
             <span className='bulbs-poll-answer-result'>
               33%
             </span>
-            <p>
-              <SelectionMarker isSelected={false}/>
-              the answer
-            </p>
           </div>
         </div>
       );
@@ -68,13 +68,13 @@ describe('<bulbs-poll> <Result>', function () {
             style={{ width: '33%' }}
           />
           <div className='bulbs-poll-answer-title'>
+            <SelectionMarker isSelected={false}/>
+            <span className='bulbs-poll-answer-text'>
+              the answer
+            </span>
             <span className='bulbs-poll-answer-result'>
               33%
             </span>
-            <p>
-              <SelectionMarker isSelected={false}/>
-              the answer
-            </p>
           </div>
         </div>
       );
@@ -115,13 +115,13 @@ describe('<bulbs-poll> <Result>', function () {
             style={{ width: '33%' }}
           />
           <div className='bulbs-poll-answer-title'>
+            <SelectionMarker isSelected={true}/>
+            <span className='bulbs-poll-answer-text'>
+              the answer
+            </span>
             <span className='bulbs-poll-answer-result'>
               33%
             </span>
-            <p>
-              <SelectionMarker isSelected={true}/>
-              the answer
-            </p>
           </div>
         </div>
       );
