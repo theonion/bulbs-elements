@@ -19,10 +19,12 @@ describe('<bulbs-poll> <Results>', function () {
           ],
         },
       };
+      let vote = {};
 
       let props = {
         data: {
           poll,
+          vote,
           winningAnswers,
         },
       };
@@ -34,11 +36,13 @@ describe('<bulbs-poll> <Results>', function () {
             <Result
               poll={poll}
               answer={answer1}
+              vote={vote}
               winningAnswers={winningAnswers}
             />
             <Result
               poll={poll}
               answer={answer2}
+              vote={vote}
               winningAnswers={winningAnswers}
             />
           </div>

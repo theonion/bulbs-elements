@@ -9,6 +9,7 @@ export default function Results (props) {
   let {
     poll,
     winningAnswers,
+    vote,
   } = props.data;
 
   return (
@@ -21,6 +22,7 @@ export default function Results (props) {
               key={index}
               answer={answer}
               poll={poll}
+              vote={vote}
               winningAnswers={winningAnswers}
             />;
           })

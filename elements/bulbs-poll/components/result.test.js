@@ -1,6 +1,7 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 import Result from './result';
+import SelectionMarker from './selection-marker';
 
 describe('<bulbs-poll> <Result>', function () {
   context('normal vote', function () {
@@ -16,6 +17,7 @@ describe('<bulbs-poll> <Result>', function () {
             total_votes: 300,
           },
         },
+        vote: {},
         winningAnswers: [],
       };
 
@@ -29,7 +31,10 @@ describe('<bulbs-poll> <Result>', function () {
             <span className='bulbs-poll-answer-result'>
               33%
             </span>
-            <p>the answer</p>
+            <p>
+              <SelectionMarker isSelected={false}/>
+              the answer
+            </p>
           </div>
         </div>
       );
@@ -50,6 +55,7 @@ describe('<bulbs-poll> <Result>', function () {
             total_votes: 300,
           },
         },
+        vote: {},
         winningAnswers: [{
           sodahead_id: 1,
         }],
@@ -65,7 +71,55 @@ describe('<bulbs-poll> <Result>', function () {
             <span className='bulbs-poll-answer-result'>
               33%
             </span>
-            <p>the answer</p>
+            <p>
+              <SelectionMarker isSelected={false}/>
+              the answer
+            </p>
+          </div>
+        </div>
+      );
+    });
+  });
+
+  context('selected vote', function () {
+    it('renders answer as selected', function () {
+      let props = {
+        answer: {
+          answer_text: 'the answer',
+          total_votes: 100,
+          sodahead_id: 100,
+          winning: true,
+        },
+        poll: {
+          data: {
+            total_votes: 300,
+          },
+        },
+        vote: {
+          voted: true,
+          answer: {
+            id: 100,
+          }
+        },
+        winningAnswers: [{
+          sodahead_id: 1,
+        }],
+      };
+
+      assertJSXEqual(this.test.title, <Result {...props} />,
+        <div className='bulbs-poll-result bulbs-poll-result-selected'>
+          <div
+            className='bulbs-poll-answer-bar'
+            style={{ width: '33%' }}
+          />
+          <div className='bulbs-poll-answer-title'>
+            <span className='bulbs-poll-answer-result'>
+              33%
+            </span>
+            <p>
+              <SelectionMarker isSelected={true}/>
+              the answer
+            </p>
           </div>
         </div>
       );

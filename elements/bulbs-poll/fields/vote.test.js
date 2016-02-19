@@ -48,19 +48,6 @@ describe('<bulbs-poll> VoteField', function () {
         data,
       });
     });
-
-    it('sets the selected answer', function (done) {
-      let data = { answer: { id: 20 } };
-      localStorage.setItem('bulbs-poll:1:vote', JSON.stringify(data));
-      let nextState = actions.getCachedVoteData.invoke({}, 1, store);
-      setImmediate(() => {
-        assert.deepEqual(store.state.selectedAnswer, {
-          id: 15,
-          sodahead_id: 20,
-        });
-        done();
-      })
-    });
   });
 
   describe('makeVoteRequest', function() {

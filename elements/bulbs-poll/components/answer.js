@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
+import SelectionMarker from './selection-marker';
 
 export default function Answer (props) {
   let {
@@ -18,10 +19,7 @@ export default function Answer (props) {
       className={className}
       onClick={selectAnswer.bind(null, answer)}
     >
-      <svg width="20px" height="20px">
-        <circle cx="10" cy="10" r="8" fill="none" stroke="black" strokeWidth="2px" />
-        <circle cx="10" cy="10" r="5" fill={isSelected ? 'black' : 'none' } />
-      </svg>
+      <SelectionMarker isSelected={isSelected} />
       { answer.answer_text }
     </li>
   );

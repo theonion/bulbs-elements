@@ -13,13 +13,12 @@ const VoteField = new Field({
     if (value) {
       state.voted = true;
       state.data = JSON.parse(value);
-      setImmediate(() => {
-        let selectedAnswer = store.state.poll.data.answers.find((answer) => {
-          return answer.sodahead_id === state.data.answer.id;
-        });
-        console.log('selectedAnswer', selectedAnswer);
-        store.actions.selectAnswer(selectedAnswer);
-      })
+      //setImmediate(() => {
+      //  let selectedAnswer = store.state.poll.data.answers.find((answer) => {
+      //    return answer.sodahead_id === state.data.answer.id;
+      //  });
+      //  store.actions.selectAnswer(selectedAnswer);
+      //})
     }
     return state;
   }),
