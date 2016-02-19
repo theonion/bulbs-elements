@@ -13,7 +13,7 @@ export default function Result (props) {
     return winningAnswer.sodahead_id === answer.sodahead_id;
   });
 
-  let isVoteAnswer = vote.answer && vote.answer.id === answer.sodahead_id ? true : false;
+  let isVoteAnswer = vote.data && vote.data.answer.id === answer.sodahead_id ? true : false;
 
   let className = classnames('bulbs-poll-result', {
     'bulbs-poll-result-winning': isWinningAnswer,

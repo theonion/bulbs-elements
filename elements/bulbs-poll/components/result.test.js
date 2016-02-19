@@ -97,9 +97,11 @@ describe('<bulbs-poll> <Result>', function () {
         },
         vote: {
           voted: true,
-          answer: {
-            id: 100,
-          }
+          data: {
+            answer: {
+              id: 100,
+            },
+          },
         },
         winningAnswers: [{
           sodahead_id: 1,

@@ -13,12 +13,6 @@ const VoteField = new Field({
     if (value) {
       state.voted = true;
       state.data = JSON.parse(value);
-      //setImmediate(() => {
-      //  let selectedAnswer = store.state.poll.data.answers.find((answer) => {
-      //    return answer.sodahead_id === state.data.answer.id;
-      //  });
-      //  store.actions.selectAnswer(selectedAnswer);
-      //})
     }
     return state;
   }),
@@ -41,8 +35,10 @@ const VoteField = new Field({
   }),
   voteRequestSuccess: new Action(function (state, data, store) {
     localStorage.setItem(cacheKey(store.state.src), JSON.stringify(data.vote));
-    store.actions.setPollTotalVotes(data.poll.totalVotes);
-    store.actions.updateAnswerVoteCount(data.vote);
+    setImmediate(() => {
+      store.actions.setPollTotalVotes(data.poll.totalVotes);
+      store.actions.updateAnswerVoteCount(data.vote);
+    });
     state.voted = true;
     state.data = data.vote;
     state.requestInFlight = false;

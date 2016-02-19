@@ -67,11 +67,26 @@ bulbs-poll {
     margin: 1em;
     padding: 1em;
     position: relative;
+
+    svg {
+      margin-right: 1em;
+    }
+  }
+
+  .bulbs-poll-result-winning .bulbs-poll-answer-result {
+    border-bottom: 8px solid $accent-color;
+    font-weight: bold;
+    padding: 0 10px;
   }
 
   .bulbs-poll-results-list {
     display: flex;
     flex-direction: column;
+  }
+
+  .bulbs-poll-thank-you {
+    align-self: center;
+    font-size: 2em;
   }
 
   .bulbs-poll-vote {

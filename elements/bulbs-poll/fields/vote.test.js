@@ -55,8 +55,17 @@ describe('<bulbs-poll> VoteField', function () {
     let url = 'https://onion.sodahead.com/api/polls/10/vote/';
 
     beforeEach(function () {
-      // not testing response, just avoiding an http call
-      fetchMock.mock(url, {});
+      fetchMock.mock(url, {
+        poll: {
+          totalVotes: 10,
+        },
+        vote: {
+          answer: {
+            totalVotes: 5,
+            id: 'answer-id',
+          },
+        },
+      });
     });
 
     afterEach(function () {
@@ -89,23 +98,27 @@ describe('<bulbs-poll> VoteField', function () {
       assert.isTrue(nextState.requestInFlight);
     });
   });
+
   describe('voteRequestSuccess', function() {
     let nextState;
     let vote;
     let poll;
     let success;
     let setPollTotalVotesSpy;
+    let updateAnswerVoteCountSpy;
 
     beforeEach(function () {
       setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
-      vote = { id: 1, answer: { } };
-      poll = { id: 1, totalVotes: 1 };
+      updateAnswerVoteCountSpy = chai.spy.on(store.actions, 'updateAnswerVoteCount');
+      vote = { id: 1, answer: { totalVotes: 10 } };
+      poll = { id: 1, totalVotes: 8 };
       success = { vote, poll };
       nextState = actions.voteRequestSuccess.invoke({}, success, store);
     });
 
     afterEach(function () {
       setPollTotalVotesSpy.reset();
+      updateAnswerVoteCountSpy.reset();
     });
 
     it('sets requestInFlight to false', function () {
@@ -124,8 +137,18 @@ describe('<bulbs-poll> VoteField', function () {
       assert.deepEqual(nextState.data, vote);
     });
 
-    it('calls setPollTotalVotes', function () {
-      setPollTotalVotesSpy.should.have.been.called.once.with(1);
+    it('calls setPollTotalVotes', function (done) {
+      setImmediate(() => {
+        setPollTotalVotesSpy.should.have.been.called.once.with(8);
+        done();
+      });
+    });
+
+    it('calls updateAnswerVoteCount', function (done) {
+      setImmediate(() => {
+        updateAnswerVoteCountSpy.should.have.been.called.once.with(vote);
+        done();
+      });
     });
   });
 

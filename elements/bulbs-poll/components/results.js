@@ -28,6 +28,9 @@ export default function Results (props) {
           })
         }
       </div>
+      <p className='bulbs-poll-thank-you'>
+        Thanks for voting!
+      </p>
     </div>
   );
 }

@@ -43,9 +43,11 @@ const PollField = new Field({
   fetchPollDataSuccess: new Action(function (state, data, store) {
     state.data = data;
     state.requestInFlight = false;
+
     setImmediate(() => {
       store.actions.collectWinningAnswers(store.state.poll.data.answers);
     });
+
     return state;
   }),
   fetchPollDataFailure: new Action(function (state, failure) {
