@@ -1,5 +1,8 @@
 {
   "presets": ["react", "es2015"],
+  "plugins": [
+    "transform-object-assign"
+  ],
   "env": {
     "hot": {
       "presets": ["react-hmre"]

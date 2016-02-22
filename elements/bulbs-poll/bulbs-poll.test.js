@@ -27,17 +27,19 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
       },
     });
     this.element = this.renderElement({
-      done,
+      done: () => {
+        this.actions = this.element.reactElement.store.actions;
+        setSrcSpy = chai.spy.on(this.actions, 'setSrc');
+        fetchPollDataSpy = chai.spy.on(this.actions, 'fetchPollData');
+        getCachedVoteDataSpy = chai.spy.on(this.actions, 'getCachedVoteData');
+        this.element.reactElement.initialDispatch();
+        done();
+      },
       tag: 'bulbs-poll',
       props: {
         src: pollEndpoint,
       },
     });
-    this.actions = this.element.reactElement.store.actions;
-
-    setSrcSpy = chai.spy.on(this.actions, 'setSrc');
-    fetchPollDataSpy = chai.spy.on(this.actions, 'fetchPollData');
-    getCachedVoteDataSpy = chai.spy.on(this.actions, 'getCachedVoteData');
   });
 
   it('invokes setSrc', function () {
