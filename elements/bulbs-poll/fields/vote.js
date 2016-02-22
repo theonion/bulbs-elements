@@ -38,6 +38,7 @@ const VoteField = new Field({
     setImmediate(() => {
       store.actions.setPollTotalVotes(data.poll.totalVotes);
       store.actions.updateAnswerVoteCount(data.vote);
+      store.actions.collectWinningAnswers(store.state.poll.data.answers);
     });
     state.voted = true;
     state.data = data.vote;

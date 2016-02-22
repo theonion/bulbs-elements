@@ -106,10 +106,12 @@ describe('<bulbs-poll> VoteField', function () {
     let success;
     let setPollTotalVotesSpy;
     let updateAnswerVoteCountSpy;
+    let collectWinningAnswersSpy;
 
     beforeEach(function () {
       setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
       updateAnswerVoteCountSpy = chai.spy.on(store.actions, 'updateAnswerVoteCount');
+      collectWinningAnswersSpy = chai.spy.on(store.actions, 'collectWinningAnswers');
       vote = { id: 1, answer: { totalVotes: 10 } };
       poll = { id: 1, totalVotes: 8 };
       success = { vote, poll };
@@ -147,6 +149,13 @@ describe('<bulbs-poll> VoteField', function () {
     it('calls updateAnswerVoteCount', function (done) {
       setImmediate(() => {
         updateAnswerVoteCountSpy.should.have.been.called.once.with(vote);
+        done();
+      });
+    });
+
+    it('calls collectWinningAnswers', function (done) {
+      setImmediate(() => {
+        collectWinningAnswersSpy.should.have.been.called.once.with(store.state.poll.data.answers);
         done();
       });
     });
