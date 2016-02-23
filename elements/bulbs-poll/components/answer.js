@@ -11,7 +11,7 @@ export default function Answer (props) {
 
   let isSelected = answer.id === selectedAnswer.id;
   let className = classnames('bulbs-poll-answer', {
-    selected: isSelected,
+    'bulbs-poll-answer-selected': isSelected,
   });
 
   return (

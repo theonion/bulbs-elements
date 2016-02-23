@@ -12,9 +12,10 @@ describe('<bulbs-poll> <Answers>', function () {
       let props = {
         answers,
         selectAnswer,
+        selectedAnswer: {},
       };
 
-      assertJSXEqual(this.test.title, <Answers {...props} />,
+      assertJSXEqual(this.test.title, <Answers {...props}/>,
         <ul className="bulbs-poll-answers"></ul>
       );
     });
@@ -31,12 +32,13 @@ describe('<bulbs-poll> <Answers>', function () {
 
       let selectAnswer = function () {};
 
-      let renderedAnswers = <Answers
-        answers={answers}
-        selectAnswer={selectAnswer}
-      />;
+      let props = {
+        answers,
+        selectAnswer,
+        selectedAnswer: {},
+      }
 
-      assertJSXEqual(this.test.title, renderedAnswers,
+      assertJSXEqual(this.test.title, <Answers {...props}/>,
         <ul className="bulbs-poll-answers">
           <Answer
             answer={answer1}

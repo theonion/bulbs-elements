@@ -32,7 +32,7 @@ describe('<bulbs-poll> <Results>', function () {
       assertJSXEqual(this.test.title, <Results {...props} />,
         <div className='bulbs-poll-results'>
           <Cover poll={poll} />
-          <div className='bulbs-poll-results-list'>
+          <ul className='bulbs-poll-results-list'>
             <Result
               poll={poll}
               answer={answer1}
@@ -45,8 +45,8 @@ describe('<bulbs-poll> <Results>', function () {
               vote={vote}
               winningAnswers={winningAnswers}
             />
-          </div>
-          <div className='bulbs-poll-thank-you'>
+          </ul>
+          <div className='bulbs-poll-thank-you bulbs-poll-footer'>
             Thanks for voting!
           </div>
         </div>

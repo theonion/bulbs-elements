@@ -24,7 +24,7 @@ export default function Result (props) {
   let percentResult = `${percent.toFixed(0)}%`;
 
   return (
-    <div className={className}>
+    <li className={className}>
       <div
         className='bulbs-poll-answer-bar'
         style={{ width: percentResult }}
@@ -38,7 +38,7 @@ export default function Result (props) {
           { percentResult }
         </span>
       </div>
-    </div>
+    </li>
   );
 }
 

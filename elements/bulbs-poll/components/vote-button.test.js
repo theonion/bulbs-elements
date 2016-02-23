@@ -11,7 +11,7 @@ describe('<bulbs-poll> <VoteButton>', function () {
       };
 
       assertJSXEqual(this.test.title, <VoteButton {...props} />,
-        <button className="bulbs-poll-vote">
+        <button className="bulbs-poll-vote bulbs-poll-footer">
           Vote
         </button>
       );
@@ -26,7 +26,7 @@ describe('<bulbs-poll> <VoteButton>', function () {
       };
 
       assertJSXEqual(this.test.title, <VoteButton {...props} />,
-        <button className="bulbs-poll-vote">
+        <button className="bulbs-poll-vote bulbs-poll-footer">
           Vote
         </button>
       );

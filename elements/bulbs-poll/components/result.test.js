@@ -22,7 +22,7 @@ describe('<bulbs-poll> <Result>', function () {
       };
 
       assertJSXEqual(this.test.title, <Result {...props} />,
-        <div className='bulbs-poll-result'>
+        <li className='bulbs-poll-result'>
           <div
             className='bulbs-poll-answer-bar'
             style={{ width: '33%' }}
@@ -36,7 +36,7 @@ describe('<bulbs-poll> <Result>', function () {
               33%
             </span>
           </div>
-        </div>
+        </li>
       );
     });
   });
@@ -62,7 +62,7 @@ describe('<bulbs-poll> <Result>', function () {
       };
 
       assertJSXEqual(this.test.title, <Result {...props} />,
-        <div className='bulbs-poll-result bulbs-poll-result-winning'>
+        <li className='bulbs-poll-result bulbs-poll-result-winning'>
           <div
             className='bulbs-poll-answer-bar'
             style={{ width: '33%' }}
@@ -76,7 +76,7 @@ describe('<bulbs-poll> <Result>', function () {
               33%
             </span>
           </div>
-        </div>
+        </li>
       );
     });
   });
@@ -109,7 +109,7 @@ describe('<bulbs-poll> <Result>', function () {
       };
 
       assertJSXEqual(this.test.title, <Result {...props} />,
-        <div className='bulbs-poll-result bulbs-poll-result-selected'>
+        <li className='bulbs-poll-result bulbs-poll-result-selected'>
           <div
             className='bulbs-poll-answer-bar'
             style={{ width: '33%' }}
@@ -123,7 +123,7 @@ describe('<bulbs-poll> <Result>', function () {
               33%
             </span>
           </div>
-        </div>
+        </li>
       );
     });
   });

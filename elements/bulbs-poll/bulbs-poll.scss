@@ -44,25 +44,26 @@ bulbs-poll {
     padding: 0;
   }
 
-  .bulbs-poll-answer {
-    &, & * {
-      cursor: pointer;
-    }
+  .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
+    opacity: 0.5;
+  }
 
+  .bulbs-poll-answer,
+  .bulbs-poll-result {
     background: $low-contrast;
     display: flex;
     list-style: none;
     margin: 1em 0;
-    padding: 1em;
-    user-select: none;
+    padding: 1.3em;
+    position: relative;
 
-    span {
-      opacity: 0.8;
-      line-height: 1.5;
+    &:first-child {
+      margin-top: 1em;
     }
 
-    &.selected span {
-      opacity: 1;
+    span {
+      line-height: 1.5;
+      font-size: 14px;
     }
 
     svg {
@@ -71,45 +72,61 @@ bulbs-poll {
     }
   }
 
-  .bulbs-poll-result {
-    background: $low-contrast;
-    display: flex;
-    margin-bottom: 0;
-    margin: 1em 0;
-    margin-top: 0;
-    padding: 1em;
-    position: relative;
-
-    &:first-child {
-      margin-top: 1em;
+  .bulbs-poll-answer {
+    &:hover {
+      opacity: 0.5;
     }
+  }
 
-    svg {
-      margin-right: 1em;
-      min-width: 20px;
-    }
+  .bulbs-poll-answer-text {
+    opacity: 0.5;
+  }
+
+  .bulbs-poll-answer,
+  .bulbs-poll-answer * {
+    cursor: pointer;
+    user-select: none;
   }
 
   .bulbs-poll-answer-result {
-    border-bottom: 8px solid transparent;
     min-width: 1.5em;
   }
 
-  .bulbs-poll-result-winning .bulbs-poll-answer-result {
-    border-bottom: 8px solid $accent-color;
-    font-weight: bold;
-    min-width: 3em;
-    padding: 0 10px;
+  .bulbs-poll-result-winning {
+    .bulbs-poll-answer-text {
+      opacity: 1;
+    }
+
+    .bulbs-poll-answer-result {
+      font-weight: bold;
+      min-width: 3em;
+      padding: 0 10px;
+      position: relative;
+
+      &:after {
+        content: "";
+        width: 100%;
+        height: 8px;
+        bottom: -5px;
+        left: 0px;
+        background-color: $accent-color;
+        position: absolute;
+      }
+    }
   }
 
   .bulbs-poll-results-list {
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bulbs-poll-footer {
+    margin: 15px 0;
   }
 
   .bulbs-poll-thank-you {
     align-self: center;
-    font-size: 2em;
+    font-size: 1.3em;
     text-align: center;
   }
 
@@ -119,8 +136,9 @@ bulbs-poll {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-size: 1.5em;
+    font-size: 1.3em;
     padding: .5em 1.5em;
+    text-transform: uppercase;
 
     &[disabled] {
       cursor: not-allowed;

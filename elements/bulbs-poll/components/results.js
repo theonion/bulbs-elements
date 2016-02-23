@@ -15,7 +15,7 @@ export default function Results (props) {
   return (
     <div className={className}>
       <Cover poll={poll} />
-      <div className='bulbs-poll-results-list'>
+      <ul className='bulbs-poll-results-list'>
         {
           poll.data.answers.map((answer, index) => {
             return <Result
@@ -27,8 +27,8 @@ export default function Results (props) {
             />;
           })
         }
-      </div>
-      <div className='bulbs-poll-thank-you'>
+      </ul>
+      <div className='bulbs-poll-thank-you bulbs-poll-footer'>
         Thanks for voting!
       </div>
     </div>

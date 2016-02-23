@@ -33,7 +33,7 @@ describe('<bulbs-poll> <Answer>', function () {
         selectAnswer={selectAnswer}
       />;
       assertJSXEqual(this.test.title, renderedAnswer,
-        <li className="bulbs-poll-answer selected">
+        <li className="bulbs-poll-answer bulbs-poll-answer-selected">
           <SelectionMarker isSelected={true}/>
           Answer
         </li>
