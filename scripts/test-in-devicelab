@@ -3,9 +3,13 @@ set -e
 
 # This script:
 # * moves dist/ to .dist/
+# * moves .test/ to .test-tmp/
 # * runs a devicelab build
+# * runs devicelab tests
 # * deletes dist/
 # * restores .dist/ to dist/
+# * deletes .test/
+# * restores .test-tmp/ to .test/
 
 mv dist/ .dist/ || true
 mv .test/ .test-tmp/ || true
