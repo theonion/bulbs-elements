@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+# This script:
+# * moves dist/ to .dist/
+# * runs a devicelab build
+# * deletes dist/
+# * restores .dist/ to dist/
+
+mv dist/ .dist/ || true
+mv .test/ .test-tmp/ || true
+
+function  cleanup_at_exit {
+  rm -rf dist/ || true
+  mv .dist/ dist/ || true
+  rm -rf .test/ || true
+  mv .test-tmp/ .test || true
+}
+trap cleanup_at_exit EXIT
+
+scripts/webpack-devicelab-build
+
+node_modules/.bin/karma start karma.devicelab.js --single-run

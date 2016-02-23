@@ -36,7 +36,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
-      }
+      };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
         <ul className="bulbs-poll-answers">

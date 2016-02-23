@@ -33,6 +33,7 @@ glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
 
 // We will vendor common dependencies of our elements.
 entries['dist/vendor'] = [
+  'array-find',
   'react',
   'react-dom',
   'classnames',

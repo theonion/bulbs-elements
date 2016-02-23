@@ -1,4 +1,5 @@
 import { Field, Action } from 'bulbs-elements/store';
+import find from 'array-find';
 
 const PollField = new Field({
   initialState: {
@@ -13,7 +14,7 @@ const PollField = new Field({
   }),
   updateAnswerVoteCount: new Action(function (state, vote) {
     state.data = Object.assign({}, state.data);
-    let answer = state.data.answers.find((eachAnswer) => {
+    let answer = find(state.data.answers, (eachAnswer) => {
       return eachAnswer.sodahead_id === vote.answer.id;
     });
 

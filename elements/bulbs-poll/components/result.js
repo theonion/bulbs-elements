@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import SelectionMarker from './selection-marker';
+import find from 'array-find';
 
 export default function Result (props) {
   let {
@@ -9,7 +10,7 @@ export default function Result (props) {
     vote,
     winningAnswers,
   } = props;
-  let isWinningAnswer = winningAnswers.find((winningAnswer) => {
+  let isWinningAnswer = find(winningAnswers, (winningAnswer) => {
     return winningAnswer.sodahead_id === answer.sodahead_id;
   });
 
