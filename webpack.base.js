@@ -2,6 +2,8 @@ var webpack = require('webpack');
 var path    = require('path');
 var glob    = require('glob');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+
 // postcss processors
 var autoprefixer = require('autoprefixer');
 var initial      = require('postcss-initial');
@@ -57,8 +59,11 @@ exports.plugins = {
   sassExtractor: sassExtractor,
   uglify: new webpack.optimize.UglifyJsPlugin({
     compress: {
-      warnings: false
-    }
+      warnings: false,
+    },
+  }),
+  clean: new CleanWebpackPlugin(['.test', 'dist'], {
+    verbose: true,
   }),
 };
 

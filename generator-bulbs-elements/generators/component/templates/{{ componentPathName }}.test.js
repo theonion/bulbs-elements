@@ -8,7 +8,7 @@ describe('<<%= elementName %>> <<%= componentClassName %>>', function () {
       let props = {};
 
       assertJSXEqual(this.test.title, <<%= componentClassName %> {...props} />,
-        <div className='<%= elementName %>-<%= componentClassName %>'>
+        <div className='<%= componentCssClassName %>'>
         </div>
       );
     })

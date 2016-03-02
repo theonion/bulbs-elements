@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react';
-import classnames from 'classnames';
-
 import Cover from './cover';
 import ResultsList from './results-list';
 
-export default function Results (props) {
-  let className = classnames('bulbs-poll-results', {});
+export default function Ended (props) {
   let {
     poll,
     winningAnswers,
@@ -13,20 +10,20 @@ export default function Results (props) {
   } = props.data;
 
   return (
-    <div className={className}>
-      <Cover poll={poll} />
+    <div className='bulbs-poll-ended'>
+      <Cover poll={poll}/>
       <ResultsList
         poll={poll}
         winningAnswers={winningAnswers}
         vote={vote}
       />
-      <div className='bulbs-poll-thank-you bulbs-poll-footer'>
-        Thanks for voting!
+      <div className='bulbs-poll-ended-message bulbs-poll-footer'>
+        Poll Closed
       </div>
     </div>
   );
 }
 
-Results.propTypes = {
+Ended.propTypes = {
   data: PropTypes.object.isRequired,
 };

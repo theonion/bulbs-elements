@@ -4,6 +4,11 @@ import classnames from 'classnames';
 export default function VoteButton (props) {
   let { selectedAnswer } = props;
 
+  let buttonIsDisabled = true;
+  if (selectedAnswer && selectedAnswer.id) {
+    buttonIsDisabled = false;
+  }
+
   function handleClick () {
     if (selectedAnswer) {
       props.makeVoteRequest(selectedAnswer);
@@ -16,9 +21,10 @@ export default function VoteButton (props) {
 
   return (
     <button
+      data-track-label='Submit'
       className={classes}
       onClick={handleClick}
-      disabled={!selectedAnswer.id}
+      disabled={buttonIsDisabled}
     >
       Vote
     </button>

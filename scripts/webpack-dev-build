@@ -6,4 +6,5 @@ node_modules/.bin/webpack \
   --color \
   --output-pathinfo \
   --quiet \
+  --display-error-details \
   --config webpack.config.dev.js

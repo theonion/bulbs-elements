@@ -10,6 +10,7 @@ export default function Result (props) {
     vote,
     winningAnswers,
   } = props;
+
   let isWinningAnswer = find(winningAnswers, (winningAnswer) => {
     return winningAnswer.sodahead_id === answer.sodahead_id;
   });

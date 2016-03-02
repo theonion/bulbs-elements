@@ -4,8 +4,7 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import PollStore from './bulbs-poll-store';
 
-import PollQuestion from './components/question';
-import PollResults from './components/results';
+import BulbsPollRoot from './components/root';
 
 import './bulbs-poll.scss';
 
@@ -17,17 +16,14 @@ class BulbsPoll extends BulbsElement {
   }
 
   render () {
-    if (this.state.vote.voted) {
-      return <PollResults
-        data={this.state}
-      />;
-    }
-    else {
-      return <PollQuestion
-        actions={this.store.actions}
-        data={this.state}
-      />;
-    }
+    return (
+      <div data-track-action='Poll'>
+        <BulbsPollRoot
+          data={this.state}
+          actions={this.store.actions}
+        />
+      </div>
+    );
   }
 }
 

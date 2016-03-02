@@ -3,11 +3,31 @@ import React from 'react';
 let examples = {
   element: 'bulbs-poll',
   examples: {
-    'Standard Example': {
+    'Open For Voting': {
       render: function () {
         return `
           <bulbs-poll
             src="http://localhost:8080/fixtures/bulbs-poll/poll-data.json"
+          >
+          </bulbs-poll>
+        `;
+      },
+    },
+    'Unpublished': {
+      render: function () {
+        return `
+          <bulbs-poll
+            src="http://localhost:8080/fixtures/bulbs-poll/unpublished-poll-data.json"
+          >
+          </bulbs-poll>
+        `;
+      },
+    },
+    'Closed': {
+      render: function () {
+        return `
+          <bulbs-poll
+            src="http://localhost:8080/fixtures/bulbs-poll/closed-poll-data.json"
           >
           </bulbs-poll>
         `;
@@ -33,10 +53,11 @@ let examples = {
     },
     'Results': {
       render: function () {
-        let src = 'http://localhost:8080/fixtures/bulbs-poll/poll-data.json';
+        let src = 'http://localhost:8080/fixtures/bulbs-poll/results-poll-data.json';
         localStorage.setItem(`bulbs-poll:${src}:vote`, JSON.stringify({
           id: 293849,
           total_votes: 23,
+          vote: {},
         }));
         return `
           <bulbs-poll

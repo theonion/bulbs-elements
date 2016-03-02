@@ -95,10 +95,22 @@ describe('<bulbs-poll> PollField', function () {
       assert.isFalse(nextState.requestInFlight);
     });
 
+    it('parses published date', function () {
+      let success = { published: '2016-02-27T06:00:00Z' };
+      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
+      assert.equal(nextState.data.published.toISOString(), '2016-02-27T06:00:00.000Z');
+    });
+
+    it('parses end_date date', function () {
+      let success = { end_date: '2016-02-27T06:00:00Z' };
+      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
+      assert.equal(nextState.data.end_date.toISOString(), '2016-02-27T06:00:00.000Z');
+    });
+
     it('sets state.data', function () {
       let success = {};
       let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
-      assert.equal(nextState.data, success);
+      assert.deepEqual(nextState.data, success);
     });
   });
 

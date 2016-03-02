@@ -8,7 +8,7 @@ export default function <%= componentName %> (props) {
     <div className={className}>
     </div>
   );
-};
+}
 
 <%= componentName %>.propTypes = {
 

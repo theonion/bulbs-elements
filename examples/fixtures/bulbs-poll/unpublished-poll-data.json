@@ -2,7 +2,6 @@
   "id": 1,
   "question_text": "How — ARE you?",
   "total_votes": 200,
-  "published": "2012-12-30T09:27:26.483Z",
   "answers": [
     {
       "answer_text": "answer A",
@@ -15,4 +14,3 @@
     }
   ]
 }
-

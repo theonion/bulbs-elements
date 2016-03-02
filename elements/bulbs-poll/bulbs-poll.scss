@@ -22,7 +22,7 @@ bulbs-poll {
   background: #fafafa;
   padding: 1em;
 
-  > div {
+  > div > div {
     display: flex;
     flex-direction: column;
   }
@@ -169,5 +169,29 @@ bulbs-poll {
     .bulbs-poll-answer-text {
       flex-grow: 1;
     }
+  }
+
+  .bulbs-poll-ended-message {
+    align-self: center;
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .bulbs-poll-coming-soon {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bulbs-poll-coming-soon-message {
+    text-align: center;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-style: italic;
+    padding: 2em;
+    background-color: $low-contrast;
+  }
+  
+  .bulbs-poll-loading {
+    text-align: center;
   }
 }

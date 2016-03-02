@@ -16,6 +16,7 @@ export default function Answer (props) {
 
   return (
     <li
+      data-track-label='Option'
       className={className}
       onClick={selectAnswer.bind(null, answer)}
     >

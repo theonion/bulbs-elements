@@ -2,7 +2,7 @@ import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 import Cover from './cover';
 import Results from './results';
-import Result from './result';
+import ResultsList from './results-list';
 
 describe('<bulbs-poll> <Results>', function () {
   context('with vote results', function () {
@@ -32,20 +32,11 @@ describe('<bulbs-poll> <Results>', function () {
       assertJSXEqual(this.test.title, <Results {...props} />,
         <div className='bulbs-poll-results'>
           <Cover poll={poll} />
-          <ul className='bulbs-poll-results-list'>
-            <Result
-              poll={poll}
-              answer={answer1}
-              vote={vote}
-              winningAnswers={winningAnswers}
-            />
-            <Result
-              poll={poll}
-              answer={answer2}
-              vote={vote}
-              winningAnswers={winningAnswers}
-            />
-          </ul>
+          <ResultsList
+            poll={poll}
+            winningAnswers={winningAnswers}
+            vote={vote}
+          />
           <div className='bulbs-poll-thank-you bulbs-poll-footer'>
             Thanks for voting!
           </div>

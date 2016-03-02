@@ -22,7 +22,7 @@ module.exports = yeoman.generators.Base.extend({
     }, {
       type: 'input',
       name: 'componentName',
-      message: 'What is the name of this field? eg: `PollResults`',
+      message: 'What is the name of this component? eg: `PollResults`',
       required: true,
     }];
 
@@ -37,7 +37,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function () {
-    var dashedName = inflection.dasherize(inflection.underscore(this.props.componentName));
+    var dashedName = inflection.dasherize(inflection.underscore(this.props.componentName)).toLowerCase();
     var templateProps = {
 			elementName: this.props.elementName,
       componentName: inflection.camelize(this.props.componentName, false),

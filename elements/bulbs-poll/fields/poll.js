@@ -1,6 +1,20 @@
 import { Field, Action } from 'bulbs-elements/store';
 import find from 'array-find';
 
+function parsePoll (props) {
+  let poll = Object.assign({}, props);
+
+  if (poll.published) {
+    poll.published = new Date(poll.published);
+  }
+
+  if (poll.end_date) {
+    poll.end_date = new Date(poll.end_date);
+  }
+
+  return poll;
+}
+
 const PollField = new Field({
   initialState: {
     data: {
@@ -42,7 +56,7 @@ const PollField = new Field({
     return state;
   }),
   fetchPollDataSuccess: new Action(function (state, data, store) {
-    state.data = data;
+    state.data = parsePoll(data);
     state.requestInFlight = false;
 
     setImmediate(() => {

@@ -9,13 +9,17 @@ describe('<bulbs-poll> <Answer>', function () {
       let answer = { answer_text: 'Answer', id: 1 };
       let otherAnswer = { answer_text: 'Another', id: 2 };
       let selectAnswer = function () {};
-      let renderedAnswer = <Answer
-        answer={answer}
-        selectedAnswer={otherAnswer}
-        selectAnswer={selectAnswer}
-      />;
-      assertJSXEqual(this.test.title, renderedAnswer,
-        <li className="bulbs-poll-answer">
+      let props = {
+        answer,
+        selectedAnswer: otherAnswer,
+        selectAnswer,
+      };
+
+      assertJSXEqual(this.test.title, <Answer {...props}/>,
+        <li
+          data-track-label='Option'
+          className="bulbs-poll-answer"
+        >
           <SelectionMarker isSelected={false}/>
           Answer
         </li>
@@ -27,13 +31,17 @@ describe('<bulbs-poll> <Answer>', function () {
     it('renders answer as selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };
       let selectAnswer = function () {};
-      let renderedAnswer = <Answer
-        answer={answer}
-        selectedAnswer={answer}
-        selectAnswer={selectAnswer}
-      />;
-      assertJSXEqual(this.test.title, renderedAnswer,
-        <li className="bulbs-poll-answer bulbs-poll-answer-selected">
+      let props = {
+        answer,
+        selectedAnswer: answer,
+        selectAnswer,
+      };
+
+      assertJSXEqual(this.test.title, <Answer {...props}/>,
+        <li
+          data-track-label='Option'
+          className="bulbs-poll-answer bulbs-poll-answer-selected"
+        >
           <SelectionMarker isSelected={true}/>
           Answer
         </li>
