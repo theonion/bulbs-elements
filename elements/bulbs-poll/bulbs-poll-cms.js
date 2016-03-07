@@ -1,6 +1,6 @@
 import { registerForBulbsCMS, EmbededCMSElement } from 'bulbs-elements/register';
 
-let promiseCache = {}
+let promiseCache = {};
 let previewDataCache = {};
 function getPreviewData (src, callback) {
   promiseCache[src] || (promiseCache[src] = fetch(src).then((response) => response.json()));
