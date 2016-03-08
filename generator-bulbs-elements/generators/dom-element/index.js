@@ -11,7 +11,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     this.log(onionsay(
-      'Generate a ' + chalk.green('bulbs-elements') + ' and sharpen the knife.'
+      'Generate a ' + chalk.green('plain DOM bulbs-element') + ' and sharpen the knife.'
     ));
 
     var prompts = [{

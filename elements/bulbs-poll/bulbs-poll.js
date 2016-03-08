@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import register from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import PollStore from './bulbs-poll-store';
@@ -35,4 +35,4 @@ BulbsPoll.propTypes = {
   src: PropTypes.string.isRequired,
 };
 
-register('bulbs-poll', BulbsPoll);
+registerReactElement('bulbs-poll', BulbsPoll);
