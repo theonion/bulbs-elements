@@ -2,13 +2,12 @@ import { assert } from 'chai';
 
 describe('<<%= elementName %>>', function () {
   let element;
-  let container;
 
-	beforeEach(function (done) {
-    element = document.createElement('<%= elementName %>')
-	});
+  beforeEach(function () {
+    element = document.createElement('<%= elementName %>');
+  });
 
-	it('renders an <<%= elementName %>>', function () {
-		assert.equal(this.element.tagName.toLowerCase(), '<%= elementName %>');
-	});
+  it('renders an <<%= elementName %>>', function () {
+    assert.equal(element.tagName.toLowerCase(), '<%= elementName %>');
+  });
 });

@@ -1,4 +1,7 @@
-import { registerForBulbsCMS, EmbededCMSElement } from 'bulbs-elements/register';
+import {
+  registerElement,
+  EmbededCMSElement,
+} from 'bulbs-elements/register';
 
 let promiseCache = {};
 let previewDataCache = {};
@@ -33,4 +36,4 @@ class EmbeddedBulbsPoll extends EmbededCMSElement {
   }
 }
 
-registerForBulbsCMS('bulbs-poll', EmbeddedBulbsPoll);
+registerElement('bulbs-poll', EmbeddedBulbsPoll);

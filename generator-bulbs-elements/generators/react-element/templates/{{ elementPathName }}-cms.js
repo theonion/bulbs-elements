@@ -1,4 +1,7 @@
-import { registerForBulbsCMS, EmbededCMSElement } from 'bulbs-elements/register';
+import {
+  registerElement,
+  EmbededCMSElement,
+} from 'bulbs-elements/register';
 
 class Embedded<%= elementClassName %> extends EmbededCMSElement {
   get embedContentPreview () {
@@ -11,4 +14,4 @@ class Embedded<%= elementClassName %> extends EmbededCMSElement {
   }
 }
 
-registerForBulbsCMS('<%= elementName %>', Embedded<%= elementClassName %>);
+registerElement('<%= elementName %>', Embedded<%= elementClassName %>);

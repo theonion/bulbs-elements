@@ -26,7 +26,7 @@ function startKarma () {
   console.log('Starting Karma');
   karma = new Van({
     scripts: {
-      karma: 'node_modules/.bin/karma start --reporters dots | sed \'/LOG:/d\'',
+      karma: 'rm -rf .test/ && node_modules/.bin/karma start --reporters dots | sed \'/LOG:/d\'',
     }
   });
   karma.start();
