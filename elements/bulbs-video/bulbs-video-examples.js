@@ -1,13 +1,13 @@
 let examples = {
-  element: 'onion-video',
+  element: 'bulbs-video',
   examples: {
     'Basic Example': {
       render: function () {
         return `
-          <onion-video
+          <bulbs-video
             attribute="value"
           >
-          </onion-video
+          </bulbs-video
         `;
       },
     },
