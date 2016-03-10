@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+./scripts/webpack-ci-build
+./node_modules/.bin/karma start --single-run
