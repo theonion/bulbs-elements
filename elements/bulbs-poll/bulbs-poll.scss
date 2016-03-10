@@ -68,7 +68,8 @@ bulbs-poll {
 
     svg {
       margin-right: 1em;
-      min-width: 20px
+      width: 20px;
+      height: 20px;
     }
   }
 
@@ -128,6 +129,7 @@ bulbs-poll {
     align-self: center;
     font-size: 1.3em;
     text-align: center;
+    display: block;
   }
 
   .bulbs-poll-vote {
@@ -164,10 +166,12 @@ bulbs-poll {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    position: relative;
     z-index: 1;
 
     .bulbs-poll-answer-text {
       flex-grow: 1;
+      display: block;
     }
   }
 
@@ -175,6 +179,7 @@ bulbs-poll {
     align-self: center;
     font-size: 1.3em;
     text-align: center;
+    display: block;
   }
 
   .bulbs-poll-coming-soon {
@@ -183,6 +188,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-coming-soon-message {
+    display: block;
     text-align: center;
     font-size: 1.3em;
     text-transform: uppercase;
@@ -190,7 +196,7 @@ bulbs-poll {
     padding: 2em;
     background-color: $low-contrast;
   }
-  
+
   .bulbs-poll-loading {
     text-align: center;
   }
