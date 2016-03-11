@@ -1,5 +1,6 @@
 import Answers from './answers';
 import Answer from './answer';
+import ImageAnswer from './image-answer';
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 // import { assert } from 'chai';
@@ -13,6 +14,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
+        poll: {data:{answer_type: 'text'}},
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
@@ -36,6 +38,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
+        poll: {data:{answer_type: 'text'}},
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
@@ -45,6 +48,39 @@ describe('<bulbs-poll> <Answers>', function () {
             selectAnswer={selectAnswer}
           />
           <Answer
+            answer={answer1}
+            selectAnswer={selectAnswer}
+          />
+        </ul>
+      );
+    });
+  });
+
+  context('answer_type is imageAnswer', function () {
+    it('renders answer images', function () {
+      let answer1 = {};
+      let answer2 = {};
+      let answers = [
+        answer1,
+        answer2,
+      ];
+
+      let selectAnswer = function () {};
+
+      let props = {
+        answers,
+        selectAnswer,
+        selectedAnswer: {},
+        poll: {data:{answer_type: 'imageText'}},
+      };
+
+      assertJSXEqual(this.test.title, <Answers {...props}/>,
+        <ul className="bulbs-poll-answers">
+          <ImageAnswer
+            answer={answer1}
+            selectAnswer={selectAnswer}
+          />
+          <ImageAnswer
             answer={answer1}
             selectAnswer={selectAnswer}
           />

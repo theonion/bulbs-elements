@@ -41,6 +41,7 @@ export default function Question (props) {
         answers={poll.data.answers}
         selectAnswer={selectAnswer}
         selectedAnswer={selectedAnswer}
+        poll={poll}
       />
 
       <VoteButton
