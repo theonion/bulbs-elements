@@ -13,6 +13,7 @@ describe('<bulbs-poll> <Answer>', function () {
         answer,
         selectedAnswer: otherAnswer,
         selectAnswer,
+        poll: {answer_type: 'text'},
       };
 
       assertJSXEqual(this.test.title, <Answer {...props}/>,
@@ -35,6 +36,7 @@ describe('<bulbs-poll> <Answer>', function () {
         answer,
         selectedAnswer: answer,
         selectAnswer,
+        poll: {answer_type: 'text'},
       };
 
       assertJSXEqual(this.test.title, <Answer {...props}/>,
