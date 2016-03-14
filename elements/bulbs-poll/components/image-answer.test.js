@@ -9,7 +9,7 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
       let answer = {
         answer_text: 'Answer',
         id: 1,
-        answer_image_url: 'www.suckitjerks.com'
+        answer_image_url: 'www.suckitjerks.com',
       };
       let otherAnswer = { answer_text: 'Another', id: 2 };
       let selectAnswer = function () {};
@@ -17,7 +17,7 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
         answer,
         selectedAnswer: otherAnswer,
         selectAnswer,
-        poll: {answer_type: 'imageText'},
+        poll: { answer_type: 'imageText' },
       };
 
       assertJSXEqual(this.test.title, <ImageAnswer {...props} />,
@@ -40,14 +40,14 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
       let answer = {
         answer_text: 'Answer',
         id: 1,
-        answer_image_url: 'www.suckitjerks.com'
+        answer_image_url: 'www.suckitjerks.com',
       };
       let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: answer,
         selectAnswer,
-        poll: {answer_type: 'imageText'},
+        poll: { answer_type: 'imageText' },
       };
 
       assertJSXEqual(this.test.title, <ImageAnswer {...props}/>,

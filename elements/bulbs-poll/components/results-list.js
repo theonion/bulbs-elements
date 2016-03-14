@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Result from './result';
 import ImageResult from './image-result';
-import classnames from 'classnames';
 
 export default function ResultsList (props) {
   let {

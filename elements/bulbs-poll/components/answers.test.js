@@ -14,7 +14,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
-        poll: {data:{answer_type: 'text'}},
+        poll: { data: { answer_type: 'text' } },
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
@@ -38,7 +38,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
-        poll: {data:{answer_type: 'text'}},
+        poll: { data: { answer_type: 'text' } },
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
@@ -71,7 +71,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answers,
         selectAnswer,
         selectedAnswer: {},
-        poll: {data:{answer_type: 'imageText'}},
+        poll: { data: { answer_type: 'imageText' } },
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,

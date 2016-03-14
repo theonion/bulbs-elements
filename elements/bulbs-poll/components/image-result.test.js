@@ -45,7 +45,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
           </div>
         </li>
       );
-    })
+    });
   });
 
   context('winning vote', function () {

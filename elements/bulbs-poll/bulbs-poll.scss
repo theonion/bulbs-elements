@@ -51,7 +51,6 @@ bulbs-poll {
 
   li.bulbs-poll-image-answer {
     background: #eaeaea;
-    justify-content: center;
     margin: 2em;
     padding: 2em;
   }
@@ -65,15 +64,16 @@ bulbs-poll {
     }
 
     svg {
-      margin: 1em auto;
       width: 20px;
       height: 20px;
+      margin-right: 1em;
     }
   }
 
   .answer-image-text {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding: 1.5em;
   }
 
   .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
@@ -105,7 +105,39 @@ bulbs-poll {
     }
   }
 
-  .bulbs-poll-answer {
+  .bulbs-poll-image-result {
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 1.5em;
+    position: relative;
+    width: 100%;
+
+    img {
+      width: 100%
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 1em;
+    }
+
+    .bulbs-poll-answer-result {
+      margin: 3em auto;
+    }
+
+    .result-image-list-item {
+      background: $low-contrast;
+      height: 100%;
+      padding: 1.3em;
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  .bulbs-poll-answer,
+  .bulbs-poll-image-answer {
     &:hover {
       opacity: 0.5;
     }
@@ -116,21 +148,25 @@ bulbs-poll {
   }
 
   .bulbs-poll-answer,
+  .bulbs-poll-image-answer,
   .bulbs-poll-answer * {
     cursor: pointer;
     user-select: none;
   }
 
-  .bulbs-poll-answer-result {
+  .bulbs-poll-answer-result,
+  .bulbs-poll-image-answer-result {
     min-width: 1.5em;
   }
 
   .bulbs-poll-result-winning {
-    .bulbs-poll-answer-text {
+    .bulbs-poll-answer-text,
+    .bulbs-poll-image-answer-text {
       opacity: 1;
     }
 
-    .bulbs-poll-answer-result {
+    .bulbs-poll-answer-result,
+    .bulbs-poll-image-answer-result {
       font-weight: bold;
       min-width: 3em;
       padding: 0 10px;
@@ -151,6 +187,10 @@ bulbs-poll {
   .bulbs-poll-results-list {
     margin: 0;
     padding: 0;
+  }
+
+  .bulbs-poll-image-results-list {
+    display: flex;
   }
 
   .bulbs-poll-footer {
@@ -186,6 +226,15 @@ bulbs-poll {
     position: absolute;
     top: 0;
     z-index: 0;
+  }
+
+  .bulbs-poll-image-answer-bar {
+    background-color: $highlight-color;
+    bottom: 0;
+    position: absolute;
+    opacity: 0.5;
+    right: 0;
+    width: 100%;
   }
 
   .bulbs-poll-answer-result {
