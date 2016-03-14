@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import Result from './result';
+import ImageResult from './image-result';
+import classnames from 'classnames';
 
 export default function ResultsList (props) {
   let {
@@ -7,12 +9,17 @@ export default function ResultsList (props) {
     winningAnswers,
     vote,
   } = props;
-
+  let ResultType = Result;
+  let ListType = 'bulbs-poll-results-list';
+  if(props.poll.data.answer_type === 'imageText') {
+    ResultType = ImageResult;
+    ListType = 'bulbs-poll-image-results-list';
+  }
   return (
-    <ul className='bulbs-poll-results-list'>
+    <ul className={ListType}>
       {
         poll.data.answers.map((answer, index) => {
-          return <Result
+          return <ResultType
             key={index}
             answer={answer}
             poll={poll}
