@@ -39,9 +39,41 @@ bulbs-poll {
 
   }
 
+  ul.bulbs-poll-answers {
+    display: flex;
+    flex-direction: row;
+  }
+
   .bulbs-poll-answers {
     margin: 0;
     padding: 0;
+  }
+
+  li.bulbs-poll-image-answer {
+    background: #eaeaea;
+    justify-content: center;
+    margin: 2em;
+    padding: 2em;
+  }
+
+  .bulbs-poll-image-answer {
+    display: flex;
+    flex-flow: row wrap;
+
+    img {
+      width: 100%
+    }
+
+    svg {
+      margin: 1em auto;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .answer-image-text {
+    display: flex;
+    flex-direction: column;
   }
 
   .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
