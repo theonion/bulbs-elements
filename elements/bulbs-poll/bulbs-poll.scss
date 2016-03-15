@@ -1,6 +1,7 @@
 $accent-color: green;
 $low-contrast: lightgray;
 $highlight-color: lightblue;
+$background-color: white;
 
 // First we do some resetting.
 // This has to be in it's own block because the production build
@@ -48,9 +49,9 @@ bulbs-poll {
   }
 
   li.bulbs-poll-image-answer {
-    background: #eaeaea;
-    margin: 2em;
-    padding: 2em;
+    background: $background-color;
+    padding: .5em .5em 1em .5em;
+    margin: 1em;
 
     &:before {
       content: "";
@@ -116,7 +117,7 @@ bulbs-poll {
     display: flex;
     flex-flow: row wrap;
     list-style: none;
-    margin: 1.5em;
+    margin: 1em;
     position: relative;
     width: 100%;
 
@@ -136,9 +137,9 @@ bulbs-poll {
     }
 
     .result-image-list-item {
-      background: $low-contrast;
+      background: $background-color;
       height: 100%;
-      padding: 1.3em;
+      padding: .5em .5em 1em .5em;
       position: relative;
       width: 100%;
     }
