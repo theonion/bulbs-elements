@@ -51,6 +51,10 @@ bulbs-poll {
     background: #eaeaea;
     margin: 2em;
     padding: 2em;
+
+    &:before {
+      content: "";
+    }
   }
 
   .bulbs-poll-image-answer {
@@ -58,7 +62,8 @@ bulbs-poll {
     flex-flow: row wrap;
 
     img {
-      width: 100%
+      height: 100%;
+      width: 100%;
     }
 
     svg {
@@ -70,8 +75,8 @@ bulbs-poll {
 
   .answer-image-text {
     display: flex;
-    flex-direction: row;
-    padding: 1.5em;
+    flex-flow: row wrap;
+    padding: 0.2em;
   }
 
   .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
@@ -103,6 +108,10 @@ bulbs-poll {
     }
   }
 
+  li.bulbs-poll-image-result:before {
+    content: "";
+  }
+
   .bulbs-poll-image-result {
     display: flex;
     flex-flow: row wrap;
@@ -120,6 +129,7 @@ bulbs-poll {
       height: 20px;
       margin-right: 1em;
     }
+
 
     .bulbs-poll-answer-result {
       margin: 3em auto;
@@ -189,6 +199,7 @@ bulbs-poll {
 
   .bulbs-poll-image-results-list {
     display: flex;
+    margin: 0;
   }
 
   .bulbs-poll-footer {
