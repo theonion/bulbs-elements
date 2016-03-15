@@ -39,12 +39,10 @@ bulbs-poll {
 
   }
 
-  ul.bulbs-poll-answers {
+  .bulbs-poll-answers {
     display: flex;
     flex-direction: row;
-  }
-
-  .bulbs-poll-answers {
+    list-style: none;
     margin: 0;
     padding: 0;
   }
