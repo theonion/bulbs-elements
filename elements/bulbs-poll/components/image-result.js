@@ -27,7 +27,7 @@ export default function ImageResult (props) {
     percent = (total_votes / poll.data.total_votes) * 100;
   }
   else {
-    percent = 0;
+    percent = total_votes * 100;
   }
   let percentResult = `${percent.toFixed(0)}%`;
 

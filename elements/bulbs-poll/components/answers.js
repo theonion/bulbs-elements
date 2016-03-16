@@ -4,13 +4,16 @@ import ImageAnswer from './image-answer';
 import classnames from 'classnames';
 
 export default function Answers (props) {
-  let classNames = classnames('bulbs-poll-answers', {
-    'bulbs-poll-answers-selected': props.selectedAnswer.id,
-  });
   let AnswerType = Answer;
+  let ListType = 'bulbs-poll-answers';
   if (props.poll.data.answer_type === 'imageText') {
     AnswerType = ImageAnswer;
+    ListType = 'bulbs-poll-image-answers';
   }
+
+  let classNames = classnames(ListType, {
+    'bulbs-poll-answers-selected': props.selectedAnswer.id,
+  });
   return (
     <ul className={classNames}>
       {

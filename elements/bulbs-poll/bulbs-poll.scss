@@ -40,10 +40,11 @@ bulbs-poll {
 
   }
 
-  .bulbs-poll-answers {
+  .bulbs-poll-image-answers {
     display: flex;
-    flex-direction: row;
-    list-style: none;
+  }
+
+  .bulbs-poll-answers {
     margin: 0;
     padding: 0;
   }
@@ -95,6 +96,10 @@ bulbs-poll {
 
     &:first-child {
       margin-top: 1em;
+    }
+
+    &:before {
+      content: "";
     }
 
     span {
