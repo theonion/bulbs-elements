@@ -13,6 +13,10 @@ bulbs-poll {
   & * {
     all: initial;
     box-sizing: border-box;
+
+    &:before {
+      content: "";
+    }
   }
 }
 
@@ -49,6 +53,7 @@ bulbs-poll {
     padding: 0;
   }
 
+  // overwriting specifity in starwipe
   li.bulbs-poll-image-answer {
     background: $background-color;
     padding: .5em .5em 1em .5em;
@@ -114,6 +119,7 @@ bulbs-poll {
     }
   }
 
+  // overwriting specificity in starwipe
   li.bulbs-poll-image-result:before {
     content: "";
   }

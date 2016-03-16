@@ -5,13 +5,13 @@ import classnames from 'classnames';
 
 export default function Answers (props) {
   let AnswerType = Answer;
-  let ListType = 'bulbs-poll-answers';
+  let listClassName = 'bulbs-poll-answers';
   if (props.poll.data.answer_type === 'imageText') {
     AnswerType = ImageAnswer;
-    ListType = 'bulbs-poll-image-answers';
+    listClassName = 'bulbs-poll-image-answers';
   }
 
-  let classNames = classnames(ListType, {
+  let classNames = classnames(listClassName, {
     'bulbs-poll-answers-selected': props.selectedAnswer.id,
   });
   return (

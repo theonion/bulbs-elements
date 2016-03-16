@@ -9,13 +9,13 @@ export default function ResultsList (props) {
     vote,
   } = props;
   let ResultType = Result;
-  let ListType = 'bulbs-poll-results-list';
+  let listClassName = 'bulbs-poll-results-list';
   if(props.poll.data.answer_type === 'imageText') {
     ResultType = ImageResult;
-    ListType = 'bulbs-poll-image-results-list';
+    listClassName = 'bulbs-poll-image-results-list';
   }
   return (
-    <ul className={ListType}>
+    <ul className={listClassName}>
       {
         poll.data.answers.map((answer, index) => {
           return <ResultType
