@@ -48,6 +48,49 @@ describe('<bulbs-poll> <ImageResult>', function () {
     });
   });
 
+  context('no votes cast', function () {
+    it('renders 0% vote', function () {
+      let props = {
+        answer: {
+          answer_text: 'the answer',
+          answer_image_url: 'www.foobar.com',
+          total_votes: 0,
+          sodahead_id: 1,
+        },
+        answer_type: 'imageText',
+        poll: {
+          data: {
+            total_votes: 0,
+          },
+        },
+        vote: {},
+        winningAnswers: [],
+      };
+
+      assertJSXEqual(this.test.title, <ImageResult {...props} />,
+        <li className='bulbs-poll-image-result'>
+          <div className="result-image-list-item">
+            <div
+              className='bulbs-poll-image-answer-bar'
+              style={{ height: '0%' }}
+            />
+            <div className="bulbs-poll-image-answer-title">
+              <img src='www.foobar.com' />
+              <div className='answer-image-text'>
+                <SelectionMarker isSelected={false}/>
+                <span className='bulbs-poll-image-answer-text'>
+                  the answer
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className='bulbs-poll-answer-result'>
+            0%
+          </div>
+        </li>
+      );
+    });
+  });
   context('winning vote', function () {
     it('renders winning answer + image', function () {
       let props = {

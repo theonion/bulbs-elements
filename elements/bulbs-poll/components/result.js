@@ -22,7 +22,13 @@ export default function Result (props) {
     'bulbs-poll-result-selected': isVoteAnswer,
   });
   let { total_votes } = answer;
-  let percent = (total_votes / poll.data.total_votes) * 100;
+  let percent;
+  if(poll.data.total_votes > 1) {
+    percent = (total_votes / poll.data.total_votes) * 100;
+  }
+  else {
+    percent = 0;
+  }
   let percentResult = `${percent.toFixed(0)}%`;
 
   return (
