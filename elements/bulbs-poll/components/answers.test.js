@@ -75,7 +75,7 @@ describe('<bulbs-poll> <Answers>', function () {
       };
 
       assertJSXEqual(this.test.title, <Answers {...props}/>,
-        <ul className="bulbs-poll-answers">
+        <ul className="bulbs-poll-image-answers">
           <ImageAnswer
             answer={answer1}
             selectAnswer={selectAnswer}
