@@ -1,6 +1,7 @@
 $accent-color: green;
 $low-contrast: lightgray;
 $highlight-color: lightblue;
+$background-color: white;
 
 // First we do some resetting.
 // This has to be in it's own block because the production build
@@ -12,6 +13,10 @@ bulbs-poll {
   & * {
     all: initial;
     box-sizing: border-box;
+
+    &:before {
+      content: "";
+    }
   }
 }
 
@@ -39,9 +44,46 @@ bulbs-poll {
 
   }
 
+  .bulbs-poll-image-answers {
+    display: flex;
+  }
+
   .bulbs-poll-answers {
     margin: 0;
     padding: 0;
+  }
+
+  // overwriting specifity in starwipe
+  li.bulbs-poll-image-answer {
+    background: $background-color;
+    padding: .5em .5em 1em .5em;
+    margin: 1em;
+
+    &:before {
+      content: "";
+    }
+  }
+
+  .bulbs-poll-image-answer {
+    display: flex;
+    flex-flow: row wrap;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 1em;
+    }
+  }
+
+  .answer-image-text {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0.2em;
   }
 
   .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
@@ -61,6 +103,10 @@ bulbs-poll {
       margin-top: 1em;
     }
 
+    &:before {
+      content: "";
+    }
+
     span {
       line-height: 1.5;
       font-size: 14px;
@@ -73,7 +119,45 @@ bulbs-poll {
     }
   }
 
-  .bulbs-poll-answer {
+  // overwriting specificity in starwipe
+  li.bulbs-poll-image-result:before {
+    content: "";
+  }
+
+  .bulbs-poll-image-result {
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 1em;
+    position: relative;
+    width: 100%;
+
+    img {
+      width: 100%
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 1em;
+    }
+
+
+    .bulbs-poll-answer-result {
+      margin: 3em auto;
+    }
+
+    .result-image-list-item {
+      background: $background-color;
+      height: 100%;
+      padding: .5em .5em 1em .5em;
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  .bulbs-poll-answer,
+  .bulbs-poll-image-answer {
     &:hover {
       opacity: 0.5;
     }
@@ -84,21 +168,25 @@ bulbs-poll {
   }
 
   .bulbs-poll-answer,
+  .bulbs-poll-image-answer,
   .bulbs-poll-answer * {
     cursor: pointer;
     user-select: none;
   }
 
-  .bulbs-poll-answer-result {
+  .bulbs-poll-answer-result,
+  .bulbs-poll-image-answer-result {
     min-width: 1.5em;
   }
 
   .bulbs-poll-result-winning {
-    .bulbs-poll-answer-text {
+    .bulbs-poll-answer-text,
+    .bulbs-poll-image-answer-text {
       opacity: 1;
     }
 
-    .bulbs-poll-answer-result {
+    .bulbs-poll-answer-result,
+    .bulbs-poll-image-answer-result {
       font-weight: bold;
       min-width: 3em;
       padding: 0 10px;
@@ -119,6 +207,11 @@ bulbs-poll {
   .bulbs-poll-results-list {
     margin: 0;
     padding: 0;
+  }
+
+  .bulbs-poll-image-results-list {
+    display: flex;
+    margin: 0;
   }
 
   .bulbs-poll-footer {
@@ -154,6 +247,15 @@ bulbs-poll {
     position: absolute;
     top: 0;
     z-index: 0;
+  }
+
+  .bulbs-poll-image-answer-bar {
+    background-color: $highlight-color;
+    bottom: 0;
+    position: absolute;
+    opacity: 0.5;
+    right: 0;
+    width: 100%;
   }
 
   .bulbs-poll-answer-result {

@@ -41,6 +41,43 @@ describe('<bulbs-poll> <Result>', function () {
     });
   });
 
+  context('no votes cast', function () {
+    it('renders 0% results', function () {
+      let props = {
+        answer: {
+          answer_text: 'the answer',
+          total_votes: 0,
+          sodahead_id: 1,
+        },
+        poll: {
+          data: {
+            total_votes: 0,
+          },
+        },
+        vote: {},
+        winningAnswers: [],
+      };
+
+      assertJSXEqual(this.test.title, <Result {...props} />,
+        <li className='bulbs-poll-result'>
+          <div
+            className='bulbs-poll-answer-bar'
+            style={{ width: '0%' }}
+          />
+          <div className='bulbs-poll-answer-title'>
+            <SelectionMarker isSelected={false}/>
+            <span className='bulbs-poll-answer-text'>
+              the answer
+            </span>
+            <span className='bulbs-poll-answer-result'>
+              0%
+            </span>
+          </div>
+        </li>
+      );
+    });
+  });
+
   context('winning vote', function () {
     it('renders winning answer', function () {
       let props = {

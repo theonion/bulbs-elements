@@ -6,3 +6,4 @@ karma_html/
 *.log
 benchmark/
 dist/
+bower_components/

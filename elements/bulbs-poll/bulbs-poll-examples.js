@@ -70,7 +70,20 @@ let examples = {
     'avclub local': {
       render: function () {
         let pollId = '230936';
-        let src = `http://avclub.local/poll/${pollId}.json`;
+        let src = `http://avclub.local/poll/${pollId}/merged.json`;
+        //localStorage.removeItem(`bulbs-poll:${src}:vote`);
+        return `
+          <bulbs-poll
+            src="${src}"
+          >
+          </bulbs-poll>
+        `;
+      },
+    },
+    'starwipe local': {
+      render: function () {
+        let pollId = '2186';
+        let src = `http://starwipe.local/poll/${pollId}/merged.json`;
         //localStorage.removeItem(`bulbs-poll:${src}:vote`);
         return `
           <bulbs-poll
