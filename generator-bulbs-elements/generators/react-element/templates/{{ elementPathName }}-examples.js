@@ -7,7 +7,7 @@ let examples = {
           <<%= elementName %>
             attribute="value"
           >
-          </<%= elementName %>
+          </<%= elementName %>>
         `;
       },
     },
