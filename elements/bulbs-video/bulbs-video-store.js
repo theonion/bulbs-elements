@@ -9,5 +9,5 @@ export default class VideoStore extends Store { }
 Store.defineFields(VideoStore, {
   video: VideoField,
   sources: SourcesField,
-	controller: ControllerField,
+  controller: ControllerField,
 });

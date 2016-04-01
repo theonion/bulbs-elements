@@ -20,7 +20,7 @@ class BulbsVideo extends BulbsElement {
   }
 
   willRecieveProps (props) {
-		// Prop Will Change
+    // Prop Will Change
     if (this.props.videoId !== props.videoId) {
       this.fetchVideoIdeoData(props.videoId);
     }
@@ -37,7 +37,7 @@ class BulbsVideo extends BulbsElement {
     return (
       <BulbsVideoRoot
         data={this.state}
-				actions={this.store.actions}
+        actions={this.store.actions}
       />
     );
   }

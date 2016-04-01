@@ -10,17 +10,17 @@ function copyDirectory (generator, templateProps) {
       file: function (root, stats, next) {
         templatePath = path.relative(generator.sourceRoot(), path.join(root, stats.name));
         destinationPath = mustache.render(generator.destinationPath(templatePath), templateProps);
-				try {
-					generator.fs.copyTpl(
-						generator.templatePath(templatePath),
-						destinationPath,
-						templateProps
-					);
-				}
-				catch (error) {
-					console.log(destinationPath);
-					console.trace(error);
-				}
+        try {
+          generator.fs.copyTpl(
+            generator.templatePath(templatePath),
+            destinationPath,
+            templateProps
+          );
+        }
+        catch (error) {
+          console.log(destinationPath);
+          console.trace(error);
+        }
         next();
       }.bind(this)
     }
