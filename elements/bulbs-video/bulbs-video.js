@@ -10,9 +10,7 @@ import BulbsVideoRoot from './components/root';
 
 import './bulbs-video.scss';
 
-//const ONION_STUDIOS_URL = '//www.onionstudios.com';
-console.log(process.env.ONION_STUDIOS_URL);
-const ONION_STUDIOS_URL = '//videohub.local';
+const ONION_STUDIOS_URL = process.env.ONION_STUDIOS_URL;
 
 class BulbsVideo extends BulbsElement {
   initialDispatch () {
