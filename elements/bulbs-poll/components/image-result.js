@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import SelectionMarker from './selection-marker';
 import find from 'array-find';
 
-export default function Result (props) {
+export default function ImageResult (props) {
   let {
     answer,
     poll,
@@ -17,7 +17,7 @@ export default function Result (props) {
 
   let isVoteAnswer = !!(vote.data && vote.data.answer.id === answer.sodahead_id);
 
-  let className = classnames('bulbs-poll-result', {
+  let className = classnames('bulbs-poll-image-result', {
     'bulbs-poll-result-winning': isWinningAnswer,
     'bulbs-poll-result-selected': isVoteAnswer,
   });
@@ -33,24 +33,29 @@ export default function Result (props) {
 
   return (
     <li className={className}>
-      <div
-        className='bulbs-poll-answer-bar'
-        style={{ width: percentResult }}
-      />
-      <div className='bulbs-poll-answer-title'>
-        <SelectionMarker isSelected={isVoteAnswer}/>
-        <span className='bulbs-poll-answer-text'>
-          { answer.answer_text }
-        </span>
-        <span className='bulbs-poll-answer-result'>
-          { percentResult }
-        </span>
+      <div className="result-image-list-item">
+        <div
+          className='bulbs-poll-image-answer-bar'
+          style={{ height: percentResult }}
+        />
+        <div className='bulbs-poll-image-answer-title'>
+          <img src={ answer.answer_image_url } />
+          <div className="answer-image-text">
+            <SelectionMarker isSelected={isVoteAnswer}/>
+            <span className='bulbs-poll-image-answer-text'>
+              { answer.answer_text }
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className='bulbs-poll-answer-result'>
+        { percentResult }
       </div>
     </li>
   );
 }
 
-Result.propTypes = {
+ImageResult.propTypes = {
   answer: PropTypes.object.isRequired,
   poll: PropTypes.object.isRequired,
   vote: PropTypes.object.isRequired,

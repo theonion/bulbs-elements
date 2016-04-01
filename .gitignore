@@ -1,9 +1,9 @@
 *hot-update*
-test/
+.test/
 !elements/*/test
 node_modules/
 karma_html/
 *.log
 benchmark/
-.test/
 dist/
+bower_components/
