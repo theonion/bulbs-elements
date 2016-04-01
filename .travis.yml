@@ -1,9 +1,9 @@
 language: node_js
 sudo: false
 before_script:
-- "./node_modules/.bin/npm install"
+- "npm install"
 script:
-- "scripts/"
+- "scripts/ci"
 cache:
   directories:
   - node_modules
