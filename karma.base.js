@@ -1,6 +1,6 @@
 var glob = require('glob');
 var path = require('path');
-
+var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.hot');
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
 
   // list of files / patterns to load in the browser
   files: [
-    path.join(__dirname, 'elements/**/*.test.js')
+    path.join(__dirname, 'test/load-all-tests.js')
   ],
 
   // list of files to exclude
@@ -31,6 +31,8 @@ module.exports = {
   // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
   preprocessors: {
     'elements/**/*.js': ['webpack', 'sourcemap'],
+    'lib/**/*.js': ['webpack', 'sourcemap'],
+    'test/**/*.js': ['webpack', 'sourcemap'],
     '**/*.html': ['html2js'],
   },
 
