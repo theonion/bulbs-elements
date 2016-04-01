@@ -1,8 +1,9 @@
 {
   "name": "bulbs-elements",
-  "version": "X.Y.Z-rc#",
+  "version": "0.2.5",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
+  "repository": "git@github.com:theonion/bulbs-elements.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
