@@ -5,9 +5,9 @@ let examples = {
       render: function () {
         return `
           <bulbs-video
-            attribute="value"
+            video-id="3936"
           >
-          </bulbs-video
+          </bulbs-video>
         `;
       },
     },

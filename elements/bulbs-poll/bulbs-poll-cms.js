@@ -5,8 +5,14 @@ import {
 
 let promiseCache = {};
 let previewDataCache = {};
+
 function getPreviewData (src, callback) {
-  promiseCache[src] || (promiseCache[src] = fetch(src).then((response) => response.json()));
+  if (!promiseCache[src]) {
+    let promise = promiseCache[src] = fetch(src, {
+      credentials: 'include',
+    });
+    promise.then((response) => response.json());
+  }
   promiseCache[src].then((data) => {
     previewDataCache[src] = data;
     callback(data);

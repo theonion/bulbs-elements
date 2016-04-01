@@ -12,6 +12,7 @@ config.plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('development'),
+			'ONION_STUDIOS_URL': JSON.stringify('//videohub.local'),
     },
   }),
 ];
@@ -30,10 +31,5 @@ config.module.preLoaders = [
 config.eslint = {
   configFile: '.eslintrc'
 };
-
-var testFiles = glob.sync('{elements,lib}/**/*.test.js');
-testFiles.forEach(function (file) {
-  config.entry['.test/'+file.replace(/\.js$/, '')] = path.join(__dirname, file);
-});
 
 module.exports = config;
