@@ -17,7 +17,7 @@ class BulbsVideo extends BulbsElement {
     this.fetchVideoData(this.props.videoId);
   }
 
-  willRecieveProps (props) {
+  willReceiveProps (props) {
     // Prop Will Change
     if (this.props.videoId !== props.videoId) {
       this.fetchVideoIdeoData(props.videoId);
