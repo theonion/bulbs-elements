@@ -35,16 +35,16 @@ module.exports = {
   },
 
   webpack: {
-		devtool: 'inline-source-map',
-		resolve: webpackConfig.resolve,
-		module: webpackConfig.module,
-	},
+    devtool: 'inline-source-map',
+    resolve: webpackConfig.resolve,
+    module: webpackConfig.module,
+  },
 
-	webpackMiddleware: {
-		stats: {
-			colors: true,
-		},
-	},
+  webpackMiddleware: {
+    stats: {
+      colors: true,
+    },
+  },
 
   // test results reporter to use
   // possible values: 'dots', 'progress'
