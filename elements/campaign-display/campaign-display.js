@@ -1,30 +1,36 @@
-import {
-  registerElement,
-  BulbsHTMLElement,
-} from 'bulbs-elements/register';
+import React, { PropTypes } from 'react';
+
+import BulbsElement from 'bulbs-elements/bulbs-element';
+import { registerReactElement } from 'bulbs-elements/register';
+
 import './campaign-display.scss';
 
-class CampaignDisplay extends BulbsHTMLElement {
-  createdCallback () {
-    console.log('Created campaign-display');
+import CampaignDisplayStore from './campaign-display-store';
+import CampaignDisplayRoot from './components/campaign-display-root';
+
+class CampaignDisplay extends BulbsElement {
+  initialDispatch () {
+    this.store.actions.fetchCampaign(this.props.campaignUrl);
   }
 
-  attachedCallback () {
-    console.log('Attached campaign-display');
-  }
-
-  detachedCallback () {
-    console.log('Detached campaign-display');
-  }
-
-  attributeChangedCallback (name, previousValue, value) {
-    console.log(
-      'Attribute Changed campaign-display changed ${name} from: ',
-      previousValue, 'to:', value
+  render () {
+    return (
+      <CampaignDisplayRoot
+          data={this.state}
+      />
     );
   }
 }
 
-registerElement('campaign-display', CampaignDisplay);
+CampaignDisplay.displayName = 'CampaignDisplay';
+
+CampaignDisplay.store = CampaignDisplayStore;
+
+CampaignDisplay.propTypes = {
+  campaignUrl: PropTypes.string.isRequired,
+  display: PropTypes.oneOf(['image', 'name']).isRequired,
+};
+
+registerReactElement('campaign-display', CampaignDisplay);
 
 export default CampaignDisplay;

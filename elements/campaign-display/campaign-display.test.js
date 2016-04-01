@@ -1,13 +1,20 @@
 import { assert } from 'chai';
+import testElement from 'bulbs-elements/test/element';
 
-describe('<campaign-display>', function () {
-  let element;
+testElement('<campaign-display>', function () {
+  beforeEach(function (done) {
+    this.element = this.renderElement({
+      done,
+      tag: 'campaign-display',
+      props: {
+        // src: '/whatever.json',
+      },
+    });
 
-  beforeEach(function () {
-    element = document.createElement('campaign-display');
+    this.actions = this.element.reactElement.store.actions;
   });
 
   it('renders an <campaign-display>', function () {
-    assert.equal(element.tagName.toLowerCase(), 'campaign-display');
+    assert.equal(this.element.tagName.toLowerCase(), 'campaign-display');
   });
 });
