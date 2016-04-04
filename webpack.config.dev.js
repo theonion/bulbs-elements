@@ -31,9 +31,4 @@ config.eslint = {
   configFile: '.eslintrc'
 };
 
-var testFiles = glob.sync('{elements,lib}/**/*.test.js');
-testFiles.forEach(function (file) {
-  config.entry['.test/'+file.replace(/\.js$/, '')] = path.join(__dirname, file);
-});
-
 module.exports = config;

@@ -26,7 +26,7 @@ function startKarma () {
   console.log('Starting Karma');
   karma = new Van({
     scripts: {
-      karma: 'rm -rf .test/ && node_modules/.bin/karma start --reporters dots | sed \'/LOG:/d\'',
+      karma: 'node_modules/.bin/karma start --reporters dots | sed \'/LOG:/d\'',
     }
   });
   karma.start();
@@ -36,7 +36,6 @@ function startWebpack () {
   console.log('Starting Webpack');
   webpack = new Van({
     scripts: {
-      webpackBuild: 'scripts/webpack-dev-build',
       webpackServe: 'scripts/webpack-dev-server',
     }
   });
