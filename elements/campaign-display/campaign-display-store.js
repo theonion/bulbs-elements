@@ -1,9 +1,8 @@
 import { Store } from 'bulbs-elements/store';
+import CampaignField from './fields/campaign';
 
 export default class CampaignDisplayStore extends Store {}
 
-import CampaignField from './fields/campaign';
-
-Store.defineFields(Store, {
+Store.defineFields(CampaignDisplayStore, {
   campaign: CampaignField,
 });
