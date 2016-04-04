@@ -17,20 +17,20 @@ const CampaignField = new Field({
   }),
 
   fetchCampaignSuccess: new Action(function (state, data) {
-    state.requestInFlight = false;
     state.data = data;
+    state.requestInFlight = false;
     return state;
   }),
 
   fetchCampaignFailure: new Action(function (state, failure) {
-    state.requestInFlight = false;
     state.requestFailure = failure;
+    state.requestInFlight = false;
     return state;
   }),
 
   fetchCampaignError: new Action(function (state, error) {
-    state.requestInFlight = false;
     state.requestError = error;
+    state.requestInFlight = false;
     return state;
   }),
 });
