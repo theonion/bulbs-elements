@@ -5,25 +5,32 @@ const CampaignField = new Field({
     data: [],
     requestInFlight: false,
   },
-  fetchCampaign: new Action(function (state, campaignUrl) {
+
+  fetchCampaign: new Action(function (state, campaignUrl, store) {
+    state.requestInFlight = true;
     this.request(campaignUrl, {
-      success: this.actions.fetchCampaignSuccess,
-      failure: this.actions.fetchCampaignFailure,
-      error: this.actions.fetchCampaignError,
-      finally: this.actions.fetchCampaignFinally,
+      success: store.actions.fetchCampaignSuccess,
+      failure: store.actions.fetchCampaignFailure,
+      error: store.actions.fetchCampaignError,
     });
+    return state;
   }),
+
   fetchCampaignSuccess: new Action(function (state, data) {
-    state.data = data;
-  }),
-  fetchCampaignFailure: new Action(function (state, failure) {
-    state.requestFailure = failure;
-  }),
-  fetchCampaignError: new Action(function (state, error) {
-    state.requestError = error;
-  }),
-  fetchCampaignFinally: new Action(function (state) {
     state.requestInFlight = false;
+    state.data = data;
+    return state;
+  }),
+
+  fetchCampaignFailure: new Action(function (state, failure) {
+    state.requestInFlight = false;
+    state.requestFailure = failure;
+    return state;
+  }),
+
+  fetchCampaignError: new Action(function (state, error) {
+    state.requestInFlight = false;
+    state.requestError = error;
     return state;
   }),
 });
