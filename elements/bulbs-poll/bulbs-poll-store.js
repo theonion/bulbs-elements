@@ -7,13 +7,11 @@ import VoteField from './fields/vote';
 import SrcField from './fields/src';
 import NowField from './fields/now';
 
-export default class PollStore extends Store { }
-
-Store.defineFields(PollStore, {
+export default const PollSchema = {
   poll: PollField,
   selectedAnswer: SelectedAnswerField,
   winningAnswers: WinningAnswersField,
   vote: VoteField,
   src: SrcField,
   now: NowField,
-});
+};
