@@ -1,4 +1,3 @@
-import makeRequest from 'bulbs-elements/util/make-request';
 import { Field, Action } from 'bulbs-elements/store';
 
 function cacheKey (pollId) {
@@ -20,7 +19,7 @@ const VoteField = new Field({
   makeVoteRequest: new Action(function (state, answer, store) {
     let { poll } = store.state;
     let url = `https://onion.sodahead.com/api/polls/${poll.data.sodahead_id}/vote/`
-    makeRequest(url, {
+    this.request(url, {
       method: 'post',
       headers: {
         'Accept': 'application/json',

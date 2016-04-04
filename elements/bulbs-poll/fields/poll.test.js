@@ -52,11 +52,6 @@ describe('<bulbs-poll> PollField', function () {
     it('updates the matching answer\'s vote count', function () {
       assert.equal(nextState.data.answers[1].total_votes, 10);
     });
-
-    it('makes a copy of the matching answer', function () {
-      assert.isTrue(state.data.answers[0] === nextState.data.answers[0]);
-      assert.isFalse(state.data.answers[1] === nextState.data.answers[1]);
-    });
   });
 
   describe('fetchPollData', function () {

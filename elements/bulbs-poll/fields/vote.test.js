@@ -58,11 +58,14 @@ describe('<bulbs-poll> VoteField', function () {
       fetchMock.mock(url, {
         poll: {
           totalVotes: 10,
+          answers: [{
+            sodaheadId: 20,
+          }],
         },
         vote: {
           answer: {
             totalVotes: 5,
-            id: 'answer-id',
+            id: 20,
           },
         },
       });
@@ -112,10 +115,9 @@ describe('<bulbs-poll> VoteField', function () {
       setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
       updateAnswerVoteCountSpy = chai.spy.on(store.actions, 'updateAnswerVoteCount');
       collectWinningAnswersSpy = chai.spy.on(store.actions, 'collectWinningAnswers');
-      vote = { id: 1, answer: { totalVotes: 10 } };
+      vote = { id: 1, answer: { totalVotes: 10, id: 20 } };
       poll = { id: 1, totalVotes: 8 };
       success = { vote, poll };
-      nextState = actions.voteRequestSuccess.invoke({}, success, store);
     });
 
     afterEach(function () {
@@ -124,22 +126,27 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('sets requestInFlight to false', function () {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('sets state.voted to true', function () {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       assert.equal(nextState.voted, true);
     });
 
     it('caches response data', function () {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:STATE-SRC:vote')), vote);
     });
 
     it('sets state.data', function () {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       assert.deepEqual(nextState.data, vote);
     });
 
     it('calls setPollTotalVotes', function (done) {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       setImmediate(() => {
         setPollTotalVotesSpy.should.have.been.called.once.with(8);
         done();
@@ -147,6 +154,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('calls updateAnswerVoteCount', function (done) {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       setImmediate(() => {
         updateAnswerVoteCountSpy.should.have.been.called.once.with(vote);
         done();
@@ -154,6 +162,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     it('calls collectWinningAnswers', function (done) {
+      nextState = actions.voteRequestSuccess.invoke({}, success, store);
       setImmediate(() => {
         collectWinningAnswersSpy.should.have.been.called.once.with(store.state.poll.data.answers);
         done();

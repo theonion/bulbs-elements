@@ -1,10 +1,7 @@
-import makeRequest from 'bulbs-elements/util/make-request';
 import { Field, Action } from 'bulbs-elements/store';
 import find from 'array-find';
 
-function parsePoll (props) {
-  let poll = Object.assign({}, props);
-
+function parsePoll (poll) {
   if (poll.published) {
     poll.published = new Date(poll.published);
   }
@@ -28,17 +25,20 @@ const PollField = new Field({
     return state;
   }),
   updateAnswerVoteCount: new Action(function (state, vote) {
-    state.data = Object.assign({}, state.data);
     let answer = find(state.data.answers, (eachAnswer) => {
       return eachAnswer.sodahead_id === vote.answer.id;
     });
 
-    let nextAnswer = Object.assign({}, answer);
-    let answerIndex = state.data.answers.indexOf(answer);
-    nextAnswer.total_votes = vote.answer.totalVotes;
+    let answerIndex;
+    state.data.answers.forEach((dataAnswer, index) => {
+      if (dataAnswer.id === answer.id) {
+        answerIndex = index;
+      };
+    });
+    answer.total_votes = vote.answer.totalVotes;
     state.data.answers = [
       ...state.data.answers.slice(0, answerIndex),
-      nextAnswer,
+      answer,
       ...state.data.answers.slice(answerIndex + 1),
     ];
 
@@ -47,7 +47,7 @@ const PollField = new Field({
   fetchPollData: new Action(function (state, src, store) {
     src || (src = store.src);
     store.src = src;
-    makeRequest(src, {
+    this.request(src, {
       credentials: 'include',
       success: store.actions.fetchPollDataSuccess,
       failure: store.actions.fetchPollDataFailure,
