@@ -1,16 +1,12 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 import CampaignDisplayRoot from './campaign-display-root';
 
 describe('<campaign-display> <CampaignDisplayRoot>', function () {
-  context('default', function () {
-    it('renders', function () {
-      let props = {};
+  context('with display set to `name`', function() {
+    it('should have tests');
+  });
 
-      assertJSXEqual(this.test.title, <CampaignDisplayRoot {...props} />,
-        <div className='campaign-display-campaign-display-root'>
-        </div>
-      );
-    });
+  context('with display set to `logo`', function() {
+    it('should have tests');
   });
 });

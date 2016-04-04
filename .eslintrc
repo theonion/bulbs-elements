@@ -2,10 +2,12 @@
   "globals": {
     "describe": true,
     "it": true,
+    "xit": true,
     "beforeEach": true,
     "afterEach": true,
     "context": true,
     "chai": true,
+    "expect": true,
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
