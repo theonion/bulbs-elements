@@ -1,3 +1,4 @@
+import makeRequest from 'bulbs-elements/util/make-request';
 import { Field, Action } from 'bulbs-elements/store';
 import find from 'array-find';
 
@@ -46,7 +47,7 @@ const PollField = new Field({
   fetchPollData: new Action(function (state, src, store) {
     src || (src = store.src);
     store.src = src;
-    this.request(src, {
+    makeRequest(src, {
       credentials: 'include',
       success: store.actions.fetchPollDataSuccess,
       failure: store.actions.fetchPollDataFailure,
