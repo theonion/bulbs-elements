@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-export default function CampaignDisplayRoot (props) {
+export default function CampaignDisplayRoot () {
   let className = classnames('campaign-display-campaign-display-root', {});
 
   return (
