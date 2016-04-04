@@ -2,9 +2,7 @@
 export NODE_ENV=development
 node_modules/.bin/webpack \
   --devtool source-map \
-  --watch \
   --color \
   --output-pathinfo \
-  --quiet \
   --display-error-details \
   --config webpack.config.dev.js

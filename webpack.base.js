@@ -13,11 +13,13 @@ var elementsDir = path.join(__dirname, '/elements');
 var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
 var libDir = path.join(__dirname, '/lib');
 var examplesDir = path.join(__dirname, '/examples');
+var testDir = path.join(__dirname, '/test');
 
 var includeDirs = [
   elementsDir,
   libDir,
   examplesDir,
+  testDir,
 ];
 
 var entries = {};
