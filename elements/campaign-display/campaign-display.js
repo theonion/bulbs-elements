@@ -17,6 +17,7 @@ class CampaignDisplay extends BulbsElement {
     return (
       <CampaignDisplayRoot
           data={this.state}
+          display={this.props.display}
       />
     );
   }
@@ -34,3 +35,4 @@ CampaignDisplay.propTypes = {
 registerReactElement('campaign-display', CampaignDisplay);
 
 export default CampaignDisplay;
+export const displayPropType = CampaignDisplay.propTypes.display;
