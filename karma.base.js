@@ -12,9 +12,11 @@ module.exports = {
   // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
   frameworks: [
     'chai-spies',
+    'chai-jquery',
     'chai',
     'mocha',
     'fixture',
+    'jquery-1.8.3',
   ],
 
 

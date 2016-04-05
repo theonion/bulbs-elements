@@ -3,7 +3,9 @@ import React, { PropTypes } from 'react';
 export default function CampaignDisplayImage (props) {
   return (
     <div className='campaign-display-image'>
-      <img src={props.image} />
+      <a href={props.url}>
+        <img src={props.image} />
+      </a>
     </div>);
 }
 
