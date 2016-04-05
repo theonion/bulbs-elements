@@ -1,7 +1,7 @@
 const SrcField = {
   initialState: '',
   actions: {
-    setSrc: function (state, src) {
+    setSrc (state, src) {
       return src;
     },
   },

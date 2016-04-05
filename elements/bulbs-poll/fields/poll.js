@@ -21,11 +21,11 @@ const PollField = {
     requestInFlight: false,
   },
   actions: {
-    setPollTotalVotes: function (state, count) {
+    setPollTotalVotes (state, count) {
       state.data.total_votes = count;
       return state;
     },
-    updateAnswerVoteCount: function (state, vote) {
+    updateAnswerVoteCount (state, vote) {
       let answer = find(state.data.answers, (eachAnswer) => {
         return eachAnswer.sodahead_id === vote.answer.id;
       });
@@ -45,7 +45,7 @@ const PollField = {
 
       return state;
     },
-    fetchPollData: function (state, src, store) {
+    fetchPollData (state, src, store) {
       src || (src = store.src);
       store.src = src;
       util.makeRequest(src, {
@@ -57,7 +57,7 @@ const PollField = {
       state.requestInFlight = true;
       return state;
     },
-    fetchPollDataSuccess: function (state, data, store) {
+    fetchPollDataSuccess (state, data, store) {
       state.data = parsePoll(data);
       state.requestInFlight = false;
 
@@ -67,17 +67,17 @@ const PollField = {
 
       return state;
     },
-    fetchPollDataFailure: function (state, failure) {
+    fetchPollDataFailure (state, failure) {
       state.requestFailure = failure;
       state.requestInFlight = false;
       return state;
     },
-    fetchPollDataError: function (state, error) {
+    fetchPollDataError (state, error) {
       state.requestError = error;
       state.requestInFlight = false;
       return state;
     },
-    resetFetchPollData: function (state, _null, store) {
+    resetFetchPollData (state, _null, store) {
       state.requestInFlight = false;
       delete state.requestFailure;
       delete state.requestError;
