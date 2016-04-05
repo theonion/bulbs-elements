@@ -8,6 +8,7 @@
     "context": true,
     "chai": true,
     "expect": true,
+    "$": true,
   },
   "ecmaFeatures": {
     "arrowFunctions": true,

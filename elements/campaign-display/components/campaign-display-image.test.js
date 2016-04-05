@@ -1,20 +1,33 @@
 import React from 'react';
 import CampaignDisplayImage from './campaign-display-image';
 import { createRenderer } from 'react-addons-test-utils';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 describe('<campaign-display> <CampaignDisplayImage>', () => {
   let shallowRenderer;
   let props;
   let subject;
+  let renderOutput;
   beforeEach(() => {
-    props = { image: 'some-image-url' };
+    props = {
+      image: 'campaign-image-url',
+      url: 'campaign-url',
+    };
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplayImage {...props} />);
-    subject = shallowRenderer.getRenderOutput();
+    renderOutput = shallowRenderer.getRenderOutput();
+    subject = $(renderToStaticMarkup(renderOutput));
   });
 
   it('renders the campaign image', () => {
-    expect(subject.props.children.type).to.equal('img');
-    expect(subject.props.children.props.src).to.equal('some-image-url');
+    let image = subject.find('img');
+    expect(subject).to.have.descendants('img');
+    expect(image).to.have.attr('src', 'campaign-image-url');
+  });
+
+  it('renders a link to the campaign url', function() {
+    let link = subject.find('a');
+    expect(subject).to.have.descendants('a');
+    expect(link).to.have.attr('href', 'campaign-url');
   });
 });
