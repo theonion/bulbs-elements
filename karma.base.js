@@ -1,3 +1,8 @@
+var glob = require('glob');
+var path = require('path');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config.hot');
+
 module.exports = {
   // base path that will be used to resolve all patterns (eg. files, exclude)
   basePath: '',
@@ -15,21 +20,8 @@ module.exports = {
 
   // list of files / patterns to load in the browser
   files: [
-    'dist/vendor.bundle.js',
-    {
-      pattern: 'dist/*.js.map',
-      included: false,
-      served: true,
-    },
-    {
-      pattern: '.test/**/*.js.map',
-      included: false,
-      served: true,
-    },
-    'dist/!(bulbs-poll.bulbs-cms).js',
-    '.test/**/*.js',
+    path.join(__dirname, 'test/load-all-tests.js')
   ],
-
 
   // list of files to exclude
   exclude: [
@@ -38,9 +30,23 @@ module.exports = {
   // preprocess matching files before serving them to the browser
   // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
   preprocessors: {
-    '**/*.html'   : ['html2js'],
+    'elements/**/*.js': ['webpack', 'sourcemap'],
+    'lib/**/*.js': ['webpack', 'sourcemap'],
+    'test/**/*.js': ['webpack', 'sourcemap'],
+    '**/*.html': ['html2js'],
   },
 
+  webpack: {
+    devtool: 'inline-source-map',
+    resolve: webpackConfig.resolve,
+    module: webpackConfig.module,
+  },
+
+  webpackMiddleware: {
+    stats: {
+      colors: true,
+    },
+  },
 
   // test results reporter to use
   // possible values: 'dots', 'progress'

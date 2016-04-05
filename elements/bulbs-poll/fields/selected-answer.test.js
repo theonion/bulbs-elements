@@ -14,17 +14,17 @@ describe('<bulbs-poll> SelectedAnswerField', function () {
     let { selectAnswer } = actions;
 
     it('selects first answer', function () {
-      let nextState = selectAnswer.invoke(null, answer1);
+      let nextState = selectAnswer(null, answer1);
       assert.equal(nextState, answer1);
     });
 
     it('selects new answers', function () {
-      let nextState = selectAnswer.invoke(answer2, answer1);
+      let nextState = selectAnswer(answer2, answer1);
       assert.equal(nextState, answer1);
     });
 
     it('returns null if answer selected again', function () {
-      let nextState = selectAnswer.invoke(answer1, answer1);
+      let nextState = selectAnswer(answer1, answer1);
       assert.deepEqual(nextState, {});
     });
   });

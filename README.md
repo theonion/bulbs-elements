@@ -63,28 +63,34 @@ Make sure you are not running any build scripts while cutting a release. (such a
 1. checkout the branch you were working on originally
 1. restory your local `dist/` folder
 
-## Generators
+## Development
+Prepare your development environment:
+
+```bash
+$ ./scripts/dev-setup
+```
+
+### Generators
 
 Bulbs Elements comes with code generators to help you develop components.
 
-### Generating an Element
+#### Generating an Element
 
 `scripts/generate-element`
 
-### Generating Store Fields
+#### Generating Store Fields
 
 `scripts/generate-field`
 
-### Generating Element Components
+#### Generating Element Components
 
 `scripts/generate-component`
 
-## Making HTTP Requests
+### Making HTTP Requests
 
-## Testing
+### Testing
 
-## Examples
+### Examples
 
 ## Crossing The Boundary
 ### interop with angular.js
-

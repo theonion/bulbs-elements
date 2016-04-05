@@ -5,13 +5,12 @@ describe('<bulbs-poll> SrcField', function () {
   let { actions } = SrcField;
 
   it('initialState', function () {
-    assert.deepEqual(SrcField.initialState, null);
+    assert.deepEqual(SrcField.initialState, '');
   });
 
   describe('setSrc', function () {
     it('sets src', function () {
-      // write actual tests
-      let nextState = actions.setSrc.invoke({}, '/whatever.json');
+      let nextState = actions.setSrc({}, '/whatever.json');
       assert.deepEqual(nextState, '/whatever.json');
     });
   });

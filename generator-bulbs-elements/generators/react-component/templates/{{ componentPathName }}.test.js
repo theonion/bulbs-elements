@@ -1,6 +1,6 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import <%= componentClassName %> from './<%= componentPathName %>';
+import './<%= componentPathName %>';
 
 describe('<<%= elementName %>> <<%= componentClassName %>>', function () {
   context('default', function () {

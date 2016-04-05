@@ -1,10 +1,10 @@
-import { Field, Action } from 'bulbs-elements/store';
-
-const SelectedAnswerField = new Field({
+const SelectedAnswerField = {
   initialState: {},
-  selectAnswer: new Action(function (state, answer) {
-    return (state && state.id === answer.id) ? {} : answer;
-  }),
-});
+  actions: {
+    selectAnswer (state, answer) {
+      return (state && state.id === answer.id) ? {} : answer;
+    },
+  },
+};
 
 export default SelectedAnswerField;

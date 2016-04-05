@@ -4,7 +4,7 @@ var chalk      = require('chalk');
 var onionsay   = require('onionsay');
 var path       = require('path');
 var inflection = require('inflection');
-var common     = require('../common');
+var common     = require('../../common');
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
