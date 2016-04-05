@@ -11,7 +11,7 @@ describe('<<%= elementName %>> <%= fieldClassName %>Field', function () {
   describe('initialAction', function () {
     it('passes state through untouched', function () {
       // write actual tests
-      let nextState = actions.initialAction.invoke({}, {});
+      let nextState = actions.initialAction({}, {});
       assert.deepEqual(nextState, {});
     });
   });
