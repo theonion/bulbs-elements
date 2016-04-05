@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 
-function filterBadResponse(response) {
+function rejectBadResponse(response) {
   if (response.status < 400) {
     return Promise.resolve(response);
   }
@@ -9,7 +9,7 @@ function filterBadResponse(response) {
   }
 }
 
-describe('filterBadResponse', function() {
+describe('rejectBadResponse', function() {
   beforeEach(() => {
     fetchMock.mock('http://example.com/success', 'GET', 200);
     fetchMock.mock('http://example.com/redirect', 'GET', 301);
@@ -19,26 +19,26 @@ describe('filterBadResponse', function() {
 
   it('resolves with a status less than 400', (done) => {
     fetch('http://example.com/success')
-      .then(filterBadResponse)
+      .then(rejectBadResponse)
       .then(() => done());
   });
 
   it('does not reject with status less than 400', (done) => {
     fetch('http://example.com/success')
-      .then(filterBadResponse)
+      .then(rejectBadResponse)
       .then(() => { expect(false).to.equal(true); done(); })
       .catch(() => done());
   });
 
   it('resolves with redirects', (done) => {
     fetch('http://example.com/redirect')
-      .then(filterBadResponse)
+      .then(rejectBadResponse)
       .then(() => done());
   });
 
   it('rejects with a status >= 400', (done) => {
     fetch('http://example.com/not-found')
-      .then(filterBadResponse)
+      .then(rejectBadResponse)
       .then(() => { expect(false).to.equal(true); done(); })
       .catch(() => done());
   });
