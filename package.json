@@ -5,7 +5,8 @@
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --single-run",
+    "karma": "karma start"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
@@ -40,7 +41,7 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.15.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "fetch-mock": "^4.0.1",
+    "fetch-mock": "^4.3.1",
     "glob": "^6.0.4",
     "history": "^1.17.0",
     "inflection": "^1.8.0",

@@ -1,12 +1,9 @@
-var glob = require('glob');
 var path = require('path');
-var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.hot');
 
 module.exports = {
   // base path that will be used to resolve all patterns (eg. files, exclude)
   basePath: '',
-
 
   // frameworks to use
   // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -17,10 +14,9 @@ module.exports = {
     'fixture',
   ],
 
-
   // list of files / patterns to load in the browser
   files: [
-    path.join(__dirname, 'test/load-all-tests.js')
+    path.join(__dirname, 'test/load-all-tests.js'),
   ],
 
   // list of files to exclude
@@ -56,13 +52,12 @@ module.exports = {
   client: {
     mocha: {
       reporter: 'html',
-      ui: 'bdd'
-    }
+      ui: 'bdd',
+    },
   },
 
   // web server port
   port: 9876,
-
 
   // enable / disable colors in the output (reporters and logs)
   colors: true,
@@ -70,11 +65,9 @@ module.exports = {
   // enable / disable watching file and executing tests whenever any file changes
   autoWatch: true,
 
-
   // start these browsers
   // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
   browsers: ['Chrome'],
-
 
   // Continuous Integration mode
   // if true, Karma captures browsers, runs the tests and exits
