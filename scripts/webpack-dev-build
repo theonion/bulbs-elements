@@ -5,6 +5,8 @@ node_modules/.bin/webpack \
   --watch \
   --color \
   --output-pathinfo \
+  --display-modules \
+  --display-chunks \
   --quiet \
   --display-error-details \
   --config webpack.config.dev.js

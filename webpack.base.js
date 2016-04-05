@@ -1,63 +1,48 @@
-var webpack = require('webpack');
-var path    = require('path');
-var glob    = require('glob');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+'use strict';
+
+let webpack = require('webpack');
+let path = require('path');
+let glob = require('glob');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // postcss processors
-var autoprefixer = require('autoprefixer');
-var initial      = require('postcss-initial');
-var stylelint    = require('stylelint');
+let autoprefixer = require('autoprefixer');
+let initial = require('postcss-initial');
+//let stylelint = require('stylelint');
 
-var elementsDir = path.join(__dirname, '/elements');
-var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
-var libDir = path.join(__dirname, '/lib');
-var examplesDir = path.join(__dirname, '/examples');
-var testDir = path.join(__dirname, '/test');
+let elementsDir = path.join(__dirname, '/elements');
+let elementDirs = glob.sync(path.join(elementsDir, '/*/'));
+let libDir = path.join(__dirname, '/lib');
+let examplesDir = path.join(__dirname, '/examples');
+let testDir = path.join(__dirname, '/test');
 
-var includeDirs = [
+let includeDirs = [
   elementsDir,
   libDir,
   examplesDir,
   testDir,
 ];
 
-var entries = {};
+let entries = {};
 
 elementDirs.forEach(function (dir) {
-  var elementName = path.basename(dir);
-  var elementEntryPoint = path.join(dir, elementName + '.js');
+  let elementName = path.basename(dir);
+  let elementEntryPoint = path.join(dir, elementName + '.js');
   entries['dist/' + elementName] = elementEntryPoint;
 });
 
 glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
-  var elementName = path.basename(path.dirname(cmsFile));
+  let elementName = path.basename(path.dirname(cmsFile));
   entries['dist/' + elementName + '.bulbs-cms'] = cmsFile;
 });
 
-// We will vendor common dependencies of our elements.
-entries['dist/vendor'] = [
-  'array-find',
-  'react',
-  'react-dom',
-  'classnames',
-  'document-register-element',
-  'document-register-element/build/innerHTML',
-  'es6-promise',
-  'isomorphic-fetch',
-  'dom4',
-  'camelcase',
-  'object-map-to-array',
-  './lib/bulbs-elements/register',
-  './lib/bulbs-elements/store',
-  './lib/bulbs-elements/bulbs-element',
-  './lib/bulbs-elements/components/cropped-image',
-];
-
-var sassExtractor = new ExtractTextPlugin('[name].css');
+let sassExtractor = new ExtractTextPlugin('[name].css');
 
 exports.plugins = {
-  chunker: new webpack.optimize.CommonsChunkPlugin('dist/vendor', 'dist/vendor.bundle.js'),
+  chunker: new webpack.optimize.CommonsChunkPlugin({
+    name: 'dist/vendor.bundle',
+  }),
   sassExtractor: sassExtractor,
   uglify: new webpack.optimize.UglifyJsPlugin({
     compress: {
@@ -129,8 +114,8 @@ exports.config = {
   },
   module: {
   },
-  postcss: function () {
-    return  [
+  postcss () {
+    return [
       //stylelint({
       //  'extends': 'stylelint-config-standard'
       //}),

@@ -4,7 +4,7 @@ import {
 } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
-import VideoStore from './bulbs-video-store';
+import VideoSchema from './bulbs-video-schema';
 
 import BulbsVideoRoot from './components/root';
 
@@ -43,13 +43,13 @@ class BulbsVideo extends BulbsElement {
 
 BulbsVideo.displayName = 'BulbsVideo';
 
-BulbsVideo.store = VideoStore;
+BulbsVideo.schema = VideoSchema;
 
 BulbsVideo.propTypes = {
-  videoId: PropTypes.string.isRequired,
-  loop: PropTypes.bool,
   autoplay: PropTypes.bool,
+  loop: PropTypes.bool,
   mute: PropTypes.bool,
+  videoId: PropTypes.string.isRequired,
 };
 
 registerReactElement('bulbs-video', BulbsVideo);
