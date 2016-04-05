@@ -11,4 +11,5 @@ export default function CampaignDisplayImage (props) {
 
 CampaignDisplayImage.propTypes = {
   image: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };

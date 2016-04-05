@@ -1,13 +1,16 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import _, { first } from 'lodash';
+import utils, { createRenderer } from 'react-addons-test-utils';
+import rquery from 'rquery';
 import CampaignDisplayImage from './campaign-display-image';
-import { createRenderer } from 'react-addons-test-utils';
-import { renderToStaticMarkup } from 'react-dom/server';
+
+const $R = rquery(_, React, ReactDOM, utils);
 
 describe('<campaign-display> <CampaignDisplayImage>', () => {
   let shallowRenderer;
   let props;
   let subject;
-  let renderOutput;
   beforeEach(() => {
     props = {
       image: 'campaign-image-url',
@@ -15,19 +18,16 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
     };
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplayImage {...props} />);
-    renderOutput = shallowRenderer.getRenderOutput();
-    subject = $(renderToStaticMarkup(renderOutput));
+    subject = $R(shallowRenderer.getRenderOutput());
   });
 
   it('renders the campaign image', () => {
-    let image = subject.find('img');
-    expect(subject).to.have.descendants('img');
-    expect(image).to.have.attr('src', 'campaign-image-url');
+    let image = first(subject.find('img'));
+    expect(image.props.src).to.equal('campaign-image-url');
   });
 
   it('renders a link to the campaign url', function() {
-    let link = subject.find('a');
-    expect(subject).to.have.descendants('a');
-    expect(link).to.have.attr('href', 'campaign-url');
+    let link = first(subject.find('a'));
+    expect(link.props.href).to.equal('campaign-url');
   });
 });

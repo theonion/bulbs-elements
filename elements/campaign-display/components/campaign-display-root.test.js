@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'lodash';
+import utils, { createRenderer } from 'react-addons-test-utils';
+import rquery from 'rquery';
 import CampaignDisplayRoot from './campaign-display-root';
-import CampaignDisplayName from './campaign-display-name';
-import CampaignDisplayImage from './campaign-display-image';
-import { createRenderer } from 'react-addons-test-utils';
+
+const $R = rquery(_, React, ReactDOM, utils);
 
 describe('<campaign-display> <CampaignDisplayRoot>', () => {
   let shallowRenderer;
@@ -22,11 +25,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     beforeEach(() => {
       props = { display: 'name', data };
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
-      subject = shallowRenderer.getRenderOutput();
+      subject = $R(shallowRenderer.getRenderOutput());
     });
 
     it('renders the CampaignDisplayName component', () => {
-      expect(subject.props.children.type).to.equal(CampaignDisplayName);
+      let campaignDisplayName = subject.find('.campaign-display-name');
+      expect(campaignDisplayName).to.exist;
     });
   });
 
@@ -34,11 +38,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     beforeEach(() => {
       props = { display: 'image', data };
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
-      subject = shallowRenderer.getRenderOutput();
+      subject = $R(shallowRenderer.getRenderOutput());
     });
 
     it('renders the CampaignDisplayName component', () => {
-      expect(subject.props.children.type).to.equal(CampaignDisplayImage);
+      let campainDisplayImage = subject.find('.campaign-display-image');
+      expect(campainDisplayImage).to.exist;
     });
   });
 });
