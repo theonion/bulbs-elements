@@ -6,7 +6,6 @@ describe('<campaign-display>', function() {
   let subject;
   let props;
   let shallowRenderer;
-  let renderedComponent;
   beforeEach(() => {
     props = {
       campaignUrl: 'test campaign url',

@@ -5,7 +5,7 @@ import { registerReactElement } from 'bulbs-elements/register';
 
 import './campaign-display.scss';
 
-import CampaignDisplayStore from './campaign-display-store';
+import CampaignDisplaySchema from './campaign-display-schema';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
@@ -25,7 +25,7 @@ class CampaignDisplay extends BulbsElement {
 
 CampaignDisplay.displayName = 'CampaignDisplay';
 
-CampaignDisplay.store = CampaignDisplayStore;
+CampaignDisplay.schema = CampaignDisplaySchema;
 
 CampaignDisplay.propTypes = {
   campaignUrl: PropTypes.string.isRequired,

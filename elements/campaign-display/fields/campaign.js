@@ -1,3 +1,4 @@
+import { makeRequest } from 'bulbs-elements/util';
 const CampaignField = {
   initialState: {
     data: [],
@@ -7,7 +8,7 @@ const CampaignField = {
   actions: {
     fetchCampaign(state, campaignUrl, store) {
       state.requestInFlight = true;
-      this.request(campaignUrl, {
+      makeRequest(campaignUrl, {
         success: store.actions.fetchCampaignSuccess,
         failure: store.actions.fetchCampaignFailure,
         error: store.actions.fetchCampaignError,
