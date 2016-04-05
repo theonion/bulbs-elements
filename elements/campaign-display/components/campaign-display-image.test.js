@@ -11,6 +11,7 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
   let shallowRenderer;
   let props;
   let subject;
+  let renderOutput;
   beforeEach(() => {
     props = {
       image: 'campaign-image-url',
