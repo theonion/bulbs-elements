@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import testElement from 'bulbs-elements/test/element';
+import '<%= elementPathName %>'
 
 testElement('<<%= elementName %>>', function () {
   beforeEach(function (done) {

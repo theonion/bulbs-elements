@@ -3,7 +3,7 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
 import './<%= elementPathName %>.scss';
 
-import <%= elementClassName %>Store from './<%= elementPathName %>-store';
+import <%= elementClassName %>Schema from './<%= elementPathName %>-schema';
 
 class <%= elementClassName %> extends BulbsElement {
   initialDispatch () {
@@ -24,7 +24,7 @@ class <%= elementClassName %> extends BulbsElement {
 
 <%= elementClassName %>.displayName = '<%= elementClassName %>';
 
-<%= elementClassName %>.store = <%= elementClassName %>Store;
+<%= elementClassName %>.schema = <%= elementClassName %>Schema;
 
 <%= elementClassName %>.propTypes = {
 

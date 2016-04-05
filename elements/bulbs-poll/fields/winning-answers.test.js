@@ -18,7 +18,7 @@ describe('<bulbs-poll> WinningAnswersField', function () {
       let nextState;
 
       beforeEach(function () {
-        nextState = actions.collectWinningAnswers.invoke([], answers);
+        nextState = actions.collectWinningAnswers([], answers);
       });
 
       it('collects the winning answer', function () {
@@ -37,7 +37,7 @@ describe('<bulbs-poll> WinningAnswersField', function () {
       let nextState;
 
       beforeEach(function () {
-        nextState = actions.collectWinningAnswers.invoke([], answers);
+        nextState = actions.collectWinningAnswers([], answers);
       });
 
       it('collects the tying answers', function () {
