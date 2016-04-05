@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
-import PollStore from './bulbs-poll-store';
+import PollSchema from './bulbs-poll-schema';
 
 import BulbsPollRoot from './components/root';
 
@@ -29,7 +29,7 @@ class BulbsPoll extends BulbsElement {
 
 BulbsPoll.displayName = 'BulbsPoll';
 
-BulbsPoll.store = PollStore;
+BulbsPoll.schema = PollSchema;
 
 BulbsPoll.propTypes = {
   src: PropTypes.string.isRequired,

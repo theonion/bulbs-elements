@@ -1,7 +1,5 @@
-import { Field } from 'bulbs-elements/store';
-
-const NowField = new Field({
+const NowField = {
   initialState: new Date(),
-});
+};
 
 export default NowField;
