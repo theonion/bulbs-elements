@@ -1,9 +1,11 @@
 import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
+import util from 'bulbs-elements/util';
+import Store from 'bulbs-elements/store';
 import PollField from './poll';
-import PollStore from '../bulbs-poll-store';
+import PollSchema from '../bulbs-poll-schema';
 
-let store = new PollStore();
+let store = new Store({ schema: PollSchema });
 
 describe('<bulbs-poll> PollField', function () {
   let { actions } = PollField;
@@ -22,7 +24,7 @@ describe('<bulbs-poll> PollField', function () {
       let state = {
         data: {},
       };
-      let nextState = actions.setPollTotalVotes.invoke(state, 15);
+      let nextState = actions.setPollTotalVotes(state, 15);
       assert.equal(nextState.data.total_votes, 15);
     });
   });
@@ -46,7 +48,7 @@ describe('<bulbs-poll> PollField', function () {
     let nextState;
 
     beforeEach(function () {
-      nextState = actions.updateAnswerVoteCount.invoke(Object.assign({}, state), vote);
+      nextState = actions.updateAnswerVoteCount(Object.assign({}, state), vote);
     });
 
     it('updates the matching answer\'s vote count', function () {
@@ -56,11 +58,15 @@ describe('<bulbs-poll> PollField', function () {
 
   describe('fetchPollData', function () {
     let src = 'http://example.tld/poll/:id';
-    let requestSpy = chai.spy.on(actions.fetchPollData, 'request');
+    let requestSpy = chai.spy.on(util, 'makeRequest');
 
     beforeEach(function () {
       // just preventing making a network call here
       fetchMock.mock(src, {});
+    });
+
+    beforeEach(function () {
+      requestSpy.reset();
     });
 
     afterEach(function () {
@@ -69,7 +75,8 @@ describe('<bulbs-poll> PollField', function () {
     });
 
     it('makes GET request to the poll endpoint', function () {
-      actions.fetchPollData.invoke({}, src, store);
+      actions.fetchPollData({}, src, store);
+
       requestSpy.should.have.been.called.with(src, {
         credentials: 'include',
         success: store.actions.fetchPollDataSuccess,
@@ -79,58 +86,58 @@ describe('<bulbs-poll> PollField', function () {
     });
 
     it('sets requestInFlight to true', function () {
-      let nextState = actions.fetchPollData.invoke({}, src, store);
+      let nextState = actions.fetchPollData({}, src, store);
       assert.isTrue(nextState.requestInFlight);
     });
   });
 
   describe('fetchPollDataSuccess', function () {
     it('sets requestInFlight to false', function () {
-      let nextState = actions.fetchPollDataSuccess.invoke({}, {}, store);
+      let nextState = actions.fetchPollDataSuccess({}, {}, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('parses published date', function () {
       let success = { published: '2016-02-27T06:00:00Z' };
-      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
+      let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.equal(nextState.data.published.toISOString(), '2016-02-27T06:00:00.000Z');
     });
 
     it('parses end_date date', function () {
       let success = { end_date: '2016-02-27T06:00:00Z' };
-      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
+      let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.equal(nextState.data.end_date.toISOString(), '2016-02-27T06:00:00.000Z');
     });
 
     it('sets state.data', function () {
       let success = {};
-      let nextState = actions.fetchPollDataSuccess.invoke({}, success, store);
+      let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.deepEqual(nextState.data, success);
     });
   });
 
   describe('fetchPollDataFailure', function () {
     it('sets requestInFlight to false', function () {
-      let nextState = actions.fetchPollDataFailure.invoke({}, {});
+      let nextState = actions.fetchPollDataFailure({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('sets state.failure', function () {
       let failure = {};
-      let nextState = actions.fetchPollDataFailure.invoke({}, failure);
+      let nextState = actions.fetchPollDataFailure({}, failure);
       assert.equal(nextState.requestFailure, failure);
     });
   });
 
   describe('fetchPollDataError', function () {
     it('sets requestInFlight to false', function () {
-      let nextState = actions.fetchPollDataError.invoke({}, {});
+      let nextState = actions.fetchPollDataError({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
     it('sets state.error', function () {
       let error = {};
-      let nextState = actions.fetchPollDataError.invoke({}, error);
+      let nextState = actions.fetchPollDataError({}, error);
       assert.equal(nextState.requestError, error);
     });
   });
@@ -140,7 +147,7 @@ describe('<bulbs-poll> PollField', function () {
       let startState = {
         data: {},
       };
-      let nextState = actions.setPollTotalVotes.invoke(startState, 10);
+      let nextState = actions.setPollTotalVotes(startState, 10);
       assert.equal(nextState.data.total_votes, 10);
     });
   });

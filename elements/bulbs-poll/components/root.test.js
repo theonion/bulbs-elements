@@ -1,7 +1,8 @@
 import React from 'react';
+import Store from 'bulbs-elements/store';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 import BulbsPollRoot from './root';
-import PollStore from '../bulbs-poll-store';
+import PollSchema from '../bulbs-poll-schema';
 
 import PollQuestion from './question';
 import PollResults from './results';
@@ -16,7 +17,7 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
   let props;
 
   beforeEach(function () {
-    store = new PollStore();
+    store = new Store({ schema: PollSchema });
     data = store.state;
     data.poll.data.id = 1;
     actions = store.actions;

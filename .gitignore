@@ -7,3 +7,4 @@ karma_html/
 benchmark/
 dist/
 bower_components/
+*.swp
