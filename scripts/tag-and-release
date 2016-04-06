@@ -2,7 +2,6 @@
 set -e
 
 # This script:
-# * takes a single argument: scripts/tag-and-release TAG
 # * moves dist/ to .dist/
 # * checks out HEAD as a detached head
 # * runs a production build
