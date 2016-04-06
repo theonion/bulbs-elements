@@ -91,6 +91,3 @@ Bulbs Elements comes with code generators to help you develop components.
 ### Testing
 
 ### Examples
-
-## Crossing The Boundary
-### interop with angular.js
