@@ -1,12 +1,13 @@
 import CampaignField from './campaign';
-import CampaignSchema from '../campaign-display-schema';
+import fetchMock from 'fetch-mock';
 
 describe('<campaign-display> CampaignField', () => {
   let subject = CampaignField;
-  let store;
+  let testUrl;
 
   beforeEach(() => {
-    store = CampaignSchema;
+    testUrl = 'http://example.com';
+    fetchMock.mock(testUrl, {});
   });
 
   describe('initialState', () => {
@@ -21,33 +22,33 @@ describe('<campaign-display> CampaignField', () => {
 
   describe('fetchCampaign', () => {
     it('sets requestInFlight to true', () => {
-      let state = subject.actions.fetchCampaign({}, 'some url', subject);
+      let state = subject.actions.fetchCampaign({}, testUrl, subject);
       expect(state.requestInFlight).to.equal(true);
     });
 
-    xit('fetches the campaign data from tunic', () => {
-      subject.actions.fetchCampaign({}, 'campaign url', subject);
-      expect(spy).to.have.been.called.with('campaign url');
+    it('fetches the campaign data from tunic', () => {
+      subject.actions.fetchCampaign({}, testUrl, subject);
+      expect(fetchMock.called(testUrl)).to.equal(true);
     });
   });
 
   describe('fetchCampaignSuccess', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignSuccess({}, 'some url', subject);
+      let state = subject.actions.fetchCampaignSuccess({}, testUrl, subject);
       expect(state.requestInFlight).to.equal(false);
     });
   });
 
   describe('fetchCampaignFailure', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignFailure({}, 'some url');
+      let state = subject.actions.fetchCampaignFailure({}, testUrl);
       expect(state.requestInFlight).to.equal(false);
     });
   });
 
   describe('fetchCampaignError', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignError({}, 'some url');
+      let state = subject.actions.fetchCampaignError({}, testUrl);
       expect(state.requestInFlight).to.equal(false);
     });
   });
