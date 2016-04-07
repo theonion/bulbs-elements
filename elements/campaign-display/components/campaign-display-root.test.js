@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _ from 'lodash';
+import _, { first } from 'lodash';
 import utils, { createRenderer } from 'react-addons-test-utils';
 import rquery from 'rquery';
 import CampaignDisplayRoot from './campaign-display-root';
