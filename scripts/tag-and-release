@@ -88,6 +88,6 @@ NEW_VERSION="$(node $HELPERS_DIR/version-read.js ./package.json)"
 secho "Tagging and Releasing"
 git commit --allow-empty --quiet -m "production build for release tag: $NEW_VERSION"
 git tag "$NEW_VERSION"
-git push origin "$NEW_VERSION"
+git push origin "$NEW_VERSION" && git push origin --tags
 
 node_modules/.bin/onionsay "NEW VERSION: $NEW_VERSION"
