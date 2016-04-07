@@ -9,6 +9,13 @@ import CampaignDisplaySchema from './campaign-display-schema';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
+  constructor (props) {
+    if (!props.campaignUrl) {
+      throw new Error('campaign-display component requires a campaign url');
+    }
+    super(props);
+  }
+
   initialDispatch () {
     this.store.actions.fetchCampaign(this.props.campaignUrl);
   }
