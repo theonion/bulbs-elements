@@ -11,6 +11,20 @@ set -e
 # * deletes dist/
 # * restores .dist/ to dist/
 
+function secho {
+  echo "$LOG_PREFIX $1"
+}
+
+secho "Starting release process..."
+BRANCH_NAME_RELEASE="master"
+BRANCH_NAME="$(git symbolic-ref --short HEAD)"
+if [ "$BRANCH_NAME" = "$BRANCH_NAME_RELEASE" ]; then
+  secho "On releasable branch '$BRANCH_NAME_RELEASE'"
+else
+  secho "You are currently on branch '$BRANCH_NAME', please switch to '$BRANCH_NAME_RELEASE' before running this command, exiting..."
+  exit 1
+fi
+
 mv dist/ .dist/ || true
 
 function  cleanup_at_exit {
@@ -22,9 +36,6 @@ function  cleanup_at_exit {
 trap cleanup_at_exit EXIT
 
 LOG_PREFIX="[RELEASE] [$(date)]"
-function secho {
-  echo "$LOG_PREFIX $1"
-}
 
 TAG=$(cat package.json \
   | grep version \
