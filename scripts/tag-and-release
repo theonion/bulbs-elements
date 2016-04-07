@@ -11,12 +11,24 @@ set -e
 # * deletes dist/
 # * restores .dist/ to dist/
 
+BOWER_COMPONENTS="./bower_components"
+BRANCH_NAME_RELEASE="master"
+HELPERS_DIR="./scripts/helpers"
+LOG_PREFIX="[RELEASE] [$(date)]"
+NODE_MODULES="./node_modules"
+NODE_BIN="$NODE_MODULES/.bin"
+RELEASE_TYPE="$1" # major, minor, patch
+
 function secho {
   echo "$LOG_PREFIX $1"
 }
 
+if [ -z "$RELEASE_TYPE" ]; then
+  secho "Must provide a relase type to this command ('major', 'minor', or 'patch'), exiting..."
+  exit 1
+fi
+
 secho "Starting release process..."
-BRANCH_NAME_RELEASE="master"
 BRANCH_NAME="$(git symbolic-ref --short HEAD)"
 if [ "$BRANCH_NAME" = "$BRANCH_NAME_RELEASE" ]; then
   secho "On releasable branch '$BRANCH_NAME_RELEASE'"
@@ -25,7 +37,10 @@ else
   exit 1
 fi
 
-mv dist/ .dist/ || true
+if [ -d ./dist ]; then
+  secho "Renaming dist/ to .dist/"
+  mv dist/ .dist/ || true
+fi
 
 function  cleanup_at_exit {
   secho "Resetting local checkout"
@@ -35,17 +50,28 @@ function  cleanup_at_exit {
 }
 trap cleanup_at_exit EXIT
 
-LOG_PREFIX="[RELEASE] [$(date)]"
+secho "Check that npm dependencies are in place"
+if [ ! -d "$NODE_MODULES" ]; then
+  npm install
+else
+  npm update
+fi
 
-TAG=$(cat package.json \
-  | grep version \
-  | head -1 \
-  | awk -F: '{ print $2 }' \
-  | sed 's/[",]//g' \
-  | tr -d '[[:space:]]')
+secho "Check that bower dependencies are in place"
+if [ -d "$BOWER_COMPONENTS" ]; then
+  "$NODE_BIN"/bower update
+else
+  "$NODE_BIN"/bower install
+fi
+
+secho "Running tests"
+if [ ! "$(npm test)" ]; then
+  secho "You cannot release with failing tests, shame on you"
+  exit 1
+fi
 
 secho "Checking out detached HEAD"
-git checkout $(git rev-parse HEAD) --quiet
+git checkout "$(git rev-parse HEAD)" --quiet
 
 secho "Running scripts/webpack-prod-build"
 scripts/webpack-prod-build
@@ -53,10 +79,14 @@ scripts/webpack-prod-build
 secho "Adding dist to detached HEAD"
 git add -f 'dist/*'
 
+secho "Increasing $RELEASE_TYPE version"
+node $HELPERS_DIR/version-up.js ./package.json "$RELEASE_TYPE"
+
 secho "Tagging and Releasing"
-git commit --allow-empty --quiet -m "production build for release tag: $TAG"
-git tag $TAG
-git push origin $TAG
+NEW_VERSION="$(node $HELPERS_DIR/version-read.js ./package.json)"
 
-node_modules/.bin/onionsay "NEW VERSION: $TAG"
+git add --all && git commit -m "Version up to $NEW_VERSION"
+git tag -a "$NEW_VERSION" -m "Version up to $NEW_VERSION"
+git push origin && git push origin --tags
 
+node_modules/.bin/onionsay "NEW VERSION: $NEW_VERSION"
