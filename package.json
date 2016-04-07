@@ -87,6 +87,7 @@
   },
   "dependencies": {
     "auto-loader": "^0.2.0",
+    "bower": "^1.7.9",
     "camelcase": "^2.0.1",
     "classnames": "^2.2.3",
     "document-register-element": "^0.5.4",
