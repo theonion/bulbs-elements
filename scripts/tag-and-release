@@ -18,6 +18,7 @@ LOG_PREFIX="[RELEASE]"
 NODE_MODULES="./node_modules"
 NODE_BIN="$NODE_MODULES/.bin"
 RELEASE_TYPE="$1" # major, minor, patch
+OLD_PKG_JSON="$(cat ./package.json)"
 
 function secho {
   echo "$LOG_PREFIX [$(date)] $1"
@@ -37,16 +38,13 @@ else
   exit 1
 fi
 
-if [ -d ./dist ]; then
-  secho "Renaming dist/ to .dist/"
-  mv dist/ .dist/ || true
-fi
-
 function  cleanup_at_exit {
+  if [ "$?" = "1" ]; then
+    echo "$OLD_PKG_JSON" > ./package.json
+  fi
   secho "Resetting local checkout"
-  git checkout - --quiet
+  git checkout "$BRANCH_NAME_RELEASE" --quiet
   rm -rf dist/ || true
-  mv .dist/ dist/ || true
 }
 trap cleanup_at_exit EXIT
 
@@ -70,6 +68,14 @@ if [ ! "$(npm test)" ]; then
   exit 1
 fi
 
+secho "Increasing $RELEASE_TYPE version"
+node $HELPERS_DIR/version-up.js ./package.json "$RELEASE_TYPE"
+NEW_VERSION="$(node $HELPERS_DIR/version-read.js ./package.json)"
+
+secho "Commiting updated version"
+git add package.json
+git commit -m "Upddate package version to $NEW_VERSION"
+
 secho "Checking out detached HEAD"
 git checkout "$(git rev-parse HEAD)" --quiet
 
@@ -79,15 +85,10 @@ scripts/webpack-prod-build
 secho "Adding dist to detached HEAD"
 git add -f 'dist/*'
 
-secho "Increasing $RELEASE_TYPE version"
-node $HELPERS_DIR/version-up.js ./package.json "$RELEASE_TYPE"
-
-secho "Tagging and Releasing"
-NEW_VERSION="$(node $HELPERS_DIR/version-read.js ./package.json)"
-
 secho "Tagging and Releasing"
 git commit --allow-empty --quiet -m "production build for release tag: $NEW_VERSION"
 git tag "$NEW_VERSION"
 git push origin "$NEW_VERSION" && git push origin --tags
+git checkout "$BRANCH_NAME_RELEASE" && git push origin "$BRANCH_NAME_RELEASE"
 
 node_modules/.bin/onionsay "NEW VERSION: $NEW_VERSION"
