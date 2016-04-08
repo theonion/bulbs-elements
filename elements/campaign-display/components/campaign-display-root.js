@@ -21,6 +21,6 @@ export default function CampaignDisplayRoot (props) {
 }
 
 CampaignDisplayRoot.propTypes = {
-  data: PropTypes.object.isRequired,
+  campaign: PropTypes.object,
   display: PropTypes.oneOf(['image', 'name']).isRequired,
 };
