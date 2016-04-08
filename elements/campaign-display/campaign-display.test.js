@@ -27,10 +27,10 @@ describe('<campaign-display>', () => {
   });
 
   describe('initialDispatch', () => {
-    it('fetches campaign data for display with credentials', () => {
+    it('fetches campaign data for display', () => {
       let spy = chai.spy.on(subject.store.actions, 'fetchCampaign');
       subject.initialDispatch();
-      expect(spy).to.have.been.called.with(campaignUrl, { credentials: 'include' });
+      expect(spy).to.have.been.called.with(campaignUrl);
     });
   });
 });

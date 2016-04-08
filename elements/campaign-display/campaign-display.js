@@ -17,7 +17,7 @@ class CampaignDisplay extends BulbsElement {
   }
 
   initialDispatch () {
-    this.store.actions.fetchCampaign(this.props.campaignUrl, { credentials: 'include' });
+    this.store.actions.fetchCampaign(this.props.campaignUrl);
   }
 
   render () {
