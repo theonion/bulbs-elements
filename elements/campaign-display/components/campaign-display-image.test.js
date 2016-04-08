@@ -13,13 +13,17 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
   let props;
   let subject;
   let campaignUrl;
+  let campaignName;
   let imageUrl;
   beforeEach(() => {
+    campaignName = 'Test Campaign';
     campaignUrl = 'http://example.com';
     imageUrl = 'http://example.com./image.png';
     props = {
-      image: imageUrl,
-      url: campaignUrl,
+      name: 'Test Campaign',
+      image_url: imageUrl,
+      image_id: 1,
+      clickthrough_url: campaignUrl,
     };
     fetchMock
       .mock(campaignUrl, 200);
@@ -36,5 +40,10 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
   it('renders a link to the campaign url', function() {
     let link = first(subject.find('a'));
     expect(link.props.href).to.equal(campaignUrl);
+  });
+
+  it('renders an alt tag with the campaign name', () => {
+    let image = first(subject.find('img'));
+    expect(image.props.alt).to.equal(campaignName);
   });
 });

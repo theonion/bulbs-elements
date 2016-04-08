@@ -6,11 +6,11 @@ export default function CampaignDisplayRoot (props) {
   let component;
   switch (props.display) {
   case 'name':
-    component = <CampaignDisplayName name={props.data.name}/>;
+    component = <CampaignDisplayName name={props.campaign.name}/>;
     break;
 
   case 'image':
-    component = <CampaignDisplayImage name={props.data.image} />;
+    component = <CampaignDisplayImage {...props.campaign} />;
     break;
   }
 
