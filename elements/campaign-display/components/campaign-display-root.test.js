@@ -12,26 +12,27 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   let shallowRenderer;
   let subject;
   let props;
-  let data;
+  let response;
   let campaignUrl;
   let imageUrl;
 
   beforeEach(() => {
     campaignUrl = 'http://example.com';
     imageUrl = 'http://example.com/image.png';
-    data = {
+    response = {
+      clickthrough_url: campaignUrl,
+      image_url: imageUrl,
       name: 'Test Campaign',
-      image: imageUrl,
     };
     fetchMock
-      .mock(campaignUrl, data)
+      .mock(campaignUrl, response)
       .mock(imageUrl, 200);
     shallowRenderer = createRenderer();
   });
 
   context('with display set to `name`', () => {
     beforeEach(() => {
-      props = { display: 'name', data };
+      props = { display: 'name', campaign: response };
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
       subject = $R(shallowRenderer.getRenderOutput());
     });
@@ -44,7 +45,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
   context('with display set to `image`', () => {
     beforeEach(() => {
-      props = { display: 'image', data };
+      props = { display: 'image', campaign: response };
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
       subject = $R(shallowRenderer.getRenderOutput());
     });

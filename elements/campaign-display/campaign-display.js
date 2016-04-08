@@ -23,7 +23,7 @@ class CampaignDisplay extends BulbsElement {
   render () {
     return (
       <CampaignDisplayRoot
-          data={this.state}
+          {...this.state}
           display={this.props.display}
       />
     );
