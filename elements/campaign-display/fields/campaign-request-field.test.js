@@ -1,20 +1,20 @@
-import CampaignField from './campaign';
+import CampaignRequestField from './campaign-request-field';
 import fetchMock from 'fetch-mock';
 
-describe('<campaign-display> CampaignField', () => {
-  let subject = CampaignField;
+describe('<campaign-display> CampaignRequestField', () => {
+  let subject = CampaignRequestField;
   let testUrl;
+  let mockStore;
 
   beforeEach(() => {
     testUrl = 'http://example.com';
+    mockStore = {
+      actions: { handleFetchComplete: chai.spy() },
+    };
     fetchMock.mock(testUrl, {});
   });
 
   describe('initialState', () => {
-    it('sets data to an empty array', () => {
-      expect(subject.initialState.data).to.eql([]);
-    });
-
     it('sets requestInFlight to false', () => {
       expect(subject.initialState.requestInFlight).to.equal(false);
     });
@@ -39,21 +39,26 @@ describe('<campaign-display> CampaignField', () => {
 
   describe('fetchCampaignSuccess', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignSuccess({}, testUrl, subject);
+      let state = subject.actions.fetchCampaignSuccess({}, testUrl, mockStore);
       expect(state.requestInFlight).to.equal(false);
+    });
+
+    it('triggers the handleFetchComplete action', () => {
+      subject.actions.fetchCampaignSuccess({}, testUrl, mockStore);
+      expect(mockStore.actions.handleFetchComplete).to.have.been.called();
     });
   });
 
   describe('fetchCampaignFailure', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignFailure({}, testUrl);
+      let state = subject.actions.fetchCampaignFailure({}, testUrl, mockStore);
       expect(state.requestInFlight).to.equal(false);
     });
   });
 
   describe('fetchCampaignError', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignError({}, testUrl);
+      let state = subject.actions.fetchCampaignError({}, testUrl, mockStore);
       expect(state.requestInFlight).to.equal(false);
     });
   });
