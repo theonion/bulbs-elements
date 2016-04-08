@@ -9,6 +9,7 @@ const CampaignField = {
     fetchCampaign(state, campaignUrl, store) {
       state.requestInFlight = true;
       makeRequest(campaignUrl, {
+        credentials: 'include',
         success: store.actions.fetchCampaignSuccess,
         failure: store.actions.fetchCampaignFailure,
         error: store.actions.fetchCampaignError,
