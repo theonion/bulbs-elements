@@ -30,6 +30,11 @@ describe('<campaign-display> CampaignField', () => {
       subject.actions.fetchCampaign({}, testUrl, subject);
       expect(fetchMock.called(testUrl)).to.equal(true);
     });
+
+    it('includes the credentials when fetching the data', () => {
+      subject.actions.fetchCampaign({}, testUrl, subject);
+      expect(fetchMock.lastOptions().credentials).to.equal('include');
+    });
   });
 
   describe('fetchCampaignSuccess', () => {
