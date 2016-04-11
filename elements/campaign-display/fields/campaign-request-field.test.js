@@ -39,7 +39,8 @@ describe('<campaign-display> CampaignRequestField', () => {
 
   describe('fetchCampaignSuccess', () => {
     it('sets requestInFlight to false', () => {
-      let state = subject.actions.fetchCampaignSuccess({}, testUrl, mockStore);
+      let state = {};
+      subject.actions.fetchCampaignSuccess(state, testUrl, mockStore);
       expect(state.requestInFlight).to.equal(false);
     });
 

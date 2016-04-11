@@ -20,7 +20,6 @@ const CampaignRequestField = {
     fetchCampaignSuccess(state, response, store) {
       state.requestInFlight = false;
       store.actions.handleFetchComplete(response);
-      return state;
     },
 
     fetchCampaignFailure(state, response) {
