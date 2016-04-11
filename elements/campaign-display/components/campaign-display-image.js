@@ -1,11 +1,16 @@
 import React, { PropTypes } from 'react';
 
 export default function CampaignDisplayImage (props) {
+  let image = <img src={props.image_url} alt={props.name} />;
+  let hasUrl = !!props.clickthrough_url;
+  let link = (
+    <a href={props.clickthrough_url}>
+      {image}
+    </a>);
+
   return (
     <div className='campaign-display-image'>
-      <a href={props.clickthrough_url}>
-        <img src={props.image_url} alt={props.name} />
-      </a>
+      {hasUrl ? link : image}
     </div>);
 }
 
