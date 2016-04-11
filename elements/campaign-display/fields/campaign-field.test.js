@@ -18,8 +18,15 @@ describe('<campaign-display> CampaignField', () => {
 
   describe('handleFetchComplete', () => {
     it('returns the response', () => {
-      let state = subject.actions.handleFetchComplete({}, { data: 'test' });
-      expect(state.data).to.equal('test');
+      let state = {};
+      let response = {
+        clickthrough_url: 'clickthrough_url',
+        image_id: 'image_id',
+        image_url: 'image_url',
+        name: 'name',
+      };
+      subject.actions.handleFetchComplete(state, response);
+      expect(state).to.eql(response);
     });
   });
 });
