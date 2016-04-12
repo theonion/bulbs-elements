@@ -5,7 +5,8 @@ import { registerReactElement } from 'bulbs-elements/register';
 
 import './campaign-display.scss';
 
-import CampaignDisplaySchema from './campaign-display-schema';
+import CampaignField from './fields/campaign-field';
+import CampaignRequest from './fields/campaign-request-field';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
@@ -30,14 +31,17 @@ class CampaignDisplay extends BulbsElement {
   }
 }
 
-CampaignDisplay.displayName = 'CampaignDisplay';
-
-CampaignDisplay.schema = CampaignDisplaySchema;
-
-CampaignDisplay.propTypes = {
-  campaignUrl: PropTypes.string.isRequired,
-  display: PropTypes.oneOf(['image', 'name']).isRequired,
-};
+Object.assign(CampaignDisplay, {
+  displayName: 'CampaignDisplay',
+  schema: {
+    campaign: CampaignField,
+    campaignRequest: CampaignRequest,
+  },
+  propTypes: {
+    campaignUrl: PropTypes.string.isRequired,
+    display: PropTypes.oneOf(['image', 'name']).isRequired,
+  },
+});
 
 registerReactElement('campaign-display', CampaignDisplay);
 
