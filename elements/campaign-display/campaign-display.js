@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
@@ -10,9 +11,7 @@ import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
   constructor (props) {
-    if (!props.campaignUrl) {
-      throw new Error('campaign-display component requires a campaign url');
-    }
+    invariant(!!props.campaignUrl, 'campaign-display component requires a campaign url');
     super(props);
   }
 
