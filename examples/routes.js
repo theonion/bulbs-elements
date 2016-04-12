@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 let browserHistory = createBrowserHistory();
 
 import Index from './index';
@@ -14,4 +14,4 @@ const Routes = (
   </Router>
 );
 
-export default Routes
+export default Routes;

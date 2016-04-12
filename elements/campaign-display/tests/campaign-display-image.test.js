@@ -1,12 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import _, { first } from 'lodash';
-import utils, { createRenderer } from 'react-addons-test-utils';
-import rquery from 'rquery';
+import { createRenderer } from 'react-addons-test-utils';
 import CampaignDisplayImage from '../components/campaign-display-image';
 import fetchMock from 'fetch-mock';
-
-const $R = rquery(_, React, ReactDOM, utils);
 
 describe('<campaign-display> <CampaignDisplayImage>', () => {
   let shallowRenderer;
@@ -29,21 +24,21 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
       .mock(campaignUrl, 200);
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplayImage {...props} />);
-    subject = $R(shallowRenderer.getRenderOutput());
+    subject = shallowRenderer.getRenderOutput();
   });
 
   it('renders the campaign image', () => {
-    let image = first(subject.find('img'));
+    let image = subject.props.children.props.children;
     expect(image.props.src).to.equal(imageUrl);
   });
 
   it('renders a link to the campaign url', function() {
-    let link = first(subject.find('a'));
+    let link = subject.props.children;
     expect(link.props.href).to.equal(campaignUrl);
   });
 
   it('renders an alt tag with the campaign name', () => {
-    let image = first(subject.find('img'));
+    let image = subject.props.children.props.children;
     expect(image.props.alt).to.equal(campaignName);
   });
 });

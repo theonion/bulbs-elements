@@ -1,2 +1,3 @@
 webpack*.js
 karma*.js
+scripts/*
