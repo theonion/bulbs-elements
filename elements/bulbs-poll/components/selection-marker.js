@@ -5,10 +5,29 @@ export default function SelectionMarker (props) {
     isSelected,
   } = props;
 
+  let diameter = 20;
+  let radius = diameter / 2;
+  let stroke = 1 / 5 * diameter;
+
   return (
-    <svg width="20px" height="20px">
-      <circle cx="10" cy="10" r="8" fill="none" stroke="black" strokeWidth="2px" />
-      <circle cx="10" cy="10" r="5" fill={isSelected ? 'black' : 'none' } />
+    <svg
+      width={`${diameter}px`}
+      height={`${diameter}px`}
+    >
+      <circle
+        cx={radius}
+        cy={radius}
+        r={radius - stroke}
+        fill="none"
+        stroke="black"
+        strokeWidth={`${radius - stroke}px`}
+      />
+      <circle
+        cx={radius}
+        cy={radius}
+        r={radius / 2}
+        fill={isSelected ? 'black' : 'none' }
+      />
     </svg>
   );
 }

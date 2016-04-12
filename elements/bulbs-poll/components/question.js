@@ -20,7 +20,7 @@ export default function Question (props) {
   } = props.data;
 
   return (
-    <div>
+    <div className='bulbs-poll-question'>
       <Cover poll={poll} />
 
       <RequestError
