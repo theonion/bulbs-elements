@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _, { first } from 'lodash';
+import _ from 'lodash';
 import utils, { createRenderer } from 'react-addons-test-utils';
 import rquery from 'rquery';
-import CampaignDisplayRoot from './campaign-display-root';
+import CampaignDisplayRoot from '../components/campaign-display-root';
 import fetchMock from 'fetch-mock';
 
 const $R = rquery(_, React, ReactDOM, utils);
