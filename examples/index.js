@@ -1,7 +1,7 @@
+/*eslint react/no-unknown-property: "off"*/
 import React from 'react';
 import { Link } from 'react-router';
-import _ from 'lodash';
-import examples from './data';
+import examples from './element-examples';
 import inflection from 'inflection';
 
 export default class Index extends React.Component {

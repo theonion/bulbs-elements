@@ -2,10 +2,16 @@ let examples = {
   element: 'campaign-display',
   examples: {
     'Basic Example': {
-      render: function () {
+      render() {
         return `
           <campaign-display
-            attribute="value"
+            display="name" campaign={
+              {
+                name: 'Example Campaign',
+                clickthrough_url: 'http://example.com',
+                image_url: 'http://lorempixel.com/480/340',
+              }
+            }
           >
           </campaign-display
         `;
