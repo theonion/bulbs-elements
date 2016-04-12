@@ -45,6 +45,7 @@ describe('<bulbs-poll> <Question>', function () {
         <RequestError error={voteRequestError} />
         <Answers
           answers={answers}
+          poll={poll}
           selectAnswer={selectAnswer}
           selectedAnswer={selectedAnswer}
         />
