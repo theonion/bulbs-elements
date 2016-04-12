@@ -46,7 +46,9 @@ describe('<campaign-display> CampaignRequestField', () => {
 
     it('triggers the handleFetchComplete action', () => {
       subject.actions.fetchCampaignSuccess({}, testUrl, mockStore);
-      expect(mockStore.actions.handleFetchComplete).to.have.been.called();
+      setImmediate(() => {
+        expect(mockStore.actions.handleFetchComplete).to.have.been.called();
+      });
     });
   });
 

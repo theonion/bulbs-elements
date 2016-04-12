@@ -19,7 +19,7 @@ const CampaignRequestField = {
 
     fetchCampaignSuccess(state, response, store) {
       state.requestInFlight = false;
-      store.actions.handleFetchComplete(response);
+      setImmediate(() => store.actions.campaign.handleFetchComplete(response));
     },
 
     fetchCampaignFailure(state, response) {

@@ -1,16 +1,27 @@
 let examples = {
   element: 'campaign-display',
   examples: {
-    'Basic Example': {
-      render: function () {
+    'CampaignDisplayName': {
+      render() {
         return `
           <campaign-display
-            attribute="value"
+            display="name" campaign-url="http://localhost:8080/fixtures/campaign-display/campaign.json"
           >
-          </campaign-display
+          </campaign-display>
         `;
       },
     },
+
+    'CampaignDisplayImage': {
+      render() {
+        return `
+          <campaign-display
+            display="image" campaign-url="http://localhost:8080/fixtures/campaign-display/campaign.json"
+          >
+          </campaign-display>
+        `
+      }
+    }
   },
 };
 
