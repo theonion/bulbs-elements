@@ -1,6 +1,6 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import Loading from './loading';
+import Loading from '../../components/loading';
 
 describe('<bulbs-poll> <Loading>', function () {
   context('default', function () {

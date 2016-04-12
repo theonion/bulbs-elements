@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import NowField from './now';
+import NowField from '../../fields/now';
 
 describe('<bulbs-poll> NowField', function () {
 
