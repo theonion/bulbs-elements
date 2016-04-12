@@ -14,6 +14,11 @@ describe('<campaign-display>', () => {
       campaignUrl,
       display: 'image',
     };
+
+    // Prevent setState warnings spamming the console
+    // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
+    CampaignDisplay.prototype.setState = chai.spy();
+
     fetchMock.mock(campaignUrl, props);
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplay {...props}/>);
