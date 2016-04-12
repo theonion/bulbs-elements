@@ -3,6 +3,13 @@ $low-contrast: lightgray;
 $highlight-color: lightblue;
 $background-color: white;
 
+%poll-item-list {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-left: 0px; // Override margin in article body from starwipe
+}
+
 // First we do some resetting.
 // This has to be in it's own block because the production build
 // likes to re-order/combine things.
@@ -45,7 +52,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-image-answers {
-    display: flex;
+    @extend %poll-item-list;
   }
 
   .bulbs-poll-answers {
@@ -55,6 +62,9 @@ bulbs-poll {
 
   // overwriting specifity in starwipe
   li.bulbs-poll-image-answer {
+    display: flex;
+    flex-flow: row wrap;
+
     background: $background-color;
     padding: .5em .5em 1em .5em;
     margin: 1em;
@@ -62,11 +72,6 @@ bulbs-poll {
     &:before {
       content: "";
     }
-  }
-
-  .bulbs-poll-image-answer {
-    display: flex;
-    flex-flow: row wrap;
 
     img {
       height: 100%;
@@ -82,7 +87,7 @@ bulbs-poll {
 
   .answer-image-text {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: row;
     padding: 0.2em;
   }
 
@@ -120,18 +125,20 @@ bulbs-poll {
   }
 
   // overwriting specificity in starwipe
-  li.bulbs-poll-image-result:before {
-    content: "";
-  }
-
-  .bulbs-poll-image-result {
+  li.bulbs-poll-image-result {
+    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     list-style: none;
     margin: 1em;
     position: relative;
     width: 100%;
+    width: calc(50% - 2em);
 
+    &:before {
+      content: "";
+    }
+    
     img {
       width: 100%
     }
@@ -154,6 +161,13 @@ bulbs-poll {
       position: relative;
       width: 100%;
     }
+  }
+
+  // overriding app specificity
+  li.bulbs-poll-image-answer,
+  li.bulbs-poll-image-result {
+    box-sizing: border-box;
+    width: calc(50% - 2em);
   }
 
   .bulbs-poll-answer,
@@ -210,7 +224,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-image-results-list {
-    display: flex;
+    @extend %poll-item-list;
     margin: 0;
   }
 
