@@ -15,7 +15,7 @@ export default function CampaignDisplayImage (props) {
 }
 
 CampaignDisplayImage.propTypes = {
-  clickthrough_url: PropTypes.string.isRequired,
+  clickthrough_url: PropTypes.string,
   image_url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 };

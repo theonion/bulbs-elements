@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRenderer } from 'react-addons-test-utils';
-import CampaignDisplayImage from '../components/campaign-display-image';
+import CampaignDisplayImage from './campaign-display-image';
 import fetchMock from 'fetch-mock';
 
 describe('<campaign-display> <CampaignDisplayImage>', () => {
@@ -43,12 +43,11 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
   });
 
   context('without a clickthrough_url', () => {
-    xit('does not wrap the image in a link', () => {
+    it('does not wrap the image in a link', () => {
       delete props.clickthrough_url;
       shallowRenderer.render(<CampaignDisplayImage {...props} />);
-      subject = $R(shallowRenderer.getRenderOutput());
-      let link = first(subject.find('a'));
-      expect(link).to.be.undefined;
+      subject = shallowRenderer.getRenderOutput();
+      expect(subject.props.children.type).to.equal('img');
     });
   });
 });

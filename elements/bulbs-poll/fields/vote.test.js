@@ -2,8 +2,8 @@ import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
 import util from 'bulbs-elements/util';
 import Store from 'bulbs-elements/store';
-import VoteField from '../../fields/vote';
-import PollSchema from '../../bulbs-poll-schema';
+import VoteField from './vote';
+import PollSchema from '../bulbs-poll-schema';
 
 describe('<bulbs-poll> VoteField', function () {
   let { actions } = VoteField;
