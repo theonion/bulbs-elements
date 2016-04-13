@@ -1,8 +1,8 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import PollEnded from './ended';
-import Cover from './cover';
-import ResultsList from './results-list';
+import PollEnded from '../../components/ended';
+import Cover from '../../components/cover';
+import ResultsList from '../../components/results-list';
 
 describe('<bulbs-poll> <PollEnded>', function () {
   context('default', function () {

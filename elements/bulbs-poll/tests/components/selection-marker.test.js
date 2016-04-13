@@ -1,6 +1,6 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import SelectionMarker from './selection-marker';
+import SelectionMarker from '../../components/selection-marker';
 
 describe('<bulbs-poll> <SelectionMarker>', function () {
   context('is selected', function () {

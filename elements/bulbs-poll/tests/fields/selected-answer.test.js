@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import SelectedAnswerField from './selected-answer';
+import SelectedAnswerField from '../../fields/selected-answer';
 
 describe('<bulbs-poll> SelectedAnswerField', function () {
   let { actions } = SelectedAnswerField;

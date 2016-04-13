@@ -1,4 +1,4 @@
-import CampaignField from './campaign-field';
+import CampaignField from '../fields/campaign-field';
 import fetchMock from 'fetch-mock';
 
 describe('<campaign-display> CampaignField', () => {
@@ -25,8 +25,8 @@ describe('<campaign-display> CampaignField', () => {
         image_url: 'image_url',
         name: 'name',
       };
-      subject.actions.handleFetchComplete(state, response);
-      expect(state).to.eql(response);
+      let nextState = subject.actions.handleFetchComplete(state, response);
+      expect(nextState).to.eql(response);
     });
   });
 });

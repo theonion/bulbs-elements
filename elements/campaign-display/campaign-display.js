@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
+import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
 
 import './campaign-display.scss';
 
-import CampaignDisplaySchema from './campaign-display-schema';
+import CampaignField from './fields/campaign-field';
+import CampaignRequest from './fields/campaign-request-field';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
   constructor (props) {
-    if (!props.campaignUrl) {
-      throw new Error('campaign-display component requires a campaign url');
-    }
+    invariant(!!props.campaignUrl, 'campaign-display component requires a campaign url');
     super(props);
   }
 
@@ -30,14 +30,17 @@ class CampaignDisplay extends BulbsElement {
   }
 }
 
-CampaignDisplay.displayName = 'CampaignDisplay';
-
-CampaignDisplay.schema = CampaignDisplaySchema;
-
-CampaignDisplay.propTypes = {
-  campaignUrl: PropTypes.string.isRequired,
-  display: PropTypes.oneOf(['image', 'name']).isRequired,
-};
+Object.assign(CampaignDisplay, {
+  displayName: 'CampaignDisplay',
+  schema: {
+    campaign: CampaignField,
+    campaignRequest: CampaignRequest,
+  },
+  propTypes: {
+    campaignUrl: PropTypes.string.isRequired,
+    display: PropTypes.oneOf(['image', 'name']).isRequired,
+  },
+});
 
 registerReactElement('campaign-display', CampaignDisplay);
 

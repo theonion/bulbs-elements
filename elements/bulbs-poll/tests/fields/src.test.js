@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import SrcField from './src';
+import SrcField from '../../fields/src';
 
 describe('<bulbs-poll> SrcField', function () {
   let { actions } = SrcField;

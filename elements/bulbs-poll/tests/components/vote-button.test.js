@@ -1,4 +1,4 @@
-import VoteButton from './vote-button';
+import VoteButton from '../../components/vote-button';
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 

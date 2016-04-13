@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Question from './question';
-import RequestError from './request-error';
-import Cover from './cover';
-import Answers from './answers';
-import VoteButton from './vote-button';
+import Question from '../../components/question';
+import RequestError from '../../components/request-error';
+import Cover from '../../components/cover';
+import Answers from '../../components/answers';
+import VoteButton from '../../components/vote-button';
 
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
