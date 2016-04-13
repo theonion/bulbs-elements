@@ -25,8 +25,8 @@ describe('<campaign-display> CampaignField', () => {
         image_url: 'image_url',
         name: 'name',
       };
-      subject.actions.handleFetchComplete(state, response);
-      expect(state).to.eql(response);
+      let nextState = subject.actions.handleFetchComplete(state, response);
+      expect(nextState).to.eql(response);
     });
   });
 });

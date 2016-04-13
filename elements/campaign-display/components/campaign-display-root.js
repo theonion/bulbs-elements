@@ -4,14 +4,14 @@ import CampaignDisplayImage from './campaign-display-image';
 
 export default function CampaignDisplayRoot (props) {
   let component;
-  switch (props.display) {
-  case 'name':
+  if (Object.keys(props.campaign).length === 0) {
+    component = '';
+  }
+  else if (props.display === 'name') {
     component = <CampaignDisplayName name={props.campaign.name}/>;
-    break;
-
-  case 'image':
+  }
+  else if (props.display === 'image') {
     component = <CampaignDisplayImage {...props.campaign} />;
-    break;
   }
 
   return (

@@ -46,4 +46,14 @@ describe('<campaign-display> <CampaignDisplayImage>', () => {
     let image = first(subject.find('img'));
     expect(image.props.alt).to.equal(campaignName);
   });
+
+  context('without a clickthrough_url', () => {
+    it('does not wrap the image in a link', () => {
+      delete props.clickthrough_url;
+      shallowRenderer.render(<CampaignDisplayImage {...props} />);
+      subject = $R(shallowRenderer.getRenderOutput());
+      let link = first(subject.find('a'));
+      expect(link).to.be.undefined;
+    });
+  });
 });
