@@ -21,7 +21,7 @@ describe('<campaign-display>', () => {
 
     fetchMock.mock(campaignUrl, props);
     shallowRenderer = createRenderer();
-    shallowRenderer.render(<CampaignDisplay {...props}/>);
+    shallowRenderer.render(<CampaignDisplay {...props} />);
     subject = new CampaignDisplay(props);
   });
 

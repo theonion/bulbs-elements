@@ -1,12 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import _ from 'lodash';
-import utils, { createRenderer } from 'react-addons-test-utils';
-import rquery from 'rquery';
+import { createRenderer } from 'react-addons-test-utils';
 import CampaignDisplayName from '../components/campaign-display-name';
 import fetchMock from 'fetch-mock';
-
-const $R = rquery(_, React, ReactDOM, utils);
 
 describe('<campaign-display> <CampaignDisplayName>', () => {
   let shallowRenderer;
@@ -19,10 +14,10 @@ describe('<campaign-display> <CampaignDisplayName>', () => {
     props = { name: 'Test Campaign' };
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplayName {...props} />);
-    subject = $R(shallowRenderer.getRenderOutput());
+    subject = shallowRenderer.getRenderOutput();
   });
 
   it('renders the campaign name', () => {
-    expect(subject.text()).to.equal('Test Campaign');
+    expect(subject.props.children).to.equal('Test Campaign');
   });
 });

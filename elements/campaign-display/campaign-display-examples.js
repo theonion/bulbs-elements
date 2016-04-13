@@ -19,9 +19,9 @@ let examples = {
             display="image" campaign-url="http://localhost:8080/fixtures/campaign-display/campaign.json"
           >
           </campaign-display>
-        `
-      }
-    }
+        `;
+      },
+    },
   },
 };
 

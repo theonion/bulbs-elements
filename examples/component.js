@@ -1,20 +1,22 @@
+/*eslint react/no-unknown-property: "off"*/
 import React from 'react';
-import examples from './data';
+import examples from './element-examples';
 
-export default class Component extends React.Component {
-  render () {
-    return (
-      <div dangerouslySetInnerHTML={this.renderExample()} />
-    );
-  }
-
+class Component extends React.Component {
   renderExample () {
-    let example = examples.find((example) => {
-      return example.element === this.props.params.element;
+    let example = examples.find((exmpl) => {
+      return exmpl.element === this.props.params.element;
     });
     return {
       __html: example.examples[this.props.params.example].render(),
     };
   }
+
+  render () {
+    return (
+      <div dangerouslySetInnerHTML={this.renderExample()} />
+    );
+  }
 }
 
+export default Component;
