@@ -15,7 +15,7 @@ describe('<campaign-display>', () => {
       display: 'image',
     };
 
-    // Prevent setState warnings spamming the console
+    // TODO: Prevent setState warnings spamming the console
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
     CampaignDisplay.prototype.setState = chai.spy();
 
