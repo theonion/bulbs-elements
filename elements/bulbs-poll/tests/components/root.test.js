@@ -1,14 +1,14 @@
 import React from 'react';
 import Store from 'bulbs-elements/store';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import BulbsPollRoot from './root';
-import PollSchema from '../bulbs-poll-schema';
+import BulbsPollRoot from '../../components/root';
+import PollSchema from '../../bulbs-poll-schema';
 
-import PollQuestion from './question';
-import PollResults from './results';
-import PollEnded from './ended';
-import PollLoading from './loading';
-import ComingSoon from './coming-soon';
+import PollQuestion from '../../components/question';
+import PollResults from '../../components/results';
+import PollEnded from '../../components/ended';
+import PollLoading from '../../components/loading';
+import ComingSoon from '../../components/coming-soon';
 
 describe('<bulbs-poll> <BulbsPollRoot>', function () {
   let store;

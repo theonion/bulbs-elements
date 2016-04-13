@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import utils, { createRenderer } from 'react-addons-test-utils';
 import rquery from 'rquery';
-import CampaignDisplayName from './campaign-display-name';
+import CampaignDisplayName from '../components/campaign-display-name';
 import fetchMock from 'fetch-mock';
 
 const $R = rquery(_, React, ReactDOM, utils);

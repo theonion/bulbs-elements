@@ -1,4 +1,4 @@
-import Cover from './cover';
+import Cover from '../../components/cover';
 import React from 'react';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';

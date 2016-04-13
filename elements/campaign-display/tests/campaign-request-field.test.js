@@ -1,4 +1,4 @@
-import CampaignRequestField from './campaign-request-field';
+import CampaignRequestField from '../fields/campaign-request-field';
 import fetchMock from 'fetch-mock';
 
 describe('<campaign-display> CampaignRequestField', () => {

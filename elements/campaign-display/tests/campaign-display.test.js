@@ -1,5 +1,5 @@
 import React from 'react';
-import CampaignDisplay from './campaign-display';
+import CampaignDisplay from '../campaign-display';
 import { createRenderer } from 'react-addons-test-utils';
 import fetchMock from 'fetch-mock';
 
@@ -27,7 +27,7 @@ describe('<campaign-display>', () => {
 
   it('requires a campaignUrl', () => {
     expect(() => {
-      new CampaignDisplay({ display: 'image' });
+      new CampaignDisplay({ display: 'image' }); // eslint-disable-line
     }).to.throw('campaign-display component requires a campaign url');
   });
 

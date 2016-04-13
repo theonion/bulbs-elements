@@ -1,6 +1,6 @@
-import Answers from './answers';
-import Answer from './answer';
-import ImageAnswer from './image-answer';
+import Answers from '../../components/answers';
+import Answer from '../../components/answer';
+import ImageAnswer from '../../components/image-answer';
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 // import { assert } from 'chai';
