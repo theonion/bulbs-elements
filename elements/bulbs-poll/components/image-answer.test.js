@@ -1,7 +1,7 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import ImageAnswer from '../../components/image-answer';
-import SelectionMarker from '../../components/selection-marker';
+import ImageAnswer from './image-answer';
+import SelectionMarker from './selection-marker';
 
 describe('<bulbs-poll> <ImageAnswer>', function () {
   context('answer in not the selected answer', function () {

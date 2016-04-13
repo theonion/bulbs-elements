@@ -1,5 +1,5 @@
 import React from 'react';
-import CampaignDisplay from '../campaign-display';
+import CampaignDisplay from './campaign-display';
 import { createRenderer } from 'react-addons-test-utils';
 import fetchMock from 'fetch-mock';
 

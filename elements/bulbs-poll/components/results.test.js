@@ -1,8 +1,8 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import Cover from '../../components/cover';
-import Results from '../../components/results';
-import ResultsList from '../../components/results-list';
+import Cover from './cover';
+import Results from './results';
+import ResultsList from './results-list';
 
 describe('<bulbs-poll> <Results>', function () {
   context('with vote results', function () {

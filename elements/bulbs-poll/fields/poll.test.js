@@ -2,8 +2,8 @@ import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
 import util from 'bulbs-elements/util';
 import Store from 'bulbs-elements/store';
-import PollField from '../../fields/poll';
-import PollSchema from '../../bulbs-poll-schema';
+import PollField from './poll';
+import PollSchema from '../bulbs-poll-schema';
 
 let store = new Store({ schema: PollSchema });
 

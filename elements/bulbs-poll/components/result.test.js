@@ -1,7 +1,7 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import Result from '../../components/result';
-import SelectionMarker from '../../components/selection-marker';
+import Result from './result';
+import SelectionMarker from './selection-marker';
 
 describe('<bulbs-poll> <Result>', function () {
   context('normal vote', function () {

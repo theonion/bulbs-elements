@@ -1,7 +1,7 @@
 import React from 'react';
 import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-import ComingSoon from '../../components/coming-soon';
-import VoteButton from '../../components/vote-button';
+import ComingSoon from './coming-soon';
+import VoteButton from './vote-button';
 
 describe('<bulbs-poll> <ComingSoon>', function () {
   context('default', function () {

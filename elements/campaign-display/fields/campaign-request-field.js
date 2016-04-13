@@ -10,16 +10,18 @@ const CampaignRequestField = {
       state.requestInFlight = true;
       makeRequest(campaignUrl, {
         credentials: 'include',
-        success: store.actions.fetchCampaignSuccess,
+        success: (response) => {
+          store.actions.fetchCampaignSuccess(response);
+          store.actions.handleFetchComplete(response);
+        },
         failure: store.actions.fetchCampaignFailure,
         error: store.actions.fetchCampaignError,
       });
       return state;
     },
 
-    fetchCampaignSuccess(state, response, store) {
+    fetchCampaignSuccess(state) {
       state.requestInFlight = false;
-      setImmediate(() => store.actions.handleFetchComplete(response));
     },
 
     fetchCampaignFailure(state, response) {

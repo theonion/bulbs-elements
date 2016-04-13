@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRenderer } from 'react-addons-test-utils';
-import CampaignDisplayRoot from '../components/campaign-display-root';
-import CampaignDisplayName from '../components/campaign-display-name';
-import CampaignDisplayImage from '../components/campaign-display-image';
+import CampaignDisplayRoot from './campaign-display-root';
+import CampaignDisplayName from './campaign-display-name';
+import CampaignDisplayImage from './campaign-display-image';
 import fetchMock from 'fetch-mock';
 
 describe('<campaign-display> <CampaignDisplayRoot>', () => {
