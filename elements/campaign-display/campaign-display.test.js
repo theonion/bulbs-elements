@@ -7,35 +7,36 @@ describe('<campaign-display>', () => {
   let subject;
   let props;
   let shallowRenderer;
-  let campaignUrl;
+  let src;
   beforeEach(() => {
-    campaignUrl = 'http://example.com';
-    props = {
-      campaignUrl,
-      display: 'image',
-    };
-
     // TODO: Prevent setState warnings spamming the console
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
     CampaignDisplay.prototype.setState = chai.spy();
 
-    fetchMock.mock(campaignUrl, props);
+    src = 'http://example.com';
+    props = {
+      src,
+      clickthrough_url: 'http://example.com/clickthrough',
+      image_id: 'http://example.com/image.jpg',
+      name: 'Test Campaign',
+    };
+    fetchMock.mock(src, props);
     shallowRenderer = createRenderer();
-    shallowRenderer.render(<CampaignDisplay {...props} />);
+    shallowRenderer.render(<CampaignDisplay src={src} />);
     subject = new CampaignDisplay(props);
   });
 
-  it('requires a campaignUrl', () => {
+  it('requires a src', () => {
     expect(() => {
-      new CampaignDisplay({ display: 'image' }); // eslint-disable-line
-    }).to.throw('campaign-display component requires a campaign url');
+      new CampaignDisplay({}); // eslint-disable-line
+    }).to.throw('campaign-display component requires a src');
   });
 
   describe('initialDispatch', () => {
     it('fetches campaign data for display', () => {
       let spy = chai.spy.on(subject.store.actions, 'fetchCampaign');
       subject.initialDispatch();
-      expect(spy).to.have.been.called.with(campaignUrl);
+      expect(spy).to.have.been.called.with(src);
     });
   });
 });

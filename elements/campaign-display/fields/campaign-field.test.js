@@ -12,7 +12,7 @@ describe('<campaign-display> CampaignField', () => {
 
   describe('initialState', () => {
     it('is an object', () => {
-      expect(subject.initialState).to.eql({});
+      expect(subject.initialState).to.eql({ name: '' });
     });
   });
 

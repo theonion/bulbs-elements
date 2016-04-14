@@ -12,21 +12,20 @@ import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
   constructor (props) {
-    invariant(!!props.campaignUrl, 'campaign-display component requires a campaign url');
+    invariant(!!props.src, 'campaign-display component requires a src');
     super(props);
   }
 
   initialDispatch () {
-    this.store.actions.fetchCampaign(this.props.campaignUrl);
+    this.store.actions.fetchCampaign(this.props.src);
   }
 
   render () {
-    return (
-      <CampaignDisplayRoot
-          {...this.state}
-          display={this.props.display}
-      />
-    );
+    let options = Object.assign({}, this.state, this.props, {
+      nameOnly: this.props.nameOnly === '',
+      imageOnly: this.props.imageOnly === '',
+    });
+    return (<CampaignDisplayRoot {...options} />);
   }
 }
 
@@ -37,8 +36,10 @@ Object.assign(CampaignDisplay, {
     campaignRequest: CampaignRequest,
   },
   propTypes: {
-    campaignUrl: PropTypes.string.isRequired,
-    display: PropTypes.oneOf(['image', 'name']).isRequired,
+    logoOnly: PropTypes.string,
+    nameOnly: PropTypes.string,
+    preambleText: PropTypes.string,
+    src: PropTypes.string.isRequired,
   },
 });
 

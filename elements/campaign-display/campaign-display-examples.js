@@ -1,22 +1,38 @@
 let examples = {
   element: 'campaign-display',
   examples: {
-    'CampaignDisplayName': {
+    'CampaignDisplay': {
       render() {
         return `
           <campaign-display
-            display="name" campaign-url="http://localhost:8080/fixtures/campaign-display/campaign.json"
+            src="http://localhost:8080/fixtures/campaign-display/campaign.json"
+            preamble-text="Presented by"
           >
           </campaign-display>
         `;
       },
     },
 
-    'CampaignDisplayImage': {
+    'CampaignDisplay (no image)': {
       render() {
         return `
           <campaign-display
-            display="image" campaign-url="http://localhost:8080/fixtures/campaign-display/campaign.json"
+            src="http://localhost:8080/fixtures/campaign-display/campaign.json"
+            preamble-text="Sponsored by"
+            name-only
+          >
+          </campaign-display>
+        `;
+      },
+    },
+
+    'CampaignDisplay (no name)': {
+      render() {
+        return `
+          <campaign-display
+            src="http://localhost:8080/fixtures/campaign-display/campaign.json"
+            preamble-text="Sponsored by"
+            image-only
           >
           </campaign-display>
         `;

@@ -1,26 +1,61 @@
-import React, { PropTypes } from 'react';
-import CampaignDisplayName from './campaign-display-name';
-import CampaignDisplayImage from './campaign-display-image';
+import React, { PropTypes, Component } from 'react';
+import Logo from './logo';
+import Preamble from './preamble';
+import SponsorName from './sponsor-name';
 
-export default function CampaignDisplayRoot (props) {
-  let component;
-  if (Object.keys(props.campaign).length === 0) {
-    component = '';
-  }
-  else if (props.display === 'name') {
-    component = <CampaignDisplayName name={props.campaign.name}/>;
-  }
-  else if (props.display === 'image') {
-    component = <CampaignDisplayImage {...props.campaign} />;
+class CampaignDisplayRoot extends Component {
+  constructor(props) {
+    super(props);
   }
 
-  return (
-    <div className='campaign-display-campaign-display-root'>
-      {component}
-    </div>);
+  renderDefaultComponent() {
+    return (
+      <div className='campaign-display'>
+        <Logo {...this.props.campaign} />
+        <Preamble text={this.props.preambleText}/>
+        <SponsorName {...this.props.campaign} />
+      </div>);
+  }
+
+  renderLogoComponent() {
+    return (
+      <div className='campaign-display'>
+        <Preamble text={this.props.preambleText}/>
+        <Logo {...this.props.campaign} />
+      </div>);
+  }
+
+  renderNameComponent() {
+    return (
+      <div className='campaign-display'>
+        <Preamble text={this.props.preambleText}/>
+        <SponsorName {...this.props.campaign} />
+      </div>);
+  }
+
+  render() {
+    if (this.props.logoOnly) {
+      return this.renderLogoComponent();
+    }
+    else if (this.props.nameOnly) {
+      return this.renderNameComponent();
+    }
+    else {
+      return this.renderDefaultComponent();
+    }
+  }
 }
+
+CampaignDisplayRoot.defaultProps = {
+  logoOnly: false,
+  nameOnly: false,
+};
 
 CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.object,
-  display: PropTypes.oneOf(['image', 'name']).isRequired,
+  logoOnly: PropTypes.bool,
+  nameOnly: PropTypes.bool,
+  preambleText: PropTypes.string,
 };
+
+export default CampaignDisplayRoot;
