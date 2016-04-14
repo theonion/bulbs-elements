@@ -32,7 +32,7 @@ let examples = {
           <campaign-display
             src="http://localhost:8080/fixtures/campaign-display/campaign.json"
             preamble-text="Sponsored by"
-            image-only={true}
+            image-only
           >
           </campaign-display>
         `;
