@@ -1,15 +1,20 @@
 import React, { PropTypes } from 'react';
 
 export default function DfpPixel (props) {
+  let targeting = {
+    dfp_placement: props.placement,
+    dfp_campaign_id: props.campaignId,
+  };
+
   return (
     <div
-        data-ad-unit={ props.adUnitName }
-        data-targeting={ props.targetingParams }>
+        data-ad-unit="campaign-pixel"
+        data-targeting={ targeting }>
     </div>
   );
-};
+}
 
 DfpPixel.propTypes = {
-  adUnitName: PropTypes.string.isRequired,
-  targetingParams: PropTypes.object,
+  campaignId: PropTypes.number.isRequired,
+  placement: PropTypes.string.isRequired,
 };

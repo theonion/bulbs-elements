@@ -5,55 +5,66 @@ import DfpPixel from './dfp-pixel';
 
 // TODO : looks like this:
 // <div
-//     data-ad-unit-"{{ adUnitName }}"
-//     data-targeting="{{ targetingObj }}">
+//     data-ad-unit="campaign-pixel"
+//     data-targeting="{
+//        dfp_placement: "{ somethingPassedIn }"    <-- passed in as attr on component
+//        dfp_campaign_id: 1                            <-- from campaign json
+//      }">
 // </div>
 
 describe('<campaign-display> <DfpPixel>', () => {
 
-  let adUnitName = 'my-favorite-ad-unit';
   let shallowRenderer = createRenderer();
 
   context('ad unit name', () => {
 
-    it('should render that attribute in the dfp pixel div', function () {
+    it('should always be "campaign-pixel"', function () {
 
-      shallowRenderer.render(<DfpPixel adUnitName={ adUnitName } />);
+      shallowRenderer.render(<DfpPixel placement="junk" campaignId='1' />);
 
-      expect(shallowRenderer.getRenderOutput().props['data-ad-unit'])
-        .to.equal(adUnitName);
-    });
-
-    it('should be required', function () {
-
-      // TODO : add test code here
-      throw new Error('Not implemented yet.');
+      let html = shallowRenderer.getRenderOutput();
+      expect(html.props['data-ad-unit']).to.equal('campaign-pixel');
     });
   });
 
   context('targeting parameters', () => {
 
-    it('should render that attribute in the dfp pixel div', function () {
-      let targetingParams = {
-        dfp_param_1: 'my garbage ad',
-        dfp_param_2: 'some garbage parameter',
-      };
+    it('should include ad unit placement', function () {
+      let placement = 'top';
 
-      shallowRenderer.render(
-        <DfpPixel
-          adUnitName={ adUnitName }
-          targetingParams={ targetingParams } />
-      );
+      shallowRenderer.render(<DfpPixel campaignId='1' placement={ placement } />);
 
-      expect(shallowRenderer.getRenderOutput().props['data-targeting'])
-        .to.eql(targetingParams);
+      let html = shallowRenderer.getRenderOutput();
+      expect(html.props['data-targeting'].dfp_placement).to.equal(placement);
     });
 
-    it('should not render if not provided', function () {
+    it('should require ad unit placement', function () {
+      chai.spy.on(console, 'error');
 
-      shallowRenderer.render(<DfpPixel adUnitName={ adUnitName } />);
+      shallowRenderer.render(<DfpPixel campaignId='1' />);
 
-      expect(shallowRenderer.getRenderOutput().props['data-targeting']).to.be.undefined;
+      expect(console.error).to.have.been.called.with(
+        'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'
+      );
+    });
+
+    it('should include campaign id', function () {
+      let id = 1;
+
+      shallowRenderer.render(<DfpPixel campaignId={ id } placement='junk' />);
+
+      let html = shallowRenderer.getRenderOutput();
+      expect(html.props['data-targeting'].dfp_campaign_id).to.equal(id);
+    });
+
+    it('should require campaign id', function () {
+      chai.spy.on(console, 'error');
+
+      shallowRenderer.render(<DfpPixel placement="junk" />);
+
+      expect(console.error).to.have.been.called.with(
+        'Warning: Failed propType: Required prop `campaignId` was not specified in `DfpPixel`.'
+      );
     });
   });
 });
