@@ -3,15 +3,6 @@ import React from 'react';
 
 import DfpPixel from './dfp-pixel';
 
-// TODO : looks like this:
-// <div
-//     data-ad-unit="campaign-pixel"
-//     data-targeting="{
-//        dfp_placement: "{ somethingPassedIn }"    <-- passed in as attr on component
-//        dfp_campaign_id: 1                            <-- from campaign json
-//      }">
-// </div>
-
 describe('<campaign-display> <DfpPixel>', () => {
 
   let shallowRenderer = createRenderer();
