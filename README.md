@@ -90,4 +90,14 @@ Bulbs Elements comes with code generators to help you develop components.
 
 ### Testing
 
+To do a single test run:
+```bash
+$ npm test
+```
+
+To start continuous testing:
+```bash
+$ npm run karma
+```
+
 ### Examples
