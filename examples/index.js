@@ -1,4 +1,5 @@
-/*eslint react/no-unknown-property: "off"*/
+/* eslint-disable react/no-unknown-property */
+
 import React from 'react';
 import { Link } from 'react-router';
 import examples from './element-examples';
@@ -17,25 +18,29 @@ export default class Index extends React.Component {
           <ul>
             {
               examples.map((group, index) => {
-                return <li key={index} className="examples-example-group">
-                  <code>
-                    {`<${group.element}>`}
-                  </code>
-                  <ul>
-                    {
-                      Object.keys(group.examples).map((name) => {
-                        return <li key={name} className="examples-example">
-                          <Link
-                            to={`/example/${group.element}/${inflection.dasherize(name)}`}
-                            activeClassName="active"
-                          >
-                            {group.examples[name].title}
-                          </Link>
-                        </li>
-                      })
-                    }
-                  </ul>
-                </li>
+                return (
+                  <li key={index} className="examples-example-group">
+                    <code>
+                      {`<${group.element}>`}
+                    </code>
+                    <ul>
+                      {
+                        Object.keys(group.examples).map((name) => {
+                          return (
+                            <li key={name} className="examples-example">
+                              <Link
+                                to={`/example/${group.element}/${inflection.dasherize(name)}`}
+                                activeClassName="active"
+                              >
+                                {group.examples[name].title}
+                              </Link>
+                            </li>
+                          );
+                        })
+                      }
+                    </ul>
+                  </li>
+                );
               })
             }
           </ul>
@@ -47,4 +52,3 @@ export default class Index extends React.Component {
     );
   }
 }
-
