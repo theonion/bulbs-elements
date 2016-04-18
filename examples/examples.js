@@ -1,6 +1,6 @@
 let context = require.context('../elements', true, /^\.\/[^\/]+\/[^\.]+(?!\.test)\.js$/);
 context.keys().forEach((key) => {
-  let [x, dir, file] = key.match(/\.\/(.+)\/(.+).js/) || [];
+  let [_x, dir, file] = key.match(/\.\/(.+)\/(.+).js/) || [];// eslint-disable-line
   if (dir === file) {
     context(key);
   }

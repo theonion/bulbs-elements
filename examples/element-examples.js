@@ -16,4 +16,4 @@ examples.forEach((example) => {
   data.push(datum);
 });
 
-export default data
+export default data;

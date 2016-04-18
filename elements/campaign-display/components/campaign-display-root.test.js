@@ -1,49 +1,89 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import _ from 'lodash';
-import utils, { createRenderer } from 'react-addons-test-utils';
-import rquery from 'rquery';
+import { createRenderer } from 'react-addons-test-utils';
 import CampaignDisplayRoot from './campaign-display-root';
-
-const $R = rquery(_, React, ReactDOM, utils);
+import Logo from './logo';
+import Preamble from './preamble';
+import SponsorName from './sponsor-name';
 
 describe('<campaign-display> <CampaignDisplayRoot>', () => {
-  let shallowRenderer;
+  let shallowRenderer = createRenderer();
   let subject;
   let props;
-  let data;
+  let campaign;
+  let preambleText;
 
   beforeEach(() => {
-    data = {
+    preambleText = 'Presented by';
+    campaign = {
+      image_id: 1,
+      clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
-      image: 'test-campaign-url',
     };
-    shallowRenderer = createRenderer();
+    props = {
+      campaign,
+      preambleText,
+    };
   });
 
-  context('with display set to `name`', () => {
+  context('with a clickthrough url, image and name', () => {
     beforeEach(() => {
-      props = { display: 'name', data };
-      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
-      subject = $R(shallowRenderer.getRenderOutput());
+      shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+      subject = shallowRenderer.getRenderOutput();
     });
 
-    it('renders the CampaignDisplayName component', () => {
-      let campaignDisplayName = subject.find('.campaign-display-name');
-      expect(campaignDisplayName).to.exist;
+    it('renders the logo and name, each wrapped in a link to the clickthrough_url', () => {
+      let logo = subject.props.children[0];
+      let preamble = subject.props.children[1];
+      let sponsorName = subject.props.children[2];
+
+      expect(subject.props.children.length).to.equal(3);
+      expect(logo.type).to.be.equal(Logo);
+      expect(preamble.type).to.be.equal(Preamble);
+      expect(sponsorName.type).to.be.equal(SponsorName);
     });
   });
 
-  context('with display set to `image`', () => {
+  context('with logo-only set to true', () => {
     beforeEach(() => {
-      props = { display: 'image', data };
-      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
-      subject = $R(shallowRenderer.getRenderOutput());
+      campaign = {
+        clickthrough_url: 'http://example.com/campaign',
+        image_id: 1,
+      };
+      props = {
+        campaign,
+        logoOnly: true,
+        preambleText,
+      };
+      shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+      subject = shallowRenderer.getRenderOutput();
     });
 
-    it('renders the CampaignDisplayName component', () => {
-      let campainDisplayImage = subject.find('.campaign-display-image');
-      expect(campainDisplayImage).to.exist;
+    it('only renders the preamble and the logo', () => {
+      expect(subject.props.children.length).to.equal(2);
+      expect(subject.props.children[0].type).to.equal(Preamble);
+      expect(subject.props.children[1].type).to.equal(Logo);
+    });
+  });
+
+  context('with name-only set to true', () => {
+    beforeEach(() => {
+      campaign = {
+        clickthrough_url: 'http://example.com/campaign',
+        image_id: 1,
+      };
+      props = {
+        campaign,
+        logoOnly: true,
+        preambleText,
+      };
+      shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+      subject = shallowRenderer.getRenderOutput();
+    });
+
+    it('only renders the preamble and the name', () => {
+      expect(subject.props.children.length).to.equal(2);
+      expect(subject.props.children[0].type).to.equal(Preamble);
+      expect(subject.props.children[1].type).to.equal(Logo);
     });
   });
 });

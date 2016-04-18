@@ -1,36 +1,47 @@
 import React, { PropTypes } from 'react';
+import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
 
 import './campaign-display.scss';
 
-import CampaignDisplaySchema from './campaign-display-schema';
+import CampaignField from './fields/campaign-field';
+import CampaignRequest from './fields/campaign-request-field';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
+  constructor (props) {
+    invariant(!!props.src, 'campaign-display component requires a src');
+    super(props);
+  }
+
   initialDispatch () {
-    this.store.actions.fetchCampaign(this.props.campaignUrl);
+    this.store.actions.fetchCampaign(this.props.src);
   }
 
   render () {
-    return (
-      <CampaignDisplayRoot
-          data={this.state}
-          display={this.props.display}
-      />
-    );
+    let options = Object.assign({}, this.state, this.props, {
+      nameOnly: this.props.nameOnly === '',
+      imageOnly: this.props.imageOnly === '',
+    });
+    return (<CampaignDisplayRoot {...options} />);
   }
 }
 
-CampaignDisplay.displayName = 'CampaignDisplay';
-
-CampaignDisplay.schema = CampaignDisplaySchema;
-
-CampaignDisplay.propTypes = {
-  campaignUrl: PropTypes.string.isRequired,
-  display: PropTypes.oneOf(['image', 'name']).isRequired,
-};
+Object.assign(CampaignDisplay, {
+  displayName: 'CampaignDisplay',
+  schema: {
+    campaign: CampaignField,
+    campaignRequest: CampaignRequest,
+  },
+  propTypes: {
+    logoOnly: PropTypes.string,
+    nameOnly: PropTypes.string,
+    preambleText: PropTypes.string,
+    src: PropTypes.string.isRequired,
+  },
+});
 
 registerReactElement('campaign-display', CampaignDisplay);
 

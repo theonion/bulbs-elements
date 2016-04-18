@@ -1,7 +1,7 @@
 import { makeRequest } from 'bulbs-elements/util';
-const CampaignField = {
+
+const CampaignRequestField = {
   initialState: {
-    data: [],
     requestInFlight: false,
   },
 
@@ -9,31 +9,33 @@ const CampaignField = {
     fetchCampaign(state, campaignUrl, store) {
       state.requestInFlight = true;
       makeRequest(campaignUrl, {
-        success: store.actions.fetchCampaignSuccess,
+        credentials: 'include',
+        success: (response) => {
+          store.actions.fetchCampaignSuccess(response);
+          store.actions.handleFetchComplete(response);
+        },
         failure: store.actions.fetchCampaignFailure,
         error: store.actions.fetchCampaignError,
       });
       return state;
     },
 
-    fetchCampaignSuccess(state, data) {
-      state.data = data;
+    fetchCampaignSuccess(state) {
       state.requestInFlight = false;
+    },
+
+    fetchCampaignFailure(state, response) {
+      state.requestInFlight = false;
+      state.requestFailure = response;
       return state;
     },
 
-    fetchCampaignFailure(state, failure) {
-      state.requestFailure = failure;
+    fetchCampaignError(state, response) {
       state.requestInFlight = false;
-      return state;
-    },
-
-    fetchCampaignError(state, error) {
-      state.requestError = error;
-      state.requestInFlight = false;
+      state.networkError = response;
       return state;
     },
   },
 };
 
-export default CampaignField;
+export default CampaignRequestField;

@@ -1,4 +1,3 @@
-//import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
 import testElement from 'bulbs-elements/test/element';
 import './bulbs-poll';

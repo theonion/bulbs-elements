@@ -87,18 +87,7 @@ karmaConfig.customLaunchers = {
 
 karmaConfig.browsers = Object.keys(karmaConfig.customLaunchers);
 karmaConfig.browsers = [
-  //'bs_android_4_0',
-  //'bs_android_4_1',
-  //'bs_android_4_3',
-  //'bs_android_4_4',
-  //'bs_android_5_0',
-  //'bs_ios_8_3',
-  //'bs_ios_9_1',
-  //'bs_ie_10',
-  //'bs_ie_11',
-  //'bs_safari_8',
   'bs_chrome_47',
-  //'bs_firefox_43',
 ];
 module.exports = function(config) {
   // level of logging
