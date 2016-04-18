@@ -43,12 +43,18 @@ describe('<campaign-display> <Logo>', () => {
       subject = ReactDOM.render(<Logo {...props} />, reactContainer);
     });
 
-    it('renders the image container with the required attributes', () => {
+    it('should render the image container with the required attributes', () => {
       let element = subject.refs.image;
 
       expect(element.getAttribute('data-type')).to.equal('image');
       expect(element.getAttribute('data-image-id')).to.equal('1');
       expect(element.getAttribute('data-crop')).to.equal('original');
+    });
+
+    it('should render the image container with a child div', function () {
+      // NOTE : this is required for compatibility with our image.js code :(
+
+      expect(subject.refs.image.children[0].tagName).to.equal('DIV');
     });
 
     it('allows the crop value to be configured', () => {
