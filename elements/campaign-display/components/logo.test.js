@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRenderer } from 'react-addons-test-utils';
 import Logo from './logo';
 
 describe('<campaign-display> <Logo>', () => {
   let clickthroughUrl = 'http://example.com';
   let reactContainer;
   let props;
-  let shallowRenderer = createRenderer();
   let subject;
 
   beforeEach(() => {
@@ -17,7 +15,7 @@ describe('<campaign-display> <Logo>', () => {
 
   afterEach(() => {
     reactContainer.remove();
-  })
+  });
 
   context('picturefill', () => {
 
