@@ -32,7 +32,7 @@ export default class Logo extends React.Component {
     );
     let link = <a ref="linkWrapper" href={this.props.clickthrough_url}>{image}</a>;
 
-    return hasUrl ? link : image;
+    return <div className="campaign-display-logo">{ hasUrl ? link : image }</div>;
   }
 }
 
