@@ -37,7 +37,7 @@ export default class Logo extends Component {
 }
 
 Logo.propTypes = {
-  clickthrough_url: PropTypes.string,
+  clickthrough_url: PropTypes.string.isRequired,
   crop: PropTypes.string,
   image_id: PropTypes.number.isRequired,
 };
