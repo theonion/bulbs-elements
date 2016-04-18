@@ -9,7 +9,7 @@ export default function DfpPixel (props) {
   return (
     <div
         data-ad-unit="campaign-pixel"
-        data-targeting={ targeting }>
+        data-targeting={ JSON.stringify(targeting) }>
     </div>
   );
 }

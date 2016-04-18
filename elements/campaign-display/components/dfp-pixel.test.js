@@ -26,7 +26,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       shallowRenderer.render(<DfpPixel campaignId={1} placement={ placement } />);
 
       let html = shallowRenderer.getRenderOutput();
-      expect(html.props['data-targeting'].dfp_placement).to.equal(placement);
+      expect(JSON.parse(html.props['data-targeting']).dfp_placement).to.equal(placement);
     });
 
     it('should require ad unit placement', function () {
@@ -45,7 +45,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       shallowRenderer.render(<DfpPixel campaignId={ id } placement='junk' />);
 
       let html = shallowRenderer.getRenderOutput();
-      expect(html.props['data-targeting'].dfp_campaign_id).to.equal(id);
+      expect(JSON.parse(html.props['data-targeting']).dfp_campaign_id).to.equal(id);
     });
 
     it('should require campaign id', function () {
