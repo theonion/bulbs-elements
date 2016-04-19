@@ -1,18 +1,66 @@
-import { createRenderer } from 'react-addons-test-utils';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import DfpPixel from './dfp-pixel';
 
 describe('<campaign-display> <DfpPixel>', () => {
 
-  let shallowRenderer = createRenderer();
+  let reactContainer;
+  let renderSubject;
+
+  beforeEach(() => {
+    reactContainer = document.createElement('react-container');
+    document.body.appendChild(reactContainer);
+
+    renderSubject = function () {
+      return ReactDOM.render(
+        <DfpPixel
+            placement='junk'
+            campaignId={1} />,
+        reactContainer
+      );
+    };
+  });
+
+  afterEach(() => {
+    reactContainer.remove();
+  });
 
   context('on render', () => {
 
-    it('should call a callback', () => {
+    it('should call AdsManager.reloadAds', () => {
+      let reloadAds = chai.spy();
+      window.BULBS_ELEMENTS_ADS_MANAGER = { reloadAds };
 
-      // TODO : add test code here
-      throw new Error('Not implemented yet.');
+      let subject = renderSubject();
+
+      delete window.BULBS_ELEMENTS_ADS_MANAGER;
+
+      expect(reloadAds).to.have.been.called.with(subject.refs.container);
+    });
+
+    it('should error out if AdsManager is not available', function () {
+      chai.spy.on(console, 'warn');
+
+      renderSubject();
+
+      expect(console.warn).to.have.been.called.with(
+        '<campaign-display> pixel will not trigger since ' +
+        '`window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an ' +
+        'AdsManager instance.'
+      );
+    });
+
+    it('should error out of AdsManager.reloadAds is not available', function () {
+      window.BULBS_ELEMENTS_ADS_MANAGER = {};
+
+      renderSubject();
+
+      expect(console.warn).to.have.been.called.with(
+        '<campaign-display> pixel will not trigger since ' +
+        '`window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an ' +
+        'AdsManager instance.'
+      );
     });
   });
 
