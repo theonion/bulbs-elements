@@ -31,6 +31,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = shallowRenderer.getRenderOutput();
     });
 
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
+
     it('renders the logo and name, each wrapped in a link to the clickthrough_url', () => {
       let logo = subject.props.children[0];
       let preamble = subject.props.children[1];
@@ -40,6 +44,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(logo.type).to.be.equal(Logo);
       expect(preamble.type).to.be.equal(Preamble);
       expect(sponsorName.type).to.be.equal(SponsorName);
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
     });
   });
 
@@ -63,6 +71,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.children[0].type).to.equal(Preamble);
       expect(subject.props.children[1].type).to.equal(Logo);
     });
+
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
+    });
   });
 
   context('with name-only set to true', () => {
@@ -78,6 +94,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       };
       shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
       subject = shallowRenderer.getRenderOutput();
+    });
+
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
     });
 
     it('only renders the preamble and the name', () => {
