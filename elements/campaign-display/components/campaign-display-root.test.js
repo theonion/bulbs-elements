@@ -36,13 +36,20 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = shallowRenderer.getRenderOutput();
     });
 
-    it('renders the pixel, logo, and name, each wrapped in a link to the clickthrough_url', () => {
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
 
+    it('renders the pixel, logo, and name, each wrapped in a link to the clickthrough_url', () => {
       expect(subject.props.children.length).to.equal(4);
       expect(subject.props.children[0].type).to.be.equal(DfpPixel);
       expect(subject.props.children[1].type).to.be.equal(Logo);
       expect(subject.props.children[2].type).to.be.equal(Preamble);
       expect(subject.props.children[3].type).to.be.equal(SponsorName);
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
     });
   });
 
@@ -69,6 +76,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.children[1].type).to.equal(Preamble);
       expect(subject.props.children[2].type).to.equal(Logo);
     });
+
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
+    });
   });
 
   context('with name-only set to true', () => {
@@ -86,6 +101,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       };
       shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
       subject = shallowRenderer.getRenderOutput();
+    });
+
+    it('has a campaign-display class', () => {
+      expect(subject.props.className).to.equal('campaign-display');
+    });
+
+    it('has a data-label with the clickthrough_url', () => {
+      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
     });
 
     it('only renders the pixel, preamble, and name', () => {
