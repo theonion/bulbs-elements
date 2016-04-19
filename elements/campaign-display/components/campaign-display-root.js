@@ -10,7 +10,7 @@ class CampaignDisplayRoot extends Component {
 
   renderDefaultComponent() {
     return (
-      <div className='campaign-display'>
+      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
         <Logo {...this.props.campaign} />
         <Preamble text={this.props.preambleText}/>
         <SponsorName {...this.props.campaign} />
@@ -19,7 +19,7 @@ class CampaignDisplayRoot extends Component {
 
   renderLogoComponent() {
     return (
-      <div className='campaign-display'>
+      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
         <Preamble text={this.props.preambleText}/>
         <Logo {...this.props.campaign} />
       </div>);
@@ -27,7 +27,7 @@ class CampaignDisplayRoot extends Component {
 
   renderNameComponent() {
     return (
-      <div className='campaign-display'>
+      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
         <Preamble text={this.props.preambleText}/>
         <SponsorName {...this.props.campaign} />
       </div>);
