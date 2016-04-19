@@ -7,9 +7,18 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   let shallowRenderer = createRenderer();
 
+  context('on render', () => {
+
+    it('should call a callback', () => {
+
+      // TODO : add test code here
+      throw new Error('Not implemented yet.');
+    });
+  });
+
   context('ad unit name', () => {
 
-    it('should always be "campaign-pixel"', function () {
+    it('should always be "campaign-pixel"', () => {
 
       shallowRenderer.render(<DfpPixel placement='junk' campaignId={1} />);
 
@@ -20,7 +29,7 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   context('targeting parameters', () => {
 
-    it('should include ad unit placement', function () {
+    it('should include ad unit placement', () => {
       let placement = 'top';
 
       shallowRenderer.render(<DfpPixel campaignId={1} placement={ placement } />);
@@ -29,7 +38,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       expect(JSON.parse(html.props['data-targeting']).dfp_placement).to.equal(placement);
     });
 
-    it('should require ad unit placement', function () {
+    it('should require ad unit placement', () => {
       chai.spy.on(console, 'error');
 
       shallowRenderer.render(<DfpPixel campaignId={1} />);
@@ -39,7 +48,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       );
     });
 
-    it('should include campaign id', function () {
+    it('should include campaign id', () => {
       let id = 1;
 
       shallowRenderer.render(<DfpPixel campaignId={ id } placement='junk' />);
@@ -48,7 +57,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       expect(JSON.parse(html.props['data-targeting']).dfp_campaign_id).to.equal(id);
     });
 
-    it('should require campaign id', function () {
+    it('should require campaign id', () => {
       chai.spy.on(console, 'error');
 
       shallowRenderer.render(<DfpPixel placement='junk' />);
