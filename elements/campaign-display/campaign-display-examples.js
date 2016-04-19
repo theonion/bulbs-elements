@@ -5,6 +5,7 @@ let examples = {
       render() {
         return `
           <campaign-display
+            placement="my-custom-placement"
             src="http://localhost:8080/fixtures/campaign-display/campaign.json"
             preamble-text="Presented by"
           >
@@ -17,6 +18,7 @@ let examples = {
       render() {
         return `
           <campaign-display
+            placement="my-custom-placement"
             src="http://localhost:8080/fixtures/campaign-display/campaign.json"
             preamble-text="Sponsored by"
             name-only
@@ -30,6 +32,7 @@ let examples = {
       render() {
         return `
           <campaign-display
+            placement="my-custom-placement"
             src="http://localhost:8080/fixtures/campaign-display/campaign.json"
             preamble-text="Sponsored by"
             image-only
