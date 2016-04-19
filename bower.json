@@ -15,5 +15,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bulbs-public-analytics-manager": "theonion/bulbs-public-analytics-manager#0.1.3"
+  }
 }

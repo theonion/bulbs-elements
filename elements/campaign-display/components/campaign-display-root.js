@@ -11,7 +11,7 @@ class CampaignDisplayRoot extends Component {
 
   renderDefaultComponent() {
     return (
-      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Logo {...this.props.campaign} />
         <Preamble text={this.props.preambleText}/>
@@ -21,7 +21,7 @@ class CampaignDisplayRoot extends Component {
 
   renderLogoComponent() {
     return (
-      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Preamble text={this.props.preambleText}/>
         <Logo {...this.props.campaign} />
@@ -30,7 +30,7 @@ class CampaignDisplayRoot extends Component {
 
   renderNameComponent() {
     return (
-      <div className='campaign-display' data-label={this.props.campaign.clickthrough_url}>
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Preamble text={this.props.preambleText}/>
         <SponsorName {...this.props.campaign} />
