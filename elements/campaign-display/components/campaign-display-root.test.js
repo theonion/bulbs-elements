@@ -48,8 +48,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.children[3].type).to.be.equal(SponsorName);
     });
 
-    it('has a data-label with the clickthrough_url', () => {
-      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
+    it('has a data-track-label with the clickthrough_url', () => {
+      expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
   });
 
@@ -81,8 +81,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.className).to.equal('campaign-display');
     });
 
-    it('has a data-label with the clickthrough_url', () => {
-      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
+    it('has a data-track-label with the clickthrough_url', () => {
+      expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
   });
 
@@ -107,8 +107,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.className).to.equal('campaign-display');
     });
 
-    it('has a data-label with the clickthrough_url', () => {
-      expect(subject.props['data-label']).to.equal(props.campaign.clickthrough_url);
+    it('has a data-track-label with the clickthrough_url', () => {
+      expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
 
     it('only renders the pixel, preamble, and name', () => {
