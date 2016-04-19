@@ -9,7 +9,7 @@ export default class Logo extends Component {
   componentDidMount () {
     // check if window.picturefill is available at mount time, otherwise wait
     //  until the document is loaded, and hopefully image.js is loaded, and try
-    //    window.picturefill again
+    //  window.picturefill again
     if (typeof window.picturefill === 'function') {
       doPicturefill(this);
     }
