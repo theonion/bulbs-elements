@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
+import DfpPixel from './dfp-pixel';
 
 class CampaignDisplayRoot extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class CampaignDisplayRoot extends Component {
   renderDefaultComponent() {
     return (
       <div className='campaign-display'>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Logo {...this.props.campaign} />
         <Preamble text={this.props.preambleText}/>
         <SponsorName {...this.props.campaign} />
@@ -20,6 +22,7 @@ class CampaignDisplayRoot extends Component {
   renderLogoComponent() {
     return (
       <div className='campaign-display'>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Preamble text={this.props.preambleText}/>
         <Logo {...this.props.campaign} />
       </div>);
@@ -28,6 +31,7 @@ class CampaignDisplayRoot extends Component {
   renderNameComponent() {
     return (
       <div className='campaign-display'>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
         <Preamble text={this.props.preambleText}/>
         <SponsorName {...this.props.campaign} />
       </div>);
@@ -55,6 +59,7 @@ CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.object,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
+  placement: PropTypes.string,
   preambleText: PropTypes.string,
 };
 
