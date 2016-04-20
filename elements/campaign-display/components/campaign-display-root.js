@@ -9,13 +9,37 @@ class CampaignDisplayRoot extends Component {
     super(props);
   }
 
+  hasImageId() {
+    return !!this.props.campaign.image_id;
+  }
+
+  hasSponsorName() {
+    return !!this.props.campaign.name;
+  }
+
+  hasPreambleText() {
+    return !!this.props.preambleText;
+  }
+
+  logoComponent() {
+    return this.hasImageId() ? <Logo {...this.props.campaign} /> : '';
+  }
+
+  sponsorNameComponent() {
+    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+  }
+
+  preambleTextComponent() {
+    return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
+  }
+
   renderDefaultComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
-        <Logo {...this.props.campaign} />
-        <Preamble text={this.props.preambleText}/>
-        <SponsorName {...this.props.campaign} />
+        {this.logoComponent()}
+        {this.preambleTextComponent()}
+        {this.sponsorNameComponent()}
       </div>);
   }
 
@@ -23,8 +47,8 @@ class CampaignDisplayRoot extends Component {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
-        <Preamble text={this.props.preambleText}/>
-        <Logo {...this.props.campaign} />
+        {this.preambleTextComponent()}
+        {this.logoComponent()}
       </div>);
   }
 
@@ -32,8 +56,8 @@ class CampaignDisplayRoot extends Component {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
-        <Preamble text={this.props.preambleText}/>
-        <SponsorName {...this.props.campaign} />
+        {this.preambleTextComponent()}
+        {this.sponsorNameComponent()}
       </div>);
   }
 
