@@ -8,8 +8,8 @@ export default class Logo extends Component {
 
   componentDidMount () {
     // check if window.picturefill is available at mount time, otherwise wait
-    //  until the document is loaded, and hopefully image.js is loaded, and try
-    //  window.picturefill again
+    // until the document is loaded, and hopefully image.js is loaded, and try
+    // window.picturefill again
     if (typeof window.picturefill === 'function') {
       doPicturefill(this);
     }
@@ -37,7 +37,7 @@ export default class Logo extends Component {
 }
 
 Logo.propTypes = {
-  clickthrough_url: PropTypes.string.isRequired,
+  clickthrough_url: PropTypes.string,
   crop: PropTypes.string,
   image_id: PropTypes.number.isRequired,
 };

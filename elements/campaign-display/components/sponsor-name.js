@@ -11,6 +11,6 @@ export default class SponsorName extends Component {
 }
 
 SponsorName.propTypes = {
-  clickthrough_url: PropTypes.string.isRequired,
+  clickthrough_url: PropTypes.string,
   name: PropTypes.string.isRequired,
 };

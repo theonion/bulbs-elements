@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import DfpPixel from './dfp-pixel';
+
+function restoreConsole(oldConsole) {
+  window.console = oldConsole;
+}
 
 describe('<campaign-display> <DfpPixel>', () => {
 
   let reactContainer;
   let renderSubject;
-
+  let oldConsole;
   beforeEach(() => {
+    oldConsole = window.console;
+    window.console = {
+      warn: chai.spy(),
+      log: chai.spy(),
+    };
     reactContainer = document.createElement('react-container');
     document.body.appendChild(reactContainer);
 
@@ -24,6 +32,7 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   afterEach(() => {
     reactContainer.remove();
+    restoreConsole(oldConsole);
   });
 
   context('on render', () => {
@@ -41,7 +50,6 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should error out if AdsManager is not available', function () {
       chai.spy.on(console, 'warn');
-
       renderSubject();
 
       expect(console.warn).to.have.been.called.with(
@@ -65,11 +73,8 @@ describe('<campaign-display> <DfpPixel>', () => {
   });
 
   context('ad unit name', () => {
-
     it('should always be "campaign-pixel"', () => {
-
       let subject = renderSubject();
-
       expect(subject.refs.container.dataset.adUnit).to.equal('campaign-pixel');
     });
   });
@@ -78,17 +83,14 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should include ad unit placement', () => {
       let placement = 'top';
-
       let subject = renderSubject({ placement });
-
       let targeting = JSON.parse(subject.refs.container.dataset.targeting);
       expect(targeting.dfp_placement).to.equal(placement);
     });
 
     it('should require ad unit placement', () => {
       chai.spy.on(console, 'error');
-
-      renderSubject({ placement: window.undefined });
+      let subject = renderSubject({ placement: window.undefined });
 
       expect(console.error).to.have.been.called.with(
         'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'
@@ -97,18 +99,14 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should include campaign id', () => {
       let id = 1;
-
       let subject = renderSubject({ campaignId: id });
-
       let targeting = JSON.parse(subject.refs.container.dataset.targeting);
       expect(targeting.dfp_campaign_id).to.equal(id);
     });
 
     it('should require campaign id', () => {
       chai.spy.on(console, 'error');
-
       renderSubject({ campaignId: window.undefined });
-
       expect(console.error).to.have.been.called.with(
         'Warning: Failed propType: Required prop `campaignId` was not specified in `DfpPixel`.'
       );
