@@ -23,6 +23,7 @@ describe('<campaign-display> <Logo>', () => {
       props = {
         name: 'Test Campaign',
         image_id: 1,
+        clickthrough_url: clickthroughUrl
       };
       window.picturefill = chai.spy(() => {});
 
@@ -51,7 +52,6 @@ describe('<campaign-display> <Logo>', () => {
 
     it('should render the image container with a child div', function () {
       // NOTE : this is required for compatibility with our image.js code :(
-
       expect(subject.refs.image.children[0].tagName).to.equal('DIV');
     });
 
