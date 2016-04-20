@@ -33,15 +33,28 @@ class CampaignDisplayRoot extends Component {
       </div>);
   }
 
+  renderEmptyComponent() {
+    return <span/>;
+  }
+
+  hasCampaignData() {
+    return !!(this.props.campaign && !this.props.campaign.detail);
+  }
+
   render() {
-    if (this.props.logoOnly) {
-      return this.renderLogoComponent();
-    }
-    else if (this.props.nameOnly) {
-      return this.renderNameComponent();
+    if (this.hasCampaignData()) {
+      if (this.props.logoOnly) {
+        return this.renderLogoComponent();
+      }
+      else if (this.props.nameOnly) {
+        return this.renderNameComponent();
+      }
+      else {
+        return this.renderDefaultComponent();
+      }
     }
     else {
-      return this.renderDefaultComponent();
+      return this.renderEmptyComponent();
     }
   }
 }
