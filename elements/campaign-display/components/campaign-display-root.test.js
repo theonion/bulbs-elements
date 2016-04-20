@@ -30,6 +30,96 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     };
   });
 
+  describe('hasImageId', function() {
+    it('returns true when the campaign has an image_id', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasImageId()).to.equal(true);
+    });
+
+    it('returns false when the campaign has no image_id', () => {
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasImageId()).to.equal(false);
+    });
+  });
+
+  describe('hasSponsorName', function() {
+    it('returns true when the campaign has a sponsor name', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorName()).to.equal(true);
+    });
+
+    it('returns false when the campaign has no sponsor name', () => {
+      delete props.campaign.name;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorName()).to.equal(false);
+    });
+  });
+
+  describe('hasPreambleText', function() {
+    it('returns true when there is preamble text', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasPreambleText()).to.equal(true);
+    });
+
+    it('returns false when there is no preamble text', () => {
+      delete props.preambleText;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasPreambleText()).to.equal(false);
+    });
+  });
+
+  describe('logoComponent', function() {
+    context('when the campaign has an image_id', () => {
+      it('returns a Logo component', () => {
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.logoComponent().type).to.equal(Logo);
+      });
+    });
+
+    context('when the campaign has no image_id', () => {
+      it('returns an empty string', () => {
+        delete props.campaign.image_id;
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.logoComponent()).to.equal('');
+      });
+    });
+  });
+
+  describe('sponsorNameComponent', function() {
+    context('when the campaign has a name', () => {
+      it('returns a SponsorName component', () => {
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.sponsorNameComponent().type).to.equal(SponsorName);
+      });
+    });
+
+    context('when the campaign has no name', () => {
+      it('returns an empty string', () => {
+        delete props.campaign.name;
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.sponsorNameComponent()).to.equal('');
+      });
+    });
+  });
+
+  describe('preambleTextComponent', function() {
+    context('when there is preamble text', () => {
+      it('returns a Preamble component', () => {
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.preambleTextComponent().type).to.equal(Preamble);
+      });
+    });
+
+    context('when there is no preamble text', () => {
+      it('returns an empty string', () => {
+        delete props.preambleText;
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.preambleTextComponent()).to.equal('');
+      });
+    });
+  });
+
   describe('hasCampaignData', function() {
     it('returns false when there is no campaign data', () => {
       delete props.campaign;
@@ -70,6 +160,45 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     it('has a data-track-label with the clickthrough_url', () => {
       expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
+
+    context('with missing image_id', () => {
+      beforeEach(() => {
+        delete props.campaign.image_id;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the logo', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(Logo);
+      });
+    });
+
+    context('with missing name', () => {
+      beforeEach(() => {
+        delete props.campaign.name;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the sponsor name', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(SponsorName);
+      });
+    });
+
+    context('with missing preamble', () => {
+      beforeEach(() => {
+        delete props.preambleText;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the preamble', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(Preamble);
+      });
+    });
   });
 
   context('with logo-only set to true', () => {
@@ -103,6 +232,32 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     it('has a data-track-label with the clickthrough_url', () => {
       expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
+
+    context('with missing image_id', () => {
+      beforeEach(() => {
+        delete props.campaign.image_id;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the logo', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(Logo);
+      });
+    });
+
+    context('with missing preamble', () => {
+      beforeEach(() => {
+        delete props.preambleText;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the preamble', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(Preamble);
+      });
+    });
   });
 
   context('with name-only set to true', () => {
@@ -135,6 +290,32 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.children[0].type).to.equal(DfpPixel);
       expect(subject.props.children[1].type).to.equal(Preamble);
       expect(subject.props.children[2].type).to.equal(Logo);
+    });
+
+    context('with missing name', () => {
+      beforeEach(() => {
+        delete props.campaign.name;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the sponsor name', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(SponsorName);
+      });
+    });
+
+    context('with missing preamble', () => {
+      beforeEach(() => {
+        delete props.preambleText;
+        shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+        subject = shallowRenderer.getRenderOutput();
+      });
+
+      it('does not render the preamble', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.not.contain(Preamble);
+      });
     });
   });
 

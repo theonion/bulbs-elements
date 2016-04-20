@@ -26,7 +26,6 @@ describe('<campaign-display>', () => {
     fetchMock.mock(src, props);
     shallowRenderer = createRenderer();
     shallowRenderer.render(<CampaignDisplay src={src} placement={placement} />);
-    subject = new CampaignDisplay(props);
   });
 
   it('should require a src', () => {
@@ -43,6 +42,7 @@ describe('<campaign-display>', () => {
 
   describe('initialDispatch', () => {
     it('fetches campaign data for display', () => {
+      subject = new CampaignDisplay(props);
       let spy = chai.spy.on(subject.store.actions, 'fetchCampaign');
       subject.initialDispatch();
       expect(spy).to.have.been.called.with(src);
