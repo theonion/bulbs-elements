@@ -30,6 +30,25 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     };
   });
 
+  describe('hasCampaignData', function() {
+    it('returns false when there is no campaign data', () => {
+      delete props.campaign;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasCampaignData()).to.equal(false);
+    });
+
+    it('returns true when there is campaign data', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasCampaignData()).to.equal(true);
+    });
+
+    it('returns false when the campaign is not found', () => {
+      props.campaign = { detail: 'Not found.' };
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasCampaignData()).to.equal(false);
+    });
+  });
+
   context('with a clickthrough url, image and name', () => {
     beforeEach(() => {
       shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
@@ -116,6 +135,23 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props.children[0].type).to.equal(DfpPixel);
       expect(subject.props.children[1].type).to.equal(Preamble);
       expect(subject.props.children[2].type).to.equal(Logo);
+    });
+  });
+
+  context('with missing data', () => {
+    beforeEach(() => {
+      props = {
+        campaign: { detail: 'Not found.' },
+        logoOnly: true,
+        preambleText,
+      };
+      shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
+      subject = shallowRenderer.getRenderOutput();
+    });
+
+    it('renders an empty span', () => {
+      expect(subject.props.children).to.be.undefined;
+      expect(subject.type).to.equal('span');
     });
   });
 });
