@@ -15,5 +15,13 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.3",
+    "video.js": "4.12.15"
+  },
+  "dependencies": {
+    "videohub-player": "theonion/videohub-player#^0.1.0-rc2",
+    "jquery": "^2.2.3"
+  }
 }

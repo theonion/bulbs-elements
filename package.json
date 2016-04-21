@@ -94,5 +94,8 @@
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
     "yo": "^1.6.0"
+  },
+  "dependencies": {
+    "videohub-player": "github:theonion/videohub-player#0.1.0-rc2"
   }
 }

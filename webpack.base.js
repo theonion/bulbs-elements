@@ -106,6 +106,7 @@ exports.config = {
   ],
   resolve: {
     modulesDirectories: [
+      'bower_components',
       'node_modules',
       'lib',
     ],

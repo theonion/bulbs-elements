@@ -1,8 +1,20 @@
-import React, { PropTypes } from 'react';
+/* global jQuery, videojs, VideoPlayer */
 
+import React, { PropTypes } from 'react';
+import invariant from 'invariant';
+import VideoPlayer from 'videohub-player';
+
+window.AnalyticsManager = {
+  sendEvent() {
+    // no-op
+  },
+};
+
+window.ga = () => {}
 export default class Revealed extends React.Component {
   componentDidMount () {
-    this.refs.video.play();
+    invariant(jQuery, '<bulbs-video> requires jQuery to be in global scope.');
+    let player = new VideoPlayer(this.refs.video);
   }
 
   render () {
@@ -11,7 +23,7 @@ export default class Revealed extends React.Component {
       <div className='bulbs-video-viewport'>
         <video
           controls
-          ref="video"
+          ref='video'
           className='bulbs-video-video'
         >
           {
@@ -31,5 +43,5 @@ export default class Revealed extends React.Component {
 }
 
 Revealed.propTypes = {
-
+  data: PropTypes.object.isRequired,
 };
