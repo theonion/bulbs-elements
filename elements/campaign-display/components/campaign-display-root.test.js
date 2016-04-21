@@ -69,6 +69,27 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
+  describe('hasContent', function() {
+    it('returns true when there is a campaign name', () => {
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasContent()).to.equal(true);
+    });
+
+    it('returns true when there is a campaign image_id', () => {
+      delete props.campaign.name;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasContent()).to.equal(true);
+    });
+
+    it('returns false when there is no image_id or campaign name', () => {
+      delete props.campaign.name;
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasContent()).to.equal(false);
+    });
+  });
+
   describe('logoComponent', function() {
     context('when the campaign has an image_id', () => {
       it('returns a Logo component', () => {
@@ -114,6 +135,15 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     context('when there is no preamble text', () => {
       it('returns an empty string', () => {
         delete props.preambleText;
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.preambleTextComponent()).to.equal('');
+      });
+    });
+
+    context('when there is no campaign name or image_id', () => {
+      it('returns an empty string', () => {
+        delete props.campaign.name;
+        delete props.campaign.image_id;
         subject = new CampaignDisplayRoot(props);
         expect(subject.preambleTextComponent()).to.equal('');
       });

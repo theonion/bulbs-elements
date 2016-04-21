@@ -21,6 +21,10 @@ class CampaignDisplayRoot extends Component {
     return !!this.props.preambleText;
   }
 
+  hasContent() {
+    return !!(this.props.campaign.name || this.props.campaign.image_id);
+  }
+
   logoComponent() {
     return this.hasImageId() ? <Logo {...this.props.campaign} /> : '';
   }
@@ -30,7 +34,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   preambleTextComponent() {
-    return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
+    return this.hasPreambleText() && this.hasContent() ? <Preamble text={this.props.preambleText}/> : '';
   }
 
   renderDefaultComponent() {
