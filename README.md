@@ -63,6 +63,18 @@ Prepare your development environment:
 $ ./scripts/dev-setup
 ```
 
+## Common Components
+
+Some components can be used in more than one element.
+Those components live at `lib/bulbs-elements/components`
+
+### `<CroppedImage>`
+
+*props*
+
+`crop`: <String> original (default), `16x9`, `3x1`, `1x1` 
+`imageId`: <Number> (required) betty-cropper image id.
+
 ### Generators
 
 Bulbs Elements comes with code generators to help you develop components.
