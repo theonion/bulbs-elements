@@ -8,3 +8,4 @@ benchmark/
 dist/
 bower_components/
 *.swp
+*.swo

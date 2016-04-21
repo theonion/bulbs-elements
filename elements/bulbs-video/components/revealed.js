@@ -20,7 +20,7 @@ export default class Revealed extends React.Component {
   render () {
     let { data } = this.props;
     return (
-      <div className='bulbs-video-viewport'>
+      <div className='bulbs-video-viewport video-js vjs-default-skin'>
         <video
           controls
           ref='video'
@@ -30,6 +30,7 @@ export default class Revealed extends React.Component {
             data.sources.data.map((source) => {
               return (
                 <source
+                  key={source.url}
                   src={source.url}
                   type={source.content_type}
                 />

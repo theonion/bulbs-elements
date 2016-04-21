@@ -9,6 +9,7 @@ import VideoSchema from './bulbs-video-schema';
 import BulbsVideoRoot from './components/root';
 
 import './bulbs-video.scss';
+import 'videojs/dist/video-js/video-js.css';
 
 const ONION_STUDIOS_URL = process.env.ONION_STUDIOS_URL;
 

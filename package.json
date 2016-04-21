@@ -96,6 +96,7 @@
     "yo": "^1.6.0"
   },
   "dependencies": {
+    "file-loader": "^0.8.5",
     "videohub-player": "github:theonion/videohub-player#0.1.0-rc2"
   }
 }

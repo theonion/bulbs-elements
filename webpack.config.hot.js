@@ -24,6 +24,8 @@ config.module.loaders = [
   loaders.yaml,
   loaders.json,
   loaders.sass,
+  loaders.css,
+  loaders.files,
 ];
 
 module.exports = config;

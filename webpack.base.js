@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // eslint-disable-line
 
 let webpack = require('webpack');
 let path = require('path');
@@ -16,12 +16,14 @@ let elementDirs = glob.sync(path.join(elementsDir, '/*/'));
 let libDir = path.join(__dirname, '/lib');
 let examplesDir = path.join(__dirname, '/examples');
 let testDir = path.join(__dirname, '/test');
+let bowerDir = path.join(__dirname, '/bower_components');
 
 let includeDirs = [
   elementsDir,
   libDir,
   examplesDir,
   testDir,
+  bowerDir,
 ];
 
 let entries = {};
@@ -37,13 +39,13 @@ glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
   entries['dist/' + elementName + '.bulbs-cms'] = cmsFile;
 });
 
-let sassExtractor = new ExtractTextPlugin('[name].css');
+let styleExtractor = new ExtractTextPlugin('[name].css');
 
 exports.plugins = {
   chunker: new webpack.optimize.CommonsChunkPlugin({
     name: 'dist/vendor.bundle',
   }),
-  sassExtractor: sassExtractor,
+  styleExtractor: styleExtractor, // eslint-disable-line
   uglify: new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false,
@@ -80,17 +82,38 @@ exports.loaders = {
     ],
     include: includeDirs,
   },
-  sassExtractor: {
+  css: {
+    test: /\.css$/,
+    loaders: [
+      'style',
+      'css',
+    ],
+    include: includeDirs,
+  },
+  styleExtractor: {
     test: /\.scss$/,
-    loader: sassExtractor.extract(
+    loader: styleExtractor.extract(
       'style-loader',
       'css-loader!postcss-loader!sass-loader'
+    ),
+    include: includeDirs,
+  },
+  cssExtractor: {
+    test: /\.css$/,
+    loader: styleExtractor.extract(
+      'style-loader',
+      'css-loader'
     ),
     include: includeDirs,
   },
   eslint: {
     test: /\.js$/,
     loader: 'eslint-loader',
+    include: includeDirs,
+  },
+  files: {
+    test: /\.(ttf|eot|svg|woff)$/,
+    loader: 'file',
     include: includeDirs,
   },
 };
