@@ -72,8 +72,8 @@ Those components live at `lib/bulbs-elements/components`
 
 *props*
 
-* `crop`: <String> original (default), `16x9`, `3x1`, `1x1` 
-* `imageId`: <Number> (required) betty-cropper image id.
+* `crop`: `<String>` one of: `original` (default), `16x9`, `3x1`, `1x1` 
+* `imageId`: `<Number>` (required) The betty-cropper image id.
 
 ### Generators
 
