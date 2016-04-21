@@ -152,9 +152,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     it('renders the pixel, logo, and name, each wrapped in a link to the clickthrough_url', () => {
       expect(subject.props.children.length).to.equal(4);
       expect(subject.props.children[0].type).to.be.equal(DfpPixel);
-      expect(subject.props.children[1].type).to.be.equal(Logo);
-      expect(subject.props.children[2].type).to.be.equal(Preamble);
-      expect(subject.props.children[3].type).to.be.equal(SponsorName);
+      expect(subject.props.children[1].type).to.be.equal(Preamble);
+      expect(subject.props.children[2].type).to.be.equal(SponsorName);
+      expect(subject.props.children[3].type).to.be.equal(Logo);
     });
 
     it('has a data-track-label with the clickthrough_url', () => {

@@ -37,9 +37,9 @@ class CampaignDisplayRoot extends Component {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
-        {this.logoComponent()}
         {this.preambleTextComponent()}
         {this.sponsorNameComponent()}
+        {this.logoComponent()}
       </div>);
   }
 
