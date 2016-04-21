@@ -2,46 +2,91 @@ import React, { PropTypes, Component } from 'react';
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
+import DfpPixel from './dfp-pixel';
 
 class CampaignDisplayRoot extends Component {
   constructor(props) {
     super(props);
   }
 
+  hasImageId() {
+    return !!this.props.campaign.image_id;
+  }
+
+  hasSponsorName() {
+    return !!this.props.campaign.name;
+  }
+
+  hasPreambleText() {
+    return !!this.props.preambleText;
+  }
+
+  hasContent() {
+    return !!(this.props.campaign.name || this.props.campaign.image_id);
+  }
+
+  logoComponent() {
+    return this.hasImageId() ? <Logo {...this.props.campaign} /> : '';
+  }
+
+  sponsorNameComponent() {
+    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+  }
+
+  preambleTextComponent() {
+    return this.hasPreambleText() && this.hasContent() ? <Preamble text={this.props.preambleText}/> : '';
+  }
+
   renderDefaultComponent() {
     return (
-      <div className='campaign-display'>
-        <Logo {...this.props.campaign} />
-        <Preamble text={this.props.preambleText}/>
-        <SponsorName {...this.props.campaign} />
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.logoComponent()}
+        {this.preambleTextComponent()}
+        {this.sponsorNameComponent()}
       </div>);
   }
 
   renderLogoComponent() {
     return (
-      <div className='campaign-display'>
-        <Preamble text={this.props.preambleText}/>
-        <Logo {...this.props.campaign} />
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.preambleTextComponent()}
+        {this.logoComponent()}
       </div>);
   }
 
   renderNameComponent() {
     return (
-      <div className='campaign-display'>
-        <Preamble text={this.props.preambleText}/>
-        <SponsorName {...this.props.campaign} />
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.preambleTextComponent()}
+        {this.sponsorNameComponent()}
       </div>);
   }
 
+  renderEmptyComponent() {
+    return <span/>;
+  }
+
+  hasCampaignData() {
+    return !!(this.props.campaign && !this.props.campaign.detail);
+  }
+
   render() {
-    if (this.props.logoOnly) {
-      return this.renderLogoComponent();
-    }
-    else if (this.props.nameOnly) {
-      return this.renderNameComponent();
+    if (this.hasCampaignData()) {
+      if (this.props.logoOnly) {
+        return this.renderLogoComponent();
+      }
+      else if (this.props.nameOnly) {
+        return this.renderNameComponent();
+      }
+      else {
+        return this.renderDefaultComponent();
+      }
     }
     else {
-      return this.renderDefaultComponent();
+      return this.renderEmptyComponent();
     }
   }
 }
@@ -55,6 +100,7 @@ CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.object,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
+  placement: PropTypes.string,
   preambleText: PropTypes.string,
 };
 

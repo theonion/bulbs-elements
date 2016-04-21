@@ -1,12 +1,16 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 
-export default function SponsorName (props) {
-  let hasUrl = !!props.clickthrough_url;
-  let name = <span className='campaign-display-name'>{props.name}</span>;
-  let link = <a href={props.clickthrough_url}>{name}</a>;
-  return hasUrl ? link : name;
+export default class SponsorName extends Component {
+
+  render () {
+    let hasUrl = !!this.props.clickthrough_url;
+    let name = <span ref='name'>{this.props.name}</span>;
+    let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{name}</a>;
+    return <span className='campaign-display-sponsor-name'>{hasUrl ? link : name}</span>;
+  }
 }
 
 SponsorName.propTypes = {
+  clickthrough_url: PropTypes.string,
   name: PropTypes.string.isRequired,
 };

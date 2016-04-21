@@ -44,24 +44,29 @@ css before the main sitestyles, you'll lose the reset.
 
 Per element custom styling should be included after the bulbs-element styles.
 
-## Releasing
+### Creating a new release
 
-Bump the version in `package.json`.
+To create a new release: stop any running build scripts and ensure you're on the ```master``` branch, then:
+```bash
+$ ./scripts/tag-and-release <versioning-type>
+```
+where ```versioning-type``` is one of ```major```, ```minor```, or ```patch```.
+See [semver](http://semver.org/) for an explanation of what each of these types
+of versionings mean.
 
-Run `scripts/tag-and-release`.
+This will build, version up, and push the dist to a tag identified by the new version.
 
-Make sure you are not running any build scripts while cutting a release. (such as `scripts/develop-and-test`)
+#### Create a 'temp' release
 
-`tag-and-release` will:
+To create a tag not associated with any particular version run:
+```bash
+$ ./scripts/tag-and-release temp
+```
 
-1. checkout your current commit as a detached head
-1. stash your local `dist/` folder
-1. run a production build
-1. commit the `dist/` directory
-1. tag the commit with the version from `package.json`
-1. push the tag to github
-1. checkout the branch you were working on originally
-1. restory your local `dist/` folder
+This will build and push the dist to a tag identified by `temp-<last commit hash>-<current branch name>`.
+
+Use this in situations where you need to point someone else to a distribution
+for some analysis or testing.
 
 ## Development
 Prepare your development environment:
@@ -89,5 +94,15 @@ Bulbs Elements comes with code generators to help you develop components.
 ### Making HTTP Requests
 
 ### Testing
+
+To do a single test run:
+```bash
+$ npm test
+```
+
+To start continuous testing:
+```bash
+$ npm run karma
+```
 
 ### Examples

@@ -13,6 +13,7 @@ import CampaignDisplayRoot from './components/campaign-display-root';
 class CampaignDisplay extends BulbsElement {
   constructor (props) {
     invariant(!!props.src, 'campaign-display component requires a src');
+    invariant(!!props.placement, 'campaign-display component requires a placement');
     super(props);
   }
 
@@ -21,11 +22,16 @@ class CampaignDisplay extends BulbsElement {
   }
 
   render () {
-    let options = Object.assign({}, this.state, this.props, {
-      nameOnly: this.props.nameOnly === '',
-      imageOnly: this.props.imageOnly === '',
-    });
-    return (<CampaignDisplayRoot {...options} />);
+    if (this.state.campaignRequest.networkError) {
+      return <span/>;
+    }
+    else {
+      let options = Object.assign({}, this.state, this.props, {
+        nameOnly: this.props.nameOnly === '',
+        imageOnly: this.props.imageOnly === '',
+      });
+      return (<CampaignDisplayRoot {...options} />);
+    }
   }
 }
 
@@ -38,6 +44,7 @@ Object.assign(CampaignDisplay, {
   propTypes: {
     logoOnly: PropTypes.string,
     nameOnly: PropTypes.string,
+    placement: PropTypes.string.isRequired,
     preambleText: PropTypes.string,
     src: PropTypes.string.isRequired,
   },
