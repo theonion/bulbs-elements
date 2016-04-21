@@ -56,6 +56,18 @@ of versionings mean.
 
 This will build, version up, and push the dist to a tag identified by the new version.
 
+#### Create a 'temp' release
+
+To create a tag not associated with any particular version run:
+```bash
+$ ./scripts/tag-and-release temp
+```
+
+This will build and push the dist to a tag identified by `temp-<last commit hash>-<current branch name>`.
+
+Use this in situations where you need to point someone else to a distribution
+for some analysis or testing.
+
 ## Development
 Prepare your development environment:
 
