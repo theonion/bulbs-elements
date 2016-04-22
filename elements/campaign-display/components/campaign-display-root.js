@@ -26,7 +26,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   logoComponent() {
-    return this.hasImageId() ? <Logo {...this.props.campaign} /> : '';
+    return this.hasImageId() ? <Logo {...this.props.campaign} crop={this.props.logoCrop} /> : '';
   }
 
   sponsorNameComponent() {
@@ -94,12 +94,14 @@ class CampaignDisplayRoot extends Component {
 CampaignDisplayRoot.defaultProps = {
   logoOnly: false,
   nameOnly: false,
+  logoCrop: 'original',
 };
 
 CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.object,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
+  logoCrop: PropTypes.string,
   placement: PropTypes.string,
   preambleText: PropTypes.string,
 };

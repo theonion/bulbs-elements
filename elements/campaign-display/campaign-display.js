@@ -42,6 +42,7 @@ Object.assign(CampaignDisplay, {
     campaignRequest: CampaignRequest,
   },
   propTypes: {
+    logoCrop: PropTypes.string,
     logoOnly: PropTypes.string,
     nameOnly: PropTypes.string,
     placement: PropTypes.string.isRequired,
