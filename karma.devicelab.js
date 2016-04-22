@@ -1,4 +1,6 @@
-var karmaConfig = require('./karma.base.js');
+'use strict'; // eslint-disable-line
+
+const karmaConfig = require('./karma.base.js');
 
 karmaConfig.browserStack = {
   username: process.env.BROWSER_STACK_USERNAME,
@@ -94,4 +96,4 @@ module.exports = function(config) {
   // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
   config.logLevel = config.LOG_WARN;
   config.set(karmaConfig);
-}
+};

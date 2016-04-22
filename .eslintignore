@@ -1,3 +1,2 @@
-webpack*.js
-karma*.js
 scripts/*
+bower_components/*

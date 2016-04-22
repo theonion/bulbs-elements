@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import classnames from 'classnames';
 
 import Revealed from './revealed';
 import Cover from './cover';
 
 export default function Root (props) {
-  let className = classnames('bulbs-video-root', {});
+  let className = 'bulbs-video-root player';
   let { actions, data } = props;
+
   if (!(data.video && data.sources)) {
     return <div className={className} />;
   }
@@ -22,10 +22,11 @@ export default function Root (props) {
       <div className={className}>
         <Cover data={data} actions={actions} />;
       </div>
-    )
+    );
   }
 }
 
 Root.propTypes = {
-
+  actions: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };

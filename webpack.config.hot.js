@@ -1,10 +1,10 @@
-var webpack = require('webpack');
-var webpackBase = require('./webpack.base.js');
-var plugins = webpackBase.plugins;
-var loaders = webpackBase.loaders;
-var config = Object.assign({}, webpackBase.config);
+const webpack = require('webpack');
+const webpackBase = require('./webpack.base.js');
+const plugins = webpackBase.plugins;
+const loaders = webpackBase.loaders;
+const config = Object.assign({}, webpackBase.config);
 
-config.entry['examples'] = [
+config.entry.examples = [
   './examples/examples.js',
   'react-router',
 ];
@@ -14,7 +14,7 @@ config.plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('hot'),
-			'ONION_STUDIOS_URL': JSON.stringify('//videohub.local'),
+      'ONION_STUDIOS_URL': JSON.stringify('//videohub.local'),
     },
   }),
 ];

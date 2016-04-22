@@ -1,4 +1,4 @@
-/* global jQuery, videojs, VideoPlayer */
+/* global jQuery */
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
@@ -10,21 +10,21 @@ window.AnalyticsManager = {
   },
 };
 
-window.ga = () => {}
+window.ga = () => {};
 export default class Revealed extends React.Component {
   componentDidMount () {
     invariant(jQuery, '<bulbs-video> requires jQuery to be in global scope.');
-    let player = new VideoPlayer(this.refs.video);
+    new VideoPlayer(this.refs.video);
   }
 
   render () {
     let { data } = this.props;
     return (
-      <div className='bulbs-video-viewport video-js vjs-default-skin'>
+      <div className='bulbs-video-viewport'>
         <video
           controls
           ref='video'
-          className='bulbs-video-video'
+          className='bulbs-video-video video-js vjs-default-skin'
         >
           {
             data.sources.data.map((source) => {
