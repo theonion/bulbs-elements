@@ -121,6 +121,9 @@ exports.loaders = {
     test: /\.(ttf|eot|svg|woff)$/,
     loader: 'file',
     include: includeDirs,
+    query: {
+      name: 'dist/files/[name].[ext]',
+    },
   },
 };
 
