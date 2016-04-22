@@ -1,37 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRenderer } from 'react-addons-test-utils';
 import Logo from './logo';
+import Croppedimage from 'bulbs-elements/components/cropped-image';
 
 describe('<campaign-display> <Logo>', () => {
   let clickthroughUrl = 'http://example.com';
-  let reactContainer;
   let props;
   let subject;
 
-  beforeEach(() => {
-    reactContainer = document.createElement('react-container');
-    document.body.appendChild(reactContainer);
-  });
-
-  afterEach(() => {
-    reactContainer.remove();
-  });
-
-  context('picturefill', () => {
-
-    it('should be called during render', () => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-        clickthrough_url: clickthroughUrl
-      };
-      window.picturefill = chai.spy(() => {});
-
-      subject = ReactDOM.render(<Logo {...props} />, reactContainer);
-
-      expect(window.picturefill).to.have.been.called.with(subject.refs.image);
-    });
-  });
+  function shallow (element) {
+    let shallowRenderer = createRenderer();
+    shallowRenderer.render(element);
+    return shallowRenderer.getRenderOutput();
+  }
 
   context('without a clickthrough_url', () => {
     beforeEach(() => {
@@ -39,29 +20,32 @@ describe('<campaign-display> <Logo>', () => {
         name: 'Test Campaign',
         image_id: 1,
       };
-      subject = ReactDOM.render(<Logo {...props} />, reactContainer);
+      subject = shallow(<Logo {...props}/>);
     });
 
     it('should render the image container with the required attributes', () => {
-      let element = subject.refs.image;
-
-      expect(element.getAttribute('data-type')).to.equal('image');
-      expect(element.getAttribute('data-image-id')).to.equal('1');
-      expect(element.getAttribute('data-crop')).to.equal('original');
+      let croppedImage = subject.props.children;
+      expect(croppedImage.type).to.eql(Croppedimage);
+      expect(croppedImage.props).to.eql({
+        crop: undefined, // eslint-disable-line no-undefined
+        imageId: 1,
+      });
     });
+  });
 
-    it('should render the image container with a child div', function () {
-      // NOTE : this is required for compatibility with our image.js code :(
-      expect(subject.refs.image.children[0].tagName).to.equal('DIV');
+  context('with a crop', () => {
+    beforeEach(() => {
+      props = {
+        name: 'Test Campaign',
+        image_id: 1,
+        crop: 'custom-crop',
+      };
+      subject = shallow(<Logo {...props}/>);
     });
 
     it('allows the crop value to be configured', () => {
-      props.crop = 'custom-crop';
-
-      subject = ReactDOM.render(<Logo {...props} />, reactContainer);
-
-      let element = subject.refs.image;
-      expect(element.getAttribute('data-crop')).to.equal('custom-crop');
+      let croppedImage = subject.props.children;
+      expect(croppedImage.props.crop).to.eql('custom-crop');
     });
   });
 
@@ -72,14 +56,13 @@ describe('<campaign-display> <Logo>', () => {
         image_id: 1,
         clickthrough_url: clickthroughUrl,
       };
-      subject = ReactDOM.render(<Logo {...props} />, reactContainer);
+      subject = shallow(<Logo {...props}/>);
     });
 
     it('wraps the image in a link to the clickthrough_url', () => {
-
-      let element = subject.refs.linkWrapper;
-      expect(element.tagName).to.equal('A');
-      expect(element.getAttribute('href')).to.equal(props.clickthrough_url);
+      let anchor = subject.props.children;
+      expect(anchor.type).to.eql('a');
+      expect(anchor.props.href).to.equal(props.clickthrough_url);
     });
   });
 });
