@@ -13,8 +13,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   let campaign;
   let placement;
   let preambleText;
+  let logoCrop;
 
   beforeEach(() => {
+    logoCrop = '16x9';
     placement = 'top';
     preambleText = 'Presented by';
     campaign = {
@@ -91,6 +93,13 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('logoComponent', function() {
+    it('passes the logoCrop property to the logo', () => {
+      props.logoCrop = logoCrop;
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+      expect(subject.props.children[1].props.crop).to.equal(logoCrop);
+    });
+
     context('when the campaign has an image_id', () => {
       it('returns a Logo component', () => {
         subject = new CampaignDisplayRoot(props);
