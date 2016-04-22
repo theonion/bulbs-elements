@@ -34,17 +34,17 @@ let entries = {};
 elementDirs.forEach(function (dir) {
   let elementName = path.basename(dir);
   let elementEntryPoint = path.join(dir, elementName + '.js');
-  entries['dist/' + elementName] = elementEntryPoint;
+  entries[elementName] = elementEntryPoint;
 });
 
 glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
   let elementName = path.basename(path.dirname(cmsFile));
-  entries['dist/' + elementName + '.bulbs-cms'] = cmsFile;
+  entries[elementName + '.bulbs-cms'] = cmsFile;
 });
 
 exports.plugins = {
   chunker: new webpack.optimize.CommonsChunkPlugin({
-    name: 'dist/vendor.bundle',
+    name: 'vendor.bundle',
   }),
   styleExtractor: styleExtractor, // eslint-disable-line
   uglify: new webpack.optimize.UglifyJsPlugin({
@@ -122,7 +122,7 @@ exports.loaders = {
     loader: 'file',
     include: includeDirs,
     query: {
-      name: 'dist/files/[name].[ext]',
+      name: 'files/[name].[ext]',
     },
   },
 };
@@ -130,9 +130,9 @@ exports.loaders = {
 exports.config = {
   entry: entries,
   output: {
-    path: path.join(__dirname),
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/',
+    publicPath: '',
   },
   plugins: [
   ],
