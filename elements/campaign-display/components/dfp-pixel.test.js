@@ -37,6 +37,13 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   context('on render', () => {
 
+    it('should render an element with the class "dfp"', function () {
+
+      let subject = renderSubject();
+
+      expect(subject.refs.container.className).to.contain('dfp');
+    });
+
     it('should call AdsManager.reloadAds', () => {
       let reloadAds = chai.spy();
       window.BULBS_ELEMENTS_ADS_MANAGER = { reloadAds };
@@ -90,7 +97,8 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should require ad unit placement', () => {
       chai.spy.on(console, 'error');
-      let subject = renderSubject({ placement: window.undefined });
+
+      renderSubject({ placement: window.undefined });
 
       expect(console.error).to.have.been.called.with(
         'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'

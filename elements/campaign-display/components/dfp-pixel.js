@@ -26,6 +26,7 @@ export default class DfpPixel extends Component {
     return (
       <div
           ref="container"
+          className="dfp"
           data-ad-unit="campaign-pixel"
           data-targeting={ JSON.stringify(targeting) }>
       </div>
