@@ -9,11 +9,13 @@ describe('<campaign-display>', () => {
   let props;
   let shallowRenderer;
   let src;
+  let crop;
   beforeEach(() => {
     // TODO: Prevent setState warnings spamming the console
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
     CampaignDisplay.prototype.setState = chai.spy();
 
+    crop = '16x9';
     placement = 'top';
     src = 'http://example.com';
     props = {
@@ -25,7 +27,7 @@ describe('<campaign-display>', () => {
     };
     fetchMock.mock(src, props);
     shallowRenderer = createRenderer();
-    shallowRenderer.render(<CampaignDisplay src={src} placement={placement} />);
+    shallowRenderer.render(<CampaignDisplay src={src} placement={placement} logoCrop={crop} />);
   });
 
   it('should require a src', () => {
@@ -38,6 +40,11 @@ describe('<campaign-display>', () => {
     expect(() => {
       new CampaignDisplay({ src: 'some/src '}); // eslint-disable-line
     }).to.throw('campaign-display component requires a placement');
+  });
+
+  it('accepts a logo-crop attribute', () => {
+    subject = shallowRenderer.getRenderOutput();
+    expect(subject.props.logoCrop).to.equal(crop);
   });
 
   describe('initialDispatch', () => {

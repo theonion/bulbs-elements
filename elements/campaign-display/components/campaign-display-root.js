@@ -9,6 +9,10 @@ class CampaignDisplayRoot extends Component {
     super(props);
   }
 
+  hasId() {
+    return typeof this.props.campaign.id === 'number';
+  }
+
   hasImageId() {
     return !!this.props.campaign.image_id;
   }
@@ -22,11 +26,15 @@ class CampaignDisplayRoot extends Component {
   }
 
   hasContent() {
-    return !!(this.props.campaign.name || this.props.campaign.image_id);
+    return !!(this.hasId() || this.props.campaign.image_id);
+  }
+
+  pixelComponent() {
+    return this.hasId() ? <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} /> : '';
   }
 
   logoComponent() {
-    return this.hasImageId() ? <Logo {...this.props.campaign} /> : '';
+    return this.hasImageId() ? <Logo {...this.props.campaign} crop={this.props.logoCrop} /> : '';
   }
 
   sponsorNameComponent() {
@@ -40,7 +48,7 @@ class CampaignDisplayRoot extends Component {
   renderDefaultComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.pixelComponent()}
         {this.logoComponent()}
         {this.preambleTextComponent()}
         {this.sponsorNameComponent()}
@@ -50,7 +58,7 @@ class CampaignDisplayRoot extends Component {
   renderLogoComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.pixelComponent()}
         {this.preambleTextComponent()}
         {this.logoComponent()}
       </div>);
@@ -59,7 +67,7 @@ class CampaignDisplayRoot extends Component {
   renderNameComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />
+        {this.pixelComponent()}
         {this.preambleTextComponent()}
         {this.sponsorNameComponent()}
       </div>);
@@ -94,10 +102,12 @@ class CampaignDisplayRoot extends Component {
 CampaignDisplayRoot.defaultProps = {
   logoOnly: false,
   nameOnly: false,
+  logoCrop: 'original',
 };
 
 CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.object,
+  logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
   placement: PropTypes.string,

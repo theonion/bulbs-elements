@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Summary: Run javascript tests.
+#
+# Relies on your package.json having a "test" script that does a single run of
+#   your tests and a "karma" script that does a continuous run of your tests.
+
+if [ "$1" = "--single-run" ] || [ "$1" = "-s" ]; then
+  npm test
+else
+  npm run karma
+fi

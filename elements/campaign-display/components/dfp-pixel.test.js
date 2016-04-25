@@ -37,15 +37,22 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   context('on render', () => {
 
-    it('should call AdsManager.reloadAds', () => {
-      let reloadAds = chai.spy();
-      window.BULBS_ELEMENTS_ADS_MANAGER = { reloadAds };
+    it('should render an element with the class "dfp"', function () {
+
+      let subject = renderSubject();
+
+      expect(subject.refs.container.className).to.contain('dfp');
+    });
+
+    it('should call AdsManager.loadAds', () => {
+      let loadAds = chai.spy();
+      window.BULBS_ELEMENTS_ADS_MANAGER = { loadAds };
 
       let subject = renderSubject();
 
       delete window.BULBS_ELEMENTS_ADS_MANAGER;
 
-      expect(reloadAds).to.have.been.called.with(subject.refs.container);
+      expect(loadAds).to.have.been.called.with(subject.refs.container);
     });
 
     it('should error out if AdsManager is not available', function () {
@@ -59,7 +66,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       );
     });
 
-    it('should error out of AdsManager.reloadAds is not available', function () {
+    it('should error out of AdsManager.loadAds is not available', function () {
       window.BULBS_ELEMENTS_ADS_MANAGER = {};
 
       renderSubject();
@@ -90,7 +97,8 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should require ad unit placement', () => {
       chai.spy.on(console, 'error');
-      let subject = renderSubject({ placement: window.undefined });
+
+      renderSubject({ placement: window.undefined });
 
       expect(console.error).to.have.been.called.with(
         'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'

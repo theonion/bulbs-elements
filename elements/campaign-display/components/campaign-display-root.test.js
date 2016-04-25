@@ -13,8 +13,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   let campaign;
   let placement;
   let preambleText;
+  let logoCrop;
 
   beforeEach(() => {
+    logoCrop = '16x9';
     placement = 'top';
     preambleText = 'Presented by';
     campaign = {
@@ -82,8 +84,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.hasContent()).to.equal(true);
     });
 
-    it('returns false when there is no image_id or campaign name', () => {
-      delete props.campaign.name;
+    it('returns false when there is no image_id or campaign id', () => {
+      delete props.campaign.id;
       delete props.campaign.image_id;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasContent()).to.equal(false);
@@ -91,6 +93,13 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('logoComponent', function() {
+    it('passes the logoCrop property to the logo', () => {
+      props.logoCrop = logoCrop;
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+      expect(subject.props.children[1].props.crop).to.equal(logoCrop);
+    });
+
     context('when the campaign has an image_id', () => {
       it('returns a Logo component', () => {
         subject = new CampaignDisplayRoot(props);
@@ -140,9 +149,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
     });
 
-    context('when there is no campaign name or image_id', () => {
+    context('when there is no campaign id or image_id', () => {
       it('returns an empty string', () => {
-        delete props.campaign.name;
+        delete props.campaign.id;
         delete props.campaign.image_id;
         subject = new CampaignDisplayRoot(props);
         expect(subject.preambleTextComponent()).to.equal('');
