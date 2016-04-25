@@ -11,8 +11,9 @@ describe('<campaign-display> CampaignField', () => {
   });
 
   describe('initialState', () => {
-    it('is an object', () => {
-      expect(subject.initialState).to.eql({ name: '' });
+
+    it('is undefined', () => {
+      expect(subject.initialState).to.be.undefined;
     });
   });
 
