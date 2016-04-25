@@ -5,8 +5,8 @@ export default class DfpPixel extends Component {
   componentDidMount () {
     const adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     if (typeof adsManager !== 'undefined' &&
-        typeof adsManager.reloadAds === 'function') {
-      adsManager.reloadAds(this.refs.container);
+        typeof adsManager.loadAds === 'function') {
+      adsManager.loadAds(this.refs.container);
     }
     else {
       console.warn(
