@@ -17,8 +17,9 @@ class BulbsVideo extends BulbsElement {
     this.store.actions.fetchVideoData(this.props.src);
   }
 
-  willReceiveProps (props) {
+  componentWillReceiveProps (props) {
     // Prop Will Change
+    this.store.actions.resetController();
     if (this.props.src !== props.src) {
       this.store.actions.fetchVideoData(props.src);
     }

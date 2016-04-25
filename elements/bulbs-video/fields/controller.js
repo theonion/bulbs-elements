@@ -1,11 +1,16 @@
+const InitialController = {
+  revealed: false,
+};
+
 const ControllerField = {
-  initialState: {
-    revealed: false,
-  },
+  initialState: InitialController,
   actions: {
     revealPlayer (state) {
       state.revealed = true;
       return state;
+    },
+    resetController () {
+      return InitialController;
     },
   },
 };
