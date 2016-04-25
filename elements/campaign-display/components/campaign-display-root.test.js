@@ -84,8 +84,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.hasContent()).to.equal(true);
     });
 
-    it('returns false when there is no image_id or campaign name', () => {
-      delete props.campaign.name;
+    it('returns false when there is no image_id or campaign id', () => {
+      delete props.campaign.id;
       delete props.campaign.image_id;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasContent()).to.equal(false);
@@ -149,9 +149,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
     });
 
-    context('when there is no campaign name or image_id', () => {
+    context('when there is no campaign id or image_id', () => {
       it('returns an empty string', () => {
-        delete props.campaign.name;
+        delete props.campaign.id;
         delete props.campaign.image_id;
         subject = new CampaignDisplayRoot(props);
         expect(subject.preambleTextComponent()).to.equal('');
