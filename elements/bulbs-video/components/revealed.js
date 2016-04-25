@@ -14,7 +14,7 @@ window.ga = () => {};
 export default class Revealed extends React.Component {
   componentDidMount () {
     invariant(jQuery, '<bulbs-video> requires jQuery to be in global scope.');
-    new VideoPlayer(this.refs.video);
+    new VideoPlayer(this.refs.video); // eslint-disable-line no-new
   }
 
   render () {
@@ -27,7 +27,7 @@ export default class Revealed extends React.Component {
           className='bulbs-video-video video-js vjs-default-skin'
         >
           {
-            data.sources.data.map((source) => {
+            data.video.data.sources.map((source) => {
               return (
                 <source
                   key={source.url}

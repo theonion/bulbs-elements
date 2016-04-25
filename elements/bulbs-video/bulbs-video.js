@@ -12,25 +12,16 @@ import './bulbs-video.scss';
 import 'videojs/dist/video-js/video-js.css';
 import 'videohub-player/dist/videohub-player.css';
 
-const ONION_STUDIOS_URL = process.env.ONION_STUDIOS_URL;
-
 class BulbsVideo extends BulbsElement {
   initialDispatch () {
-    this.fetchVideoData(this.props.videoId);
+    this.store.actions.fetchVideoData(this.props.src);
   }
 
   willReceiveProps (props) {
     // Prop Will Change
-    if (this.props.videoId !== props.videoId) {
-      this.fetchVideoIdeoData(props.videoId);
+    if (this.props.src !== props.src) {
+      this.store.actions.fetchVideoData(props.src);
     }
-  }
-
-  fetchVideoData (videoId) {
-    let videoDataUrl = `${ONION_STUDIOS_URL}/video/${videoId}.json`;
-    let videoSourcesUrl = `${ONION_STUDIOS_URL}/video/${videoId}/sources`;
-    this.store.actions.fetchVideoData(videoDataUrl);
-    this.store.actions.fetchSources(videoSourcesUrl);
   }
 
   render () {
@@ -51,7 +42,7 @@ BulbsVideo.propTypes = {
   autoplay: PropTypes.bool,
   loop: PropTypes.bool,
   mute: PropTypes.bool,
-  videoId: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
 };
 
 registerReactElement('bulbs-video', BulbsVideo);

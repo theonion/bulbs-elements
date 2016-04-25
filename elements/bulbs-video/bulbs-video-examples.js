@@ -2,10 +2,10 @@ let examples = {
   element: 'bulbs-video',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-video
-            video-id="3936"
+            src="//videohub.local/video/3916.json"
           >
           </bulbs-video>
         `;

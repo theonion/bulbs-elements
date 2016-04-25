@@ -18,5 +18,6 @@ export default function Cover (props) {
 }
 
 Cover.propTypes = {
-
+  actions: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };

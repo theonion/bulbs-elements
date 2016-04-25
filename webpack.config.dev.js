@@ -12,7 +12,6 @@ config.plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': JSON.stringify('development'),
-      'ONION_STUDIOS_URL': JSON.stringify('//videohub.local'),
     },
   }),
 ];

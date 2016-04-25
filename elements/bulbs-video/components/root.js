@@ -7,7 +7,7 @@ export default function Root (props) {
   let className = 'bulbs-video-root player';
   let { actions, data } = props;
 
-  if (!(data.video && data.sources)) {
+  if (!data.video) {
     return <div className={className} />;
   }
   else if (data.controller.revealed) {
