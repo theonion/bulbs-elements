@@ -1,12 +1,15 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 
-export default function Logo (props) {
-  let hasUrl = !!props.clickthrough_url;
-  let image = <CroppedImage crop={props.crop} imageId={props.image_id}/>;
-  let link = <a ref='linkWrapper' href={props.clickthrough_url}>{image}</a>;
+export default class Logo extends Component {
 
-  return <div className='campaign-display-logo'>{ hasUrl ? link : image }</div>;
+  render() {
+    let hasUrl = !!this.props.clickthrough_url;
+    let image = <CroppedImage crop={this.props.crop} imageId={this.props.image_id}/>;
+    let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{image}</a>;
+
+    return <div className='campaign-display-logo'>{ hasUrl ? link : image }</div>;
+  }
 }
 
 Logo.propTypes = {
