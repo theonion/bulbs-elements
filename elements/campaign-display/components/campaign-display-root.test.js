@@ -24,6 +24,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       image_id: 1,
       clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
+      active: true,
     };
     props = {
       campaign,
@@ -216,22 +217,24 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
-  describe('hasCampaignData', () => {
+  describe('hasActiveCampaignData', () => {
     it('returns false when there is no campaign data', () => {
       delete props.campaign;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(false);
+      expect(subject.hasActiveCampaignData()).to.equal(false);
     });
 
     it('returns true when there is campaign data', () => {
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(true);
+      expect(subject.hasActiveCampaignData()).to.equal(true);
     });
 
-    it('returns false when the campaign is not found', () => {
-      props.campaign = { detail: 'Not found.' };
+    it('should return false when campaign is not active', () => {
+      props.campaign.active = false;
+
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(false);
+
+      expect(subject.hasActiveCampaignData()).to.be.false;
     });
   });
 
@@ -303,6 +306,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
+        active: true,
       };
       props = {
         campaign,
@@ -362,6 +366,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
+        active: true,
       };
       props = {
         campaign,
@@ -427,6 +432,20 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('renders an empty span', () => {
+      expect(subject.props.children).to.be.undefined;
+      expect(subject.type).to.equal('span');
+    });
+  });
+
+  context('with data active === false', () => {
+    beforeEach(() => {
+      props.campaign.active = false;
+    });
+
+    it('should render an empty span', () => {
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+
       expect(subject.props.children).to.be.undefined;
       expect(subject.type).to.equal('span');
     });

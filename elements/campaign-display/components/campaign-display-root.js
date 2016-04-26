@@ -73,12 +73,12 @@ class CampaignDisplayRoot extends Component {
     return <span/>;
   }
 
-  hasCampaignData() {
-    return !!(this.props.campaign && !this.props.campaign.detail);
+  hasActiveCampaignData() {
+    return !!(this.props.campaign && this.props.campaign.active);
   }
 
   render() {
-    if (this.hasCampaignData()) {
+    if (this.hasActiveCampaignData()) {
       if (this.props.logoOnly) {
         return this.renderLogoComponent();
       }
