@@ -24,6 +24,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       image_id: 1,
       clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
+      active: true,
     };
     props = {
       campaign,
@@ -32,7 +33,33 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     };
   });
 
-  describe('hasImageId', function() {
+  describe('hasId', () => {
+
+    it('should return true when campaign has an id', () => {
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.hasId()).to.be.true;
+    });
+
+    it('should return false when camapign id is not a number', () => {
+      props.campaign.id = '1';
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.hasId()).to.be.false;
+    });
+
+    it('should return false when campaign has no id', () => {
+      delete props.campaign.id;
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.hasId()).to.be.false;
+    });
+  });
+
+  describe('hasImageId', () => {
     it('returns true when the campaign has an image_id', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasImageId()).to.equal(true);
@@ -43,9 +70,17 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasImageId()).to.equal(false);
     });
+
+    it('should return false when the campaign has no id', () => {
+      delete props.campaign.id;
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.hasImageId()).to.be.false;
+    });
   });
 
-  describe('hasSponsorName', function() {
+  describe('hasSponsorName', () => {
     it('returns true when the campaign has a sponsor name', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorName()).to.equal(true);
@@ -56,9 +91,17 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorName()).to.equal(false);
     });
+
+    it('should return false when the campaign has no id', () => {
+      delete props.campaign.id;
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.hasSponsorName()).to.be.false;
+    });
   });
 
-  describe('hasPreambleText', function() {
+  describe('hasPreambleText', () => {
     it('returns true when there is preamble text', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasPreambleText()).to.equal(true);
@@ -69,30 +112,45 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasPreambleText()).to.equal(false);
     });
-  });
 
-  describe('hasContent', function() {
-    it('returns true when there is a campaign name', () => {
-      delete props.campaign.image_id;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasContent()).to.equal(true);
-    });
-
-    it('returns true when there is a campaign image_id', () => {
-      delete props.campaign.name;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasContent()).to.equal(true);
-    });
-
-    it('returns false when there is no image_id or campaign id', () => {
+    it('should return false when the campaign has no id', () => {
       delete props.campaign.id;
-      delete props.campaign.image_id;
+
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasContent()).to.equal(false);
+
+      expect(subject.hasPreambleText()).to.be.false;
     });
   });
 
-  describe('logoComponent', function() {
+  describe('pixelComponent', () => {
+
+    it('should pass the campaign id to the pixel component', () => {
+
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+
+      expect(subject.props.children[0].props.campaignId)
+        .to.equal(props.campaign.id);
+    });
+
+    it('should pass the placement to the pixel component', () => {
+
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+
+      expect(subject.props.children[0].props.placement).to.equal(props.placement);
+    });
+
+    it('should return an empty string when campaign has no id', () => {
+      delete props.campaign.id;
+
+      subject = new CampaignDisplayRoot(props);
+
+      expect(subject.pixelComponent()).to.equal('');
+    });
+  });
+
+  describe('logoComponent', () => {
     it('passes the logoCrop property to the logo', () => {
       props.logoCrop = logoCrop;
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
@@ -116,7 +174,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
-  describe('sponsorNameComponent', function() {
+  describe('sponsorNameComponent', () => {
     context('when the campaign has a name', () => {
       it('returns a SponsorName component', () => {
         subject = new CampaignDisplayRoot(props);
@@ -133,7 +191,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
-  describe('preambleTextComponent', function() {
+  describe('preambleTextComponent', () => {
     context('when there is preamble text', () => {
       it('returns a Preamble component', () => {
         subject = new CampaignDisplayRoot(props);
@@ -159,22 +217,24 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
-  describe('hasCampaignData', function() {
+  describe('hasActiveCampaignData', () => {
     it('returns false when there is no campaign data', () => {
       delete props.campaign;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(false);
+      expect(subject.hasActiveCampaignData()).to.equal(false);
     });
 
     it('returns true when there is campaign data', () => {
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(true);
+      expect(subject.hasActiveCampaignData()).to.equal(true);
     });
 
-    it('returns false when the campaign is not found', () => {
-      props.campaign = { detail: 'Not found.' };
+    it('should return false when campaign is not active', () => {
+      props.campaign.active = false;
+
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasCampaignData()).to.equal(false);
+
+      expect(subject.hasActiveCampaignData()).to.be.false;
     });
   });
 
@@ -246,7 +306,11 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
+<<<<<<< HEAD
         name: 'Test Campaign',
+=======
+        active: true,
+>>>>>>> master
       };
       props = {
         campaign,
@@ -311,6 +375,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
+        active: true,
       };
       props = {
         campaign,
@@ -376,6 +441,20 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('renders an empty span', () => {
+      expect(subject.props.children).to.be.undefined;
+      expect(subject.type).to.equal('span');
+    });
+  });
+
+  context('with data active === false', () => {
+    beforeEach(() => {
+      props.campaign.active = false;
+    });
+
+    it('should render an empty span', () => {
+      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
+      subject = shallowRenderer.getRenderOutput();
+
       expect(subject.props.children).to.be.undefined;
       expect(subject.type).to.equal('span');
     });
