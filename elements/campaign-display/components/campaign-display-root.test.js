@@ -166,10 +166,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     context('when the campaign has no image_id', () => {
-      it('returns an empty string', () => {
+      it('returns a SponsorName component', () => {
         delete props.campaign.image_id;
         subject = new CampaignDisplayRoot(props);
-        expect(subject.logoComponent()).to.equal('');
+        expect(subject.logoComponent().type).to.equal(SponsorName);
       });
     });
   });
@@ -306,6 +306,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
+        name: 'Test Campaign',
         active: true,
       };
       props = {
@@ -343,6 +344,11 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       it('does not render the logo', () => {
         let types = subject.props.children.map((c) => c.type);
         expect(types).to.not.contain(Logo);
+      });
+
+      it('renders the sponsor name', () => {
+        let types = subject.props.children.map((c) => c.type);
+        expect(types).to.contain(SponsorName);
       });
     });
 

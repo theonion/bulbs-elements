@@ -30,7 +30,12 @@ class CampaignDisplayRoot extends Component {
   }
 
   logoComponent() {
-    return this.hasImageId() ? <Logo {...this.props.campaign} crop={this.props.logoCrop} /> : '';
+    if (this.hasImageId()) {
+      return <Logo {...this.props.campaign} crop={this.props.logoCrop} />;
+    }
+    else {
+      return this.sponsorNameComponent();
+    }
   }
 
   sponsorNameComponent() {
