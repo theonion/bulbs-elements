@@ -306,11 +306,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
         image_id: 1,
-<<<<<<< HEAD
         name: 'Test Campaign',
-=======
         active: true,
->>>>>>> master
       };
       props = {
         campaign,
