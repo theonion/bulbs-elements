@@ -188,7 +188,7 @@
     "one-var": [1, "never"],
     "operator-assignment": [0, "never"],
     "padded-blocks": [0, "never"],
-    "quote-props": [0, "as-needed"],
+    "quote-props": [0, "avoidEscape"],
     "quotes": [1, "single"],
     "semi-spacing": [1, { "before": false, "after": true }],
     "semi": [1, "always"],

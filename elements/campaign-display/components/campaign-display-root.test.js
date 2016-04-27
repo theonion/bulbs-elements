@@ -200,6 +200,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         expect(subject.logoComponent().type).to.equal(SponsorName);
       });
     });
+
+    context('when noLink attribute is present', () => {
+      it('passes the noLink attribute through to the component', () => {
+        props.noLink = '';
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.logoComponent().props.noLink).to.equal('');
+      });
+    });
   });
 
   describe('sponsorNameComponent', () => {
@@ -215,6 +223,14 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         delete props.campaign.name;
         subject = new CampaignDisplayRoot(props);
         expect(subject.sponsorNameComponent()).to.equal('');
+      });
+    });
+
+    context('when noLink attribute is present', () => {
+      it('passes the noLink attribute through to the component', () => {
+        props.noLink = '';
+        subject = new CampaignDisplayRoot(props);
+        expect(subject.sponsorNameComponent().props.noLink).to.equal('');
       });
     });
   });
