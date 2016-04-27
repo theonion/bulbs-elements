@@ -70,14 +70,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasImageId()).to.equal(false);
     });
-
-    it('should return false when the campaign has no id', () => {
-      delete props.campaign.id;
-
-      subject = new CampaignDisplayRoot(props);
-
-      expect(subject.hasImageId()).to.be.false;
-    });
   });
 
   describe('hasSponsorName', () => {
@@ -91,13 +83,57 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorName()).to.equal(false);
     });
+  });
 
-    it('should return false when the campaign has no id', () => {
-      delete props.campaign.id;
-
+  describe('hasSponsorInfo', () => {
+    it('returns true with either a name or image_id present', () => {
       subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorInfo()).to.equal(true);
+    });
 
-      expect(subject.hasSponsorName()).to.be.false;
+    it('returns true when there is a name, and NO image_id', () => {
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorInfo()).to.equal(true);
+    });
+
+    it('returns true when there is an image_id, and NO name', () => {
+      delete props.campaign.name;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorInfo()).to.equal(true);
+    });
+
+    it('returns false when there is no image_id or name', () => {
+      delete props.campaign.name;
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasSponsorInfo()).to.equal(false);
+    });
+  });
+
+  describe('isRenderable', function() {
+    it('returns true when the campaign is active, has sponsor information, and preamble text', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.isRenderable()).to.equal(true);
+    });
+
+    it('returns false when the campaign is not active', () => {
+      props.campaign.active = false;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.isRenderable()).to.equal(false);
+    });
+
+    it('returns false when there is no sponsor info', () => {
+      delete props.campaign.name;
+      delete props.campaign.image_id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.isRenderable()).to.equal(false);
+    });
+
+    it('returns false when there is no preamble text provided', () => {
+      delete props.preambleText;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.isRenderable()).to.equal(false);
     });
   });
 
@@ -111,14 +147,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       delete props.preambleText;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasPreambleText()).to.equal(false);
-    });
-
-    it('should return false when the campaign has no id', () => {
-      delete props.campaign.id;
-
-      subject = new CampaignDisplayRoot(props);
-
-      expect(subject.hasPreambleText()).to.be.false;
     });
   });
 
@@ -206,27 +234,24 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         expect(subject.preambleTextComponent()).to.equal('');
       });
     });
-
-    context('when there is no campaign id or image_id', () => {
-      it('returns an empty string', () => {
-        delete props.campaign.id;
-        delete props.campaign.image_id;
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.preambleTextComponent()).to.equal('');
-      });
-    });
   });
 
-  describe('hasActiveCampaignData', () => {
+  describe('hasActiveCampaign', () => {
     it('returns false when there is no campaign data', () => {
       delete props.campaign;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaignData()).to.equal(false);
+      expect(subject.hasActiveCampaign()).to.equal(false);
     });
 
     it('returns true when there is campaign data', () => {
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaignData()).to.equal(true);
+      expect(subject.hasActiveCampaign()).to.equal(true);
+    });
+
+    it('returns false when there is no campaign id', () => {
+      delete props.campaign.id;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasActiveCampaign()).to.equal(false);
     });
 
     it('should return false when campaign is not active', () => {
@@ -234,7 +259,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
       subject = new CampaignDisplayRoot(props);
 
-      expect(subject.hasActiveCampaignData()).to.be.false;
+      expect(subject.hasActiveCampaign()).to.be.false;
     });
   });
 
@@ -293,9 +318,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         subject = shallowRenderer.getRenderOutput();
       });
 
-      it('does not render the preamble', () => {
-        let types = subject.props.children.map((c) => c.type);
-        expect(types).to.not.contain(Preamble);
+      it('renders an empty component', () => {
+        expect(subject.props.children).to.be.undefined;
       });
     });
   });
@@ -359,9 +383,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         subject = shallowRenderer.getRenderOutput();
       });
 
-      it('does not render the preamble', () => {
-        let types = subject.props.children.map((c) => c.type);
-        expect(types).to.not.contain(Preamble);
+      it('renders an empty component', () => {
+        expect(subject.props.children).to.be.undefined;
       });
     });
   });
@@ -419,9 +442,8 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         subject = shallowRenderer.getRenderOutput();
       });
 
-      it('does not render the preamble', () => {
-        let types = subject.props.children.map((c) => c.type);
-        expect(types).to.not.contain(Preamble);
+      it('renders an empty component', () => {
+        expect(subject.props.children).to.be.undefined;
       });
     });
   });
