@@ -1,18 +1,18 @@
 import { assert } from 'chai';
 import VideoField from './video';
 
-describe('<bulbs-video> VideoField', function () {
+describe('<bulbs-video> VideoField', () => {
   let { actions } = VideoField;
 
-  it('initialState', function () {
-    assert.deepEqual(VideoField.initialState, {});
+  it('initialState', () => {
+    assert.deepEqual(VideoField.initialState, undefined); // eslint-disable-line no-undefined
   });
 
-  describe('initialAction', function () {
-    it('passes state through untouched', function () {
-      // write actual tests
-      let nextState = actions.initialAction.invoke({}, {});
-      assert.deepEqual(nextState, {});
+  describe('setVideoField', () => {
+    it('replaces state', () => {
+      expect(
+        actions.setVideoField({}, {})
+      ).to.eql({});
     });
   });
 });

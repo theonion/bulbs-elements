@@ -2,7 +2,7 @@ const InitialController = {
   revealed: false,
 };
 
-const ControllerField = {
+export default {
   initialState: InitialController,
   actions: {
     revealPlayer (state) {
@@ -14,5 +14,3 @@ const ControllerField = {
     },
   },
 };
-
-export default ControllerField;

@@ -4,7 +4,9 @@ import {
 } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
-import VideoSchema from './bulbs-video-schema';
+import VideoField from './fields/video';
+import VideoRequest from './fields/video-request';
+import ControllerField from './fields/controller';
 
 import BulbsVideoRoot from './components/root';
 
@@ -12,40 +14,42 @@ import './bulbs-video.scss';
 import 'videojs/dist/video-js/video-js.css';
 import 'videohub-player/dist/videohub-player.css';
 
-class BulbsVideo extends BulbsElement {
+export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
-    this.store.actions.fetchVideoData(this.props.src);
+    this.store.actions.fetchVideo(this.props.src);
   }
 
   componentWillReceiveProps (props) {
     // Prop Will Change
-    this.store.actions.resetController();
     if (this.props.src !== props.src) {
-      this.store.actions.fetchVideoData(props.src);
+      this.store.actions.resetController();
+      this.store.actions.fetchVideo(props.src);
     }
   }
 
   render () {
     return (
       <BulbsVideoRoot
-        data={this.state}
+        {...this.state}
         actions={this.store.actions}
       />
     );
   }
 }
 
-BulbsVideo.displayName = 'BulbsVideo';
-
-BulbsVideo.schema = VideoSchema;
-
-BulbsVideo.propTypes = {
-  autoplay: PropTypes.bool,
-  loop: PropTypes.bool,
-  mute: PropTypes.bool,
-  src: PropTypes.string.isRequired,
-};
+Object.assign(BulbsVideo, {
+  displayName: 'BulbsVideo',
+  schema: {
+    video: VideoField,
+    videoRequest: VideoRequest,
+    controller: ControllerField,
+  },
+  propTypes: {
+    autoplay: PropTypes.bool,
+    loop: PropTypes.bool,
+    mute: PropTypes.bool,
+    src: PropTypes.string.isRequired,
+  },
+});
 
 registerReactElement('bulbs-video', BulbsVideo);
-
-export default BulbsVideo;

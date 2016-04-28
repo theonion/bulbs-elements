@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
+import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 export default function Cover (props) {
-  let { data, actions } = props;
+  let { video, actions } = props;
+  let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
+
   return (
     <div className='bulbs-video-cover'>
       <button
@@ -9,9 +12,10 @@ export default function Cover (props) {
       >
         ▶
       </button>
-      <img
+      <CroppedImage
         className='bulbs-video-poster'
-        src={data.video.data.poster_url}
+        imageId={imageId}
+        src={video.poster_url}
       />
     </div>
   );
@@ -19,5 +23,5 @@ export default function Cover (props) {
 
 Cover.propTypes = {
   actions: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  video: PropTypes.object.isRequired,
 };

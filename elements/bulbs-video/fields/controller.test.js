@@ -1,18 +1,28 @@
 import { assert } from 'chai';
 import ControllerField from './controller';
 
-describe('<bulbs-video> ControllerField', function () {
+describe('<bulbs-video> ControllerField', () => {
   let { actions } = ControllerField;
 
-  it('initialState', function () {
-    assert.deepEqual(ControllerField.initialState, {});
+  it('initialState', () => {
+    assert.deepEqual(ControllerField.initialState, {
+      revealed: false,
+    });
   });
 
-  describe('initialAction', function () {
-    it('passes state through untouched', function () {
-      // write actual tests
-      let nextState = actions.initialAction.invoke({}, {});
-      assert.deepEqual(nextState, {});
+  describe('action: revealPlayer', () => {
+    it('reveals player', () => {
+      expect(
+        actions.revealPlayer({ revealed: false }).revealed
+      ).to.be.true;
+    });
+  });
+
+  describe('action: resetController', () => {
+    it('resets controller', () => {
+      expect(
+        actions.resetController({ revealed: true }).revealed
+      ).to.be.false;
     });
   });
 });

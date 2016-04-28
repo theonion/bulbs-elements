@@ -1,4 +1,4 @@
-/* global jQuery */
+/* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
@@ -11,14 +11,54 @@ window.AnalyticsManager = {
 };
 
 window.ga = () => {};
+
+function makeGaPrefix () {
+  return 'video-player-${prefixCount++}';
+}
+
+window.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
+
 export default class Revealed extends React.Component {
   componentDidMount () {
-    invariant(jQuery, '<bulbs-video> requires jQuery to be in global scope.');
-    new VideoPlayer(this.refs.video); // eslint-disable-line no-new
+    invariant(
+      window.jQuery,
+      '`<bulbs-video>` requires `jQuery` to be in global scope.'
+    );
+    invariant(
+      window.ga,
+      '`<bulbs-video>` requires `ga` (google analyntics) to be in global scope.'
+    );
+    invariant(
+      window.AnalyticsManager,
+      '`<bulbs-video>` reuqires `AnalyticsManager` to be in global scope.'
+    );
+    invariant(
+      window.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
+      '`<bulbs-video>` requires `BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID` to be in global scope.'
+    );
+
+    let gaPrefix = makeGaPrefix();
+    ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
+    let targeting = this.props.video.targeting;
+    let prefixedSet = `${gaPrefix}.prefixedSet`;
+
+    ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
+    ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
+    ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
+    ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
+    ga(prefixedSet, 'dimension5', targeting.target_host_channel || 'None');
+    ga(prefixedSet, 'dimension6', targeting.target_special_coverage || 'None');
+    ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
+
+    new VideoPlayer(this.refs.video, { // eslint-disable-line no-new
+      ga: {
+        gaPrefix,
+      },
+    });
   }
 
   render () {
-    let { data } = this.props;
+    let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>
         <video
@@ -27,7 +67,7 @@ export default class Revealed extends React.Component {
           className='bulbs-video-video video-js vjs-default-skin'
         >
           {
-            data.video.data.sources.map((source) => {
+            video.sources.map((source) => {
               return (
                 <source
                   key={source.url}
@@ -44,5 +84,5 @@ export default class Revealed extends React.Component {
 }
 
 Revealed.propTypes = {
-  data: PropTypes.object.isRequired,
+  video: PropTypes.object.isRequired,
 };
