@@ -14,6 +14,27 @@ describe('<campaign-display> <Logo>', () => {
     return shallowRenderer.getRenderOutput();
   }
 
+  describe('shouldWrapLink', function() {
+    beforeEach(() => {
+      props = {
+        image_id: 1,
+        name: 'Test Campaign',
+      };
+    });
+
+    it('returns false when no-link attribute is present', () => {
+      props.noLink = '';
+      subject = new Logo(props);
+      expect(subject.shouldWrapWithLink()).to.equal(false);
+    });
+
+    it('returns true when there is a clickthrough_url', () => {
+      props.clickthrough_url = 'http://example.com';
+      subject = new Logo(props);
+      expect(subject.shouldWrapWithLink()).to.equal(true);
+    });
+  });
+
   context('without a clickthrough_url', () => {
     beforeEach(() => {
       props = {

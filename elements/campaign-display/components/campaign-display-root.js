@@ -31,7 +31,7 @@ class CampaignDisplayRoot extends Component {
 
   logoComponent() {
     if (this.hasImageId()) {
-      return <Logo {...this.props.campaign} crop={this.props.logoCrop} />;
+      return <Logo {...this.props.campaign} noLink={this.props.noLink} crop={this.props.logoCrop} />;
     }
     else {
       return this.sponsorNameComponent();
@@ -39,7 +39,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   sponsorNameComponent() {
-    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} noLink={this.props.noLink} /> : '';
   }
 
   preambleTextComponent() {

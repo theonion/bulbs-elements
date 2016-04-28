@@ -1,45 +1,71 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import SponsorName from './sponsor-name';
+import { createRenderer } from 'react-addons-test-utils';
 
-describe('<campaign-display> <CampaignDisplayName>', () => {
+describe('<campaign-display> <SponsorName>', () => {
+  let clickthrough_url = 'http://example.com';
+  let props;
   let reactContainer;
+  let shallowRenderer;
   let sponsorName = 'Test Campaign';
   let subject;
 
   beforeEach(() => {
-    reactContainer = document.createElement('react-container');
-    document.body.appendChild(reactContainer);
+    shallowRenderer = createRenderer();
+    props = {
+      name: sponsorName,
+      clickthrough_url,
+    };
   });
 
-  afterEach(() => {
-    reactContainer.remove();
+  describe('shouldWrapLink', function() {
+    beforeEach(() => {
+      props = {
+        clickthrough_url,
+        name: sponsorName,
+      };
+    });
+
+    it('returns false when no-link attribute is present', () => {
+      props.noLink = '';
+      subject = new SponsorName(props);
+      expect(subject.shouldWrapWithLink()).to.equal(false);
+    });
+
+    it('returns true when there is a clickthrough_url', () => {
+      subject = new SponsorName(props);
+      expect(subject.shouldWrapWithLink()).to.equal(true);
+    });
   });
 
   context('without a clickthrough_url', () => {
     beforeEach(() => {
-      subject = ReactDOM.render(<SponsorName name={sponsorName} />, reactContainer);
+      shallowRenderer.render(<SponsorName name={props.name} />);
+      subject = shallowRenderer.getRenderOutput();
     });
 
     it('renders the campaign name', () => {
-      expect(subject.refs.name.innerHTML).to.equal('Test Campaign');
+      expect(subject.props.children.props.children).to.equal(sponsorName);
     });
   });
 
   context('with a clickthrough_url', () => {
-    let props;
-
     beforeEach(() => {
-      props = {
-        name: sponsorName,
-        clickthrough_url: 'http://example.com',
-      };
-      subject = ReactDOM.render(<SponsorName {...props} />, reactContainer);
+      shallowRenderer.render(<SponsorName {...props}/>);
+      subject = shallowRenderer.getRenderOutput();
     });
 
-    it('wraps the image in a link to the clickthrough_url', () => {
-      expect(subject.refs.linkWrapper.getAttribute('href'))
-        .to.equal(props.clickthrough_url);
+    it('wraps the name in a link to the clickthrough_url', () => {
+      expect(subject.props.children.type).to.equal('a');
+      expect(subject.props.children.props.href).to.equal(props.clickthrough_url);
+    });
+
+    context('when no-link attribute is present', () => {
+      it('does not wrap the name in a link to the clickthrough_url ', () => {
+        shallowRenderer.render(<SponsorName {...props} noLink/>)
+        subject = shallowRenderer.getRenderOutput();
+        expect(subject.props.children.type).to.equal('span');
+      });
     });
   });
 });

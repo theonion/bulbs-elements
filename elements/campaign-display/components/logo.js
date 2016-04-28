@@ -2,13 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 export default class Logo extends Component {
+  shouldWrapWithLink() {
+    if (typeof this.props.noLink !== 'undefined') {
+      return false;
+    }
+    return !!this.props.clickthrough_url;
+  }
 
   render() {
-    let hasUrl = !!this.props.clickthrough_url;
     let image = <CroppedImage crop={this.props.crop} imageId={this.props.image_id}/>;
     let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{image}</a>;
 
-    return <div className='campaign-display-logo'>{ hasUrl ? link : image }</div>;
+    return <div className='campaign-display-logo'>{ this.shouldWrapWithLink() ? link : image }</div>;
   }
 }
 
