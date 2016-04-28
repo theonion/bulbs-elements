@@ -1,18 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Logo from './logo';
-import Croppedimage from 'bulbs-elements/components/cropped-image';
+import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 describe('<campaign-display> <Logo>', () => {
   let clickthroughUrl = 'http://example.com';
   let props;
   let subject;
-
-  function shallow (element) {
-    let shallowRenderer = createRenderer();
-    shallowRenderer.render(element);
-    return shallowRenderer.getRenderOutput();
-  }
 
   describe('shouldWrapLink', function() {
     beforeEach(() => {
@@ -45,12 +39,14 @@ describe('<campaign-display> <Logo>', () => {
     });
 
     it('should render the image container with the required attributes', () => {
-      let croppedImage = subject.props.children;
-      expect(croppedImage.type).to.eql(Croppedimage);
-      expect(croppedImage.props).to.eql({
-        crop: undefined, // eslint-disable-line no-undefined
-        imageId: 1,
-      });
+      expect(subject.equals(
+        <div className='campaign-display-logo'>
+          <CroppedImage
+            imageId={1}
+            crop={undefined}
+          />
+        </div>
+      )).to.be.true;
     });
   });
 
@@ -65,8 +61,14 @@ describe('<campaign-display> <Logo>', () => {
     });
 
     it('allows the crop value to be configured', () => {
-      let croppedImage = subject.props.children;
-      expect(croppedImage.props.crop).to.eql('custom-crop');
+      expect(subject.equals(
+        <div className='campaign-display-logo'>
+          <CroppedImage
+            imageId={1}
+            crop='custom-crop'
+          />
+        </div>
+      )).to.be.true;
     });
   });
 
@@ -81,9 +83,16 @@ describe('<campaign-display> <Logo>', () => {
     });
 
     it('wraps the image in a link to the clickthrough_url', () => {
-      let anchor = subject.props.children;
-      expect(anchor.type).to.eql('a');
-      expect(anchor.props.href).to.equal(props.clickthrough_url);
+      expect(subject.equals(
+        <div className='campaign-display-logo'>
+          <a href={clickthroughUrl}>
+            <CroppedImage
+              imageId={1}
+              crop={undefined}
+            />
+          </a>
+        </div>
+      )).to.be.true;
     });
   });
 });

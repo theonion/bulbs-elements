@@ -11,7 +11,7 @@ export default class Logo extends Component {
 
   render() {
     let image = <CroppedImage crop={this.props.crop} imageId={this.props.image_id}/>;
-    let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{image}</a>;
+    let link = <a href={this.props.clickthrough_url}>{image}</a>;
 
     return <div className='campaign-display-logo'>{ this.shouldWrapWithLink() ? link : image }</div>;
   }
