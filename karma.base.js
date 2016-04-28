@@ -53,7 +53,7 @@ module.exports = {
   },
 
   bowerPackages: [
-    'jQuery',
+    'jquery',
   ],
 
   // test results reporter to use
