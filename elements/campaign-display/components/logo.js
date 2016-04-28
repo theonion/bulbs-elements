@@ -10,7 +10,7 @@ export default class Logo extends Component {
   }
 
   render() {
-    let image = <CroppedImage crop={this.props.crop} imageId={this.props.image_id}/>;
+    let image = <img src={this.props.image_url} />;
     let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{image}</a>;
 
     return <div className='campaign-display-logo'>{ this.shouldWrapWithLink() ? link : image }</div>;
@@ -20,5 +20,5 @@ export default class Logo extends Component {
 Logo.propTypes = {
   clickthrough_url: PropTypes.string,
   crop: PropTypes.string,
-  image_id: PropTypes.number.isRequired,
+  image_url: PropTypes.string.isRequired,
 };

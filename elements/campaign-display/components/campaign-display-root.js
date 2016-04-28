@@ -13,8 +13,8 @@ class CampaignDisplayRoot extends Component {
     return typeof this.props.campaign.id === 'number';
   }
 
-  hasImageId() {
-    return !!this.props.campaign.image_id;
+  hasImageUrl() {
+    return !!this.props.campaign.image_url;
   }
 
   hasSponsorName() {
@@ -30,8 +30,8 @@ class CampaignDisplayRoot extends Component {
   }
 
   logoComponent() {
-    if (this.hasImageId()) {
-      return <Logo {...this.props.campaign} noLink={this.props.noLink} crop={this.props.logoCrop} />;
+    if (this.hasImageUrl()) {
+      return <Logo {...this.props.campaign} noLink={this.props.noLink} />;
     }
     else {
       return this.sponsorNameComponent();
@@ -83,7 +83,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   hasSponsorInfo() {
-    return this.hasSponsorName() || this.hasImageId();
+    return this.hasSponsorName() || this.hasImageUrl();
   }
 
   isRenderable() {
@@ -111,7 +111,6 @@ class CampaignDisplayRoot extends Component {
 CampaignDisplayRoot.defaultProps = {
   logoOnly: false,
   nameOnly: false,
-  logoCrop: 'original',
 };
 
 CampaignDisplayRoot.propTypes = {

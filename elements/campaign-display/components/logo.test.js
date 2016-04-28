@@ -5,6 +5,7 @@ import Croppedimage from 'bulbs-elements/components/cropped-image';
 
 describe('<campaign-display> <Logo>', () => {
   let clickthroughUrl = 'http://example.com';
+  let imageUrl = 'http://example.com/img.jpg';
   let props;
   let subject;
 
@@ -14,14 +15,14 @@ describe('<campaign-display> <Logo>', () => {
     return shallowRenderer.getRenderOutput();
   }
 
-  describe('shouldWrapLink', function() {
-    beforeEach(() => {
-      props = {
-        image_id: 1,
-        name: 'Test Campaign',
-      };
-    });
+  beforeEach(() => {
+    props = {
+      name: 'Test Campaign',
+      image_url: imageUrl,
+    };
+  });
 
+  describe('shouldWrapLink', function() {
     it('returns false when no-link attribute is present', () => {
       props.noLink = '';
       subject = new Logo(props);
@@ -35,52 +36,17 @@ describe('<campaign-display> <Logo>', () => {
     });
   });
 
-  context('without a clickthrough_url', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
-    it('should render the image container with the required attributes', () => {
-      let croppedImage = subject.props.children;
-      expect(croppedImage.type).to.eql(Croppedimage);
-      expect(croppedImage.props).to.eql({
-        crop: undefined, // eslint-disable-line no-undefined
-        imageId: 1,
-      });
-    });
-  });
-
-  context('with a crop', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-        crop: 'custom-crop',
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
-    it('allows the crop value to be configured', () => {
-      let croppedImage = subject.props.children;
-      expect(croppedImage.props.crop).to.eql('custom-crop');
-    });
+  it('should render an image with the given src', () => {
+    subject = shallow(<Logo {...props}/>);
+    let img = subject.props.children;
+    expect(img.type).to.equal('img');
+    expect(img.props.src).to.equal(imageUrl);
   });
 
   context('with a clickthrough_url', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-        clickthrough_url: clickthroughUrl,
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
     it('wraps the image in a link to the clickthrough_url', () => {
+      props.clickthrough_url = clickthroughUrl;
+      subject = shallow(<Logo {...props}/>);
       let anchor = subject.props.children;
       expect(anchor.type).to.eql('a');
       expect(anchor.props.href).to.equal(props.clickthrough_url);
