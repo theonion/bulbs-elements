@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import SelectionMarker from './selection-marker';
 
 describe('<bulbs-poll> <SelectionMarker>', function () {
@@ -9,12 +10,12 @@ describe('<bulbs-poll> <SelectionMarker>', function () {
         isSelected: true,
       };
 
-      assertJSXEqual(this.test.title, <SelectionMarker {...props} />,
+      expect(shallow(<SelectionMarker {...props} />).equals(
         <svg width="20px" height="20px">
           <circle cx="10" cy="10" r="8" fill="none" stroke="black" strokeWidth="2px" />
           <circle cx="10" cy="10" r="5" fill="black" />
         </svg>
-      );
+      )).to.be.tru;
     });
   });
 
@@ -24,12 +25,12 @@ describe('<bulbs-poll> <SelectionMarker>', function () {
         isSelected: false,
       };
 
-      assertJSXEqual(this.test.title, <SelectionMarker {...props} />,
+      expect(shallow(<SelectionMarker {...props} />).equals(
         <svg width="20px" height="20px">
           <circle cx="10" cy="10" r="8" fill="none" stroke="black" strokeWidth="2px" />
           <circle cx="10" cy="10" r="5" fill="none" />
         </svg>
-      );
+      )).to.be.true;
     });
   });
 });

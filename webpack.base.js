@@ -18,6 +18,7 @@ const libDir = path.join(__dirname, 'lib');
 const examplesDir = path.join(__dirname, 'examples');
 const testDir = path.join(__dirname, 'test');
 const bowerDir = path.join(__dirname, 'bower_components');
+const npmDir = path.join(__dirname, 'node_modules');
 
 const includeDirs = [
   elementsDir,
@@ -76,7 +77,16 @@ exports.loaders = {
   json: {
     test: /\.json$/,
     loaders: ['json'],
-    include: includeDirs,
+    include: [
+      elementsDir,
+      libDir,
+      examplesDir,
+      testDir,
+      bowerDir,
+      // including npmDir for json-loader
+      // chai-enzyme includes some json files
+      npmDir,
+    ],
   },
   sass: {
     test: /\.scss$/,

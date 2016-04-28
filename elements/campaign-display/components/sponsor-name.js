@@ -1,12 +1,17 @@
 import React, { PropTypes, Component } from 'react';
 
 export default class SponsorName extends Component {
+  shouldWrapWithLink() {
+    if (typeof this.props.noLink !== 'undefined') {
+      return false;
+    }
+    return !!this.props.clickthrough_url;
+  }
 
   render () {
-    let hasUrl = !!this.props.clickthrough_url;
-    let name = <span ref='name'>{this.props.name}</span>;
-    let link = <a ref='linkWrapper' href={this.props.clickthrough_url}>{name}</a>;
-    return <span className='campaign-display-sponsor-name'>{hasUrl ? link : name}</span>;
+    let name = <span>{this.props.name}</span>;
+    let link = <a href={this.props.clickthrough_url}>{name}</a>;
+    return <span className='campaign-display-sponsor-name'>{ this.shouldWrapWithLink() ? link : name }</span>;
   }
 }
 

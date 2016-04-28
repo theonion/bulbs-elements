@@ -25,24 +25,25 @@ class CampaignDisplayRoot extends Component {
     return !!this.props.preambleText;
   }
 
-  hasContent() {
-    return !!(this.hasId() || this.props.campaign.image_id);
-  }
-
   pixelComponent() {
     return this.hasId() ? <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} /> : '';
   }
 
   logoComponent() {
-    return this.hasImageId() ? <Logo {...this.props.campaign} crop={this.props.logoCrop} /> : '';
+    if (this.hasImageId()) {
+      return <Logo {...this.props.campaign} noLink={this.props.noLink} crop={this.props.logoCrop} />;
+    }
+    else {
+      return this.sponsorNameComponent();
+    }
   }
 
   sponsorNameComponent() {
-    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} noLink={this.props.noLink} /> : '';
   }
 
   preambleTextComponent() {
-    return this.hasPreambleText() && this.hasContent() ? <Preamble text={this.props.preambleText}/> : '';
+    return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
   }
 
   renderDefaultComponent() {
@@ -77,12 +78,20 @@ class CampaignDisplayRoot extends Component {
     return <span/>;
   }
 
-  hasCampaignData() {
-    return !!(this.props.campaign && !this.props.campaign.detail);
+  hasActiveCampaign() {
+    return !!(this.props.campaign && this.props.campaign.id && this.props.campaign.active);
+  }
+
+  hasSponsorInfo() {
+    return this.hasSponsorName() || this.hasImageId();
+  }
+
+  isRenderable() {
+    return this.hasActiveCampaign() && this.hasSponsorInfo() && this.hasPreambleText();
   }
 
   render() {
-    if (this.hasCampaignData()) {
+    if (this.isRenderable()) {
       if (this.props.logoOnly) {
         return this.renderLogoComponent();
       }

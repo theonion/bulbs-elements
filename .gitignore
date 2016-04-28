@@ -9,3 +9,4 @@ dist/
 bower_components/
 *.swp
 *.swo
+.tern-project

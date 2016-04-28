@@ -10,6 +10,7 @@ describe('<campaign-display>', () => {
   let shallowRenderer;
   let src;
   let crop;
+  let campaign;
   beforeEach(() => {
     // TODO: Prevent setState warnings spamming the console
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
@@ -18,16 +19,23 @@ describe('<campaign-display>', () => {
     crop = '16x9';
     placement = 'top';
     src = 'http://example.com';
-    props = {
-      src,
+    campaign = {
+      active: true,
       clickthrough_url: 'http://example.com/clickthrough',
-      image_id: 'http://example.com/image.jpg',
+      image_id: 1234,
       name: 'Test Campaign',
+    }
+
+    props = {
+      logoCrop: crop,
+      noLink: '',
       placement,
+      src,
     };
-    fetchMock.mock(src, props);
+
+    fetchMock.mock(src, campaign);
     shallowRenderer = createRenderer();
-    shallowRenderer.render(<CampaignDisplay src={src} placement={placement} logoCrop={crop} />);
+    shallowRenderer.render(<CampaignDisplay {...props} />);
   });
 
   it('should require a src', () => {
@@ -45,6 +53,11 @@ describe('<campaign-display>', () => {
   it('accepts a logo-crop attribute', () => {
     subject = shallowRenderer.getRenderOutput();
     expect(subject.props.logoCrop).to.equal(crop);
+  });
+
+  it('accepts a no-link attribute', () => {
+    subject = shallowRenderer.getRenderOutput();
+    expect(subject.props.noLink).to.equal('');
   });
 
   describe('initialDispatch', () => {

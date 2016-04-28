@@ -1,3 +1,7 @@
+import chaiEnzyme from 'chai-enzyme';
+
+chai.use(chaiEnzyme());
+
 // We're using require contexts to get karma-webpack to build all the tests
 // in one big webpack bundle. Otherwise karma-webpack builds an individual
 // bundle per test file.
