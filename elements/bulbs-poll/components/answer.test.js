@@ -1,5 +1,5 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
 
 import Answer from './answer';
 import SelectionMarker from './selection-marker';
@@ -17,15 +17,17 @@ describe('<bulbs-poll> <Answer>', function () {
         poll: { answer_type: 'text' },
       };
 
-      assertJSXEqual(this.test.title, <Answer {...props}/>,
+      let subject = shallow(<Answer {...props}/>);
+      expect(subject.equals(
         <li
           data-track-label='Option'
-          className="bulbs-poll-answer"
+          className='bulbs-poll-answer'
+          onClick={Answer.prototype.selectAnswer}
         >
           <SelectionMarker isSelected={false}/>
           Answer
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -40,15 +42,17 @@ describe('<bulbs-poll> <Answer>', function () {
         poll: { answer_type: 'text' },
       };
 
-      assertJSXEqual(this.test.title, <Answer {...props}/>,
+      let subject = shallow(<Answer {...props}/>);
+      expect(subject.equals(
         <li
           data-track-label='Option'
           className="bulbs-poll-answer bulbs-poll-answer-selected"
+          onClick={Answer.prototype.selectAnswer}
         >
           <SelectionMarker isSelected={true}/>
           Answer
         </li>
-      );
+      )).to.be.true;
     });
   });
 });

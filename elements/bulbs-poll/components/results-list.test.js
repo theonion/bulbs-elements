@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import ResultsList from './results-list';
 import Result from './result';
 import ImageResult from './image-result';
@@ -27,7 +28,7 @@ describe('<bulbs-poll> <ResultsList>', function () {
         winningAnswers,
       };
 
-      assertJSXEqual(this.test.title, <ResultsList {...props} />,
+      expect(shallow(<ResultsList {...props} />).equals(
         <ul className='bulbs-poll-results-list'>
           <Result
             poll={poll}
@@ -42,7 +43,7 @@ describe('<bulbs-poll> <ResultsList>', function () {
             winningAnswers={winningAnswers}
           />
         </ul>
-      );
+      )).to.be.true;
     });
   });
 
@@ -69,7 +70,7 @@ describe('<bulbs-poll> <ResultsList>', function () {
         winningAnswers,
       };
 
-      assertJSXEqual(this.test.title, <ResultsList {...props}/>,
+      expect(shallow(<ResultsList {...props}/>).equals(
         <ul className="bulbs-poll-image-results-list">
           <ImageResult
             poll={poll}
@@ -84,7 +85,7 @@ describe('<bulbs-poll> <ResultsList>', function () {
             winningAnswers={winningAnswers}
           />
         </ul>
-      );
+      )).to.be.true;
     });
   });
 });

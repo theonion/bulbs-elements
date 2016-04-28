@@ -1,10 +1,11 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import ImageAnswer from './image-answer';
 import SelectionMarker from './selection-marker';
 
 describe('<bulbs-poll> <ImageAnswer>', function () {
-  context('answer in not the selected answer', function () {
+  context('answer is not the selected answer', function () {
     it('renders anser as not selected', function () {
       let answer = {
         answer_text: 'Answer',
@@ -20,10 +21,11 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
         poll: { answer_type: 'imageText' },
       };
 
-      assertJSXEqual(this.test.title, <ImageAnswer {...props} />,
+      expect(shallow(<ImageAnswer {...props} />).equals(
         <li
           data-track-label='Option'
           className='bulbs-poll-image-answer'
+          onClick={ImageAnswer.prototype.selectAnswer}
         >
           <img src='www.suckitjerks.com'/>
           <div className="answer-image-text">
@@ -31,7 +33,7 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
             Answer
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -50,10 +52,11 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
         poll: { answer_type: 'imageText' },
       };
 
-      assertJSXEqual(this.test.title, <ImageAnswer {...props}/>,
+      expect(shallow(<ImageAnswer {...props}/>).equals(
         <li
           data-track-label='Option'
           className="bulbs-poll-image-answer bulbs-poll-answer-selected"
+          onClick={ImageAnswer.prototype.selectAnswer}
         >
           <img src='www.suckitjerks.com'/>
           <div className="answer-image-text">
@@ -61,7 +64,7 @@ describe('<bulbs-poll> <ImageAnswer>', function () {
             Answer
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 });

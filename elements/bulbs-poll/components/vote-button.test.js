@@ -1,6 +1,7 @@
-import VoteButton from './vote-button';
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
+import VoteButton from './vote-button';
 
 describe('<bulbs-poll> <VoteButton>', function () {
   context('with selectedAnswer', function () {
@@ -10,15 +11,16 @@ describe('<bulbs-poll> <VoteButton>', function () {
         makeVoteRequest () {},
       };
 
-      assertJSXEqual(this.test.title, <VoteButton {...props} />,
+      expect(shallow(<VoteButton {...props} />).equals(
         <button
           data-track-label='Submit'
           className="bulbs-poll-vote bulbs-poll-footer"
+          onClick={VoteButton.prototype.makeVoteRequest}
           disabled={false}
         >
           Vote
         </button>
-      );
+      )).to.be.true;
     });
   });
 
@@ -29,29 +31,31 @@ describe('<bulbs-poll> <VoteButton>', function () {
         makeVoteRequest () {},
       };
 
-      assertJSXEqual(this.test.title, <VoteButton {...props} />,
+      expect(shallow(<VoteButton {...props} />).equals(
         <button
           data-track-label='Submit'
           className="bulbs-poll-vote bulbs-poll-footer"
+          onClick={VoteButton.prototype.makeVoteRequest}
           disabled={true}
         >
           Vote
         </button>
-      );
+      )).to.be.true;
     });
   });
 
   context('without properties', function () {
     it('renders a disabled vote button', function () {
-      assertJSXEqual(this.test.title, <VoteButton/>,
+      expect(shallow(<VoteButton/>).equals(
         <button
           data-track-label='Submit'
           className="bulbs-poll-vote bulbs-poll-footer"
+          onClick={VoteButton.prototype.makeVoteRequest}
           disabled={true}
         >
           Vote
         </button>
-      );
+      )).to.be.true;
     });
   });
 });

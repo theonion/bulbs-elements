@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import ComingSoon from './coming-soon';
 import VoteButton from './vote-button';
 
@@ -8,12 +9,12 @@ describe('<bulbs-poll> <ComingSoon>', function () {
     it('renders', function () {
       let props = {};
 
-      assertJSXEqual(this.test.title, <ComingSoon {...props} />,
+      expect(shallow(<ComingSoon {...props} />).equals(
         <div className='bulbs-poll-coming-soon'>
           <div className='bulbs-poll-coming-soon-message'>Poll Coming Soon</div>
           <VoteButton/>
         </div>
-      );
+      )).to.be.true;
     });
   });
 });

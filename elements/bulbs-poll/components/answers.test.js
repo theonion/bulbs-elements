@@ -1,8 +1,9 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
 import Answers from './answers';
 import Answer from './answer';
 import ImageAnswer from './image-answer';
-import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 
 describe('<bulbs-poll> <Answers>', function () {
   context('with no answers', function () {
@@ -16,9 +17,9 @@ describe('<bulbs-poll> <Answers>', function () {
         poll: { data: { answer_type: 'text' } },
       };
 
-      assertJSXEqual(this.test.title, <Answers {...props}/>,
-        <ul className="bulbs-poll-answers"></ul>
-      );
+      expect(shallow(<Answers {...props}/>).equals(
+        <ul className="bulbs-poll-answers">{[]}</ul>
+      )).to.be.true;
     });
   });
 
@@ -40,18 +41,18 @@ describe('<bulbs-poll> <Answers>', function () {
         poll: { data: { answer_type: 'text' } },
       };
 
-      assertJSXEqual(this.test.title, <Answers {...props}/>,
+      expect(shallow(<Answers {...props}/>).equals(
         <ul className="bulbs-poll-answers">
           <Answer
             answer={answer1}
-            selectAnswer={selectAnswer}
+            {...props}
           />
           <Answer
             answer={answer1}
-            selectAnswer={selectAnswer}
+            {...props}
           />
         </ul>
-      );
+      )).to.be.true;
     });
   });
 
@@ -73,18 +74,18 @@ describe('<bulbs-poll> <Answers>', function () {
         poll: { data: { answer_type: 'imageText' } },
       };
 
-      assertJSXEqual(this.test.title, <Answers {...props}/>,
+      expect(shallow(<Answers {...props}/>).equals(
         <ul className="bulbs-poll-image-answers">
           <ImageAnswer
             answer={answer1}
-            selectAnswer={selectAnswer}
+            {...props}
           />
           <ImageAnswer
             answer={answer1}
-            selectAnswer={selectAnswer}
+            {...props}
           />
         </ul>
-      );
+      )).to.be.true;
     });
   });
 });

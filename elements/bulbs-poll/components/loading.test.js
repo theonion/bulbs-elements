@@ -1,15 +1,16 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import Loading from './loading';
 
 describe('<bulbs-poll> <Loading>', function () {
   context('default', function () {
     it('renders', function () {
-      assertJSXEqual(this.test.title, <Loading/>,
+      expect(shallow(<Loading/>).equals(
         <div className='bulbs-poll-loading'>
           Loading Poll...
         </div>
-      );
+      )).to.be.true;
     });
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRenderer } from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
 import Logo from './logo';
 import Croppedimage from 'bulbs-elements/components/cropped-image';
 
