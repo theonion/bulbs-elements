@@ -6,7 +6,8 @@
   "repository": "git@github.com:theonion/bulbs-elements.git",
   "scripts": {
     "test": "karma start --single-run",
-    "karma": "karma start"
+    "karma": "karma start",
+    "lint": "eslint ."
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",

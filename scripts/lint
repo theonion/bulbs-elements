@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Summary: lint js files.
+
+npm run lint
