@@ -189,7 +189,7 @@
     "operator-assignment": [0, "never"],
     "padded-blocks": [0, "never"],
     "quote-props": [0],
-    "quotes": [1, "single", { "avoidEscape": true }],
+    "quotes": [1, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
     "semi-spacing": [1, { "before": false, "after": true }],
     "semi": [1, "always"],
     "sort-vars": 0,
