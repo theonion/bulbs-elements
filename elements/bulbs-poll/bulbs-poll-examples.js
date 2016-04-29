@@ -1,10 +1,9 @@
-import React from 'react';
 
 let examples = {
   element: 'bulbs-poll',
   examples: {
     'Open For Voting': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-poll
             src="http://localhost:8080/fixtures/bulbs-poll/poll-data.json"
@@ -14,7 +13,7 @@ let examples = {
       },
     },
     'Unpublished': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-poll
             src="http://localhost:8080/fixtures/bulbs-poll/unpublished-poll-data.json"
@@ -24,7 +23,7 @@ let examples = {
       },
     },
     'Closed': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-poll
             src="http://localhost:8080/fixtures/bulbs-poll/closed-poll-data.json"
@@ -34,7 +33,7 @@ let examples = {
       },
     },
     'Cover Image': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-poll
             src="http://localhost:8080/fixtures/bulbs-poll/poll-data-cover-image.json"
@@ -44,7 +43,7 @@ let examples = {
       },
     },
     'Request Error': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-poll src="httx://not-a-valid-url:oldsport/">
           </bulbs-poll>
@@ -52,7 +51,7 @@ let examples = {
       },
     },
     'Results': {
-      render: function () {
+      render: () => {
         let src = 'http://localhost:8080/fixtures/bulbs-poll/results-poll-data.json';
         localStorage.setItem(`bulbs-poll:${src}:vote`, JSON.stringify({
           id: 293849,
@@ -68,7 +67,7 @@ let examples = {
       },
     },
     'avclub local': {
-      render: function () {
+      render: () => {
         let pollId = '230936';
         let src = `http://avclub.local/poll/${pollId}/merged.json`;
         //localStorage.removeItem(`bulbs-poll:${src}:vote`);
@@ -81,7 +80,7 @@ let examples = {
       },
     },
     'starwipe local': {
-      render: function () {
+      render: () => {
         let pollId = '2186';
         let src = `http://starwipe.local/poll/${pollId}/merged.json`;
         //localStorage.removeItem(`bulbs-poll:${src}:vote`);
@@ -92,7 +91,7 @@ let examples = {
           </bulbs-poll>
         `;
       },
-    }
+    },
   },
 };
 export default examples;
