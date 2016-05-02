@@ -13,14 +13,14 @@ export default function Root (props) {
   else if (controller.revealed) {
     return (
       <div className={className}>
-        <Revealed video={video} actions={actions} />;
+        <Revealed video={video} actions={actions}/>
       </div>
     );
   }
   else {
     return (
       <div className={className}>
-        <Cover video={video} actions={actions} />;
+        <Cover video={video} actions={actions}/>
       </div>
     );
   }

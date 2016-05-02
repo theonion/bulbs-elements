@@ -1,5 +1,9 @@
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
+setImmediate(() => {
+  window.AnalyticsManager = window.avclubAnalytics;
+});
+
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import VideoPlayer from 'videohub-player';
@@ -12,8 +16,10 @@ global.BULBS_ELEMENTS_ANALYTICS_MANAGER = {
 
 global.ga = () => {};
 
+let prefixCount = 0;
 function makeGaPrefix () {
-  return 'video-player-${prefixCount++}';
+  // ga demands tracker names be alphanumeric
+  return `videoplayer${prefixCount++}`;
 }
 
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
@@ -40,7 +46,7 @@ export default class Revealed extends React.Component {
     let gaPrefix = makeGaPrefix();
     ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
     let targeting = this.props.video.targeting;
-    let prefixedSet = `${gaPrefix}.prefixedSet`;
+    let prefixedSet = `${gaPrefix}.set`;
 
     ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
     ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
@@ -50,11 +56,14 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension6', targeting.target_special_coverage || 'None');
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
 
-    new VideoPlayer(this.refs.video, { // eslint-disable-line no-new
-      ga: {
-        gaPrefix,
-      },
-    });
+    let playerOptions = Object.assign({}, this.props.video.videojs_options);
+    playerOptions.pluginConfig.ga = {
+      gaPrefix,
+      eventCategory: `Video:${targeting.target_channel}`,
+      eventLabel: window.location.href,
+    };
+
+    new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new
   }
 
   render () {

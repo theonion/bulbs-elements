@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 export default class Logo extends Component {
   shouldWrapWithLink() {

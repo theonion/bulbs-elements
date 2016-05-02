@@ -32,6 +32,32 @@ bulbs-video {
     display: block;
   }
 
+  .player {
+    // the `.player` section is fighting against
+    // some `rem` units in videojs.
+
+    // rems are cool, but our properties have different
+    // document font sizes:  10px, 16px, 14px, 16.0016px, 10px
+    // so we can't take advantage of them until that is resolved.
+    .vjs-default-skin .vjs-autoplay-toggle-button div .vjs-control-text {
+      top: 0;
+    }
+
+    .vjs-control-bar .vjs-progress-control {
+      font-size: 15px;
+    }
+
+    .vjs-current-time-display,
+    .vjs-time-controls,
+    .vjs-time-divider,
+    .vjs-duration,
+    .vjs-remaining-time {
+      font-size: 10px;
+      line-height: 30px;
+      margin: 0;
+    }
+  }
+
   .bulbs-video-root {
     @include aspect-ratio(16, 9);
   }
@@ -74,4 +100,6 @@ bulbs-video {
     width: 100% !important;
     height: 100% !important;
   }
+
+
 }

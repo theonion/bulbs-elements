@@ -27,4 +27,5 @@ config.module.loaders = [
   loaders.files,
 ];
 
+config.output.publicPath = '/';
 module.exports = config;
