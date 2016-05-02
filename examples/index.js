@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 
-import React from 'react';
+import { React, PropTypes } from 'react';
 import { Link } from 'react-router';
 import examples from './element-examples';
 import inflection from 'inflection';

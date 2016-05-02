@@ -21,7 +21,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     preambleText = 'Presented by';
     campaign = {
       id: 123,
-      image_id: 1,
+      image_url:'http://example.com/img.jpg',
       clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
       active: true,
@@ -59,16 +59,16 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
   });
 
-  describe('hasImageId', () => {
-    it('returns true when the campaign has an image_id', () => {
+  describe('hasImageUrl', () => {
+    it('returns true when the campaign has an image_url', () => {
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasImageId()).to.equal(true);
+      expect(subject.hasImageUrl()).to.equal(true);
     });
 
-    it('returns false when the campaign has no image_id', () => {
-      delete props.campaign.image_id;
+    it('returns false when the campaign has no image_url', () => {
+      delete props.campaign.image_url;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasImageId()).to.equal(false);
+      expect(subject.hasImageUrl()).to.equal(false);
     });
   });
 
@@ -86,26 +86,26 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('hasSponsorInfo', () => {
-    it('returns true with either a name or image_id present', () => {
+    it('returns true with either a name or image_url present', () => {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorInfo()).to.equal(true);
     });
 
-    it('returns true when there is a name, and NO image_id', () => {
-      delete props.campaign.image_id;
+    it('returns true when there is a name, and NO image_url', () => {
+      delete props.campaign.image_url;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorInfo()).to.equal(true);
     });
 
-    it('returns true when there is an image_id, and NO name', () => {
+    it('returns true when there is an image_url, and NO name', () => {
       delete props.campaign.name;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorInfo()).to.equal(true);
     });
 
-    it('returns false when there is no image_id or name', () => {
+    it('returns false when there is no image_url or name', () => {
       delete props.campaign.name;
-      delete props.campaign.image_id;
+      delete props.campaign.image_url;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasSponsorInfo()).to.equal(false);
     });
@@ -125,7 +125,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
     it('returns false when there is no sponsor info', () => {
       delete props.campaign.name;
-      delete props.campaign.image_id;
+      delete props.campaign.image_url;
       subject = new CampaignDisplayRoot(props);
       expect(subject.isRenderable()).to.equal(false);
     });
@@ -179,23 +179,16 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('logoComponent', () => {
-    it('passes the logoCrop property to the logo', () => {
-      props.logoCrop = logoCrop;
-      shallowRenderer.render(<CampaignDisplayRoot {...props} />);
-      subject = shallowRenderer.getRenderOutput();
-      expect(subject.props.children[1].props.crop).to.equal(logoCrop);
-    });
-
-    context('when the campaign has an image_id', () => {
+    context('when the campaign has an image_url', () => {
       it('returns a Logo component', () => {
         subject = new CampaignDisplayRoot(props);
         expect(subject.logoComponent().type).to.equal(Logo);
       });
     });
 
-    context('when the campaign has no image_id', () => {
+    context('when the campaign has no image_url', () => {
       it('returns a SponsorName component', () => {
-        delete props.campaign.image_id;
+        delete props.campaign.image_url;
         subject = new CampaignDisplayRoot(props);
         expect(subject.logoComponent().type).to.equal(SponsorName);
       });
@@ -301,9 +294,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
 
-    context('with missing image_id', () => {
+    context('with missing image_url', () => {
       beforeEach(() => {
-        delete props.campaign.image_id;
+        delete props.campaign.image_url;
         shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
         subject = shallowRenderer.getRenderOutput();
       });
@@ -345,7 +338,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       campaign = {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
-        image_id: 1,
+        image_url: 'http://example.com/img.jpg',
         name: 'Test Campaign',
         active: true,
       };
@@ -374,9 +367,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.props['data-track-label']).to.equal(props.campaign.clickthrough_url);
     });
 
-    context('with missing image_id', () => {
+    context('with missing image_url', () => {
       beforeEach(() => {
-        delete props.campaign.image_id;
+        delete props.campaign.image_url;
         shallowRenderer.render(<CampaignDisplayRoot {...props}/>);
         subject = shallowRenderer.getRenderOutput();
       });
@@ -410,7 +403,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       campaign = {
         id: 123,
         clickthrough_url: 'http://example.com/campaign',
-        image_id: 1,
+        image_url: 'http://example.com/img.jpg',
         active: true,
       };
       props = {

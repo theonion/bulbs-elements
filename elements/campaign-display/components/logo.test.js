@@ -1,21 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Logo from './logo';
-import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 describe('<campaign-display> <Logo>', () => {
   let clickthroughUrl = 'http://example.com';
+  let imageUrl = 'http://example.com/img.jpg';
   let props;
   let subject;
 
-  describe('shouldWrapLink', function() {
-    beforeEach(() => {
-      props = {
-        image_id: 1,
-        name: 'Test Campaign',
-      };
-    });
+  beforeEach(() => {
+    props = {
+      name: 'Test Campaign',
+      image_url: imageUrl,
+    };
+  });
 
+  describe('shouldWrapLink', function() {
     it('returns false when no-link attribute is present', () => {
       props.noLink = '';
       subject = new Logo(props);
@@ -29,70 +29,26 @@ describe('<campaign-display> <Logo>', () => {
     });
   });
 
-  context('without a clickthrough_url', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
-    it('should render the image container with the required attributes', () => {
-      expect(subject.equals(
+  describe('render', () => {
+    it('should render an image with the given src', () => {
+      expect(shallow(<Logo {...props}/>).equals(
         <div className='campaign-display-logo'>
-          <CroppedImage
-            imageId={1}
-            crop={undefined}
-          />
+          <img src={imageUrl}/>
         </div>
       )).to.be.true;
     });
-  });
 
-  context('with a crop', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-        crop: 'custom-crop',
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
-    it('allows the crop value to be configured', () => {
-      expect(subject.equals(
-        <div className='campaign-display-logo'>
-          <CroppedImage
-            imageId={1}
-            crop='custom-crop'
-          />
-        </div>
-      )).to.be.true;
-    });
-  });
-
-  context('with a clickthrough_url', () => {
-    beforeEach(() => {
-      props = {
-        name: 'Test Campaign',
-        image_id: 1,
-        clickthrough_url: clickthroughUrl,
-      };
-      subject = shallow(<Logo {...props}/>);
-    });
-
-    it('wraps the image in a link to the clickthrough_url', () => {
-      expect(subject.equals(
-        <div className='campaign-display-logo'>
-          <a href={clickthroughUrl}>
-            <CroppedImage
-              imageId={1}
-              crop={undefined}
-            />
-          </a>
-        </div>
-      )).to.be.true;
+    context('with a clickthrough_url', () => {
+      it('wraps the image in a link to the clickthrough_url', () => {
+        props.clickthrough_url = clickthroughUrl;
+        expect(shallow(<Logo {...props}/>).equals(
+          <div className='campaign-display-logo'>
+            <a href={clickthroughUrl}>
+              <img src={imageUrl}/>
+            </a>
+          </div>
+        )).to.be.true;
+      });
     });
   });
 });
