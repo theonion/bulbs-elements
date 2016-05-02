@@ -16,18 +16,16 @@ describe('<campaign-display>', () => {
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
     CampaignDisplay.prototype.setState = chai.spy();
 
-    crop = '16x9';
     placement = 'top';
     src = 'http://example.com';
     campaign = {
       active: true,
       clickthrough_url: 'http://example.com/clickthrough',
-      image_id: 1234,
+      image_url: 'http://example.com/campain-img.jpg',
       name: 'Test Campaign',
     }
 
     props = {
-      logoCrop: crop,
       noLink: '',
       placement,
       src,
