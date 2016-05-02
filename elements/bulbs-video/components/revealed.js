@@ -4,36 +4,36 @@ import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import VideoPlayer from 'videohub-player';
 
-window.AnalyticsManager = {
+global.BULBS_ELEMENTS_ANALYTICS_MANAGER = {
   sendEvent() {
     // no-op
   },
 };
 
-window.ga = () => {};
+global.ga = () => {};
 
 function makeGaPrefix () {
   return 'video-player-${prefixCount++}';
 }
 
-window.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
+global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
 
 export default class Revealed extends React.Component {
   componentDidMount () {
     invariant(
-      window.jQuery,
+      global.jQuery,
       '`<bulbs-video>` requires `jQuery` to be in global scope.'
     );
     invariant(
-      window.ga,
-      '`<bulbs-video>` requires `ga` (google analyntics) to be in global scope.'
+      global.ga,
+      '`<bulbs-video>` requires `ga` to be in global scope.'
     );
     invariant(
-      window.AnalyticsManager,
-      '`<bulbs-video>` reuqires `AnalyticsManager` to be in global scope.'
+      global.BULBS_ELEMENTS_ANALYTICS_MANAGER,
+      '`<bulbs-video>` requires `BULBS_ELEMENTS_ANALYTICS_MANAGER` to be in global scope.'
     );
     invariant(
-      window.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
+      global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       '`<bulbs-video>` requires `BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID` to be in global scope.'
     );
 

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
+
 import Revealed from './revealed';
 import video from '../fixtures/video.json';
 
@@ -53,5 +54,28 @@ describe('<bulbs-video> <Revealed>', () => {
         />
       );
     });
+  });
+
+  describe('componentDidMount globalsCheck', () => {
+    const globals = [
+      'jQuery', 'ga', 'BULBS_ELEMENTS_ANALYTICS_MANAGER',
+      'BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID',
+    ];
+
+    globals.forEach((name) => {
+      it(`${name} MUST be available globally`, () => {
+        let _global = global[name];
+        delete global[name];
+        let subject = new Revealed({ video });
+        expect(() => {
+          subject.componentDidMount();
+        }).to.throw(`\`<bulbs-video>\` requires \`${name}\` to be in global scope.`);
+        global[name] = _global;
+      });
+    });
+  });
+
+  describe('componentDidMount', () => {
+    beforeEach({});
   });
 });
