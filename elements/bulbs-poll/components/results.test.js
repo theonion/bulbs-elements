@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import Cover from './cover';
 import Results from './results';
 import ResultsList from './results-list';
@@ -29,7 +30,7 @@ describe('<bulbs-poll> <Results>', function () {
         },
       };
 
-      assertJSXEqual(this.test.title, <Results {...props} />,
+      expect(shallow(<Results {...props} />).equals(
         <div className='bulbs-poll-results'>
           <Cover poll={poll} />
           <ResultsList
@@ -41,7 +42,7 @@ describe('<bulbs-poll> <Results>', function () {
             Thanks for voting!
           </div>
         </div>
-      );
+      )).to.be.true;
     });
   });
 });

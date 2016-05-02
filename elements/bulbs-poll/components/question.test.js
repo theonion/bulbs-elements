@@ -1,4 +1,5 @@
 import React from 'react';
+import { shallow } from 'enzyme';
 
 import Question from './question';
 import RequestError from './request-error';
@@ -6,12 +7,12 @@ import Cover from './cover';
 import Answers from './answers';
 import VoteButton from './vote-button';
 
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
-
 describe('<bulbs-poll> <Question>', function () {
   it('renders the question', function () {
     let selectAnswer = function () {};
     let makeVoteRequest = function () {};
+    let resetVoteRequest = function () {};
+    let resetFetchPollData = function () {};
 
     let answers = [];
     let selectedAnswer = {};
@@ -32,28 +33,43 @@ describe('<bulbs-poll> <Question>', function () {
     let props = {
       actions: {
         selectAnswer, makeVoteRequest,
+        resetFetchPollData, resetVoteRequest,
       },
       data: {
         vote, poll, answers, selectedAnswer,
       },
     };
 
-    assertJSXEqual(this.test.title, <Question {...props} />,
+    expect(shallow(<Question {...props} />).equals(
       <div>
         <Cover poll={poll} />
-        <RequestError error={pollRequestError} />
-        <RequestError error={voteRequestError} />
+
+        <RequestError
+          error={pollRequestError}
+          reset={resetFetchPollData}
+        >
+          Could not connect to network when fetching poll data.
+        </RequestError>
+
+        <RequestError
+          error={voteRequestError}
+          reset={resetVoteRequest}
+        >
+          Could not connect to network when placing your vote.
+        </RequestError>
+
         <Answers
-          answers={answers}
           poll={poll}
+          answers={answers}
           selectAnswer={selectAnswer}
           selectedAnswer={selectedAnswer}
         />
-        <VoteButton
+
+          <VoteButton
           selectedAnswer={selectedAnswer}
           makeVoteRequest={makeVoteRequest}
         />
       </div>
-    );
+    )).to.be.true;
   });
 });

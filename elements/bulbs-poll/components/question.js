@@ -38,10 +38,10 @@ export default function Question (props) {
       </RequestError>
 
       <Answers
+        poll={poll}
         answers={poll.data.answers}
         selectAnswer={selectAnswer}
         selectedAnswer={selectedAnswer}
-        poll={poll}
       />
 
       <VoteButton
