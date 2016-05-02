@@ -6,12 +6,15 @@ export default function Cover (props) {
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
 
   return (
-    <div className='bulbs-video-cover'>
-      <button
-        onClick={actions.revealPlayer}
+    <div
+      className='bulbs-video-cover'
+      onClick={actions.revealPlayer}
+    >
+      <div
+        className='bulbs-video-play-button'
       >
         ▶
-      </button>
+      </div>
       <CroppedImage
         className='bulbs-video-poster'
         imageId={imageId}

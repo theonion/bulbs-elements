@@ -41,11 +41,17 @@ describe('<bulbs-video> <Cover>', function () {
       expect(subject.find('.bulbs-video-cover')).to.have.length(1);
     });
 
+    it('has a click handler', () => {
+      expect(subject).to.have.prop('onClick', Cover.prototype.revealPlayer);
+    });
+
     it('renders a play button', () => {
       expect(subject).to.contain(
-        <button onClick={revealPlayer}>
+        <div
+          className='bulbs-video-play-button'
+        >
           ▶
-        </button>
+        </div>
       );
     });
 
