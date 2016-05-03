@@ -33,7 +33,7 @@ bulbs-video {
   }
 
   .player {
-    // the `.player` section is fighting against
+    // this `.player` section is fighting against
     // some `rem` units in videojs.
 
     // rems are cool, but our properties have different
@@ -86,6 +86,7 @@ bulbs-video {
     height: 100%;
 		cursor: pointer;
     .bulbs-video-play-button {
+      /* These were copiedfrom the browser dev tools */
 			background-color: #07141e;
 			background-color: rgba(7,20,30,0.7);
 			border-radius: .8em;
@@ -114,6 +115,7 @@ bulbs-video {
 		}
 
 		&:hover .bulbs-video-play-button {
+      /* These were copiedfrom the browser dev tools */
 			outline: 0;
 			border-color: #fff;
 			background-color: #505050;

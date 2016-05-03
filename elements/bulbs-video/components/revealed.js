@@ -16,13 +16,13 @@ global.BULBS_ELEMENTS_ANALYTICS_MANAGER = {
 
 global.ga = () => {};
 
+global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
+
 let prefixCount = 0;
 function makeGaPrefix () {
   // ga demands tracker names be alphanumeric
   return `videoplayer${prefixCount++}`;
 }
-
-global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
 
 export default class Revealed extends React.Component {
   componentDidMount () {
@@ -45,6 +45,7 @@ export default class Revealed extends React.Component {
 
     let gaPrefix = makeGaPrefix();
     ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
+
     let targeting = this.props.video.targeting;
     let prefixedSet = `${gaPrefix}.set`;
 
@@ -61,6 +62,15 @@ export default class Revealed extends React.Component {
       gaPrefix,
       eventCategory: `Video:${targeting.target_channel}`,
       eventLabel: window.location.href,
+    };
+
+    playerOptions.pluginConfig.endcard.allowCountdown = !!this.props.autoplayNext;
+
+    playerOptions.pluginConfig.vpbc = {
+      vpCategory: this.props.video.category,
+      vpFlags: [''],
+      tags: this.props.video.tags,
+      optional: { flashEnabled: true, },
     };
 
     new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new
@@ -94,4 +104,5 @@ export default class Revealed extends React.Component {
 
 Revealed.propTypes = {
   video: PropTypes.object.isRequired,
+  autoplayNext: PropTypes.bool,
 };

@@ -5,7 +5,10 @@ import Cover from './cover';
 
 export default function Root (props) {
   let className = 'bulbs-video-root player';
-  let { actions, video, controller } = props;
+  let {
+    actions, video, controller,
+    autoplayNext
+  } = props;
 
   if (!video) {
     return <div className={className} />;
@@ -13,7 +16,11 @@ export default function Root (props) {
   else if (controller.revealed) {
     return (
       <div className={className}>
-        <Revealed video={video} actions={actions}/>
+        <Revealed
+          autoplayNext={autoplayNext}
+          video={video}
+          actions={actions}
+        />
       </div>
     );
   }
