@@ -57,8 +57,11 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('componentDidMount globalsCheck', () => {
+    global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
+    global.ga = () => {}
+
     const globals = [
-      'jQuery', 'ga', 'BULBS_ELEMENTS_ANALYTICS_MANAGER',
+      'jQuery', 'ga',
       'BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID',
     ];
 

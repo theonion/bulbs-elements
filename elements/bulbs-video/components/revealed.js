@@ -1,22 +1,28 @@
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 setImmediate(() => {
-  window.AnalyticsManager = window.avclubAnalytics;
+  // FIXME: videohub-player should define it's own analytics manager
+  if (window.avclubAnalytics) {
+    window.AnalyticsManager = avclubAnalytics;
+  }
+  else if (window.onionan) {
+    window.AnalyticsManager = onionan;
+  }
+  else if (window.clickholean) {
+    window.AnalyticsManager = clickholean;
+  }
+  else if (window.starwipe) {
+    window.AnalyticsManager = starwipe.analyticsManager;
+  }
 });
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import VideoPlayer from 'videohub-player';
 
-global.BULBS_ELEMENTS_ANALYTICS_MANAGER = {
-  sendEvent() {
-    // no-op
-  },
-};
-
-global.ga = () => {};
-
-global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'nix';
+// FIXME: where should this be defined? Per-app?
+//  Or in some better sort of settings file here?
+global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 
 let prefixCount = 0;
 function makeGaPrefix () {
@@ -33,10 +39,6 @@ export default class Revealed extends React.Component {
     invariant(
       global.ga,
       '`<bulbs-video>` requires `ga` to be in global scope.'
-    );
-    invariant(
-      global.BULBS_ELEMENTS_ANALYTICS_MANAGER,
-      '`<bulbs-video>` requires `BULBS_ELEMENTS_ANALYTICS_MANAGER` to be in global scope.'
     );
     invariant(
       global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
