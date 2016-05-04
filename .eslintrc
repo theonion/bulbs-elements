@@ -9,6 +9,7 @@
     "chai": true,
     "expect": true,
     "assert": true,
+    "sinon": true,
   },
   "ecmaFeatures": {
     "arrowFunctions": true,

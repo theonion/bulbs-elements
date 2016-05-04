@@ -2,21 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DfpPixel from './dfp-pixel';
 
-function restoreConsole(oldConsole) {
-  window.console = oldConsole;
-}
-
 describe('<campaign-display> <DfpPixel>', () => {
 
   let reactContainer;
   let renderSubject;
   let oldConsole;
   beforeEach(() => {
-    oldConsole = window.console;
-    window.console = {
-      warn: chai.spy(),
-      log: chai.spy(),
-    };
+    ['warn', 'log', 'error'].forEach(function(method) {
+      sinon.stub(window.console, method);
+    });
     reactContainer = document.createElement('react-container');
     document.body.appendChild(reactContainer);
 
@@ -32,7 +26,9 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   afterEach(() => {
     reactContainer.remove();
-    restoreConsole(oldConsole);
+    ['warn', 'log', 'error'].forEach(function(method) {
+      window.console[method].restore();
+    });
   });
 
   context('on render', () => {
@@ -45,21 +41,20 @@ describe('<campaign-display> <DfpPixel>', () => {
     });
 
     it('should call AdsManager.loadAds', () => {
-      let loadAds = chai.spy();
+      let loadAds = sinon.spy();
       window.BULBS_ELEMENTS_ADS_MANAGER = { loadAds };
 
       let subject = renderSubject();
 
       delete window.BULBS_ELEMENTS_ADS_MANAGER;
 
-      expect(loadAds).to.have.been.called.with(subject.refs.container);
+      expect(loadAds).to.have.been.calledWith(subject.refs.container);
     });
 
     it('should error out if AdsManager is not available', function () {
-      chai.spy.on(console, 'warn');
       renderSubject();
 
-      expect(console.warn).to.have.been.called.with(
+      expect(console.warn).to.have.been.calledWith(
         '<campaign-display> pixel will not trigger since ' +
         '`window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an ' +
         'AdsManager instance.'
@@ -71,7 +66,7 @@ describe('<campaign-display> <DfpPixel>', () => {
 
       renderSubject();
 
-      expect(console.warn).to.have.been.called.with(
+      expect(console.warn).to.have.been.calledWith(
         '<campaign-display> pixel will not trigger since ' +
         '`window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an ' +
         'AdsManager instance.'
@@ -96,11 +91,9 @@ describe('<campaign-display> <DfpPixel>', () => {
     });
 
     it('should require ad unit placement', () => {
-      chai.spy.on(console, 'error');
-
       renderSubject({ placement: window.undefined });
 
-      expect(console.error).to.have.been.called.with(
+      expect(console.error).to.have.been.calledWith(
         'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'
       );
     });
@@ -113,9 +106,8 @@ describe('<campaign-display> <DfpPixel>', () => {
     });
 
     it('should require campaign id', () => {
-      chai.spy.on(console, 'error');
       renderSubject({ campaignId: window.undefined });
-      expect(console.error).to.have.been.called.with(
+      expect(console.error).to.have.been.calledWith(
         'Warning: Failed propType: Required prop `campaignId` was not specified in `DfpPixel`.'
       );
     });

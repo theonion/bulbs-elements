@@ -58,31 +58,23 @@ describe('<bulbs-poll> PollField', function () {
 
   describe('fetchPollData', function () {
     let src = 'http://example.tld/poll/:id';
-    let requestSpy = chai.spy.on(util, 'makeRequest');
 
     beforeEach(function () {
-      // just preventing making a network call here
       fetchMock.mock(src, {});
     });
 
-    beforeEach(function () {
-      requestSpy.reset();
-    });
-
-    afterEach(function () {
-      requestSpy.reset();
-      fetchMock.restore();
-    });
-
     it('makes GET request to the poll endpoint', function () {
+      let requestSpy = sinon.stub(util, 'makeRequest');
       actions.fetchPollData({}, src, store);
 
-      requestSpy.should.have.been.called.with(src, {
+      requestSpy.should.have.been.calledWith(src, {
         credentials: 'include',
         success: store.actions.fetchPollDataSuccess,
         failure: store.actions.fetchPollDataFailure,
         error: store.actions.fetchPollDataError,
       });
+
+      requestSpy.restore();
     });
 
     it('sets requestInFlight to true', function () {

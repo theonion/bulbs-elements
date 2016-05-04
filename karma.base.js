@@ -8,9 +8,8 @@ module.exports = {
   // frameworks to use
   // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
   frameworks: [
-    'chai-spies',
-    'chai',
     'mocha',
+    'sinon-chai',
     'fixture',
     'bower',
   ],
@@ -23,8 +22,7 @@ module.exports = {
   ],
 
   // list of files to exclude
-  exclude: [
-  ],
+  exclude: [],
 
   // preprocess matching files before serving them to the browser
   // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -65,6 +63,9 @@ module.exports = {
     mocha: {
       reporter: 'html',
       ui: 'bdd',
+    },
+    chai: {
+      includeStack: true
     },
   },
 

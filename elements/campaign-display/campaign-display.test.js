@@ -14,7 +14,7 @@ describe('<campaign-display>', () => {
   beforeEach(() => {
     // TODO: Prevent setState warnings spamming the console
     // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
-    CampaignDisplay.prototype.setState = chai.spy();
+    CampaignDisplay.prototype.setState = sinon.spy();
 
     placement = 'top';
     src = 'http://example.com';
@@ -61,9 +61,9 @@ describe('<campaign-display>', () => {
   describe('initialDispatch', () => {
     it('fetches campaign data for display', () => {
       subject = new CampaignDisplay(props);
-      let spy = chai.spy.on(subject.store.actions, 'fetchCampaign');
+      let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
       subject.initialDispatch();
-      expect(spy).to.have.been.called.with(src);
+      expect(spy).to.have.been.calledWith(src);
     });
   });
 });
