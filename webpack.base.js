@@ -129,7 +129,7 @@ exports.loaders = {
   },
   files: {
     test: /\.(ttf|eot|svg|woff)$/,
-    loader: 'file',
+    loader: 'file-loader',
     include: includeDirs,
     query: {
       name: 'files/[name].[ext]',
