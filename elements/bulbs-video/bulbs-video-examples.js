@@ -5,6 +5,7 @@ let examples = {
       render () {
         return `
           <bulbs-video
+            twitter-handle="avclub"
             src="//videohub.local/video/3916.json"
           >
           </bulbs-video>

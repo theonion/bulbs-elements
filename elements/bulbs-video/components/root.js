@@ -7,7 +7,7 @@ export default function Root (props) {
   let className = 'bulbs-video-root player';
   let {
     actions, video, controller,
-    autoplayNext
+    autoplayNext, twitterHandle,
   } = props;
 
   if (!video) {
@@ -18,6 +18,7 @@ export default function Root (props) {
       <div className={className}>
         <Revealed
           autoplayNext={autoplayNext}
+          twitterHandle={twitterHandle}
           video={video}
           actions={actions}
         />
@@ -35,6 +36,8 @@ export default function Root (props) {
 
 Root.propTypes = {
   actions: PropTypes.object.isRequired,
+  autoplayNext: PropTypes.bool,
+  twitterHandle: PropTypes.string,
   controller: PropTypes.object.isRequired,
   video: PropTypes.object,
 };

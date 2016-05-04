@@ -33,6 +33,7 @@ export default class BulbsVideo extends BulbsElement {
     return (
       <BulbsVideoRoot
         {...this.state}
+        twitterHandle={this.props.twitterHandle}
         actions={this.store.actions}
       />
     );
@@ -51,6 +52,7 @@ Object.assign(BulbsVideo, {
     loop: PropTypes.bool,
     mute: PropTypes.bool,
     src: PropTypes.string.isRequired,
+    twitterHandle: PropTypes.isRequired,
     autoplayNext: PropTypes.bool,
   },
 });

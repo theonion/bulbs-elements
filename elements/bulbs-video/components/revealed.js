@@ -75,6 +75,13 @@ export default class Revealed extends React.Component {
       optional: { flashEnabled: true, },
     };
 
+    playerOptions.pluginConfig.sharetools = {
+      shareUrl: window.location.href,
+      shareTitle: this.props.video.title,
+      shareDescription: '',
+      twitterHandle: this.props.twitterHandle,
+    };
+
     new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new
   }
 
@@ -107,4 +114,5 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   video: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
+  twitterHandle: PropTypes.string,
 };
