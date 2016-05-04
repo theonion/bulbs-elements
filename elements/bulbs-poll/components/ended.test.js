@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import PollEnded from './ended';
 import Cover from './cover';
 import ResultsList from './results-list';
@@ -18,7 +19,7 @@ describe('<bulbs-poll> <PollEnded>', function () {
         },
       };
 
-      assertJSXEqual(this.test.title, <PollEnded {...props} />,
+      expect(shallow(<PollEnded {...props} />).equals(
         <div className='bulbs-poll-ended'>
           <Cover poll={poll}/>
           <ResultsList
@@ -30,7 +31,7 @@ describe('<bulbs-poll> <PollEnded>', function () {
             Poll Closed
           </div>
         </div>
-      );
+      )).to.be.true;
     });
   });
 });

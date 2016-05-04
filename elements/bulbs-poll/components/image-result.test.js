@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import ImageResult from './image-result';
 import SelectionMarker from './selection-marker';
 
@@ -23,7 +24,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
         winningAnswers: [],
       };
 
-      assertJSXEqual(this.test.title, <ImageResult {...props} />,
+      expect(shallow(<ImageResult {...props} />).equals(
         <li className='bulbs-poll-image-result'>
           <div className="result-image-list-item">
             <div
@@ -44,7 +45,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
             33%
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -67,7 +68,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
         winningAnswers: [],
       };
 
-      assertJSXEqual(this.test.title, <ImageResult {...props} />,
+      expect(shallow(<ImageResult {...props} />).equals(
         <li className='bulbs-poll-image-result'>
           <div className="result-image-list-item">
             <div
@@ -88,7 +89,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
             0%
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
   context('winning vote', function () {
@@ -113,7 +114,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
         }],
       };
 
-      assertJSXEqual(this.test.title, <ImageResult {...props} />,
+      expect(shallow(<ImageResult {...props} />).equals(
         <li className='bulbs-poll-image-result bulbs-poll-result-winning'>
           <div className="result-image-list-item">
             <div
@@ -134,7 +135,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
             33%
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -167,7 +168,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
         }],
       };
 
-      assertJSXEqual(this.test.title, <ImageResult {...props} />,
+      expect(shallow(<ImageResult {...props} />).equals(
         <li className='bulbs-poll-image-result bulbs-poll-result-selected'>
           <div className="result-image-list-item">
             <div
@@ -188,7 +189,7 @@ describe('<bulbs-poll> <ImageResult>', function () {
             33%
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 });

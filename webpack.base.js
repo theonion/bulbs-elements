@@ -9,11 +9,13 @@ var autoprefixer = require('autoprefixer');
 var initial      = require('postcss-initial');
 var stylelint    = require('stylelint');
 
-var elementsDir = path.join(__dirname, '/elements');
-var elementDirs = glob.sync(path.join(elementsDir, '/*/'));
-var libDir = path.join(__dirname, '/lib');
-var examplesDir = path.join(__dirname, '/examples');
-var testDir = path.join(__dirname, '/test');
+const elementsDir = path.join(__dirname, 'elements');
+const elementDirs = glob.sync(path.join(elementsDir, '/*/'));
+const libDir = path.join(__dirname, 'lib');
+const examplesDir = path.join(__dirname, 'examples');
+const testDir = path.join(__dirname, 'test');
+const bowerDir = path.join(__dirname, 'bower_components');
+const npmDir = path.join(__dirname, 'node_modules');
 
 var includeDirs = [
   elementsDir,
@@ -83,7 +85,16 @@ exports.loaders = {
   json: {
     test: /\.json$/,
     loaders: ['json'],
-    include: includeDirs,
+    include: [
+      elementsDir,
+      libDir,
+      examplesDir,
+      testDir,
+      bowerDir,
+      // including npmDir for json-loader
+      // chai-enzyme includes some json files
+      npmDir,
+    ],
   },
   sass: {
     test: /\.scss$/,

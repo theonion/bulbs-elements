@@ -11,11 +11,14 @@ module.exports = {
     'mocha',
     'sinon-chai',
     'fixture',
+    'bower',
   ],
 
   // list of files / patterns to load in the browser
   files: [
-    path.join(__dirname, 'test/load-all-tests.js'),
+    // test/index.js loads all our tests
+    // and sets up test helpers (chai-enzyme, etc.)
+    path.join(__dirname, 'test/index.js'),
   ],
 
   // list of files to exclude
@@ -34,6 +37,11 @@ module.exports = {
     devtool: 'inline-source-map',
     resolve: webpackConfig.resolve,
     module: webpackConfig.module,
+    externals: {
+      'react/addons': true,
+      'react/lib/ExecutionEnvironment': true,
+      'react/lib/ReactContext': true,
+    },
   },
 
   webpackMiddleware: {
@@ -41,6 +49,10 @@ module.exports = {
       colors: true,
     },
   },
+
+  bowerPackages: [
+    'jquery',
+  ],
 
   // test results reporter to use
   // possible values: 'dots', 'progress'

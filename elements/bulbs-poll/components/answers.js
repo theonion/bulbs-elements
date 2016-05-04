@@ -14,6 +14,7 @@ export default function Answers (props) {
   let classNames = classnames(listClassName, {
     'bulbs-poll-answers-selected': props.selectedAnswer.id,
   });
+
   return (
     <ul className={classNames}>
       {

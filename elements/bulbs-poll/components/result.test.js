@@ -1,5 +1,6 @@
 import React from 'react';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
+import { shallow } from 'enzyme';
+
 import Result from './result';
 import SelectionMarker from './selection-marker';
 
@@ -21,7 +22,7 @@ describe('<bulbs-poll> <Result>', function () {
         winningAnswers: [],
       };
 
-      assertJSXEqual(this.test.title, <Result {...props} />,
+      expect(shallow(<Result {...props} />).equals(
         <li className='bulbs-poll-result'>
           <div
             className='bulbs-poll-answer-bar'
@@ -37,7 +38,7 @@ describe('<bulbs-poll> <Result>', function () {
             </span>
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -58,7 +59,7 @@ describe('<bulbs-poll> <Result>', function () {
         winningAnswers: [],
       };
 
-      assertJSXEqual(this.test.title, <Result {...props} />,
+      expect(shallow(<Result {...props} />).equals(
         <li className='bulbs-poll-result'>
           <div
             className='bulbs-poll-answer-bar'
@@ -74,7 +75,7 @@ describe('<bulbs-poll> <Result>', function () {
             </span>
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -98,7 +99,7 @@ describe('<bulbs-poll> <Result>', function () {
         }],
       };
 
-      assertJSXEqual(this.test.title, <Result {...props} />,
+      expect(shallow(<Result {...props} />).equals(
         <li className='bulbs-poll-result bulbs-poll-result-winning'>
           <div
             className='bulbs-poll-answer-bar'
@@ -114,7 +115,7 @@ describe('<bulbs-poll> <Result>', function () {
             </span>
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 
@@ -145,7 +146,7 @@ describe('<bulbs-poll> <Result>', function () {
         }],
       };
 
-      assertJSXEqual(this.test.title, <Result {...props} />,
+      expect(shallow(<Result {...props} />).equals(
         <li className='bulbs-poll-result bulbs-poll-result-selected'>
           <div
             className='bulbs-poll-answer-bar'
@@ -161,7 +162,7 @@ describe('<bulbs-poll> <Result>', function () {
             </span>
           </div>
         </li>
-      );
+      )).to.be.true;
     });
   });
 });

@@ -1,3 +1,4 @@
 webpack*.js
 karma*.js
 scripts/*
+generator-bulbs-elements

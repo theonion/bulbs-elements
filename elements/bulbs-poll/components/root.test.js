@@ -1,6 +1,7 @@
 import React from 'react';
+import { shallow } from 'enzyme';
+
 import Store from 'bulbs-elements/store';
-import { assertJSXEqual } from 'bulbs-elements/test/assertions';
 import BulbsPollRoot from './root';
 import PollSchema from '../bulbs-poll-schema';
 
@@ -33,7 +34,7 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders PollLoading', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>, <PollLoading />);
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(<PollLoading />)).to.be.true;
     });
   });
 
@@ -43,12 +44,12 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders PollQuestion', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>,
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(
         <PollQuestion
           data={data}
           actions={actions}
         />
-      );
+      )).to.be.true;
     });
   });
 
@@ -59,9 +60,9 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders PollResults', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>,
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(
         <PollResults data={props.data}/>
-      );
+      )).to.be.true;
     });
   });
 
@@ -71,7 +72,7 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders ComingSoon', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>, <ComingSoon/>);
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(<ComingSoon/>)).to.be.true;
     });
   });
 
@@ -81,7 +82,7 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders ComingSoon', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>, <ComingSoon/>);
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(<ComingSoon/>)).to.be.true;
     });
   });
 
@@ -92,9 +93,9 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
     });
 
     it('renders PollEnded', function () {
-      assertJSXEqual(this.test.title, <BulbsPollRoot {...props}/>,
+      expect(shallow(<BulbsPollRoot {...props}/>).equals(
         <PollEnded data={props.data}/>
-      );
+      )).to.be.true;
     });
   });
 });
