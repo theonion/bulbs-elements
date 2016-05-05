@@ -28,6 +28,7 @@ describe('<bulbs-video> <Root>', () => {
     let actions = {};
     let video = {};
     let controller = {};
+    let twitterHandle = 'twitterHandle';
 
     beforeEach(() => {
       subject = shallow(<Root {...props}/>);
@@ -52,6 +53,7 @@ describe('<bulbs-video> <Root>', () => {
           actions,
           video,
           controller: { revealed: true },
+          twitterHandle
         };
       });
 
@@ -65,6 +67,7 @@ describe('<bulbs-video> <Root>', () => {
             video={video}
             actions={actions}
             autoplayNext={undefined}
+            twitterHandle={twitterHandle}
           />
         );
       });
