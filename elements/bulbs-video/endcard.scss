@@ -179,9 +179,11 @@ bulbs-video {
     }
   }
 
+
+
   // Fake Media Query
 
-  &[data-breakpoint="md"] {
+  &.bp-md {
     .endcard {
       font-size: 1.5em;
     } 
@@ -189,14 +191,14 @@ bulbs-video {
       font-size: 15px;
     }
   }
-  &[data-breakpoint="lg"],
-  &[data-breakpoint="xlg"] {
+
+  &.bp-lg {
     .endcard {
       font-size: 2em;
     }
     .embed-div textarea  {
       font-size: 15px;
-    }
+    }    
   }
 
 }
