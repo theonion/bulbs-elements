@@ -1,18 +1,3 @@
-bulbs-video {
-  all: initial;
-  box-sizing: border-box;
-
-  & * {
-    all: initial;
-    box-sizing: border-box;
-
-    &:before {
-      content: "";
-    }
-  }
-}
-
-
 @mixin aspect-ratio($width, $height) {
   position: relative;
   &:before {
@@ -31,6 +16,7 @@ bulbs-video {
 }
 
 bulbs-video {
+
   display: block;
   background-color: black;
   overflow: hidden;
