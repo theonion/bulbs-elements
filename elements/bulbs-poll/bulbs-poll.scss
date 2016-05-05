@@ -6,32 +6,103 @@ $background-color: white;
 // First we do some resetting.
 // This has to be in it's own block because the production build
 // likes to re-order/combine things.
-bulbs-poll {
+
+%bulbs-poll-reset {
   all: initial;
   box-sizing: border-box;
+}
 
-  & * {
-    all: initial;
-    box-sizing: border-box;
+%column {
+  display: flex;
+  flex-direction: column;
+}
 
-    &:before {
-      content: "";
-    }
+%row {
+  display: flex;
+  flex-directon: row;
+}
+
+%wrap-row {
+  @extend %row;
+  flex-wrap: wrap;
+}
+
+%wrap-column {
+  @extend %column;
+  flex-wrap: wrap;
+}
+
+%full-bleed {
+  margin: 0;
+  padding: 0;
+}
+
+%shy {
+  opacity: .5;
+}
+
+%fit {
+  width: 100%;
+  height: 100%;
+}
+
+%low-contrast {
+  background: $low-contrast;
+}
+
+%shy-on-hover {
+  &:hover {
+    @extend %shy;
   }
 }
 
 bulbs-poll {
+  @extend %bulbs-poll-reset;
+
   display: block;
   font-family: sans-serif;
   border-top: 2px solid $accent-color;
   background: #fafafa;
   padding: 1em;
+}
 
-  > div > div {
-    display: flex;
-    flex-direction: column;
-  }
+bulbs-poll * {
+  @extend %bulbs-poll-reset;
+}
 
+// STATES
+// These are the top level states of a poll
+.bulbs-poll-question {
+  @extend %column;
+}
+
+.bulbs-poll-loading {
+  @extend %column;
+}
+
+.bulbs-poll-coming-soon {
+  @extend %column;
+}
+
+.bulbs-poll-ended {
+  @extend %column;
+}
+
+.bolbus-poll-question {
+  @extend %column;
+}
+
+
+.bulbs-poll-image-answers {
+  @extend %row;
+}
+
+.bulbs-poll-answers {
+  @extend %full-bleed;
+}
+// COMPONENTS
+
+bulbs-poll {
   .bulbs-poll-cover {
 
   }
@@ -44,14 +115,7 @@ bulbs-poll {
 
   }
 
-  .bulbs-poll-image-answers {
-    display: flex;
-  }
 
-  .bulbs-poll-answers {
-    margin: 0;
-    padding: 0;
-  }
 
   // overwriting specifity in starwipe
   li.bulbs-poll-image-answer {
@@ -65,12 +129,10 @@ bulbs-poll {
   }
 
   .bulbs-poll-image-answer {
-    display: flex;
-    flex-flow: row wrap;
+    @extend %wrap-row;
 
     img {
-      height: 100%;
-      width: 100%;
+      @extend %fit;
     }
 
     svg {
@@ -81,19 +143,22 @@ bulbs-poll {
   }
 
   .answer-image-text {
-    display: flex;
-    flex-flow: row wrap;
+    @extend %wrap-row;
     padding: 0.2em;
   }
 
   .bulbs-poll-answers-selected :not(.bulbs-poll-answer-selected) span {
-    opacity: 0.5;
+    @extend %shy;
   }
 
-  .bulbs-poll-answer,
+  .bulbs-poll-answer {
+    @extend %row;
+  }
+
   .bulbs-poll-result {
-    background: $low-contrast;
-    display: flex;
+    @extend %row;
+    @extend %low-contrast;
+
     list-style: none;
     margin: 1em 0;
     padding: 1.3em;
@@ -125,8 +190,7 @@ bulbs-poll {
   }
 
   .bulbs-poll-image-result {
-    display: flex;
-    flex-flow: row wrap;
+    @extend %wrap-row;
     list-style: none;
     margin: 1em;
     position: relative;
@@ -149,22 +213,19 @@ bulbs-poll {
 
     .result-image-list-item {
       background: $background-color;
-      height: 100%;
+      @extend %fit;
       padding: .5em .5em 1em .5em;
       position: relative;
-      width: 100%;
     }
   }
 
   .bulbs-poll-answer,
   .bulbs-poll-image-answer {
-    &:hover {
-      opacity: 0.5;
-    }
+    @extend %shy-on-hover;
   }
 
   .bulbs-poll-answer-text {
-    opacity: 0.5;
+    @extend %shy;
   }
 
   .bulbs-poll-answer,
@@ -253,7 +314,7 @@ bulbs-poll {
     background-color: $highlight-color;
     bottom: 0;
     position: absolute;
-    opacity: 0.5;
+    @extend %shy;
     right: 0;
     width: 100%;
   }
@@ -264,9 +325,8 @@ bulbs-poll {
   }
 
   .bulbs-poll-answer-title {
+    @extend %wrap-row;
     align-items: flex-start;
-    display: flex;
-    flex-direction: row;
     flex-grow: 1;
     position: relative;
     z-index: 1;
