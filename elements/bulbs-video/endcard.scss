@@ -19,6 +19,7 @@ bulbs-video {
     bottom: 0;
     display: flex;
     flex-direction: column;
+    font-size: 1.25em;
     left: 0;
     position: absolute;
     right: 0;
@@ -38,7 +39,6 @@ bulbs-video {
     textarea {
       background: white;
       border: none;
-      font-size: 2.4vw;
       margin: auto;
       max-height: 500px;
       min-height: 200px;
@@ -55,7 +55,6 @@ bulbs-video {
 
   .ec-header {
     background: black;
-    font-size: 2.4vw;
     z-index: 4;
     ul {
       align-items: center;
@@ -73,7 +72,6 @@ bulbs-video {
     .ec-countdown {
       border-right: 0;
       color: white;
-      font-size: 1.5em;
       font-weight: $bold;
     }
     .ec-replay {
@@ -104,7 +102,6 @@ bulbs-video {
     }
     .pause-wrap {
       color: white;
-      font-size: 2.4vw;
       margin: 0 0 .5em 0;
       text-transform: uppercase;
       width: 100%;
@@ -138,7 +135,6 @@ bulbs-video {
       a {
         display: flex;
         flex-direction: row;
-        font-size: 2.4vw;
         text-decoration: none;
       }
       figure {
@@ -181,7 +177,24 @@ bulbs-video {
       filter: none;
     }
   }
+
+  // Fake Media Query
+
+  &[data-breakpoint="md"] {
+    .endcard {
+      font-size: 1.5em;
+    }   
+  }
+  &[data-breakpoint="lg"],
+  &[data-breakpoint="xlg"] {
+    .endcard {
+      font-size: 2em;
+    }
+  }
+
 }
+
+
 
 ///////////////////////////
 // ********************* //
@@ -191,11 +204,8 @@ bulbs-video {
 
 bulbs-video {
 
-  //Third Party Colors
-
-  $facebook-accent: rgba(59, 89, 152, 1);
-  $gplus-accent: rgba(221, 75, 57, 1);
-  $twitter-accent: rgba(85, 172, 238, 1);
+  $facebook: rgba(59, 89, 152, 1);
+  $twitter: rgba(85, 172, 238, 1);
 
   .button {
     color: white;
@@ -236,13 +246,13 @@ bulbs-video {
       }  
     }
     .fb {
-      background: $facebook-accent;
+      background: $facebook;
       &:before {
         content: "\f09a";
       }
     }
     .twitter {
-      background: $twitter-accent;
+      background: $twitter;
       &:before {
         content: "\f099";
       }
