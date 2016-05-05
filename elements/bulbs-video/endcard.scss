@@ -178,31 +178,7 @@ bulbs-video {
       filter: none;
     }
   }
-
-
-
-  // Fake Media Query
-
-  &.bp-md {
-    .endcard {
-      font-size: 1.5em;
-    } 
-    .embed-div textarea  {
-      font-size: 15px;
-    }
-  }
-
-  &.bp-lg {
-    .endcard {
-      font-size: 2em;
-    }
-    .embed-div textarea  {
-      font-size: 15px;
-    }    
-  }
-
 }
-
 
 
 ///////////////////////////
