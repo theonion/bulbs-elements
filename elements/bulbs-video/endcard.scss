@@ -39,13 +39,14 @@ bulbs-video {
     textarea {
       background: white;
       border: none;
+      box-shadow: none;
+      font-size: 12px;
       margin: auto;
       max-height: 500px;
       min-height: 200px;
       outline: none;
       padding-top: 55px;
       resize: vertical;  
-      box-shadow: none;
       width: 90%;
     }
     &.embed-active {
@@ -183,12 +184,18 @@ bulbs-video {
   &[data-breakpoint="md"] {
     .endcard {
       font-size: 1.5em;
-    }   
+    } 
+    .embed-div textarea  {
+      font-size: 15px;
+    }
   }
   &[data-breakpoint="lg"],
   &[data-breakpoint="xlg"] {
     .endcard {
       font-size: 2em;
+    }
+    .embed-div textarea  {
+      font-size: 15px;
     }
   }
 
