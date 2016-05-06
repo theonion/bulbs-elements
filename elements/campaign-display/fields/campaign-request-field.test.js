@@ -9,7 +9,7 @@ describe('<campaign-display> CampaignRequestField', () => {
   beforeEach(() => {
     testUrl = 'http://example.com';
     mockStore = {
-      actions: { handleFetchComplete: chai.spy() },
+      actions: { handleFetchComplete: sinon.spy() },
     };
     fetchMock.mock(testUrl, {});
   });

@@ -29,9 +29,9 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
     this.element = this.renderElement({
       done: () => {
         this.actions = this.element.reactElement.store.actions;
-        setSrcSpy = chai.spy.on(this.actions, 'setSrc');
-        fetchPollDataSpy = chai.spy.on(this.actions, 'fetchPollData');
-        getCachedVoteDataSpy = chai.spy.on(this.actions, 'getCachedVoteData');
+        setSrcSpy = sinon.stub(this.actions, 'setSrc');
+        fetchPollDataSpy = sinon.stub(this.actions, 'fetchPollData');
+        getCachedVoteDataSpy = sinon.stub(this.actions, 'getCachedVoteData');
         this.element.reactElement.initialDispatch();
         done();
       },
@@ -43,14 +43,14 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
   });
 
   it('invokes setSrc', function () {
-    setSrcSpy.should.have.been.called.with(pollEndpoint);
+    expect(setSrcSpy).to.have.been.calledWith(pollEndpoint);
   });
 
   it('invokes fetchPollData', function () {
-    fetchPollDataSpy.should.have.been.called.with(pollEndpoint);
+    expect(fetchPollDataSpy).to.have.been.calledWith(pollEndpoint);
   });
 
   it('invokes getCachedVoteData', function () {
-    getCachedVoteDataSpy.should.have.been.called.with(pollEndpoint);
+    expect(getCachedVoteDataSpy).to.have.been.calledWith(pollEndpoint);
   });
 });
