@@ -103,4 +103,8 @@
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
     "yo": "^1.6.0"
+  },
+  "dependencies": {
+    "lolex": "^1.4.0"
+  }
 }

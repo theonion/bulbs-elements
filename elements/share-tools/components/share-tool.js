@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 /*
 <share-tools
@@ -12,15 +13,21 @@ import React, { PropTypes } from 'react';
 */
 
 export default class ShareTool extends React.Component {
-	get shareTools () {
-		return this.closest('share-tools');
+  componentDidMount () {
+    if(!this.shareTools) {
+      throw new Error('Share Tools MUST be contained within a <share-tools>');
+    }
+  }
+
+  get shareTools () {
+    return ReactDOM.findDOMNode(this).closest('share-tools');
 	}
 	get shareUrl () {
-		return this.shareTools.getAttribute('data-share-url');
+		return this.shareTools.getAttribute('share-url');
 	}
 
 	get shareTitle () {
-		return this.shareTools.getAttribute('data-share-title');
+		return this.shareTools.getAttribute('share-title');
 	}
 }
 

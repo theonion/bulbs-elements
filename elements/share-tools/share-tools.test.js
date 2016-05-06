@@ -7,29 +7,31 @@ describe('<share-tools>', () => {
   describe('propTypes', () => {
     let subject = ShareTools.propTypes;
 
-    it('requires url', () => {
-      expect(subject.url).to.eql(PropTypes.string.isRequired);
+    it('requires data-track-action', () => {
+      expect(subject.dataTrackAction).to.eql(PropTypes.string.isRequired);
     });
 
-    it('requires title', () => {
-      expect(subject.title).to.eql(PropTypes.string.isRequired);
+    it('requires data-track-category', () => {
+      expect(subject.dataTrackCategory).to.eql(PropTypes.string.isRequired);
+    });
+
+    it('requires share-url', () => {
+      expect(subject.shareUrl).to.eql(PropTypes.string.isRequired);
+    });
+
+    it('requires share-title', () => {
+      expect(subject.shareTitle).to.eql(PropTypes.string.isRequired);
     });
   });
 
   describe('render', () => {
     let subject;
     let props = {
-      url: 'http://example.com',
-      title: 'Example',
+      shareUrl: 'http://example.com',
+      shareTitle: 'Example',
+      dataTrackAction: 'Action',
+      dataTrackCategory: 'Category',
     };
-
-    it('renders share tools wrapper', () => {
-      expect(shallow(<ShareTools {...props}/>).equals(
-        <div className='bulbs-share-tools'>
-          {undefined}
-        </div>
-      )).to.be.true;
-    });
 
     it('passes children through', () => {
       expect(shallow(
@@ -37,9 +39,7 @@ describe('<share-tools>', () => {
           <div/>
         </ShareTools>
       ).equals(
-        <div className='bulbs-share-tools'>
-          <div/>
-        </div>
+        <div/>
       )).to.be.true;
     });
   });
