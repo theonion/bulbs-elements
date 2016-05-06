@@ -23,7 +23,7 @@ describe('<campaign-display>', () => {
       clickthrough_url: 'http://example.com/clickthrough',
       image_url: 'http://example.com/campain-img.jpg',
       name: 'Test Campaign',
-    }
+    };
 
     props = {
       noLink: '',
@@ -55,7 +55,7 @@ describe('<campaign-display>', () => {
 
   it('accepts a no-link attribute', () => {
     subject = shallowRenderer.getRenderOutput();
-    expect(subject.props.noLink).to.equal('');
+    expect(subject.props.noLink).to.equal(true);
   });
 
   describe('initialDispatch', () => {

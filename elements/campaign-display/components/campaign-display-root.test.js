@@ -21,7 +21,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     preambleText = 'Presented by';
     campaign = {
       id: 123,
-      image_url:'http://example.com/img.jpg',
+      image_url: 'http://example.com/img.jpg',
       clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
       active: true,
@@ -187,10 +187,21 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     context('when the campaign has no image_url', () => {
-      it('returns a SponsorName component', () => {
-        delete props.campaign.image_url;
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.logoComponent().type).to.equal(SponsorName);
+      context('and logoOnly is true', () => {
+        it('returns a SponsorName component', () => {
+          delete props.campaign.image_url;
+          props.logoOnly = true;
+          subject = new CampaignDisplayRoot(props);
+          expect(subject.logoComponent().type).to.equal(SponsorName);
+        });
+      });
+
+      context('and logoOnly is false', () => {
+        it('returns an empty string', function() {
+          delete props.campaign.image_url;
+          subject = new CampaignDisplayRoot(props);
+          expect(subject.logoComponent()).to.equal('');
+        });
       });
     });
 

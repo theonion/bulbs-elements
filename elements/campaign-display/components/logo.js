@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import CroppedImage from 'bulbs-elements/components/cropped-image';
 
 export default class Logo extends Component {
   shouldWrapWithLink() {
@@ -21,4 +20,5 @@ Logo.propTypes = {
   clickthrough_url: PropTypes.string,
   crop: PropTypes.string,
   image_url: PropTypes.string.isRequired,
+  noLink: PropTypes.bool,
 };

@@ -34,7 +34,7 @@ class CampaignDisplayRoot extends Component {
       return <Logo {...this.props.campaign} noLink={this.props.noLink} />;
     }
     else {
-      return this.sponsorNameComponent();
+      return this.props.logoOnly ? this.sponsorNameComponent() : '';
     }
   }
 
@@ -118,6 +118,7 @@ CampaignDisplayRoot.propTypes = {
   logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
+  noLink: PropTypes.string,
   placement: PropTypes.string,
   preambleText: PropTypes.string,
 };
