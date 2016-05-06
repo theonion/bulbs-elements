@@ -207,9 +207,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
     context('when noLink attribute is present', () => {
       it('passes the noLink attribute through to the component', () => {
-        props.noLink = '';
+        props.noLink = true;
         subject = new CampaignDisplayRoot(props);
-        expect(subject.logoComponent().props.noLink).to.equal('');
+        expect(subject.logoComponent().props.noLink).to.equal(true);
       });
     });
   });
@@ -232,9 +232,9 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
     context('when noLink attribute is present', () => {
       it('passes the noLink attribute through to the component', () => {
-        props.noLink = '';
+        props.noLink = true;
         subject = new CampaignDisplayRoot(props);
-        expect(subject.sponsorNameComponent().props.noLink).to.equal('');
+        expect(subject.sponsorNameComponent().props.noLink).to.equal(true);
       });
     });
   });

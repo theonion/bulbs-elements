@@ -118,7 +118,7 @@ CampaignDisplayRoot.propTypes = {
   logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
-  noLink: PropTypes.string,
+  noLink: PropTypes.bool,
   placement: PropTypes.string,
   preambleText: PropTypes.string,
 };
