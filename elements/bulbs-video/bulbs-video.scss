@@ -80,24 +80,31 @@ bulbs-video {
 
   .bulbs-video-cover,
   .bulbs-video-poster {
+    background: black;
+    left: 0;
+    opacity: .6;
     position: absolute;
     top: 50%;
-    left: 0;
     width: 100%;
     transform: translateY(-50%);
     z-index: 0;
   }
 
   .bulbs-video-cover {
-    width: 100%;
+    cursor: pointer;
     height: 100%;
-		cursor: pointer;
+    width: 100%;
     .bulbs-video-play-button {
       align-items: center;
-      background: red;
+      bottom: 0;
       display: flex;
       height: 100%;
+      left: 0;
       justify-content: center;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
       &:after {
         color: white;
         content: '\f01d';
