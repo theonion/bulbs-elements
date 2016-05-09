@@ -17,7 +17,7 @@ describe('<campaign-display> <Logo>', () => {
 
   describe('shouldWrapLink', function() {
     it('returns false when no-link attribute is present', () => {
-      props.noLink = '';
+      props.noLink = true;
       subject = new Logo(props);
       expect(subject.shouldWrapWithLink()).to.equal(false);
     });
