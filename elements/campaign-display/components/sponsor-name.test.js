@@ -27,7 +27,7 @@ describe('<campaign-display> <SponsorName>', () => {
     });
 
     it('returns false when no-link attribute is present', () => {
-      props.noLink = '';
+      props.noLink = true;
       subject = new SponsorName(props);
       expect(subject.shouldWrapWithLink()).to.equal(false);
     });
