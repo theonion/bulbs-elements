@@ -90,12 +90,6 @@ bulbs-video {
     z-index: 0;
   }
 
-  .bulbs-video-poster {
-    img {
-      opacity: .6;
-    }
-  }
-
   .bulbs-video-cover {
     background: black;
     cursor: pointer;
@@ -106,19 +100,21 @@ bulbs-video {
         opacity: 1;
       }
     }
-    .bulbs-video-play-button {
-      bottom: 20px;
-      left: 20px;
-      opacity: .7;
-      position: absolute;
-      width: 9vw;
-      .st0 {
-        opacity: 0.5;
-      }
-      .st1 {
-        fill: #FFFFFF;
-      }
-		}
+  }
+
+  .bulbs-video-play-button {
+    bottom: 20px;
+    left: 20px;
+    opacity: .8;
+    position: absolute;
+    width: 8vw;
+    z-index: 1;
+    .st0 {
+      opacity: 0.5;
+    }
+    .st1 {
+      fill: #FFFFFF;
+    }
   }
 
   .bulbs-video-video {
