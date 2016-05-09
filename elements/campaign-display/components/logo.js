@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 export default class Logo extends Component {
   shouldWrapWithLink() {
-    if (typeof this.props.noLink !== 'undefined') {
+    if (this.props.noLink) {
       return false;
     }
     return !!this.props.clickthrough_url;
@@ -15,6 +15,10 @@ export default class Logo extends Component {
     return <div className='campaign-display-logo'>{ this.shouldWrapWithLink() ? link : image }</div>;
   }
 }
+
+Logo.defaultProps = {
+  noLink: false,
+};
 
 Logo.propTypes = {
   clickthrough_url: PropTypes.string,

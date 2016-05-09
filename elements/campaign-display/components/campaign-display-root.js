@@ -117,6 +117,7 @@ class CampaignDisplayRoot extends Component {
 CampaignDisplayRoot.defaultProps = {
   logoOnly: false,
   nameOnly: false,
+  noLink: false,
 };
 
 CampaignDisplayRoot.propTypes = {
