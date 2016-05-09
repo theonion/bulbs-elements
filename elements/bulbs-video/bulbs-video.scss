@@ -101,29 +101,22 @@ bulbs-video {
     cursor: pointer;
     height: 100%;
     width: 100%;
-    .bulbs-video-play-button {
-      align-items: center;
-      bottom: 0;
-      display: flex;
-      height: 100%;
-      left: 0;
-      justify-content: center;
-      position: absolute;
-      right: 0;
-      top: 0;
-      z-index: 1;
-      &:after {
-        color: white;
-        content: '\f01d';
-        cursor: pointer;
-        font-family: FontAwesome;
-        font-size: 6em;
-        opacity: .7;       
+    &:hover {
+      .bulbs-video-play-button {
+        opacity: 1;
       }
-      &:hover {
-        &:after {
-          opacity: 1;
-        }
+    }
+    .bulbs-video-play-button {
+      bottom: 20px;
+      left: 20px;
+      opacity: .7;
+      position: absolute;
+      width: 9vw;
+      .st0 {
+        opacity: 0.5;
+      }
+      .st1 {
+        fill: #FFFFFF;
       }
 		}
   }
