@@ -10,11 +10,7 @@ export default function Cover (props) {
       className='bulbs-video-cover'
       onClick={actions.revealPlayer}
     >
-      <div
-        className='bulbs-video-play-button'
-      >
-        ▶
-      </div>
+      <div className='bulbs-video-play-button'/>
       <CroppedImage
         className='bulbs-video-poster'
         imageId={imageId}

@@ -149,9 +149,12 @@ bulbs-video {
         }
       }
       .next-meta {
+        align-items: flex-start;
+        display: flex;
         line-height: 1.3;
         padding: 2%;
         width: 50%;
+        flex-direction: column;
         @extend .bulbs-video-vertical-align;
         .runtime {
           opacity: .8;
