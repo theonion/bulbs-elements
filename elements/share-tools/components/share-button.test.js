@@ -58,7 +58,6 @@ describe('<share-tools> <ShareButton>', () => {
           icon: true,
           iconClassName: 'icon-class-name',
         });
-        console.log(ShareButton, props);
         subject = shallow(<ShareButton {...props}/>);
       });
 

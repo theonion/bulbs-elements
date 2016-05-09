@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import ShareTool from './share-tool';
+import ShareButton from './share-button';
 
 const FB_BASE = 'https://www.facebook.com/sharer/sharer.php?u=';
 
@@ -11,19 +12,19 @@ export default class ShareViaFacebook extends ShareTool {
 
 	render () {
 		return (
-			<a
-				className='share-via-facebook'
-				href='#'
-				data-track-label='Facebook'
-				onClick={this.share}
-			>
-        { this.props.icon && <i className='fa fa-facebook'/> }
-        { this.props.label && <span>Share</span> }
-			</a>
+      <ShareButton
+        className='share-via-facebook'
+        data-track-label='Facebook'
+        iconClassName='fa fa-facebook'
+        icon={this.props.icon}
+        labelText='Share'
+        label={this.props.label}
+        onClick={this.share}
+      />
 		);
 	}
 }
 
-ShareViaTwitter.proptTypes = Object.extend({}, ShareTool.proptTypes, {
+ShareViaFacebook.proptTypes = Object.assign({}, ShareTool.proptTypes, {
 
 });

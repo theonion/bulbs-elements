@@ -1,23 +1,25 @@
 import React, { PropTypes } from 'react';
 import ShareTool from './share-tool';
 
+import ShareButton from './share-button';
+
 export default class ShareViaEmail extends ShareTool {
 	render (event) {
-		let emailUrl = `mailto:subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0Avia theonion.com`;
+		let emailUrl = `mailto:subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}`;
 		return (
       <ShareButton
         className='share-via-email'
         href={emailUrl}
-        data-track-label='Email'
+        dataTrackLabel='Email'
         iconClassName='fa fa-envelope'
-        icon={this.props.icon}
-        label={this.props.label}
-        labelText="Email"
-      >
+        icon={true}
+        label={true}
+        labelText='Email'
+      />
 		);
 	}
 }
 
-ShareViaEmail.proptTypes = Object.extend({}, ShareTool.proptTypes, {
+ShareViaEmail.propTypes = Object.assign({}, ShareTool.propTypes, {
   message: PropTypes.string.isRequired,
 });
