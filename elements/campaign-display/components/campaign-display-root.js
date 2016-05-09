@@ -49,28 +49,34 @@ class CampaignDisplayRoot extends Component {
   renderDefaultComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        {this.pixelComponent()}
-        {this.logoComponent()}
-        {this.preambleTextComponent()}
-        {this.sponsorNameComponent()}
+        <div className='inner'>
+          {this.pixelComponent()}
+          {this.logoComponent()}
+          {this.preambleTextComponent()}
+          {this.sponsorNameComponent()}
+        </div>
       </div>);
   }
 
   renderLogoComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        {this.pixelComponent()}
-        {this.preambleTextComponent()}
-        {this.logoComponent()}
+        <div className='inner'>
+          {this.pixelComponent()}
+          {this.preambleTextComponent()}
+          {this.logoComponent()}
+        </div>
       </div>);
   }
 
   renderNameComponent() {
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        {this.pixelComponent()}
-        {this.preambleTextComponent()}
-        {this.sponsorNameComponent()}
+        <div className='inner'>
+          {this.pixelComponent()}
+          {this.preambleTextComponent()}
+          {this.sponsorNameComponent()}
+        </div>
       </div>);
   }
 

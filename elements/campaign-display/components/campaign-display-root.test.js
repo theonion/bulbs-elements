@@ -156,8 +156,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
 
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
       subject = shallowRenderer.getRenderOutput();
-
-      expect(subject.props.children[0].props.campaignId)
+      expect(subject.props.children.props.children[0].props.campaignId)
         .to.equal(props.campaign.id);
     });
 
@@ -166,7 +165,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       shallowRenderer.render(<CampaignDisplayRoot {...props} />);
       subject = shallowRenderer.getRenderOutput();
 
-      expect(subject.props.children[0].props.placement).to.equal(props.placement);
+      expect(subject.props.children.props.children[0].props.placement).to.equal(props.placement);
     });
 
     it('should return an empty string when campaign has no id', () => {
@@ -294,11 +293,11 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('renders the pixel, logo, and name, each wrapped in a link to the clickthrough_url', () => {
-      expect(subject.props.children.length).to.equal(4);
-      expect(subject.props.children[0].type).to.be.equal(DfpPixel);
-      expect(subject.props.children[1].type).to.be.equal(Logo);
-      expect(subject.props.children[2].type).to.be.equal(Preamble);
-      expect(subject.props.children[3].type).to.be.equal(SponsorName);
+      expect(subject.props.children.props.children.length).to.equal(4);
+      expect(subject.props.children.props.children[0].type).to.be.equal(DfpPixel);
+      expect(subject.props.children.props.children[1].type).to.be.equal(Logo);
+      expect(subject.props.children.props.children[2].type).to.be.equal(Preamble);
+      expect(subject.props.children.props.children[3].type).to.be.equal(SponsorName);
     });
 
     it('has a data-track-label with the clickthrough_url', () => {
@@ -313,7 +312,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
 
       it('does not render the logo', () => {
-        let types = subject.props.children.map((c) => c.type);
+        let types = subject.props.children.props.children.map((c) => c.type);
         expect(types).to.not.contain(Logo);
       });
     });
@@ -326,7 +325,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
 
       it('does not render the sponsor name', () => {
-        let types = subject.props.children.map((c) => c.type);
+        let types = subject.props.children.props.children.map((c) => c.type);
         expect(types).to.not.contain(SponsorName);
       });
     });
@@ -364,10 +363,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('only renders the pixel, preamble and logo', () => {
-      expect(subject.props.children.length).to.equal(3);
-      expect(subject.props.children[0].type).to.equal(DfpPixel);
-      expect(subject.props.children[1].type).to.equal(Preamble);
-      expect(subject.props.children[2].type).to.equal(Logo);
+      expect(subject.props.children.props.children.length).to.equal(3);
+      expect(subject.props.children.props.children[0].type).to.equal(DfpPixel);
+      expect(subject.props.children.props.children[1].type).to.equal(Preamble);
+      expect(subject.props.children.props.children[2].type).to.equal(Logo);
     });
 
     it('has a campaign-display class', () => {
@@ -386,12 +385,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
 
       it('does not render the logo', () => {
-        let types = subject.props.children.map((c) => c.type);
+        let types = subject.props.children.props.children.map((c) => c.type);
         expect(types).to.not.contain(Logo);
       });
 
       it('renders the sponsor name', () => {
-        let types = subject.props.children.map((c) => c.type);
+        let types = subject.props.children.props.children.map((c) => c.type);
         expect(types).to.contain(SponsorName);
       });
     });
@@ -436,10 +435,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('only renders the pixel, preamble, and name', () => {
-      expect(subject.props.children.length).to.equal(3);
-      expect(subject.props.children[0].type).to.equal(DfpPixel);
-      expect(subject.props.children[1].type).to.equal(Preamble);
-      expect(subject.props.children[2].type).to.equal(Logo);
+      expect(subject.props.children.props.children.length).to.equal(3);
+      expect(subject.props.children.props.children[0].type).to.equal(DfpPixel);
+      expect(subject.props.children.props.children[1].type).to.equal(Preamble);
+      expect(subject.props.children.props.children[2].type).to.equal(Logo);
     });
 
     context('with missing name', () => {
@@ -450,7 +449,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
 
       it('does not render the sponsor name', () => {
-        let types = subject.props.children.map((c) => c.type);
+        let types = subject.props.children.props.children.map((c) => c.type);
         expect(types).to.not.contain(SponsorName);
       });
     });
