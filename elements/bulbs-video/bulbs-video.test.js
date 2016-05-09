@@ -9,16 +9,16 @@ describe('<bulbs-video>', () => {
   };
 
   beforeEach(() => {
-    BulbsVideo.prototype.setState = chai.spy();
+    BulbsVideo.prototype.setState = sinon.spy();
     fetchMock.mock(src, {});
     subject = new BulbsVideo(props);
   });
 
   describe('#initialDispatch', () => {
     it('fetches video data', () => {
-      let spy = chai.spy.on(subject.store.actions, 'fetchVideo');
+      let spy = sinon.spy(subject.store.actions, 'fetchVideo');
       subject.initialDispatch();
-      expect(spy).to.have.been.called.with(src);
+      expect(spy).to.have.been.calledWith(src);
     });
   });
 
@@ -29,8 +29,8 @@ describe('<bulbs-video>', () => {
 
     context('src did not change', () => {
       beforeEach(() => {
-        fetchSpy = chai.spy.on(subject.store.actions, 'fetchVideo');
-        resetSpy = chai.spy.on(subject.store.actions, 'resetController');
+        fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
+        resetSpy = sinon.spy(subject.store.actions, 'resetController');
         subject.componentWillReceiveProps({ src });
         newSrc = src;
       });
@@ -46,15 +46,15 @@ describe('<bulbs-video>', () => {
 
     context('src did change', () => {
       beforeEach(() => {
-        fetchSpy = chai.spy.on(subject.store.actions, 'fetchVideo');
-        resetSpy = chai.spy.on(subject.store.actions, 'resetController');
+        fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
+        resetSpy = sinon.spy(subject.store.actions, 'resetController');
         newSrc = '//example.org/new-video-src.html';
         fetchMock.mock(newSrc, {});
         subject.componentWillReceiveProps({ src: newSrc });
       });
 
       it('fetches video data', () => {
-        expect(fetchSpy).to.have.been.called.with(newSrc);
+        expect(fetchSpy).to.have.been.calledWith(newSrc);
       });
 
       it('resets the controller', () => {

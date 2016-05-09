@@ -20,7 +20,7 @@ describe('<bulbs-video> <Cover>', function () {
   describe('render', () => {
     let props;
     let subject;
-    let revealPlayer = chai.spy();
+    let revealPlayer = sinon.spy();
     let imageId = 394839;
     let posterUrl = `/video-poster-url/${imageId}/whatever.png`;
 
