@@ -78,11 +78,11 @@ bulbs-video {
     }
   }
 
+
+
   .bulbs-video-cover,
   .bulbs-video-poster {
-    background: black;
     left: 0;
-    opacity: .6;
     position: absolute;
     top: 50%;
     width: 100%;
@@ -90,7 +90,14 @@ bulbs-video {
     z-index: 0;
   }
 
+  .bulbs-video-poster {
+    img {
+      opacity: .6;
+    }
+  }
+
   .bulbs-video-cover {
+    background: black;
     cursor: pointer;
     height: 100%;
     width: 100%;
@@ -110,7 +117,7 @@ bulbs-video {
         content: '\f01d';
         cursor: pointer;
         font-family: FontAwesome;
-        font-size: 5em;
+        font-size: 6em;
         opacity: .7;       
       }
       &:hover {
