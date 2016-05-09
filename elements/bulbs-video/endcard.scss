@@ -32,6 +32,7 @@ bulbs-video {
     bottom: 0;
     display: none;
     left: 0;
+    overflow: hidden;
     position: absolute;
     right: 0;
     top: 0;
@@ -48,7 +49,7 @@ bulbs-video {
       outline: none;
       padding-top: 55px;
       resize: vertical;  
-      width: 90%;
+      width: 98%;
     }
     &.embed-active {
       @extend .bulbs-video-vertical-align;
@@ -56,7 +57,9 @@ bulbs-video {
   }
 
   .ec-header {
+    align-items: center;
     background: black;
+    display: flex;
     z-index: 4;
     ul {
       align-items: center;
