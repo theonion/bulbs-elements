@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "bulbs-public-analytics-manager": "theonion/bulbs-public-analytics-manager#0.1.3",
-    "videohub-player": "https://github.com/theonion/videohub-player.git#video-url-swap-release-2"
+    "videohub-player": "https://github.com/theonion/videohub-player.git#1.0.0"
   },
   "resolutions": {
     "jquery": "^2.2.3"

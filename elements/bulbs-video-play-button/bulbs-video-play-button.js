@@ -3,7 +3,7 @@ import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
-import VideoPlayButton from 'bulbs-elements/components/video-play-button'
+import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 export default class BulbsVideoPlayButton extends BulbsElement {
   render () {
