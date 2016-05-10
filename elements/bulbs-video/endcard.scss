@@ -16,9 +16,11 @@ bulbs-video {
 
   .endcard {
     background: black;
+    border: 1px solid black;
     bottom: 0;
     display: flex;
     flex-direction: column;
+    font-size: 1.25em;
     left: 0;
     position: absolute;
     right: 0;
@@ -30,6 +32,7 @@ bulbs-video {
     bottom: 0;
     display: none;
     left: 0;
+    overflow: hidden;
     position: absolute;
     right: 0;
     top: 0;
@@ -38,15 +41,15 @@ bulbs-video {
     textarea {
       background: white;
       border: none;
-      font-size: 1.4vw;
+      box-shadow: none;
+      font-size: 12px;
       margin: auto;
       max-height: 500px;
       min-height: 200px;
       outline: none;
       padding-top: 55px;
       resize: vertical;  
-      box-shadow: none;
-      width: 90%;
+      width: 98%;
     }
     &.embed-active {
       @extend .bulbs-video-vertical-align;
@@ -54,13 +57,15 @@ bulbs-video {
   }
 
   .ec-header {
+    align-items: center;
     background: black;
-    font-size: 1.5vw;
+    display: flex;
     z-index: 4;
     ul {
       align-items: center;
       display: flex;
       height: 50px;
+      margin: 0;
       width: 100%;
     }
     li {
@@ -72,7 +77,6 @@ bulbs-video {
     .ec-countdown {
       border-right: 0;
       color: white;
-      font-size: 1.5em;
       font-weight: $bold;
     }
     .ec-replay {
@@ -103,8 +107,7 @@ bulbs-video {
     }
     .pause-wrap {
       color: white;
-      font-size: 1.5vw;
-      margin-bottom: 1rem;
+      margin: 0 0 .5em 0;
       text-transform: uppercase;
       width: 100%;
       li {
@@ -137,7 +140,6 @@ bulbs-video {
       a {
         display: flex;
         flex-direction: row;
-        font-size: 1.75vw;
         text-decoration: none;
       }
       figure {
@@ -150,9 +152,12 @@ bulbs-video {
         }
       }
       .next-meta {
+        align-items: flex-start;
+        display: flex;
         line-height: 1.3;
         padding: 2%;
         width: 50%;
+        flex-direction: column;
         @extend .bulbs-video-vertical-align;
         .runtime {
           opacity: .8;
@@ -182,6 +187,7 @@ bulbs-video {
   }
 }
 
+
 ///////////////////////////
 // ********************* //
 //        Buttons        //
@@ -190,14 +196,10 @@ bulbs-video {
 
 bulbs-video {
 
-  //Third Party Colors
-
-  $facebook-accent: rgba(59, 89, 152, 1);
-  $gplus-accent: rgba(221, 75, 57, 1);
-  $twitter-accent: rgba(85, 172, 238, 1);
+  $facebook: rgba(59, 89, 152, 1);
+  $twitter: rgba(85, 172, 238, 1);
 
   .button {
-    //@include ease(all, 50ms);
     color: white;
     display: inline-block;
     font-weight: $bold;
@@ -205,6 +207,14 @@ bulbs-video {
     &:hover {
       opacity: .8;
       cursor: pointer;
+    }
+    // Reset Styles
+    all: initial;
+    box-sizing: border-box;
+
+    & * {
+      all: initial;
+      box-sizing: border-box;
     }
   }
 
@@ -228,19 +238,19 @@ bulbs-video {
       }  
     }
     .fb {
-      background-color: $facebook-accent;
+      background: $facebook;
       &:before {
         content: "\f09a";
       }
     }
     .twitter {
-      background-color: $twitter-accent;
+      background: $twitter;
       &:before {
         content: "\f099";
       }
     }
     .embed {
-      background-color: rgba(48, 206, 153, 1);
+      background: rgba(48, 206, 153, 1);
       &:before {
         content: "\f121";
       }      

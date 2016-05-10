@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
+import VideoPlayButton from 'bulbs-elements/components/video-play-button'
 
 export default function Cover (props) {
   let { video, actions } = props;
@@ -10,11 +11,7 @@ export default function Cover (props) {
       className='bulbs-video-cover'
       onClick={actions.revealPlayer}
     >
-      <div
-        className='bulbs-video-play-button'
-      >
-        ▶
-      </div>
+      <VideoPlayButton/>
       <CroppedImage
         className='bulbs-video-poster'
         imageId={imageId}
