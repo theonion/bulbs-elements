@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import Cover from './cover';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 import video from '../fixtures/video.json';
+import VideoPlayButton from 'bulbs-elements/components/video-play-button'
+
 
 describe('<bulbs-video> <Cover>', function () {
   describe('propTypes', () => {
@@ -47,11 +49,7 @@ describe('<bulbs-video> <Cover>', function () {
 
     it('renders a play button', () => {
       expect(subject).to.contain(
-        <div
-          className='bulbs-video-play-button'
-        >
-          ▶
-        </div>
+        <VideoPlayButton/>
       );
     });
 
