@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CampaignDisplayRoot from './campaign-display-root';
-import DfpPixel from './dfp-pixel'
+import DfpPixel from './dfp-pixel';
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
