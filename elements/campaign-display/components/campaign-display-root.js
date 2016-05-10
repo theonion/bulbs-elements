@@ -128,18 +128,18 @@ CampaignDisplayRoot.defaultProps = {
 
 CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.shape({
-    active: PropTypes.bool,
-    clickthrough_url: PropTypes.string,
-    id: PropTypes.number,
-    image_url: PropTypes.string,
-    name: PropTypes.string,
+    active: PropTypes.bool.isRequired,
+    clickthrough_url: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    image_url: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }),
   logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
   noLink: PropTypes.bool,
-  placement: PropTypes.string,
-  preambleText: PropTypes.string,
+  placement: PropTypes.string.isRequired,
+  preambleText: PropTypes.string.isRequired,
 };
 
 export default CampaignDisplayRoot;
