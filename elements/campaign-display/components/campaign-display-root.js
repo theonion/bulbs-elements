@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import createFragment from 'react-addons-create-fragment'; // http://facebook.github.io/react/docs/create-fragment.html
+import createFragment from 'react-addons-create-fragment';
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
