@@ -27,9 +27,9 @@ class CampaignDisplay extends BulbsElement {
     }
     else {
       let options = Object.assign({}, this.state, this.props, {
-        nameOnly: this.props.nameOnly === '',
-        logoOnly: this.props.logoOnly === '',
-        noLink: this.props.noLink === '',
+        nameOnly: typeof this.props.nameOnly === 'string',
+        logoOnly: typeof this.props.logoOnly === 'string',
+        noLink: typeof this.props.noLink === 'string',
       });
       return (<CampaignDisplayRoot {...options} />);
     }
