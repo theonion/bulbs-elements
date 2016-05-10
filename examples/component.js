@@ -1,4 +1,6 @@
-/*eslint react/no-unknown-property: "off"*/
+/* eslint react/no-unknown-property: "off" */
+/* eslint-disable react/prop-types, react/no-danger */
+
 import React from 'react';
 import examples from './element-examples';
 

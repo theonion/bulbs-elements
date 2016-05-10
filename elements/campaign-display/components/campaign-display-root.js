@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import createFragment from 'react-addons-create-fragment'; // http://facebook.github.io/react/docs/create-fragment.html
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
@@ -47,28 +48,28 @@ class CampaignDisplayRoot extends Component {
   }
 
   defaultComponents() {
-    return [
-      this.pixelComponent(),
-      this.logoComponent(),
-      this.preambleTextComponent(),
-      this.sponsorNameComponent(),
-    ];
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      logo: this.logoComponent(),
+      preamble: this.preambleTextComponent(),
+      sponsorName: this.sponsorNameComponent(),
+    });
   }
 
   logoOnlyComponents() {
-    return [
-      this.pixelComponent(),
-      this.preambleTextComponent(),
-      this.logoComponent(),
-    ];
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      preamble: this.preambleTextComponent(),
+      logo: this.logoComponent(),
+    });
   }
 
   nameOnlyComponents() {
-    return [
-      this.pixelComponent(),
-      this.preambleTextComponent(),
-      this.sponsorNameComponent(),
-    ];
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      preamble: this.preambleTextComponent(),
+      sponsorName: this.sponsorNameComponent(),
+    });
   }
 
   renderEmptyComponent() {
@@ -94,7 +95,6 @@ class CampaignDisplayRoot extends Component {
   }
 
   wrapChildren(children) {
-    if (!this.isRenderable()) { return ''; }
     if (this.props.noLink) { return children; }
     return (
       <a href={this.props.campaign.clickthrough_url}>
@@ -104,9 +104,8 @@ class CampaignDisplayRoot extends Component {
   }
 
   render() {
-    let children = this.childComponents();
-
     if (this.isRenderable()) {
+      let children = this.childComponents();
       return (
         <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
           <div className='inner'>
@@ -131,9 +130,9 @@ CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.shape({
     active: PropTypes.bool,
     clickthrough_url: PropTypes.string,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     image_url: PropTypes.string,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }),
   logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,

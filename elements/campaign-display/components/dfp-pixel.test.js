@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import DfpPixel from './dfp-pixel';
 
 describe('<campaign-display> <DfpPixel>', () => {
-
   let reactContainer;
   let renderSubject;
-  let oldConsole;
+
   beforeEach(() => {
     ['warn', 'log', 'error'].forEach(function(method) {
       sinon.stub(window.console, method);

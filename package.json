@@ -81,6 +81,7 @@
     "postcss-initial": "^1.4.1",
     "postcss-loader": "^0.8.0",
     "react": "^15.0.0",
+    "react-addons-create-fragment": "^15.0.2",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-proptypes-url-validator": "0.0.1",
