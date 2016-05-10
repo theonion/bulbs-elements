@@ -31,7 +31,7 @@ class CampaignDisplayRoot extends Component {
 
   logoComponent() {
     if (this.hasImageUrl()) {
-      return <Logo {...this.props.campaign} noLink={this.props.noLink} />;
+      return <Logo {...this.props.campaign} />;
     }
     else {
       return this.props.logoOnly ? this.sponsorNameComponent() : '';
@@ -39,45 +39,36 @@ class CampaignDisplayRoot extends Component {
   }
 
   sponsorNameComponent() {
-    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} noLink={this.props.noLink} /> : '';
+    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
   }
 
   preambleTextComponent() {
     return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
   }
 
-  renderDefaultComponent() {
-    return (
-      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <div className='inner'>
-          {this.pixelComponent()}
-          {this.logoComponent()}
-          {this.preambleTextComponent()}
-          {this.sponsorNameComponent()}
-        </div>
-      </div>);
+  defaultComponents() {
+    return [
+      this.pixelComponent(),
+      this.logoComponent(),
+      this.preambleTextComponent(),
+      this.sponsorNameComponent(),
+    ];
   }
 
-  renderLogoComponent() {
-    return (
-      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <div className='inner'>
-          {this.pixelComponent()}
-          {this.preambleTextComponent()}
-          {this.logoComponent()}
-        </div>
-      </div>);
+  logoOnlyComponents() {
+    return [
+      this.pixelComponent(),
+      this.preambleTextComponent(),
+      this.logoComponent(),
+    ];
   }
 
-  renderNameComponent() {
-    return (
-      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <div className='inner'>
-          {this.pixelComponent()}
-          {this.preambleTextComponent()}
-          {this.sponsorNameComponent()}
-        </div>
-      </div>);
+  nameOnlyComponents() {
+    return [
+      this.pixelComponent(),
+      this.preambleTextComponent(),
+      this.sponsorNameComponent(),
+    ];
   }
 
   renderEmptyComponent() {
@@ -96,17 +87,32 @@ class CampaignDisplayRoot extends Component {
     return this.hasActiveCampaign() && this.hasSponsorInfo() && this.hasPreambleText();
   }
 
+  childComponents() {
+    if (this.props.logoOnly) { return this.logoOnlyComponents(); }
+    if (this.props.nameOnly) { return this.nameOnlyComponents(); }
+    return this.defaultComponents();
+  }
+
+  wrapChildren(children) {
+    if (this.props.noLink) { return children; }
+    return (
+      <a href={this.props.campaign.clickthrough_url}>
+        {children}
+      </a>
+    );
+  }
+
   render() {
+    let children = this.childComponents();
+
     if (this.isRenderable()) {
-      if (this.props.logoOnly) {
-        return this.renderLogoComponent();
-      }
-      else if (this.props.nameOnly) {
-        return this.renderNameComponent();
-      }
-      else {
-        return this.renderDefaultComponent();
-      }
+      return (
+        <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+          <div className='inner'>
+            {this.wrapChildren(children)}
+          </div>
+        </div>
+      );
     }
     else {
       return this.renderEmptyComponent();
@@ -121,7 +127,13 @@ CampaignDisplayRoot.defaultProps = {
 };
 
 CampaignDisplayRoot.propTypes = {
-  campaign: PropTypes.object,
+  campaign: PropTypes.shape({
+    active: PropTypes.bool,
+    clickthrough_url: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    image_url: PropTypes.string,
+    name: PropTypes.string.isRequired,
+  }),
   logoCrop: PropTypes.string,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
