@@ -30,16 +30,13 @@ describe('<bulbs-video> <Root>', () => {
     let controller = {};
     let twitterHandle = 'twitterHandle';
 
-    beforeEach(() => {
-      subject = shallow(<Root {...props}/>);
-    });
-
     context('without video', () => {
       beforeEach(() => {
         props = {
           actions,
           controller,
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders blank div', () => {
@@ -55,6 +52,7 @@ describe('<bulbs-video> <Root>', () => {
           controller: { revealed: true },
           twitterHandle
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders video-root div', () => {
@@ -80,6 +78,7 @@ describe('<bulbs-video> <Root>', () => {
           video,
           controller: { revealed: false },
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders video-root div', () => {

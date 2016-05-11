@@ -40,6 +40,7 @@ describe('<bulbs-poll> <Question>', function () {
       },
     };
 
+
     expect(shallow(<Question {...props} />).equals(
       <div>
         <Cover poll={poll} />

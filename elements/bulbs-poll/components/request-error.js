@@ -20,5 +20,5 @@ export default function RequestError (props) {
 RequestError.propTypes = {
   children: PropTypes.node,
   error: PropTypes.object,
-  reset: PropTypes.function,
+  reset: PropTypes.func,
 };
