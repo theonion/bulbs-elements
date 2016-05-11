@@ -30,6 +30,25 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     };
   });
 
+  describe('hasValidCampaign', () => {
+    it('returns false when there is no campaign', function() {
+      delete props.campaign;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasValidCampaign()).to.equal(false);
+    });
+
+    it('returns false when the campaign is not active', function() {
+      props.campaign.active = false;
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasValidCampaign()).to.equal(false);
+    });
+
+    it('returns true when there is an active campaign', function() {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.hasValidCampaign()).to.equal(true);
+    });
+  });
+
   describe('pixelComponent', () => {
     it('passes the campaign id to the pixel component', () => {
       subject = shallow(<CampaignDisplayRoot {...props} />);
