@@ -48,11 +48,11 @@ Object.assign(BulbsVideo, {
   },
   propTypes: {
     autoplay: PropTypes.bool,
+    autoplayNext: PropTypes.bool,
     loop: PropTypes.bool,
     mute: PropTypes.bool,
     src: PropTypes.string.isRequired,
     twitterHandle: PropTypes.isRequired,
-    autoplayNext: PropTypes.bool,
   },
 });
 

@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import invariant from 'invariant';
+import React from 'react';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
@@ -7,7 +6,7 @@ import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 export default class BulbsVideoPlayButton extends BulbsElement {
   render () {
-    return <VideoPlayButton/>
+    return <VideoPlayButton/>;
   }
 }
 

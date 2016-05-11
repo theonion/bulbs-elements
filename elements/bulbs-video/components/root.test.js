@@ -50,7 +50,7 @@ describe('<bulbs-video> <Root>', () => {
           actions,
           video,
           controller: { revealed: true },
-          twitterHandle
+          twitterHandle,
         };
         subject = shallow(<Root {...props}/>);
       });
@@ -64,7 +64,7 @@ describe('<bulbs-video> <Root>', () => {
           <Revealed
             video={video}
             actions={actions}
-            autoplayNext={undefined}
+            autoplayNext={undefined} // eslint-disable-line no-undefined
             twitterHandle={twitterHandle}
           />
         );

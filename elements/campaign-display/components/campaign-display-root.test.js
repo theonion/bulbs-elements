@@ -21,7 +21,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     preambleText = 'Presented by';
     campaign = {
       id: 123,
-      image_url:'http://example.com/img.jpg',
+      image_url: 'http://example.com/img.jpg',
       clickthrough_url: 'http://example.com/campaign',
       name: 'Test Campaign',
       active: true,

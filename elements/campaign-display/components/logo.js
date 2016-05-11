@@ -20,4 +20,5 @@ Logo.propTypes = {
   clickthrough_url: PropTypes.string,
   crop: PropTypes.string,
   image_url: PropTypes.string.isRequired,
+  noLink: PropTypes.bool,
 };

@@ -5,7 +5,6 @@ import { createRenderer } from 'react-addons-test-utils';
 describe('<campaign-display> <SponsorName>', () => {
   let clickthrough_url = 'http://example.com';
   let props;
-  let reactContainer;
   let shallowRenderer;
   let sponsorName = 'Test Campaign';
   let subject;
@@ -62,7 +61,7 @@ describe('<campaign-display> <SponsorName>', () => {
 
     context('when no-link attribute is present', () => {
       it('does not wrap the name in a link to the clickthrough_url ', () => {
-        shallowRenderer.render(<SponsorName {...props} noLink/>)
+        shallowRenderer.render(<SponsorName {...props} noLink/>);
         subject = shallowRenderer.getRenderOutput();
         expect(subject.props.children.type).to.equal('span');
       });

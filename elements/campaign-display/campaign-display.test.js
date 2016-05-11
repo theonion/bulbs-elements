@@ -23,7 +23,7 @@ describe('<campaign-display>', () => {
       clickthrough_url: 'http://example.com/clickthrough',
       image_url: 'http://example.com/campain-img.jpg',
       name: 'Test Campaign',
-    }
+    };
 
     props = {
       noLink: '',

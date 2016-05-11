@@ -3,8 +3,7 @@ import { shallow } from 'enzyme';
 import Cover from './cover';
 import CroppedImage from 'bulbs-elements/components/cropped-image';
 import video from '../fixtures/video.json';
-import VideoPlayButton from 'bulbs-elements/components/video-play-button'
-
+import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 describe('<bulbs-video> <Cover>', function () {
   describe('propTypes', () => {
