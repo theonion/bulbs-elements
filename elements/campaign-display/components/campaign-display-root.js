@@ -14,6 +14,10 @@ class CampaignDisplayRoot extends Component {
     return !!this.props.campaign.image_url;
   }
 
+  hasValidCampaign() {
+    return !!this.props.campaign && this.props.campaign.active;
+  }
+
   pixelComponent() {
     return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
   }
@@ -79,7 +83,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   render() {
-    if (!this.props.campaign.active) { return <div className='inactive-campaign'></div>; }
+    if (!this.hasValidCampaign()) { return <div className='inactive-campaign'></div>; }
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
         <div className='inner'>
