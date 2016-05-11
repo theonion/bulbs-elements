@@ -10,41 +10,27 @@ class CampaignDisplayRoot extends Component {
     super(props);
   }
 
-  hasId() {
-    return typeof this.props.campaign.id === 'number';
-  }
-
   hasImageUrl() {
     return !!this.props.campaign.image_url;
   }
 
-  hasSponsorName() {
-    return !!this.props.campaign.name;
-  }
-
-  hasPreambleText() {
-    return !!this.props.preambleText;
-  }
-
   pixelComponent() {
-    return this.hasId() ? <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} /> : '';
+    return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
   }
 
   logoComponent() {
-    if (this.hasImageUrl()) {
-      return <Logo {...this.props.campaign} />;
+    if (this.props.logoOnly && !this.hasImageUrl()) {
+      return this.sponsorNameComponent();
     }
-    else {
-      return this.props.logoOnly ? this.sponsorNameComponent() : '';
-    }
+    return <Logo {...this.props.campaign} />;
   }
 
   sponsorNameComponent() {
-    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+    return <SponsorName {...this.props.campaign} />;
   }
 
   preambleTextComponent() {
-    return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
+    return <Preamble text={this.props.preambleText}/>;
   }
 
   defaultComponents() {
@@ -72,51 +58,35 @@ class CampaignDisplayRoot extends Component {
     });
   }
 
-  renderEmptyComponent() {
-    return <span/>;
-  }
-
-  hasActiveCampaign() {
-    return !!(this.props.campaign && this.props.campaign.id && this.props.campaign.active);
-  }
-
-  hasSponsorInfo() {
-    return this.hasSponsorName() || this.hasImageUrl();
-  }
-
-  isRenderable() {
-    return this.hasActiveCampaign() && this.hasSponsorInfo() && this.hasPreambleText();
-  }
-
   childComponents() {
-    if (this.props.logoOnly) { return this.logoOnlyComponents(); }
-    if (this.props.nameOnly) { return this.nameOnlyComponents(); }
-    return this.defaultComponents();
-  }
+    let children;
+    if (this.props.logoOnly) {
+      children = this.logoOnlyComponents();
+    }
+    else if (this.props.nameOnly) {
+      children = this.nameOnlyComponents();
+    }
+    else {
+      children = this.defaultComponents();
+    }
 
-  wrapChildren(children) {
-    if (this.props.noLink) { return children; }
-    return (
-      <a href={this.props.campaign.clickthrough_url}>
-        {children}
-      </a>
-    );
+    if (this.props.noLink) {
+      return children;
+    }
+    else {
+      return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
+    }
   }
 
   render() {
-    if (this.isRenderable()) {
-      let children = this.childComponents();
-      return (
-        <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-          <div className='inner'>
-            {this.wrapChildren(children)}
-          </div>
+    if (!this.props.campaign.active) { return <div className='inactive-campaign'></div>; }
+    return (
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+        <div className='inner'>
+          {this.childComponents()}
         </div>
-      );
-    }
-    else {
-      return this.renderEmptyComponent();
-    }
+      </div>
+    );
   }
 }
 
@@ -131,10 +101,9 @@ CampaignDisplayRoot.propTypes = {
     active: PropTypes.bool.isRequired,
     clickthrough_url: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    image_url: PropTypes.string.isRequired,
+    image_url: PropTypes.string,
     name: PropTypes.string.isRequired,
-  }),
-  logoCrop: PropTypes.string,
+  }).isRequired,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
   noLink: PropTypes.bool,

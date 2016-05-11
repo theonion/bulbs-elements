@@ -1,24 +1,19 @@
 import React from 'react';
 import CampaignDisplay from './campaign-display';
-import { createRenderer } from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
 describe('<campaign-display>', () => {
   let subject;
   let placement;
   let props;
-  let shallowRenderer;
   let src;
-  let crop;
   let campaign;
   beforeEach(() => {
-    // TODO: Prevent setState warnings spamming the console
-    // We sould investigate if this is an issue with lib/bulbs-elements/store/store.js:60
-    CampaignDisplay.prototype.setState = sinon.spy();
-
     placement = 'top';
     src = 'http://example.com';
     campaign = {
+      id: 1,
       active: true,
       clickthrough_url: 'http://example.com/clickthrough',
       image_url: 'http://example.com/campain-img.jpg',
@@ -28,12 +23,11 @@ describe('<campaign-display>', () => {
     props = {
       noLink: '',
       placement,
+      preambleText: 'Presented by',
       src,
     };
 
     fetchMock.mock(src, campaign);
-    shallowRenderer = createRenderer();
-    shallowRenderer.render(<CampaignDisplay {...props} />);
   });
 
   it('should require a src', () => {
@@ -48,14 +42,9 @@ describe('<campaign-display>', () => {
     }).to.throw('campaign-display component requires a placement');
   });
 
-  it('accepts a logo-crop attribute', () => {
-    subject = shallowRenderer.getRenderOutput();
-    expect(subject.props.logoCrop).to.equal(crop);
-  });
-
   it('accepts a no-link attribute', () => {
-    subject = shallowRenderer.getRenderOutput();
-    expect(subject.props.noLink).to.equal(true);
+    subject = shallow(<CampaignDisplay {...props} campaign={campaign} />);
+    expect(subject).to.have.prop('noLink', true);
   });
 
   describe('initialDispatch', () => {

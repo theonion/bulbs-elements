@@ -47,7 +47,7 @@ Object.assign(CampaignDisplay, {
     nameOnly: PropTypes.string,
     noLink: PropTypes.string,
     placement: PropTypes.string.isRequired,
-    preambleText: PropTypes.string,
+    preambleText: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
   },
 });
