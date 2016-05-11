@@ -16,7 +16,7 @@ import 'videojs/dist/video-js/video-js.css';
 import 'videohub-player/dist/videohub-player.css';
 import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
 
-let videoStores = {};
+// let videoStores = {};
 
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
@@ -25,32 +25,32 @@ export default class BulbsVideo extends BulbsElement {
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
-			this.actions.resetController();
-			this.connectToStore()
+      this.actions.resetController();
+      this.connectToStore();
     }
   }
 
 /*
-	createStore () {
-		let cachedStore;
-		cachedStore = videoStores[this.props.src];
-		if (!videoStores[this.props.src]) {
-			videoStores[this.props.src] = new Store({
-				schema: this.constructor.schema
-			});
-		}
-		return videoStores[this.props.src];
-	}
+  createStore () {
+    let cachedStore;
+    cachedStore = videoStores[this.props.src];
+    if (!videoStores[this.props.src]) {
+      videoStores[this.props.src] = new Store({
+        schema: this.constructor.schema
+      });
+    }
+    return videoStores[this.props.src];
+  }
 
-	disconnectFromStore () {
-		if (this.store.components.length <= 0) {
-			Object.keys(videoStores).forEach((src) => {
-				if (videoStores[src] === this.store) {
-					delete videoStores[src];
-				}
-			});
-		}
-	}
+  disconnectFromStore () {
+    if (this.store.components.length <= 0) {
+      Object.keys(videoStores).forEach((src) => {
+        if (videoStores[src] === this.store) {
+          delete videoStores[src];
+        }
+      });
+    }
+  }
 */
   render () {
     return (
@@ -72,11 +72,11 @@ Object.assign(BulbsVideo, {
   },
   propTypes: {
     autoplay: PropTypes.bool,
+    autoplayNext: PropTypes.bool,
     loop: PropTypes.bool,
     mute: PropTypes.bool,
     src: PropTypes.string.isRequired,
     twitterHandle: PropTypes.isRequired,
-    autoplayNext: PropTypes.bool,
   },
 });
 

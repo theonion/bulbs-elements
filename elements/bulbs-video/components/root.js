@@ -37,7 +37,7 @@ export default function Root (props) {
 Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
-  twitterHandle: PropTypes.string,
   controller: PropTypes.object.isRequired,
+  twitterHandle: PropTypes.string,
   video: PropTypes.object,
 };

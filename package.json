@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "0.20.0",
+  "version": "1.0.6",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -82,6 +82,7 @@
     "postcss-initial": "^1.4.1",
     "postcss-loader": "^0.8.0",
     "react": "^15.0.0",
+    "react-addons-create-fragment": "^15.0.2",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-proptypes-url-validator": "0.0.1",
@@ -103,8 +104,5 @@
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
     "yo": "^1.6.0"
-  },
-  "dependencies": {
-    "lolex": "^1.4.0"
   }
 }

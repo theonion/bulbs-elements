@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default function RequestError ({ error, children, reset }) {
   if (error) {
@@ -15,3 +15,9 @@ export default function RequestError ({ error, children, reset }) {
     return <div />;
   }
 }
+
+RequestError.propTypes = {
+  children: PropTypes.node,
+  error: PropTypes.object,
+  reset: PropTypes.func,
+};

@@ -1,7 +1,18 @@
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 setImmediate(() => {
-  // FIXME: videohub-player should define it's own analytics manager
+  /*
+  FIXME: videohub-player depends on there being an instance of our analytics manager
+          at window.AnalyticsManager.
+          Some possible solutions:
+          1. Have bulbs-video and/or videohub-player initialize their own
+             analytics manager
+          2. Have bulbs-video and/or videohub-player use a confuration
+             such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
+          3. Have all sites follow a convention for where AnalyticsManager
+             lives.
+  */
+  /* global avclubAnalytics, onionan, clickholean, starwipe */
   if (window.avclubAnalytics) {
     window.AnalyticsManager = avclubAnalytics;
   }
@@ -72,7 +83,7 @@ export default class Revealed extends React.Component {
       vpCategory: this.props.video.category,
       vpFlags: [''],
       tags: this.props.video.tags,
-      optional: { flashEnabled: true, },
+      optional: { flashEnabled: true },
     };
 
     playerOptions.pluginConfig.sharetools = {
@@ -112,7 +123,7 @@ export default class Revealed extends React.Component {
 }
 
 Revealed.propTypes = {
-  video: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   twitterHandle: PropTypes.string,
+  video: PropTypes.object.isRequired,
 };

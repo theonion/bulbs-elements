@@ -30,16 +30,13 @@ describe('<bulbs-video> <Root>', () => {
     let controller = {};
     let twitterHandle = 'twitterHandle';
 
-    beforeEach(() => {
-      subject = shallow(<Root {...props}/>);
-    });
-
     context('without video', () => {
       beforeEach(() => {
         props = {
           actions,
           controller,
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders blank div', () => {
@@ -53,8 +50,9 @@ describe('<bulbs-video> <Root>', () => {
           actions,
           video,
           controller: { revealed: true },
-          twitterHandle
+          twitterHandle,
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders video-root div', () => {
@@ -66,7 +64,7 @@ describe('<bulbs-video> <Root>', () => {
           <Revealed
             video={video}
             actions={actions}
-            autoplayNext={undefined}
+            autoplayNext={undefined} // eslint-disable-line no-undefined
             twitterHandle={twitterHandle}
           />
         );
@@ -80,6 +78,7 @@ describe('<bulbs-video> <Root>', () => {
           video,
           controller: { revealed: false },
         };
+        subject = shallow(<Root {...props}/>);
       });
 
       it('renders video-root div', () => {
