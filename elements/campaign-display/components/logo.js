@@ -11,4 +11,5 @@ export default class Logo extends Component {
 
 Logo.propTypes = {
   image_url: PropTypes.string.isRequired,
+  noLink: PropTypes.bool,
 };

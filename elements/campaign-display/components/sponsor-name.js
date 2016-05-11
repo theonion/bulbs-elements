@@ -8,4 +8,5 @@ export default class SponsorName extends Component {
 
 SponsorName.propTypes = {
   name: PropTypes.string.isRequired,
+  noLink: PropTypes.bool,
 };

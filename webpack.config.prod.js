@@ -1,12 +1,14 @@
-var webpack = require('webpack');
-var webpackBase = require('./webpack.base.js');
-var plugins = webpackBase.plugins;
-var loaders = webpackBase.loaders;
-var config = Object.assign({}, webpackBase.config);
+'use strict'; // eslint-disable-line
+
+const webpack = require('webpack');
+const webpackBase = require('./webpack.base.js');
+const plugins = webpackBase.plugins;
+const loaders = webpackBase.loaders;
+const config = Object.assign({}, webpackBase.config);
 
 config.plugins = [
   plugins.chunker,
-  plugins.sassExtractor,
+  plugins.styleExtractor,
   plugins.uglify,
   new webpack.DefinePlugin({
     'process.env': {
@@ -19,8 +21,10 @@ config.module.loaders = [
   loaders.babel,
   loaders.yaml,
   loaders.json,
-  loaders.sassExtractor,
+  loaders.styleExtractor,
+  loaders.cssExtractor,
   loaders.eslint,
+  loaders.files,
 ];
 
 config.module.preLoaders = [
@@ -28,7 +32,7 @@ config.module.preLoaders = [
 ];
 
 config.eslint = {
-  configFile: '.eslintrc'
+  configFile: '.eslintrc',
 };
 
 module.exports = config;

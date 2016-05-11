@@ -1,10 +1,10 @@
-var webpack = require('webpack');
-var webpackBase = require('./webpack.base.js');
-var plugins = webpackBase.plugins;
-var loaders = webpackBase.loaders;
-var config = Object.assign({}, webpackBase.config);
+const webpack = require('webpack');
+const webpackBase = require('./webpack.base.js');
+const plugins = webpackBase.plugins;
+const loaders = webpackBase.loaders;
+const config = Object.assign({}, webpackBase.config);
 
-config.entry['examples'] = [
+config.entry.examples = [
   './examples/examples.js',
   'react-router',
 ];
@@ -23,6 +23,9 @@ config.module.loaders = [
   loaders.yaml,
   loaders.json,
   loaders.sass,
+  loaders.css,
+  loaders.files,
 ];
 
+config.output.publicPath = '/';
 module.exports = config;

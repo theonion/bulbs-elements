@@ -39,11 +39,11 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     var dashedName = inflection.dasherize(inflection.underscore(this.props.componentName)).toLowerCase();
     var templateProps = {
-			elementName: this.props.elementName,
+      elementName: this.props.elementName,
       componentName: inflection.camelize(this.props.componentName, false),
       componentPathName: dashedName,
       componentClassName: inflection.camelize(this.props.componentName, false),
-			componentCssClassName: this.props.elementName + '-' + dashedName,
+      componentCssClassName: this.props.elementName + '-' + dashedName,
     };
     common.copyDirectory(this, templateProps);
   },

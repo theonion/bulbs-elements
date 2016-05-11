@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
+import React, { PropTypes } from 'react';
 
-import React from 'react';
-
-export default function RequestError ({ error, children, reset }) {
+export default function RequestError (props) {
+  let { error, children, reset } = props;
   if (error) {
     return (
       <div className="bulbs-poll-network-error">
@@ -17,3 +16,9 @@ export default function RequestError ({ error, children, reset }) {
     return <div />;
   }
 }
+
+RequestError.propTypes = {
+  children: PropTypes.node,
+  error: PropTypes.object,
+  reset: PropTypes.func,
+};

@@ -1,9 +1,8 @@
-/* eslint-disable react/no-unknown-property, react/prop-types */
-
 import { React } from 'react';
 import { Link } from 'react-router';
 import examples from './element-examples';
 import inflection from 'inflection';
+window.ga = function(){};
 
 export default class Index extends React.Component {
   render () {

@@ -1,5 +1,7 @@
-var path = require('path');
-var webpackConfig = require('./webpack.config.hot');
+'use strict'; // eslint-disable-line
+
+const path = require('path');
+const webpackConfig = require('./webpack.config.hot');
 
 module.exports = {
   // base path that will be used to resolve all patterns (eg. files, exclude)
