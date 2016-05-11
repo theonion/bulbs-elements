@@ -22,7 +22,6 @@ export default class BulbsVideo extends BulbsElement {
   }
 
   componentWillReceiveProps (props) {
-    // Prop Will Change
     if (this.props.src !== props.src) {
       this.store.actions.resetController();
       this.store.actions.fetchVideo(props.src);
