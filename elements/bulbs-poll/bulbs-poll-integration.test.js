@@ -59,16 +59,16 @@
 
 //   context('VoteButton', function () {
 //     it('will not vote when no answer is selected', function () {
-//       let actionSpy = chai.spy.on(this.actions, 'invoke');
+//       let actionSpy = sinon.stub(this.actions, 'invoke');
 //       this.element.querySelector('.bulbs-poll-vote').click();
-//       actionSpy.should.not.have.been.called();
+//       expect(actionSpy).not.to.have.been.called;
 //     });
 
 //     it('will make a vote request if an answer is selected', function () {
-//       let actionSpy = chai.spy.on(this.actions, 'makeVoteRequest');
+//       let actionSpy = sinon.stub(this.actions, 'makeVoteRequest');
 //       this.element.querySelector('.bulbs-poll-answer').click();
 //       this.element.querySelector('.bulbs-poll-vote').click();
-//       actionSpy.should.have.been.called();
+//       expect(actionSpy).to.have.been.called;
 //     });
 //   });
 

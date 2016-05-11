@@ -53,7 +53,6 @@ describe('<bulbs-poll> VoteField', function () {
   });
 
   describe('makeVoteRequest', function() {
-    let requestSpy = chai.spy.on(util, 'makeRequest');
     let url = 'https://onion.sodahead.com/api/polls/10/vote/';
 
     beforeEach(function () {
@@ -74,18 +73,18 @@ describe('<bulbs-poll> VoteField', function () {
     });
 
     afterEach(function () {
-      requestSpy.reset();
       fetchMock.restore();
     });
 
     it('makes a POST request to the vote endpoint', function () {
+      let requestSpy = sinon.stub(util, 'makeRequest');
       let answer = {
         sodahead_id: 123456789,
       };
 
       actions.makeVoteRequest({}, answer, store);
 
-      requestSpy.should.have.been.called.with(url, {
+      expect(requestSpy).to.have.been.calledWith(url, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -96,6 +95,7 @@ describe('<bulbs-poll> VoteField', function () {
         failure: store.actions.voteRequestFailure,
         error: store.actions.voteRequestError,
       });
+      requestSpy.restore();
     });
 
     it('sets requestInFlight to true', function () {
@@ -114,9 +114,9 @@ describe('<bulbs-poll> VoteField', function () {
     let collectWinningAnswersSpy;
 
     beforeEach(function () {
-      setPollTotalVotesSpy = chai.spy.on(store.actions, 'setPollTotalVotes');
-      updateAnswerVoteCountSpy = chai.spy.on(store.actions, 'updateAnswerVoteCount');
-      collectWinningAnswersSpy = chai.spy.on(store.actions, 'collectWinningAnswers');
+      setPollTotalVotesSpy = sinon.stub(store.actions, 'setPollTotalVotes');
+      updateAnswerVoteCountSpy = sinon.stub(store.actions, 'updateAnswerVoteCount');
+      collectWinningAnswersSpy = sinon.stub(store.actions, 'collectWinningAnswers');
       vote = { id: 1, answer: { totalVotes: 10, id: 20 } };
       poll = { id: 1, totalVotes: 8 };
       success = { vote, poll };
@@ -150,7 +150,8 @@ describe('<bulbs-poll> VoteField', function () {
     it('calls setPollTotalVotes', function (done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
-        setPollTotalVotesSpy.should.have.been.called.once.with(8);
+        expect(setPollTotalVotesSpy).to.have.been.calledOnce;
+        expect(setPollTotalVotesSpy).to.have.been.calledWith(8);
         done();
       });
     });
@@ -158,7 +159,8 @@ describe('<bulbs-poll> VoteField', function () {
     it('calls updateAnswerVoteCount', function (done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
-        updateAnswerVoteCountSpy.should.have.been.called.once.with(vote);
+        expect(updateAnswerVoteCountSpy).to.have.been.calledOnce;
+        expect(updateAnswerVoteCountSpy).to.have.been.calledWith(vote);
         done();
       });
     });
@@ -166,7 +168,8 @@ describe('<bulbs-poll> VoteField', function () {
     it('calls collectWinningAnswers', function (done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
-        collectWinningAnswersSpy.should.have.been.called.once.with(store.state.poll.data.answers);
+        expect(collectWinningAnswersSpy).to.have.been.calledOnce;
+        expect(collectWinningAnswersSpy).to.have.been.calledWith(store.state.poll.data.answers);
         done();
       });
     });
