@@ -1,7 +1,18 @@
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 setImmediate(() => {
-  // FIXME: videohub-player should define it's own analytics manager
+  /*
+  FIXME: videohub-player depends on there being an instance of our analytics manager
+          at window.AnalyticsManager.
+  
+          Some possible solutions:
+          1. Have bulbs-video and/or videohub-player initialize their own
+             analytics manager
+          2. Have bulbs-video and/or videohub-player use a confuration
+             such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
+          3. Have all sites follow a convention for where AnalyticsManager
+             lives.
+  */
   if (window.avclubAnalytics) {
     window.AnalyticsManager = avclubAnalytics;
   }
