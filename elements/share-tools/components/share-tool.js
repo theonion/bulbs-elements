@@ -20,8 +20,14 @@ export default class ShareTool extends React.Component {
   }
 
   get shareTools () {
-    return ReactDOM.findDOMNode(this).closest('share-tools');
+    try {
+      return ReactDOM.findDOMNode(this).closest('share-tools');
+    }
+    catch (error) {
+      debugger
+    }
 	}
+
 	get shareUrl () {
 		return this.shareTools.getAttribute('share-url');
 	}

@@ -16,19 +16,42 @@ import 'videojs/dist/video-js/video-js.css';
 import 'videohub-player/dist/videohub-player.css';
 import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
 
+let videoStores = {};
+
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
   }
 
-  componentWillReceiveProps (props) {
-    // Prop Will Change
-    if (this.props.src !== props.src) {
-      this.store.actions.resetController();
-      this.store.actions.fetchVideo(props.src);
+  componentDidUpdate (prevProps) {
+    if (this.props.src !== prevProps.src) {
+			this.actions.resetController();
+			this.connectToStore()
     }
   }
 
+/*
+	createStore () {
+		let cachedStore;
+		cachedStore = videoStores[this.props.src];
+		if (!videoStores[this.props.src]) {
+			videoStores[this.props.src] = new Store({
+				schema: this.constructor.schema
+			});
+		}
+		return videoStores[this.props.src];
+	}
+
+	disconnectFromStore () {
+		if (this.store.components.length <= 0) {
+			Object.keys(videoStores).forEach((src) => {
+				if (videoStores[src] === this.store) {
+					delete videoStores[src];
+				}
+			});
+		}
+	}
+*/
   render () {
     return (
       <BulbsVideoRoot
@@ -58,3 +81,7 @@ Object.assign(BulbsVideo, {
 });
 
 registerReactElement('bulbs-video', BulbsVideo);
+
+import Meta from './elements/meta';
+import Summary from './elements/summary';
+
