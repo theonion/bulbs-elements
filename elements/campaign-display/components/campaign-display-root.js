@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import createFragment from 'react-addons-create-fragment';
 import Logo from './logo';
 import Preamble from './preamble';
 import SponsorName from './sponsor-name';
@@ -9,115 +10,83 @@ class CampaignDisplayRoot extends Component {
     super(props);
   }
 
-  hasId() {
-    return typeof this.props.campaign.id === 'number';
-  }
-
   hasImageUrl() {
     return !!this.props.campaign.image_url;
   }
 
-  hasSponsorName() {
-    return !!this.props.campaign.name;
-  }
-
-  hasPreambleText() {
-    return !!this.props.preambleText;
-  }
-
   pixelComponent() {
-    return this.hasId() ? <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} /> : '';
+    return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
   }
 
   logoComponent() {
-    if (this.hasImageUrl()) {
-      return <Logo {...this.props.campaign} />;
+    if (this.props.logoOnly && !this.hasImageUrl()) {
+      return this.sponsorNameComponent();
     }
-    else {
-      return this.props.logoOnly ? this.sponsorNameComponent() : '';
-    }
+    return <Logo {...this.props.campaign} />;
   }
 
   sponsorNameComponent() {
-    return this.hasSponsorName() ? <SponsorName {...this.props.campaign} /> : '';
+    return <SponsorName {...this.props.campaign} />;
   }
 
   preambleTextComponent() {
-    return this.hasPreambleText() ? <Preamble text={this.props.preambleText}/> : '';
+    return <Preamble text={this.props.preambleText}/>;
   }
 
   defaultComponents() {
-    return [
-      this.pixelComponent(),
-      this.logoComponent(),
-      this.preambleTextComponent(),
-      this.sponsorNameComponent(),
-    ];
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      logo: this.logoComponent(),
+      preamble: this.preambleTextComponent(),
+      sponsorName: this.sponsorNameComponent(),
+    });
   }
 
   logoOnlyComponents() {
-    return [
-      this.pixelComponent(),
-      this.preambleTextComponent(),
-      this.logoComponent(),
-    ];
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      preamble: this.preambleTextComponent(),
+      logo: this.logoComponent(),
+    });
   }
 
   nameOnlyComponents() {
-    return [
-      this.pixelComponent(),
-      this.preambleTextComponent(),
-      this.sponsorNameComponent(),
-    ];
-  }
-
-  renderEmptyComponent() {
-    return <span/>;
-  }
-
-  hasActiveCampaign() {
-    return !!(this.props.campaign && this.props.campaign.id && this.props.campaign.active);
-  }
-
-  hasSponsorInfo() {
-    return this.hasSponsorName() || this.hasImageUrl();
-  }
-
-  isRenderable() {
-    return this.hasActiveCampaign() && this.hasSponsorInfo() && this.hasPreambleText();
+    return createFragment({
+      dfpPixel: this.pixelComponent(),
+      preamble: this.preambleTextComponent(),
+      sponsorName: this.sponsorNameComponent(),
+    });
   }
 
   childComponents() {
-    if (this.props.logoOnly) { return this.logoOnlyComponents(); }
-    if (this.props.nameOnly) { return this.nameOnlyComponents(); }
-    return this.defaultComponents();
-  }
+    let children;
+    if (this.props.logoOnly) {
+      children = this.logoOnlyComponents();
+    }
+    else if (this.props.nameOnly) {
+      children = this.nameOnlyComponents();
+    }
+    else {
+      children = this.defaultComponents();
+    }
 
-  wrapChildren(children) {
-    if (!this.isRenderable()) { return ''; }
-    if (this.props.noLink) { return children; }
-    return (
-      <a href={this.props.campaign.clickthrough_url}>
-        {children}
-      </a>
-    );
+    if (this.props.noLink) {
+      return children;
+    }
+    else {
+      return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
+    }
   }
 
   render() {
-    let children = this.childComponents();
-
-    if (this.isRenderable()) {
-      return (
-        <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-          <div className='inner'>
-            {this.wrapChildren(children)}
-          </div>
+    if (!this.props.campaign.active) { return <div className='inactive-campaign'></div>; }
+    return (
+      <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
+        <div className='inner'>
+          {this.childComponents()}
         </div>
-      );
-    }
-    else {
-      return this.renderEmptyComponent();
-    }
+      </div>
+    );
   }
 }
 
@@ -129,18 +98,17 @@ CampaignDisplayRoot.defaultProps = {
 
 CampaignDisplayRoot.propTypes = {
   campaign: PropTypes.shape({
-    active: PropTypes.bool,
-    clickthrough_url: PropTypes.string,
+    active: PropTypes.bool.isRequired,
+    clickthrough_url: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     image_url: PropTypes.string,
     name: PropTypes.string.isRequired,
-  }),
-  logoCrop: PropTypes.string,
+  }).isRequired,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
   noLink: PropTypes.bool,
-  placement: PropTypes.string,
-  preambleText: PropTypes.string,
+  placement: PropTypes.string.isRequired,
+  preambleText: PropTypes.string.isRequired,
 };
 
 export default CampaignDisplayRoot;

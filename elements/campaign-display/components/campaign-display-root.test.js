@@ -30,116 +30,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     };
   });
 
-  describe('hasId', () => {
-    it('returns true when campaign has an id', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasId()).to.be.true;
-    });
-
-    it('returns false when camapign id is not a number', () => {
-      props.campaign.id = '1';
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasId()).to.be.false;
-    });
-
-    it('returns false when campaign has no id', () => {
-      delete props.campaign.id;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasId()).to.be.false;
-    });
-  });
-
-  describe('hasImageUrl', () => {
-    it('returns true when the campaign has an image_url', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasImageUrl()).to.equal(true);
-    });
-
-    it('returns false when the campaign has no image_url', () => {
-      delete props.campaign.image_url;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasImageUrl()).to.equal(false);
-    });
-  });
-
-  describe('hasSponsorName', () => {
-    it('returns true when the campaign has a sponsor name', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorName()).to.equal(true);
-    });
-
-    it('returns false when the campaign has no sponsor name', () => {
-      delete props.campaign.name;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorName()).to.equal(false);
-    });
-  });
-
-  describe('hasSponsorInfo', () => {
-    it('returns true with either a name or image_url present', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorInfo()).to.equal(true);
-    });
-
-    it('returns true when there is a name, and NO image_url', () => {
-      delete props.campaign.image_url;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorInfo()).to.equal(true);
-    });
-
-    it('returns true when there is an image_url, and NO name', () => {
-      delete props.campaign.name;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorInfo()).to.equal(true);
-    });
-
-    it('returns false when there is no image_url or name', () => {
-      delete props.campaign.name;
-      delete props.campaign.image_url;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasSponsorInfo()).to.equal(false);
-    });
-  });
-
-  describe('isRenderable', function() {
-    it('returns true when the campaign is active, has sponsor information, and preamble text', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.isRenderable()).to.equal(true);
-    });
-
-    it('returns false when the campaign is not active', () => {
-      props.campaign.active = false;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.isRenderable()).to.equal(false);
-    });
-
-    it('returns false when there is no sponsor info', () => {
-      delete props.campaign.name;
-      delete props.campaign.image_url;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.isRenderable()).to.equal(false);
-    });
-
-    it('returns false when there is no preamble text provided', () => {
-      delete props.preambleText;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.isRenderable()).to.equal(false);
-    });
-  });
-
-  describe('hasPreambleText', () => {
-    it('returns true when there is preamble text', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasPreambleText()).to.equal(true);
-    });
-
-    it('returns false when there is no preamble text', () => {
-      delete props.preambleText;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasPreambleText()).to.equal(false);
-    });
-  });
-
   describe('pixelComponent', () => {
     it('passes the campaign id to the pixel component', () => {
       subject = shallow(<CampaignDisplayRoot {...props} />);
@@ -150,12 +40,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       subject = shallow(<CampaignDisplayRoot {...props} />);
       expect(subject.find('DfpPixel')).to.have.prop('placement', props.placement);
     });
-
-    it('returns an empty string when campaign has no id', () => {
-      delete props.campaign.id;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.pixelComponent()).to.equal('');
-    });
   });
 
   describe('logoComponent', () => {
@@ -165,87 +49,23 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         expect(subject.logoComponent().type).to.equal(Logo);
       });
     });
-
-    context('when the campaign has no image_url', () => {
-      context('and logoOnly is true', () => {
-        it('returns a SponsorName component', () => {
-          delete props.campaign.image_url;
-          props.logoOnly = true;
-          subject = new CampaignDisplayRoot(props);
-          expect(subject.logoComponent().type).to.equal(SponsorName);
-        });
-      });
-
-      context('and logoOnly is false', () => {
-        it('returns an empty string', function() {
-          delete props.campaign.image_url;
-          subject = new CampaignDisplayRoot(props);
-          expect(subject.logoComponent()).to.equal('');
-        });
-      });
-    });
   });
 
   describe('sponsorNameComponent', () => {
-    context('when the campaign has a name', () => {
-      it('returns a SponsorName component', () => {
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.sponsorNameComponent().type).to.equal(SponsorName);
-      });
-    });
-
-    context('when the campaign has no name', () => {
-      it('returns an empty string', () => {
-        delete props.campaign.name;
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.sponsorNameComponent()).to.equal('');
-      });
+    it('returns a SponsorName component', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.sponsorNameComponent().type).to.equal(SponsorName);
     });
   });
 
   describe('preambleTextComponent', () => {
-    context('when there is preamble text', () => {
-      it('returns a Preamble component', () => {
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.preambleTextComponent().type).to.equal(Preamble);
-      });
-    });
-
-    context('when there is no preamble text', () => {
-      it('returns an empty string', () => {
-        delete props.preambleText;
-        subject = new CampaignDisplayRoot(props);
-        expect(subject.preambleTextComponent()).to.equal('');
-      });
+    it('returns a Preamble component', () => {
+      subject = new CampaignDisplayRoot(props);
+      expect(subject.preambleTextComponent().type).to.equal(Preamble);
     });
   });
 
-  describe('hasActiveCampaign', () => {
-    it('returns false when there is no campaign data', () => {
-      delete props.campaign;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaign()).to.equal(false);
-    });
-
-    it('returns true when there is campaign data', () => {
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaign()).to.equal(true);
-    });
-
-    it('returns false when there is no campaign id', () => {
-      delete props.campaign.id;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaign()).to.equal(false);
-    });
-
-    it('should return false when campaign is not active', () => {
-      props.campaign.active = false;
-      subject = new CampaignDisplayRoot(props);
-      expect(subject.hasActiveCampaign()).to.be.false;
-    });
-  });
-
-  context('with a clickthrough url, image and name', () => {
+  context('when rendered', () => {
     beforeEach(() => {
       subject = shallow(<CampaignDisplayRoot {...props}/>);
     });
@@ -278,30 +98,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
           </div>
         </div>
       )).to.be.true;
-    });
-
-    context('with missing image_url', () => {
-      it('does not render the logo', () => {
-        delete props.campaign.image_url;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-        expect(subject).to.not.have.descendants('Logo');
-      });
-    });
-
-    context('with missing name', () => {
-      it('does not render the sponsor name', () => {
-        delete props.campaign.name;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-        expect(subject).to.not.have.descendants('SponsorName');
-      });
-    });
-
-    context('with missing preamble', () => {
-      it('renders an empty component', () => {
-        delete props.preambleText;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-        expect(subject).to.have.be.blank();
-      });
     });
   });
 
@@ -352,17 +148,6 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
         expect(subject).to.have.descendants('SponsorName');
       });
     });
-
-    context('with missing preamble', () => {
-      beforeEach(() => {
-        delete props.preambleText;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-      });
-
-      it('renders an empty component', () => {
-        expect(subject).to.have.be.blank();
-      });
-    });
   });
 
   context('with name-only set to true', () => {
@@ -397,41 +182,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject).to.have.descendants('SponsorName');
       expect(subject).to.not.have.descendants('Logo');
     });
-
-    context('with missing name', () => {
-      it('does not render the sponsor name', () => {
-        delete props.campaign.name;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-        expect(subject).to.not.have.descendants('SponsorName');
-      });
-    });
-
-    context('with missing preamble', () => {
-      it('renders an empty component', () => {
-        delete props.preambleText;
-        subject = shallow(<CampaignDisplayRoot {...props}/>);
-        expect(subject).to.have.be.blank();
-      });
-    });
   });
 
-  context('with missing data', () => {
+  context('with inactive campaign', () => {
     it('renders an empty component', () => {
-      props = {
-        campaign: { detail: 'Not found.' },
-        logoOnly: true,
-        preambleText,
-      };
-      subject = shallow(<CampaignDisplayRoot {...props}/>);
-      expect(subject).to.be.blank();
-    });
-  });
-
-  context('with data active === false', () => {
-    it('should render an empty component', () => {
       props.campaign.active = false;
       subject = shallow(<CampaignDisplayRoot {...props} />);
-
       expect(subject).to.be.blank();
     });
   });
