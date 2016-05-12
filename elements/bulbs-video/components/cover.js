@@ -12,7 +12,7 @@ export default function Cover (props) {
       onClick={actions.revealPlayer}
     >
       <VideoPlayButton/>
-      <CroppedImage
+      <img
         className='bulbs-video-poster'
         imageId={imageId}
         src={video.poster_url}
