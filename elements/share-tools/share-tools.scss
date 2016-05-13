@@ -1,0 +1,54 @@
+$facebook-blue: rgb(55, 87, 162);
+$twitter-blue: rgb(45, 159, 216);
+$email-grey: rgb(149, 169, 162);
+
+share-tools {
+  > :not(:last-child) {
+    margin-right: 0.25em;
+  }
+}
+
+%share-tool {
+  background-color: black;
+  display: inline-flex;
+  font-size: 1.5em;
+
+  .share-button-icon {
+    color: white;
+    padding: .5em;
+    width: 1em;
+    text-align: center;
+    box-sizing: content-box;
+  }
+
+  a {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .share-button-label {
+    font-family: sans-serif;
+    color: white;
+    padding: .5em;
+
+    &:not(:first-child) {
+      padding-left: 0;
+    }
+  }
+}
+
+share-via-facebook {
+  @extend %share-tool;
+  background-color: $facebook-blue;
+}
+
+share-via-twitter {
+  @extend %share-tool;
+  background-color: $twitter-blue;
+}
+
+share-via-email {
+  @extend %share-tool;
+  background-color: $email-grey;
+}

@@ -6,3 +6,5 @@ node_modules/.bin/webpack \
   --devtool source-map \
   --progress \
   --config webpack.config.prod.js \
+  --json \
+  > stats.json

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'; // eslint-disable-line
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
-import CroppedImage from 'bulbs-elements/components/cropped-image';
+
+import './summary.scss';
 
 import VideoField from '../fields/video';
 import VideoRequest from '../fields/video-request';
@@ -19,51 +20,45 @@ export default class VideoSummary extends BulbsElement {
   }
 
   render () {
-
     if (!this.state.video) {
       return <div/>;
     }
     let { video } = this.state;
-    let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
     return (
       <div className='bulbs-video-summary'>
         <div
           className='bulbs-video-poster'
-          style={{position: 'relative'}}
+          style={{ position: 'relative' }}
         >
           <img
-            style={{maxWidth: '100%'}}
+            style={{ maxWidth: '100%' }}
             src={video.poster_url}
           />
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            boxShadow: 'rgba(0,0,0,0.45) 0px 0px 100px 0px inset',
-          }}/>
+          <div className='bulbs-video-shade'/>
+          { typeof this.props.nowPlaying === 'string' &&
+            <div className='bulbs-video-summary-playing'>
+              Now Playing
+            </div>
+          }
+          <VideoPlayButton/>
         </div>
-        <div className='bulbs-video-summary-title'>
+        <h3 className='bulbs-video-summary-title'>
           {this.state.video.title}
-        </div>
-        <div className='bulbs-video-summary-playing'>
-          Now Playing
-        </div>
-        <VideoPlayButton/>
+        </h3>
       </div>
     );
   }
 }
 
 Object.assign(VideoSummary, {
-	displayName: 'BulbsVideoSummary',
-	schema: {
-		video: VideoField,
-		videoRequest: VideoRequest,
-	},
-	propTypes: {
-	},
+  displayName: 'BulbsVideoSummary',
+  schema: {
+    video: VideoField,
+    videoRequest: VideoRequest,
+  },
+  propTypes: {
+    nowPlaying: PropTypes.bool,
+  },
 });
 
 registerReactElement('bulbs-video-summary', VideoSummary);

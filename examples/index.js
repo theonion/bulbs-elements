@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import _ from 'lodash';
 import examples from './element-examples';
 import inflection from 'inflection';
-import classnames from 'classnames';
 
 export default class Index extends React.Component {
   render () {
@@ -27,7 +25,7 @@ export default class Index extends React.Component {
                       Object.keys(group.examples).map((name) => {
                         return <li key={name} className="examples-example">
                           <Link
-                            to={`/example/${group.element}/${inflection.dasherize(name)}/${this.props.params.device || 'tablet,mobile'}`}
+                            to={`/example/${group.element}/${inflection.dasherize(name)}/${this.props.params.device || 'tablet,mobile'}`} // eslint-disable-line max-len
                             activeClassName="active"
                           >
                             {group.examples[name].title}

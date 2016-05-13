@@ -5,30 +5,21 @@ import Cover from './cover';
 
 export default function Root (props) {
   let className = 'bulbs-video-root player';
-  let {
-    actions, video, controller,
-    autoplayNext, twitterHandle,
-  } = props;
 
-  if (!video) {
+  if (!props.video) {
     return <div className={className} />;
   }
-  else if (controller.revealed) {
+  else if (props.controller.revealed) {
     return (
       <div className={className}>
-        <Revealed
-          autoplayNext={autoplayNext}
-          twitterHandle={twitterHandle}
-          video={video}
-          actions={actions}
-        />
+        <Revealed {...props}/>
       </div>
     );
   }
   else {
     return (
       <div className={className}>
-        <Cover video={video} actions={actions}/>
+        <Cover video={props.video} actions={props.actions}/>
       </div>
     );
   }
@@ -38,6 +29,7 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
+  noEndcard: PropTypes.bool,
   twitterHandle: PropTypes.string,
   video: PropTypes.object,
 };

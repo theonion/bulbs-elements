@@ -9,8 +9,8 @@ export default class ShareButton extends React.Component {
         data-track-label={this.props.dataTrackLabel}
         onClick={this.props.onClick}
       >
-        { this.props.icon && <i className={this.props.iconClassName}/> }
-        { this.props.label && <span>{this.props.labelText}</span> }
+        { typeof this.props.icon === 'string' && <i className={`share-button-icon ${this.props.iconClassName}`}/> }
+        { typeof this.props.label === 'string' && <span className='share-button-label'>{this.props.labelText}</span> }
       </a>
     );
   }

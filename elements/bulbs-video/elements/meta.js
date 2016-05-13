@@ -1,9 +1,11 @@
-import React, { PropTypes  } from 'react';
+import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import VideoField from '../fields/video';
 import VideoRequest from '../fields/video-request';
+
+import './meta.scss';
 
 export default class VideoMeta extends BulbsElement {
   initialDispatch () {
@@ -21,9 +23,9 @@ export default class VideoMeta extends BulbsElement {
     }
     return (
       <div className='bulbs-video-meta'>
-        <div className='bulbs-video-meta-title'>
+        <h1 className='bulbs-video-meta-title'>
           {this.state.video.title}
-        </div>
+        </h1>
         <share-tools
           share-title={this.state.video.title}
           share-url={window.location.href}
@@ -44,8 +46,8 @@ Object.assign(VideoMeta, {
     videoRequest: VideoRequest,
   },
   propTypes: {
-    twitterHandle: PropTypes.string.isRequired,
     emailShareMessage: PropTypes.string.isRequired,
+    twitterHandle: PropTypes.string.isRequired,
   },
 });
 

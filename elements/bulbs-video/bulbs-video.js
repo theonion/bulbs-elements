@@ -53,10 +53,13 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
+
     return (
       <BulbsVideoRoot
         {...this.state}
         twitterHandle={this.props.twitterHandle}
+        autoplayNext={typeof this.props.twitterHandle === 'string'}
+        noEndcard={typeof this.props.noEndcard === 'string'}
         actions={this.store.actions}
       />
     );
@@ -71,10 +74,11 @@ Object.assign(BulbsVideo, {
     controller: ControllerField,
   },
   propTypes: {
-    autoplay: PropTypes.bool,
-    autoplayNext: PropTypes.bool,
-    loop: PropTypes.bool,
-    mute: PropTypes.bool,
+    autoplay: PropTypes.string,
+    autoplayNext: PropTypes.string,
+    loop: PropTypes.string,
+    mute: PropTypes.string,
+    noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
     twitterHandle: PropTypes.isRequired,
   },
@@ -82,6 +86,5 @@ Object.assign(BulbsVideo, {
 
 registerReactElement('bulbs-video', BulbsVideo);
 
-import Meta from './elements/meta';
-import Summary from './elements/summary';
-
+import './elements/meta';
+import './elements/summary';
