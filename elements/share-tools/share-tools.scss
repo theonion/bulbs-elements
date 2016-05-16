@@ -1,6 +1,6 @@
+$email-grey: rgb(149, 169, 162);
 $facebook-blue: rgb(55, 87, 162);
 $twitter-blue: rgb(45, 159, 216);
-$email-grey: rgb(149, 169, 162);
 
 .share-tools {
   > :not(:last-child) {
@@ -14,22 +14,22 @@ $email-grey: rgb(149, 169, 162);
   font-size: 1.5em;
 
   .share-button-icon {
+    box-sizing: content-box;
     color: white;
     padding: .5em;
-    width: 1em;
     text-align: center;
-    box-sizing: content-box;
+    width: 1em;
   }
 
   a {
-    text-decoration: none;
     display: flex;
     justify-content: space-around;
+    text-decoration: none;
   }
 
   .share-button-label {
-    font-family: sans-serif;
     color: white;
+    font-family: sans-serif;
     padding: .5em;
 
     &:not(:first-child) {
