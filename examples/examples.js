@@ -1,5 +1,8 @@
 /* eslint-disable no-unused-vars */
-let context = require.context('../elements', true, /^\.\/[^\/]+\/.+\.js$/);
+// This regex matches .js files
+// it excludes *.test.js files, if we parse test files webpack tries to load
+// enzyme, which breaks the environment.
+let context = require.context('../elements', true, /^\.\/[^\/]+\/[^.]+\.js$/);
 context.keys().forEach((key) => {
   let [_x, dir, file] = key.match(/\.\/(.+)\/(.+).js/) || [];// eslint-disable-line
   if (dir === file) {

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function RequestError (props) {
-  let { error, children, reset } = props;
+export default function RequestError ({ error, children, reset }) {
   if (error) {
     return (
       <div className="bulbs-poll-network-error">

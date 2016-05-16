@@ -62,7 +62,6 @@
     "karma-bower": "^1.0.1",
     "karma-browserstack-launcher": "^0.1.9",
     "karma-chai": "^0.1.0",
-    "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^0.2.2",
     "karma-fixture": "^0.2.5",
     "karma-html2js-preprocessor": "^0.1.0",
@@ -81,12 +80,12 @@
     "phantomjs": "^1.9.19",
     "postcss-initial": "^1.4.1",
     "postcss-loader": "^0.8.0",
-    "react": "^15.0.0",
+    "react": "^15.0.2",
     "react-addons-create-fragment": "^15.0.2",
-    "react-addons-test-utils": "^15.0.0",
-    "react-dom": "^15.0.0",
+    "react-addons-test-utils": "^15.0.2",
+    "react-dom": "^15.0.2",
     "react-proptypes-url-validator": "0.0.1",
-    "react-router": "^1.0.3",
+    "react-router": "^2.4.0",
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",
     "sass-loader": "^3.1.2",
@@ -104,6 +103,5 @@
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
     "yo": "^1.6.0"
-  },
-  "dependencies": {}
+  }
 }

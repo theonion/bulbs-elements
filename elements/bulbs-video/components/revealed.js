@@ -93,6 +93,10 @@ export default class Revealed extends React.Component {
       twitterHandle: this.props.twitterHandle,
     };
 
+    if (this.props.noEndcard) {
+      delete playerOptions.pluginConfig.endcard;
+    }
+
     new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new
   }
 
@@ -124,6 +128,7 @@ export default class Revealed extends React.Component {
 
 Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
+  noEndcard: PropTypes.bool,
   twitterHandle: PropTypes.string,
   video: PropTypes.object.isRequired,
 };

@@ -156,6 +156,9 @@ exports.config = {
     },
   },
   module: {
+    noParse: [
+      path.join(npmDir, 'clone'),
+    ],
   },
   postcss () {
     return [

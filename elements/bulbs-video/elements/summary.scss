@@ -1,0 +1,36 @@
+bulbs-video-summary {
+  display: block;
+}
+
+.bulbs-video-poster {
+  position: relative;
+
+  > img {
+    max-width: 100%;
+  }
+}
+
+.bulbs-video-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-shadow: rgba(0,0,0,0.45) 0px 0px 100px 0px inset;
+}
+
+.bulbs-video-summary-playing {
+  position: absolute;
+  top: .25em;
+  left: .25em;
+  background-color: black;
+  color: white;
+  font-size: .8em;
+  font-family: sans-serif;
+}
+
+.bulbs-video-play-button {
+  position: absolute;
+  bottom: .25em;
+  left: .25em;
+}

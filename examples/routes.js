@@ -1,15 +1,26 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-let browserHistory = createBrowserHistory();
+import {
+  Router,
+  Route,
+  browserHistory,
+} from 'react-router';
 
 import Index from './index';
-import Component from './component';
+import {
+	Component,
+	RenderComponent,
+} from './component';
+
+function Empty () {
+  return <h1> Choose an Example </h1>;
+}
 
 const Routes = (
   <Router history={browserHistory}>
+		<Route path="/render-example/:element/:example" component={RenderComponent} />
     <Route path="/" component={Index}>
-      <Route path="example/:element/:example" component={Component} />
+      <Route path="example/:element/:example/:device" component={Component} />
+      <Route path="*" component={Empty}/>
     </Route>
   </Router>
 );
