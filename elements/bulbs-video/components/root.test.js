@@ -61,12 +61,7 @@ describe('<bulbs-video> <Root>', () => {
 
       it('renders <Revealed>', () => {
         expect(subject).to.contain(
-          <Revealed
-            video={video}
-            actions={actions}
-            autoplayNext={undefined} // eslint-disable-line no-undefined
-            twitterHandle={twitterHandle}
-          />
+          <Revealed {...props}/>
         );
       });
     });

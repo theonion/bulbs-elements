@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 import Cover from './cover';
+import CroppedImage from 'bulbs-elements/components/cropped-image';
 import video from '../fixtures/video.json';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
@@ -51,7 +52,7 @@ describe('<bulbs-video> <Cover>', function () {
       );
     });
 
-    it('renders a CroppedImage', () => {
+    it('renders an image', () => {
       expect(subject).to.contain(
         <img
           className='bulbs-video-poster'
