@@ -2,7 +2,7 @@ $facebook-blue: rgb(55, 87, 162);
 $twitter-blue: rgb(45, 159, 216);
 $email-grey: rgb(149, 169, 162);
 
-share-tools {
+.share-tools {
   > :not(:last-child) {
     margin-right: 0.25em;
   }
@@ -38,17 +38,17 @@ share-tools {
   }
 }
 
-share-via-facebook {
+.share-via-facebook {
   @extend %share-tool;
   background-color: $facebook-blue;
 }
 
-share-via-twitter {
+.share-via-twitter {
   @extend %share-tool;
   background-color: $twitter-blue;
 }
 
-share-via-email {
+.share-via-email {
   @extend %share-tool;
   background-color: $email-grey;
 }

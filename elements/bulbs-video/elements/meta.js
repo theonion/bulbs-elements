@@ -5,6 +5,10 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 import VideoField from '../fields/video';
 import VideoRequest from '../fields/video-request';
 
+import ShareTools from '../../share-tools/components/root';
+import ShareViaFacebook from '../../share-tools/components/via-facebook';
+import ShareViaTwitter from '../../share-tools/components/via-twitter';
+import ShareViaEmail from '../../share-tools/components/via-email';
 import './meta.scss';
 
 export default class VideoMeta extends BulbsElement {
@@ -26,14 +30,20 @@ export default class VideoMeta extends BulbsElement {
         <h1 className='bulbs-video-meta-title'>
           {this.state.video.title}
         </h1>
-        <share-tools
-          share-title={this.state.video.title}
-          share-url={window.location.href}
+        <ShareTools
+          shareTitle={this.state.video.title}
+          shareUrl={window.location.href}
         >
-          <share-via-facebook icon label/>
-          <share-via-twitter twitter-handle={this.props.twitterHandle} icon label/>
-          <share-via-email message={this.props.emailShareMessage} icon label/>
-        </share-tools>
+          <ShareViaFacebook icon={true} label={true}/>
+          <ShareViaTwitter
+            twitter-handle={this.props.twitterHandle}
+            icon={true} label={true}
+          />
+          <ShareViaEmail
+            message={this.props.emailShareMessage}
+            icon={true} label={true}
+          />
+        </ShareTools>
       </div>
     );
   }

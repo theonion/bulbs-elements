@@ -31,7 +31,7 @@ export default class ShareTool extends React.Component {
   */
 
   get shareTools () {
-    return ReactDOM.findDOMNode(this).closest('share-tools');
+    return ReactDOM.findDOMNode(this).closest('.share-tools');
   }
 
   get shareUrl () {

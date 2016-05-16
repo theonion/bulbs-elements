@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
+import Root from './components/root';
+
 import './share-tools.scss';
 
 export default class ShareTools extends React.Component {
   render () {
-    if (this.props.children) {
-      return this.props.children;
-    }
-    else {
-      return <div/>;
-    }
+    return <Root {...this.props}/>;
   }
 }
 
