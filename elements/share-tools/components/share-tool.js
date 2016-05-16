@@ -7,11 +7,11 @@ export default class ShareTool extends React.Component {
   }
 
   get shareUrl () {
-    return this.shareTools.getAttribute('share-url');
+    return this.shareTools.getAttribute('data-share-url');
   }
 
   get shareTitle () {
-    return this.shareTools.getAttribute('share-title');
+    return this.shareTools.getAttribute('data-share-title');
   }
 }
 

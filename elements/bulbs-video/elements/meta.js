@@ -25,27 +25,29 @@ export default class VideoMeta extends BulbsElement {
     if(!this.state.video) {
       return <div/>;
     }
-    return (
-      <div className='bulbs-video-meta'>
-        <h1 className='bulbs-video-meta-title'>
-          {this.state.video.title}
-        </h1>
-        <ShareTools
-          shareTitle={this.state.video.title}
-          shareUrl={window.location.href}
-        >
-          <ShareViaFacebook icon={true} label={true}/>
-          <ShareViaTwitter
-            twitter-handle={this.props.twitterHandle}
-            icon={true} label={true}
-          />
-          <ShareViaEmail
-            message={this.props.emailShareMessage}
-            icon={true} label={true}
-          />
-        </ShareTools>
-      </div>
-    );
+    else {
+      return (
+        <div className='bulbs-video-meta'>
+          <h1 className='bulbs-video-meta-title'>
+            {this.state.video.title}
+          </h1>
+          <ShareTools
+            shareTitle={this.state.video.title}
+            shareUrl={window.location.href}
+          >
+            <ShareViaFacebook icon={true} label={true}/>
+            <ShareViaTwitter
+              twitterHandle={this.props.twitterHandle}
+              icon={true} label={true}
+            />
+            <ShareViaEmail
+              message={this.props.emailShareMessage}
+              icon={true} label={true}
+            />
+          </ShareTools>
+        </div>
+      );
+    }
   }
 }
 

@@ -26,7 +26,8 @@ config.module.loaders = [
 ];
 
 config.module.preLoaders = [
-  loaders.eslint,
+  // FIXME: eslint is throwing sytax errors on ES6 features
+  //loaders.eslint,
 ];
 
 config.eslint = {

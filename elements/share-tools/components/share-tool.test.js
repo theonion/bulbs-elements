@@ -34,8 +34,8 @@ describe('<share-tools> <ShareTool>', () => {
           <div
             class='share-tools'
             id='closest'
-            share-url='//example.org/share-url'
-            share-title='Example Thing'
+            data-share-url='//example.org/share-url'
+            data-share-title='Example Thing'
           >
             <div id='render-target'/>
           </div>

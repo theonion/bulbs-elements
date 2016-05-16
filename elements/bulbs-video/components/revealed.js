@@ -93,8 +93,8 @@ export default class Revealed extends React.Component {
       twitterHandle: this.props.twitterHandle,
     };
 
-    if (typeof this.props.noEndcard === 'string') {
-      //delete playerOptions.pluginConfig.endcard;
+    if (this.props.noEndcard) {
+      delete playerOptions.pluginConfig.endcard;
     }
 
     new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new

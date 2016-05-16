@@ -5,8 +5,8 @@ export default class Root extends React.Component {
     return (
       <div
         className='share-tools'
-        share-title={this.props.shareTitle}
-        share-url={this.props.shareUrl}
+        data-share-title={this.props.shareTitle}
+        data-share-url={this.props.shareUrl}
       >
         {this.props.children}
       </div>
