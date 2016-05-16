@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+export NODE_ENV=production
+node_modules/.bin/webpack \
+  --bail \
+  --color \
+  --devtool source-map \
+  --progress \
+  --config webpack.config.prod.js \
+  --json \
+  > stats.json
