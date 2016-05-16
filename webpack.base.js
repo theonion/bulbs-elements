@@ -150,11 +150,6 @@ exports.config = {
     alias: {
     },
   },
-  module: {
-    noParse: [
-      path.join(npmDir, 'clone'),
-    ],
-  },
   postcss () {
     return [
       //stylelint({
