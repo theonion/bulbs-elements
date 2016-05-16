@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import CroppedImage from 'bulbs-elements/components/cropped-image';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 export default function Cover (props) {

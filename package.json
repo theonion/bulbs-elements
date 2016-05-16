@@ -7,7 +7,7 @@
   "scripts": {
     "test": "karma start --single-run",
     "karma": "karma start",
-    "lint": "eslint ."
+    "lint": "scripts/lint"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
@@ -46,7 +46,6 @@
     "enzyme": "^2.2.0",
     "es6-promise": "^3.0.2",
     "eslint": "^2.9.0",
-    "eslint-loader": "^1.2.0",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",

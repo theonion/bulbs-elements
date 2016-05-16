@@ -25,12 +25,4 @@ config.module.loaders = [
   loaders.files,
 ];
 
-config.module.preLoaders = [
-  loaders.eslint,
-];
-
-config.eslint = {
-  configFile: '.eslintrc',
-};
-
 module.exports = config;
