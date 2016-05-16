@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default class Root extends React.Component {
   render () {
@@ -13,3 +13,9 @@ export default class Root extends React.Component {
     );
   }
 }
+
+Root.propTypes = {
+  children: PropTypes.node,
+  shareTitle: PropTypes.string.isRequired,
+  shareUrl: PropTypes.string.isRequired,
+};

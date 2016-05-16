@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
+import { shallow } from 'enzyme';
+
 import ShareViaEmail from './via-email';
 import ShareButton from './share-button';
 
@@ -32,12 +34,12 @@ describe('<share-tools> <ViaEmail>', () => {
       let expected = (
         <ShareButton
           className='share-via-email'
-          href={emailUrl}
           dataTrackLabel='Email'
           iconClassName='fa fa-envelope'
           icon={true}
           label={true}
           labelText='Email'
+          onClick={subject.share}
         />
       );
       expect(subject.render().type).to.eql(expected.type);

@@ -31,7 +31,7 @@ describe('<bulbs-video>', () => {
       beforeEach(() => {
         fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
         resetSpy = sinon.spy(subject.store.actions, 'resetController');
-        subject.componentWillReceiveProps({ src });
+        subject.componentDidUpdate({ src });
         newSrc = src;
       });
 
@@ -50,7 +50,8 @@ describe('<bulbs-video>', () => {
         resetSpy = sinon.spy(subject.store.actions, 'resetController');
         newSrc = '//example.org/new-video-src.html';
         fetchMock.mock(newSrc, {});
-        subject.componentWillReceiveProps({ src: newSrc });
+        subject.props.src = newSrc;
+        subject.componentDidUpdate({ src });
       });
 
       it('fetches video data', () => {

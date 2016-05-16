@@ -5,6 +5,11 @@ import ShareButton from './share-button';
 const FB_BASE = 'https://www.facebook.com/sharer/sharer.php?u=';
 
 export default class ShareViaFacebook extends ShareTool {
+  constructor (props) {
+    super(props);
+    this.share = this.share.bind(this);
+  }
+
   share (event) {
     event.preventDefault();
     window.open(FB_BASE + this.shareUrl, 'facebook-share', 'width=580,height=296');
@@ -19,7 +24,7 @@ export default class ShareViaFacebook extends ShareTool {
         icon={this.props.icon}
         labelText='Share'
         label={this.props.label}
-        onClick={this.share.bind(this)}
+        onClick={this.share}
       />
     );
   }

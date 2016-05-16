@@ -69,7 +69,7 @@ describe('<share-tools> <ShareButton>', () => {
             data-track-label='tracking-label'
             onClick={onClick}
           >
-            <i className='icon-class-name'/>
+            <i className='share-button-icon icon-class-name'/>
           </a>
         )).to.be.true;
       });
@@ -92,7 +92,11 @@ describe('<share-tools> <ShareButton>', () => {
             data-track-label='tracking-label'
             onClick={onClick}
           >
-            <span>Label Text</span>
+            <span
+              className='share-button-label'
+            >
+              Label Text
+            </span>
           </a>
         )).to.be.true;
       });
@@ -117,8 +121,12 @@ describe('<share-tools> <ShareButton>', () => {
             data-track-label='tracking-label'
             onClick={onClick}
           >
-            <i className='icon-class-name'/>
-            <span>Label Text</span>
+            <i className='share-button-icon icon-class-name'/>
+            <span
+              className='share-button-label'
+            >
+              Label Text
+            </span>
           </a>
         )).to.be.true;
       });

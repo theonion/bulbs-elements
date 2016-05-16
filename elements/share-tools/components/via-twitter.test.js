@@ -33,7 +33,7 @@ describe('<share-tools> <ViaTwitter>', () => {
           icon={true}
           labelText='Tweet'
           label={true}
-          onClick={ShareViaTwitter.prototype.share}
+          onClick={subject.share}
         />
       );
     });
@@ -45,12 +45,13 @@ describe('<share-tools> <ViaTwitter>', () => {
     beforeEach(() => {
       let container = document.createElement('div');
       container.innerHTML = `
-        <share-tools
+        <div
+          class='share-tools'
           share-url='//example.org'
           share-title='Share Title'
         >
-          <div></div>
-        </share-tools>
+          <div id='render-target'></div>
+        </div>
       `;
       event = {
         preventDefault: () => {}
@@ -59,7 +60,7 @@ describe('<share-tools> <ViaTwitter>', () => {
       sinon.stub(window, 'open');
       let shareViaTwitter = ReactDOM.render(
         <ShareViaTwitter twitterHandle='real-slim-shady'/>,
-        container.querySelector('div')
+        container.querySelector('#render-target')
       );
       shareViaTwitter.share(event);
     });

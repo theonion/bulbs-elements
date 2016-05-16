@@ -25,12 +25,15 @@ export default class BulbsVideo extends BulbsElement {
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
-      this.actions.resetController();
-      this.connectToStore();
+      this.store.actions.resetController();
+      this.store.actions.fetchVideo(this.props.src);
     }
   }
 
 /*
+  TODO: Here is a naive implementation of a cached store.
+  We don't want to over-fetch resources if two elements
+  on the page have the same src attribute
   createStore () {
     let cachedStore;
     cachedStore = videoStores[this.props.src];

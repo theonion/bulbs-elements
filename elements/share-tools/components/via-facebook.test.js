@@ -23,7 +23,7 @@ describe('<share-tools> <ViaFacebook>', () => {
           icon={true}
           labelText='Share'
           label={true}
-          onClick={ShareViaFacebook.prototype.share}
+          onClick={subject.share}
         />
       );
     });
@@ -35,21 +35,22 @@ describe('<share-tools> <ViaFacebook>', () => {
     beforeEach(() => {
       let container = document.createElement('div');
       container.innerHTML = `
-        <share-tools
+        <div
+          class='share-tools'
           share-url='//example.org'
           share-title='Share Title'
         >
-          <div></div>
-        </share-tools>
+          <div id='render-target'></div>
+        </div>
       `;
       event = {
         preventDefault: () => {}
       };
       sinon.stub(event, 'preventDefault');
       sinon.stub(window, 'open');
-      let shareViaFacebook  = ReactDOM.render(
+      let shareViaFacebook = ReactDOM.render(
         <ShareViaFacebook/>,
-        container.querySelector('div')
+        container.querySelector('#render-target')
       );
       shareViaFacebook.share(event);
     });
