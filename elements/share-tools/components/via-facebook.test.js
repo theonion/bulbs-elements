@@ -37,8 +37,8 @@ describe('<share-tools> <ViaFacebook>', () => {
       container.innerHTML = `
         <div
           class='share-tools'
-          share-url='//example.org'
-          share-title='Share Title'
+          data-share-url='//example.org'
+          data-share-title='Share Title'
         >
           <div id='render-target'></div>
         </div>

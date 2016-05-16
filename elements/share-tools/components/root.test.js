@@ -31,8 +31,8 @@ describe('<share-tools> <Root>', () => {
       ).equals(
         <div
           className='share-tools'
-          share-title='Share Title'
-          share-url='//example.org/share-me'
+          data-share-title='Share Title'
+          data-share-url='//example.org/share-me'
         >
           <div/>
         </div>
