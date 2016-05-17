@@ -7,7 +7,7 @@
   "scripts": {
     "test": "karma start --single-run",
     "karma": "karma start",
-    "lint": "scripts/lint"
+    "lint": "node_modules/.bin/eslint elements lib --max-warnings=1 --cache"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",

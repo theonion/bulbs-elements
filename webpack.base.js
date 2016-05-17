@@ -150,6 +150,9 @@ exports.config = {
     alias: {
     },
   },
+  module: {
+
+  },
   postcss () {
     return [
       //stylelint({
