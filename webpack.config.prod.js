@@ -23,16 +23,7 @@ config.module.loaders = [
   loaders.json,
   loaders.styleExtractor,
   loaders.cssExtractor,
-  loaders.eslint,
   loaders.files,
 ];
-
-config.module.preLoaders = [
-  loaders.eslint,
-];
-
-config.eslint = {
-  configFile: '.eslintrc',
-};
 
 module.exports = config;

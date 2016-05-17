@@ -73,6 +73,12 @@ if [ ! "$(npm test)" ]; then
   exit 1
 fi
 
+secho "Running linter"
+if [ ! "$(npm run lint)" ]; then
+  secho "You cannot release with failing linter, shame on you"
+  exit 1
+fi
+
 if [ $IS_TEMP_RELEASE = true ]; then
   NEW_VERSION="temp-$(git rev-parse HEAD | cut -c 1-7)-$BRANCH_NAME"
   secho "Releasing temporary tag @$NEW_VERSION"
