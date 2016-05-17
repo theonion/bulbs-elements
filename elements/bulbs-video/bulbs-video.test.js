@@ -20,6 +20,15 @@ describe('<bulbs-video>', () => {
       subject.initialDispatch();
       expect(spy).to.have.been.calledWith(src);
     });
+
+    context('autoplay is true', () => {
+      it('reveals the player', () => {
+        let spy = sinon.spy(subject.store.actions, 'revealPlayer');
+        subject.props.autoplay = '';
+        subject.initialDispatch();
+        expect(spy).to.have.been.called;
+      });
+    });
   });
 
   describe('#componentWillReceiveProps', () => {

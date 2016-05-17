@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
-import {
-  registerReactElement,
-} from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import VideoField from './fields/video';
@@ -21,17 +19,21 @@ import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
+    if (typeof this.props.autoplay === 'string') {
+      this.store.actions.revealPlayer();
+    }
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
       this.store.actions.resetController();
-      this.store.actions.fetchVideo(this.props.src);
+      this.initialDispatch();
     }
   }
 
 /*
-  TODO: Here is a naive implementation of a cached store.
+  Here is a naive implementation of a cached store.
+  This is planned to be implemented with the rail palyer MVP
   We don't want to over-fetch resources if two elements
   on the page have the same src attribute
   createStore () {
