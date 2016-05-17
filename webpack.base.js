@@ -152,6 +152,8 @@ exports.config = {
   },
   module: {
     noParse: [
+      // When webpack parses the `clone` module it includes ~40K of 
+      //  code that web browsers won't use.
       path.join(npmDir, 'clone'),
     ],
   },
