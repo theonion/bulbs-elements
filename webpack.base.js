@@ -122,11 +122,6 @@ exports.loaders = {
     ),
     include: includeDirs,
   },
-  eslint: {
-    test: /\.js$/,
-    loader: 'eslint-loader',
-    include: includeDirs,
-  },
   files: {
     test: /\.(ttf|eot|svg|woff)$/,
     loader: 'file-loader',
@@ -156,6 +151,7 @@ exports.config = {
     },
   },
   module: {
+
   },
   postcss () {
     return [
