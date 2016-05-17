@@ -1,3 +1,5 @@
+'use strict'; // eslint-disable-line
+
 const webpack = require('webpack');
 const webpackBase = require('./webpack.base.js');
 const plugins = webpackBase.plugins;
@@ -28,4 +30,5 @@ config.module.loaders = [
 ];
 
 config.output.publicPath = '/';
+
 module.exports = config;

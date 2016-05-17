@@ -1,17 +1,23 @@
 language: node_js
 node_js:
-- '5.1'
-- '5.9'
+  - '5.1'
+  - '5.9'
 sudo: false
 before_script:
-- bower install
-- npm install
+  - bower install
+  - npm install
 script:
-- scripts/ci
+# using an env var for the script to run lets us make the script to run
+# part of the travis matrix. This way we get cleaner out put for linting/ci
+  - $RUNNER
 cache:
   directories:
-  - node_modules
+    - node_modules
+    - bower_components
 env:
+  matrix:
+    - RUNNER=scripts/ci
+    - RUNNER=scripts/lint
   global:
-  - secure: XxbtSW9aolp50p4opm5VRjY3v3xs5+yy9jylCDaFBw8CHNoAye/huhf0EoUYeiBTPS8mdM7ZMFlzBn97TSAHPnIak0/u0Js2B7trQOTLRHVbaW7/jXlgZyCJ8Ps40AF1UuJgSgR0WX1Zo53V0T1wunB/1hk/JtCyP3plZoS5EAWuMwDuQJlvM/UAjy9KcjJ6yD3Mzg8GW3vyWVybPx73aObFMf86B92TnoAHcSm5/ulx5s2Tj+O5XsDmu5Kj+u+Vqc+emr0ScIPTjv2H6i7qAyLxPBiRTnF4Fr7NfxjtaQwdgiqJ7w0BcJ+ZkIEd/CIU8NwRp+WTBqZT4485keJxLs6r6cYNx/AOJNyfO9YNx55Ut86kQIL3RdD6ys/6PFgLdVw/GV8xJF94czztuCFn+9IrRF7BT39nvDhb7o+egpCFKVtV7SyMThfo5gRA5u7kHEY3BgKOYkxfN07mSB4IVrbSqE4PiE0VxN0cIC9w0GqwSfDhS1gaLaWUzxESC3inAeqZ1DYzwCL3SVfKJaXOC2bWYVhXN0TOEetndU6nyWClbNazeLjNWPEX4wdvn60hmp7Ewz2gvtSUjMJfZx3ls4f4l/3vAITknEg+u0TjlKpCCT/a5B7uWb8qYGJKYCDb69caMnsTj5/gz/OFH009XIRIf2nOv98gJYzAj+FZTV4=
-  - secure: a4oUYoPm3w1nywasc9hb1qP4bGPRjN1mj8V5K9l0hIX3/H0984sA+Zk9SbRuIqnLDcuRrpzMq+qYC4AUe6gIIAfo6bZQ9GiEvrczULWdHbK84fNDXNRR6NHXBmFnybwLnDqJ1/W4IkaAwIvllAgoGLVXziq4r+ZzxBdy9asS7DOvBUyi/AUnL3s2mbIXRNtD11XmTn257UsbFAJlMRPrQFJa/wpSejUPGn7pO9OlGB8kIwaSDY2oAgF07rsweidaZZfU+zlarqd9F5KGVL1GmiWCSBMn+JXDKxQZoxyW8H7h4frc0r6x5C/3YP07heN3B+s17CkgCQUioOtto+25jIuW37zsiPJRPfxmY53wMjg3Rjl2iBL+vc13Ujz2SRq3KJZgmiQJJPnK1yRo+taXiChclFX8Td+JDkKkQSrPGrGNaORzDzUH2COyXphL7Q4lV5RkpqyOnXI+Ti05usOsQUMlYNtQepfbn1neEEcFyzVhWUxT09KMrVJvlwZLMOqS4dYcqmCtf0He76ypS+QAGUGDSLXCgKZrXVApqAYWv9eP+zHXc0k2WZBGsH+Fn6I59YKsNDMpHxvpxdNdMimgWYAaehZLiHPuWHJGpDxTfYSDdpCWfbwMjFHxE/pruF9cgBiXS2wU24Mosey8y2s/9haG9vSVzlhbMNr+XXwF4Wk=
+    - secure: XxbtSW9aolp50p4opm5VRjY3v3xs5+yy9jylCDaFBw8CHNoAye/huhf0EoUYeiBTPS8mdM7ZMFlzBn97TSAHPnIak0/u0Js2B7trQOTLRHVbaW7/jXlgZyCJ8Ps40AF1UuJgSgR0WX1Zo53V0T1wunB/1hk/JtCyP3plZoS5EAWuMwDuQJlvM/UAjy9KcjJ6yD3Mzg8GW3vyWVybPx73aObFMf86B92TnoAHcSm5/ulx5s2Tj+O5XsDmu5Kj+u+Vqc+emr0ScIPTjv2H6i7qAyLxPBiRTnF4Fr7NfxjtaQwdgiqJ7w0BcJ+ZkIEd/CIU8NwRp+WTBqZT4485keJxLs6r6cYNx/AOJNyfO9YNx55Ut86kQIL3RdD6ys/6PFgLdVw/GV8xJF94czztuCFn+9IrRF7BT39nvDhb7o+egpCFKVtV7SyMThfo5gRA5u7kHEY3BgKOYkxfN07mSB4IVrbSqE4PiE0VxN0cIC9w0GqwSfDhS1gaLaWUzxESC3inAeqZ1DYzwCL3SVfKJaXOC2bWYVhXN0TOEetndU6nyWClbNazeLjNWPEX4wdvn60hmp7Ewz2gvtSUjMJfZx3ls4f4l/3vAITknEg+u0TjlKpCCT/a5B7uWb8qYGJKYCDb69caMnsTj5/gz/OFH009XIRIf2nOv98gJYzAj+FZTV4=
+    - secure: a4oUYoPm3w1nywasc9hb1qP4bGPRjN1mj8V5K9l0hIX3/H0984sA+Zk9SbRuIqnLDcuRrpzMq+qYC4AUe6gIIAfo6bZQ9GiEvrczULWdHbK84fNDXNRR6NHXBmFnybwLnDqJ1/W4IkaAwIvllAgoGLVXziq4r+ZzxBdy9asS7DOvBUyi/AUnL3s2mbIXRNtD11XmTn257UsbFAJlMRPrQFJa/wpSejUPGn7pO9OlGB8kIwaSDY2oAgF07rsweidaZZfU+zlarqd9F5KGVL1GmiWCSBMn+JXDKxQZoxyW8H7h4frc0r6x5C/3YP07heN3B+s17CkgCQUioOtto+25jIuW37zsiPJRPfxmY53wMjg3Rjl2iBL+vc13Ujz2SRq3KJZgmiQJJPnK1yRo+taXiChclFX8Td+JDkKkQSrPGrGNaORzDzUH2COyXphL7Q4lV5RkpqyOnXI+Ti05usOsQUMlYNtQepfbn1neEEcFyzVhWUxT09KMrVJvlwZLMOqS4dYcqmCtf0He76ypS+QAGUGDSLXCgKZrXVApqAYWv9eP+zHXc0k2WZBGsH+Fn6I59YKsNDMpHxvpxdNdMimgWYAaehZLiHPuWHJGpDxTfYSDdpCWfbwMjFHxE/pruF9cgBiXS2wU24Mosey8y2s/9haG9vSVzlhbMNr+XXwF4Wk=

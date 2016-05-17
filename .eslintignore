@@ -1,3 +1,6 @@
 scripts/*
+dist/*
 bower_components/*
+node_modules/*
+examples/vendor/*
 generator-bulbs-elements
