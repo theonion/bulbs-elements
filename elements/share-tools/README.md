@@ -4,7 +4,7 @@ Attributes
   * `share-url` *(required)* Used in all nested share tools.
   * `share-title` *(required)* Used in all nested share tools.
 
-`<share-via-*>`
+#### `<share-via-*>`
 
 All elements that named `<share-via-*>` take an `icon` and `label` attribute.
 
@@ -12,15 +12,15 @@ Attributes
   * `icon` Render an icon for the share tool.
   * `label` Render a label for the share tool.
 
-`<share-via-facebook>`
+#### `<share-via-facebook>`
   * _No attributes_
 
-`<share-via-twitter>`
+#### `<share-via-twitter>`
 
 Attributes
   * `twitter-handle` *(required)* Used to construct the tweet share message.
 
-`<share-via-email>`
+#### `<share-via-email>`
 
 Attributes
   * message (required)* Used to construct the email share message.
