@@ -81,8 +81,6 @@ Object.assign(BulbsVideo, {
   propTypes: {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
-    loop: PropTypes.string,
-    mute: PropTypes.string,
     noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
     twitterHandle: PropTypes.isRequired,

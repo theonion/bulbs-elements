@@ -30,10 +30,7 @@ export default class VideoSummary extends BulbsElement {
           className='bulbs-video-poster'
           style={{ position: 'relative' }}
         >
-          <img
-            style={{ maxWidth: '100%' }}
-            src={video.poster_url}
-          />
+          <img src={video.poster_url}/>
           <div className='bulbs-video-shade'/>
           { typeof this.props.nowPlaying === 'string' &&
             <div className='bulbs-video-summary-playing'>
