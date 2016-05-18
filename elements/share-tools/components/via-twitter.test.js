@@ -54,7 +54,7 @@ describe('<share-tools> <ViaTwitter>', () => {
         </div>
       `;
       event = {
-        preventDefault: () => {}
+        preventDefault: () => {},
       };
       sinon.stub(event, 'preventDefault');
       sinon.stub(window, 'open');

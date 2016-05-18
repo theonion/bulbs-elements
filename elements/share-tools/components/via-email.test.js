@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import { shallow } from 'enzyme';
-
 import ShareViaEmail from './via-email';
 import ShareButton from './share-button';
 
@@ -25,12 +23,11 @@ describe('<share-tools> <ViaEmail>', () => {
         message: 'Message',
       });
 
-      Object.defineProperty(subject, 'shareTitle', { get: () => { return 'Title' } });
-      Object.defineProperty(subject, 'shareUrl', { get: () => { return 'URL' } });
+      Object.defineProperty(subject, 'shareTitle', { get: () => { return 'Title'; } });
+      Object.defineProperty(subject, 'shareUrl', { get: () => { return 'URL'; } });
     });
 
     it('renders a ShareButton', () => {
-      let emailUrl = `mailto:subject=Title&body=URL %0D%0A%0D%0AMessage`;
       let expected = (
         <ShareButton
           className='share-via-email'
@@ -44,6 +41,49 @@ describe('<share-tools> <ViaEmail>', () => {
       );
       expect(subject.render().type).to.eql(expected.type);
       expect(subject.render().props).to.eql(expected.props);
+    });
+  });
+
+  describe('share', () => {
+    let event;
+
+    beforeEach(() => {
+      let container = document.createElement('div');
+      container.innerHTML = `
+        <div
+          class='share-tools'
+          data-share-url='URL'
+          data-share-title='Title'
+        >
+          <div id='render-target'></div>
+        </div>
+      `;
+      event = {
+        preventDefault: () => {},
+      };
+      sinon.stub(event, 'preventDefault');
+      sinon.stub(window, 'open');
+      let shareViaEmail = ReactDOM.render(
+        <ShareViaEmail message='Message'/>,
+        container.querySelector('#render-target')
+      );
+      shareViaEmail.share(event);
+    });
+
+    afterEach(() => {
+      window.open.restore();
+    });
+
+    it('prevents default', () => {
+      expect(event.preventDefault).to.have.been.called;
+    });
+
+    it('opens a email popup', () => {
+      expect(window.open).to.have.been.calledWith(
+       'mailto:?subject=Title&body=URL %0D%0A%0D%0AMessage',
+       'email-share',
+       'width=580,height=300'
+      );
     });
   });
 });

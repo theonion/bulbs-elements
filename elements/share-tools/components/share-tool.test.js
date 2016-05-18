@@ -4,7 +4,7 @@ import ShareTool from './share-tool';
 
 class CustomShareTool extends ShareTool {
   render () {
-    return <div/>
+    return <div/>;
   }
 }
 
