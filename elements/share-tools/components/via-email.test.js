@@ -52,7 +52,7 @@ describe('<share-tools> <ViaEmail>', () => {
       container.innerHTML = `
         <div
           class='share-tools'
-          data-share-url='//example.org'
+          data-share-url='URL'
           data-share-title='Title'
         >
           <div id='render-target'></div>
@@ -82,7 +82,7 @@ describe('<share-tools> <ViaEmail>', () => {
       expect(window.open).to.have.been.calledWith(
        'mailto:?subject=Title&body=URL %0D%0A%0D%0AMessage',
        'email-share',
-       'width=580,height=235'
+       'width=580,height=300'
       );
     });
   });
