@@ -26,7 +26,6 @@ describe('<share-tools>', () => {
   });
 
   describe('render', () => {
-    let subject;
     let props = {
       shareUrl: 'http://example.com',
       shareTitle: 'Example',

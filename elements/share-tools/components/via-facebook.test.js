@@ -44,7 +44,7 @@ describe('<share-tools> <ViaFacebook>', () => {
         </div>
       `;
       event = {
-        preventDefault: () => {}
+        preventDefault: () => {},
       };
       sinon.stub(event, 'preventDefault');
       sinon.stub(window, 'open');

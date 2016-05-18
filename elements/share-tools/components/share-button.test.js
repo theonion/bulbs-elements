@@ -49,7 +49,7 @@ describe('<share-tools> <ShareButton>', () => {
       href: '/path',
       className: 'share-class-name',
       dataTrackLabel: 'tracking-label',
-      onClick
+      onClick,
     };
 
     context('with icon', () => {
