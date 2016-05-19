@@ -36,7 +36,7 @@ describe('<share-tools> <ShareButton>', () => {
     });
 
     it('accepts onClick', () => {
-      expect(subject.onClick).to.eql(PropTypes.fn);
+      expect(subject.onClick).to.eql(PropTypes.func);
     });
   });
 

@@ -1,3 +1,5 @@
+/* global BULBS_ELEMENTS_ANALYTICS_MANAGER */
+
 import React, { PropTypes } from 'react';
 import ShareTool from './share-tool';
 
@@ -21,8 +23,8 @@ export default class ShareViaEmail extends ShareTool {
         className='share-via-email'
         dataTrackLabel='Email'
         iconClassName='fa fa-envelope'
-        icon={this.props.icon}
-        label={this.props.label}
+        icon={this.hasIcon()}
+        label={this.hasLabel()}
         labelText='Email'
         onClick={this.share}
       />
