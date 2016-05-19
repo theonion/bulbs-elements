@@ -18,8 +18,8 @@ describe('<share-tools> <ViaEmail>', () => {
 
     beforeEach(() => {
       subject = new ShareViaEmail({
-        icon: true,
-        label: true,
+        icon: '',
+        label: '',
         message: 'Message',
       });
 
@@ -50,13 +50,12 @@ describe('<share-tools> <ViaEmail>', () => {
     beforeEach(() => {
       let container = document.createElement('div');
       container.innerHTML = `
-        <div
-          class='share-tools'
-          data-share-url='URL'
-          data-share-title='Title'
+        <share-tools
+          share-url='URL'
+          share-title='Title'
         >
           <div id='render-target'></div>
-        </div>
+        </share-tools>
       `;
       event = {
         preventDefault: () => {},

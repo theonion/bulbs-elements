@@ -18,8 +18,8 @@ describe('<share-tools> <ViaTwitter>', () => {
 
     beforeEach(() => {
       subject = new ShareViaTwitter({
-        icon: true,
-        label: true,
+        icon: '',
+        label: '',
         twitterHandle: 'real-slim-shady',
       });
     });
@@ -28,7 +28,7 @@ describe('<share-tools> <ViaTwitter>', () => {
       expect(subject.render()).to.eql(
         <ShareButton
           className='share-via-twitter'
-          data-track-label='Twitter'
+          dataTrackLabel='Twitter'
           iconClassName='fa fa-twitter'
           icon={true}
           labelText='Tweet'
@@ -45,13 +45,12 @@ describe('<share-tools> <ViaTwitter>', () => {
     beforeEach(() => {
       let container = document.createElement('div');
       container.innerHTML = `
-        <div
-          class='share-tools'
-          data-share-url='//example.org'
-          data-share-title='Share Title'
+        <share-tools
+          share-url='//example.org'
+          share-title='Share Title'
         >
           <div id='render-target'></div>
-        </div>
+        </share-tools>
       `;
       event = {
         preventDefault: () => {},
