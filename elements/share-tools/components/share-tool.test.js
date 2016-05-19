@@ -65,6 +65,34 @@ describe('<share-tools> <ShareTool>', () => {
         expect(subject.shareTitle).to.eql('Example Thing');
       });
     });
+
+    describe('hasIcon', () => {
+      context('icon attribute is set', () => {
+        it('is true', () => {
+          expect(new ShareTool({ icon: '' }).hasIcon()).to.be.true;
+        });
+      });
+
+      context('icon attribute not set', () => {
+        it('is false', () => {
+          expect(new ShareTool({}).hasIcon()).to.be.false;
+        });
+      });
+    });
+
+    describe('hasLabel', () => {
+      context('label attribute is set', () => {
+        it('is true', () => {
+          expect(new ShareTool({ label: '' }).hasLabel()).to.be.true;
+        });
+      });
+
+      context('label attribute not set', () => {
+        it('is false', () => {
+          expect(new ShareTool({}).hasLabel()).to.be.false;
+        });
+      });
+    });
   });
 });
 
