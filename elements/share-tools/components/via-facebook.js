@@ -1,3 +1,5 @@
+/* global BULBS_ELEMENTS_ANALYTICS_MANAGER */
+
 import React from 'react';
 import ShareTool from './share-tool';
 import ShareButton from './share-button';
@@ -19,11 +21,11 @@ export default class ShareViaFacebook extends ShareTool {
     return (
       <ShareButton
         className='share-via-facebook'
-        data-track-label='Facebook'
+        dataTrackLabel='Facebook'
         iconClassName='fa fa-facebook'
-        icon={this.props.icon}
+        icon={this.hasIcon()}
+        label={this.hasLabel()}
         labelText='Share'
-        label={this.props.label}
         onClick={this.share}
       />
     );

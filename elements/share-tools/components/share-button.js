@@ -24,5 +24,5 @@ ShareButton.propTypes = {
   iconClassName: PropTypes.string,
   label: PropTypes.bool,
   labelText: PropTypes.string,
-  onClick: PropTypes.fn,
+  onClick: PropTypes.func,
 };

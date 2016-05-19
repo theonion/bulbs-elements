@@ -9,8 +9,8 @@ describe('<share-tools> <ViaFacebook>', () => {
 
     beforeEach(() => {
       subject = new ShareViaFacebook({
-        icon: true,
-        label: true,
+        icon: '',
+        label: '',
       });
     });
 
@@ -18,7 +18,7 @@ describe('<share-tools> <ViaFacebook>', () => {
       expect(subject.render()).to.eql(
         <ShareButton
           className='share-via-facebook'
-          data-track-label='Facebook'
+          dataTrackLabel='Facebook'
           iconClassName='fa fa-facebook'
           icon={true}
           labelText='Share'
@@ -35,13 +35,12 @@ describe('<share-tools> <ViaFacebook>', () => {
     beforeEach(() => {
       let container = document.createElement('div');
       container.innerHTML = `
-        <div
-          class='share-tools'
-          data-share-url='//example.org'
-          data-share-title='Share Title'
+        <share-tools
+          share-url='//example.org'
+          share-title='Share Title'
         >
           <div id='render-target'></div>
-        </div>
+        </share-tools>
       `;
       event = {
         preventDefault: () => {},

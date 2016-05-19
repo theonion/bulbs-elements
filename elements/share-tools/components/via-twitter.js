@@ -1,3 +1,5 @@
+/* global BULBS_ELEMENTS_ANALYTICS_MANAGER */
+
 import React, { PropTypes } from 'react';
 import ShareTool from './share-tool';
 import ShareButton from './share-button';
@@ -25,17 +27,17 @@ export default class ShareViaTwitter extends ShareTool {
     return (
       <ShareButton
         className='share-via-twitter'
-        data-track-label='Twitter'
+        dataTrackLabel='Twitter'
         iconClassName='fa fa-twitter'
-        icon={this.props.icon}
+        icon={this.hasIcon()}
+        label={this.hasLabel()}
         labelText='Tweet'
-        label={this.props.label}
         onClick={this.share}
       />
     );
   }
 }
 
-ShareViaTwitter.propTypes = Object.assign({}, ShareTool.proptTypes, {
+ShareViaTwitter.propTypes = Object.assign({}, ShareTool.propTypes, {
   twitterHandle: PropTypes.string.isRequired,
 });

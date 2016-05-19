@@ -2,20 +2,32 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class ShareTool extends React.Component {
+  get DOMNode () {
+    return ReactDOM.findDOMNode(this);
+  }
+
   get shareTools () {
-    return ReactDOM.findDOMNode(this).closest('.share-tools');
+    return this.DOMNode.closest('share-tools');
   }
 
   get shareUrl () {
-    return this.shareTools.getAttribute('data-share-url');
+    return this.shareTools.getAttribute('share-url');
   }
 
   get shareTitle () {
-    return this.shareTools.getAttribute('data-share-title');
+    return this.shareTools.getAttribute('share-title');
+  }
+
+  hasIcon () {
+    return typeof this.props.icon === 'string';
+  }
+
+  hasLabel () {
+    return typeof this.props.label === 'string';
   }
 }
 
 ShareTool.propTypes = {
-  icon: PropTypes.bool,
-  label: PropTypes.bool,
+  icon: PropTypes.string,
+  label: PropTypes.string,
 };

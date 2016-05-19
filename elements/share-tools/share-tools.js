@@ -1,25 +1,14 @@
-import React, { PropTypes } from 'react';
-import { registerReactElement } from 'bulbs-elements/register';
-
-import Root from './components/root';
+import {
+  registerReactElement,
+  registerElement,
+  BulbsHTMLElement,
+} from 'bulbs-elements/register';
 
 import './share-tools.scss';
 
-export default class ShareTools extends React.Component {
-  render () {
-    return <Root {...this.props}/>;
-  }
-}
+export default class ShareTools extends BulbsHTMLElement {}
 
-ShareTools.propTypes = {
-  children: PropTypes.node,
-  dataTrackAction: PropTypes.string.isRequired,
-  dataTrackCategory: PropTypes.string.isRequired,
-  shareTitle: PropTypes.string.isRequired,
-  shareUrl: PropTypes.string.isRequired,
-};
-
-registerReactElement('share-tools', ShareTools);
+registerElement('share-tools', ShareTools);
 
 import ShareViaFacebook from './components/via-facebook';
 import ShareViaTwitter from './components/via-twitter';
