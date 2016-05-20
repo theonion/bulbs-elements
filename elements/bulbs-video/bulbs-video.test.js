@@ -20,6 +20,15 @@ describe('<bulbs-video>', () => {
       subject.initialDispatch();
       expect(spy).to.have.been.calledWith(src);
     });
+
+    context('autoplay is true', () => {
+      it('reveals the player', () => {
+        let spy = sinon.spy(subject.store.actions, 'revealPlayer');
+        subject.props.autoplay = '';
+        subject.initialDispatch();
+        expect(spy).to.have.been.called;
+      });
+    });
   });
 
   describe('#componentWillReceiveProps', () => {
@@ -31,7 +40,7 @@ describe('<bulbs-video>', () => {
       beforeEach(() => {
         fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
         resetSpy = sinon.spy(subject.store.actions, 'resetController');
-        subject.componentWillReceiveProps({ src });
+        subject.componentDidUpdate({ src });
         newSrc = src;
       });
 
@@ -50,7 +59,8 @@ describe('<bulbs-video>', () => {
         resetSpy = sinon.spy(subject.store.actions, 'resetController');
         newSrc = '//example.org/new-video-src.html';
         fetchMock.mock(newSrc, {});
-        subject.componentWillReceiveProps({ src: newSrc });
+        subject.props.src = newSrc;
+        subject.componentDidUpdate({ src });
       });
 
       it('fetches video data', () => {

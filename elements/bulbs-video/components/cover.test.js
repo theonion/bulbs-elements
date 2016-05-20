@@ -51,7 +51,7 @@ describe('<bulbs-video> <Cover>', function () {
       );
     });
 
-    it('renders a CroppedImage', () => {
+    it('renders an image', () => {
       expect(subject).to.contain(
         <img
           className='bulbs-video-poster'
