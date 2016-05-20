@@ -7,10 +7,7 @@ karma_html/
 benchmark/
 dist/
 bower_components/
-*.swp
-*.swo
+*.sw[pomn]
 .tern-project
-.swn
-*.swm
 stats.json
 .eslintcache
