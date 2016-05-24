@@ -19,6 +19,7 @@ module.exports = {
   files: [
     // test/index.js loads all our tests
     // and sets up test helpers (chai-enzyme, etc.)
+    path.join(__dirname, 'node_modules/whatwg-fetch/fetch.js'),
     path.join(__dirname, 'test/index.js'),
   ],
 
@@ -66,6 +67,8 @@ module.exports = {
     'karma-browserstack-launcher',
     'karma-chai',
     'karma-chrome-launcher',
+    'karma-coveralls',
+    'karma-phantomjs-launcher',
     'karma-coverage',
     'karma-coveralls',
     'karma-fixture',
