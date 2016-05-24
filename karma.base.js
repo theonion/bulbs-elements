@@ -1,7 +1,6 @@
 'use strict'; // eslint-disable-line
 
 const path = require('path');
-const webpackConfig = require('./webpack.config.hot');
 
 module.exports = {
   // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -35,16 +34,7 @@ module.exports = {
     '**/*.html': ['html2js'],
   },
 
-  webpack: {
-    devtool: 'inline-source-map',
-    resolve: webpackConfig.resolve,
-    module: webpackConfig.module,
-    externals: {
-      'react/addons': true,
-      'react/lib/ExecutionEnvironment': true,
-      'react/lib/ReactContext': true,
-    },
-  },
+  webpack: require('./webpack.config.karma'),
 
   webpackMiddleware: {
     stats: {
@@ -67,9 +57,25 @@ module.exports = {
       ui: 'bdd',
     },
     chai: {
-      includeStack: true
+      includeStack: true,
     },
   },
+
+  plugins: [
+    'karma-bower',
+    'karma-browserstack-launcher',
+    'karma-chai',
+    'karma-chrome-launcher',
+    'karma-coverage',
+    'karma-coveralls',
+    'karma-fixture',
+    'karma-html2js-preprocessor',
+    'karma-mocha',
+    'karma-sinon',
+    'karma-sinon-chai',
+    'karma-sourcemap-loader',
+    'karma-webpack',
+  ],
 
   // web server port
   port: 9876,

@@ -7,7 +7,8 @@
   "scripts": {
     "test": "karma start --single-run",
     "karma": "karma start",
-    "lint": "node_modules/.bin/eslint elements lib --max-warnings=1 --cache"
+    "lint": "node_modules/.bin/eslint elements lib *.js --max-warnings=1 --cache",
+    "coverage": "karma start karma.coverage.js --single-run"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
@@ -21,6 +22,8 @@
     "babel": "^6.3.26",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.4",
+    "babel-istanbul": "^0.8.0",
+    "babel-istanbul-loader": "^0.1.0",
     "babel-loader": "^6.2.1",
     "babel-plugin-object-assign": "^1.2.1",
     "babel-plugin-react-transform": "^2.0.0",
@@ -63,6 +66,8 @@
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^1.0.0",
+    "karma-coveralls": "^1.1.2",
     "karma-fixture": "^0.2.5",
     "karma-html2js-preprocessor": "^0.1.0",
     "karma-mocha": "^0.2.1",
