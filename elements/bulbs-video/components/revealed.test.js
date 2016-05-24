@@ -8,6 +8,30 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('propTypes', () => {
     let subject = Revealed.propTypes;
 
+    it('accepts autoplay boolean', () => {
+      expect(subject.autoplay).to.eql(PropTypes.bool);
+    });
+
+    it('accepts autoplayNext boolean', () => {
+      expect(subject.autoplayNext).to.eql(PropTypes.bool);
+    });
+
+    it('accepts noEndcard boolean', () => {
+      expect(subject.noEndcard).to.eql(PropTypes.bool);
+    });
+
+    it('accepts targetCampaignId string', () => {
+      expect(subject.targetCampaignId).to.eql(PropTypes.string);
+    });
+
+    it('accepts targetSpecialCoverage string', () => {
+      expect(subject.targetSpecialCoverage).to.eql(PropTypes.string);
+    });
+
+    it('accepts twitterHandle string', () => {
+      expect(subject.twitterHandle).to.eql(PropTypes.string);
+    });
+
     it('requires video', () => {
       expect(subject.video).to.eql(PropTypes.object.isRequired);
     });
@@ -79,6 +103,204 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('componentDidMount', () => {
-    beforeEach({});
+    let props;
+    let state;
+    let videoRef = {};
+    let makeVideoPlayerSpy;
+    let trackerRegex = /^videoplayer\d+.set$/;
+
+    describe('makes a video player', () => {
+      beforeEach(function () {
+        props = {
+          targetSpecialCoverage: 'sc-slug',
+          targetCampaignId: 'campaign',
+          videojs_options: {},
+          twitterHandle: 'twitter',
+          autoplay: true,
+          autoplayNext: true,
+          video: Object.assign({}, video, {
+            title: 'video_title',
+            tags: 'tags',
+            category: 'category',
+            targeting: {
+              target_channel: 'channel',
+              target_series: 'series',
+              target_season: 'season',
+              target_video_id: 'video_id',
+              target_host_channel: 'host_channel',
+            },
+          }),
+        };
+        state = {};
+        global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
+        global.ga = sinon.spy();
+        makeVideoPlayerSpy = sinon.spy();
+      });
+
+      context('standard setup', () => {
+        beforeEach(() => {
+          Revealed.prototype.componentDidMount.call({
+            props,
+            state,
+            refs: { video: videoRef },
+            makeVideoPlayer: makeVideoPlayerSpy,
+          });
+        });
+
+        it('sets sharetools config', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, {
+              pluginConfig: {
+                sharetools: {
+                  shareUrl: window.location.href,
+                  shareTitle: 'video_title',
+                  shareDescription: '',
+                  twitterHandle: 'twitter',
+                },
+              },
+            }
+          );
+        });
+
+        it('sets ga config', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, {
+              pluginConfig: {
+                ga: {
+                  gaPrefix: sinon.match(/^videoplayer\d+$/),
+                  eventCategory: 'Video:channel',
+                  eventLabel: window.location.href,
+                },
+              },
+            }
+          );
+        });
+
+        it('sets vpbc config', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, {
+              pluginConfig: {
+                vpbc: {
+                  vpCategory: 'category',
+                  vpFlags: [''],
+                  tags: 'tags',
+                  optional: { flashEnabled: true },
+                },
+              },
+            }
+          );
+        });
+
+        it('sets endcard.allowCountdown config', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, {
+              pluginConfig: {
+                endcard: {
+                  allowCountdown: true,
+                },
+              },
+            }
+          );
+        });
+      });
+
+      context('when noEndcard is true', () => {
+        beforeEach(() => {
+          props.noEndcard = true;
+          Revealed.prototype.componentDidMount.call({
+            props,
+            state,
+            refs: { video: videoRef },
+            makeVideoPlayer: makeVideoPlayerSpy,
+          });
+        });
+
+        it('deletes endcard config', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, {
+              pluginConfig: {
+                endcard: undefined, // eslint-disable-line no-undefined
+              },
+            }
+          );
+        });
+      });
+
+      context('analytics', () => {
+        beforeEach(() => {
+          Revealed.prototype.componentDidMount.call({
+            props,
+            state,
+            refs: { video: videoRef },
+            makeVideoPlayer: makeVideoPlayerSpy,
+          });
+        });
+
+        it('creates a prefixed ga tracker', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+            'create', 'a-ga-id', 'auto', { name: sinon.match(/^videoplayer\d+$/) }
+          );
+        });
+
+        it('sets dimension1 to targeting.target_channel', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+            trackerRegex, 'dimension1', 'channel'
+          );
+        });
+
+        it('sets dimension2 to targeting.target_series', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+            trackerRegex, 'dimension2', 'series'
+          );
+        });
+
+        it('sets dimension3 to targeting.target_season', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+            trackerRegex, 'dimension3', 'season'
+          );
+        });
+
+        it('sets dimension4 to targeting.target_video_id', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+            trackerRegex, 'dimension4', 'video_id'
+          );
+        });
+
+        it('sets dimension5 to targeting.taregt_host_channel', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension5', 'host_channel'
+          );
+        });
+
+        it('sets dimension6 to targetSpecialCoverage', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension6', 'sc-slug'
+          );
+        });
+
+        it('sets dimension7 to true', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension7', true);
+        });
+
+        it('sets dimension8 to props.autoplay', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension8', true
+          );
+        });
+
+        it('sets dimension9 to targeting.targetCampaignId', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension9', 'campaign'
+          );
+        });
+
+        it('sets dimension10 to None', () => {
+          expect(global.ga).to.have.been.calledWithMatch(
+           trackerRegex, 'dimension10', 'None'
+          );
+        });
+      });
+    });
   });
 });
