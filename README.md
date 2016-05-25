@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/theonion/bulbs-elements/badge.svg)](https://coveralls.io/github/theonion/bulbs-elements)
+[![Coverage Status](https://coveralls.io/repos/github/theonion/bulbs-elements/badge.svg?branch=master)](https://coveralls.io/github/theonion/bulbs-elements?branch=master)
 # Bulbs Elements
 
 <img src="http://webcomponents.org/img/logo.svg"  width="40" /> <img src="http://assets.onionstatic.com/onion/static/images/onion_logo.png" width="200" />
