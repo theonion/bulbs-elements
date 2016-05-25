@@ -9,10 +9,8 @@ describe('<bulbs-video-carousel>', () => {
       <bulbs-video-carousel>
         <bulbs-video></bulbs-video>
         <bulbs-video-carousel-item id='first'>
-          <a></a>
         </bulbs-video-carousel-item>
         <bulbs-video-carousel-item id='second'>
-          <a></a>
         </bulbs-video-carousel-item>
       </bulbs-video-carousel>
      `;
