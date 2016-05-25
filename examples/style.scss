@@ -16,9 +16,17 @@ body, html, #mount {
   display: flex;
 }
 
+[data-reactroot] {
+  width: 100%;
+}
+
 .examples-index {
   display: flex;
   flex-grow: 1;
+}
+
+iframe {
+  width: 100%;
 }
 
 .examples-index-list {
@@ -35,6 +43,7 @@ body, html, #mount {
 .examples-index-pane {
   overflow: auto;
   flex-grow: 1;
+  display: flex;
 }
 
 .examples-example-group {
