@@ -74,63 +74,54 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
-    let playerOptions = Object.assign({}, this.props.video.videojs_options);
+    let playerOptions = Object.assign({}, this.props.video.player_options);
     playerOptions.pluginConfig = Object.assign({}, playerOptions.pluginConfig);
 
     playerOptions.pluginConfig.ga = {
       gaPrefix,
-      eventCategory: `Video:${targeting.target_channel}`,
-      eventLabel: window.location.href,
-    };
-
-    playerOptions.pluginConfig.endcard.allowCountdown = !!this.props.autoplayNext;
-
-    playerOptions.pluginConfig.vpbc = {
-      vpCategory: this.props.video.category,
-      vpFlags: [''],
-      tags: this.props.video.tags,
-      optional: { flashEnabled: true },
     };
 
     playerOptions.pluginConfig.sharetools = {
       shareUrl: window.location.href,
-      shareTitle: this.props.video.title,
-      shareDescription: '',
-      twitterHandle: this.props.twitterHandle,
     };
 
-    if (this.props.noEndcard) {
-      delete playerOptions.pluginConfig.endcard;
-    }
-
-    this.makeVideoPlayer(this.refs.video, playerOptions);
+    this.makeVideoPlayer(this.refs.videoContainer, playerOptions);
   }
 
   makeVideoPlayer (element, playerOptions) {
-    new VideoPlayer(element, playerOptions); // eslint-disable-line no-new
+    let player = jwplayer(element);
+
+    player.setup({
+      'sources': [
+        {
+          'file': '//v.theonion.com/onionstudios/video/4023/hls_playlist.m3u8',
+        },
+      ],
+      'sharing': {
+        'code': '<iframe name="embedded" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder="no" width="480" height="270" scrolling="no" src="http://www.onionstudios.com/embed?id=4023"></iframe>',
+      },
+      'image': playerOptions.poster,
+      'advertising': {
+        'client': 'vast',
+        'tag': playerOptions.advertising.tag,
+        'skipoffset': 5,
+      },
+      'hlshtml': true,
+      'ga': {
+        idstring: playerOptions.pluginConfig.ga.gaPrefix,
+      },
+      'sharing': {
+        link: playerOptions.pluginConfig.sharetools.shareUrl,
+      },
+    });
   }
 
   render () {
     let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>
-        <video
-          controls
-          ref='video'
-          className='bulbs-video-video video-js vjs-default-skin'
-        >
-          {
-            video.sources.map((source) => {
-              return (
-                <source
-                  key={source.url}
-                  src={source.url}
-                  type={source.content_type}
-                />
-              );
-            })
-          }
-        </video>
+        <div class='bulbs-video-video video-container' ref='videoContainer'>
+        </div>
       </div>
     );
   }

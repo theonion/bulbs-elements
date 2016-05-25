@@ -1,7 +1,17 @@
 let examples = {
   element: 'bulbs-video',
   examples: {
-    'Basic Example': {
+    'Clickhole Example': {
+      render: () => {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+          >
+          </bulbs-video>
+        `;
+      },
+    },
+    'videohub.local example': {
       render () {
         return `
           <bulbs-video

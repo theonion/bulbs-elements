@@ -57,11 +57,11 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.find('.bulbs-video-viewport')).to.have.length(1);
     });
 
-    it('renders a <video>', () => {
-      let videoEl = subject.find('video');
-      expect(subject.find('video')).to.have.length(1);
-      expect(videoEl).to.have.className('bulbs-video-video video-js vjs-default-skin');
-      expect(videoEl).to.have.prop('controls');
+    it('renders a <div>', () => {
+      let videoContainer = subject.find('div');
+      expect(subject.find('div')).to.have.length(1);
+      expect(videoContainer).to.have.className('bulbs-video-video video-container');
+      expect(videoContainer).to.have.prop('controls');
     });
 
     it('renders video and sources', () => {

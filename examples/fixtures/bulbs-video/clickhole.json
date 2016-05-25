@@ -1,0 +1,107 @@
+{
+  "id": 4053,
+  "title": "Beautiful: Watch This Woman Use A Raw Steak To Bang Out The Word ‘Equality’ In Morse Code On The Hood Of Her Car",
+  "channel_slug": "clickhole",
+  "channel_name": "ClickHole",
+  "season": null,
+  "series_slug": null,
+  "series_logo_url": null,
+  "sponsor_id": null,
+  "duration": 0,
+  "poster_url": "http://i.onionstatic.com/onionstudios/4974/original/600.jpg",
+  "targeting": {
+    "target_host_channel": "main",
+    "target_video_id": 4053,
+    "target_channel": "clickhole"
+  },
+  "tags": [
+    "main",
+    "4053",
+    "clickhole"
+  ],
+  "category": "main/clickhole",
+  "player_options": {
+    "poster": "http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg",
+    "advertising": {
+      "tag": "http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602"
+    }
+  },
+  "videojs_options": {
+    "videoId": 4053,
+    "poster": "http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg",
+    "isDiscoverable": true,
+    "pluginConfig": {
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/4053/"
+      },
+      "videometrix": {
+        "id": 6036328,
+        "metadata": {
+          "c3": "onionstudios",
+          "c4": "CLICKHOLE",
+          "ns_st_ci": "onionstudios.4053"
+        }
+      },
+      "videoanalytics": {
+        "id": 6036328
+      }
+    },
+    "techOrder": [
+      "html5",
+      "flash"
+    ],
+    "shareUrl": "http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053"
+  },
+  "sources": [
+    {
+      "id": 19077,
+      "url": "http://v.theonion.com/onionstudios/video/4053/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 469,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4053
+    },
+    {
+      "id": 19078,
+      "url": "http://v.theonion.com/onionstudios/video/4053/640.mp4",
+      "content_type": "video/mp4",
+      "width": 640,
+      "bitrate": 569,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4053
+    },
+    {
+      "id": 19079,
+      "url": "http://v.theonion.com/onionstudios/video/4053/720.mp4",
+      "content_type": "720/video/mp4",
+      "width": 1280,
+      "bitrate": 3528,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4053
+    },
+    {
+      "id": 19080,
+      "url": "http://v.theonion.com/onionstudios/video/4053/1080.mp4",
+      "content_type": "1080/video/mp4",
+      "width": 1920,
+      "bitrate": 8002,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4053
+    },
+    {
+      "id": 19076,
+      "url": "http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8",
+      "content_type": "application/x-mpegURL",
+      "width": null,
+      "bitrate": null,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4053
+    }
+  ]
+}
