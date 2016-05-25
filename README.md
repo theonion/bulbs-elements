@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/theonion/bulbs-elements/badge.svg)](https://coveralls.io/github/theonion/bulbs-elements)
 # Bulbs Elements
 
 <img src="http://webcomponents.org/img/logo.svg"  width="40" /> <img src="http://assets.onionstatic.com/onion/static/images/onion_logo.png" width="200" />
@@ -84,7 +85,7 @@ Those components live at `lib/bulbs-elements/components`
 
 *props*
 
-* `crop`: `<String>` one of: `original` (default), `16x9`, `3x1`, `1x1` 
+* `crop`: `<String>` one of: `original` (default), `16x9`, `3x1`, `1x1`
 * `imageId`: `<Number>` (required) The betty-cropper image id.
 
 ### Generators
