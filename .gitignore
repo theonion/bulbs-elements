@@ -11,3 +11,4 @@ bower_components/
 .tern-project
 stats.json
 .eslintcache
+coverage/*

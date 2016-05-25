@@ -67,10 +67,16 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
     ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
     ga(prefixedSet, 'dimension5', targeting.target_host_channel || 'None');
-    ga(prefixedSet, 'dimension6', targeting.target_special_coverage || 'None');
+    ga(prefixedSet, 'dimension6', this.props.targetSpecialCoverage || 'None');
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
+    ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
+    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
+    ga(prefixedSet, 'dimension10', 'None'); // Platform
 
+    // Making assignment copies here so we can mutate object structure.
     let playerOptions = Object.assign({}, this.props.video.videojs_options);
+    playerOptions.pluginConfig = Object.assign({}, playerOptions.pluginConfig);
+
     playerOptions.pluginConfig.ga = {
       gaPrefix,
       eventCategory: `Video:${targeting.target_channel}`,
@@ -97,7 +103,11 @@ export default class Revealed extends React.Component {
       delete playerOptions.pluginConfig.endcard;
     }
 
-    new VideoPlayer(this.refs.video, playerOptions); // eslint-disable-line no-new
+    this.makeVideoPlayer(this.refs.video, playerOptions);
+  }
+
+  makeVideoPlayer (element, playerOptions) {
+    new VideoPlayer(element, playerOptions); // eslint-disable-line no-new
   }
 
   render () {
@@ -127,8 +137,11 @@ export default class Revealed extends React.Component {
 }
 
 Revealed.propTypes = {
+  autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
   noEndcard: PropTypes.bool,
+  targetCampaignId: PropTypes.string,
+  targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object.isRequired,
 };

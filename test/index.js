@@ -1,3 +1,4 @@
+require('whatwg-fetch');
 import chaiEnzyme from 'chai-enzyme';
 
 chai.use(chaiEnzyme());
