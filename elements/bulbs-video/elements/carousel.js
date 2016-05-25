@@ -1,5 +1,7 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
+import './carousel.scss';
+
 export default class Carousel extends BulbsHTMLElement {
   getAnchors () {
     return this.querySelectorAll('bulbs-video-carousel-item a');
@@ -12,8 +14,12 @@ export default class Carousel extends BulbsHTMLElement {
   }
 
   createdCallback () {
-    this.videoPlayer = this.querySelector('bulbs-video');
     this.playerEnded = this.playerEnded.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.videoPlayer = this.querySelector('bulbs-video');
+    this.slider = this.querySelector('bulbs-video-carousel-slider');
+    this.addEventListener('click', this.handleClick);
   }
 
   attachedCallback () {
@@ -49,6 +55,28 @@ export default class Carousel extends BulbsHTMLElement {
     let nextIndex = (currentIndex + 1) % (items.length - 1);
     let nextItem = items[nextIndex];
     nextItem.click();
+  }
+
+  handleClick (event) {
+    if (event.target.matches('bulbs-video-carousel-next')) {
+      this.slideToNext();
+    }
+
+    if (event.target.matches('bulbs-video-carousel-previous')) {
+      this.slideToPrevious();
+    }
+  }
+
+  slideToNext () {
+    if (this.slider) {
+      this.slider.slideToNext();
+    }
+  }
+
+  slideToPrevious () {
+    if (this.slider) {
+      this.slider.slideToPrevious();
+    }
   }
 }
 
