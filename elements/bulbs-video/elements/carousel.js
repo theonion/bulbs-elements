@@ -58,24 +58,16 @@ export default class Carousel extends BulbsHTMLElement {
   }
 
   handleClick (event) {
-    if (event.target.matches('bulbs-video-carousel-next')) {
-      this.slideToNext();
+    if (event.target.closest('bulbs-video-carousel-next')) {
+      if (this.slider) {
+        this.slider.slideToNext();
+      }
     }
 
-    if (event.target.matches('bulbs-video-carousel-previous')) {
-      this.slideToPrevious();
-    }
-  }
-
-  slideToNext () {
-    if (this.slider) {
-      this.slider.slideToNext();
-    }
-  }
-
-  slideToPrevious () {
-    if (this.slider) {
-      this.slider.slideToPrevious();
+    if (event.target.closest('bulbs-video-carousel-previous')) {
+      if (this.slider) {
+        this.slider.slideToPrevious();
+      }
     }
   }
 }

@@ -1,5 +1,7 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
+import './carousel-item.scss';
+
 function copyAttribute (attribute, from, to) {
   to.setAttribute(attribute, from.getAttribute(attribute));
 }
