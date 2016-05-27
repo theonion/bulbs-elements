@@ -78,6 +78,22 @@ Prepare your development environment:
 $ ./scripts/dev-setup
 ```
 
+### Run continuous development build
+
+Use this if linking to bulbs-elements from an implementing property:
+
+```
+$ ./scripts/webpack-dev-build
+```
+
+### Run local development server
+
+Use this if developing elements within `bulbs-elements` locally
+
+```
+$ ./scripts/webpack-dev-server
+```
+
 ## Common Components
 
 Some components can be used in more than one element.
