@@ -41,4 +41,15 @@ export default {
   onAdBlock () {
     ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'adblock', 'true');
   },
+
+  checkThreeSeconds (event) {
+    if (this.player.gaEvents['three-seconds']) {
+      return;
+    }
+
+    if (event.position >= 3) {
+      ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, '3 seconds', this.player.videoMeta.player_options.shareUrl);
+      this.player.gaEvents['three-seconds'] = true;
+    }
+  },
 };

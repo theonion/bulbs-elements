@@ -149,4 +149,86 @@ describe('Google Analytics', () => {
       expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'adblock', 'true');
     });
   });
+
+  describe('checkThreeSeconds', () => {
+    context('already sent "3 seconds" event', function() {
+      beforeEach(() => {
+        global.ga = sinon.spy();
+
+        GoogleAnalytics.checkThreeSeconds.bind({
+          player: {
+            videoMeta: {
+              channel_name: 'The Onion',
+              player_options: {
+                'shareUrl': 'http://www.theonion.com/r/4053',
+              },
+            },
+            gaEvents: {
+              'three-seconds': true,
+            },
+          },
+          gaPrefix: 'videoplayer0',
+        })();
+      });
+
+      it('does not call ga', () => {
+        expect(global.ga.called).to.be.false;
+      });
+    });
+
+    context('have not sent "3 seconds" event, < 3 seconds', function() {
+      beforeEach(() => {
+        let eventStub = {
+          duration: 60,
+          position: 1,
+        };
+        global.ga = sinon.spy();
+
+        GoogleAnalytics.checkThreeSeconds.bind({
+          player: {
+            videoMeta: {
+              channel_name: 'The Onion',
+              player_options: {
+                'shareUrl': 'http://www.theonion.com/r/4053',
+              },
+            },
+            gaEvents: {},
+          },
+          gaPrefix: 'videoplayer0',
+        })(eventStub);
+      });
+
+      it('does not call ga', () => {
+        expect(global.ga.called).to.be.false;
+      });
+    });
+
+    context('have not sent "3 seconds" event, > 3 seconds', function() {
+      beforeEach(() => {
+        let eventStub = {
+          duration: 60,
+          position: 4,
+        };
+        global.ga = sinon.spy();
+
+        GoogleAnalytics.checkThreeSeconds.bind({
+          player: {
+            videoMeta: {
+              channel_name: 'The Onion',
+              player_options: {
+                'shareUrl': 'http://www.theonion.com/r/4053',
+              },
+            },
+            gaEvents: {},
+          },
+          gaPrefix: 'videoplayer0',
+        })(eventStub);
+      });
+
+      it('sends "3 seconds" event', () => {
+        expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', '3 seconds', 'http://www.theonion.com/r/4053');
+      });
+    });
+
+  });
 });
