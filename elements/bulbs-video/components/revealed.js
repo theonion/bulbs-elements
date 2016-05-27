@@ -1,3 +1,5 @@
+import GoogleAnalytics from '../plugins/google-analytics';
+
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 setImmediate(() => {
@@ -85,11 +87,13 @@ export default class Revealed extends React.Component {
       shareUrl: window.location.href,
     };
 
-    this.makeVideoPlayer(this.refs.videoContainer, playerOptions);
+    this.makeVideoPlayer(this.refs.videoContainer, playerOptions, this.props.video);
   }
 
-  makeVideoPlayer (element, playerOptions) {
+  makeVideoPlayer (element, playerOptions, videoMeta) {
     let player = jwplayer(element);
+
+    player.videoMeta = videoMeta;
 
     player.setup({
       'sources': [
@@ -97,9 +101,6 @@ export default class Revealed extends React.Component {
           'file': '//v.theonion.com/onionstudios/video/4023/hls_playlist.m3u8',
         },
       ],
-      'sharing': {
-        'code': '<iframe name="embedded" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder="no" width="480" height="270" scrolling="no" src="http://www.onionstudios.com/embed?id=4023"></iframe>',
-      },
       'image': playerOptions.poster,
       'advertising': {
         'client': 'vast',
@@ -107,13 +108,13 @@ export default class Revealed extends React.Component {
         'skipoffset': 5,
       },
       'hlshtml': true,
-      'ga': {
-        idstring: playerOptions.pluginConfig.ga.gaPrefix,
-      },
       'sharing': {
-        link: playerOptions.pluginConfig.sharetools.shareUrl,
+        'link': playerOptions.pluginConfig.sharetools.shareUrl,
+        'code': '<iframe name="embedded" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder="no" width="480" height="270" scrolling="no" src="http://www.onionstudios.com/embed?id=4023"></iframe>',
       },
     });
+
+    GoogleAnalytics.init(player, playerOptions.pluginConfig.ga.gaPrefix);
   }
 
   render () {
