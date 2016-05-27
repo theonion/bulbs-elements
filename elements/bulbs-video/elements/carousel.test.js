@@ -8,10 +8,12 @@ describe('<bulbs-video-carousel>', () => {
     container.innerHTML = `
       <bulbs-video-carousel>
         <bulbs-video></bulbs-video>
-        <bulbs-video-carousel-item id='first'>
-        </bulbs-video-carousel-item>
-        <bulbs-video-carousel-item id='second'>
-        </bulbs-video-carousel-item>
+        <bulbs-video-carousel-slider>
+          <bulbs-video-carousel-item id='first'>
+          </bulbs-video-carousel-item>
+          <bulbs-video-carousel-item id='second'>
+          </bulbs-video-carousel-item>
+        </bulbs-video-carousel-slider>
       </bulbs-video-carousel>
      `;
     subject = container.children[0];
@@ -35,6 +37,7 @@ describe('<bulbs-video-carousel>', () => {
 
   describe('attachedCallback', () => {
     beforeEach(() => {
+      sinon.spy(subject.slider, 'pageToCarouselItem');
       sinon.spy(subject.videoPlayer, 'addEventListener');
       sinon.spy(subject, 'scrollPlayerIntoView');
     });
@@ -56,6 +59,13 @@ describe('<bulbs-video-carousel>', () => {
       it('scrolls to the video player', () => {
         subject.attachedCallback();
         expect(subject.scrollPlayerIntoView).to.have.been.called;
+      });
+
+      it('pages to the active item in the carousel', () => {
+        subject.attachedCallback();
+        expect(subject.slider.pageToCarouselItem).to.have.been.calledWith(
+          container.querySelector('#second')
+        );
       });
     });
 
@@ -85,6 +95,7 @@ describe('<bulbs-video-carousel>', () => {
     beforeEach(() => {
       sinon.spy(window, 'scrollBy');
     });
+
     afterEach(() => {
       window.scrollBy.restore();
     });

@@ -346,4 +346,26 @@ describe('<bulbs-video-carousel-slider>', () => {
       );
     });
   });
+
+  describe('pageToCarouselItem', () => {
+    beforeEach(() => {
+      subject.style.width = '200px';
+      sinon.spy(subject, 'slideItems');
+    });
+
+    it('pages to the correct page if item is start af page', () => {
+      subject.pageToCarouselItem(subject.carouselItems[4]);
+      expect(subject.getCurrentPage()).to.eql(2);
+    });
+
+    it('pages to the correct page if item in middle of page', () => {
+      subject.pageToCarouselItem(subject.carouselItems[5]);
+      expect(subject.getCurrentPage()).to.eql(2);
+    });
+
+    it('slides items', () => {
+      subject.pageToCarouselItem(subject.carouselItems[5]);
+      expect(subject.slideItems).to.have.been.called;
+    });
+  });
 });

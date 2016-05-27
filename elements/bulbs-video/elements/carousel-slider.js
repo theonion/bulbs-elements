@@ -113,6 +113,19 @@ export default class CarouselSlider extends BulbsHTMLElement {
     });
     this.dispatchEvent(event);
   }
+
+  pageToCarouselItem (item) {
+    let index = Array.prototype.indexOf.call(this.carouselItems, item);
+
+    console.log('pageToCarouselItem', index);
+    if (item > -1) {
+      this.currentIndex = Math.floor(
+        index / this.getChildrenPerPage()
+      );
+    }
+
+    this.slideItems();
+  }
 }
 
 registerElement('bulbs-video-carousel-slider', CarouselSlider);

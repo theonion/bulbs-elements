@@ -28,8 +28,12 @@ export default class Carousel extends BulbsHTMLElement {
       //  video events do not bubble, so we have to listen to the
       //  catpure phase.
       this.videoPlayer.addEventListener('ended', this.playerEnded, true);
-      if (this.getActiveCarouselItem()) {
+      let activeCarouselItem = this.getActiveCarouselItem();
+      if (activeCarouselItem) {
         this.scrollPlayerIntoView();
+        if (this.slider) {
+          this.slider.pageToCarouselItem(activeCarouselItem);
+        }
       }
     }
   }
@@ -41,7 +45,9 @@ export default class Carousel extends BulbsHTMLElement {
   }
 
   scrollPlayerIntoView () {
-    this.videoPlayer.scrollIntoView();
+    if (this.videoPlayer) {
+      this.videoPlayer.scrollIntoView();
+    }
     let header = document.body.querySelector('header');
     if (header) {
       window.scrollBy(0, header.getBoundingClientRect().height);
