@@ -1,5 +1,4 @@
 import GoogleAnalytics from './google-analytics';
-// ga('send', 'event', [eventCategory], [eventAction], [eventLabel], [eventValue], [fieldsObject]);
 
 describe('Google Analytics', () => {
   global.ga = () => {};
@@ -9,18 +8,21 @@ describe('Google Analytics', () => {
       beforeEach(() => {
         global.ga = sinon.spy();
 
-        GoogleAnalytics.onPlay.bind({
-          player: {
+        let googleAnalytics = GoogleAnalytics.init(
+          {
             videoMeta: {
               channel_name: 'The Onion',
               player_options: {
                 'shareUrl': 'http://www.theonion.com/r/4053',
               },
             },
-            playedOnce: true
+            playedOnce: true,
+            on: sinon.spy(),
           },
-          gaPrefix: 'videoplayer0',
-        })();
+          'videoplayer0'
+        );
+
+        googleAnalytics.onPlay();
       });
 
       it('sends a "play" event', () => {
@@ -49,12 +51,16 @@ describe('Google Analytics', () => {
               'shareUrl': 'http://www.theonion.com/r/4053',
             },
           },
+          playedOnce: false,
+          on: sinon.spy(),
         };
 
-        GoogleAnalytics.onPlay.bind({
-          player: player,
-          gaPrefix: 'videoplayer0',
-        })();
+        let googleAnalytics = GoogleAnalytics.init(
+          player,
+          'videoplayer0'
+        );
+
+        googleAnalytics.onPlay();
       });
 
       it('sets the "playedOnce" value', () => {
@@ -79,21 +85,30 @@ describe('Google Analytics', () => {
     beforeEach(() => {
       global.ga = sinon.spy();
 
-      GoogleAnalytics.onPause.bind({
-        player: {
+      let googleAnalytics = GoogleAnalytics.init(
+        {
           videoMeta: {
             channel_name: 'The Onion',
             player_options: {
               'shareUrl': 'http://www.theonion.com/r/4053',
             },
           },
+          on: sinon.spy(),
         },
-        gaPrefix: 'videoplayer0',
-      })();
+        'videoplayer0'
+      );
+
+      googleAnalytics.onPause();
     });
 
     it('sends an "pause" event', () => {
-      expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'pause', 'http://www.theonion.com/r/4053');
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'pause',
+        'http://www.theonion.com/r/4053'
+      );
     });
   });
 
@@ -111,16 +126,22 @@ describe('Google Analytics', () => {
           },
         },
         playedOnce: true,
+        on: sinon.spy(),
       };
 
-      GoogleAnalytics.onComplete.bind({
-        player: player,
-        gaPrefix: 'videoplayer0',
-      })();
+      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+      googleAnalytics.onComplete();
     });
 
     it('sends an "end" event', () => {
-      expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'end', 'http://www.theonion.com/r/4053');
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'end',
+        'http://www.theonion.com/r/4053'
+      );
     });
 
     it('resets the "playedOnce" value', () => {
@@ -132,17 +153,19 @@ describe('Google Analytics', () => {
     beforeEach(() => {
       global.ga = sinon.spy();
 
-      GoogleAnalytics.onAdBlock.bind({
-        player: {
-          videoMeta: {
-            channel_name: 'The Onion',
-            player_options: {
-              'shareUrl': 'http://www.theonion.com/r/4053',
-            },
+      let player = {
+        videoMeta: {
+          channel_name: 'The Onion',
+          player_options: {
+            'shareUrl': 'http://www.theonion.com/r/4053',
           },
         },
-        gaPrefix: 'videoplayer0',
-      })();
+        on: sinon.spy(),
+      };
+
+      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+      googleAnalytics.onAdBlock();
     });
 
     it('sends an "adblock" event', () => {
@@ -150,25 +173,78 @@ describe('Google Analytics', () => {
     });
   });
 
+  describe('onTime', () => {
+    let data = {
+      duration: 60,
+      position: 25,
+    };
+    let googleAnalytics;
+
+    beforeEach(() => {
+      let player = {
+        videoMeta: {
+          channel_name: 'The Onion',
+          player_options: {
+            'shareUrl': 'http://www.theonion.com/r/4053',
+          },
+        },
+        on: sinon.spy(),
+      };
+
+      googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+      sinon.stub(googleAnalytics, 'checkThreeSeconds');
+      sinon.stub(googleAnalytics, 'checkPercentage');
+      googleAnalytics.onTime(data);
+    });
+
+    it('checks if the video is past 3 seconds', function() {
+      expect(googleAnalytics.checkThreeSeconds.calledWith(data)).to.be.true;
+    });
+
+    it('checks for 25 percent quartile', function() {
+      expect(googleAnalytics.checkPercentage.calledWith(data, 25)).to.be.true;
+    });
+
+    it('checks for 50 percent quartile', function() {
+      expect(googleAnalytics.checkPercentage.calledWith(data, 50)).to.be.true;
+    });
+
+    it('checks for 75 percent quartile', function() {
+      expect(googleAnalytics.checkPercentage.calledWith(data, 75)).to.be.true;
+    });
+
+    it('checks for 95 percent quartile', function() {
+      expect(googleAnalytics.checkPercentage.calledWith(data, 95)).to.be.true;
+    });
+  });
+
   describe('checkThreeSeconds', () => {
+    let googleAnalytics;
+    let player;
+
     context('already sent "3 seconds" event', function() {
       beforeEach(() => {
         global.ga = sinon.spy();
 
-        GoogleAnalytics.checkThreeSeconds.bind({
-          player: {
-            videoMeta: {
-              channel_name: 'The Onion',
-              player_options: {
-                'shareUrl': 'http://www.theonion.com/r/4053',
-              },
-            },
-            gaEvents: {
-              'three-seconds': true,
+        let eventStub = {
+          duration: 50,
+          position: 5,
+        };
+
+        player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
             },
           },
-          gaPrefix: 'videoplayer0',
-        })();
+          on: sinon.spy(),
+        };
+
+        googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        googleAnalytics.player.gaEvents['3 seconds'] = true;
+        googleAnalytics.checkThreeSeconds(eventStub);
       });
 
       it('does not call ga', () => {
@@ -184,18 +260,19 @@ describe('Google Analytics', () => {
         };
         global.ga = sinon.spy();
 
-        GoogleAnalytics.checkThreeSeconds.bind({
-          player: {
-            videoMeta: {
-              channel_name: 'The Onion',
-              player_options: {
-                'shareUrl': 'http://www.theonion.com/r/4053',
-              },
+        player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
             },
-            gaEvents: {},
           },
-          gaPrefix: 'videoplayer0',
-        })(eventStub);
+          on: sinon.spy(),
+        };
+
+        googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+        googleAnalytics.checkThreeSeconds(eventStub);
       });
 
       it('does not call ga', () => {
@@ -209,26 +286,131 @@ describe('Google Analytics', () => {
           duration: 60,
           position: 4,
         };
+        player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        };
         global.ga = sinon.spy();
 
-        GoogleAnalytics.checkThreeSeconds.bind({
-          player: {
-            videoMeta: {
-              channel_name: 'The Onion',
-              player_options: {
-                'shareUrl': 'http://www.theonion.com/r/4053',
-              },
-            },
-            gaEvents: {},
-          },
-          gaPrefix: 'videoplayer0',
-        })(eventStub);
+        googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+        googleAnalytics.checkThreeSeconds(eventStub);
       });
 
       it('sends "3 seconds" event', () => {
-        expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', '3 seconds', 'http://www.theonion.com/r/4053');
+        expect(global.ga).to.have.been.calledWith(
+          'videoplayer0.send',
+          'event',
+          'Video:The Onion',
+          '3 seconds',
+          'http://www.theonion.com/r/4053'
+        );
+      });
+
+      it('makes sure it is not sent again', function() {
+        expect(player.gaEvents['3 seconds']).to.be.true;
       });
     });
 
+  });
+
+  describe('checkPercentage', () => {
+    context('already sent "xx" percentage event', () => {
+      beforeEach(() => {
+        global.ga = sinon.spy();
+
+        let player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        };
+
+        let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+
+        googleAnalytics.player.gaEvents['25 percent'] = true;
+        googleAnalytics.checkPercentage({}, 25);
+      });
+
+      it('does not call ga', function() {
+        expect(global.ga.called).to.be.false;
+      });
+    });
+
+    context('have not sent percent, under percent', () => {
+      beforeEach(() => {
+        global.ga = sinon.spy();
+
+        let eventStub = {
+          duration: 100,
+          position: 20,
+        };
+
+        let player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        };
+
+        let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        googleAnalytics.checkPercentage(eventStub, 25);
+      });
+
+      it('does not send "xx percent" event', () => {
+        expect(global.ga.called).to.be.false;
+      });
+    });
+
+    context('have not sent percent, over percent', () => {
+      let player;
+
+      beforeEach(() => {
+        global.ga = sinon.spy();
+
+        let eventStub = {
+          duration: 100,
+          position: 25,
+        };
+
+        player = {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        };
+
+        let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        googleAnalytics.checkPercentage(eventStub, 25);
+      });
+
+      it('sends "xx percent" event', () => {
+        expect(global.ga).to.have.been.calledWith(
+          'videoplayer0.send',
+          'event',
+          'Video:The Onion',
+          '25 percent',
+          'http://www.theonion.com/r/4053'
+        );
+      });
+
+      it('makes sure it is not sent again', function() {
+        expect(player.gaEvents['25 percent']).to.be.true;
+      });
+    });
   });
 });

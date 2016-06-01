@@ -2,16 +2,19 @@ let prefixedSend = (gaPrefix) => {
   return `${gaPrefix}.send`;
 };
 
-export default {
-  init (player, gaPrefix) {
-    let context = {
-      player: player,
-      gaPrefix: gaPrefix,
-    };
-    player.on('play', this.onPlay.bind(context));
-    player.on('pause', this.onPause.bind(context));
-    player.on('adBlock', this.onAdBlock.bind(context));
-    player.on('complete', this.onComplete.bind(context));
+class GoogleAnalytics {
+  constructor(player, gaPrefix) {
+    console.log(this, player);
+    this.player = player;
+    this.gaPrefix = gaPrefix;
+
+    this.player.gaEvents = {};
+
+    player.on('play', this.onPlay.bind(this));
+    player.on('pause', this.onPause.bind(this));
+    player.on('adBlock', this.onAdBlock.bind(this));
+    player.on('complete', this.onComplete.bind(this));
+    player.on('time', this.onTime.bind(this));
     // .on('adSkipped')
     // .on('adError')
     // .on('fullscreen') // fullscreen
@@ -19,37 +22,104 @@ export default {
     // .on('time')
     // .on('error')
     // .on('firstFrame') // Returns object with loadTime (in ms) of time between user hitting play and same user viewing their content
-  },
+  }
 
-  onPlay () {
+  onPlay() {
     if (!this.player.playedOnce) {
-      ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'start', this.player.videoMeta.player_options.shareUrl);
+      global.ga(
+        prefixedSend(this.gaPrefix),
+        'event', 'Video:' + this.player.videoMeta.channel_name,
+        'start',
+        this.player.videoMeta.player_options.shareUrl
+      );
       this.player.playedOnce = true;
     }
-    ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'play', this.player.videoMeta.player_options.shareUrl);
-  },
+    global.ga(
+      prefixedSend(this.gaPrefix),
+      'event', 'Video:' + this.player.videoMeta.channel_name,
+      'play',
+      this.player.videoMeta.player_options.shareUrl
+    );
+  }
 
-  onPause () {
-    ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'pause', this.player.videoMeta.player_options.shareUrl);
-  },
+  onPause() {
+    global.ga(
+      prefixedSend(this.gaPrefix), 'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'pause',
+      this.player.videoMeta.player_options.shareUrl
+    );
+  }
 
-  onComplete () {
-    ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'end', this.player.videoMeta.player_options.shareUrl);
+  onComplete() {
+    global.ga(
+      prefixedSend(this.gaPrefix),
+      'event', 'Video:' + this.player.videoMeta.channel_name,
+      'end',
+      this.player.videoMeta.player_options.shareUrl
+    );
     this.player.playedOnce = false;
-  },
+  }
 
-  onAdBlock () {
-    ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, 'adblock', 'true');
-  },
+  onAdBlock() {
+    global.ga(
+      prefixedSend(this.gaPrefix),
+      'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'adblock',
+      'true'
+    );
+  }
 
-  checkThreeSeconds (event) {
-    if (this.player.gaEvents['three-seconds']) {
+  onTime(event) {
+    this.checkThreeSeconds(event);
+    this.checkPercentage(event, 25);
+    this.checkPercentage(event, 50);
+    this.checkPercentage(event, 75);
+    this.checkPercentage(event, 95);
+  }
+
+  checkPercentage(event, percent) {
+    let eventAction = percent + ' percent';
+
+    if (this.player.gaEvents[eventAction]) {
+      return;
+    }
+
+    let percentPlayed = Math.round(event.position / event.duration * 100);
+
+    if (percentPlayed >= percent) {
+      global.ga(
+        prefixedSend(this.gaPrefix),
+        'event', 'Video:' + this.player.videoMeta.channel_name,
+        eventAction,
+        this.player.videoMeta.player_options.shareUrl
+      );
+      this.player.gaEvents[eventAction] = true;
+    }
+  }
+
+  checkThreeSeconds(event) {
+    let eventAction = '3 seconds';
+
+    if (this.player.gaEvents[eventAction]) {
       return;
     }
 
     if (event.position >= 3) {
-      ga(prefixedSend(this.gaPrefix), 'event', 'Video:' + this.player.videoMeta.channel_name, '3 seconds', this.player.videoMeta.player_options.shareUrl);
-      this.player.gaEvents['three-seconds'] = true;
+      global.ga(
+        prefixedSend(this.gaPrefix),
+        'event', 'Video:' + this.player.videoMeta.channel_name,
+        eventAction,
+        this.player.videoMeta.player_options.shareUrl
+      );
+      this.player.gaEvents[eventAction] = true;
     }
+  }
+}
+
+export default {
+  init (player, gaPrefix) {
+    return new GoogleAnalytics(player, gaPrefix);
   },
 };
