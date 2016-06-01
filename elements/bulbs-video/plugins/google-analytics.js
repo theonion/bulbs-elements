@@ -19,7 +19,6 @@ class GoogleAnalytics {
     // .on('adError')
     // .on('fullscreen') // fullscreen
     // .on('resize') // resize
-    // .on('time')
     // .on('error')
     // .on('firstFrame') // Returns object with loadTime (in ms) of time between user hitting play and same user viewing their content
   }
@@ -72,7 +71,9 @@ class GoogleAnalytics {
   }
 
   onTime(event) {
-    this.checkThreeSeconds(event);
+    this.checkSecondsElapsed(3, event);
+    this.checkSecondsElapsed(10, event);
+    this.checkSecondsElapsed(30, event);
     this.checkPercentage(event, 25);
     this.checkPercentage(event, 50);
     this.checkPercentage(event, 75);
@@ -99,14 +100,14 @@ class GoogleAnalytics {
     }
   }
 
-  checkThreeSeconds(event) {
-    let eventAction = '3 seconds';
+  checkSecondsElapsed(seconds, event) {
+    let eventAction = seconds + ' seconds';
 
     if (this.player.gaEvents[eventAction]) {
       return;
     }
 
-    if (event.position >= 3) {
+    if (event.position >= seconds) {
       global.ga(
         prefixedSend(this.gaPrefix),
         'event', 'Video:' + this.player.videoMeta.channel_name,

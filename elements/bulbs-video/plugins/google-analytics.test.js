@@ -193,13 +193,21 @@ describe('Google Analytics', () => {
 
       googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
 
-      sinon.stub(googleAnalytics, 'checkThreeSeconds');
+      sinon.stub(googleAnalytics, 'checkSecondsElapsed');
       sinon.stub(googleAnalytics, 'checkPercentage');
       googleAnalytics.onTime(data);
     });
 
     it('checks if the video is past 3 seconds', function() {
-      expect(googleAnalytics.checkThreeSeconds.calledWith(data)).to.be.true;
+      expect(googleAnalytics.checkSecondsElapsed.calledWith(3, data)).to.be.true;
+    });
+
+    it('checks if the video is past 10 seconds', function() {
+      expect(googleAnalytics.checkSecondsElapsed.calledWith(10, data)).to.be.true;
+    });
+
+    it('checks if the video is past 30 seconds', function() {
+      expect(googleAnalytics.checkSecondsElapsed.calledWith(30, data)).to.be.true;
     });
 
     it('checks for 25 percent quartile', function() {
@@ -219,11 +227,11 @@ describe('Google Analytics', () => {
     });
   });
 
-  describe('checkThreeSeconds', () => {
+  describe('checkSecondsElapsed', () => {
     let googleAnalytics;
     let player;
 
-    context('already sent "3 seconds" event', function() {
+    context('already sent "x seconds" event', function() {
       beforeEach(() => {
         global.ga = sinon.spy();
 
@@ -244,7 +252,7 @@ describe('Google Analytics', () => {
 
         googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
         googleAnalytics.player.gaEvents['3 seconds'] = true;
-        googleAnalytics.checkThreeSeconds(eventStub);
+        googleAnalytics.checkSecondsElapsed(3, eventStub);
       });
 
       it('does not call ga', () => {
@@ -252,7 +260,7 @@ describe('Google Analytics', () => {
       });
     });
 
-    context('have not sent "3 seconds" event, < 3 seconds', function() {
+    context('have not sent "x seconds" event, < x seconds', function() {
       beforeEach(() => {
         let eventStub = {
           duration: 60,
@@ -272,7 +280,7 @@ describe('Google Analytics', () => {
 
         googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
 
-        googleAnalytics.checkThreeSeconds(eventStub);
+        googleAnalytics.checkSecondsElapsed(3, eventStub);
       });
 
       it('does not call ga', () => {
@@ -280,7 +288,7 @@ describe('Google Analytics', () => {
       });
     });
 
-    context('have not sent "3 seconds" event, > 3 seconds', function() {
+    context('have not sent "x seconds" event, > x seconds', function() {
       beforeEach(() => {
         let eventStub = {
           duration: 60,
@@ -299,7 +307,7 @@ describe('Google Analytics', () => {
 
         googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
 
-        googleAnalytics.checkThreeSeconds(eventStub);
+        googleAnalytics.checkSecondsElapsed(3, eventStub);
       });
 
       it('sends "3 seconds" event', () => {
