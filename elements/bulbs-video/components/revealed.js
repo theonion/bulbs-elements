@@ -31,7 +31,6 @@ setImmediate(() => {
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import VideoPlayer from 'videohub-player';
 
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
@@ -56,6 +55,10 @@ export default class Revealed extends React.Component {
     invariant(
       global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       '`<bulbs-video>` requires `BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID` to be in global scope.'
+    );
+    invariant(
+      global.jwplayer,
+      '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
     let gaPrefix = makeGaPrefix();
@@ -91,7 +94,7 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, playerOptions, videoMeta) {
-    let player = jwplayer(element);
+    let player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
 

@@ -10,11 +10,6 @@ import BulbsVideoRoot from './components/root';
 
 import './bulbs-video.scss';
 import './endcard.scss';
-import 'videojs/dist/video-js/video-js.css';
-import 'videohub-player/dist/videohub-player.css';
-import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
-
-// let videoStores = {};
 
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {

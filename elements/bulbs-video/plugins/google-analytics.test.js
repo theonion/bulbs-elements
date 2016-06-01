@@ -277,7 +277,7 @@ describe('Google Analytics', () => {
     });
 
     it('sends an "adblock" event', () => {
-      expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'adblock', 'true');
+      expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'adblock:enabled', 'http://www.theonion.com/r/4053');
     });
   });
 

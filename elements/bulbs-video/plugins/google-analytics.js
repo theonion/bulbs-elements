@@ -93,8 +93,8 @@ class GoogleAnalytics {
       prefixedSend(this.gaPrefix),
       'event',
       'Video:' + this.player.videoMeta.channel_name,
-      'adblock',
-      'true'
+      'adblock:enabled',
+      this.player.videoMeta.player_options.shareUrl
     );
   }
 

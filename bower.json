@@ -20,8 +20,7 @@
     "jquery": "^2.2.3"
   },
   "dependencies": {
-    "bulbs-public-analytics-manager": "theonion/bulbs-public-analytics-manager#0.1.3",
-    "videohub-player": "https://github.com/theonion/videohub-player.git#1.0.0"
+    "bulbs-public-analytics-manager": "theonion/bulbs-public-analytics-manager#0.1.3"
   },
   "resolutions": {
     "jquery": "^2.2.3"
