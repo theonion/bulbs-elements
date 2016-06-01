@@ -15,12 +15,12 @@ class GoogleAnalytics {
     player.on('adBlock', this.onAdBlock.bind(this));
     player.on('complete', this.onComplete.bind(this));
     player.on('time', this.onTime.bind(this));
+    player.on('fullscreen', this.onFullScreen.bind(this));
+    player.on('resize', this.onResize.bind(this));
+    player.on('firstFrame', this.onFirstFrame.bind(this));
     // .on('adSkipped')
     // .on('adError')
-    // .on('fullscreen') // fullscreen
-    // .on('resize') // resize
     // .on('error')
-    // .on('firstFrame') // Returns object with loadTime (in ms) of time between user hitting play and same user viewing their content
   }
 
   onPlay() {
@@ -47,6 +47,34 @@ class GoogleAnalytics {
       'Video:' + this.player.videoMeta.channel_name,
       'pause',
       this.player.videoMeta.player_options.shareUrl
+    );
+  }
+
+  onFullScreen(event) {
+    global.ga(
+      prefixedSend(this.gaPrefix), 'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'fullscreen:' + event.fullscreen,
+      this.player.videoMeta.player_options.shareUrl
+    );
+  }
+
+  onResize(event) {
+    global.ga(
+      prefixedSend(this.gaPrefix), 'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'resize:' + event.width + 'x' + event.height,
+      this.player.videoMeta.player_options.shareUrl
+    );
+  }
+
+  onFirstFrame(event) {
+    global.ga(
+      prefixedSend(this.gaPrefix), 'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'firstFrame',
+      this.player.videoMeta.player_options.shareUrl,
+      event.loadTime
     );
   }
 

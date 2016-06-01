@@ -112,6 +112,114 @@ describe('Google Analytics', () => {
     });
   });
 
+  describe('onFullScreen', () => {
+    beforeEach(() => {
+      global.ga = sinon.spy();
+
+      let eventStub = {
+        fullscreen: true,
+        type: 'fullscreen',
+      };
+
+      let googleAnalytics = GoogleAnalytics.init(
+        {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        },
+        'videoplayer0'
+      );
+
+      googleAnalytics.onFullScreen(eventStub);
+    });
+
+    it('sends an "fullscreen" event', () => {
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'fullscreen:true',
+        'http://www.theonion.com/r/4053'
+      );
+    });
+  });
+
+  describe('onResize', () => {
+    beforeEach(() => {
+      global.ga = sinon.spy();
+
+      let eventStub = {
+        width: 1920,
+        height: 1080,
+      };
+
+      let googleAnalytics = GoogleAnalytics.init(
+        {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        },
+        'videoplayer0'
+      );
+
+      googleAnalytics.onResize(eventStub);
+    });
+
+    it('sends an "resize" event', () => {
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'resize:1920x1080',
+        'http://www.theonion.com/r/4053'
+      );
+    });
+  });
+
+  describe('onFirstFrame', () => {
+    beforeEach(() => {
+      global.ga = sinon.spy();
+
+      let eventStub = {
+        loadTime: 300,
+      };
+
+      let googleAnalytics = GoogleAnalytics.init(
+        {
+          videoMeta: {
+            channel_name: 'The Onion',
+            player_options: {
+              'shareUrl': 'http://www.theonion.com/r/4053',
+            },
+          },
+          on: sinon.spy(),
+        },
+        'videoplayer0'
+      );
+
+      googleAnalytics.onFirstFrame(eventStub);
+    });
+
+    it('sends an "firstFrame" event', () => {
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'firstFrame',
+        'http://www.theonion.com/r/4053',
+        300
+      );
+    });
+  });
+
   describe('onComplete', () => {
     let player;
 
