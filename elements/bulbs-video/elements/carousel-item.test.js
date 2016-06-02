@@ -3,9 +3,10 @@ import './carousel-item';
 describe('<bulbs-video-carousel-item>', () => {
   let subject;
   let anchor;
+  let container;
 
-  beforeEach(() => {
-    let container = document.createElement('container');
+  beforeEach((done) => {
+    container = document.createElement('container');
     container.innerHTML = `
       <bulbs-video-carousel-item
         href="/path"
@@ -16,8 +17,18 @@ describe('<bulbs-video-carousel-item>', () => {
         <cool-kid></cool-kid>
       </bulbs-video-carousel-item>
     `;
-    subject = container.querySelector('bulbs-video-carousel-item');
-    anchor = subject.querySelector('a');
+    document.body.appendChild(container);
+    // document.registerElement polyfill runs on next microtask in some browsers
+    // MUST wait until end of queue for elements to be constructed
+    setImmediate(() => {
+      subject = container.querySelector('bulbs-video-carousel-item');
+      anchor = subject.querySelector('a');
+      done();
+    });
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
   });
 
   it('wraps the inner elements in an anchor', () => {

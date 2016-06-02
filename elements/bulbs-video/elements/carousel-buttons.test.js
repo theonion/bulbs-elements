@@ -1,6 +1,7 @@
 import './carousel-buttons';
 let subject;
 let carousel;
+let container;
 
 function carouselButtonExamples () {
   describe('createdCallback', () => {
@@ -12,7 +13,11 @@ function carouselButtonExamples () {
     it('listens to the <bulbs-video-carousel> slide-items event', () => {
       sinon.stub(subject, 'checkBounds');
       subject.attachedCallback();
-      let event = new CustomEvent('slide-items');
+      let event = new CustomEvent('slide-items', {
+        detail: {
+          carouselItems: [],
+        },
+      });
       carousel.dispatchEvent(event);
       expect(subject.checkBounds).to.have.been.calledWith(event);
     });
@@ -38,8 +43,8 @@ function carouselButtonExamples () {
 }
 
 describe('<bulbs-video-carousel-next>', () => {
-  beforeEach(() => {
-    let container = document.createElement('container');
+  beforeEach((done) => {
+    container = document.createElement('container');
     container.innerHTML = `
       <bulbs-video-carousel>
         <bulbs-video-carousel-next></bulbs-video-carousel-next>
@@ -47,6 +52,14 @@ describe('<bulbs-video-carousel-next>', () => {
     `;
     subject = container.querySelector('bulbs-video-carousel-next');
     carousel = container.querySelector('bulbs-video-carousel');
+    document.body.appendChild(container);
+    // document.registerElement polyfill runs on next microtask in some browsers
+    // MUST wait until end of queue for elements to be constructed
+    setImmediate(done);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
   });
 
   carouselButtonExamples.call(this);
@@ -85,8 +98,8 @@ describe('<bulbs-video-carousel-next>', () => {
 });
 
 describe('<bulbs-video-carousel-previous>', () => {
-  beforeEach(() => {
-    let container = document.createElement('container');
+  beforeEach((done) => {
+    container = document.createElement('container');
     container.innerHTML = `
       <bulbs-video-carousel>
         <bulbs-video-carousel-previous></bulbs-video-carousel-previous>
@@ -94,6 +107,14 @@ describe('<bulbs-video-carousel-previous>', () => {
     `;
     subject = container.querySelector('bulbs-video-carousel-previous');
     carousel = container.querySelector('bulbs-video-carousel');
+    document.body.appendChild(container);
+    // document.registerElement polyfill runs on next microtask in some browsers
+    // MUST wait until end of queue for elements to be constructed
+    setImmediate(done);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
   });
 
   carouselButtonExamples.call(this);

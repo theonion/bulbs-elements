@@ -6,7 +6,7 @@ describe('<bulbs-video-carousel-slider>', () => {
   let firstItem;
   let secondItem;
 
-  beforeEach(() => {
+  beforeEach((done) => {
     container = document.createElement('container');
     container.innerHTML = `
       <bulbs-video-carousel-slider>
@@ -23,19 +23,25 @@ describe('<bulbs-video-carousel-slider>', () => {
       </bulsb-video-carousel-slider>
      `;
     // ^^ There are ten carousel-items in there ^^
-    subject = container.children[0];
 
-    subject.track.style.width = '100px';
-    subject.track.style.height = '100px';
-
-    firstItem = subject.querySelector('#first');
-    secondItem = subject.querySelector('#second');
-
-    firstItem.style.width = '100px';
-    firstItem.style.height = '100px';
-    secondItem.style.width = '100px';
-    secondItem.style.height = '100px';
     document.body.appendChild(container);
+    // document.registerElement polyfill runs on next microtask in some browsers
+    // MUST wait until end of queue for elements to be constructed
+    setImmediate(() => {
+      subject = container.children[0];
+
+      subject.track.style.width = '100px';
+      subject.track.style.height = '100px';
+
+      firstItem = subject.querySelector('#first');
+      secondItem = subject.querySelector('#second');
+
+      firstItem.style.width = '100px';
+      firstItem.style.height = '100px';
+      secondItem.style.width = '100px';
+      secondItem.style.height = '100px';
+      done();
+    });
   });
 
   afterEach(() => {

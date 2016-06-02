@@ -3,11 +3,12 @@ import './carousel';
 describe('<bulbs-video-carousel>', () => {
   let container;
   let subject;
-  beforeEach(() => {
+
+  beforeEach((done) => {
     container = document.createElement('test-container');
     container.innerHTML = `
       <bulbs-video-carousel>
-        <bulbs-video></bulbs-video>
+        <bulbs-video src="//example.com"></bulbs-video>
         <bulbs-video-carousel-slider>
           <bulbs-video-carousel-item id='first'>
           </bulbs-video-carousel-item>
@@ -16,7 +17,17 @@ describe('<bulbs-video-carousel>', () => {
         </bulbs-video-carousel-slider>
       </bulbs-video-carousel>
      `;
-    subject = container.children[0];
+    document.body.appendChild(container);
+    // document.registerElement polyfill runs on next microtask in some browsers
+    // MUST wait until end of queue for elements to be constructed
+    setImmediate(() => {
+      subject = container.children[0];
+      done();
+    });
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
   });
 
   describe('getAnchors', () => {
