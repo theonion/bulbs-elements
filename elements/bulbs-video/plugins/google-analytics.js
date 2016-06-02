@@ -4,7 +4,6 @@ let prefixedSend = (gaPrefix) => {
 
 class GoogleAnalytics {
   constructor(player, gaPrefix) {
-    console.log(this, player);
     this.player = player;
     this.gaPrefix = gaPrefix;
 

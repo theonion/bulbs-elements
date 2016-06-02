@@ -79,52 +79,63 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
-    let playerOptions = Object.assign({}, this.props.video.player_options);
-    playerOptions.pluginConfig = Object.assign({}, playerOptions.pluginConfig);
+    let videoMeta = Object.assign({}, this.props.video);
+    videoMeta.gaPrefix = gaPrefix;
+    videoMeta.player_options.shareUrl = window.location.href;
 
-    playerOptions.pluginConfig.ga = {
-      gaPrefix,
-    };
-
-    playerOptions.pluginConfig.sharetools = {
-      shareUrl: window.location.href,
-    };
-
-    this.makeVideoPlayer(this.refs.videoContainer, playerOptions, this.props.video);
+    this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
-  makeVideoPlayer (element, playerOptions, videoMeta) {
+  extractSources(sources) {
+    let sourceMap = {};
+    let extractedSources = [];
+
+    sources.forEach(function(source) {
+      sourceMap[source.content_type] = source.url;
+    });
+
+    if (sourceMap['application/x-mpegURL']) {
+      extractedSources.push({
+        file: sourceMap['application/x-mpegURL'],
+      });
+    }
+
+    if (sourceMap['video/mp4']) {
+      extractedSources.push({
+        file: sourceMap['video/mp4'],
+      });
+    }
+
+    return extractedSources;
+  }
+
+  makeVideoPlayer (element, videoMeta) {
     let player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
 
     player.setup({
-      'sources': [
-        {
-          'file': '//v.theonion.com/onionstudios/video/4023/hls_playlist.m3u8',
-        },
-      ],
-      'image': playerOptions.poster,
+      'sources': this.extractSources(videoMeta.sources),
+      'image': videoMeta.player_options.poster,
       'advertising': {
         'client': 'vast',
-        'tag': playerOptions.advertising.tag,
+        'tag': videoMeta.player_options.advertising.tag,
         'skipoffset': 5,
       },
       'hlshtml': true,
       'sharing': {
-        'link': playerOptions.pluginConfig.sharetools.shareUrl,
-        'code': '<iframe name="embedded" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder="no" width="480" height="270" scrolling="no" src="http://www.onionstudios.com/embed?id=4023"></iframe>',
+        'link': videoMeta.player_options.shareUrl,
+        'code': videoMeta.player_options.embedCode,
       },
     });
 
-    GoogleAnalytics.init(player, playerOptions.pluginConfig.ga.gaPrefix);
+    GoogleAnalytics.init(player, videoMeta.gaPrefix);
   }
 
   render () {
-    let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>
-        <div class='bulbs-video-video video-container' ref='videoContainer'>
+        <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
       </div>
     );
