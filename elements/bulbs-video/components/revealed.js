@@ -1,4 +1,5 @@
 import GoogleAnalytics from '../plugins/google-analytics';
+import Comscore from '../plugins/comscore';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -35,6 +36,7 @@ import invariant from 'invariant';
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
+global.BULBS_ELEMENTS_COMSCORE_ID = '<fill me out>';
 
 let prefixCount = 0;
 function makeGaPrefix () {
@@ -130,6 +132,7 @@ export default class Revealed extends React.Component {
     });
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
+    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID);
   }
 
   render () {

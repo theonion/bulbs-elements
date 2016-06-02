@@ -3,16 +3,19 @@ import { shallow } from 'enzyme';
 
 import Revealed from './revealed';
 import GoogleAnalytics from '../plugins/google-analytics';
+import Comscore from '../plugins/comscore';
 import video from '../fixtures/video.json';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
     global.jwplayer = () => {};
     sinon.stub(GoogleAnalytics, 'init');
+    sinon.stub(Comscore, 'init');
   });
 
   afterEach(() => {
     GoogleAnalytics.init.restore();
+    Comscore.init.restore();
   });
 
   describe('propTypes', () => {
@@ -448,6 +451,10 @@ describe('<bulbs-video> <Revealed>', () => {
 
       it('initializes the GoogleAnalytics plugin', function() {
         expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+      });
+
+      it('initializes the Comscore plugin', function() {
+        expect(Comscore.init.calledWith(player)).to.be.true;
       });
     });
   });
