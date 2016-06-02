@@ -117,11 +117,8 @@ export default class CarouselSlider extends BulbsHTMLElement {
   pageToCarouselItem (item) {
     let index = Array.prototype.indexOf.call(this.carouselItems, item);
 
-    console.log('pageToCarouselItem', index);
-    if (item > -1) {
-      this.currentIndex = Math.floor(
-        index / this.getChildrenPerPage()
-      );
+    if (index > -1) {
+      this.currentIndex = index;
     }
 
     this.slideItems();

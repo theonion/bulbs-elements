@@ -1,6 +1,6 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
-class CarouselButton extends BulbsHTMLElement {
+export class CarouselButton extends BulbsHTMLElement {
   createdCallback () {
     this.innerHTML = this.contentHTML;
   }
@@ -12,10 +12,10 @@ class CarouselButton extends BulbsHTMLElement {
 
   checkBounds (event) {
     if (this.outOfBounds(event.detail)) {
-      this.style.opacity = '0.5';
+      this.setAttribute('disabled', '');
     }
     else {
-      this.style.opacity = '';
+      this.removeAttribute('disabled');
     }
   }
 }
@@ -32,7 +32,6 @@ export class PreviousButton extends CarouselButton {
   get contentHTML () { return '<i class="fa fa-chevron-left">'; }
 
   outOfBounds (detail) {
-    console.log(detail);
     return detail.currentIndex === 0;
   }
 }

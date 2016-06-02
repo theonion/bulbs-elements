@@ -353,7 +353,7 @@ describe('<bulbs-video-carousel-slider>', () => {
       sinon.spy(subject, 'slideItems');
     });
 
-    it('pages to the correct page if item is start af page', () => {
+    it('pages to the correct page if item is start of page', () => {
       subject.pageToCarouselItem(subject.carouselItems[4]);
       expect(subject.getCurrentPage()).to.eql(2);
     });
