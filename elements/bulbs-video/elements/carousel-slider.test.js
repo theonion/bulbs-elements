@@ -40,6 +40,7 @@ describe('<bulbs-video-carousel-slider>', () => {
       firstItem.style.height = '100px';
       secondItem.style.width = '100px';
       secondItem.style.height = '100px';
+
       done();
     });
   });

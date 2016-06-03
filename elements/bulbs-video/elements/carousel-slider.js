@@ -32,7 +32,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
   getItemMargin () {
     let child = this.carouselItems[0];
     if (child) {
-      let style = getComputedStyle(child);
+      let { style } = child;
       return (parseInt(style.marginLeft, 10) || 0) + (parseInt(style.marginRight, 10) || 0);
     }
     else {
