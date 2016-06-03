@@ -50,7 +50,6 @@ describe('<bulbs-video-carousel>', () => {
     beforeEach(() => {
       sinon.spy(subject.slider, 'pageToCarouselItem');
       sinon.spy(subject.videoPlayer, 'addEventListener');
-      sinon.spy(subject, 'scrollPlayerIntoView');
     });
 
     it('attaches playerEnded handler to videoPlayer', () => {
@@ -67,23 +66,11 @@ describe('<bulbs-video-carousel>', () => {
         );
       });
 
-      it('scrolls to the video player', () => {
-        subject.attachedCallback();
-        expect(subject.scrollPlayerIntoView).to.have.been.called;
-      });
-
       it('pages to the active item in the carousel', () => {
         subject.attachedCallback();
         expect(subject.slider.pageToCarouselItem).to.have.been.calledWith(
           container.querySelector('#second')
         );
-      });
-    });
-
-    context('there are no active carousel items', () => {
-      it('does not scroll to the video player', () => {
-        subject.attachedCallback();
-        expect(subject.scrollPlayerIntoView).not.to.have.been.called;
       });
     });
   });
@@ -98,51 +85,6 @@ describe('<bulbs-video-carousel>', () => {
       expect(subject.videoPlayer.removeEventListener).to.have.been.calledWith(
         'ended', subject.playerEnded
       );
-    });
-  });
-
-  describe('scrollPlayerIntoView', () => {
-    // strangly, resetting scrollBy does not work
-    beforeEach(() => {
-      sinon.spy(window, 'scrollBy');
-    });
-
-    afterEach(() => {
-      window.scrollBy.restore();
-    });
-
-    it('calls videoplayer.scrollIntoView', () => {
-      sinon.spy(subject.videoPlayer, 'scrollIntoView');
-      subject.scrollPlayerIntoView();
-      expect(subject.videoPlayer.scrollIntoView).to.have.been.called;
-    });
-
-    context('there is a page <header>', () => {
-      let header;
-      beforeEach(() => {
-        header = document.createElement('header');
-        document.body.appendChild(header);
-        header.setAttribute('style', `
-          width: 100px;
-          height: 100px;
-        `);
-      });
-
-      afterEach(() => {
-        document.body.removeChild(header);
-      });
-
-      it('engages vertical scroll by the header height', () => {
-        subject.scrollPlayerIntoView();
-        expect(window.scrollBy).to.have.been.calledWith(0, 100);
-      });
-    });
-
-    context('there is no page <header>', () => {
-      it('does not engage any extra scrolling', () => {
-        subject.scrollPlayerIntoView();
-        expect(window.scrollBy).not.to.have.been.called;
-      });
     });
   });
 

@@ -1,4 +1,5 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import './carousel-buttons.scss';
 
 export class CarouselButton extends BulbsHTMLElement {
   createdCallback () {
@@ -7,7 +8,7 @@ export class CarouselButton extends BulbsHTMLElement {
 
   attachedCallback () {
     let carousel = this.closest('bulbs-video-carousel');
-    carousel.addEventListener('slide-items', this.checkBounds.bind(this));
+    carousel.addEventListener('slide-items', this.checkBounds.bind(this), true);
   }
 
   checkBounds (event) {
