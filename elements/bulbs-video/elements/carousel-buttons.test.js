@@ -6,6 +6,7 @@ let container;
 function carouselButtonExamples () {
   describe('createdCallback', () => {
     it('sets innerHTML', () => {
+      expect(subject.innerHTML).to.eql(subject.contentHTML);
     });
   });
 

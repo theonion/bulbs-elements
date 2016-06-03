@@ -21,7 +21,7 @@ export class CarouselButton extends BulbsHTMLElement {
 }
 
 export class NextButton extends CarouselButton {
-  get contentHTML () { return '<i class="fa fa-chevron-right">'; }
+  get contentHTML () { return '<i class="fa fa-chevron-right"></i>'; }
 
   outOfBounds (detail) {
     return detail.currentIndex + detail.perPage >= detail.carouselItems.length;
@@ -29,7 +29,7 @@ export class NextButton extends CarouselButton {
 }
 
 export class PreviousButton extends CarouselButton {
-  get contentHTML () { return '<i class="fa fa-chevron-left">'; }
+  get contentHTML () { return '<i class="fa fa-chevron-left"></i>'; }
 
   outOfBounds (detail) {
     return detail.currentIndex === 0;
