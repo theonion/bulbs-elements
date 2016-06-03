@@ -5,7 +5,8 @@ const karmaConfig = require('./karma.base.js');
 karmaConfig.webpack = require('./webpack.config.coverage.js');
 
 if (process.env.TRAVIS) {
-  karmaConfig.browsers = ['PhantomJS'];
+  karmaConfig.captureTimeout = 0;
+  karmaConfig.browsers = ['Chrome_travis_ci'];
 }
 else {
   karmaConfig.browsers = ['Chrome'];
