@@ -3,6 +3,10 @@ import './carousel';
 describe('<bulbs-video-carousel>', () => {
   let container;
   let subject;
+  let firstItem;
+  let secondItem;
+  let previous;
+  let next;
 
   beforeEach((done) => {
     container = document.createElement('test-container');
@@ -15,6 +19,8 @@ describe('<bulbs-video-carousel>', () => {
           <bulbs-video-carousel-item id='second'>
           </bulbs-video-carousel-item>
         </bulbs-video-carousel-slider>
+        <bulbs-video-carousel-previous id='previous'></bulbs-video-carousel-previous>
+        <bulbs-video-carousel-next id='next'></bulbs-video-carousel-next>
       </bulbs-video-carousel>
      `;
     document.body.appendChild(container);
@@ -22,6 +28,10 @@ describe('<bulbs-video-carousel>', () => {
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
       subject = container.children[0];
+      firstItem = container.querySelector('#first');
+      secondItem = container.querySelector('#second');
+      previous = container.querySelector('#previous');
+      next = container.querySelector('#next');
       done();
     });
   });
@@ -61,7 +71,7 @@ describe('<bulbs-video-carousel>', () => {
 
     context('there is an active carousel item', () => {
       beforeEach(() => {
-        container.querySelector('#second').setAttribute(
+        secondItem.setAttribute(
           'href', window.location.pathname
         );
       });
@@ -69,7 +79,7 @@ describe('<bulbs-video-carousel>', () => {
       it('pages to the active item in the carousel', () => {
         subject.attachedCallback();
         expect(subject.slider.pageToCarouselItem).to.have.been.calledWith(
-          container.querySelector('#second')
+          secondItem
         );
       });
     });
@@ -91,31 +101,31 @@ describe('<bulbs-video-carousel>', () => {
   describe('getActiveCarouselItem', () => {
     context('an item is active', () => {
       beforeEach(() => {
-        container.querySelector('#second').setAttribute(
+        secondItem.setAttribute(
           'href', window.location.pathname
         );
       });
 
       it('returns that item', () => {
         expect(subject.getActiveCarouselItem()).to.eql(
-          container.querySelector('#second')
+          secondItem
         );
       });
     });
 
     context('multiple items are active', () => {
       beforeEach(() => {
-        container.querySelector('#first').setAttribute(
+        firstItem.setAttribute(
           'href', window.location.pathname
         );
-        container.querySelector('#second').setAttribute(
+        secondItem.setAttribute(
           'href', window.location.pathname
         );
       });
 
       it('returns the first active item', () => {
         expect(subject.getActiveCarouselItem()).to.eql(
-          container.querySelector('#first')
+          firstItem
         );
       });
     });
@@ -128,5 +138,62 @@ describe('<bulbs-video-carousel>', () => {
   });
 
   describe('playerEnded', () => {
+    context('no other items in carousel', () => {
+      beforeEach(() => {
+        firstItem.setAttribute('now-playing', '');
+        secondItem.remove();
+      });
+
+      it('does nothing', () => {
+        let anchor = firstItem.querySelector('a');
+        anchor.click = sinon.stub();
+        subject.playerEnded();
+        expect(anchor.click).not.to.have.been.called;
+      });
+    });
+
+    context('an item is currently playing', () => {
+      beforeEach(() => {
+        firstItem.setAttribute('now-playing', '');
+      });
+
+      it('clicks on the next item in carousel', () => {
+        let anchor = secondItem.querySelector('a');
+        anchor.click = sinon.stub();
+        subject.playerEnded();
+        expect(anchor.click).to.have.been.called;
+      });
+    });
+
+    context('the last item is currently playing', () => {
+      beforeEach(() => {
+        secondItem.setAttribute('now-playing', '');
+      });
+
+      it('clicks on the first item in carousel', () => {
+        let anchor = firstItem.querySelector('a');
+        anchor.click = sinon.stub();
+        subject.playerEnded();
+        expect(anchor.click).to.have.been.called;
+      });
+    });
+  });
+
+  describe('handleClick', () => {
+    context('clicked on carousel-next button', () => {
+      it('slides to next page in carousel', () => {
+        sinon.spy(subject.slider, 'slideToNext');
+        next.click();
+        expect(subject.slider.slideToNext).to.have.been.called;
+      });
+    });
+
+    context('clicked on carousel-previous button', () => {
+      it('slides to previous page in carousel', () => {
+        sinon.spy(subject.slider, 'slideToPrevious');
+        previous.click();
+        expect(subject.slider.slideToPrevious).to.have.been.called;
+      });
+    });
   });
 });

@@ -47,9 +47,11 @@ export default class Carousel extends BulbsHTMLElement {
     let items = this.getAnchors();
     let current = this.querySelector('bulbs-video-carousel-item[now-playing] a');
     let currentIndex = [].indexOf.call(items, current);
-    let nextIndex = (currentIndex + 1) % (items.length - 1);
-    let nextItem = items[nextIndex];
-    nextItem.click();
+    let nextIndex = (currentIndex + 1) % (items.length);
+    if (currentIndex !== nextIndex) {
+      let nextItem = items[nextIndex];
+      nextItem.click();
+    }
   }
 
   handleClick (event) {
