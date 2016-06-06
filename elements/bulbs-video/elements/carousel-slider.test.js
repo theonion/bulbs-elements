@@ -1,4 +1,4 @@
-import './carousel-slider';
+import { calculatesTransform } from './carousel-slider';
 
 describe('<bulbs-video-carousel-slider>', () => {
   let container;
@@ -346,9 +346,16 @@ describe('<bulbs-video-carousel-slider>', () => {
       subject.carouselItems[0].style.marginRight = '15px';
       subject.updateCurrentIndex(2);
       subject.slideItems();
-      expect(subject.track.style.transform).to.eql(
-        'translateX(calc(-100% - 25px))'
-      );
+      if (calculatesTransform) {
+        expect(subject.track.style.transform).to.eql(
+          'translateX(calc(-100% - 25px))'
+        );
+      }
+      else {
+        expect(subject.track.style.transform).to.eql(
+          'translateX(-100%) translateX(-25px)'
+        );
+      }
     });
   });
 

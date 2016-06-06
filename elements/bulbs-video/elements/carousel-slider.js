@@ -2,6 +2,12 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
 import './carousel-slider.scss';
 
+export const calculatesTransform = (() => {
+  let div = document.createElement('div');
+  div.style.transform = 'translateX(calc(100% - 10px))';
+  return div.style.transform !== '';
+})();
+
 export default class CarouselSlider extends BulbsHTMLElement {
   createdCallback () {
     this.currentIndex = 0;
@@ -103,7 +109,13 @@ export default class CarouselSlider extends BulbsHTMLElement {
     let page = this.getCurrentPage();
     let translate = -100 * page;
     let marginCorrection = this.getItemMargin() * page;
-    this.track.style.transform = `translateX(calc(${translate}% - ${marginCorrection}px))`;
+
+    if (calculatesTransform) {
+      this.track.style.transform = `translateX(calc(${translate}% - ${marginCorrection}px))`;
+    }
+    else {
+      this.track.style.transform = `translateX(${translate}%) translateX(-${marginCorrection}px)`;
+    }
     let event = new CustomEvent('slide-items', {
       detail: {
         currentIndex: this.currentIndex,
