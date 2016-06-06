@@ -30,6 +30,9 @@ Root.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   noEndcard: PropTypes.bool,
+  targetCampaignId: PropTypes.string,
+  targetHostChannel: PropTypes.string,
+  targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object,
 };

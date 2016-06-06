@@ -12,6 +12,20 @@ let examples = {
         `;
       },
     },
+    'Special Coverage Main': {
+      render () {
+        return `
+          <bulbs-video
+            twitter-handle="avclub"
+            src="http://localhost:8080/fixtures/bulbs-video/special-coverage.json"
+            target-host-channel="specialcoverage_main"
+            target-special-coverage="food"
+            target-campaign-id="12345"
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 
