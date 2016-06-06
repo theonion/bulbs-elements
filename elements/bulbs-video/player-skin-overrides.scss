@@ -9,4 +9,131 @@
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00566273', endColorstr='#4d2b333f',GradientType=0 ); /* IE6-9 */
     }
   }
+  .jw-background-color {
+    background: none;
+  }
+  .jw-rail {
+    background-color: rgba(255,255,255,.5);
+  }
+  .jw-buffer {
+    background-color: white;
+  }
+  .jw-progress {
+    background: white;
+  }
+  .jw-slider-time .jw-text {
+    background:black;
+    padding:.5em;
+    border-radius:3px;
+    position: relative;
+    left:-10px;
+  }
+  .jw-knob {
+    box-shadow: none;
+  }
+  .jw-text-duration {
+    color: white;
+  }
+  .jw-button-color {
+    &:hover {
+      color: white;
+      font-weight: bold;
+    }
+  }
+  .jw-controlbar-right-group {
+    .jw-icon-tooltip:before {
+      border-left: 0;
+    }
+    .jw-icon-inline {
+      &:before {
+        border-left: 0;
+      }
+    }
+  }
+  .jw-time-tip, .jw-menu, .jw-volume-tip, .jw-skip {
+    border: 0;
+  }
+  .jw-volume-tip {
+    left: -63%;
+    padding-bottom: 0em;
+  }
+  .jw-menu {
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    padding:.3em;
+    border-radius:5px;
+    .jw-option {
+      margin-bottom: .1em;
+    }
+  }
+  .jw-icon-tooltip .jw-active-option {
+    background-color: #fff;
+    color: #000;
+  }
+  .jw-plugin-sharing {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    .jw-sharing-row {
+      display:block;
+      &:before {
+        display:none;
+      }
+      .jw-sharing-cell, .jw-sharing-action-icons {
+        display:block;
+      }
+    }
+    .jw-sharing-content {
+      .jw-text {
+        font-weight:normal;
+        font-size:15px;
+      }
+      .jw-sharing-prompt {
+        padding-bottom:.5em;
+        width:85%;
+        display:inline-block;
+      }
+      .jw-sharing-link {
+        display:none;
+      }
+      .jw-sharing-icon-embed {
+        background:none;
+        display:block;
+        height:auto;
+        width:auto;
+        padding-top:2em;
+        padding-bottom:.8em;
+        &:before {
+          content: 'Embed Video';
+          color: #fff;
+          font-weight: normal;
+          font-size:15px;
+        }
+      }
+      .jw-sharing-text {
+        height:9em;
+        font-size: 1em;
+        line-height: 1.2em;
+        border-radius:0;
+      }
+    }
+  }
+  .jw-controls-right {
+    .jw-sharing-dock-btn {
+      background: black;
+      border-radius: 100px;
+      &:hover {
+        width:8.5em;
+        .jw-dock-image {
+          background-position:91% 50%;
+        }
+      }
+    }
+    .jw-text {
+      position: relative;
+      top: -42px;
+      left: -40px;
+    }
+  }
 }
