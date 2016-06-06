@@ -22,4 +22,4 @@ export default class CarouselItem extends BulbsHTMLElement {
   }
 }
 
-registerElement('bulbs-video-carousel-item', CarouselItem);
+registerElement('bulbs-carousel-item', CarouselItem);

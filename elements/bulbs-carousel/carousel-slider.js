@@ -11,7 +11,7 @@ export const calculatesTransform = (() => {
 export default class CarouselSlider extends BulbsHTMLElement {
   createdCallback () {
     this.currentIndex = 0;
-    this.track = document.createElement('bulbs-video-carousel-track');
+    this.track = document.createElement('bulbs-carousel-track');
     while (this.firstChild) {
       this.track.appendChild(this.firstChild);
     }
@@ -137,4 +137,4 @@ export default class CarouselSlider extends BulbsHTMLElement {
   }
 }
 
-registerElement('bulbs-video-carousel-slider', CarouselSlider);
+registerElement('bulbs-carousel-slider', CarouselSlider);

@@ -1,6 +1,6 @@
 import './carousel';
 
-describe('<bulbs-video-carousel>', () => {
+describe('<bulbs-carousel>', () => {
   let container;
   let subject;
   let firstItem;
@@ -11,17 +11,17 @@ describe('<bulbs-video-carousel>', () => {
   beforeEach((done) => {
     container = document.createElement('test-container');
     container.innerHTML = `
-      <bulbs-video-carousel>
+      <bulbs-carousel>
         <bulbs-video src="//example.com"></bulbs-video>
-        <bulbs-video-carousel-slider>
-          <bulbs-video-carousel-item id='first'>
-          </bulbs-video-carousel-item>
-          <bulbs-video-carousel-item id='second'>
-          </bulbs-video-carousel-item>
-        </bulbs-video-carousel-slider>
-        <bulbs-video-carousel-previous id='previous'></bulbs-video-carousel-previous>
-        <bulbs-video-carousel-next id='next'></bulbs-video-carousel-next>
-      </bulbs-video-carousel>
+        <bulbs-carousel-slider>
+          <bulbs-carousel-item id='first'>
+          </bulbs-carousel-item>
+          <bulbs-carousel-item id='second'>
+          </bulbs-carousel-item>
+        </bulbs-carousel-slider>
+        <bulbs-carousel-previous id='previous'></bulbs-carousel-previous>
+        <bulbs-carousel-next id='next'></bulbs-carousel-next>
+      </bulbs-carousel>
      `;
     document.body.appendChild(container);
     // document.registerElement polyfill runs on next microtask in some browsers

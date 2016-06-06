@@ -7,7 +7,7 @@ export class CarouselButton extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    let carousel = this.closest('bulbs-video-carousel');
+    let carousel = this.closest('bulbs-carousel');
     carousel.addEventListener('slide-items', this.checkBounds.bind(this), true);
   }
 
@@ -37,5 +37,5 @@ export class PreviousButton extends CarouselButton {
   }
 }
 
-registerElement('bulbs-video-carousel-next', NextButton);
-registerElement('bulbs-video-carousel-previous', PreviousButton);
+registerElement('bulbs-carousel-next', NextButton);
+registerElement('bulbs-carousel-previous', PreviousButton);

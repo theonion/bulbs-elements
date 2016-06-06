@@ -11,7 +11,7 @@ function carouselButtonExamples () {
   });
 
   describe('attachedCallback', () => {
-    it('listens to the <bulbs-video-carousel> slide-items event', () => {
+    it('listens to the <bulbs-carousel> slide-items event', () => {
       sinon.stub(subject, 'checkBounds');
       subject.attachedCallback();
       let event = new CustomEvent('slide-items', {
@@ -43,16 +43,16 @@ function carouselButtonExamples () {
   });
 }
 
-describe('<bulbs-video-carousel-next>', () => {
+describe('<bulbs-carousel-next>', () => {
   beforeEach((done) => {
     container = document.createElement('container');
     container.innerHTML = `
-      <bulbs-video-carousel>
-        <bulbs-video-carousel-next></bulbs-video-carousel-next>
-      </bulbs-video-carousel>
+      <bulbs-carousel>
+        <bulbs-carousel-next></bulbs-carousel-next>
+      </bulbs-carousel>
     `;
-    subject = container.querySelector('bulbs-video-carousel-next');
-    carousel = container.querySelector('bulbs-video-carousel');
+    subject = container.querySelector('bulbs-carousel-next');
+    carousel = container.querySelector('bulbs-carousel');
     document.body.appendChild(container);
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
@@ -98,16 +98,16 @@ describe('<bulbs-video-carousel-next>', () => {
   });
 });
 
-describe('<bulbs-video-carousel-previous>', () => {
+describe('<bulbs-carousel-previous>', () => {
   beforeEach((done) => {
     container = document.createElement('container');
     container.innerHTML = `
-      <bulbs-video-carousel>
-        <bulbs-video-carousel-previous></bulbs-video-carousel-previous>
-      </bulbs-video-carousel>
+      <bulbs-carousel>
+        <bulbs-carousel-previous></bulbs-carousel-previous>
+      </bulbs-carousel>
     `;
-    subject = container.querySelector('bulbs-video-carousel-previous');
-    carousel = container.querySelector('bulbs-video-carousel');
+    subject = container.querySelector('bulbs-carousel-previous');
+    carousel = container.querySelector('bulbs-carousel');
     document.body.appendChild(container);
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed

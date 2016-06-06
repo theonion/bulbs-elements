@@ -1,15 +1,15 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
-import './carousel.scss';
+import './bulbs-carousel.scss';
 
-export default class Carousel extends BulbsHTMLElement {
+export default class BulbsCarousel extends BulbsHTMLElement {
   getAnchors () {
-    return this.querySelectorAll('bulbs-video-carousel-item a');
+    return this.querySelectorAll('bulbs-carousel-item a');
   }
 
   getActiveCarouselItem () {
     return this.querySelector(
-      `bulbs-video-carousel-item[href='${window.location.pathname}']`
+      `bulbs-carousel-item[href='${window.location.pathname}']`
     );
   }
 
@@ -18,7 +18,7 @@ export default class Carousel extends BulbsHTMLElement {
     this.handleClick = this.handleClick.bind(this);
 
     this.videoPlayer = this.querySelector('bulbs-video');
-    this.slider = this.querySelector('bulbs-video-carousel-slider');
+    this.slider = this.querySelector('bulbs-carousel-slider');
     this.addEventListener('click', this.handleClick);
   }
 
@@ -45,7 +45,7 @@ export default class Carousel extends BulbsHTMLElement {
 
   playerEnded () {
     let items = this.getAnchors();
-    let current = this.querySelector('bulbs-video-carousel-item[now-playing] a');
+    let current = this.querySelector('bulbs-carousel-item[now-playing] a');
     let currentIndex = [].indexOf.call(items, current);
     let nextIndex = (currentIndex + 1) % (items.length);
     if (currentIndex !== nextIndex) {
@@ -55,13 +55,13 @@ export default class Carousel extends BulbsHTMLElement {
   }
 
   handleClick (event) {
-    if (event.target.closest('bulbs-video-carousel-next')) {
+    if (event.target.closest('bulbs-carousel-next')) {
       if (this.slider) {
         this.slider.slideToNext();
       }
     }
 
-    if (event.target.closest('bulbs-video-carousel-previous')) {
+    if (event.target.closest('bulbs-carousel-previous')) {
       if (this.slider) {
         this.slider.slideToPrevious();
       }
@@ -69,4 +69,4 @@ export default class Carousel extends BulbsHTMLElement {
   }
 }
 
-registerElement('bulbs-video-carousel', Carousel);
+registerElement('bulbs-carousel', BulbsCarousel);

@@ -1,6 +1,6 @@
 import { calculatesTransform } from './carousel-slider';
 
-describe('<bulbs-video-carousel-slider>', () => {
+describe('<bulbs-carousel-slider>', () => {
   let container;
   let subject;
   let firstItem;
@@ -9,18 +9,18 @@ describe('<bulbs-video-carousel-slider>', () => {
   beforeEach((done) => {
     container = document.createElement('container');
     container.innerHTML = `
-      <bulbs-video-carousel-slider>
-       <bulbs-video-carousel-item id="first"></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item id="second"></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-      </bulsb-video-carousel-slider>
+      <bulbs-carousel-slider>
+       <bulbs-carousel-item id="first"></bulbs-carousel-item>
+       <bulbs-carousel-item id="second"></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+       <bulbs-carousel-item></bulbs-carousel-item>
+      </bulsb-carousel-slider>
      `;
     // ^^ There are ten carousel-items in there ^^
 
@@ -52,7 +52,7 @@ describe('<bulbs-video-carousel-slider>', () => {
     it('wraps content in a <bulbs-carousel-track>', () => {
       expect(subject.children).to.have.length(1);
       expect(
-        subject.children[0].querySelectorAll('bulbs-video-carousel-item')
+        subject.children[0].querySelectorAll('bulbs-carousel-item')
       ).to.have.length(10);
     });
 

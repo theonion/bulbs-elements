@@ -1,4 +1,4 @@
-%bulbs-video-carousel-button {
+%bulbs-carousel-button {
   align-items: center;
   background-color: black;
   color: white;
@@ -19,11 +19,11 @@
   }
 }
 
-bulbs-video-carousel-next {
-  @extend %bulbs-video-carousel-button;
+bulbs-carousel-next {
+  @extend %bulbs-carousel-button;
 }
 
-bulbs-video-carousel-previous {
-  @extend %bulbs-video-carousel-button;
+bulbs-carousel-previous {
+  @extend %bulbs-carousel-button;
 }
 

@@ -1,6 +1,6 @@
 import './carousel-item';
 
-describe('<bulbs-video-carousel-item>', () => {
+describe('<bulbs-carousel-item>', () => {
   let subject;
   let anchor;
   let container;
@@ -8,20 +8,20 @@ describe('<bulbs-video-carousel-item>', () => {
   beforeEach((done) => {
     container = document.createElement('container');
     container.innerHTML = `
-      <bulbs-video-carousel-item
+      <bulbs-carousel-item
         href="/path"
         data-track-action="action"
         data-track-category="category"
       >
         <cool-kid></cool-kid>
         <cool-kid></cool-kid>
-      </bulbs-video-carousel-item>
+      </bulbs-carousel-item>
     `;
     document.body.appendChild(container);
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
-      subject = container.querySelector('bulbs-video-carousel-item');
+      subject = container.querySelector('bulbs-carousel-item');
       anchor = subject.querySelector('a');
       done();
     });
