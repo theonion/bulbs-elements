@@ -64,7 +64,7 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
     ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
     ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', targeting.target_host_channel || 'None');
+    ga(prefixedSet, 'dimension5', this.props.targetHostChannel || 'None');
     ga(prefixedSet, 'dimension6', this.props.targetSpecialCoverage || 'None');
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
@@ -140,6 +140,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
+  targetHostChannel: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object.isRequired,

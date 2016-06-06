@@ -28,6 +28,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.targetSpecialCoverage).to.eql(PropTypes.string);
     });
 
+    it('accepts targetHostChannel string', () => {
+      expect(subject.targetHostChannel).to.eql(PropTypes.string);
+    });
+
     it('accepts twitterHandle string', () => {
       expect(subject.twitterHandle).to.eql(PropTypes.string);
     });
@@ -114,6 +118,7 @@ describe('<bulbs-video> <Revealed>', () => {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',
+          targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
           autoplay: true,
@@ -127,7 +132,6 @@ describe('<bulbs-video> <Revealed>', () => {
               target_series: 'series',
               target_season: 'season',
               target_video_id: 'video_id',
-              target_host_channel: 'host_channel',
             },
           }),
         };
