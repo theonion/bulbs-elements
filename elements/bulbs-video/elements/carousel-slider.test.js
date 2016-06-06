@@ -25,22 +25,20 @@ describe('<bulbs-video-carousel-slider>', () => {
     // ^^ There are ten carousel-items in there ^^
 
     document.body.appendChild(container);
+    subject = container.children[0];
+
+    firstItem = subject.querySelector('#first');
+    secondItem = subject.querySelector('#second');
+
+    firstItem.style.width = '100px';
+    firstItem.style.height = '100px';
+    secondItem.style.width = '100px';
+    secondItem.style.height = '100px';
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
-      subject = container.children[0];
-
       subject.track.style.width = '100px';
       subject.track.style.height = '100px';
-
-      firstItem = subject.querySelector('#first');
-      secondItem = subject.querySelector('#second');
-
-      firstItem.style.width = '100px';
-      firstItem.style.height = '100px';
-      secondItem.style.width = '100px';
-      secondItem.style.height = '100px';
-
       done();
     });
   });
