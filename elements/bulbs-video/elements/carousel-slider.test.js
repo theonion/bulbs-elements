@@ -34,6 +34,7 @@ describe('<bulbs-video-carousel-slider>', () => {
     firstItem.style.height = '100px';
     secondItem.style.width = '100px';
     secondItem.style.height = '100px';
+    firstItem.style.transition = 'none'; // Kill animations for test
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
@@ -127,6 +128,7 @@ describe('<bulbs-video-carousel-slider>', () => {
       beforeEach(() => {
         firstItem.style.marginLeft = '10px';
         firstItem.style.marginRight = '20px';
+        // give render engine a chance to apply/compute styles
       });
 
       it('adds the margins together', () => {
