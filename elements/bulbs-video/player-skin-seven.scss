@@ -1,0 +1,226 @@
+.jw-icon {
+  font-family: 'jw-icons';
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+  background-color: transparent;
+  font-variant: normal;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  -o-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.jw-skin-onion {
+  .jw-background-color {
+    background: #000;
+  }
+  .jw-controlbar {
+    border-top: #333 1px solid;
+    height: 2.5em;
+  }
+  .jw-group {
+    vertical-align: middle;
+  }
+  .jw-playlist {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .jw-playlist-container {
+    left: -43%;
+    background-color: rgba(0, 0, 0, 0.5);
+    .jw-option {
+      border-bottom: 1px solid #444;
+      &:hover, &.jw-active-option {
+        background-color: black;
+      }
+      &:hover .jw-label {
+        color: #ff0046;
+      }
+    }
+    .jw-icon-playlist {
+      margin-left: 0;
+    }
+    .jw-label .jw-icon-play {
+      color: #ff0046;
+      &:before {
+        padding-left: 0;
+      }
+    }
+  }
+  .jw-tooltip-title {
+    background-color: #000;
+    color: #fff;
+  }
+  .jw-text {
+    color: #fff;
+  }
+  .jw-button-color {
+    color: #fff;
+    &:hover {
+      color: #ff0046;
+    }
+  }
+  .jw-toggle {
+    color: #ff0046;
+    &.jw-off {
+      color: #fff;
+    }
+  }
+  .jw-controlbar .jw-icon:before, .jw-text-elapsed, .jw-text-duration {
+    padding: 0 .7em;
+  }
+  .jw-controlbar {
+    .jw-icon-prev:before {
+      padding-right: .25em;
+    }
+    .jw-icon-playlist:before {
+      padding: 0 .45em;
+    }
+    .jw-icon-next:before {
+      padding-left: .25em;
+    }
+  }
+  .jw-icon-prev, .jw-icon-next {
+    font-size: .7em;
+  }
+  .jw-icon-prev:before {
+    border-left: 1px solid #666;
+  }
+  .jw-icon-next:before {
+    border-right: 1px solid #666;
+  }
+  .jw-icon-display {
+    color: #fff;
+    &:before {
+      padding-left: 0;
+    }
+  }
+  .jw-display-icon-container {
+    border-radius: 50%;
+    border: 1px solid #333;
+  }
+  .jw-rail {
+    background-color: #384154;
+    box-shadow: none;
+  }
+  .jw-buffer {
+    background-color: #666f82;
+  }
+  .jw-progress {
+    background: #ff0046;
+  }
+  .jw-knob {
+    width: .6em;
+    height: .6em;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #000;
+    border-radius: 1em;
+  }
+  .jw-slider-horizontal {
+    .jw-slider-container {
+      height: .95em;
+    }
+    .jw-rail, .jw-buffer, .jw-progress {
+      height: .2em;
+      border-radius: 0;
+    }
+    .jw-knob {
+      top: -0.19999999999999998em;
+    }
+    .jw-cue {
+      top: -0.04999999999999999em;
+      width: .3em;
+      height: .3em;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+  }
+  .jw-slider-vertical {
+    .jw-rail, .jw-buffer, .jw-progress {
+      width: .2em;
+    }
+    .jw-knob {
+      margin-bottom: -0.3em;
+    }
+  }
+  .jw-volume-tip {
+    width: 100%;
+    left: -45%;
+    padding-bottom: .7em;
+  }
+  .jw-text-duration {
+    color: #666f82;
+  }
+  .jw-controlbar-right-group {
+    .jw-icon-tooltip:before {
+      border-left: 1px solid #666;
+    }
+    .jw-icon-inline {
+      &:before {
+        border-left: 1px solid #666;
+      }
+      &:first-child:before {
+        border: 0;
+      }
+    }
+  }
+  .jw-dock {
+    .jw-dock-button {
+      border-radius: 50%;
+      border: 1px solid #333;
+    }
+    .jw-overlay {
+      border-radius: 2.5em;
+    }
+  }
+  .jw-icon-tooltip .jw-active-option {
+    background-color: #ff0046;
+    color: #fff;
+  }
+  .jw-icon-volume {
+    min-width: 2.6em;
+  }
+  .jw-time-tip, .jw-menu, .jw-volume-tip, .jw-skip {
+    border: 1px solid #333;
+  }
+  .jw-time-tip {
+    padding: .2em;
+    bottom: 1.3em;
+  }
+  .jw-menu, .jw-volume-tip {
+    bottom: .24em;
+  }
+  .jw-skip {
+    padding: .4em;
+    border-radius: 1.75em;
+    .jw-text, .jw-icon-inline {
+      color: #fff;
+      line-height: 1.75em;
+    }
+    &.jw-skippable:hover {
+      .jw-text, .jw-icon-inline {
+        color: #ff0046;
+      }
+    }
+  }
+  &.jw-flag-touch {
+    .jw-controlbar .jw-icon:before, .jw-text-elapsed, .jw-text-duration {
+      padding: 0 .35em;
+    }
+    .jw-controlbar {
+      .jw-icon-prev:before {
+        padding: 0 .125em 0 .7em;
+      }
+      .jw-icon-next:before {
+        padding: 0 .7em 0 .125em;
+      }
+      .jw-icon-playlist:before {
+        padding: 0 .225em;
+      }
+    }
+  }
+}

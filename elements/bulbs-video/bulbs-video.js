@@ -9,6 +9,8 @@ import ControllerField from './fields/controller';
 import BulbsVideoRoot from './components/root';
 
 import './bulbs-video.scss';
+import './player-skin-seven.scss';
+import './player-skin-overrides.scss';
 import './endcard.scss';
 
 export default class BulbsVideo extends BulbsElement {

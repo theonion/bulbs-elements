@@ -117,13 +117,16 @@ export default class Revealed extends React.Component {
     player.videoMeta = videoMeta;
 
     player.setup({
+      'skin': {
+        'name': 'onion',
+      },
       'sources': this.extractSources(videoMeta.sources),
       'image': videoMeta.player_options.poster,
-      'advertising': {
-        'client': 'vast',
-        'tag': videoMeta.player_options.advertising.tag,
-        'skipoffset': 5,
-      },
+      // 'advertising': {
+      //   'client': 'vast',
+      //   'tag': videoMeta.player_options.advertising.tag,
+      //   'skipoffset': 5,
+      // },
       'hlshtml': true,
       'sharing': {
         'link': videoMeta.player_options.shareUrl,
