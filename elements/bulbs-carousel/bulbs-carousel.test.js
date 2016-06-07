@@ -1,4 +1,4 @@
-import './carousel';
+import './bulbs-carousel';
 
 describe('<bulbs-carousel>', () => {
   let container;

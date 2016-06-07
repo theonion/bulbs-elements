@@ -90,8 +90,4 @@ Object.assign(BulbsVideo, {
 registerReactElement('bulbs-video', BulbsVideo);
 
 import './elements/meta';
-import './elements/carousel';
-import './elements/carousel-buttons';
-import './elements/carousel-slider';
-import './elements/carousel-item';
 import './elements/summary';
