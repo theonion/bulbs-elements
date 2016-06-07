@@ -11,9 +11,8 @@ export default function RequestError ({ error, children, reset }) {
       </div>
     );
   }
-  else {
-    return <div />;
-  }
+
+  return <div />;
 }
 
 RequestError.propTypes = {

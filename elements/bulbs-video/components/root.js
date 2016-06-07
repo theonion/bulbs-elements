@@ -16,13 +16,12 @@ export default function Root (props) {
       </div>
     );
   }
-  else {
-    return (
-      <div className={className}>
-        <Cover video={props.video} actions={props.actions}/>
-      </div>
-    );
-  }
+
+  return (
+    <div className={className}>
+      <Cover video={props.video} actions={props.actions}/>
+    </div>
+  );
 }
 
 Root.propTypes = {

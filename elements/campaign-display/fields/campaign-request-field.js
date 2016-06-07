@@ -6,7 +6,7 @@ const CampaignRequestField = {
   },
 
   actions: {
-    fetchCampaign(state, campaignUrl, store) {
+    fetchCampaign (state, campaignUrl, store) {
       state.requestInFlight = true;
       makeRequest(campaignUrl, {
         credentials: 'include',
@@ -20,17 +20,17 @@ const CampaignRequestField = {
       return state;
     },
 
-    fetchCampaignSuccess(state) {
+    fetchCampaignSuccess (state) {
       state.requestInFlight = false;
     },
 
-    fetchCampaignFailure(state, response) {
+    fetchCampaignFailure (state, response) {
       state.requestInFlight = false;
       state.requestFailure = response;
       return state;
     },
 
-    fetchCampaignError(state, response) {
+    fetchCampaignError (state, response) {
       state.requestInFlight = false;
       state.networkError = response;
       return state;
