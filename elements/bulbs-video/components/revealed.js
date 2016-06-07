@@ -1,32 +1,5 @@
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
-setImmediate(() => {
-  /*
-  FIXME: videohub-player depends on there being an instance of our analytics manager
-          at window.AnalyticsManager.
-          Some possible solutions:
-          1. Have bulbs-video and/or videohub-player initialize their own
-             analytics manager
-          2. Have bulbs-video and/or videohub-player use a confuration
-             such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
-          3. Have all sites follow a convention for where AnalyticsManager
-             lives.
-  */
-  /* global avclubAnalytics, onionan, clickholean, starwipe */
-  if (window.avclubAnalytics) {
-    window.AnalyticsManager = avclubAnalytics;
-  }
-  else if (window.onionan) {
-    window.AnalyticsManager = onionan;
-  }
-  else if (window.clickholean) {
-    window.AnalyticsManager = clickholean;
-  }
-  else if (window.starwipe) {
-    window.AnalyticsManager = starwipe.analyticsManager;
-  }
-});
-
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import VideoPlayer from 'videohub-player';
@@ -43,6 +16,31 @@ function makeGaPrefix () {
 
 export default class Revealed extends React.Component {
   componentDidMount () {
+    /*
+    FIXME: videohub-player depends on there being an instance of our analytics manager
+            at window.AnalyticsManager.
+            Some possible solutions:
+            1. Have bulbs-video and/or videohub-player initialize their own
+               analytics manager
+            2. Have bulbs-video and/or videohub-player use a confuration
+               such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
+            3. Have all sites follow a convention for where AnalyticsManager
+               lives.
+    */
+    /* global avclubAnalytics, onionan, clickholean, starwipe */
+    if (window.avclubAnalytics) {
+      window.AnalyticsManager = avclubAnalytics;
+    }
+    else if (window.onionan) {
+      window.AnalyticsManager = onionan;
+    }
+    else if (window.clickholean) {
+      window.AnalyticsManager = clickholean;
+    }
+    else if (window.starwipe) {
+      window.AnalyticsManager = starwipe.analyticsManager;
+    }
+
     invariant(
       global.jQuery,
       '`<bulbs-video>` requires `jQuery` to be in global scope.'
@@ -107,7 +105,8 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, playerOptions) {
-    new VideoPlayer(element, playerOptions); // eslint-disable-line no-new
+    let player = new VideoPlayer(element, playerOptions);
+    player.player.play();
   }
 
   render () {

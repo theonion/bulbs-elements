@@ -1,11 +1,13 @@
 language: node_js
 node_js:
-- '5.1'
 - '5.9'
 sudo: false
 before_script:
 - bower install
 - npm install
+- 'export CHROME_BIN=chromium-browser'
+- 'export DISPLAY=:99.0'
+- 'sh -e /etc/init.d/xvfb start'
 script:
 - $RUNNER
 cache:
@@ -14,7 +16,10 @@ cache:
   - bower_components
 env:
   matrix:
-  - RUNNER=scripts/ci
+  - RUNNER=scripts/ci BROWSER=bs_chrome_47
+  - RUNNER=scripts/ci BROWSER=bs_firefox_43
+  - RUNNER=scripts/ci BROWSER=bs_safari_8
+  - RUNNER=scripts/ci BROWSER=bs_ie_11
   - RUNNER=scripts/lint
   - RUNNER=scripts/report-coverage
   global:

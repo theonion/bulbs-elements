@@ -4,7 +4,13 @@ const karmaConfig = require('./karma.base.js');
 
 karmaConfig.webpack = require('./webpack.config.coverage.js');
 
-karmaConfig.browsers = ['PhantomJS'];
+if (process.env.TRAVIS) {
+  karmaConfig.captureTimeout = 0;
+  karmaConfig.browsers = ['Chrome_travis_ci'];
+}
+else {
+  karmaConfig.browsers = ['Chrome'];
+}
 
 if (process.env.TRAVIS) {
   karmaConfig.reporters.push('coverage');
