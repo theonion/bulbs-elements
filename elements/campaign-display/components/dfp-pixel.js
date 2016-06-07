@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 export default class DfpPixel extends Component {
 
-  componentDidMount () {
+  componentDidMount() {
     const adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     if (typeof adsManager !== 'undefined' &&
         typeof adsManager.loadAds === 'function') {
@@ -17,7 +17,7 @@ export default class DfpPixel extends Component {
     }
   }
 
-  render () {
+  render() {
     let targeting = {
       dfp_placement: this.props.placement,
       dfp_campaign_id: this.props.campaignId,

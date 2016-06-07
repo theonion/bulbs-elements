@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-video',
   examples: {
     'Basic Example': {
-      render () {
+      render() {
         return `
           <bulbs-video
             twitter-handle="avclub"

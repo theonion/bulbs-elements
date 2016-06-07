@@ -7,12 +7,12 @@ import Cover from './cover';
 import Answers from './answers';
 import VoteButton from './vote-button';
 
-describe('<bulbs-poll> <Question>', function () {
-  it('renders the question', function () {
-    let selectAnswer = function () {};
-    let makeVoteRequest = function () {};
-    let resetVoteRequest = function () {};
-    let resetFetchPollData = function () {};
+describe('<bulbs-poll> <Question>', function() {
+  it('renders the question', function() {
+    let selectAnswer = function() {};
+    let makeVoteRequest = function() {};
+    let resetVoteRequest = function() {};
+    let resetFetchPollData = function() {};
 
     let answers = [];
     let selectedAnswer = {};

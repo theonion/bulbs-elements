@@ -1,7 +1,7 @@
 const WinningAnswersField = {
   initialState: [],
   actions: {
-    collectWinningAnswers (state, answers = []) {
+    collectWinningAnswers(state, answers = []) {
       let highScore = 0;
       let winningAnswers = [];
 

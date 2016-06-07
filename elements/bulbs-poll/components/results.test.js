@@ -5,9 +5,9 @@ import Cover from './cover';
 import Results from './results';
 import ResultsList from './results-list';
 
-describe('<bulbs-poll> <Results>', function () {
-  context('with vote results', function () {
-    it('renders vote results', function () {
+describe('<bulbs-poll> <Results>', function() {
+  context('with vote results', function() {
+    it('renders vote results', function() {
       let answer1 = {};
       let answer2 = {};
       let winningAnswers = [answer1];

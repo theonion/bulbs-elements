@@ -6,10 +6,10 @@ export default {
   },
 
   actions: {
-    fetchVideo (state, url, store) {
+    fetchVideo(state, url, store) {
       state.requestInFlight = true;
       util.makeRequest(url, {
-        success (response) {
+        success(response) {
           store.actions.fetchVideoSuccess(response);
           store.actions.setVideoField(response);
         },
@@ -18,16 +18,16 @@ export default {
       });
       return state;
     },
-    fetchVideoSuccess (state) {
+    fetchVideoSuccess(state) {
       state.requestInFlight = false;
       return state;
     },
-    fetchVideoFailure (state, failure) {
+    fetchVideoFailure(state, failure) {
       state.requstFailure = failure;
       state.requestInFlight = false;
       return state;
     },
-    fetchVideoError (state, error) {
+    fetchVideoError(state, error) {
       state.requestError = error;
       state.requestInFlight = false;
       return state;

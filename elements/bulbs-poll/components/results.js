@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Cover from './cover';
 import ResultsList from './results-list';
 
-export default function Results (props) {
+export default function Results(props) {
   let className = classnames('bulbs-poll-results', {});
   let {
     poll,

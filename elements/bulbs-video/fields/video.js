@@ -1,6 +1,6 @@
 export default {
   actions: {
-    setVideoField (state, video) {
+    setVideoField(state, video) {
       return video;
     },
   },

@@ -114,7 +114,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let trackerRegex = /^videoplayer\d+.set$/;
 
     describe('makes a video player', () => {
-      beforeEach(function () {
+      beforeEach(function() {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',

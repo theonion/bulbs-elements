@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 import Result from './result';
 import SelectionMarker from './selection-marker';
 
-describe('<bulbs-poll> <Result>', function () {
-  context('normal vote', function () {
-    it('renders plain answer', function () {
+describe('<bulbs-poll> <Result>', function() {
+  context('normal vote', function() {
+    it('renders plain answer', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -42,8 +42,8 @@ describe('<bulbs-poll> <Result>', function () {
     });
   });
 
-  context('no votes cast', function () {
-    it('renders 0% results', function () {
+  context('no votes cast', function() {
+    it('renders 0% results', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -79,8 +79,8 @@ describe('<bulbs-poll> <Result>', function () {
     });
   });
 
-  context('winning vote', function () {
-    it('renders winning answer', function () {
+  context('winning vote', function() {
+    it('renders winning answer', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -119,8 +119,8 @@ describe('<bulbs-poll> <Result>', function () {
     });
   });
 
-  context('selected vote', function () {
-    it('renders answer as selected', function () {
+  context('selected vote', function() {
+    it('renders answer as selected', function() {
       let props = {
         answer: {
           answer_text: 'the answer',

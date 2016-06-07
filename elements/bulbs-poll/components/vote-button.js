@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
 export default class VoteButton extends React.Component {
-  makeVoteRequest () {
+  makeVoteRequest() {
     if (this.props.selectedAnswer) {
       this.props.makeVoteRequest(this.props.selectedAnswer);
     }
   }
-  render () {
+  render() {
     let { selectedAnswer } = this.props;
 
     let buttonIsDisabled = true;

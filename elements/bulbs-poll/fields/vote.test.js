@@ -5,11 +5,11 @@ import Store from 'bulbs-elements/store';
 import VoteField from './vote';
 import PollSchema from '../bulbs-poll-schema';
 
-describe('<bulbs-poll> VoteField', function () {
+describe('<bulbs-poll> VoteField', function() {
   let { actions } = VoteField;
   let store;
 
-  beforeEach(function () {
+  beforeEach(function() {
     store = new Store({ schema: PollSchema });
     store.state.poll = {
       data: {
@@ -25,23 +25,23 @@ describe('<bulbs-poll> VoteField', function () {
     store.state.src = 'STATE-SRC';
   });
 
-  afterEach(function () {
+  afterEach(function() {
     localStorage.clear();
   });
 
-  it('initialState', function () {
+  it('initialState', function() {
     assert.deepEqual(VoteField.initialState, {
       voted: false,
     });
   });
 
-  describe('getCachedVoteData', function () {
-    it('ignores when localstorage value is blank', function () {
+  describe('getCachedVoteData', function() {
+    it('ignores when localstorage value is blank', function() {
       let nextState = actions.getCachedVoteData({}, 1, store);
       assert.deepEqual(nextState, {});
     });
 
-    it('gets the value from localstorage', function () {
+    it('gets the value from localstorage', function() {
       let data = { answer: { id: 20 } };
       localStorage.setItem('bulbs-poll:1:vote', JSON.stringify(data));
       let nextState = actions.getCachedVoteData({}, 1, store);
@@ -52,10 +52,10 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('makeVoteRequest', function () {
+  describe('makeVoteRequest', function() {
     let url = 'https://onion.sodahead.com/api/polls/10/vote/';
 
-    beforeEach(function () {
+    beforeEach(function() {
       fetchMock.mock(url, {
         poll: {
           totalVotes: 10,
@@ -72,11 +72,11 @@ describe('<bulbs-poll> VoteField', function () {
       });
     });
 
-    afterEach(function () {
+    afterEach(function() {
       fetchMock.restore();
     });
 
-    it('makes a POST request to the vote endpoint', function () {
+    it('makes a POST request to the vote endpoint', function() {
       let requestSpy = sinon.stub(util, 'makeRequest');
       let answer = {
         sodahead_id: 123456789,
@@ -98,13 +98,13 @@ describe('<bulbs-poll> VoteField', function () {
       requestSpy.restore();
     });
 
-    it('sets requestInFlight to true', function () {
+    it('sets requestInFlight to true', function() {
       let nextState = actions.makeVoteRequest({}, {}, store);
       assert.isTrue(nextState.requestInFlight);
     });
   });
 
-  describe('voteRequestSuccess', function () {
+  describe('voteRequestSuccess', function() {
     let nextState;
     let vote;
     let poll;
@@ -113,7 +113,7 @@ describe('<bulbs-poll> VoteField', function () {
     let updateAnswerVoteCountSpy;
     let collectWinningAnswersSpy;
 
-    beforeEach(function () {
+    beforeEach(function() {
       setPollTotalVotesSpy = sinon.stub(store.actions, 'setPollTotalVotes');
       updateAnswerVoteCountSpy = sinon.stub(store.actions, 'updateAnswerVoteCount');
       collectWinningAnswersSpy = sinon.stub(store.actions, 'collectWinningAnswers');
@@ -122,32 +122,32 @@ describe('<bulbs-poll> VoteField', function () {
       success = { vote, poll };
     });
 
-    afterEach(function () {
+    afterEach(function() {
       setPollTotalVotesSpy.reset();
       updateAnswerVoteCountSpy.reset();
     });
 
-    it('sets requestInFlight to false', function () {
+    it('sets requestInFlight to false', function() {
       nextState = actions.voteRequestSuccess({}, success, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('sets state.voted to true', function () {
+    it('sets state.voted to true', function() {
       nextState = actions.voteRequestSuccess({}, success, store);
       assert.equal(nextState.voted, true);
     });
 
-    it('caches response data', function () {
+    it('caches response data', function() {
       nextState = actions.voteRequestSuccess({}, success, store);
       assert.deepEqual(JSON.parse(localStorage.getItem('bulbs-poll:STATE-SRC:vote')), vote);
     });
 
-    it('sets state.data', function () {
+    it('sets state.data', function() {
       nextState = actions.voteRequestSuccess({}, success, store);
       assert.deepEqual(nextState.data, vote);
     });
 
-    it('calls setPollTotalVotes', function (done) {
+    it('calls setPollTotalVotes', function(done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
         expect(setPollTotalVotesSpy).to.have.been.calledOnce;
@@ -156,7 +156,7 @@ describe('<bulbs-poll> VoteField', function () {
       });
     });
 
-    it('calls updateAnswerVoteCount', function (done) {
+    it('calls updateAnswerVoteCount', function(done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
         expect(updateAnswerVoteCountSpy).to.have.been.calledOnce;
@@ -165,7 +165,7 @@ describe('<bulbs-poll> VoteField', function () {
       });
     });
 
-    it('calls collectWinningAnswers', function (done) {
+    it('calls collectWinningAnswers', function(done) {
       nextState = actions.voteRequestSuccess({}, success, store);
       setImmediate(() => {
         expect(collectWinningAnswersSpy).to.have.been.calledOnce;
@@ -175,26 +175,26 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('voteRequestFailure', function () {
-    it('sets requestInFlight to false', function () {
+  describe('voteRequestFailure', function() {
+    it('sets requestInFlight to false', function() {
       let nextState = actions.voteRequestFailure({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('sets state.requestFailure', function () {
+    it('sets state.requestFailure', function() {
       let failure = {};
       let nextState = actions.voteRequestFailure({}, failure);
       assert.equal(nextState.requestFailure, failure);
     });
   });
 
-  describe('voteRequestError', function () {
-    it('sets requestInFlight to false', function () {
+  describe('voteRequestError', function() {
+    it('sets requestInFlight to false', function() {
       let nextState = actions.voteRequestError({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('sets state.requestError', function () {
+    it('sets state.requestError', function() {
       let error = {};
       let nextState = actions.voteRequestError({}, error);
       assert.equal(nextState.requestError, error);

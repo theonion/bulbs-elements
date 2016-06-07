@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Logo extends Component {
-  render () {
+  render() {
     return (
       <div className='campaign-display-logo'>
         <img src={this.props.image_url} />

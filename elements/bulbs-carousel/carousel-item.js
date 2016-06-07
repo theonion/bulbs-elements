@@ -2,12 +2,12 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
 import './carousel-item.scss';
 
-function copyAttribute (attribute, from, to) {
+function copyAttribute(attribute, from, to) {
   to.setAttribute(attribute, from.getAttribute(attribute));
 }
 
 export default class CarouselItem extends BulbsHTMLElement {
-  createdCallback () {
+  createdCallback() {
     let anchor = document.createElement('a');
 
     copyAttribute('data-track-action', this, anchor);

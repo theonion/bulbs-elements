@@ -2,7 +2,7 @@ let examples = {
   element: 'campaign-display',
   examples: {
     'CampaignDisplay': {
-      render () {
+      render() {
         return `
           <campaign-display
             placement="my-custom-placement"
@@ -15,7 +15,7 @@ let examples = {
     },
 
     'CampaignDisplay (no image)': {
-      render () {
+      render() {
         return `
           <campaign-display
             placement="my-custom-placement"
@@ -29,7 +29,7 @@ let examples = {
     },
 
     'CampaignDisplay (no name)': {
-      render () {
+      render() {
         return `
           <campaign-display
             placement="my-custom-placement"
@@ -43,7 +43,7 @@ let examples = {
     },
 
     'CampaignDisplay (campaign not found)': {
-      render () {
+      render() {
         return `
           <campaign-display
             placement="my-custom-placement"

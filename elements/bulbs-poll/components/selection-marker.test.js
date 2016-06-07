@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import SelectionMarker from './selection-marker';
 
-describe('<bulbs-poll> <SelectionMarker>', function () {
-  context('is selected', function () {
-    it('renders as selected', function () {
+describe('<bulbs-poll> <SelectionMarker>', function() {
+  context('is selected', function() {
+    it('renders as selected', function() {
       let props = {
         isSelected: true,
       };
@@ -19,8 +19,8 @@ describe('<bulbs-poll> <SelectionMarker>', function () {
     });
   });
 
-  context('is not selected', function () {
-    it('renders as not selected', function () {
+  context('is not selected', function() {
+    it('renders as not selected', function() {
       let props = {
         isSelected: false,
       };

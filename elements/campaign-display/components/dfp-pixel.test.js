@@ -7,13 +7,13 @@ describe('<campaign-display> <DfpPixel>', () => {
   let renderSubject;
 
   beforeEach(() => {
-    ['warn', 'log', 'error'].forEach(function (method) {
+    ['warn', 'log', 'error'].forEach(function(method) {
       sinon.stub(window.console, method);
     });
     reactContainer = document.createElement('react-container');
     document.body.appendChild(reactContainer);
 
-    renderSubject = function (props) {
+    renderSubject = function(props) {
       let componentProps = Object.assign({
         placement: 'junk',
         campaignId: 1,
@@ -25,14 +25,14 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   afterEach(() => {
     reactContainer.remove();
-    ['warn', 'log', 'error'].forEach(function (method) {
+    ['warn', 'log', 'error'].forEach(function(method) {
       window.console[method].restore();
     });
   });
 
   context('on render', () => {
 
-    it('should render an element with the class "dfp"', function () {
+    it('should render an element with the class "dfp"', function() {
 
       let subject = renderSubject();
 
@@ -50,7 +50,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       expect(loadAds).to.have.been.calledWith(subject.refs.container);
     });
 
-    it('should error out if AdsManager is not available', function () {
+    it('should error out if AdsManager is not available', function() {
       renderSubject();
 
       expect(console.warn).to.have.been.calledWith(
@@ -60,7 +60,7 @@ describe('<campaign-display> <DfpPixel>', () => {
       );
     });
 
-    it('should error out of AdsManager.loadAds is not available', function () {
+    it('should error out of AdsManager.loadAds is not available', function() {
       window.BULBS_ELEMENTS_ADS_MANAGER = {};
 
       renderSubject();

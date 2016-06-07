@@ -3,12 +3,12 @@ import { shallow } from 'enzyme';
 
 import VoteButton from './vote-button';
 
-describe('<bulbs-poll> <VoteButton>', function () {
-  context('with selectedAnswer', function () {
-    it('renders active vote button', function () {
+describe('<bulbs-poll> <VoteButton>', function() {
+  context('with selectedAnswer', function() {
+    it('renders active vote button', function() {
       let props = {
         selectedAnswer: { id: 1 },
-        makeVoteRequest () {},
+        makeVoteRequest() {},
       };
 
       expect(shallow(<VoteButton {...props} />).equals(
@@ -24,11 +24,11 @@ describe('<bulbs-poll> <VoteButton>', function () {
     });
   });
 
-  context('without selectedAnswer', function () {
-    it('renders disabled vote button', function () {
+  context('without selectedAnswer', function() {
+    it('renders disabled vote button', function() {
       let props = {
         selectedAnswer: {},
-        makeVoteRequest () {},
+        makeVoteRequest() {},
       };
 
       expect(shallow(<VoteButton {...props} />).equals(
@@ -44,8 +44,8 @@ describe('<bulbs-poll> <VoteButton>', function () {
     });
   });
 
-  context('without properties', function () {
-    it('renders a disabled vote button', function () {
+  context('without properties', function() {
+    it('renders a disabled vote button', function() {
       expect(shallow(<VoteButton/>).equals(
         <button
           data-track-label='Submit'

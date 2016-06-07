@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 import ImageResult from './image-result';
 import SelectionMarker from './selection-marker';
 
-describe('<bulbs-poll> <ImageResult>', function () {
-  context('normal vote', function () {
-    it('renders plain answer + image', function () {
+describe('<bulbs-poll> <ImageResult>', function() {
+  context('normal vote', function() {
+    it('renders plain answer + image', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -49,8 +49,8 @@ describe('<bulbs-poll> <ImageResult>', function () {
     });
   });
 
-  context('no votes cast', function () {
-    it('renders 0% vote', function () {
+  context('no votes cast', function() {
+    it('renders 0% vote', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -92,8 +92,8 @@ describe('<bulbs-poll> <ImageResult>', function () {
       )).to.be.true;
     });
   });
-  context('winning vote', function () {
-    it('renders winning answer + image', function () {
+  context('winning vote', function() {
+    it('renders winning answer + image', function() {
       let props = {
         answer: {
           answer_text: 'the answer',
@@ -139,8 +139,8 @@ describe('<bulbs-poll> <ImageResult>', function () {
     });
   });
 
-  context('selected vote', function () {
-    it('renders answer as selected', function () {
+  context('selected vote', function() {
+    it('renders answer as selected', function() {
       let props = {
         answer: {
           answer_text: 'the answer',

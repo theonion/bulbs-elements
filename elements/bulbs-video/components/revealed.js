@@ -9,13 +9,13 @@ import VideoPlayer from 'videohub-player';
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 
 let prefixCount = 0;
-function makeGaPrefix () {
+function makeGaPrefix() {
   // ga demands tracker names be alphanumeric
   return `videoplayer${prefixCount++}`;
 }
 
 export default class Revealed extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     /*
     FIXME: videohub-player depends on there being an instance of our analytics manager
             at window.AnalyticsManager.
@@ -104,12 +104,12 @@ export default class Revealed extends React.Component {
     this.makeVideoPlayer(this.refs.video, playerOptions);
   }
 
-  makeVideoPlayer (element, playerOptions) {
+  makeVideoPlayer(element, playerOptions) {
     let player = new VideoPlayer(element, playerOptions);
     player.player.play();
   }
 
-  render () {
+  render() {
     let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>
