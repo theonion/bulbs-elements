@@ -122,11 +122,11 @@ export default class Revealed extends React.Component {
       },
       'sources': this.extractSources(videoMeta.sources),
       'image': videoMeta.player_options.poster,
-      // 'advertising': {
-      //   'client': 'vast',
-      //   'tag': videoMeta.player_options.advertising.tag,
-      //   'skipoffset': 5,
-      // },
+      'advertising': {
+        'client': 'vast',
+        'tag': videoMeta.player_options.advertising.tag,
+        'skipoffset': 5,
+      },
       'hlshtml': true,
       'sharing': {
         'link': videoMeta.player_options.shareUrl,
@@ -135,7 +135,7 @@ export default class Revealed extends React.Component {
     });
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
-    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID);
+    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
   }
 
   render () {

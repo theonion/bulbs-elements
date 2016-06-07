@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="2.0">
+   <Ad id="12bf7810-77a2-4127-8f4d-1653ad7262b8">
+      <InLine>
+         <AdSystem>Videoplaza Karbon</AdSystem>
+         <AdTitle>HTML5 Creative</AdTitle>
+         <Error><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=0&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=0&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p&ua=%5Bua%5D&uc=%5Buc%5D]]></Error>
+         <Impression><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=0&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p&ua=%5Bua%5D&uc=%5Buc%5D]]></Impression>
+         <Creatives>
+            <Creative id="video">
+               <Linear>
+                  <Duration>00:00:15</Duration>
+                  <TrackingEvents>
+                     <Tracking event="resume"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=36&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="rewind"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=35&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="fullscreen"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=37&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="firstQuartile"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=15&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="start"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=14&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="thirdQuartile"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=17&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="midpoint"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=16&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="mute"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=32&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="unmute"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=33&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="complete"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=18&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="close"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=7&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                     <Tracking event="pause"><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=34&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></Tracking>
+                  </TrackingEvents>
+                  <VideoClicks>
+                     <ClickThrough><![CDATA[http://us-theonion.videoplaza.tv/proxy/tracker/v2?aid=12bf7810-77a2-4127-8f4d-1653ad7262b8&cf=short_form&dcid=e0ab3366-ac39-459d-befc-03bd5cfbbe3b&e=20&pid=d32d53cc-282b-415e-8f68-91e9158ca34d&redirect=http%3A%2F%2Fwww.google.com&s=0c1b165d-6c50-4ab3-8ea3-07aa3bbda135&tid=637dadd6-2ccc-11e6-9146-0ab82df33815&tt=p]]></ClickThrough>
+                  </VideoClicks>
+                  <MediaFiles>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="697" width="640" height="390" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/0c03c0b2-8612-4bcc-bc9b-21f21ed26a07.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="851" width="942" height="576" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/32b36dc6-9ff6-467e-a400-e1bce1551007.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="812" width="590" height="360" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/98d1ef00-aade-46bf-bfc5-55e828deb26d.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="494" width="590" height="360" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/9c872525-f00e-4843-871c-8cf4a2a446ab.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="353" width="590" height="360" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/1ff9aea1-c155-429e-b412-e38da2cb055d.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="259" width="442" height="270" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/b022b193-4bd6-485f-a199-7c5a46538d7e.mp4]]></MediaFile>
+                     <MediaFile delivery="progressive" type="video/mp4" bitrate="158" width="294" height="180" scalable="true"><![CDATA[http://d2weccgdf287ps.cloudfront.net/creatives/assets/b9f4b923-20bb-46a6-aa75-612323e449e2/db981cdf-289b-4067-ae22-8142deb45caa.mp4]]></MediaFile>
+                  </MediaFiles>
+               </Linear>
+            </Creative>
+         </Creatives>
+         <Extensions>
+            <Extension type="AdServer" name="Videoplaza">
+               <AdInfo gid="8c180379-41a0-4567-b368-4b8a4ff4115a" cid="c180ac56-047b-4d63-8276-dc2780236a06" format="spot_standard" variant="NORMAL" exclusive="false" />
+            </Extension>
+         </Extensions>
+      </InLine>
+   </Ad>
+</VAST>

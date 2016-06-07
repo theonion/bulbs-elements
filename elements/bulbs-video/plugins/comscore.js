@@ -1,34 +1,16 @@
 require('./streamsense.4.1411.18.min');
 
 class Comscore {
-  constructor(player, comscoreId) {
+  constructor(player, comscoreId, comscoreMetadata) {
     this.streamingTag = new global.ns_.StreamingTag({ customerC2: comscoreId });
+    this.comscoreMetadata = comscoreMetadata;
 
-    // player.on('adstart', function(){
-    //   that.streamingTag.playVideoAdvertisement();
-    // });
-
-    // player.on('adend', function(){
-    //   that.streamingTag.stop();
-    // });
-
-    // player.on('play', function(){
-    //   if (!that.isAdPlaying()) {
-    //     that.streamingTag.playVideoContentPart(that.settings.metadata);
-    //   }
-    // });
-
-    // player.on('pause', function(){
-    //   if(!that.isAdPlaying()) {
-    //     that.streamingTag.stop();
-    //   }
-    // });
-
-    // player.on('ended', function(){
-    //   if(!that.isAdPlaying()) {
-    //     that.streamingTag.stop();
-    //   }
-    // });
+    player.on('adImpression', this.adStarted.bind(this));
+    player.on('adSkipped', this.adEnded.bind(this));
+    player.on('adComplete', this.adEnded.bind(this));
+    player.on('play', this.contentPlayed.bind(this));
+    player.on('pause', this.contentPaused.bind(this));
+    player.on('complete', this.contentEnded.bind(this));
   }
 
   adStarted () {
@@ -40,8 +22,7 @@ class Comscore {
   }
 
   contentPlayed () {
-    // TODO: Need to pass in metadata here.
-    this.streamingTag.playVideoContentPart();
+    this.streamingTag.playVideoContentPart(this.comscoreMetadata);
   }
 
   contentPaused () {
@@ -54,7 +35,7 @@ class Comscore {
 }
 
 export default {
-  init (player, comscoreId) {
-    return new Comscore(player, comscoreId);
+  init (player, comscoreId, comscoreMetadata) {
+    return new Comscore(player, comscoreId, comscoreMetadata);
   },
 };

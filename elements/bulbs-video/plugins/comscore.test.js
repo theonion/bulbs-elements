@@ -13,7 +13,7 @@ describe('Comscore', () => {
     let comscore;
 
     beforeEach(() => {
-      comscore = Comscore.init(player, '12345');
+      comscore = Comscore.init(player, '12345', {});
       sinon.stub(comscore.streamingTag, 'playVideoAdvertisement');
       comscore.adStarted();
     });
@@ -27,7 +27,7 @@ describe('Comscore', () => {
     let comscore;
 
     beforeEach(() => {
-      comscore = Comscore.init(player, '12345');
+      comscore = Comscore.init(player, '12345', {});
       sinon.stub(comscore.streamingTag, 'stop');
       comscore.adEnded();
     });
@@ -41,13 +41,19 @@ describe('Comscore', () => {
     let comscore;
 
     beforeEach(() => {
-      comscore = Comscore.init(player, '12345');
+      comscore = Comscore.init(player, '12345', {
+        'c3': 'onionstudios',
+        'c4': 'CLICKHOLE',
+      });
       sinon.stub(comscore.streamingTag, 'playVideoContentPart');
       comscore.contentPlayed();
     });
 
     it('calls "playVideoContentPart" in streaming tag lib', function() {
-      expect(comscore.streamingTag.playVideoContentPart.called).to.be.true;
+      expect(comscore.streamingTag.playVideoContentPart.calledWith({
+        'c3': 'onionstudios',
+        'c4': 'CLICKHOLE',
+      })).to.be.true;
     });
   });
 
