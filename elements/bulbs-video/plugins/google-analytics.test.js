@@ -307,7 +307,13 @@ describe('Google Analytics', () => {
     });
 
     it('sends an "adskipped" event', () => {
-      expect(global.ga).to.have.been.calledWith('videoplayer0.send', 'event', 'Video:The Onion', 'adskipped', 'http://localhost:8080/fixtures/bulbs-video/html5-vast.xml');
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'adskipped',
+        'http://localhost:8080/fixtures/bulbs-video/html5-vast.xml'
+      );
     });
   });
 
