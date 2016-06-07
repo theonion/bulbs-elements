@@ -17,7 +17,7 @@ class GoogleAnalytics {
     player.on('fullscreen', this.onFullScreen.bind(this));
     player.on('resize', this.onResize.bind(this));
     player.on('firstFrame', this.onFirstFrame.bind(this));
-    // .on('adSkipped')
+    player.on('adSkipped', this.onAdSkipped.bind(this));
     // .on('adError')
     // .on('error')
   }
@@ -94,6 +94,16 @@ class GoogleAnalytics {
       'Video:' + this.player.videoMeta.channel_name,
       'adblock:enabled',
       this.player.videoMeta.player_options.shareUrl
+    );
+  }
+
+  onAdSkipped(event) {
+    global.ga(
+      prefixedSend(this.gaPrefix),
+      'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'adskipped',
+      event.tag
     );
   }
 
