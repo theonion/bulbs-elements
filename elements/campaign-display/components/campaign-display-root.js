@@ -6,38 +6,38 @@ import SponsorName from './sponsor-name';
 import DfpPixel from './dfp-pixel';
 
 class CampaignDisplayRoot extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
-  hasImageUrl() {
+  hasImageUrl () {
     return !!this.props.campaign.image_url;
   }
 
-  hasValidCampaign() {
+  hasValidCampaign () {
     return !!this.props.campaign && this.props.campaign.active;
   }
 
-  pixelComponent() {
+  pixelComponent () {
     return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
   }
 
-  logoComponent() {
+  logoComponent () {
     if (this.props.logoOnly && !this.hasImageUrl()) {
       return this.sponsorNameComponent();
     }
     return <Logo {...this.props.campaign} />;
   }
 
-  sponsorNameComponent() {
+  sponsorNameComponent () {
     return <SponsorName {...this.props.campaign} />;
   }
 
-  preambleTextComponent() {
+  preambleTextComponent () {
     return <Preamble text={this.props.preambleText}/>;
   }
 
-  defaultComponents() {
+  defaultComponents () {
     return createFragment({
       dfpPixel: this.pixelComponent(),
       logo: this.logoComponent(),
@@ -46,7 +46,7 @@ class CampaignDisplayRoot extends Component {
     });
   }
 
-  logoOnlyComponents() {
+  logoOnlyComponents () {
     return createFragment({
       dfpPixel: this.pixelComponent(),
       preamble: this.preambleTextComponent(),
@@ -54,7 +54,7 @@ class CampaignDisplayRoot extends Component {
     });
   }
 
-  nameOnlyComponents() {
+  nameOnlyComponents () {
     return createFragment({
       dfpPixel: this.pixelComponent(),
       preamble: this.preambleTextComponent(),
@@ -62,7 +62,7 @@ class CampaignDisplayRoot extends Component {
     });
   }
 
-  childComponents() {
+  childComponents () {
     let children;
     if (this.props.logoOnly) {
       children = this.logoOnlyComponents();
@@ -77,12 +77,11 @@ class CampaignDisplayRoot extends Component {
     if (this.props.noLink) {
       return children;
     }
-    else {
-      return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
-    }
+
+    return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
   }
 
-  render() {
+  render () {
     if (!this.hasValidCampaign()) { return <div className='inactive-campaign'></div>; }
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>

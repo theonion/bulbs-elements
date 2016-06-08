@@ -30,9 +30,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     if (this.carouselItems[0]) {
       return (this.getItemWidth() / this.offsetWidth) || 0;
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 
   getItemMargin () {
@@ -41,9 +39,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
       let style = getComputedStyle(child);
       return (parseInt(style.marginLeft, 10) || 0) + (parseInt(style.marginRight, 10) || 0);
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 
   getItemWidth () {
@@ -51,9 +47,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     if (child) {
       return this.getItemMargin() + child.offsetWidth;
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 
   getChildrenPerPage () {
@@ -61,9 +55,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     if (child) {
       return Math.round(1 / this.getGridRatio());
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 
   getCurrentPage () {
@@ -74,13 +66,9 @@ export default class CarouselSlider extends BulbsHTMLElement {
       if (this.currentIndex === this.carouselItems.length && this.currentIndex % perPage === 0) {
         return page - 1;
       }
-      else {
-        return page;
-      }
+      return page;
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 
   updateCurrentIndex (magnitude) {

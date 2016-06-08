@@ -7,7 +7,7 @@ describe('<campaign-display> <DfpPixel>', () => {
   let renderSubject;
 
   beforeEach(() => {
-    ['warn', 'log', 'error'].forEach(function(method) {
+    ['warn', 'log', 'error'].forEach(function (method) {
       sinon.stub(window.console, method);
     });
     reactContainer = document.createElement('react-container');
@@ -25,7 +25,7 @@ describe('<campaign-display> <DfpPixel>', () => {
 
   afterEach(() => {
     reactContainer.remove();
-    ['warn', 'log', 'error'].forEach(function(method) {
+    ['warn', 'log', 'error'].forEach(function (method) {
       window.console[method].restore();
     });
   });
