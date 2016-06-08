@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import examples from './element-examples';
 import inflection from 'inflection';
-window.ga = function(){};
+window.ga = function(){
+  console.log(arguments);
+};
 
 export default class Index extends React.Component {
   render () {

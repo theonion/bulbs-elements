@@ -1,0 +1,101 @@
+{
+  "id": 4080,
+  "title": "Tell Your Father He's Your Hero Without Speaking",
+  "channel_slug": "onion-labs",
+  "channel_name": "Onion Labs",
+  "season": null,
+  "series_slug": null,
+  "series_logo_url": null,
+  "sponsor_id": null,
+  "duration": 0,
+  "poster_url": "http://i.onionstatic.com/onionstudios/5006/original/600.jpg",
+  "targeting": {
+    "target_channel": "onion-labs",
+    "target_video_id": 4080,
+    "target_host_channel": "main"
+  },
+  "tags": [
+    "onion-labs",
+    "4080",
+    "main"
+  ],
+  "category": "main/onion-labs",
+  "videojs_options": {
+    "techOrder": [
+      "html5",
+      "flash"
+    ],
+    "isDiscoverable": true,
+    "shareUrl": "http://www.onionstudios.com/videos/tell-your-father-hes-your-hero-without-speaking-4080",
+    "pluginConfig": {
+      "videometrix": {
+        "metadata": {
+          "c4": "ONIONLABS",
+          "ns_st_ci": "onionstudios.4080",
+          "c3": "onionstudios"
+        },
+        "id": 6036328
+      },
+      "videoanalytics": {
+        "id": 6036328
+      },
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/4080/"
+      }
+    },
+    "videoId": 4080,
+    "poster": "http://i.onionstatic.com/onionstudios/5006/16x9/800.jpg"
+  },
+  "sources": [
+    {
+      "id": 19228,
+      "url": "http://v.theonion.com/onionstudios/video/4080/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 194,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4080
+    },
+    {
+      "id": 19227,
+      "url": "http://v.theonion.com/onionstudios/video/4080/640.mp4",
+      "content_type": "video/mp4",
+      "width": 640,
+      "bitrate": 278,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4080
+    },
+    {
+      "id": 19230,
+      "url": "http://v.theonion.com/onionstudios/video/4080/720.mp4",
+      "content_type": "720/video/mp4",
+      "width": 1280,
+      "bitrate": 3513,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4080
+    },
+    {
+      "id": 19229,
+      "url": "http://v.theonion.com/onionstudios/video/4080/1080.mp4",
+      "content_type": "1080/video/mp4",
+      "width": 1920,
+      "bitrate": 8004,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4080
+    },
+    {
+      "id": 19226,
+      "url": "http://v.theonion.com/onionstudios/video/4080/hls_playlist.m3u8",
+      "content_type": "application/x-mpegURL",
+      "width": null,
+      "bitrate": null,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4080
+    }
+  ]
+}

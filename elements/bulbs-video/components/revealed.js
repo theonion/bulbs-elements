@@ -59,13 +59,16 @@ export default class Revealed extends React.Component {
 
     let targeting = this.props.video.targeting;
     let prefixedSet = `${gaPrefix}.set`;
+    let hostChannel = this.props.targetHostChannel || 'main';
+    let specialCoverage = this.props.targetSpecialCoverage || 'None';
+    let filteredTags = [];
 
     ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
     ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
     ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
     ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', this.props.targetHostChannel || 'None');
-    ga(prefixedSet, 'dimension6', this.props.targetSpecialCoverage || 'None');
+    ga(prefixedSet, 'dimension5', hostChannel);
+    ga(prefixedSet, 'dimension6', specialCoverage);
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
     ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
@@ -83,10 +86,22 @@ export default class Revealed extends React.Component {
 
     playerOptions.pluginConfig.endcard.allowCountdown = !!this.props.autoplayNext;
 
+    filteredTags.push(hostChannel);
+
+    if (specialCoverage !== 'None') {
+      filteredTags.push(specialCoverage);
+    }
+
+    this.props.video.tags.forEach(function(tag) {
+      if (tag !== 'main') {
+        filteredTags.push(tag);
+      }
+    });
+
     playerOptions.pluginConfig.vpbc = {
       vpCategory: this.props.video.category,
       vpFlags: [''],
-      tags: this.props.video.tags,
+      tags: filteredTags,
       optional: { flashEnabled: true },
     };
 
