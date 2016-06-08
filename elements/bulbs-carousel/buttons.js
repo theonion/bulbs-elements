@@ -1,5 +1,4 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
-import './carousel-buttons.scss';
 
 export class NextButton extends BulbsHTMLElement {
   createdCallback() {

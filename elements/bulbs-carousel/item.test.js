@@ -1,4 +1,4 @@
-import './carousel-item';
+import './item';
 
 describe('<bulbs-carousel-item>', () => {
   let subject;

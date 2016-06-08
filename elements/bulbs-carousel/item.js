@@ -1,10 +1,5 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
-
-import './carousel-item.scss';
-
-function copyAttribute(attribute, from, to) {
-  to.setAttribute(attribute, from.getAttribute(attribute));
-}
+import { moveChildren, copyAttribute } from 'bulbs-elements/util';
 
 export default class CarouselItem extends BulbsHTMLElement {
   createdCallback() {
@@ -14,9 +9,7 @@ export default class CarouselItem extends BulbsHTMLElement {
     copyAttribute('data-track-category', this, anchor);
     copyAttribute('href', this, anchor);
 
-    while (this.firstChild) {
-      anchor.appendChild(this.firstChild);
-    }
+    moveChildren(this, anchor);
 
     this.appendChild(anchor);
   }
