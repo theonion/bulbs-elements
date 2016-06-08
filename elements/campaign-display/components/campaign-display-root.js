@@ -15,7 +15,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   hasValidCampaign() {
-    return !!this.props.campaign && this.props.campaign.active;
+    return !!this.props.campaign;
   }
 
   pixelComponent() {
