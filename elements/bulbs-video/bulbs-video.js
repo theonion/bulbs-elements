@@ -17,14 +17,14 @@ import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
 // let videoStores = {};
 
 export default class BulbsVideo extends BulbsElement {
-  initialDispatch () {
+  initialDispatch() {
     this.store.actions.fetchVideo(this.props.src);
     if (typeof this.props.autoplay === 'string') {
       this.store.actions.revealPlayer();
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.src !== prevProps.src) {
       this.store.actions.resetController();
       this.initialDispatch();
@@ -57,7 +57,7 @@ export default class BulbsVideo extends BulbsElement {
     }
   }
 */
-  render () {
+  render() {
 
     return (
       <BulbsVideoRoot

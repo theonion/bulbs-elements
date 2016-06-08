@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Result from './result';
 import ImageResult from './image-result';
 
-export default function ResultsList (props) {
+export default function ResultsList(props) {
   let {
     poll,
     winningAnswers,

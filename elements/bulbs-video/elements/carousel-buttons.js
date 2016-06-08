@@ -2,16 +2,16 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import './carousel-buttons.scss';
 
 export class CarouselButton extends BulbsHTMLElement {
-  createdCallback () {
+  createdCallback() {
     this.innerHTML = this.contentHTML;
   }
 
-  attachedCallback () {
+  attachedCallback() {
     let carousel = this.closest('bulbs-video-carousel');
     carousel.addEventListener('slide-items', this.checkBounds.bind(this), true);
   }
 
-  checkBounds (event) {
+  checkBounds(event) {
     if (this.outOfBounds(event.detail)) {
       this.setAttribute('disabled', '');
     }
@@ -22,17 +22,17 @@ export class CarouselButton extends BulbsHTMLElement {
 }
 
 export class NextButton extends CarouselButton {
-  get contentHTML () { return '<i class="fa fa-chevron-right"></i>'; }
+  get contentHTML() { return '<i class="fa fa-chevron-right"></i>'; }
 
-  outOfBounds (detail) {
+  outOfBounds(detail) {
     return detail.currentIndex + detail.perPage >= detail.carouselItems.length;
   }
 }
 
 export class PreviousButton extends CarouselButton {
-  get contentHTML () { return '<i class="fa fa-chevron-left"></i>'; }
+  get contentHTML() { return '<i class="fa fa-chevron-left"></i>'; }
 
-  outOfBounds (detail) {
+  outOfBounds(detail) {
     return detail.currentIndex === 0;
   }
 }

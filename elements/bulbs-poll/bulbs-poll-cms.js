@@ -5,7 +5,7 @@ import {
 
 let promiseCache = {};
 let previewDataCache = {};
-function getPreviewData (src, callback) {
+function getPreviewData(src, callback) {
   promiseCache[src] || (promiseCache[src] = fetch(src).then((response) => response.json()));
   promiseCache[src].then((data) => {
     previewDataCache[src] = data;
@@ -14,7 +14,7 @@ function getPreviewData (src, callback) {
 }
 
 class EmbeddedBulbsPoll extends EmbededCMSElement {
-  get embedContentPreview () {
+  get embedContentPreview() {
     let src = this.getAttribute('src');
     let title = '';
     if (src) {

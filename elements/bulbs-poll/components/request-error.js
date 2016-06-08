@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function RequestError ({ error, children, reset }) {
+export default function RequestError({ error, children, reset }) {
   if (error) {
     return (
       <div className="bulbs-poll-network-error">
@@ -11,9 +11,7 @@ export default function RequestError ({ error, children, reset }) {
       </div>
     );
   }
-  else {
-    return <div />;
-  }
+  return <div />;
 }
 
 RequestError.propTypes = {

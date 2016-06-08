@@ -9,17 +9,17 @@ import VideoField from '../fields/video';
 import VideoRequest from '../fields/video-request';
 
 export default class VideoSummary extends BulbsElement {
-  initialDispatch () {
+  initialDispatch() {
     this.store.actions.fetchVideo(this.props.src);
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     if (this.props.src !== props.src) {
       this.store.actions.fetchVideo(props.src);
     }
   }
 
-  render () {
+  render() {
     if (!this.state.video) {
       return <div/>;
     }

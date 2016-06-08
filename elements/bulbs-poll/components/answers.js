@@ -3,7 +3,7 @@ import Answer from './answer';
 import ImageAnswer from './image-answer';
 import classnames from 'classnames';
 
-export default function Answers (props) {
+export default function Answers(props) {
   let AnswerType = Answer;
   let listClassName = 'bulbs-poll-answers';
   if (props.poll.data.answer_type === 'imageText') {

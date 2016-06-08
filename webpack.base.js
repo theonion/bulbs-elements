@@ -32,13 +32,13 @@ const styleExtractor = new ExtractTextPlugin('[name].css');
 
 let entries = {};
 
-elementDirs.forEach(function (dir) {
+elementDirs.forEach(function(dir) {
   let elementName = path.basename(dir);
   let elementEntryPoint = path.join(dir, elementName + '.js');
   entries[elementName] = elementEntryPoint;
 });
 
-glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
+glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function(cmsFile) {
   let elementName = path.basename(path.dirname(cmsFile));
   entries[elementName + '.bulbs-cms'] = cmsFile;
 });
@@ -177,7 +177,7 @@ exports.config = {
       path.join(npmDir, 'clone'),
     ],
   },
-  postcss () {
+  postcss() {
     return [
       //stylelint({
       //  'extends': 'stylelint-config-standard'

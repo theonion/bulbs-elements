@@ -2,27 +2,27 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class ShareTool extends React.Component {
-  get DOMNode () {
+  get DOMNode() {
     return ReactDOM.findDOMNode(this);
   }
 
-  get shareTools () {
+  get shareTools() {
     return this.DOMNode.closest('share-tools');
   }
 
-  get shareUrl () {
+  get shareUrl() {
     return this.shareTools.getAttribute('share-url');
   }
 
-  get shareTitle () {
+  get shareTitle() {
     return this.shareTools.getAttribute('share-title');
   }
 
-  hasIcon () {
+  hasIcon() {
     return typeof this.props.icon === 'string';
   }
 
-  hasLabel () {
+  hasLabel() {
     return typeof this.props.label === 'string';
   }
 }

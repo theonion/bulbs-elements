@@ -7,10 +7,10 @@ import PollSchema from '../bulbs-poll-schema';
 
 let store = new Store({ schema: PollSchema });
 
-describe('<bulbs-poll> PollField', function () {
+describe('<bulbs-poll> PollField', function() {
   let { actions } = PollField;
 
-  it('initialState', function () {
+  it('initialState', function() {
     assert.deepEqual(PollField.initialState, {
       data: {
         answers: [],
@@ -19,8 +19,8 @@ describe('<bulbs-poll> PollField', function () {
     });
   });
 
-  describe('setPollTotalVotes', function () {
-    it('sets data.total_votes', function () {
+  describe('setPollTotalVotes', function() {
+    it('sets data.total_votes', function() {
       let state = {
         data: {},
       };
@@ -29,7 +29,7 @@ describe('<bulbs-poll> PollField', function () {
     });
   });
 
-  describe('updateAnswerVoteCount', function () {
+  describe('updateAnswerVoteCount', function() {
     let vote = {
       answer: {
         id: '2',
@@ -47,23 +47,23 @@ describe('<bulbs-poll> PollField', function () {
     };
     let nextState;
 
-    beforeEach(function () {
+    beforeEach(function() {
       nextState = actions.updateAnswerVoteCount(Object.assign({}, state), vote);
     });
 
-    it('updates the matching answer\'s vote count', function () {
+    it('updates the matching answer\'s vote count', function() {
       assert.equal(nextState.data.answers[1].total_votes, 10);
     });
   });
 
-  describe('fetchPollData', function () {
+  describe('fetchPollData', function() {
     let src = 'http://example.tld/poll/:id';
 
-    beforeEach(function () {
+    beforeEach(function() {
       fetchMock.mock(src, {});
     });
 
-    it('makes GET request to the poll endpoint', function () {
+    it('makes GET request to the poll endpoint', function() {
       let requestSpy = sinon.stub(util, 'makeRequest');
       actions.fetchPollData({}, src, store);
 
@@ -77,65 +77,65 @@ describe('<bulbs-poll> PollField', function () {
       requestSpy.restore();
     });
 
-    it('sets requestInFlight to true', function () {
+    it('sets requestInFlight to true', function() {
       let nextState = actions.fetchPollData({}, src, store);
       assert.isTrue(nextState.requestInFlight);
     });
   });
 
-  describe('fetchPollDataSuccess', function () {
-    it('sets requestInFlight to false', function () {
+  describe('fetchPollDataSuccess', function() {
+    it('sets requestInFlight to false', function() {
       let nextState = actions.fetchPollDataSuccess({}, {}, store);
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('parses published date', function () {
+    it('parses published date', function() {
       let success = { published: '2016-02-27T06:00:00Z' };
       let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.equal(nextState.data.published.toISOString(), '2016-02-27T06:00:00.000Z');
     });
 
-    it('parses end_date date', function () {
+    it('parses end_date date', function() {
       let success = { end_date: '2016-02-27T06:00:00Z' };
       let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.equal(nextState.data.end_date.toISOString(), '2016-02-27T06:00:00.000Z');
     });
 
-    it('sets state.data', function () {
+    it('sets state.data', function() {
       let success = {};
       let nextState = actions.fetchPollDataSuccess({}, success, store);
       assert.deepEqual(nextState.data, success);
     });
   });
 
-  describe('fetchPollDataFailure', function () {
-    it('sets requestInFlight to false', function () {
+  describe('fetchPollDataFailure', function() {
+    it('sets requestInFlight to false', function() {
       let nextState = actions.fetchPollDataFailure({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('sets state.failure', function () {
+    it('sets state.failure', function() {
       let failure = {};
       let nextState = actions.fetchPollDataFailure({}, failure);
       assert.equal(nextState.requestFailure, failure);
     });
   });
 
-  describe('fetchPollDataError', function () {
-    it('sets requestInFlight to false', function () {
+  describe('fetchPollDataError', function() {
+    it('sets requestInFlight to false', function() {
       let nextState = actions.fetchPollDataError({}, {});
       assert.isFalse(nextState.requestInFlight);
     });
 
-    it('sets state.error', function () {
+    it('sets state.error', function() {
       let error = {};
       let nextState = actions.fetchPollDataError({}, error);
       assert.equal(nextState.requestError, error);
     });
   });
 
-  describe('setPollTotalVotes', function () {
-    it('sets the total_votes field of poll.data', function () {
+  describe('setPollTotalVotes', function() {
+    it('sets the total_votes field of poll.data', function() {
       let startState = {
         data: {},
       };

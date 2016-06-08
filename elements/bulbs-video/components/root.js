@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Revealed from './revealed';
 import Cover from './cover';
 
-export default function Root (props) {
+export default function Root(props) {
   let className = 'bulbs-video-root player';
 
   if (!props.video) {
@@ -16,13 +16,12 @@ export default function Root (props) {
       </div>
     );
   }
-  else {
-    return (
-      <div className={className}>
-        <Cover video={props.video} actions={props.actions}/>
-      </div>
-    );
-  }
+
+  return (
+    <div className={className}>
+      <Cover video={props.video} actions={props.actions}/>
+    </div>
+  );
 }
 
 Root.propTypes = {

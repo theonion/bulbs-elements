@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import SelectionMarker from './selection-marker';
 import find from 'array-find';
 
-export default function ImageResult (props) {
+export default function ImageResult(props) {
   let {
     answer,
     poll,

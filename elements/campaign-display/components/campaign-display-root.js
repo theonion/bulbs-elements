@@ -77,9 +77,8 @@ class CampaignDisplayRoot extends Component {
     if (this.props.noLink) {
       return children;
     }
-    else {
-      return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
-    }
+
+    return <a href={this.props.campaign.clickthrough_url}>{children}</a>;
   }
 
   render() {

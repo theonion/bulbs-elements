@@ -1,7 +1,7 @@
 const SelectedAnswerField = {
   initialState: {},
   actions: {
-    selectAnswer (state, answer) {
+    selectAnswer(state, answer) {
       return (state && state.id === answer.id) ? {} : answer;
     },
   },

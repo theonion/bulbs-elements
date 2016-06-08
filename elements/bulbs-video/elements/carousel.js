@@ -3,17 +3,17 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import './carousel.scss';
 
 export default class Carousel extends BulbsHTMLElement {
-  getAnchors () {
+  getAnchors() {
     return this.querySelectorAll('bulbs-video-carousel-item a');
   }
 
-  getActiveCarouselItem () {
+  getActiveCarouselItem() {
     return this.querySelector(
       `bulbs-video-carousel-item[href='${window.location.pathname}']`
     );
   }
 
-  createdCallback () {
+  createdCallback() {
     this.playerEnded = this.playerEnded.bind(this);
     this.handleClick = this.handleClick.bind(this);
 
@@ -22,7 +22,7 @@ export default class Carousel extends BulbsHTMLElement {
     this.addEventListener('click', this.handleClick);
   }
 
-  attachedCallback () {
+  attachedCallback() {
     if (this.videoPlayer) {
       // This event MUST pass false in as the third argument,
       //  video events do not bubble, so we have to listen to the
@@ -37,13 +37,13 @@ export default class Carousel extends BulbsHTMLElement {
     }
   }
 
-  detachedCallback () {
+  detachedCallback() {
     if (this.videoPlayer) {
       this.videoPlayer.removeEventListener('ended', this.playerEnded);
     }
   }
 
-  playerEnded () {
+  playerEnded() {
     let items = this.getAnchors();
     let current = this.querySelector('bulbs-video-carousel-item[now-playing] a');
     let currentIndex = [].indexOf.call(items, current);
@@ -54,7 +54,7 @@ export default class Carousel extends BulbsHTMLElement {
     }
   }
 
-  handleClick (event) {
+  handleClick(event) {
     if (event.target.closest('bulbs-video-carousel-next')) {
       if (this.slider) {
         this.slider.slideToNext();

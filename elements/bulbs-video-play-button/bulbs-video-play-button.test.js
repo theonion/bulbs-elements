@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import BulbsVideoPlayButton from './bulbs-video-play-button';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
-describe('<bulbs-video-play-button> <BulbsVideoPlayButton>', function () {
+describe('<bulbs-video-play-button> <BulbsVideoPlayButton>', function() {
   describe('render', () => {
     it('renders a play button', () => {
       expect(

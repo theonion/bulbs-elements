@@ -11,28 +11,27 @@ import CampaignRequest from './fields/campaign-request-field';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
-  constructor (props) {
+  constructor(props) {
     invariant(!!props.src, 'campaign-display component requires a src');
     invariant(!!props.placement, 'campaign-display component requires a placement');
     super(props);
   }
 
-  initialDispatch () {
+  initialDispatch() {
     this.store.actions.fetchCampaign(this.props.src);
   }
 
-  render () {
+  render() {
     if (this.state.campaignRequest.networkError) {
       return <span/>;
     }
-    else {
-      let options = Object.assign({}, this.state, this.props, {
-        nameOnly: typeof this.props.nameOnly === 'string',
-        logoOnly: typeof this.props.logoOnly === 'string',
-        noLink: typeof this.props.noLink === 'string',
-      });
-      return (<CampaignDisplayRoot {...options} />);
-    }
+
+    let options = Object.assign({}, this.state, this.props, {
+      nameOnly: typeof this.props.nameOnly === 'string',
+      logoOnly: typeof this.props.logoOnly === 'string',
+      noLink: typeof this.props.noLink === 'string',
+    });
+    return (<CampaignDisplayRoot {...options} />);
   }
 }
 

@@ -3,11 +3,11 @@ import classnames from 'classnames';
 import SelectionMarker from './selection-marker';
 
 export default class ImageAnswer extends React.Component {
-  selectAnswer () {
+  selectAnswer() {
     this.props.selectAnswer(this.props.answer);
   }
 
-  render () {
+  render() {
     let {
       answer,
       selectedAnswer,

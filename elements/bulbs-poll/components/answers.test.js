@@ -5,11 +5,11 @@ import Answers from './answers';
 import Answer from './answer';
 import ImageAnswer from './image-answer';
 
-describe('<bulbs-poll> <Answers>', function () {
-  context('with no answers', function () {
-    it('renders no answers', function () {
+describe('<bulbs-poll> <Answers>', function() {
+  context('with no answers', function() {
+    it('renders no answers', function() {
       let answers = [];
-      let selectAnswer = function () {};
+      let selectAnswer = function() {};
       let props = {
         answers,
         selectAnswer,
@@ -23,8 +23,8 @@ describe('<bulbs-poll> <Answers>', function () {
     });
   });
 
-  context('with list of answers', function () {
-    it('renders a list of answers', function () {
+  context('with list of answers', function() {
+    it('renders a list of answers', function() {
       let answer1 = {};
       let answer2 = {};
       let answers = [
@@ -32,7 +32,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answer2,
       ];
 
-      let selectAnswer = function () {};
+      let selectAnswer = function() {};
 
       let props = {
         answers,
@@ -56,8 +56,8 @@ describe('<bulbs-poll> <Answers>', function () {
     });
   });
 
-  context('answer_type is imageAnswer', function () {
-    it('renders answer images', function () {
+  context('answer_type is imageAnswer', function() {
+    it('renders answer images', function() {
       let answer1 = {};
       let answer2 = {};
       let answers = [
@@ -65,7 +65,7 @@ describe('<bulbs-poll> <Answers>', function () {
         answer2,
       ];
 
-      let selectAnswer = function () {};
+      let selectAnswer = function() {};
 
       let props = {
         answers,
