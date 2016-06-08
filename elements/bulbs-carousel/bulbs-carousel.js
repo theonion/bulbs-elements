@@ -11,7 +11,7 @@ export const supportsCalcInTransform = (() => {
 })();
 
 export default class BulbsCarousel extends BulbsHTMLElement {
-  createdCallback() {
+  createdCallback () {
     invariant(
       this.slider = this.querySelector('bulbs-carousel-slider'),
       '<bulbs-carousel> MUST contain a <bulbs-carousel-slider> element.'
@@ -32,12 +32,12 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     this.nextButtons = this.getElementsByTagName('bulbs-carousel-next');
   }
 
-  attachedCallback() {
+  attachedCallback () {
     this.pageToCarouselItem(this.getActiveCarouselItem());
     this.applyState();
   }
 
-  handleClick(event) {
+  handleClick (event) {
     if (event.target.closest('bulbs-carousel-previous')) {
       this.slideToPrevious();
       this.applyState();
@@ -49,7 +49,7 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     }
   }
 
-  applyState() {
+  applyState () {
     let currentPage = this.getCurrentPage();
     let onFirstPage = this.isOnfirstPage();
     let onLastPage = this.isOnLastPage();
@@ -67,7 +67,7 @@ export default class BulbsCarousel extends BulbsHTMLElement {
       this.track.style.transform = `translateX(${translate}%) translateX(-${marginCorrection}px)`;
     }
 
-    function toggleAttribute(collection, attribute, toggle) {
+    function toggleAttribute (collection, attribute, toggle) {
       Array.prototype.forEach.call(collection, (item) => {
         toggle ? item.setAttribute(attribute, '') : item.removeAttribute(attribute);
       });
@@ -77,28 +77,28 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     toggleAttribute(this.nextButtons, 'disabled', onLastPage);
   }
 
-  get carouselItems() {
+  get carouselItems () {
     return this.track.children;
   }
 
-  get firstItem() {
+  get firstItem () {
     return this.carouselItems[0];
   }
 
-  getActiveCarouselItem() {
+  getActiveCarouselItem () {
     return this.track.querySelector(
       `bulbs-carousel-item[href='${window.location.pathname}']`
     );
   }
 
-  getGridRatio() {
+  getGridRatio () {
     if (this.firstItem) {
       return (this.getItemWidth() / this.offsetWidth) || 0;
     }
     return 0;
   }
 
-  getItemMargin() {
+  getItemMargin () {
     if (this.firstItem) {
       let style = getComputedStyle(this.firstItem);
       return (parseInt(style.marginLeft, 10) || 0) + (parseInt(style.marginRight, 10) || 0);
@@ -106,21 +106,21 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     return 0;
   }
 
-  getItemWidth() {
+  getItemWidth () {
     if (this.firstItem) {
       return this.getItemMargin() + this.firstItem.offsetWidth;
     }
     return 0;
   }
 
-  getChildrenPerPage() {
+  getChildrenPerPage () {
     if (this.firstItem) {
       return Math.round(1 / this.getGridRatio());
     }
     return 0;
   }
 
-  getCurrentPage() {
+  getCurrentPage () {
     if (this.firstItem) {
       let perPage = this.getChildrenPerPage();
       let page = Math.floor(this.currentIndex / perPage);
@@ -132,7 +132,7 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     return 0;
   }
 
-  updateCurrentIndex(magnitude) {
+  updateCurrentIndex (magnitude) {
     let perPage = this.getChildrenPerPage();
     let maxPage = parseInt(this.carouselItems.length / perPage, 10) - 1;
     this.currentIndex = Math.max(0, this.currentIndex + parseInt(magnitude, 10));
@@ -144,7 +144,7 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     }
   }
 
-  pageToCarouselItem(item) {
+  pageToCarouselItem (item) {
     let index = Array.prototype.indexOf.call(this.carouselItems, item);
 
     if (index > -1) {
@@ -152,19 +152,19 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     }
   }
 
-  slideToNext() {
+  slideToNext () {
     this.updateCurrentIndex(this.getChildrenPerPage());
   }
 
-  slideToPrevious() {
+  slideToPrevious () {
     this.updateCurrentIndex(-this.getChildrenPerPage());
   }
 
-  isOnfirstPage() {
+  isOnfirstPage () {
     return this.currentIndex === 0;
   }
 
-  isOnLastPage() {
+  isOnLastPage () {
     return this.currentIndex + this.getChildrenPerPage() >= this.carouselItems.length;
   }
 }
