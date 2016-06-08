@@ -333,6 +333,34 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('cacheBuster', () => {
+    it('returns a random number', function() {
+      let integerRegEx = /^\d+$/;
+      let cacheBuster = Revealed.prototype.cacheBuster.call({});
+      expect(cacheBuster).to.match(integerRegEx);
+    });
+  });
+
+  describe('vastUrl', () => {
+    let videoMeta;
+    let cacheBusterStub;
+
+    beforeEach(() => {
+      cacheBusterStub = sinon.stub().returns('456');
+      videoMeta = {
+        tags: ['clickhole', 'main', '12345'],
+        category: 'main/clickhole',
+      };
+    });
+
+    it('returns the vast url', function() {
+      let vastUrl = Revealed.prototype.vastUrl.call({
+        cacheBuster: cacheBusterStub,
+      }, videoMeta);
+      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456');
+    });
+  });
+
   describe('makeVideoPlayer', () => {
     let playerSetup;
     let element;
@@ -414,6 +442,7 @@ describe('<bulbs-video> <Revealed>', () => {
     context('player set up', () => {
       let sources;
       let extractSourcesStub;
+      let vastUrlStub;
 
       beforeEach(() => {
         sources = [
@@ -425,8 +454,11 @@ describe('<bulbs-video> <Revealed>', () => {
           },
         ];
         extractSourcesStub = sinon.stub().returns(sources);
+        vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+
         Revealed.prototype.makeVideoPlayer.call({
           extractSources: extractSourcesStub,
+          vastUrl: vastUrlStub,
         }, element, videoMeta);
       });
 
@@ -442,7 +474,7 @@ describe('<bulbs-video> <Revealed>', () => {
       it('sets up the advertising VAST tag', function() {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.advertising.client).to.equal('vast');
-        expect(setupOptions.advertising.tag).to.equal(videoMeta.player_options.advertising.tag);
+        expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
         expect(setupOptions.advertising.skipoffset).to.equal(5);
       });
 

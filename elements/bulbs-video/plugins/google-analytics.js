@@ -18,7 +18,7 @@ class GoogleAnalytics {
     player.on('resize', this.onResize.bind(this));
     player.on('firstFrame', this.onFirstFrame.bind(this));
     player.on('adSkipped', this.onAdSkipped.bind(this));
-    // .on('adError')
+    player.on('adError', this.onAdError.bind(this));
     // .on('error')
   }
 
@@ -103,6 +103,16 @@ class GoogleAnalytics {
       'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adskipped',
+      event.tag
+    );
+  }
+
+  onAdError(event) {
+    global.ga(
+      prefixedSend(this.gaPrefix),
+      'event',
+      'Video:' + this.player.videoMeta.channel_name,
+      'aderror: ' + event.message,
       event.tag
     );
   }

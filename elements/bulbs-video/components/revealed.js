@@ -111,6 +111,25 @@ export default class Revealed extends React.Component {
     return extractedSources;
   }
 
+  cacheBuster () {
+    return Math.round(Math.random() * 1.0e+10);
+  }
+
+  vastUrl (videoMeta) {
+    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+
+    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
+    baseUrl += '&tt=p';
+    videoMeta.tags.push('html5'); // Force HTML 5
+    // Tags
+    baseUrl += '&t=' + videoMeta.tags;
+    //Category
+    baseUrl += '&s=' + videoMeta.category;
+    baseUrl += '&rnd=' + this.cacheBuster();
+
+    return baseUrl;
+  }
+
   makeVideoPlayer (element, videoMeta) {
     let player = global.jwplayer(element);
 
@@ -124,7 +143,7 @@ export default class Revealed extends React.Component {
       'image': videoMeta.player_options.poster,
       'advertising': {
         'client': 'vast',
-        'tag': videoMeta.player_options.advertising.tag,
+        'tag': this.vastUrl(videoMeta),
         'skipoffset': 5,
       },
       'hlshtml': true,

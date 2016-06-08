@@ -317,6 +317,43 @@ describe('Google Analytics', () => {
     });
   });
 
+  describe('onAdError', () => {
+    let eventStub;
+
+    beforeEach(() => {
+      global.ga = sinon.spy();
+
+      let player = {
+        videoMeta: {
+          channel_name: 'The Onion',
+          player_options: {
+            'shareUrl': 'http://www.theonion.com/r/4053',
+          },
+        },
+        on: sinon.spy(),
+      };
+
+      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      eventStub = {
+        tag:
+          'http://localhost:8080/fixtures/bulbs-video/html5-vast.xml',
+        message: 'Ad Tag Empty',
+      };
+
+      googleAnalytics.onAdError(eventStub);
+    });
+
+    it('sends an "aderror" event', () => {
+      expect(global.ga).to.have.been.calledWith(
+        'videoplayer0.send',
+        'event',
+        'Video:The Onion',
+        'aderror: Ad Tag Empty',
+        'http://localhost:8080/fixtures/bulbs-video/html5-vast.xml'
+      );
+    });
+  });
+
   describe('onTime', () => {
     let data = {
       duration: 60,
