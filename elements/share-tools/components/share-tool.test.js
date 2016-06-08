@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ShareTool from './share-tool';
 
 class CustomShareTool extends ShareTool {
-  render() {
+  render () {
     return <div/>;
   }
 }

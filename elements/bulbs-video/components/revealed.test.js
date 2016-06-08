@@ -114,7 +114,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let trackerRegex = /^videoplayer\d+.set$/;
 
     describe('makes a video player', () => {
-      beforeEach(function() {
+      beforeEach(function () {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',
@@ -125,7 +125,7 @@ describe('<bulbs-video> <Revealed>', () => {
           autoplayNext: true,
           video: Object.assign({}, video, {
             title: 'video_title',
-            tags: 'tags',
+            tags: ['main', 'tag'],
             category: 'category',
             targeting: {
               target_channel: 'channel',
@@ -187,7 +187,7 @@ describe('<bulbs-video> <Revealed>', () => {
                 vpbc: {
                   vpCategory: 'category',
                   vpFlags: [''],
-                  tags: 'tags',
+                  tags: ['host_channel', 'sc-slug', 'tag'],
                   optional: { flashEnabled: true },
                 },
               },

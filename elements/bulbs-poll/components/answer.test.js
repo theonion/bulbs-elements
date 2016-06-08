@@ -4,12 +4,12 @@ import { shallow } from 'enzyme';
 import Answer from './answer';
 import SelectionMarker from './selection-marker';
 
-describe('<bulbs-poll> <Answer>', function() {
-  context('answer is not the selected answer', function() {
-    it('renders answer as not selected', function() {
+describe('<bulbs-poll> <Answer>', function () {
+  context('answer is not the selected answer', function () {
+    it('renders answer as not selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };
       let otherAnswer = { answer_text: 'Another', id: 2 };
-      let selectAnswer = function() {};
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: otherAnswer,
@@ -31,10 +31,10 @@ describe('<bulbs-poll> <Answer>', function() {
     });
   });
 
-  context('answer is the selected answer', function() {
-    it('renders answer as selected', function() {
+  context('answer is the selected answer', function () {
+    it('renders answer as selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };
-      let selectAnswer = function() {};
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: answer,

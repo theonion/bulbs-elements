@@ -1,15 +1,15 @@
 import { assert } from 'chai';
 import WinningAnswersField from './winning-answers';
 
-describe('<bulbs-poll> WinningAnswersField', function() {
+describe('<bulbs-poll> WinningAnswersField', function () {
   let { actions } = WinningAnswersField;
 
-  it('initialState', function() {
+  it('initialState', function () {
     assert.deepEqual(WinningAnswersField.initialState, []);
   });
 
-  describe('collectWinningAnswers', function() {
-    context('single winning answer', function() {
+  describe('collectWinningAnswers', function () {
+    context('single winning answer', function () {
       let answers = [
         { total_votes: 10 },
         { total_votes: 5 },
@@ -17,18 +17,18 @@ describe('<bulbs-poll> WinningAnswersField', function() {
       ];
       let nextState;
 
-      beforeEach(function() {
+      beforeEach(function () {
         nextState = actions.collectWinningAnswers([], answers);
       });
 
-      it('collects the winning answer', function() {
+      it('collects the winning answer', function () {
         assert.deepEqual(nextState, [
           answers[0],
         ]);
       });
     });
 
-    context('multiple winning answers', function() {
+    context('multiple winning answers', function () {
       let answers = [
         { total_votes: 10 },
         { total_votes: 5 },
@@ -36,11 +36,11 @@ describe('<bulbs-poll> WinningAnswersField', function() {
       ];
       let nextState;
 
-      beforeEach(function() {
+      beforeEach(function () {
         nextState = actions.collectWinningAnswers([], answers);
       });
 
-      it('collects the tying answers', function() {
+      it('collects the tying answers', function () {
         assert.deepEqual(nextState, [
           answers[0],
           answers[2],

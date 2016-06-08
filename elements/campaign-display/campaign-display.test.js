@@ -36,7 +36,7 @@ describe('<campaign-display>', () => {
     }).to.throw('campaign-display component requires a src');
   });
 
-  it('should require a placement', function() {
+  it('should require a placement', function () {
     expect(() => {
       new CampaignDisplay({ src: 'some/src '}); // eslint-disable-line
     }).to.throw('campaign-display component requires a placement');

@@ -5,9 +5,9 @@ import ResultsList from './results-list';
 import Result from './result';
 import ImageResult from './image-result';
 
-describe('<bulbs-poll> <ResultsList>', function() {
-  context('default', function() {
-    it('renders', function() {
+describe('<bulbs-poll> <ResultsList>', function () {
+  context('default', function () {
+    it('renders', function () {
       let answer1 = {};
       let answer2 = {};
       let winningAnswers = [answer1];
@@ -47,8 +47,8 @@ describe('<bulbs-poll> <ResultsList>', function() {
     });
   });
 
-  context('answer_type is imageAnswer', function() {
-    it('renders answer images', function() {
+  context('answer_type is imageAnswer', function () {
+    it('renders answer images', function () {
       let answer1 = {};
       let answer2 = {};
       let winningAnswers = [answer1];

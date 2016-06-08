@@ -9,13 +9,13 @@ import VideoPlayer from 'videohub-player';
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 
 let prefixCount = 0;
-function makeGaPrefix() {
+function makeGaPrefix () {
   // ga demands tracker names be alphanumeric
   return `videoplayer${prefixCount++}`;
 }
 
 export default class Revealed extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     /*
     FIXME: videohub-player depends on there being an instance of our analytics manager
             at window.AnalyticsManager.
@@ -59,13 +59,16 @@ export default class Revealed extends React.Component {
 
     let targeting = this.props.video.targeting;
     let prefixedSet = `${gaPrefix}.set`;
+    let hostChannel = this.props.targetHostChannel || 'main';
+    let specialCoverage = this.props.targetSpecialCoverage || 'None';
+    let filteredTags = [];
 
     ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
     ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
     ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
     ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', this.props.targetHostChannel || 'None');
-    ga(prefixedSet, 'dimension6', this.props.targetSpecialCoverage || 'None');
+    ga(prefixedSet, 'dimension5', hostChannel);
+    ga(prefixedSet, 'dimension6', specialCoverage);
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
     ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
@@ -83,10 +86,22 @@ export default class Revealed extends React.Component {
 
     playerOptions.pluginConfig.endcard.allowCountdown = !!this.props.autoplayNext;
 
+    filteredTags.push(hostChannel);
+
+    if (specialCoverage !== 'None') {
+      filteredTags.push(specialCoverage);
+    }
+
+    this.props.video.tags.forEach(function(tag) {
+      if (tag !== 'main') {
+        filteredTags.push(tag);
+      }
+    });
+
     playerOptions.pluginConfig.vpbc = {
       vpCategory: this.props.video.category,
       vpFlags: [''],
-      tags: this.props.video.tags,
+      tags: filteredTags,
       optional: { flashEnabled: true },
     };
 
@@ -104,12 +119,12 @@ export default class Revealed extends React.Component {
     this.makeVideoPlayer(this.refs.video, playerOptions);
   }
 
-  makeVideoPlayer(element, playerOptions) {
+  makeVideoPlayer (element, playerOptions) {
     let player = new VideoPlayer(element, playerOptions);
     player.player.play();
   }
 
-  render() {
+  render () {
     let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>

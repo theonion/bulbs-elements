@@ -2,13 +2,13 @@ import fetchMock from 'fetch-mock';
 import testElement from 'bulbs-elements/test/element';
 import './bulbs-poll';
 
-testElement('<bulbs-poll> <BulbsPoll>', function() {
+testElement('<bulbs-poll> <BulbsPoll>', function () {
   let setSrcSpy;
   let fetchPollDataSpy;
   let getCachedVoteDataSpy;
   let pollEndpoint;
 
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     pollEndpoint = 'http://example.tld/api/polls/1';
     fetchMock.mock(pollEndpoint, {
       body: {
@@ -42,15 +42,15 @@ testElement('<bulbs-poll> <BulbsPoll>', function() {
     });
   });
 
-  it('invokes setSrc', function() {
+  it('invokes setSrc', function () {
     expect(setSrcSpy).to.have.been.calledWith(pollEndpoint);
   });
 
-  it('invokes fetchPollData', function() {
+  it('invokes fetchPollData', function () {
     expect(fetchPollDataSpy).to.have.been.calledWith(pollEndpoint);
   });
 
-  it('invokes getCachedVoteData', function() {
+  it('invokes getCachedVoteData', function () {
     expect(getCachedVoteDataSpy).to.have.been.calledWith(pollEndpoint);
   });
 });

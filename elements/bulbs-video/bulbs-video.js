@@ -17,14 +17,14 @@ import 'videojs-autoplay-toggle/videojs.autoplay-toggle.css';
 // let videoStores = {};
 
 export default class BulbsVideo extends BulbsElement {
-  initialDispatch() {
+  initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
     if (typeof this.props.autoplay === 'string') {
       this.store.actions.revealPlayer();
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
       this.store.actions.resetController();
       this.initialDispatch();
@@ -57,12 +57,15 @@ export default class BulbsVideo extends BulbsElement {
     }
   }
 */
-  render() {
+  render () {
 
     return (
       <BulbsVideoRoot
         {...this.state}
         twitterHandle={this.props.twitterHandle}
+        targetCampaignId={this.props.targetCampaignId}
+        targetHostChannel={this.props.targetHostChannel}
+        targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
         noEndcard={typeof this.props.noEndcard === 'string'}
         actions={this.store.actions}
@@ -83,6 +86,9 @@ Object.assign(BulbsVideo, {
     autoplayNext: PropTypes.string,
     noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
+    targetCampaignId: PropTypes.string,
+    targetHostChannel: PropTypes.string,
+    targetSpecialCoverage: PropTypes.string,
     twitterHandle: PropTypes.isRequired,
   },
 });

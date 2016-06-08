@@ -4,7 +4,7 @@ import {
 } from 'bulbs-elements/register';
 
 class EmbeddedBulbsVideo extends EmbededCMSElement {
-  get embedContentPreview() {
+  get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>
         <i class='fa fa-puzzle-piece'></i>

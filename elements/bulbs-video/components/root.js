@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import Revealed from './revealed';
 import Cover from './cover';
 
-export default function Root(props) {
+export default function Root (props) {
   let className = 'bulbs-video-root player';
 
   if (!props.video) {
@@ -29,6 +29,9 @@ Root.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   noEndcard: PropTypes.bool,
+  targetCampaignId: PropTypes.string,
+  targetHostChannel: PropTypes.string,
+  targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object,
 };

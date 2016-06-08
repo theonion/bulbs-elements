@@ -4,16 +4,16 @@ import { shallow } from 'enzyme';
 import ImageAnswer from './image-answer';
 import SelectionMarker from './selection-marker';
 
-describe('<bulbs-poll> <ImageAnswer>', function() {
-  context('answer is not the selected answer', function() {
-    it('renders anser as not selected', function() {
+describe('<bulbs-poll> <ImageAnswer>', function () {
+  context('answer is not the selected answer', function () {
+    it('renders anser as not selected', function () {
       let answer = {
         answer_text: 'Answer',
         id: 1,
         answer_image_url: 'www.suckitjerks.com',
       };
       let otherAnswer = { answer_text: 'Another', id: 2 };
-      let selectAnswer = function() {};
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: otherAnswer,
@@ -37,14 +37,14 @@ describe('<bulbs-poll> <ImageAnswer>', function() {
     });
   });
 
-  context('answer is the selected answer', function() {
-    it('renders answer as selected', function() {
+  context('answer is the selected answer', function () {
+    it('renders answer as selected', function () {
       let answer = {
         answer_text: 'Answer',
         id: 1,
         answer_image_url: 'www.suckitjerks.com',
       };
-      let selectAnswer = function() {};
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: answer,

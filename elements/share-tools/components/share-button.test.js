@@ -43,7 +43,7 @@ describe('<share-tools> <ShareButton>', () => {
   describe('render', () => {
     let subject;
     let props;
-    function onClick() {}
+    function onClick () {}
 
     let baseProps = {
       href: '/path',

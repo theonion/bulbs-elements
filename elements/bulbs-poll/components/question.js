@@ -5,7 +5,7 @@ import Answers from './answers';
 import VoteButton from './vote-button';
 import RequestError from './request-error';
 
-export default function Question(props) {
+export default function Question (props) {
   let {
     selectAnswer,
     makeVoteRequest,

@@ -8,16 +8,16 @@ import VideoRequest from '../fields/video-request';
 import './meta.scss';
 
 export default class VideoMeta extends BulbsElement {
-  initialDispatch() {
+  initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if (this.props.src !== props.src) {
       this.store.actions.fetchVideo(props.src);
     }
   }
-  render() {
+  render () {
     if(!this.state.video) {
       return <div/>;
     }

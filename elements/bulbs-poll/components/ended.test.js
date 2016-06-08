@@ -5,9 +5,9 @@ import PollEnded from './ended';
 import Cover from './cover';
 import ResultsList from './results-list';
 
-describe('<bulbs-poll> <PollEnded>', function() {
-  context('default', function() {
-    it('renders', function() {
+describe('<bulbs-poll> <PollEnded>', function () {
+  context('default', function () {
+    it('renders', function () {
       let poll = {};
       let winningAnswers = [];
       let vote = {};

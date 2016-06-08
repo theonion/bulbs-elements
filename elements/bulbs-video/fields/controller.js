@@ -5,11 +5,11 @@ const InitialController = {
 export default {
   initialState: InitialController,
   actions: {
-    revealPlayer(state) {
+    revealPlayer (state) {
       state.revealed = true;
       return state;
     },
-    resetController() {
+    resetController () {
       return InitialController;
     },
   },
