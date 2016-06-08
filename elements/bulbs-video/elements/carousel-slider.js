@@ -9,7 +9,7 @@ export const calculatesTransform = (() => {
 })();
 
 export default class CarouselSlider extends BulbsHTMLElement {
-  createdCallback() {
+  createdCallback () {
     this.currentIndex = 0;
     this.track = document.createElement('bulbs-video-carousel-track');
     while (this.firstChild) {
@@ -18,22 +18,22 @@ export default class CarouselSlider extends BulbsHTMLElement {
     this.appendChild(this.track);
   }
 
-  attachedCallback() {
+  attachedCallback () {
     this.slideItems();
   }
 
-  get carouselItems() {
+  get carouselItems () {
     return this.track.children;
   }
 
-  getGridRatio() {
+  getGridRatio () {
     if (this.carouselItems[0]) {
       return (this.getItemWidth() / this.offsetWidth) || 0;
     }
     return 0;
   }
 
-  getItemMargin() {
+  getItemMargin () {
     let child = this.carouselItems[0];
     if (child) {
       let style = getComputedStyle(child);
@@ -42,7 +42,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     return 0;
   }
 
-  getItemWidth() {
+  getItemWidth () {
     let child = this.carouselItems[0];
     if (child) {
       return this.getItemMargin() + child.offsetWidth;
@@ -50,7 +50,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     return 0;
   }
 
-  getChildrenPerPage() {
+  getChildrenPerPage () {
     let child = (this.carouselItems[0]);
     if (child) {
       return Math.round(1 / this.getGridRatio());
@@ -58,7 +58,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     return 0;
   }
 
-  getCurrentPage() {
+  getCurrentPage () {
     let child = (this.carouselItems[0]);
     if (child) {
       let perPage = this.getChildrenPerPage();
@@ -71,7 +71,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     return 0;
   }
 
-  updateCurrentIndex(magnitude) {
+  updateCurrentIndex (magnitude) {
     let perPage = this.getChildrenPerPage();
     let maxPage = parseInt(this.carouselItems.length / perPage, 10) - 1;
     this.currentIndex = Math.max(0, this.currentIndex + parseInt(magnitude, 10));
@@ -83,17 +83,17 @@ export default class CarouselSlider extends BulbsHTMLElement {
     }
   }
 
-  slideToNext() {
+  slideToNext () {
     this.updateCurrentIndex(this.getChildrenPerPage());
     this.slideItems();
   }
 
-  slideToPrevious() {
+  slideToPrevious () {
     this.updateCurrentIndex(-this.getChildrenPerPage());
     this.slideItems();
   }
 
-  slideItems() {
+  slideItems () {
     let page = this.getCurrentPage();
     let translate = -100 * page;
     let marginCorrection = this.getItemMargin() * page;
@@ -114,7 +114,7 @@ export default class CarouselSlider extends BulbsHTMLElement {
     this.dispatchEvent(event);
   }
 
-  pageToCarouselItem(item) {
+  pageToCarouselItem (item) {
     let index = Array.prototype.indexOf.call(this.carouselItems, item);
 
     if (index > -1) {

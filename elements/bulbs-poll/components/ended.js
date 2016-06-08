@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Cover from './cover';
 import ResultsList from './results-list';
 
-export default function Ended(props) {
+export default function Ended (props) {
   let {
     poll,
     winningAnswers,

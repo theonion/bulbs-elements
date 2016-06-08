@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function SelectionMarker(props) {
+export default function SelectionMarker (props) {
   let {
     isSelected,
   } = props;

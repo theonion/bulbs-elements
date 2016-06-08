@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function Cover(props) {
+export default function Cover (props) {
   let { poll } = props;
   return (
     <header className="bulbs-poll-cover">

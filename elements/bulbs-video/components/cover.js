@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
-export default function Cover(props) {
+export default function Cover (props) {
   let { video, actions } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
 

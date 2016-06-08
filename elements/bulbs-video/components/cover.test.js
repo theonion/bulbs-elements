@@ -4,7 +4,7 @@ import Cover from './cover';
 import video from '../fixtures/video.json';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
-describe('<bulbs-video> <Cover>', function() {
+describe('<bulbs-video> <Cover>', function () {
   describe('propTypes', () => {
     let subject = Cover.propTypes;
 

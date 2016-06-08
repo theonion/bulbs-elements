@@ -7,12 +7,12 @@ import ShareButton from './share-button';
 const TWITTER_BASE = 'http://twitter.com/share?';
 
 export default class ShareViaTwitter extends ShareTool {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.share = this.share.bind(this);
   }
 
-  share(event) {
+  share (event) {
     event.preventDefault();
     window.open(
       TWITTER_BASE +
@@ -23,7 +23,7 @@ export default class ShareViaTwitter extends ShareTool {
     );
   }
 
-  render() {
+  render () {
     return (
       <ShareButton
         className='share-via-twitter'

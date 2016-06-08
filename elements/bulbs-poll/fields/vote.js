@@ -1,6 +1,6 @@
 import util from 'bulbs-elements/util';
 
-function cacheKey(pollId) {
+function cacheKey (pollId) {
   return `bulbs-poll:${pollId}:vote`;
 }
 
@@ -9,7 +9,7 @@ const VoteField = {
     voted: false,
   },
   actions: {
-    getCachedVoteData(state, pollKey) {
+    getCachedVoteData (state, pollKey) {
       let value = localStorage.getItem(cacheKey(pollKey));
       if (value) {
         state.voted = true;
@@ -17,7 +17,7 @@ const VoteField = {
       }
       return state;
     },
-    makeVoteRequest(state, answer, store) {
+    makeVoteRequest (state, answer, store) {
       let { poll } = store.state;
       let url = `https://onion.sodahead.com/api/polls/${poll.data.sodahead_id}/vote/`;
       util.makeRequest(url, {
@@ -35,7 +35,7 @@ const VoteField = {
       state.requestInFlight = true;
       return state;
     },
-    voteRequestSuccess(state, data, store) {
+    voteRequestSuccess (state, data, store) {
       localStorage.setItem(cacheKey(store.state.src), JSON.stringify(data.vote));
       setImmediate(() => {
         store.actions.setPollTotalVotes(data.poll.totalVotes);
@@ -47,17 +47,17 @@ const VoteField = {
       state.requestInFlight = false;
       return state;
     },
-    voteRequestFailure(state, failure) {
+    voteRequestFailure (state, failure) {
       state.requestFailure = failure;
       state.requestInFlight = false;
       return state;
     },
-    voteRequestError(state, error) {
+    voteRequestError (state, error) {
       state.requestInFlight = false;
       state.requestError = error;
       return state;
     },
-    resetVoteRequest(state) {
+    resetVoteRequest (state) {
       state.requestInFlight = false;
       delete state.requestFailure;
       delete state.requestError;

@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 
 import Cover from './cover';
 
-describe('<bulbs-poll> <Cover>', function() {
-  it('renders a cover without a thumbnail', function() {
+describe('<bulbs-poll> <Cover>', function () {
+  it('renders a cover without a thumbnail', function () {
     let poll = {
       data: {
         question_text: 'Question?',

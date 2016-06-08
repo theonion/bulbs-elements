@@ -6,7 +6,7 @@ import PollResults from './results';
 import PollEnded from './ended';
 import ComingSoon from './coming-soon';
 
-export default function Root(props) {
+export default function Root (props) {
   let pollData = props.data.poll.data;
   let now = props.data.now;
   let pollNotLoaded = !pollData.id;

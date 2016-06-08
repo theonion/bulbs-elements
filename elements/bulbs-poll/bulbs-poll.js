@@ -9,13 +9,13 @@ import BulbsPollRoot from './components/root';
 import './bulbs-poll.scss';
 
 class BulbsPoll extends BulbsElement {
-  initialDispatch() {
+  initialDispatch () {
     this.store.actions.setSrc(this.props.src);
     this.store.actions.fetchPollData(this.props.src);
     this.store.actions.getCachedVoteData(this.props.src);
   }
 
-  render() {
+  render () {
     return (
       <div data-track-action='Poll'>
         <BulbsPollRoot
