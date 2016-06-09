@@ -25,14 +25,13 @@ class CampaignDisplay extends BulbsElement {
     if (this.state.campaignRequest.networkError) {
       return <span/>;
     }
-    else {
-      let options = Object.assign({}, this.state, this.props, {
-        nameOnly: typeof this.props.nameOnly === 'string',
-        logoOnly: typeof this.props.logoOnly === 'string',
-        noLink: typeof this.props.noLink === 'string',
-      });
-      return (<CampaignDisplayRoot {...options} />);
-    }
+
+    let options = Object.assign({}, this.state, this.props, {
+      nameOnly: typeof this.props.nameOnly === 'string',
+      logoOnly: typeof this.props.logoOnly === 'string',
+      noLink: typeof this.props.noLink === 'string',
+    });
+    return (<CampaignDisplayRoot {...options} />);
   }
 }
 

@@ -31,7 +31,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('hasValidCampaign', () => {
-    it('returns false when there is no campaign', function() {
+    it('returns false when there is no campaign', function () {
       delete props.campaign;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasValidCampaign()).to.equal(false);
@@ -43,7 +43,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.hasValidCampaign()).to.equal(true);
     });
 
-    it('returns true when there is an active campaign', function() {
+    it('returns true when there is an active campaign', function () {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasValidCampaign()).to.equal(true);
     });
@@ -104,7 +104,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject).to.have.prop('data-track-label', props.campaign.clickthrough_url);
     });
 
-    it('wraps the components in a link to the clickthrough_url', function() {
+    it('wraps the components in a link to the clickthrough_url', function () {
       expect(subject.equals(
         <div className='campaign-display' data-track-label={campaign.clickthrough_url}>
           <div className='inner'>

@@ -52,7 +52,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('makeVoteRequest', function() {
+  describe('makeVoteRequest', function () {
     let url = 'https://onion.sodahead.com/api/polls/10/vote/';
 
     beforeEach(function () {
@@ -104,7 +104,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('voteRequestSuccess', function() {
+  describe('voteRequestSuccess', function () {
     let nextState;
     let vote;
     let poll;
@@ -175,7 +175,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('voteRequestFailure', function() {
+  describe('voteRequestFailure', function () {
     it('sets requestInFlight to false', function () {
       let nextState = actions.voteRequestFailure({}, {});
       assert.isFalse(nextState.requestInFlight);
@@ -188,7 +188,7 @@ describe('<bulbs-poll> VoteField', function () {
     });
   });
 
-  describe('voteRequestError', function() {
+  describe('voteRequestError', function () {
     it('sets requestInFlight to false', function () {
       let nextState = actions.voteRequestError({}, {});
       assert.isFalse(nextState.requestInFlight);
