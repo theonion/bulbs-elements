@@ -1,3 +1,5 @@
+import './video-carousel';
+
 describe('<bulbs-video-carousel>', () => {
   let subject;
   let container;
@@ -21,18 +23,22 @@ describe('<bulbs-video-carousel>', () => {
       </bulbs-video-carousel>
     `;
 
-    subject = container.querySelector('bulbs-video-carousel');
-    videoPlayer = container.querySelector('bulbs-video');
-    firstItem = container.querySelector('#first');
-    secondItem = container.querySelector('#second');
+    document.body.appendChild(container);
 
     // polyfill is asynchronous in some browser environments.
-    setImmediate(() => {
+    requestAnimationFrame(() => {
+      subject = container.querySelector('bulbs-video-carousel');
+      videoPlayer = container.querySelector('bulbs-video');
+      firstItem = container.querySelector('#first');
+      secondItem = container.querySelector('#second');
+
       sinon.spy(videoPlayer, 'addEventListener');
       sinon.spy(videoPlayer, 'removeEventListener');
       done();
     });
   });
+
+  afterEach(() => container.remove());
 
   describe('attachedCallback', () => {
     it('attaches playerEnded handler to videoPlayer', () => {

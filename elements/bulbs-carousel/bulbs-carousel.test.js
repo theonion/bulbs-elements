@@ -2,6 +2,8 @@
 
 import { supportsCalcInTransform } from './bulbs-carousel';
 
+const NodeListConstructor = document.getElementsByTagName('an-element').constructor;
+
 describe('<bulbs-carousel>', () => {
   let container;
   let subject;
@@ -70,12 +72,12 @@ describe('<bulbs-carousel>', () => {
     });
 
     it('tracks previousButtons', () => {
-      expect(subject.previousButtons).to.be.instanceOf(HTMLCollection);
+      expect(subject.previousButtons).to.be.instanceOf(NodeListConstructor);
       expect(subject.previousButtons.item(0)).to.eq(previousButton);
     });
 
     it('tracks nextButtons', () => {
-      expect(subject.nextButtons).to.be.instanceOf(HTMLCollection);
+      expect(subject.nextButtons).to.be.instanceOf(NodeListConstructor);
       expect(subject.nextButtons.item(0)).to.eq(nextButton);
     });
 

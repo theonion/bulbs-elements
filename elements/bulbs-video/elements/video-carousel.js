@@ -2,19 +2,17 @@ import invariant from 'invariant';
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
 class BulbsVideoCarousel extends BulbsHTMLElement {
-  createdCallback () {
+  attachedCallback () {
     invariant(
       this.videoPlayer = this.querySelector('bulbs-video'),
-      '<bulbs-video-carousel> MUST container a <bulbs-video>'
+      '<bulbs-video-carousel> MUST contain a <bulbs-video>'
     );
 
     invariant(
       this.carousel = this.querySelector('bulbs-carousel'),
-      '<bulbs-video-carousel> MUST container a <bulbs-carousel>'
+      '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
-  }
 
-  attachedCallback () {
     this.videoPlayer.addEventListener('ended', this.playerEnded, true);
   }
 
