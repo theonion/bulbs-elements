@@ -36,7 +36,7 @@ import invariant from 'invariant';
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
-global.BULBS_ELEMENTS_COMSCORE_ID = '<fill me out>';
+global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let prefixCount = 0;
 function makeGaPrefix () {
