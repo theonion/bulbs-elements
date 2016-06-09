@@ -37,7 +37,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.hasValidCampaign()).to.equal(false);
     });
 
-    it('returns true when the campaign is not active', function() {
+    it('returns true when the campaign is not active', function () {
       props.campaign.active = false;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasValidCampaign()).to.equal(true);

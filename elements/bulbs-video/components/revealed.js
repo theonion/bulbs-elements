@@ -92,7 +92,7 @@ export default class Revealed extends React.Component {
       filteredTags.push(specialCoverage);
     }
 
-    this.props.video.tags.forEach(function(tag) {
+    this.props.video.tags.forEach(function (tag) {
       if (tag !== 'main') {
         filteredTags.push(tag);
       }
