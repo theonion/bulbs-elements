@@ -14,7 +14,7 @@ class CampaignDisplayRoot extends Component {
     return !!this.props.campaign.image_url;
   }
 
-  hasValidCampaign() {
+  hasValidCampaign () {
     return !!this.props.campaign;
   }
 
