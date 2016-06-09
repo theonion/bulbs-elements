@@ -204,10 +204,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   context('with inactive campaign', () => {
-    it('renders an empty component', () => {
+    it('renders a component', () => {
       props.campaign.active = false;
       subject = shallow(<CampaignDisplayRoot {...props} />);
-      expect(subject).to.be.blank();
+      expect(subject).to.not.be.blank();
     });
   });
 });
