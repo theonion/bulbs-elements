@@ -1,14 +1,8 @@
 import invariant from 'invariant';
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
-import { moveChildren } from 'bulbs-elements/util';
+import { moveChildren, supportsCalcInTransform } from 'bulbs-elements/util';
 
 import './bulbs-carousel.scss';
-
-export const supportsCalcInTransform = (() => {
-  let div = document.createElement('div');
-  div.style.transform = 'translateX(calc(100% - 10px))';
-  return div.style.transform !== '';
-})();
 
 export default class BulbsCarousel extends BulbsHTMLElement {
   createdCallback () {

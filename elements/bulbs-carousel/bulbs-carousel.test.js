@@ -1,7 +1,9 @@
 /* eslint-disable no-return-assign */
 
-import { supportsCalcInTransform } from './bulbs-carousel';
+import './bulbs-carousel';
+import { supportsCalcInTransform } from 'bulbs-elements/util';
 
+// This constructor is inconsistently named across runtimes :trollface:
 const NodeListConstructor = document.getElementsByTagName('an-element').constructor;
 
 describe('<bulbs-carousel>', () => {
@@ -33,7 +35,7 @@ describe('<bulbs-carousel>', () => {
         <bulbs-carousel-next id='next'></bulbs-carousel-next>
       </bulbs-carousel>
      `;
-    subject = container.children[0];
+    subject = container.querySelector('bulbs-carousel');
     firstItem = container.querySelector('#first');
     secondItem = container.querySelector('#second');
     previousButton = container.querySelector('#previous');
