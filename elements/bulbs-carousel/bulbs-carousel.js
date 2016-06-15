@@ -163,6 +163,9 @@ export default class BulbsCarousel extends BulbsHTMLElement {
   }
 }
 
+import './item';
+import './buttons';
+
 registerElement('bulbs-carousel', BulbsCarousel);
 registerElement('bulbs-carousel-slider', class BulbsCarouselSlider extends BulbsHTMLElement {});
 registerElement('bulbs-carousel-track', class BulbsCarouselTrack extends BulbsHTMLElement {});

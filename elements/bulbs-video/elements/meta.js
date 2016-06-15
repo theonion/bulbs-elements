@@ -40,6 +40,7 @@ export default class VideoMeta extends BulbsElement {
       this.store.actions.fetchVideo(this.props.src);
     }
   }
+
   render () {
     return <VideoMetaView {...this.props} video={this.state.video}/>;
   }
