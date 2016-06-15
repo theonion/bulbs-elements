@@ -1,3 +1,6 @@
+// Expose jwplayer on the global context
+require('expose?jwplayer!../plugins/jwplayer');
+
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
 
@@ -136,6 +139,7 @@ export default class Revealed extends React.Component {
     player.videoMeta = videoMeta;
 
     player.setup({
+      'key': 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
       'skin': {
         'name': 'onion',
       },
@@ -145,8 +149,16 @@ export default class Revealed extends React.Component {
         'client': 'vast',
         'tag': this.vastUrl(videoMeta),
         'skipoffset': 5,
+        'vpaidmode': 'insecure',
       },
+      'flashplayer': '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
+      'aspectratio': '16:9',
+      'autostart': true,
+      'mute': false,
+      'preload': 'none',
+      'primary': 'html5',
       'hlshtml': true,
+      'width': '100%',
       'sharing': {
         'link': videoMeta.player_options.shareUrl,
         'code': videoMeta.player_options.embedCode,

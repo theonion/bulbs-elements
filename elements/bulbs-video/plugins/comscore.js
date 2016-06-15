@@ -1,4 +1,4 @@
-require('./streamsense.4.1411.18.min');
+require('!imports?this=>window!./streamsense.5.1.1.160316.min.js');
 
 class Comscore {
   constructor(player, comscoreId, comscoreMetadata) {
