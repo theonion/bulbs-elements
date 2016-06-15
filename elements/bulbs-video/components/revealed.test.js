@@ -341,12 +341,51 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('vastTest', () => {
+    it('returns undefined if query string empty', () => {
+      let vastId = Revealed.prototype.vastTest.call({
+        parseParam: sinon.stub().returns(undefined),
+      }, '');
+      expect(vastId).to.be.undefined;
+    });
+
+    it('returns undefined if no xgid query string key', () => {
+      let vastId = Revealed.prototype.vastTest.call({
+        parseParam: sinon.stub().returns(undefined),
+      }, '?utm_source=facebook');
+      expect(vastId).to.be.undefined;
+    });
+
+    it('returns the vastUrl value if query string key present', () => {
+      let vastId = Revealed.prototype.vastTest.call({
+        parseParam: sinon.stub().returns('12345'),
+      }, '?xgid=12345');
+      expect(vastId).to.equal('12345');
+    });
+  });
+
+  describe('parseParam', () => {
+    it('returns the value if it find its in the query string', () => {
+      let value = Revealed.prototype.parseParam.call({
+      }, 'foo', '?foo=12345');
+      expect(value).to.equal('12345');
+    });
+
+    it('does not return the value if it does not find it in the query string', () => {
+      let value = Revealed.prototype.parseParam.call({
+      }, 'bar', '?foo=12345');
+      expect(value).to.be.null;
+    });
+  });
+
   describe('vastUrl', () => {
     let videoMeta;
     let cacheBusterStub;
+    let vastTestStub;
 
     beforeEach(() => {
       cacheBusterStub = sinon.stub().returns('456');
+      vastTestStub = sinon.stub().returns(null);
       videoMeta = {
         tags: ['clickhole', 'main', '12345'],
         category: 'main/clickhole',
@@ -356,6 +395,7 @@ describe('<bulbs-video> <Revealed>', () => {
     it('returns the vast url', function() {
       let vastUrl = Revealed.prototype.vastUrl.call({
         cacheBuster: cacheBusterStub,
+        vastTest: vastTestStub,
       }, videoMeta);
       expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456');
     });

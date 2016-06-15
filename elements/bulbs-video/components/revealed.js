@@ -118,8 +118,35 @@ export default class Revealed extends React.Component {
     return Math.round(Math.random() * 1.0e+10);
   }
 
+  parseParam (name, queryString) {
+    // Properly escape array values in param
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+
+    // Grab params from query string
+    let results = regex.exec(queryString);
+    if (results) {
+      results = decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    return results;
+  }
+
+  vastTest (searchString) {
+    if (searchString !== '') {
+      let vastId = this.parseParam('xgid', searchString);
+
+      if (vastId) {
+        return vastId;
+      }
+    }
+  }
+
   vastUrl (videoMeta) {
     let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+
+    let vastTestId = this.vastTest(window.location.search);
 
     // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
     baseUrl += '&tt=p';
@@ -129,6 +156,10 @@ export default class Revealed extends React.Component {
     //Category
     baseUrl += '&s=' + videoMeta.category;
     baseUrl += '&rnd=' + this.cacheBuster();
+
+    if (vastTestId) {
+      baseUrl += '&xgid=' + vastTestId;
+    }
 
     return baseUrl;
   }

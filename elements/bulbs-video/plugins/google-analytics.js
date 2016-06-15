@@ -15,7 +15,8 @@ class GoogleAnalytics {
     player.on('complete', this.onComplete.bind(this));
     player.on('time', this.onTime.bind(this));
     player.on('fullscreen', this.onFullScreen.bind(this));
-    player.on('resize', this.onResize.bind(this));
+    // Leave out for now, this is noisy
+    // player.on('resize', this.onResize.bind(this));
     player.on('firstFrame', this.onFirstFrame.bind(this));
     player.on('adSkipped', this.onAdSkipped.bind(this));
     player.on('adError', this.onAdError.bind(this));
