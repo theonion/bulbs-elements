@@ -165,6 +165,7 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, videoMeta) {
+    element.id = videoMeta.gaPrefix;
     let player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
