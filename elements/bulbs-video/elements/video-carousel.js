@@ -51,7 +51,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     let nextIndex = (currentIndex + 1) % (items.length);
     if (currentIndex !== nextIndex) {
       let nextItem = items[nextIndex];
-      nextItem.click();
+      nextItem.children[0].click();
     }
   }
 
