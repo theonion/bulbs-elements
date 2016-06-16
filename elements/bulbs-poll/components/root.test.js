@@ -29,7 +29,7 @@ describe('<bulbs-poll> <BulbsPollRoot>', function () {
   });
 
   context('poll has not loaded', function () {
-    beforeEach(function() {
+    beforeEach(function () {
       delete data.poll.data.id;
     });
 

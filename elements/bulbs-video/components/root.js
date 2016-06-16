@@ -16,13 +16,12 @@ export default function Root (props) {
       </div>
     );
   }
-  else {
-    return (
-      <div className={className}>
-        <Cover video={props.video} actions={props.actions}/>
-      </div>
-    );
-  }
+
+  return (
+    <div className={className}>
+      <Cover video={props.video} actions={props.actions}/>
+    </div>
+  );
 }
 
 Root.propTypes = {
@@ -30,6 +29,9 @@ Root.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   noEndcard: PropTypes.bool,
+  targetCampaignId: PropTypes.string,
+  targetHostChannel: PropTypes.string,
+  targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object,
 };

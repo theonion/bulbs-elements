@@ -34,6 +34,8 @@ export default class DfpPixel extends Component {
   }
 }
 
+DfpPixel.displayName = 'DfpPixel';
+
 DfpPixel.propTypes = {
   campaignId: PropTypes.number.isRequired,
   placement: PropTypes.string.isRequired,

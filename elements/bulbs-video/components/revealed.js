@@ -6,33 +6,6 @@ import Comscore from '../plugins/comscore';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
-setImmediate(() => {
-  /*
-  FIXME: videohub-player depends on there being an instance of our analytics manager
-          at window.AnalyticsManager.
-          Some possible solutions:
-          1. Have bulbs-video and/or videohub-player initialize their own
-             analytics manager
-          2. Have bulbs-video and/or videohub-player use a confuration
-             such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
-          3. Have all sites follow a convention for where AnalyticsManager
-             lives.
-  */
-  /* global avclubAnalytics, onionan, clickholean, starwipe */
-  if (window.avclubAnalytics) {
-    window.AnalyticsManager = avclubAnalytics;
-  }
-  else if (window.onionan) {
-    window.AnalyticsManager = onionan;
-  }
-  else if (window.clickholean) {
-    window.AnalyticsManager = clickholean;
-  }
-  else if (window.starwipe) {
-    window.AnalyticsManager = starwipe.analyticsManager;
-  }
-});
-
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
@@ -49,6 +22,31 @@ function makeGaPrefix () {
 
 export default class Revealed extends React.Component {
   componentDidMount () {
+    /*
+    FIXME: videohub-player depends on there being an instance of our analytics manager
+            at window.AnalyticsManager.
+            Some possible solutions:
+            1. Have bulbs-video and/or videohub-player initialize their own
+               analytics manager
+            2. Have bulbs-video and/or videohub-player use a confuration
+               such as BULBS_ELEMENTS_ANALYTICS_MANAGER.
+            3. Have all sites follow a convention for where AnalyticsManager
+               lives.
+    */
+    /* global avclubAnalytics, onionan, clickholean, starwipe */
+    if (window.avclubAnalytics) {
+      window.AnalyticsManager = avclubAnalytics;
+    }
+    else if (window.onionan) {
+      window.AnalyticsManager = onionan;
+    }
+    else if (window.clickholean) {
+      window.AnalyticsManager = clickholean;
+    }
+    else if (window.starwipe) {
+      window.AnalyticsManager = starwipe.analyticsManager;
+    }
+
     invariant(
       global.jQuery,
       '`<bulbs-video>` requires `jQuery` to be in global scope.'
@@ -71,13 +69,16 @@ export default class Revealed extends React.Component {
 
     let targeting = this.props.video.targeting;
     let prefixedSet = `${gaPrefix}.set`;
+    let hostChannel = this.props.targetHostChannel || 'main';
+    let specialCoverage = this.props.targetSpecialCoverage || 'None';
+    let filteredTags = [];
 
     ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
     ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
     ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
     ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', targeting.target_host_channel || 'None');
-    ga(prefixedSet, 'dimension6', this.props.targetSpecialCoverage || 'None');
+    ga(prefixedSet, 'dimension5', hostChannel);
+    ga(prefixedSet, 'dimension6', specialCoverage);
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
     ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
@@ -88,14 +89,27 @@ export default class Revealed extends React.Component {
     videoMeta.gaPrefix = gaPrefix;
     videoMeta.player_options.shareUrl = window.location.href;
 
+    filteredTags.push(hostChannel);
+
+    if (specialCoverage !== 'None') {
+      filteredTags.push(specialCoverage);
+    }
+
+    this.props.video.tags.forEach(function (tag) {
+      // Temporary until videojs_options completely removed from Onion Studios
+      if (tag !== 'main') {
+        filteredTags.push(tag);
+      }
+    });
+
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
-  extractSources(sources) {
+  extractSources (sources) {
     let sourceMap = {};
     let extractedSources = [];
 
-    sources.forEach(function(source) {
+    sources.forEach(function (source) {
       sourceMap[source.content_type] = source.url;
     });
 
@@ -216,6 +230,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
+  targetHostChannel: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
   video: PropTypes.object.isRequired,

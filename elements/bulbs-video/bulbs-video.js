@@ -60,6 +60,9 @@ export default class BulbsVideo extends BulbsElement {
       <BulbsVideoRoot
         {...this.state}
         twitterHandle={this.props.twitterHandle}
+        targetCampaignId={this.props.targetCampaignId}
+        targetHostChannel={this.props.targetHostChannel}
+        targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
         noEndcard={typeof this.props.noEndcard === 'string'}
         actions={this.store.actions}
@@ -80,6 +83,9 @@ Object.assign(BulbsVideo, {
     autoplayNext: PropTypes.string,
     noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
+    targetCampaignId: PropTypes.string,
+    targetHostChannel: PropTypes.string,
+    targetSpecialCoverage: PropTypes.string,
     twitterHandle: PropTypes.isRequired,
   },
 });
@@ -87,4 +93,8 @@ Object.assign(BulbsVideo, {
 registerReactElement('bulbs-video', BulbsVideo);
 
 import './elements/meta';
+import './elements/carousel';
+import './elements/carousel-buttons';
+import './elements/carousel-slider';
+import './elements/carousel-item';
 import './elements/summary';

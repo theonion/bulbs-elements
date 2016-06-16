@@ -41,6 +41,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.targetSpecialCoverage).to.eql(PropTypes.string);
     });
 
+    it('accepts targetHostChannel string', () => {
+      expect(subject.targetHostChannel).to.eql(PropTypes.string);
+    });
+
     it('accepts twitterHandle string', () => {
       expect(subject.twitterHandle).to.eql(PropTypes.string);
     });
@@ -111,20 +115,20 @@ describe('<bulbs-video> <Revealed>', () => {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',
+          targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
           autoplay: true,
           autoplayNext: true,
           video: Object.assign({}, video, {
             title: 'video_title',
-            tags: 'tags',
+            tags: ['main', 'tag'],
             category: 'category',
             targeting: {
               target_channel: 'channel',
               target_series: 'series',
               target_season: 'season',
               target_video_id: 'video_id',
-              target_host_channel: 'host_channel',
             },
             player_options: {
               'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
@@ -203,10 +207,8 @@ describe('<bulbs-video> <Revealed>', () => {
 
         it('sets ga config', () => {
           let videoMeta = Object.assign({}, props.video);
-          let prefixRegex = /^videoplayer\d+$/;
           expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
             videoRef, videoMeta);
-          expect(makeVideoPlayerSpy.args[0][1].gaPrefix).to.match(prefixRegex);
         });
       });
 
@@ -326,7 +328,7 @@ describe('<bulbs-video> <Revealed>', () => {
       ];
     });
 
-    it('extracts only the HLS & mp4 sources', function() {
+    it('extracts only the HLS & mp4 sources', () => {
       let extractedSources = Revealed.prototype.extractSources.call({}, sources);
       expect(extractedSources[0].file).to.equal('http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8');
       expect(extractedSources[1].file).to.equal('http://v.theonion.com/onionstudios/video/4053/640.mp4');
@@ -334,7 +336,7 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('cacheBuster', () => {
-    it('returns a random number', function() {
+    it('returns a random number', () => {
       let integerRegEx = /^\d+$/;
       let cacheBuster = Revealed.prototype.cacheBuster.call({});
       expect(cacheBuster).to.match(integerRegEx);
@@ -502,47 +504,47 @@ describe('<bulbs-video> <Revealed>', () => {
         }, element, videoMeta);
       });
 
-      it('sets up the player', function() {
+      it('sets up the player', () => {
         expect(playerSetup.called).to.be.true;
       });
 
-      it('includes only the HLS & mp4 sources', function() {
+      it('includes only the HLS & mp4 sources', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.sources).to.eql(sources);
       });
 
-      it('sets up the advertising VAST tag', function() {
+      it('sets up the advertising VAST tag', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.advertising.client).to.equal('vast');
         expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
         expect(setupOptions.advertising.skipoffset).to.equal(5);
       });
 
-      it('sets the image as the poster image', function() {
+      it('sets the image as the poster image', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
       });
 
-      it('looks for HLS always first', function() {
+      it('looks for HLS always first', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.hlshtml).to.be.true;
       });
 
-      it('sets up the sharing link', function() {
+      it('sets up the sharing link', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.sharing.link).to.equal(videoMeta.player_options.shareUrl);
       });
 
-      it('sets up the sharing embed code', function() {
+      it('sets up the sharing embed code', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.sharing.code).to.equal(videoMeta.player_options.embedCode);
       });
 
-      it('initializes the GoogleAnalytics plugin', function() {
+      it('initializes the GoogleAnalytics plugin', () => {
         expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
       });
 
-      it('initializes the Comscore plugin', function() {
+      it('initializes the Comscore plugin', () => {
         expect(Comscore.init.calledWith(player)).to.be.true;
       });
     });

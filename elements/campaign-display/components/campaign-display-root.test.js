@@ -31,19 +31,19 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   describe('hasValidCampaign', () => {
-    it('returns false when there is no campaign', function() {
+    it('returns false when there is no campaign', function () {
       delete props.campaign;
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasValidCampaign()).to.equal(false);
     });
 
-    it('returns false when the campaign is not active', function() {
+    it('returns true when the campaign is not active', function () {
       props.campaign.active = false;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasValidCampaign()).to.equal(false);
+      expect(subject.hasValidCampaign()).to.equal(true);
     });
 
-    it('returns true when there is an active campaign', function() {
+    it('returns true when there is an active campaign', function () {
       subject = new CampaignDisplayRoot(props);
       expect(subject.hasValidCampaign()).to.equal(true);
     });
@@ -52,12 +52,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   describe('pixelComponent', () => {
     it('passes the campaign id to the pixel component', () => {
       subject = shallow(<CampaignDisplayRoot {...props} />);
-      expect(subject.find('DfpPixel')).to.have.prop('campaignId', props.campaign.id);
+      expect(subject.find(DfpPixel)).to.have.prop('campaignId', props.campaign.id);
     });
 
     it('passes the placement to the pixel component', () => {
       subject = shallow(<CampaignDisplayRoot {...props} />);
-      expect(subject.find('DfpPixel')).to.have.prop('placement', props.placement);
+      expect(subject.find(DfpPixel)).to.have.prop('placement', props.placement);
     });
   });
 
@@ -94,17 +94,17 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('renders the pixel, logo, and name', () => {
-      expect(subject).to.have.descendants('DfpPixel');
-      expect(subject).to.have.descendants('Logo');
-      expect(subject).to.have.descendants('Preamble');
-      expect(subject).to.have.descendants('SponsorName');
+      expect(subject).to.have.descendants(DfpPixel);
+      expect(subject).to.have.descendants(Logo);
+      expect(subject).to.have.descendants(Preamble);
+      expect(subject).to.have.descendants(SponsorName);
     });
 
     it('has a data-track-label with the clickthrough_url', () => {
       expect(subject).to.have.prop('data-track-label', props.campaign.clickthrough_url);
     });
 
-    it('wraps the components in a link to the clickthrough_url', function() {
+    it('wraps the components in a link to the clickthrough_url', function () {
       expect(subject.equals(
         <div className='campaign-display' data-track-label={campaign.clickthrough_url}>
           <div className='inner'>
@@ -139,10 +139,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('only renders the pixel, preamble and logo', () => {
-      expect(subject).to.have.descendants('DfpPixel');
-      expect(subject).to.have.descendants('Logo');
-      expect(subject).to.have.descendants('Preamble');
-      expect(subject).to.not.have.descendants('SponsorName');
+      expect(subject).to.have.descendants(DfpPixel);
+      expect(subject).to.have.descendants(Logo);
+      expect(subject).to.have.descendants(Preamble);
+      expect(subject).to.not.have.descendants(SponsorName);
     });
 
     it('has a campaign-display class', () => {
@@ -164,7 +164,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       });
 
       it('renders the sponsor name', () => {
-        expect(subject).to.have.descendants('SponsorName');
+        expect(subject).to.have.descendants(SponsorName);
       });
     });
   });
@@ -196,18 +196,18 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     });
 
     it('only renders the pixel, preamble, and name', () => {
-      expect(subject).to.have.descendants('DfpPixel');
-      expect(subject).to.have.descendants('Preamble');
-      expect(subject).to.have.descendants('SponsorName');
-      expect(subject).to.not.have.descendants('Logo');
+      expect(subject).to.have.descendants(DfpPixel);
+      expect(subject).to.have.descendants(Preamble);
+      expect(subject).to.have.descendants(SponsorName);
+      expect(subject).to.not.have.descendants(Logo);
     });
   });
 
   context('with inactive campaign', () => {
-    it('renders an empty component', () => {
+    it('renders a component', () => {
       props.campaign.active = false;
       subject = shallow(<CampaignDisplayRoot {...props} />);
-      expect(subject).to.be.blank();
+      expect(subject).to.not.be.blank();
     });
   });
 });
