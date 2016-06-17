@@ -203,7 +203,6 @@ export default class Revealed extends React.Component {
       'mute': false,
       'preload': 'none',
       'primary': 'html5',
-      'hlshtml': true,
       'width': '100%',
       'sharing': {
         'link': videoMeta.player_options.shareUrl,
