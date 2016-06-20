@@ -28,6 +28,7 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
+  muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetHostChannel: PropTypes.string,

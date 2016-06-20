@@ -16,6 +16,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.autoplayNext).to.eql(PropTypes.bool);
     });
 
+    it('accepts muted boolean', () => {
+      expect(subject.muted).to.eql(PropTypes.bool);
+    });
+
     it('accepts noEndcard boolean', () => {
       expect(subject.noEndcard).to.eql(PropTypes.bool);
     });
@@ -123,6 +127,7 @@ describe('<bulbs-video> <Revealed>', () => {
           twitterHandle: 'twitter',
           autoplay: true,
           autoplayNext: true,
+          muted: true,
           video: Object.assign({}, video, {
             title: 'video_title',
             tags: ['main', 'tag'],
@@ -148,6 +153,12 @@ describe('<bulbs-video> <Revealed>', () => {
             state,
             refs: { video: videoRef },
             makeVideoPlayer: makeVideoPlayerSpy,
+          });
+        });
+
+        it('passes through the muted value', () => {
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(videoRef, {
+            mute: true,
           });
         });
 
