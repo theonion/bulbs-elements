@@ -14,7 +14,7 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "all": "0.0.0",
-    "array-find": "^1.0.0",
+    "ponyfill-array-find": "^1.0.0",
     "array-flatten": "^2.0.0",
     "array.prototype.find": "^2.0.0",
     "auto-loader": "^0.2.0",
