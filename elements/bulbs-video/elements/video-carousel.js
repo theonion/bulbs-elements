@@ -36,8 +36,8 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    this.videoPlayer.addEventListener('ended', this.playerEnded.bind(this), true);
-    this.carousel.addEventListener('click', this.handleClick.bind(this));
+    this.videoPlayer.addEventListener('ended', this.playerEnded = this.playerEnded.bind(this), true);
+    this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
       currentVideo: this.querySelector('bulbs-video-summary'),
@@ -56,14 +56,21 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   }
 
   handleClick (event) {
-    let summary = event.target.closest('bulbs-carousel-item bulbs-video-summary');
+    let item = event.target.closest('bulbs-carousel-item');
+    let summary;
+    if (item) {
+      summary = item.querySelector('bulbs-carousel-item > bulbs-video-summary');
+    }
     if (summary) {
       event.preventDefault();
-      this.videoPlayer.setAttribute('autoplay', true);
-      this.state.selectVideo(summary);
+      this.selectVideo(summary);
+      this.applyState();
     }
+  }
 
-    this.applyState();
+  selectVideo (summaryElement) {
+    this.videoPlayer.setAttribute('autoplay', true);
+    this.state.selectVideo(summaryElement);
   }
 
   applyState () {

@@ -54,7 +54,7 @@ export default class VideoSummary extends BulbsElement {
     return (
       <VideoSummaryView
         video={this.state.video}
-        nowPlaying={this.props.nowPlaying}
+        nowPlaying={typeof this.props.nowPlaying === 'string'}
       />
     );
   }
@@ -67,7 +67,7 @@ Object.assign(VideoSummary, {
     videoRequest: VideoRequest,
   },
   propTypes: {
-    nowPlaying: PropTypes.bool,
+    nowPlaying: PropTypes.string,
   },
 });
 

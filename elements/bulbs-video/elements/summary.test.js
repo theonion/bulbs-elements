@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 
@@ -38,7 +40,7 @@ describe('<bulbs-video-summary>', () => {
     beforeEach(() => subject = BulbsVideoSummary.propTypes);
 
     it('accepts nowPlaying bool', () => {
-      expect(subject.nowPlaying).to.eq(PropTypes.bool);
+      expect(subject.nowPlaying).to.eq(PropTypes.string);
     });
   });
 
@@ -67,7 +69,7 @@ describe('<bulbs-video-summary>', () => {
 
   describe('render', () => {
     it('renders <VideoSummaryView>', () => {
-      subject = shallow(<BulbsVideoSummary nowPlaying={true}/>);
+      subject = shallow(<BulbsVideoSummary nowPlaying=''/>);
       subject.setState({ video });
       expect(subject.equals(
         <VideoSummaryView video={video} nowPlaying={true}/>

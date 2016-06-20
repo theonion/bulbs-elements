@@ -16,16 +16,6 @@ function makeGaPrefix () {
 
 export default class Revealed extends React.Component {
   componentDidMount () {
-    this.makeVideoPlayer();
-  }
-
-  componentWillUnmoint () {
-    if (this.player) {
-      this.player.dispose();
-    }
-  }
-
-  getPlayerOptions () {
     /*
     FIXME: videohub-player depends on there being an instance of our analytics manager
             at window.AnalyticsManager.
@@ -126,14 +116,18 @@ export default class Revealed extends React.Component {
       delete playerOptions.pluginConfig.endcard;
     }
 
-    return playerOptions;
+    this.makeVideoPlayer(this.refs.video, playerOptions);
   }
 
-  makeVideoPlayer () {
-    let element = this.refs.video;
-    let playerOptions = this.getPlayerOptions();
-    this.player = new VideoPlayer(element, playerOptions);
-    this.player.player.play();
+  componentWillUnmount () {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
+
+  makeVideoPlayer (element, playerOptions) {
+    let player = new VideoPlayer(element, playerOptions);
+    player.player.play();
   }
 
   render () {
