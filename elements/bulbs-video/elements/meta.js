@@ -7,37 +7,51 @@ import VideoRequest from '../fields/video-request';
 
 import './meta.scss';
 
+export function VideoMetaView (props) {
+  if (!props.video) {
+    return <div/>;
+  }
+
+  return (
+    <div className='bulbs-video-meta'>
+      <h1 className='bulbs-video-meta-title'>
+        {props.video.title}
+      </h1>
+      <share-tools
+        share-title={props.video.title}
+        share-url={window.location}
+        data-track-action={props.shareTrackAction}
+      >
+        <share-via-facebook label icon/>
+        <share-via-twitter label icon twitter-handle={props.shareTwitterHandle}/>
+        <share-via-email label icon message={props.shareEmailMessage}/>
+      </share-tools>
+    </div>
+  );
+}
+
+VideoMetaView.displayName = 'VideoMetaView';
+
+VideoMetaView.propTypes = {
+  shareEmailMessage: PropTypes.string.isRequired,
+  shareTrackAction: PropTypes.string.isRequired,
+  shareTwitterHandle: PropTypes.string.isRequired,
+  video: PropTypes.object,
+};
+
 export default class VideoMeta extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
   }
 
-  componentWillReceiveProps (props) {
-    if (this.props.src !== props.src) {
-      this.store.actions.fetchVideo(props.src);
+  componentDidUpdate (prevProps) {
+    if (this.props.src !== prevProps.src) {
+      this.store.actions.fetchVideo(this.props.src);
     }
   }
-  render () {
-    if(!this.state.video) {
-      return <div/>;
-    }
 
-    return (
-      <div className='bulbs-video-meta'>
-        <h1 className='bulbs-video-meta-title'>
-          {this.state.video.title}
-        </h1>
-        <share-tools
-          share-title={this.state.video.title}
-          share-url={window.location}
-          data-track-action={this.props.shareTrackAction}
-        >
-          <share-via-facebook label icon></share-via-facebook>
-          <share-via-twitter label icon twitter-handle={this.props.shareTwitterHandle}></share-via-twitter>
-          <share-via-email label icon message={this.props.shareEmailMessage}></share-via-email>
-        </share-tools>
-      </div>
-    );
+  render () {
+    return <VideoMetaView {...this.props} video={this.state.video}/>;
   }
 }
 

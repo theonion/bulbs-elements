@@ -27,6 +27,7 @@ export default class BulbsVideo extends BulbsElement {
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
       this.store.actions.resetController();
+      this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
       this.initialDispatch();
     }
   }
@@ -58,7 +59,6 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
-
     return (
       <BulbsVideoRoot
         {...this.state}
