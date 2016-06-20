@@ -119,6 +119,12 @@ export default class Revealed extends React.Component {
     this.makeVideoPlayer(this.refs.video, playerOptions);
   }
 
+  componentWillUnmount () {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
+
   makeVideoPlayer (element, playerOptions) {
     let player = new VideoPlayer(element, playerOptions);
     player.player.play();

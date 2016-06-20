@@ -1,4 +1,3 @@
-import find from 'array-find';
 import util from 'bulbs-elements/util';
 
 function parsePoll (poll) {
@@ -26,7 +25,7 @@ const PollField = {
       return state;
     },
     updateAnswerVoteCount (state, vote) {
-      let answer = find(state.data.answers, (eachAnswer) => {
+      let answer = state.data.answers.find((eachAnswer) => {
         return eachAnswer.sodahead_id === vote.answer.id;
       });
 
