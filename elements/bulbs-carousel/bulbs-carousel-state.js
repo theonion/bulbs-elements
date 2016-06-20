@@ -1,4 +1,5 @@
 import invariant from 'invariant';
+import find from 'array-find';
 
 const HTMLCollection = document.body.children.constructor;
 
@@ -27,7 +28,7 @@ export default class BulbsCarouselState {
   }
 
   getActiveCarouselItem () {
-    return Array.prototype.find.call(this.props.carouselItems, (item) => {
+    return find(this.props.carouselItems, (item) => {
       return item.getAttribute('href') === window.location.pathname;
     });
   }
