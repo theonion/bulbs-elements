@@ -116,6 +116,10 @@ export default class Revealed extends React.Component {
       delete playerOptions.pluginConfig.endcard;
     }
 
+    if (this.props.muted) {
+      playerOptions.mute = true;
+    }
+
     this.makeVideoPlayer(this.refs.video, playerOptions);
   }
 
@@ -153,6 +157,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetHostChannel: PropTypes.string,
