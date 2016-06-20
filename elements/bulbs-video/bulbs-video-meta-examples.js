@@ -9,7 +9,7 @@ export default {
           >
           </bulbs-video-meta>
         `;
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};

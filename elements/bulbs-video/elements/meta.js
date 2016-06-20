@@ -30,6 +30,15 @@ export function VideoMetaView (props) {
   );
 }
 
+VideoMetaView.displayName = 'VideoMetaView';
+
+VideoMetaView.propTypes = {
+  shareEmailMessage: PropTypes.string.isRequired,
+  shareTrackAction: PropTypes.string.isRequired,
+  shareTwitterHandle: PropTypes.string.isRequired,
+  video: PropTypes.object,
+};
+
 export default class VideoMeta extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);

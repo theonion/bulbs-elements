@@ -39,6 +39,13 @@ export function VideoSummaryView (props) {
   );
 }
 
+VideoSummaryView.displayName = 'VideoSummaryView';
+
+VideoSummaryView.propTypes = {
+  nowPlaying: PropTypes.bool.isRequired,
+  video: PropTypes.object,
+};
+
 export default class VideoSummary extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
