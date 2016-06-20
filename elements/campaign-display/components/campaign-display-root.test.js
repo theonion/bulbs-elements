@@ -37,10 +37,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject.hasValidCampaign()).to.equal(false);
     });
 
-    it('returns false when the campaign is not active', function () {
+    it('returns true when the campaign is not active', function () {
       props.campaign.active = false;
       subject = new CampaignDisplayRoot(props);
-      expect(subject.hasValidCampaign()).to.equal(false);
+      expect(subject.hasValidCampaign()).to.equal(true);
     });
 
     it('returns true when there is an active campaign', function () {
@@ -204,10 +204,10 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
   });
 
   context('with inactive campaign', () => {
-    it('renders an empty component', () => {
+    it('renders a component', () => {
       props.campaign.active = false;
       subject = shallow(<CampaignDisplayRoot {...props} />);
-      expect(subject).to.be.blank();
+      expect(subject).to.not.be.blank();
     });
   });
 });
