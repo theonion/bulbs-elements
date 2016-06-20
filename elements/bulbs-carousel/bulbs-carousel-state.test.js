@@ -29,7 +29,6 @@ describe('<bulbs-carousel> BulbsCarouselState', () => {
       </bulbs-carousel>
      `;
     carousel = container.querySelector('bulbs-carousel');
-    subject = carousel.state;
     firstItem = container.querySelector('#first');
     secondItem = container.querySelector('#second');
 
@@ -43,6 +42,7 @@ describe('<bulbs-carousel> BulbsCarouselState', () => {
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
+      subject = carousel.state;
       track = carousel.track;
       track.style.width = '100px';
       track.style.height = '100px';
