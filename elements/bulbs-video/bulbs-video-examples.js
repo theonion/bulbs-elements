@@ -46,6 +46,18 @@ let examples = {
         `;
       },
     },
+    'Muted, autoplay player': {
+      render () {
+        return `
+          <bulbs-video
+            twitter-handle="avclub"
+            src="http://localhost:8080/fixtures/bulbs-video/special-coverage.json"
+            autoplay muted
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 

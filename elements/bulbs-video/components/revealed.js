@@ -102,6 +102,10 @@ export default class Revealed extends React.Component {
       }
     });
 
+    if (this.props.muted) {
+      videoMeta.player_options.muted = true;
+    }
+
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
@@ -200,7 +204,7 @@ export default class Revealed extends React.Component {
       'flashplayer': '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
       'aspectratio': '16:9',
       'autostart': true,
-      'mute': false,
+      'mute': videoMeta.player_options.muted || false,
       'preload': 'none',
       'primary': 'html5',
       'width': '100%',
@@ -227,6 +231,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetHostChannel: PropTypes.string,

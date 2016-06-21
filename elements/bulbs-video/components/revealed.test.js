@@ -29,6 +29,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.autoplayNext).to.eql(PropTypes.bool);
     });
 
+    it('accepts muted boolean', () => {
+      expect(subject.muted).to.eql(PropTypes.bool);
+    });
+
     it('accepts noEndcard boolean', () => {
       expect(subject.noEndcard).to.eql(PropTypes.bool);
     });
@@ -120,6 +124,7 @@ describe('<bulbs-video> <Revealed>', () => {
           twitterHandle: 'twitter',
           autoplay: true,
           autoplayNext: true,
+          muted: true,
           video: Object.assign({}, video, {
             title: 'video_title',
             tags: ['main', 'tag'],
@@ -195,6 +200,14 @@ describe('<bulbs-video> <Revealed>', () => {
             refs: { videoContainer: videoRef },
             makeVideoPlayer: makeVideoPlayerSpy,
           });
+        });
+
+        it('passes through the muted value', () => {
+          let videoMeta = Object.assign({}, props.video);
+          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
+            videoRef, videoMeta
+          );
+          expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
 
         it('sets sharetools config', () => {
@@ -523,11 +536,6 @@ describe('<bulbs-video> <Revealed>', () => {
       it('sets the image as the poster image', () => {
         let setupOptions = playerSetup.args[0][0];
         expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
-      });
-
-      it('looks for HLS always first', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.hlshtml).to.be.true;
       });
 
       it('sets up the sharing link', () => {
