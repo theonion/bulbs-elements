@@ -1,12 +1,18 @@
+// Expose jwplayer on the global context
+require('expose?jwplayer!../plugins/jwplayer');
+
+import GoogleAnalytics from '../plugins/google-analytics';
+import Comscore from '../plugins/comscore';
+
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import VideoPlayer from 'videohub-player';
 
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
+global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let prefixCount = 0;
 function makeGaPrefix () {
@@ -53,6 +59,10 @@ export default class Revealed extends React.Component {
       global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       '`<bulbs-video>` requires `BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID` to be in global scope.'
     );
+    invariant(
+      global.jwplayer,
+      '`<bulbs-video>` requires `jwplayer` to be in global scope.'
+    );
 
     let gaPrefix = makeGaPrefix();
     ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
@@ -75,16 +85,9 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
-    let playerOptions = Object.assign({}, this.props.video.videojs_options);
-    playerOptions.pluginConfig = Object.assign({}, playerOptions.pluginConfig);
-
-    playerOptions.pluginConfig.ga = {
-      gaPrefix,
-      eventCategory: `Video:${targeting.target_channel}`,
-      eventLabel: window.location.href,
-    };
-
-    playerOptions.pluginConfig.endcard.allowCountdown = !!this.props.autoplayNext;
+    let videoMeta = Object.assign({}, this.props.video);
+    videoMeta.gaPrefix = gaPrefix;
+    videoMeta.player_options.shareUrl = window.location.href;
 
     filteredTags.push(hostChannel);
 
@@ -93,62 +96,133 @@ export default class Revealed extends React.Component {
     }
 
     this.props.video.tags.forEach(function (tag) {
+      // Temporary until videojs_options completely removed from Onion Studios
       if (tag !== 'main') {
         filteredTags.push(tag);
       }
     });
 
-    playerOptions.pluginConfig.vpbc = {
-      vpCategory: this.props.video.category,
-      vpFlags: [''],
-      tags: filteredTags,
-      optional: { flashEnabled: true },
-    };
-
-    playerOptions.pluginConfig.sharetools = {
-      shareUrl: window.location.href,
-      shareTitle: this.props.video.title,
-      shareDescription: '',
-      twitterHandle: this.props.twitterHandle,
-    };
-
-    if (this.props.noEndcard) {
-      delete playerOptions.pluginConfig.endcard;
-    }
-
     if (this.props.muted) {
-      playerOptions.mute = true;
+      videoMeta.player_options.muted = true;
     }
 
-    this.makeVideoPlayer(this.refs.video, playerOptions);
+    this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
-  makeVideoPlayer (element, playerOptions) {
-    let player = new VideoPlayer(element, playerOptions);
-    player.player.play();
+  extractSources (sources) {
+    let sourceMap = {};
+    let extractedSources = [];
+
+    sources.forEach(function (source) {
+      sourceMap[source.content_type] = source.url;
+    });
+
+    if (sourceMap['application/x-mpegURL']) {
+      extractedSources.push({
+        file: sourceMap['application/x-mpegURL'],
+      });
+    }
+
+    if (sourceMap['video/mp4']) {
+      extractedSources.push({
+        file: sourceMap['video/mp4'],
+      });
+    }
+
+    return extractedSources;
+  }
+
+  cacheBuster () {
+    return Math.round(Math.random() * 1.0e+10);
+  }
+
+  parseParam (name, queryString) {
+    // Properly escape array values in param
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+
+    // Grab params from query string
+    let results = regex.exec(queryString);
+    if (results) {
+      results = decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    return results;
+  }
+
+  vastTest (searchString) {
+    if (searchString !== '') {
+      let vastId = this.parseParam('xgid', searchString);
+
+      if (vastId) {
+        return vastId;
+      }
+    }
+  }
+
+  vastUrl (videoMeta) {
+    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+
+    let vastTestId = this.vastTest(window.location.search);
+
+    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
+    baseUrl += '&tt=p';
+    videoMeta.tags.push('html5'); // Force HTML 5
+    // Tags
+    baseUrl += '&t=' + videoMeta.tags;
+    //Category
+    baseUrl += '&s=' + videoMeta.category;
+    baseUrl += '&rnd=' + this.cacheBuster();
+
+    if (vastTestId) {
+      baseUrl += '&xgid=' + vastTestId;
+    }
+
+    return baseUrl;
+  }
+
+  makeVideoPlayer (element, videoMeta) {
+    element.id = videoMeta.gaPrefix;
+    let player = global.jwplayer(element);
+
+    player.videoMeta = videoMeta;
+
+    player.setup({
+      key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
+      skin: {
+        name: 'onion',
+      },
+      sources: this.extractSources(videoMeta.sources),
+      image: videoMeta.player_options.poster,
+      advertising: {
+        client: 'vast',
+        tag: this.vastUrl(videoMeta),
+        skipoffset: 5,
+        vpaidmode: 'insecure',
+      },
+      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
+      aspectratio: '16:9',
+      autostart: true,
+      mute: videoMeta.player_options.muted || false,
+      preload: 'none',
+      primary: 'html5',
+      width: '100%',
+      sharing: {
+        link: videoMeta.player_options.shareUrl,
+        code: videoMeta.player_options.embedCode,
+      },
+    });
+
+    GoogleAnalytics.init(player, videoMeta.gaPrefix);
+    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
   }
 
   render () {
-    let { video } = this.props;
     return (
       <div className='bulbs-video-viewport'>
-        <video
-          controls
-          ref='video'
-          className='bulbs-video-video video-js vjs-default-skin'
-        >
-          {
-            video.sources.map((source) => {
-              return (
-                <source
-                  key={source.url}
-                  src={source.url}
-                  type={source.content_type}
-                />
-              );
-            })
-          }
-        </video>
+        <div className='bulbs-video-video video-container' ref='videoContainer'>
+        </div>
       </div>
     );
   }
