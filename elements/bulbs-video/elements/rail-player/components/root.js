@@ -8,13 +8,13 @@ export default class Root extends React.Component {
   renderCampaignDisplay () {
     if (this.props.video.tunic_campaign_url) {
       return (
-				<campaign-display
-					class='rail-player-campaign'
-					src={this.props.video.tunic_campaign_url}
-					preamble-text='Sponsored By'
-					placement='example-runner'
-				/>
-			);
+        <campaign-display
+          class='rail-player-campaign'
+          src={this.props.video.tunic_campaign_url}
+          preamble-text='Sponsored By'
+          placement='example-runner'
+        />
+      );
     }
 
     return null;
@@ -29,14 +29,14 @@ export default class Root extends React.Component {
       <div className='rail-player'>
 
         <div className='rail-player-header'>
-					<VideoPlayButton/>
+          <VideoPlayButton/>
           <div className='rail-player-logo'>
             Video
           </div>
 
           <a
             className='rail-player-recirc-link'
-						target="_blank"
+            target="_blank"
             href={this.props.recircUrl}
           >
             Watch More

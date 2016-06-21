@@ -29,7 +29,7 @@ class RailPlayer extends BulbsElement {
         targetHostChannel={this.props.targetHostChannel}
         targetSpecialCoverage={this.props.targetSpecialCoverage}
         muted={typeof this.props.muted === 'string'}
-				recircUrl={this.props.recircUrl}
+        recircUrl={this.props.recircUrl}
         actions={this.store.actions}
       />
     );
