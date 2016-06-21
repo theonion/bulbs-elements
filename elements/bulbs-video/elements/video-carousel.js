@@ -1,7 +1,7 @@
 import invariant from 'invariant';
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
-class VideoCarouselState {
+export class VideoCarouselState {
   constructor (props) {
     this.props = props;
     this.validate();
@@ -11,14 +11,27 @@ class VideoCarouselState {
     return this.props.currentVideo;
   }
 
+  get carouselItem () {
+    return this.currentVideo.closest('bulbs-carousel-item');
+  }
+
+  get videoUrl () {
+    return this.carouselItem.getAttribute('src');
+  }
+
+  get shareUrl () {
+    return this.carouselItem.getAttribute('share-url');
+  }
+
   selectVideo (videoSummary) {
     this.props.currentVideo = videoSummary;
     this.validate();
   }
 
   validate () {
+    let { currentVideo } = this.props;
     invariant(
-      this.props.currentVideo && this.props.currentVideo.matches('bulbs-video-summary'),
+      currentVideo && currentVideo.matches && currentVideo.matches('bulbs-video-summary'),
       'VideoCarouselState MUST have a <bulbs-video-summary> as currentVideo prop.'
     );
   }
@@ -69,29 +82,34 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   }
 
   selectVideo (summaryElement) {
-    this.videoPlayer.setAttribute('autoplay', true);
+    this.videoPlayer.setAttribute('autoplay', '');
     this.state.selectVideo(summaryElement);
   }
 
   applyState () {
     if (this.state.currentVideo) {
-      Array.prototype.forEach.call(
-        this.querySelectorAll('[now-playing]'),
-        (nowPlaying) => {
-          nowPlaying.removeAttribute('now-playing');
-        }
-      );
-
-      this.state.currentVideo.setAttribute('now-playing', true);
-      this.state.currentVideo.closest('bulbs-carousel-item').setAttribute('now-playing', true);
-
-      Array.prototype.forEach.call(
-        this.querySelectorAll('bulbs-video-meta, bulbs-video'),
-        (element) => {
-          element.setAttribute('src', this.state.currentVideo.getAttribute('src'));
-        }
-      );
+      this.doApplyState();
     }
+  }
+
+  doApplyState () {
+    Array.prototype.forEach.call(
+      this.querySelectorAll('[now-playing]'),
+      (nowPlaying) => nowPlaying.removeAttribute('now-playing')
+    );
+
+    this.state.currentVideo.setAttribute('now-playing', '');
+    this.state.currentVideo.closest('bulbs-carousel-item').setAttribute('now-playing', '');
+
+    Array.prototype.forEach.call(
+      this.querySelectorAll('bulbs-video-meta'),
+      (element) => element.setAttribute('share-url', this.state.shareUrl)
+    );
+
+    Array.prototype.forEach.call(
+      this.querySelectorAll('bulbs-video-meta, bulbs-video'),
+      (element) => element.setAttribute('src', this.state.videoUrl)
+    );
   }
 }
 
