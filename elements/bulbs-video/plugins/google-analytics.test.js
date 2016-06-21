@@ -379,31 +379,31 @@ describe('Google Analytics', () => {
       googleAnalytics.onTime(data);
     });
 
-    it('checks if the video is past 3 seconds', function() {
+    it('checks if the video is past 3 seconds', function () {
       expect(googleAnalytics.checkSecondsElapsed.calledWith(3, data)).to.be.true;
     });
 
-    it('checks if the video is past 10 seconds', function() {
+    it('checks if the video is past 10 seconds', function () {
       expect(googleAnalytics.checkSecondsElapsed.calledWith(10, data)).to.be.true;
     });
 
-    it('checks if the video is past 30 seconds', function() {
+    it('checks if the video is past 30 seconds', function () {
       expect(googleAnalytics.checkSecondsElapsed.calledWith(30, data)).to.be.true;
     });
 
-    it('checks for 25 percent quartile', function() {
+    it('checks for 25 percent quartile', function () {
       expect(googleAnalytics.checkPercentage.calledWith(data, 25)).to.be.true;
     });
 
-    it('checks for 50 percent quartile', function() {
+    it('checks for 50 percent quartile', function () {
       expect(googleAnalytics.checkPercentage.calledWith(data, 50)).to.be.true;
     });
 
-    it('checks for 75 percent quartile', function() {
+    it('checks for 75 percent quartile', function () {
       expect(googleAnalytics.checkPercentage.calledWith(data, 75)).to.be.true;
     });
 
-    it('checks for 95 percent quartile', function() {
+    it('checks for 95 percent quartile', function () {
       expect(googleAnalytics.checkPercentage.calledWith(data, 95)).to.be.true;
     });
   });
@@ -412,7 +412,7 @@ describe('Google Analytics', () => {
     let googleAnalytics;
     let player;
 
-    context('already sent "x seconds" event', function() {
+    context('already sent "x seconds" event', function () {
       beforeEach(() => {
         global.ga = sinon.spy();
 
@@ -441,7 +441,7 @@ describe('Google Analytics', () => {
       });
     });
 
-    context('have not sent "x seconds" event, < x seconds', function() {
+    context('have not sent "x seconds" event, < x seconds', function () {
       beforeEach(() => {
         let eventStub = {
           duration: 60,
@@ -469,7 +469,7 @@ describe('Google Analytics', () => {
       });
     });
 
-    context('have not sent "x seconds" event, > x seconds', function() {
+    context('have not sent "x seconds" event, > x seconds', function () {
       beforeEach(() => {
         let eventStub = {
           duration: 60,
@@ -501,7 +501,7 @@ describe('Google Analytics', () => {
         );
       });
 
-      it('makes sure it is not sent again', function() {
+      it('makes sure it is not sent again', function () {
         expect(player.gaEvents['3 seconds']).to.be.true;
       });
     });
@@ -529,7 +529,7 @@ describe('Google Analytics', () => {
         googleAnalytics.checkPercentage({}, 25);
       });
 
-      it('does not call ga', function() {
+      it('does not call ga', function () {
         expect(global.ga.called).to.be.false;
       });
     });
@@ -597,7 +597,7 @@ describe('Google Analytics', () => {
         );
       });
 
-      it('makes sure it is not sent again', function() {
+      it('makes sure it is not sent again', function () {
         expect(player.gaEvents['25 percent']).to.be.true;
       });
     });

@@ -3,7 +3,7 @@ let prefixedSend = (gaPrefix) => {
 };
 
 class GoogleAnalytics {
-  constructor(player, gaPrefix) {
+  constructor (player, gaPrefix) {
     this.player = player;
     this.gaPrefix = gaPrefix;
 
@@ -23,7 +23,7 @@ class GoogleAnalytics {
     // .on('error')
   }
 
-  onPlay() {
+  onPlay () {
     if (!this.player.playedOnce) {
       global.ga(
         prefixedSend(this.gaPrefix),
@@ -41,7 +41,7 @@ class GoogleAnalytics {
     );
   }
 
-  onPause() {
+  onPause () {
     global.ga(
       prefixedSend(this.gaPrefix), 'event',
       'Video:' + this.player.videoMeta.channel_name,
@@ -50,7 +50,7 @@ class GoogleAnalytics {
     );
   }
 
-  onFullScreen(event) {
+  onFullScreen (event) {
     global.ga(
       prefixedSend(this.gaPrefix), 'event',
       'Video:' + this.player.videoMeta.channel_name,
@@ -59,7 +59,7 @@ class GoogleAnalytics {
     );
   }
 
-  onResize(event) {
+  onResize (event) {
     global.ga(
       prefixedSend(this.gaPrefix), 'event',
       'Video:' + this.player.videoMeta.channel_name,
@@ -68,7 +68,7 @@ class GoogleAnalytics {
     );
   }
 
-  onFirstFrame(event) {
+  onFirstFrame (event) {
     global.ga(
       prefixedSend(this.gaPrefix), 'event',
       'Video:' + this.player.videoMeta.channel_name,
@@ -78,7 +78,7 @@ class GoogleAnalytics {
     );
   }
 
-  onComplete() {
+  onComplete () {
     global.ga(
       prefixedSend(this.gaPrefix),
       'event', 'Video:' + this.player.videoMeta.channel_name,
@@ -88,7 +88,7 @@ class GoogleAnalytics {
     this.player.playedOnce = false;
   }
 
-  onAdBlock() {
+  onAdBlock () {
     global.ga(
       prefixedSend(this.gaPrefix),
       'event',
@@ -98,7 +98,7 @@ class GoogleAnalytics {
     );
   }
 
-  onAdSkipped(event) {
+  onAdSkipped (event) {
     global.ga(
       prefixedSend(this.gaPrefix),
       'event',
@@ -108,7 +108,7 @@ class GoogleAnalytics {
     );
   }
 
-  onAdError(event) {
+  onAdError (event) {
     global.ga(
       prefixedSend(this.gaPrefix),
       'event',
@@ -118,7 +118,7 @@ class GoogleAnalytics {
     );
   }
 
-  onTime(event) {
+  onTime (event) {
     this.checkSecondsElapsed(3, event);
     this.checkSecondsElapsed(10, event);
     this.checkSecondsElapsed(30, event);
@@ -128,7 +128,7 @@ class GoogleAnalytics {
     this.checkPercentage(event, 95);
   }
 
-  checkPercentage(event, percent) {
+  checkPercentage (event, percent) {
     let eventAction = percent + ' percent';
 
     if (this.player.gaEvents[eventAction]) {
@@ -148,7 +148,7 @@ class GoogleAnalytics {
     }
   }
 
-  checkSecondsElapsed(seconds, event) {
+  checkSecondsElapsed (seconds, event) {
     let eventAction = seconds + ' seconds';
 
     if (this.player.gaEvents[eventAction]) {

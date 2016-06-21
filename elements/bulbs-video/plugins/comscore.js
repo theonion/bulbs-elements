@@ -1,7 +1,7 @@
 require('!imports?this=>window!./streamsense.5.1.1.160316.min.js');
 
 class Comscore {
-  constructor(player, comscoreId, comscoreMetadata) {
+  constructor (player, comscoreId, comscoreMetadata) {
     this.streamingTag = new global.ns_.StreamingTag({ customerC2: comscoreId });
     this.comscoreMetadata = comscoreMetadata;
 

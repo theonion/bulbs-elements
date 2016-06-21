@@ -18,7 +18,7 @@ describe('Comscore', () => {
       comscore.adStarted();
     });
 
-    it('calls "playVideoAdvertisement" in streaming tag lib', function() {
+    it('calls "playVideoAdvertisement" in streaming tag lib', function () {
       expect(comscore.streamingTag.playVideoAdvertisement.called).to.be.true;
     });
   });
@@ -32,7 +32,7 @@ describe('Comscore', () => {
       comscore.adEnded();
     });
 
-    it('calls "stop" in streaming tag lib', function() {
+    it('calls "stop" in streaming tag lib', function () {
       expect(comscore.streamingTag.stop.called).to.be.true;
     });
   });
@@ -49,7 +49,7 @@ describe('Comscore', () => {
       comscore.contentPlayed();
     });
 
-    it('calls "playVideoContentPart" in streaming tag lib', function() {
+    it('calls "playVideoContentPart" in streaming tag lib', function () {
       expect(comscore.streamingTag.playVideoContentPart.calledWith({
         'c3': 'onionstudios',
         'c4': 'CLICKHOLE',
@@ -66,7 +66,7 @@ describe('Comscore', () => {
       comscore.contentPaused();
     });
 
-    it('calls "stop" in streaming tag lib', function() {
+    it('calls "stop" in streaming tag lib', function () {
       expect(comscore.streamingTag.stop.called).to.be.true;
     });
   });
@@ -80,7 +80,7 @@ describe('Comscore', () => {
       comscore.contentEnded();
     });
 
-    it('calls "stop" in streaming tag lib', function() {
+    it('calls "stop" in streaming tag lib', function () {
       expect(comscore.streamingTag.stop.called).to.be.true;
     });
   });

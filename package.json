@@ -7,7 +7,7 @@
   "scripts": {
     "test": "karma start --single-run",
     "karma": "karma start",
-    "lint": "node_modules/.bin/eslint elements lib *.js --max-warnings=1 --cache",
+    "lint": "node_modules/.bin/eslint elements lib --max-warnings=1 --cache",
     "coverage": "karma start karma.coverage.js --single-run"
   },
   "author": "Onion Product Team <webtech@theonion.com>",

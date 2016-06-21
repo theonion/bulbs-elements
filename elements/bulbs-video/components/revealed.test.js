@@ -407,7 +407,7 @@ describe('<bulbs-video> <Revealed>', () => {
       };
     });
 
-    it('returns the vast url', function() {
+    it('returns the vast url', function () {
       let vastUrl = Revealed.prototype.vastUrl.call({
         cacheBuster: cacheBusterStub,
         vastTest: vastTestStub,

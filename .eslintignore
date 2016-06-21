@@ -2,3 +2,6 @@ scripts/*
 bower_components/*
 generator-bulbs-elements
 examples/*
+elements/bulbs-video/plugins/jwplayer.js
+elements/bulbs-video/plugins/streamsense.4.1411.18.min.js
+elements/bulbs-video/plugins/streamsense.5.1.1.160316.min.js
