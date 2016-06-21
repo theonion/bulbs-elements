@@ -11,7 +11,7 @@ describe('<bulbs-carousel-next>', () => {
   });
 
   it('renders a next icon', () => {
-    expect(subject.firstChild.matches('i.fa.fa-chevron-right')).to.be.true;
+    expect(subject.firstChild.matches('i.fa.fa-angle-right')).to.be.true;
   });
 });
 
@@ -24,6 +24,6 @@ describe('<bulbs-carousel-previous>', () => {
   });
 
   it('renders a previous icon', () => {
-    expect(subject.firstChild.matches('i.fa.fa-chevron-left')).to.be.true;
+    expect(subject.firstChild.matches('i.fa.fa-angle-left')).to.be.true;
   });
 });
