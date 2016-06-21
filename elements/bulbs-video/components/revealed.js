@@ -189,28 +189,28 @@ export default class Revealed extends React.Component {
     player.videoMeta = videoMeta;
 
     player.setup({
-      'key': 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
-      'skin': {
-        'name': 'onion',
+      key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
+      skin: {
+        name: 'onion',
       },
-      'sources': this.extractSources(videoMeta.sources),
-      'image': videoMeta.player_options.poster,
-      'advertising': {
-        'client': 'vast',
-        'tag': this.vastUrl(videoMeta),
-        'skipoffset': 5,
-        'vpaidmode': 'insecure',
+      sources: this.extractSources(videoMeta.sources),
+      image: videoMeta.player_options.poster,
+      advertising: {
+        client: 'vast',
+        tag: this.vastUrl(videoMeta),
+        skipoffset: 5,
+        vpaidmode: 'insecure',
       },
-      'flashplayer': '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
-      'aspectratio': '16:9',
-      'autostart': true,
-      'mute': videoMeta.player_options.muted || false,
-      'preload': 'none',
-      'primary': 'html5',
-      'width': '100%',
-      'sharing': {
-        'link': videoMeta.player_options.shareUrl,
-        'code': videoMeta.player_options.embedCode,
+      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
+      aspectratio: '16:9',
+      autostart: true,
+      mute: videoMeta.player_options.muted || false,
+      preload: 'none',
+      primary: 'html5',
+      width: '100%',
+      sharing: {
+        link: videoMeta.player_options.shareUrl,
+        code: videoMeta.player_options.embedCode,
       },
     });
 
