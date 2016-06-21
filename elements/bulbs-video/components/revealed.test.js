@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 
@@ -359,14 +361,14 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('vastTest', () => {
     it('returns undefined if query string empty', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(undefined), // eslint-disable-line no-undefined
       }, '');
       expect(vastId).to.be.undefined;
     });
 
     it('returns undefined if no xgid query string key', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(undefined), // eslint-disable-line no-undefined
       }, '?utm_source=facebook');
       expect(vastId).to.be.undefined;
     });
