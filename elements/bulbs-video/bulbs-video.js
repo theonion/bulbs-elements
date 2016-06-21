@@ -55,7 +55,6 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
-
     return (
       <BulbsVideoRoot
         {...this.state}
@@ -100,3 +99,4 @@ import './elements/carousel-buttons';
 import './elements/carousel-slider';
 import './elements/carousel-item';
 import './elements/summary';
+import './elements/rail-player';

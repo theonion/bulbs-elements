@@ -1,0 +1,62 @@
+rail-player {
+  display: block;
+}
+
+.rail-player {
+  background-color: #454545;
+  border-top: 5px solid #999;
+  color: white;
+  font-family: "Helvetica Neue", sans-serif;
+  font-style: Thin;
+  font-weight: 100;
+  padding: 0 10px 10px;
+}
+
+.rail-player-campaign a {
+  color: #ccc;
+  text-decoration: none;
+
+  .campaign-display-preamble {
+    margin-right: 1ex;
+  }
+}
+
+.rail-player-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  padding-left: 0;
+
+  .bulbs-video-play-button {
+    height: 2em;
+    margin-left: 0;
+    margin-right: 1em;
+    position: relative;
+    transform: translateY(5px);
+  }
+}
+
+.rail-player-title {
+  font-size: 1.2em;
+  padding: 10px 0;
+}
+
+.rail-player-logo {
+  font-size: 1.7em;
+}
+
+.rail-player-recirc-link {
+  border-radius: 4px;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 4px 16px;
+  text-decoration: none;
+  transition: 0.3s all;
+
+  &:hover {
+    background-color: #9b9b9b;
+  }
+}

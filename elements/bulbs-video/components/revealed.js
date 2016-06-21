@@ -159,6 +159,8 @@ export default class Revealed extends React.Component {
         return vastId;
       }
     }
+
+    return null;
   }
 
   vastUrl (videoMeta) {

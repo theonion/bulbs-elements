@@ -13,6 +13,7 @@ export default class Index extends React.Component {
         <div className="examples-index-list">
           <h1>
             <Link to="/">
+              <img src="/favicon.png" width="32"/>
               Examples
             </Link>
           </h1>
