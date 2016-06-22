@@ -20,6 +20,19 @@ export default class Root extends React.Component {
     return null;
   }
 
+  renderHeaderLogo () {
+    if (this.props.channel && this.props.channel === this.props.video.channel_slug) {
+      return (
+        <img
+          className='rail-player-logo'
+          src={this.props.video.channel_logo_url}
+          alt={this.props.video.channel_name}
+        />
+      );
+    }
+    return <VideoPlayButton/>;
+  }
+
   render () {
     if (!this.props.video) {
       return <div/>;
@@ -29,7 +42,7 @@ export default class Root extends React.Component {
       <div className='rail-player'>
 
         <div className='rail-player-header'>
-          <VideoPlayButton/>
+          { this.renderHeaderLogo() }
           <div className='rail-player-logo'>
             Video
           </div>
@@ -61,7 +74,7 @@ export default class Root extends React.Component {
 
 Root.propTypes = {
   actions: PropTypes.object.isRequired,
-  controller: PropTypes.object.isRequired,
+  channel: PropTypes.string,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   recircUrl: PropTypes.string.isRequired,

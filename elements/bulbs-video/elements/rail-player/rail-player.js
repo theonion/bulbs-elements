@@ -31,6 +31,7 @@ class RailPlayer extends BulbsElement {
         muted={typeof this.props.muted === 'string'}
         recircUrl={this.props.recircUrl}
         actions={this.store.actions}
+        channel={this.props.channel}
       />
     );
   }
@@ -46,6 +47,7 @@ Object.assign(RailPlayer, {
   propTypes: {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
+    channel: PropTypes.string,
     muted: PropTypes.string,
     src: PropTypes.string.isRequired,
     targetCampaignId: PropTypes.string,

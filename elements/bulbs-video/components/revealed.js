@@ -206,6 +206,7 @@ export default class Revealed extends React.Component {
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
       aspectratio: '16:9',
       autostart: true,
+      hlshtml: true,
       mute: videoMeta.player_options.muted || false,
       preload: 'none',
       primary: 'html5',

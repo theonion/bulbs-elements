@@ -25,8 +25,7 @@ rail-player {
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 8px;
-  padding-left: 0;
+  padding: 8px 0;
 
   .bulbs-video-play-button {
     height: 2em;
@@ -35,6 +34,10 @@ rail-player {
     position: relative;
     transform: translateY(5px);
   }
+}
+
+.rail-player-logo {
+  max-width: 100px;
 }
 
 .rail-player-title {
