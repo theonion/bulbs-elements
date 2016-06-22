@@ -357,18 +357,18 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('vastTest', () => {
-    it('returns undefined if query string empty', () => {
+    it('returns false if query string empty', () => {
       let vastId = Revealed.prototype.vastTest.call({
         parseParam: sinon.stub().returns(undefined),
       }, '');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
-    it('returns undefined if no xgid query string key', () => {
+    it('returns false if no xgid query string key', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(false),
       }, '?utm_source=facebook');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
     it('returns the vastUrl value if query string key present', () => {
