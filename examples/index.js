@@ -14,7 +14,6 @@ export default class Index extends React.Component {
           <h1>
             <Link to="/">
               <img src="/favicon.png" width="32"/>
-              Examples
             </Link>
           </h1>
           <ul>
@@ -33,6 +32,7 @@ export default class Index extends React.Component {
                               <Link
                                 to={`/example/${group.element}/${inflection.dasherize(name)}`}
                                 activeClassName="active"
+																title={group.examples[name].title}
                               >
                                 {group.examples[name].title}
                               </Link>

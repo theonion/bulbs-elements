@@ -21,11 +21,37 @@ body, html, #mount {
   flex-grow: 1;
 }
 
+%typography {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 300;
+}
+
 .examples-index-list {
-  min-width: 200px;
-  font-family: 'Slabo 27px', serif;
-  background: pink;
+  width: 200px;
   min-height: 100%;
+  background: pink;
+
+  @extend %typography;
+
+  h1 {
+    @extend %typography;
+
+    a {
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      display: flex;
+      flex-direction: row;
+
+      img {
+        margin: 0 .5em;
+      }
+    }
+  }
+
+  a {
+    color: #449;
+  }
 
   ul, li {
     list-style: none;
@@ -38,19 +64,33 @@ body, html, #mount {
 }
 
 .examples-example-group {
+  > code {
+    display: block;
+    padding: 4px;
+    background: rgba(0,0,0, .05);
+  }
   padding-bottom: 1em;
 }
 
 .examples-example {
-  padding-left: 0.5em;
 
   > a {
-    padding: 0 .5em
+    font-size: .8em;
+    display: block;
+    padding: .1em;
+    padding-left: 0.5em;
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  > a:hover {
+    background: rgba(50, 50, 50, .05);
   }
 
   > a.active {
     background: #333;
     color: #fafafa;
   }
-
 }

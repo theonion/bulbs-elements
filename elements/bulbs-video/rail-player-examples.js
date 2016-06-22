@@ -1,7 +1,7 @@
 export default {
   element: 'rail-player',
   examples: {
-    'Rail player with channel logo': {
+    'with channel logo': {
       render () {
         return `
           <rail-player
@@ -14,7 +14,7 @@ export default {
         `;
       },
     },
-    'Rail player without channel logo': {
+    'without channel logo': {
       render () {
         return `
           <rail-player
@@ -27,7 +27,7 @@ export default {
         `;
       },
     },
-    'Rail player with campaign': {
+    'with campaign': {
       render () {
         return `
           <rail-player

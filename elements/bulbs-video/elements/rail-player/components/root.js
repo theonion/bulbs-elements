@@ -57,7 +57,7 @@ export default class Root extends React.Component {
         </div>
 
         <div className='rail-player-video bulbs-video-root player'>
-          <Revealed {...this.props}/>
+          <Revealed disableSharing={true} {...this.props}/>
         </div>
 
         <div className='rail-player-footer'>
