@@ -71,6 +71,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   selectVideo (summaryElement) {
     this.videoPlayer.setAttribute('autoplay', true);
     this.state.selectVideo(summaryElement);
+    summaryElement.closest('bulbs-carousel-item').classList.add('played');
   }
 
   applyState () {

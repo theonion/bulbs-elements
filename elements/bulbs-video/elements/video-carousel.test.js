@@ -8,6 +8,7 @@ describe('<bulbs-video-carousel>', () => {
   let firstItem;
   let secondItem;
   let anchoredItem;
+  let firstSummary;
 
   beforeEach((done) => {
     container = document.createElement('div');
@@ -46,6 +47,7 @@ describe('<bulbs-video-carousel>', () => {
       carousel = container.querySelector('bulbs-carousel');
       videoPlayer = container.querySelector('bulbs-video');
       firstItem = container.querySelector('#first');
+      firstSummary = firstItem.querySelector('bulbs-video-summary');
       secondItem = container.querySelector('#second');
       anchoredItem = container.querySelector('#anchored');
 
@@ -115,6 +117,13 @@ describe('<bulbs-video-carousel>', () => {
         expect(anchor.click).to.have.been.called;
       });
     });
+  });
+
+  describe('selectVideo', () => {
+    it('adds a played class to item', () => {
+      subject.selectVideo(firstSummary);
+      expect(firstItem.classList.contains('played')).to.be.true;
+    }); 
   });
 
   describe('handleClick', () => {
