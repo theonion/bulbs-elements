@@ -138,11 +138,11 @@ describe('<bulbs-video> <Revealed>', () => {
             player_options: {
               'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
               'advertising': {
-                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
+                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
 
               },
-              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
-              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
+              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
+              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
               'comscore': {
                 'id': 6036328,
                 'metadata': {
@@ -357,18 +357,18 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('vastTest', () => {
-    it('returns undefined if query string empty', () => {
+    it('returns false if query string empty', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(false),
       }, '');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
-    it('returns undefined if no xgid query string key', () => {
+    it('returns false if no xgid query string key', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(false),
       }, '?utm_source=facebook');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
     it('returns the vastUrl value if query string key present', () => {
@@ -412,7 +412,7 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBuster: cacheBusterStub,
         vastTest: vastTestStub,
       }, videoMeta);
-      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456');
+      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456'); // eslint-disable-line max-len
     });
   });
 
@@ -438,10 +438,10 @@ describe('<bulbs-video> <Revealed>', () => {
         player_options: {
           'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
           'advertising': {
-            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
+            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
           },
-          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
-          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
+          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
+          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
           'comscore': {
             'id': 6036328,
             'metadata': {
