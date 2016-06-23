@@ -40,7 +40,6 @@ export default class Root extends React.Component {
 
     return (
       <div className='rail-player'>
-
         <div className='rail-player-header'>
           { this.renderHeaderLogo() }
           <div className='rail-player-logo'>

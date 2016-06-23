@@ -68,6 +68,11 @@ body, html, #mount {
     display: block;
     padding: 4px;
     background: rgba(0,0,0, .05);
+
+    > a {
+      text-decoration: none;
+      float: right;
+    }
   }
   padding-bottom: 1em;
 }
@@ -93,4 +98,24 @@ body, html, #mount {
     background: #333;
     color: #fafafa;
   }
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.example-canvas {
+  overflow: auto;
+  min-height: 50%;
+  max-height: 50%;
+}
+
+.test-suite {
+  min-height: 50%;
+  max-height: 50%;
+  width: 100%;
+  border: none;
+  border-top: 10px solid black;
 }
