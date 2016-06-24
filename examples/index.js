@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import examples from './element-examples';
 import inflection from 'inflection';
+
 window.ga = function(){
   console.log(arguments);
 };
@@ -13,7 +14,7 @@ export default class Index extends React.Component {
         <div className="examples-index-list">
           <h1>
             <Link to="/">
-              Examples
+              <img src="/favicon.png" width="32"/>
             </Link>
           </h1>
           <ul>
@@ -23,6 +24,17 @@ export default class Index extends React.Component {
                   <li key={index} className="examples-example-group">
                     <code>
                       {`<${group.element}>`}
+                      <a
+                        href={`http://localhost:9876/debug.html?grep=<${group.element}>`}
+                        title='Open test suite'
+                      >
+                        <span style={{color: 'green', display: 'none'}}>
+                          ✓
+                        </span>
+                        <span style={{color: 'red', display: 'none'}}>
+                          ✖
+                        </span>
+                      </a>
                     </code>
                     <ul>
                       {
@@ -32,6 +44,7 @@ export default class Index extends React.Component {
                               <Link
                                 to={`/example/${group.element}/${inflection.dasherize(name)}`}
                                 activeClassName="active"
+																title={group.examples[name].title}
                               >
                                 {group.examples[name].title}
                               </Link>
