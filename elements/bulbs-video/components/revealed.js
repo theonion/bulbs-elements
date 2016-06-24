@@ -160,7 +160,7 @@ export default class Revealed extends React.Component {
       }
     }
 
-    return null;
+    return false;
   }
 
   vastUrl (videoMeta) {
