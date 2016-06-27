@@ -1,25 +1,42 @@
 import invariant from 'invariant';
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
-class VideoCarouselState {
+let { forEach } = Array.prototype;
+
+export class VideoCarouselState {
   constructor (props) {
     this.props = props;
     this.validate();
   }
 
-  get currentVideo () {
-    return this.props.currentVideo;
+  get currentItem () {
+    return this.props.currentItem;
   }
 
-  selectVideo (videoSummary) {
-    this.props.currentVideo = videoSummary;
+  get videoUrl () {
+    return this.currentItem.getAttribute('video-url') || '';
+  }
+
+  get campaignUrl () {
+    return this.currentItem.getAttribute('campaign-url') || '';
+  }
+
+  get shareUrl () {
+    return this.currentItem.getAttribute('share-url') || '';
+  }
+
+  selectItem (carouselItem) {
+    this.props.currentItem = carouselItem;
     this.validate();
   }
 
   validate () {
     invariant(
-      this.props.currentVideo && this.props.currentVideo.matches('bulbs-video-summary'),
-      'VideoCarouselState MUST have a <bulbs-video-summary> as currentVideo prop.'
+      this.props.currentItem &&
+      this.props.currentItem.querySelector &&
+      this.props.currentItem.querySelector('bulbs-video-summary'),
+
+      'VideoCarouselState currentItem MUST have a <bulbs-video-summary> as a child element.'
     );
   }
 }
@@ -40,7 +57,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
-      currentVideo: this.querySelector('bulbs-video-summary'),
+      currentItem: this.querySelector('bulbs-carousel-item'),
     });
   }
 
@@ -57,42 +74,50 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
   handleClick (event) {
     let item = event.target.closest('bulbs-carousel-item');
-    let summary;
-    if (item) {
-      summary = item.querySelector('bulbs-carousel-item > bulbs-video-summary');
-    }
-    if (summary) {
+    let anchor = item.querySelector('a');
+
+    if (item && !anchor) {
       event.preventDefault();
-      this.selectVideo(summary);
+      this.selectItem(item);
       this.applyState();
     }
   }
 
-  selectVideo (summaryElement) {
-    this.videoPlayer.setAttribute('autoplay', true);
-    this.state.selectVideo(summaryElement);
-    summaryElement.closest('bulbs-carousel-item').classList.add('played');
+  selectItem (itemElement) {
+    this.videoPlayer.setAttribute('autoplay', '');
+    this.state.selectItem(itemElement);
+    itemElement.classList.add('played');
   }
 
   applyState () {
-    if (this.state.currentVideo) {
-      Array.prototype.forEach.call(
-        this.querySelectorAll('[now-playing]'),
-        (nowPlaying) => {
-          nowPlaying.removeAttribute('now-playing');
-        }
-      );
-
-      this.state.currentVideo.setAttribute('now-playing', true);
-      this.state.currentVideo.closest('bulbs-carousel-item').setAttribute('now-playing', true);
-
-      Array.prototype.forEach.call(
-        this.querySelectorAll('bulbs-video-meta, bulbs-video'),
-        (element) => {
-          element.setAttribute('src', this.state.currentVideo.getAttribute('src'));
-        }
-      );
+    if (this.state.currentItem) {
+      this.doApplyState();
     }
+  }
+
+  doApplyState () {
+    forEach.call(
+      this.querySelectorAll('[now-playing]'),
+      (nowPlaying) => nowPlaying.removeAttribute('now-playing')
+    );
+
+    this.state.currentItem.setAttribute('now-playing', '');
+    this.state.currentItem.querySelector('bulbs-video-summary').setAttribute('now-playing', '');
+
+    forEach.call(
+      this.querySelectorAll('bulbs-video-meta, bulbs-video'),
+      (element) => element.setAttribute('src', this.state.videoUrl)
+    );
+
+    forEach.call(
+      this.querySelectorAll('campaign-display'),
+      (element) => element.setAttribute('src', this.state.campaignUrl)
+    );
+
+    forEach.call(
+      this.querySelectorAll('bulbs-video-meta'),
+      (element) => element.setAttribute('share-url', this.state.shareUrl)
+    );
   }
 }
 

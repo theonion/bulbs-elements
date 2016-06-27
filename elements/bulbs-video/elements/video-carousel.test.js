@@ -1,14 +1,14 @@
-import './video-carousel';
+import { VideoCarouselState } from './video-carousel';
 
 describe('<bulbs-video-carousel>', () => {
   let subject;
   let carousel;
   let container;
+  let videoMeta;
   let videoPlayer;
   let firstItem;
   let secondItem;
   let anchoredItem;
-  let firstSummary;
 
   beforeEach((done) => {
     container = document.createElement('div');
@@ -16,6 +16,7 @@ describe('<bulbs-video-carousel>', () => {
     container.innerHTML = `
       <bulbs-video-carousel>
         <bulbs-video></bulbs-video>
+        <bulbs-video-meta></bulbs-video-meta>
 
         <bulbs-carousel>
           <bulbs-carousel-slider>
@@ -24,14 +25,17 @@ describe('<bulbs-video-carousel>', () => {
               <bulbs-video-summary now-playing></bulbs-video-summary>
             </bulbs-carousel-item>
 
-            <bulbs-carousel-item id='second'>
+            <bulbs-carousel-item
+              id='second'
+              share-url='//example.org/share-me'
+              video-url='//example.org/video.json'
+              campaign-url='//example.org/campaign'
+            >
               <bulbs-video-summary></bulbs-video-summary>
             </bulbs-carousel-item>
 
-            <bulbs-carousel-item id='anchored'>
-              <a href='#anchor'>
-                <bulbs-video-summary></bulbs-video-summary>
-              </a>
+            <bulbs-carousel-item id='anchored' href='#anchor'>
+              <bulbs-video-summary></bulbs-video-summary>
             </bulbs-carousel-item>
 
           </bulbs-carousel-slider>
@@ -45,9 +49,9 @@ describe('<bulbs-video-carousel>', () => {
     requestAnimationFrame(() => {
       subject = container.querySelector('bulbs-video-carousel');
       carousel = container.querySelector('bulbs-carousel');
+      videoMeta = container.querySelector('bulbs-video-meta');
       videoPlayer = container.querySelector('bulbs-video');
       firstItem = container.querySelector('#first');
-      firstSummary = firstItem.querySelector('bulbs-video-summary');
       secondItem = container.querySelector('#second');
       anchoredItem = container.querySelector('#anchored');
 
@@ -119,17 +123,29 @@ describe('<bulbs-video-carousel>', () => {
     });
   });
 
-  describe('selectVideo', () => {
+  describe('selectItem', () => {
     it('adds a played class to item', () => {
-      subject.selectVideo(firstSummary);
+      subject.selectItem(firstItem);
       expect(firstItem.classList.contains('played')).to.be.true;
-    }); 
+    });
+
+    it('sets an autoplay attribute on the video player', () => {
+      expect(videoPlayer.getAttribute('autoplay')).to.be.null;
+      subject.selectItem(secondItem);
+      expect(videoPlayer.getAttribute('autoplay')).to.eql('');
+    });
+
+    it('selects the item', () => {
+      sinon.spy(subject.state, 'selectItem');
+      subject.selectItem(firstItem);
+      expect(subject.state.selectItem).to.have.been.calledWith(firstItem);
+    });
   });
 
   describe('handleClick', () => {
     context('item has an anchor tag', () => {
       it('does nothing', () => {
-        sinon.spy(subject, 'selectVideo');
+        sinon.spy(subject, 'selectItem');
         let event = {
           target: anchoredItem,
           preventDefault: sinon.stub(),
@@ -137,13 +153,13 @@ describe('<bulbs-video-carousel>', () => {
         subject.handleClick(event);
 
         expect(event.preventDefault).not.have.been.called;
-        expect(subject.selectVideo).not.to.have.been.called;
+        expect(subject.selectItem).not.to.have.been.called;
       });
     });
 
     context('item does not have an anchor tag', () => {
       it('replaces the video in the carousel player', () => {
-        sinon.stub(subject, 'selectVideo');
+        sinon.stub(subject, 'selectItem');
         let event = {
           target: firstItem,
           preventDefault: sinon.stub(),
@@ -151,7 +167,125 @@ describe('<bulbs-video-carousel>', () => {
         subject.handleClick(event);
 
         expect(event.preventDefault).to.have.been.called;
-        expect(subject.selectVideo).to.have.been.calledWith(firstItem.children[0]);
+        expect(subject.selectItem).to.have.been.calledWith(firstItem);
+      });
+    });
+  });
+
+  describe('applyState', () => {
+    beforeEach(() => sinon.spy(subject, 'doApplyState'));
+
+    it('calls through to doApplyState', () => {
+      expect(subject.doApplyState).not.to.have.been.called;
+    });
+
+    context('with no currentItem', () => {
+      it('does nothing', () => {
+        expect(subject.doApplyState).not.to.have.been.called;
+      });
+    });
+  });
+
+  describe('doApplyState', () => {
+    context('firstItem selected', () => {
+      it('removes now-playing from current playing elements', () => {
+        secondItem.setAttribute('now-playing', '');
+        subject.doApplyState();
+
+        expect(secondItem.getAttribute('now-playing')).to.be.null;
+      });
+    });
+
+    context('secondItem selected', () => {
+      beforeEach(() => {
+        subject.state.selectItem(secondItem);
+        subject.doApplyState();
+      });
+
+      it('sets now-plaing attribute on the current video', () => {
+        expect(secondItem.children[0].getAttribute('now-playing')).to.eql('');
+      });
+
+      it('sets now-playing on the bulbs-carousel-item wrapping the current video', () => {
+        expect(secondItem.getAttribute('now-playing')).to.eql('');
+      });
+
+      it('updates the src of the <bulbs-video>', () => {
+        expect(videoPlayer.getAttribute('src')).to.eql('//example.org/video.json');
+      });
+
+      it('updates the src of the <bulbs-video-meta>', () => {
+        expect(videoMeta.getAttribute('src')).to.eql('//example.org/video.json');
+      });
+
+      it('updates the share-url of the <bulbs-video-meta>', () => {
+        expect(videoMeta.getAttribute('share-url')).to.eql('//example.org/share-me');
+      });
+    });
+  });
+
+  describe('VideoCarouselState', () => {
+    let currentItem;
+    let summary;
+
+    beforeEach(() => {
+      currentItem = document.createElement('bulbs-carousel-item');
+      summary = document.createElement('bulbs-video-summary');
+      currentItem.appendChild(summary);
+      subject = new VideoCarouselState({ currentItem });
+    });
+
+    describe('constructor', () => {
+      context('with an invalid currentItem', () => {
+        it('throws an error', () => {
+          expect(() => new VideoCarouselState({ currentItem: 'bad' })).to.throw(
+            /MUST have a <bulbs-video-summary> as a child element./
+          );
+        });
+      });
+    });
+
+    describe('currentItem', () => {
+      it('aliases to props', () => {
+        subject.props.currentItem = 'currentItem';
+        expect(subject.currentItem).to.eql('currentItem');
+      });
+    });
+
+    describe('videoUrl', () => {
+      it('reads from the currentItem src', () => {
+        subject.props.currentItem = secondItem;
+        expect(subject.videoUrl).to.eql('//example.org/video.json');
+      });
+    });
+
+    describe('shareUrl', () => {
+      it('reads from the currentItem share-url attribute', () => {
+        subject.props.currentItem = secondItem;
+        expect(subject.shareUrl).to.eql('//example.org/share-me');
+      });
+    });
+
+    describe('campaignUrl', () => {
+      it('readys from the currentItem campaign-url attribute', () => {
+        subject.props.currentItem = secondItem;
+        expect(subject.campaignUrl).to.eql('//example.org/campaign');
+
+      });
+    });
+
+    describe('selectItem', () => {
+      it('selects the item', () => {
+        subject.selectItem(secondItem);
+        expect(subject.currentItem).to.eql(secondItem);
+      });
+
+      context('with an invalid video', () => {
+        it('throws an error', () => {
+          expect(() => subject.selectItem(document.createElement('bad-el'))).to.throw(
+            /currentItem MUST have a <bulbs-video-summary> as a child element/
+          );
+        });
       });
     });
   });
