@@ -64,7 +64,11 @@ describe('<rail-player> <RailPlayerRoot>', () => {
       it('renders a <Revealed> component', () => {
         expect(subject).to.contain(
           <div className='rail-player-video bulbs-video-root player'>
-            <Revealed disableSharing={true} {...props}/>
+            <Revealed
+              muted={true}
+              disableSharing={true}
+              {...props}
+            />
           </div>
         );
       });

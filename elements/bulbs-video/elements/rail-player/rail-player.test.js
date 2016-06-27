@@ -17,10 +17,6 @@ describe('<rail-player>', () => {
       expect(subject.channel).to.eql(PropTypes.string.isRequired);
     });
 
-    it('accepts a muted property', () => {
-      expect(subject.muted).to.eql(PropTypes.string);
-    });
-
     it('requires a src attribute', () => {
       expect(subject.src).to.eql(PropTypes.string.isRequired);
     });
@@ -104,10 +100,6 @@ describe('<rail-player>', () => {
 
       it('passes recircUrl through', () => {
         expect(subject.recircUrl).to.eql('http://example.org/recirc');
-      });
-
-      it('converts muted to boolean', () => {
-        expect(subject.muted).to.eql(false);
       });
 
       it('merges video from state', () => {

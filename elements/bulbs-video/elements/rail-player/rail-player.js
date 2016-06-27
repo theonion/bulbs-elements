@@ -24,7 +24,6 @@ export default class RailPlayer extends BulbsElement {
     return (
       <RailPlayerRoot
         {...this.state}
-        muted={typeof this.props.muted === 'string'}
         recircUrl={this.props.recircUrl}
         actions={this.store.actions}
         channel={this.props.channel}
@@ -41,7 +40,6 @@ Object.assign(RailPlayer, {
   },
   propTypes: {
     channel: PropTypes.string.isRequired,
-    muted: PropTypes.string,
     src: PropTypes.string.isRequired,
   },
 });
