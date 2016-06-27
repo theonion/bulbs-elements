@@ -30,12 +30,6 @@ describe('<campaign-display>', () => {
     fetchMock.mock(src, campaign);
   });
 
-  it('should require a src', () => {
-    expect(() => {
-      new CampaignDisplay({ placement: 'top' }); // eslint-disable-line
-    }).to.throw('campaign-display component requires a src');
-  });
-
   it('should require a placement', function () {
     expect(() => {
       new CampaignDisplay({ src: 'some/src '}); // eslint-disable-line
@@ -48,11 +42,24 @@ describe('<campaign-display>', () => {
   });
 
   describe('initialDispatch', () => {
-    it('fetches campaign data for display', () => {
-      subject = new CampaignDisplay(props);
-      let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
-      subject.initialDispatch();
-      expect(spy).to.have.been.calledWith(src);
+    context('src is falsey', () => {
+      beforeEach(() => delete props.src);
+
+      it('makes no request', () => {
+        subject = new CampaignDisplay(props);
+        let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
+        subject.initialDispatch();
+        expect(spy).not.to.have.been.called;
+      });
+    });
+
+    context('src is given', () => {
+      it('fetches campaign data for display', () => {
+        subject = new CampaignDisplay(props);
+        let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
+        subject.initialDispatch();
+        expect(spy).to.have.been.calledWith(src);
+      });
     });
   });
 });

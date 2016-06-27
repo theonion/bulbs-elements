@@ -12,13 +12,14 @@ import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
   constructor (props) {
-    invariant(!!props.src, 'campaign-display component requires a src');
     invariant(!!props.placement, 'campaign-display component requires a placement');
     super(props);
   }
 
   initialDispatch () {
-    this.store.actions.fetchCampaign(this.props.src);
+    if (this.props.src) {
+      this.store.actions.fetchCampaign(this.props.src);
+    }
   }
 
   render () {
