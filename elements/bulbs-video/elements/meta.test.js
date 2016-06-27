@@ -43,6 +43,10 @@ describe('<bulbs-video-meta>', () => {
     it('requires shareTwitterHandle string', () => {
       expect(subject.shareTwitterHandle).to.eq(PropTypes.string.isRequired);
     });
+
+    it('accepts a shareUrl string', () => {
+      expect(subject.shareUrl).to.eq(PropTypes.string);
+    });
   });
 
   beforeEach(() => {
@@ -126,11 +130,30 @@ describe('<bulbs-video-meta>', () => {
         );
       });
 
-      it('renders share-tools', () => {
-        let shareTools = subject.find('share-tools');
-        expect(shareTools).to.have.attr('share-title', video.title);
-        expect(shareTools).to.have.attr('share-url', window.location.toString());
-        expect(shareTools).to.have.attr('data-track-action', 'action');
+      context('without shareUrl property', () => {
+        beforeEach(() => {
+          props.shareUrl = null;
+          subject = shallow(<VideoMetaView {...props} video={video}/>);
+        });
+
+        it('renders share-tools for current page url', () => {
+          let shareTools = subject.find('share-tools');
+          expect(shareTools).to.have.attr('share-title', video.title);
+          expect(shareTools).to.have.attr('share-url', window.location.toString());
+          expect(shareTools).to.have.attr('data-track-action', 'action');
+        });
+      });
+
+      context('with shareUrl Property', () => {
+        beforeEach(() => {
+          props.shareUrl = '//example.org/share-me';
+          subject = shallow(<VideoMetaView {...props} video={video}/>);
+        });
+
+        it('renders share-tools for given url', () => {
+          let shareTools = subject.find('share-tools');
+          expect(shareTools).to.have.attr('share-url', '//example.org/share-me');
+        });
       });
 
       it('renders facebook share-tools', () => {
