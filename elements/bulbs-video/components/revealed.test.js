@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 
@@ -138,11 +140,11 @@ describe('<bulbs-video> <Revealed>', () => {
             player_options: {
               'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
               'advertising': {
-                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
+                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
 
               },
-              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
-              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
+              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
+              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
               'comscore': {
                 'id': 6036328,
                 'metadata': {
@@ -357,18 +359,18 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('vastTest', () => {
-    it('returns undefined if query string empty', () => {
+    it('returns false if query string empty', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(false),
       }, '');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
-    it('returns undefined if no xgid query string key', () => {
+    it('returns false if no xgid query string key', () => {
       let vastId = Revealed.prototype.vastTest.call({
-        parseParam: sinon.stub().returns(undefined),
+        parseParam: sinon.stub().returns(false),
       }, '?utm_source=facebook');
-      expect(vastId).to.be.undefined;
+      expect(vastId).to.be.false;
     });
 
     it('returns the vastUrl value if query string key present', () => {
@@ -412,7 +414,7 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBuster: cacheBusterStub,
         vastTest: vastTestStub,
       }, videoMeta);
-      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456');
+      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456'); // eslint-disable-line max-len
     });
   });
 
@@ -438,10 +440,10 @@ describe('<bulbs-video> <Revealed>', () => {
         player_options: {
           'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
           'advertising': {
-            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
+            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
           },
-          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
-          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
+          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
+          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
           'comscore': {
             'id': 6036328,
             'metadata': {
@@ -494,66 +496,95 @@ describe('<bulbs-video> <Revealed>', () => {
       };
     });
 
-    context('player set up', () => {
+    describe('player set up', () => {
       let sources;
       let extractSourcesStub;
       let vastUrlStub;
 
-      beforeEach(() => {
-        sources = [
-          {
-            'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
-          },
-          {
-            'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
-          },
-        ];
-        extractSourcesStub = sinon.stub().returns(sources);
-        vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+      context('regular setup', () => {
+        beforeEach(() => {
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
 
-        Revealed.prototype.makeVideoPlayer.call({
-          extractSources: extractSourcesStub,
-          vastUrl: vastUrlStub,
-        }, element, videoMeta);
+          Revealed.prototype.makeVideoPlayer.call({
+            props: {},
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
+
+        it('sets up the player', () => {
+          expect(playerSetup.called).to.be.true;
+        });
+
+        it('includes only the HLS & mp4 sources', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sources).to.eql(sources);
+        });
+
+        it('sets up the advertising VAST tag', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.advertising.client).to.equal('vast');
+          expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
+          expect(setupOptions.advertising.skipoffset).to.equal(5);
+        });
+
+        it('sets the image as the poster image', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
+        });
+
+        it('sets up the sharing link', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing.link).to.equal(videoMeta.player_options.shareUrl);
+        });
+
+        it('sets up the sharing embed code', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing.code).to.equal(videoMeta.player_options.embedCode);
+        });
+
+        it('initializes the GoogleAnalytics plugin', () => {
+          expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+        });
+
+        it('initializes the Comscore plugin', () => {
+          expect(Comscore.init.calledWith(player)).to.be.true;
+        });
       });
 
-      it('sets up the player', () => {
-        expect(playerSetup.called).to.be.true;
-      });
+      context('sharing disabled', () => {
+        beforeEach(() => {
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
 
-      it('includes only the HLS & mp4 sources', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sources).to.eql(sources);
-      });
+          Revealed.prototype.makeVideoPlayer.call({
+            props: { disableSharing: true },
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
 
-      it('sets up the advertising VAST tag', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.advertising.client).to.equal('vast');
-        expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
-        expect(setupOptions.advertising.skipoffset).to.equal(5);
-      });
-
-      it('sets the image as the poster image', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
-      });
-
-      it('sets up the sharing link', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sharing.link).to.equal(videoMeta.player_options.shareUrl);
-      });
-
-      it('sets up the sharing embed code', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sharing.code).to.equal(videoMeta.player_options.embedCode);
-      });
-
-      it('initializes the GoogleAnalytics plugin', () => {
-        expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
-      });
-
-      it('initializes the Comscore plugin', () => {
-        expect(Comscore.init.calledWith(player)).to.be.true;
+        it('does not set sharing configuration', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing).to.be.undefined;
+        });
       });
     });
   });

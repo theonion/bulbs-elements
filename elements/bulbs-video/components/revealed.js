@@ -151,7 +151,7 @@ export default class Revealed extends React.Component {
     return results;
   }
 
-  vastTest (searchString) {
+  vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
       let vastId = this.parseParam('xgid', searchString);
 
@@ -159,6 +159,8 @@ export default class Revealed extends React.Component {
         return vastId;
       }
     }
+
+    return false;
   }
 
   vastUrl (videoMeta) {
@@ -188,7 +190,7 @@ export default class Revealed extends React.Component {
 
     player.videoMeta = videoMeta;
 
-    player.setup({
+    let playerOptions = {
       key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
       skin: {
         name: 'onion',
@@ -208,11 +210,16 @@ export default class Revealed extends React.Component {
       preload: 'none',
       primary: 'html5',
       width: '100%',
-      sharing: {
+    };
+
+    if (!this.props.disableSharing) {
+      playerOptions.sharing = {
         link: videoMeta.player_options.shareUrl,
         code: videoMeta.player_options.embedCode,
-      },
-    });
+      };
+    }
+
+    player.setup(playerOptions);
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
@@ -232,6 +239,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  disableSharing: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
