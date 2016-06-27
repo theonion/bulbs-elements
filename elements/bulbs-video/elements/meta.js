@@ -19,7 +19,7 @@ export function VideoMetaView (props) {
       </h1>
       <share-tools
         share-title={props.video.title}
-        share-url={window.location}
+        share-url={props.shareUrl || window.location}
         data-track-action={props.shareTrackAction}
       >
         <share-via-facebook label icon/>
@@ -36,6 +36,7 @@ VideoMetaView.propTypes = {
   shareEmailMessage: PropTypes.string.isRequired,
   shareTrackAction: PropTypes.string.isRequired,
   shareTwitterHandle: PropTypes.string.isRequired,
+  shareUrl: PropTypes.string,
   video: PropTypes.object,
 };
 
@@ -65,6 +66,7 @@ Object.assign(VideoMeta, {
     shareEmailMessage: PropTypes.string.isRequired,
     shareTrackCatagory: PropTypes.string.isRequired,
     shareTwitterHandle: PropTypes.string.isRequired,
+    shareUrl: PropTypes.string,
   },
 });
 
