@@ -22,6 +22,13 @@ class CampaignDisplay extends BulbsElement {
     }
   }
 
+  componentDidUpdate (prevProps) {
+    if (this.props.src !== prevProps.src) {
+      this.store.actions.handleFetchComplete(null);
+      this.initialDispatch();
+    }
+  }
+
   render () {
     if (this.state.campaignRequest.networkError) {
       return <span/>;

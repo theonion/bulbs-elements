@@ -41,6 +41,46 @@ describe('<campaign-display>', () => {
     expect(subject).to.have.prop('noLink', true);
   });
 
+  describe('componentDidUpdate', () => {
+    beforeEach(() => {
+      let wrapper = shallow(
+        <CampaignDisplay
+          placement='test-placement'
+          src='http://example.com/campaign'
+        />
+      );
+      subject = wrapper.instance();
+
+      campaign = {};
+      sinon.spy(subject, 'initialDispatch');
+      subject.store.actions.handleFetchComplete({}, campaign);
+    });
+
+    context('src did not change', () => {
+      it('does not reset campaign state', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        expect(subject.state.campaign).to.eql(campaign);
+      });
+
+      it('does not call initialDispatch', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        expect(subject.initialDispatch).not.to.have.been.called;
+      });
+    });
+
+    context('src changed', () => {
+      it('resets the campaign state', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/other-campaign' });
+        expect(subject.state.campaign).to.be.null;
+      });
+
+      it('calls initialDispatch', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/other-campaign' });
+        expect(subject.initialDispatch).to.have.been.called;
+      });
+    });
+  });
+
   describe('initialDispatch', () => {
     context('src is falsey', () => {
       beforeEach(() => delete props.src);
