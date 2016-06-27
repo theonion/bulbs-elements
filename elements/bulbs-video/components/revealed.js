@@ -81,7 +81,7 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension6', specialCoverage);
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
-    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
+    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Tunic Campaign Id
     ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
@@ -95,12 +95,18 @@ export default class Revealed extends React.Component {
       filteredTags.push(specialCoverage);
     }
 
+    if (this.props.targetCampaignNumber) {
+      filteredTags.push(this.props.targetCampaignNumber);
+    }
+
     this.props.video.tags.forEach(function (tag) {
       // Temporary until videojs_options completely removed from Onion Studios
       if (tag !== 'main') {
         filteredTags.push(tag);
       }
     });
+
+    videoMeta.tags = filteredTags;
 
     if (this.props.muted) {
       videoMeta.player_options.muted = true;
@@ -242,6 +248,7 @@ Revealed.propTypes = {
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
+  targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
