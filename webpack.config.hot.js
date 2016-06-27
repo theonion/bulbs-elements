@@ -6,10 +6,12 @@ const plugins = webpackBase.plugins;
 const loaders = webpackBase.loaders;
 const config = Object.assign({}, webpackBase.config);
 
-config.entry.examples = [
-  './examples/examples.js',
-  'react-router',
-];
+config.entry = {
+  examples: [
+    './examples/examples.js',
+    'react-router',
+  ],
+};
 
 config.plugins = [
   plugins.chunker,

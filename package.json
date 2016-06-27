@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -52,6 +52,7 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^5.0.1",
     "expose-loader": "^0.7.1",
+    "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "fetch-mock": "^4.3.1",
     "file-loader": "^0.8.5",
@@ -112,7 +113,9 @@
     "write-file-webpack-plugin": "^3.1.4",
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
-    "yo": "^1.6.0"
-  },
-  "dependencies": {}
+    "yo": "^1.6.0",
+    "chokidar": "^1.6.0",
+    "iframe-resizer": "^3.5.5",
+    "watch": "^0.17.1"
+  }
 }

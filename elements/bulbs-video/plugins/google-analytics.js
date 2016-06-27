@@ -95,23 +95,32 @@ class GoogleAnalytics {
     );
   }
 
+  filterQueryString (originalString, queryStringKey) {
+    let regex = new RegExp('[\\&|\\?]' + queryStringKey + '=\\d+');
+    return originalString.replace(regex, '');
+  }
+
   onAdSkipped (event) {
+    let filteredTag = this.filterQueryString(event.tag, 'rnd');
+
     global.ga(
       prefixedSend(this.gaPrefix),
       'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adskipped',
-      event.tag
+      filteredTag
     );
   }
 
   onAdError (event) {
+    let filteredTag = this.filterQueryString(event.tag, 'rnd');
+
     global.ga(
       prefixedSend(this.gaPrefix),
       'event',
       'Video:' + this.player.videoMeta.channel_name,
       'aderror: ' + event.message,
-      event.tag
+      filteredTag
     );
   }
 
