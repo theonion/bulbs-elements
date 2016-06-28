@@ -25,26 +25,25 @@ class BulbsQuiz extends BulbsHTMLElement {
     let $element = $(this);
     let quizType = getQuizType($element.attr('class'));
     let contentId = this.attributes['content-id'].value;
-    let quiz;
 
     switch (quizType) {
     case 'cosmo':
-      quiz = new CosmodeQuiz({ element: $element });
+      this.quiz = new CosmodeQuiz({ element: $element });
       break;
 
     case 'tally':
-      quiz = new TallyQuiz({ element: $element });
+      this.quiz = new TallyQuiz({ element: $element });
       break;
 
     case 'multiple':
-      quiz = new MultipleChoiceQuiz({
+      this.quiz = new MultipleChoiceQuiz({
         element: $element,
         sendAnalytics: contentId === 1333,
       });
       break;
 
     case 'test':
-      quiz = new TestQuiz({
+      this.quiz = new TestQuiz({
         element: $element,
         revealAllAnswers: $element.hasClass('quiz-show-all-answers'),
       });
@@ -55,7 +54,7 @@ class BulbsQuiz extends BulbsHTMLElement {
       break;
     }
 
-    quiz.setup();
+    this.quiz.setup();
   }
 }
 

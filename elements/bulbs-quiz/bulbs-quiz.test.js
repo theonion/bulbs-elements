@@ -16,10 +16,6 @@ describe('<bulbs-quiz>', () => {
     subject = document.createElement('bulbs-quiz');
     subject.attributes['content-id'] = 1;
     subject.className = 'quiz-style-test';
-    sandbox.stub(TestQuiz.prototype, 'setup');
-    sandbox.stub(TallyQuiz.prototype, 'setup');
-    sandbox.stub(MultipleChoiceQuiz.prototype, 'setup');
-    sandbox.stub(CosmodeQuiz.prototype, 'setup');
   });
 
   afterEach(() => {
@@ -29,7 +25,7 @@ describe('<bulbs-quiz>', () => {
   describe('TestQuiz', () => {
     it('instantiates a TestQuiz when the quiz style is test', () => {
       fixtureContainer.appendChild(subject);
-      expect(TestQuiz.prototype.setup).to.have.been.called;
+      expect(subject.quiz).to.be.an.instanceof(TestQuiz);
     });
   });
 
@@ -37,7 +33,7 @@ describe('<bulbs-quiz>', () => {
     it('instantiates a TallyQuiz when the quiz style is tally', () => {
       subject.className = 'quiz-style-tally';
       fixtureContainer.appendChild(subject);
-      expect(TallyQuiz.prototype.setup).to.have.been.called;
+      expect(subject.quiz).to.be.an.instanceof(TallyQuiz);
     });
   });
 
@@ -45,7 +41,7 @@ describe('<bulbs-quiz>', () => {
     it('instantiates a MultipleChoiceQuiz when the quiz style is multiple', () => {
       subject.className = 'quiz-style-multiple';
       fixtureContainer.appendChild(subject);
-      expect(MultipleChoiceQuiz.prototype.setup).to.have.been.called;
+      expect(subject.quiz).to.be.an.instanceof(MultipleChoiceQuiz);
     });
   });
 
@@ -53,7 +49,7 @@ describe('<bulbs-quiz>', () => {
     it('instantiates a CosmodeQuiz when the quiz style is cosmo', () => {
       subject.className = 'quiz-style-cosmo';
       fixtureContainer.appendChild(subject);
-      expect(CosmodeQuiz.prototype.setup).to.have.been.called;
+      expect(subject.quiz).to.be.an.instanceof(CosmodeQuiz);
     });
   });
 });
