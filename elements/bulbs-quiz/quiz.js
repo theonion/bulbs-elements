@@ -1,25 +1,20 @@
-import $ from 'jQuery';
+export const OUTCOME_REVEAL_DURATION = 500;
+export const OUTCOME_SCROLLTO_OFFSET_TOP = -20;
 
-export default class Quiz {
-  constructor (element) {
-    this.element = element;
-    this.form = this.element.querySelectorAll('form')[0];
-    this.checkOutcomeButton = this.element.querySelectorAll('.check-outcome')[0];
+export function sendResultAnalytics (outcome) {
+  let resultText = window.$('h3.quiz-outcome', outcome).text();
+  let gaEvent = {
+    'eventCategory': 'Quiz result: ' + resultText,
+    'eventAction': 'Quiz result',
+    'eventLabel': 'None',
+    'dimension1': window.targeting.dfp_pagetype,
+  };
+
+  if (window.clickTest) {
+    console.log(gaEvent);
+    // e.preventDefault();
   }
-
-  handleFormSubmit (event) {
-    event.preventDefault();
-    this.checkOutcome();
-    if (this.isCompleted()) {
-      this.checkOutcomeButton.style.display = 'none';
-    }
+  else {
+    window.ga('send', 'event', gaEvent);
   }
-
-  getFormData () {
-    debugger
-    return $(this.form).serializeArray();
-  }
-
-  checkOutcome () {}
-  isCompleted () {}
 }

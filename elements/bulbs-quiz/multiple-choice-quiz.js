@@ -5,7 +5,7 @@ import {
   OUTCOME_SCROLLTO_OFFSET_TOP,
 } from './quiz';
 
-export default class CosmodeQuiz {
+export default class MultipleChoiceQuiz {
   constructor (options) {
     this.element = options.element;
     this.options = options;
@@ -28,11 +28,11 @@ export default class CosmodeQuiz {
       });
     });
 
-    $('form', this.element).submit((event) => {
+    $('form', this.element).submit(function (event) {
       event.preventDefault();
       $('.check-outcome', this.element).hide();
       this.checkOutcome();
-    });
+    }.bind(this));
   }
 
   checkOutcome () {
@@ -50,27 +50,59 @@ export default class CosmodeQuiz {
     }
 
     // First we count up the outcomes associated with the user's answers:
-    $('input', this.element).prop('disabled', true);
-    let score = 0;
-    for (let i = 0; i < formData.length; i++) {
-      let datum = formData[i];
-      score += parseInt(datum.value, 10);
+    let counts = {};
+    if (formData.length > 0) {
+      for (let i = 0; i < formData.length; i++) {
+        let datum = formData[i];
+        let outcomeId = parseInt(datum.value, 10);
+        // sometimes the answer doesnt correspond to an outcome:
+
+        if (!isNaN(outcomeId)) {
+          let thisCount = counts[outcomeId] ? counts[outcomeId] + 1 : 1;
+          counts[outcomeId] = thisCount;
+        }
+      }
+    }
+    else {
+      // Sometimes we get really zen and don't want any questions at all.
+      // In that case, we just select the first outcome.
+      let outcome = $('.outcome', this.element)[0];
+      counts[$(outcome).data('id')] = 1;
     }
 
-    let outcomes = $('.outcome', this.element);
-    let bestOutcome = null;
-    let maxMinScore = 0;
-
-    for (let i = 0; i < outcomes.length; i++) {
-      let outcome = $(outcomes[i]);
-      let minScore = parseInt(outcome.attr('data-min-score'), 10);
-      if (minScore <= score && minScore >= maxMinScore) {
-        bestOutcome = outcome;
-        maxMinScore = minScore;
+    // Create an ordered list of outcome possibilities:
+    let countStack = [];
+    for (let key in counts) {
+      if (counts.hasOwnProperty(key)) {
+        let count = counts[key];
+        countStack.push({
+          id: key,
+          count,
+        });
       }
     }
 
-    if (bestOutcome) {
+    countStack.sort(function (a, b) {
+      return a.count - b.count;
+    });
+
+    let outcomeId = 0;
+    let bestOutcome;
+
+    // walk through the potential outcomes until we find something suitable:
+    while (!outcomeId && countStack.length > 0) {
+      let count = countStack.pop();
+      bestOutcome = $('#outcome-' + count.id);
+
+      // filter require-perfect outcomes with imperfect counts
+      if (!bestOutcome.data('require-perfect') && count.count === formData.length) {
+        // alright, we have an outcome
+        outcomeId = count.id;
+      }
+    }
+
+    // If there's an outcome, show it.
+    if (outcomeId) {
       $('.outcomes', this.element).show();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         window.picturefill();
@@ -82,6 +114,8 @@ export default class CosmodeQuiz {
         offset: { top: OUTCOME_SCROLLTO_OFFSET_TOP },
       });
 
+      // freeze the inputs
+      $('input', this.element).prop('disabled', true);
       if (this.options.sendAnalytics) {
         sendResultAnalytics(bestOutcome);
       }
