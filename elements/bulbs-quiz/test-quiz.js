@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import {
   sendResultAnalytics,
   OUTCOME_REVEAL_DURATION,
