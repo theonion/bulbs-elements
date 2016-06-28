@@ -6,7 +6,7 @@ import {
 } from './quiz';
 
 export default class TallyQuiz {
-  constructo (options) {
+  constructor (options) {
     this.element = options.element;
     this.options = options;
     $('.check-outcome', this.element).css('visibility', 'visible');

@@ -47,7 +47,7 @@ export default class TestQuiz {
     }.bind(this));
   }
 
-  checkOutcome () {
+  checkOutcome () { // eslint-disable-line consistent-return
     let quiz = this;
     let form = $('form', this.element);
     let numQuestions = $('.question', this.element).length;

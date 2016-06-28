@@ -1,60 +1,61 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
-import './bulbs-quiz.scss';
+import invariant from 'invariant';
+import { contains } from 'lodash';
 import CosmodeQuiz from './cosmode-quiz';
-import TestQuiz from './test-quiz';
-import TallyQuiz from './tally-quiz';
 import MultipleChoiceQuiz from './multiple-choice-quiz';
+import TallyQuiz from './tally-quiz';
+import TestQuiz from './test-quiz';
+
+import './bulbs-quiz.scss';
 
 import $ from 'jquery';
 
+function getQuizType (quizTypeClass) {
+  let matches = quizTypeClass.match(/quiz-style-(\w+)/);
+  invariant(matches, 'bulbs-quiz: no valid quiz-style class present');
+  return matches[1];
+}
+
+const QUIZ_TYPES = ['tally', 'test', 'multiple', 'cosmo'];
+
 class BulbsQuiz extends BulbsHTMLElement {
   attachedCallback () {
-    $(document).on('detail-page-setup', (e, contentId) => {
-      let $elContent = $('#content-' + contentId);
+    invariant(this.attributes['content-id'], 'bulb-quiz: content-id is undefined, add a content-id attribute');
 
-      $elContent.find('.quiz').each(function (i) {
-        let elQuiz = $(e);
-        let quiz;
-        let styleSetup = {
-          cosmo () {
-            quiz = new CosmodeQuiz({ element: elQuiz });
-          },
+    let $element = $(this);
+    let quizType = getQuizType($element.attr('class'));
+    let contentId = this.attributes['content-id'].value;
+    let quiz;
 
-          tally () {
-            quiz = new TallyQuiz({ element: elQuiz });
-          },
+    switch (quizType) {
+    case 'cosmo':
+      quiz = new CosmodeQuiz({ element: $element });
+      break;
 
-          multiple () {
-            quiz = new MultipleChoiceQuiz({
-              element: elQuiz,
-              sendAnalytics: contentId === 1333
-            });
-          },
+    case 'tally':
+      quiz = new TallyQuiz({ element: $element });
+      break;
 
-          test () {
-            quiz = new TestQuiz({
-              element: elQuiz,
-              revealAllAnswers: elQuiz.hasClass('quiz-show-all-answers'),
-            });
-          },
-        };
-
-        for (let quizStyle in styleSetup) {
-          if (!styleSetup.hasOwnProperty(quizStyle)) {
-            continue;
-          }
-
-          if (elQuiz.hasClass('quiz-style-' + quizStyle)) {
-            let f = styleSetup[quizStyle];
-            f();
-          }
-        }
-
-        if (quiz) {
-          quiz.setup();
-        }
+    case 'multiple':
+      quiz = new MultipleChoiceQuiz({
+        element: $element,
+        sendAnalytics: contentId === 1333,
       });
-    });
+      break;
+
+    case 'test':
+      quiz = new TestQuiz({
+        element: $element,
+        revealAllAnswers: $element.hasClass('quiz-show-all-answers'),
+      });
+      break;
+
+    default:
+      invariant(contains(QUIZ_TYPES, quizType), `bulbs-quiz: ${quizType} is not a valid quiz style`);
+      break;
+    }
+
+    quiz.setup();
   }
 }
 

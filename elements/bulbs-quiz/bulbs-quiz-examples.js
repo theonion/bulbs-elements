@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-quiz',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-quiz
             attribute="value"

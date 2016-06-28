@@ -12,7 +12,6 @@ export function sendResultAnalytics (outcome) {
 
   if (window.clickTest) {
     console.log(gaEvent);
-    // e.preventDefault();
   }
   else {
     window.ga('send', 'event', gaEvent);

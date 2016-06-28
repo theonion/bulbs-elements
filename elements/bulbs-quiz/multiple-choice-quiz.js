@@ -17,7 +17,7 @@ export default class MultipleChoiceQuiz {
       let $elQuestion = $(elQuestion);
       $elQuestion.attr('data-unanswered', 'true');
 
-      $('.answer', $elQuestion).each((i, elAnswer) => {
+      $('.answer', $elQuestion).each((n, elAnswer) => {
         $('input', elAnswer).change(() => {
           // reveal post-answer content
           $elQuestion.attr('data-unanswered', 'false');
@@ -35,7 +35,7 @@ export default class MultipleChoiceQuiz {
     }.bind(this));
   }
 
-  checkOutcome () {
+  checkOutcome () { // eslint-disable-line consistent-return
     let quiz = this;
     let form = $('form', this.element);
     let formData = form.serializeArray();
