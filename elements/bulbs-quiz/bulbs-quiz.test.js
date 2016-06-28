@@ -27,7 +27,7 @@ describe('<bulbs-quiz>', () => {
       fixtureContainer.appendChild(subject);
       setImmediate(() => {
         expect(subject.quiz).to.be.an.instanceof(TestQuiz);
-        done()
+        done();
       });
     });
   });
