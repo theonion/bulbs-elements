@@ -1,3 +1,5 @@
+import $ from 'jQuery';
+
 export default class Quiz {
   constructor (element) {
     this.element = element;
@@ -11,6 +13,11 @@ export default class Quiz {
     if (this.isCompleted()) {
       this.checkOutcomeButton.style.display = 'none';
     }
+  }
+
+  getFormData () {
+    debugger
+    return $(this.form).serializeArray();
   }
 
   checkOutcome () {}

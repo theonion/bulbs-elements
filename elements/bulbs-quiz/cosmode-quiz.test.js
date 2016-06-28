@@ -141,4 +141,10 @@ describe('CosmodeQuiz', () => {
       });
     });
   });
+
+  describe('getScore', function() {
+    xit('adds up the score from each input', function() {
+
+    });
+  });
 });

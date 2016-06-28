@@ -14,13 +14,15 @@ const QUIZ_TYPES = [
 ];
 
 class BulbsQuiz extends BulbsHTMLElement {
-  get quizType() {
-    let matches = this.className.match(/quiz-style-(\w+)/)
+  get quizType () {
+    let matches = this.className.match(/quiz-style-(\w+)/);
     return matches ? matches[1] : null;
   }
 
-  validate() {
+  validate () {
     invariant(this.type, 'bulbs-quiz requires a quiz-style-<type> class');
+    let invalidTypeMessage = `bulbs-quiz ${this.type} is not a valid type, use one of: ${QUIZ_TYPES.join(', ')}`;
+    invariant(contains(QUIZ_TYPES, this.quizType), invalidTypeMessage);
   }
 
   attachedCallback () {

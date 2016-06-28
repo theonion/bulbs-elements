@@ -5,20 +5,28 @@ describe('Question', () => {
   let questionElement;
   let answerElement;
   let inputElement;
+  let inputElement2;
   let postAnswerBodyElement;
 
   beforeEach(() => {
     questionElement = document.createElement('div');
-    questionElement.className = 'question';
     answerElement = document.createElement('div');
-    answerElement.className = 'answer';
     inputElement = document.createElement('input');
+    inputElement2 = document.createElement('input');
     postAnswerBodyElement = document.createElement('div');
+
+    inputElement.type = 'radio';
+    inputElement2.type = 'radio';
+    inputElement.group = 'question-1';
+    inputElement2.group = 'question-1';
+    questionElement.className = 'question';
+    answerElement.className = 'answer';
     postAnswerBodyElement.style.display = 'none';
     postAnswerBodyElement.className = 'post-answer-body';
-
     questionElement.dataset.unanswered = true;
+
     answerElement.appendChild(inputElement);
+    answerElement.appendChild(inputElement2);
     answerElement.appendChild(postAnswerBodyElement);
     questionElement.appendChild(answerElement);
 

@@ -31,4 +31,12 @@ export default class CosmodeQuiz extends Quiz {
   disableInputs () {
     this.questions.forEach((question) => question.disableInput());
   }
+
+  enableInputs () {
+    this.questions.forEach((question) => question.enableInput());
+  }
+
+  getScore () {
+
+  }
 }

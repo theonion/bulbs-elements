@@ -4,19 +4,26 @@ describe('Quiz', () => {
   let subject;
   let element;
   let form;
+  let input;
   let checkOutcomeButton;
   let sandbox;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     element = document.createElement('bulbs-quiz');
+    input = document.createElement('input');
     form = document.createElement('form');
     checkOutcomeButton = document.createElement('button');
 
+    element.className = 'quiz-style-test';
+    input.type = 'text';
+    input.value = 'Test Value';
     checkOutcomeButton.className = 'check-outcome';
-
+    form.appendChild(input);
     element.appendChild(form);
     element.appendChild(checkOutcomeButton);
+    debugger
+    document.body.appendChild(element);
     subject = new Quiz(element);
   });
 
@@ -61,6 +68,12 @@ describe('Quiz', () => {
       sandbox.stub(subject, 'isCompleted').returns(false);
       subject.handleFormSubmit(event);
       expect(subject.checkOutcomeButton.style.display).to.equal('');
+    });
+  });
+
+  describe('getFormData', () => {
+    it('returns a serialized version of the form', () => {
+      expect(subject.getFormData()).to.equal([]);
     });
   });
 });
