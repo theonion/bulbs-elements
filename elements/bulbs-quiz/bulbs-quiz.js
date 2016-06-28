@@ -7,7 +7,6 @@ import TallyQuiz from './tally-quiz';
 import TestQuiz from './test-quiz';
 
 import './bulbs-quiz.scss';
-
 import $ from 'jquery';
 
 function getQuizType (quizTypeClass) {

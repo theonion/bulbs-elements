@@ -23,33 +23,45 @@ describe('<bulbs-quiz>', () => {
   });
 
   describe('TestQuiz', () => {
-    it('instantiates a TestQuiz when the quiz style is test', () => {
+    it('instantiates a TestQuiz when the quiz style is test', (done) => {
       fixtureContainer.appendChild(subject);
-      expect(subject.quiz).to.be.an.instanceof(TestQuiz);
+      setImmediate(() => {
+        expect(subject.quiz).to.be.an.instanceof(TestQuiz);
+        done()
+      });
     });
   });
 
   describe('TallyQuiz', () => {
-    it('instantiates a TallyQuiz when the quiz style is tally', () => {
+    it('instantiates a TallyQuiz when the quiz style is tally', (done) => {
       subject.className = 'quiz-style-tally';
       fixtureContainer.appendChild(subject);
-      expect(subject.quiz).to.be.an.instanceof(TallyQuiz);
+      setImmediate(() => {
+        expect(subject.quiz).to.be.an.instanceof(TallyQuiz);
+        done();
+      });
     });
   });
 
   describe('MultipleChoiceQuiz', () => {
-    it('instantiates a MultipleChoiceQuiz when the quiz style is multiple', () => {
+    it('instantiates a MultipleChoiceQuiz when the quiz style is multiple', (done) => {
       subject.className = 'quiz-style-multiple';
       fixtureContainer.appendChild(subject);
-      expect(subject.quiz).to.be.an.instanceof(MultipleChoiceQuiz);
+      setImmediate(() => {
+        expect(subject.quiz).to.be.an.instanceof(MultipleChoiceQuiz);
+        done();
+      });
     });
   });
 
   describe('CosmodeQuiz', () => {
-    it('instantiates a CosmodeQuiz when the quiz style is cosmo', () => {
+    it('instantiates a CosmodeQuiz when the quiz style is cosmo', (done) => {
       subject.className = 'quiz-style-cosmo';
       fixtureContainer.appendChild(subject);
-      expect(subject.quiz).to.be.an.instanceof(CosmodeQuiz);
+      setImmediate(() => {
+        expect(subject.quiz).to.be.an.instanceof(CosmodeQuiz);
+        done();
+      });
     });
   });
 });
