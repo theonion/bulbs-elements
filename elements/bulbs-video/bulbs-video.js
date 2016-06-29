@@ -60,6 +60,7 @@ export default class BulbsVideo extends BulbsElement {
         {...this.state}
         twitterHandle={this.props.twitterHandle}
         targetCampaignId={this.props.targetCampaignId}
+        targetCampaignNumber={this.props.targetCampaignNumber}
         targetHostChannel={this.props.targetHostChannel}
         targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
@@ -85,6 +86,7 @@ Object.assign(BulbsVideo, {
     noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
     targetCampaignId: PropTypes.string,
+    targetCampaignNumber: PropTypes.string,
     targetHostChannel: PropTypes.string,
     targetSpecialCoverage: PropTypes.string,
     twitterHandle: PropTypes.isRequired,

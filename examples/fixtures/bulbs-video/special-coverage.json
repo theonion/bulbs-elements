@@ -20,6 +20,19 @@
     "main"
   ],
   "category": "main/onion-labs",
+  "player_options": {
+    "poster": "http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg",
+    "shareUrl": "http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053",
+    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>",
+    "comscore": {
+      "id": 6036328,
+      "metadata": {
+        "c3": "onionstudios",
+        "c4": "CLICKHOLE",
+        "ns_st_ci": "onionstudios.4053"
+      }
+    }
+  },
   "videojs_options": {
     "techOrder": [
       "html5",
