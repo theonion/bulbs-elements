@@ -121,6 +121,7 @@ describe('<bulbs-video> <Revealed>', () => {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',
+          targetCampaignNumber: '123456',
           targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
@@ -204,26 +205,32 @@ describe('<bulbs-video> <Revealed>', () => {
           });
         });
 
+        it('overrides `main` in the tags to use attribute host channel', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('host_channel');
+          expect(tags).not.to.include('main');
+        });
+
+        it('includes special coverage in the tags for targeting', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('sc-slug');
+        });
+
+        it('includes the campaign number in the tags for targeting', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('123456');
+        });
+
         it('passes through the muted value', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta
-          );
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
 
         it('sets sharetools config', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta
-          );
           expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(window.location.href);
         });
 
         it('sets ga config', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta);
+          expect(makeVideoPlayerSpy.args[0][1].gaPrefix).to.match(/^videoplayer\d+$/);
         });
       });
 

@@ -58,6 +58,20 @@ let examples = {
         `;
       },
     },
+    'Rail player (LEGACY, pre-rMVP)': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+            target-host-channel="right_rail"
+            target-campaign-number="campaign_605759"
+            autoplay
+            muted
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 
