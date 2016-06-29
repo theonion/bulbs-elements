@@ -33,13 +33,14 @@ export default class RailPlayer extends BulbsElement {
 }
 
 Object.assign(RailPlayer, {
-  displayName: 'BulbsVideo',
+  displayName: 'RailPlayer',
   schema: {
     video: VideoField,
     videoRequest: VideoRequest,
   },
   propTypes: {
     channel: PropTypes.string.isRequired,
+    recircUrl: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
   },
 });
