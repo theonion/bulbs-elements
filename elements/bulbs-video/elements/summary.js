@@ -32,6 +32,9 @@ export function VideoSummaryView (props) {
         { nowPlaying }
         <VideoPlayButton/>
       </div>
+      <h2 className='bulbs-video-series-name'>
+        {video.series_name || video.channel_name}
+      </h2>
       <h3 className='bulbs-video-summary-title'>
         {video.title}
       </h3>

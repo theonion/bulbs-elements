@@ -14,6 +14,9 @@ export function VideoMetaView (props) {
 
   return (
     <div className='bulbs-video-meta'>
+      <h2 className='bulbs-video-meta-series-name'>
+        {props.video.series_name || props.video.channel_name}
+      </h2>
       <h1 className='bulbs-video-meta-title'>
         {props.video.title}
       </h1>
