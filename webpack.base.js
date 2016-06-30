@@ -56,6 +56,19 @@ exports.plugins = {
   clean: new CleanWebpackPlugin(['.test', 'dist'], {
     verbose: true,
   }),
+  clickventure: new webpack.ProvidePlugin({
+    Clickventure: 'clickventure',
+    'window.Clickventure': 'clickventure',
+  }),
+  jquery: new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    'window.jQuery': 'jquery',
+  }),
+  google_analytics: new webpack.ProvidePlugin({
+    ga: 'google-analytics',
+    'window.ga': 'google-analytics',
+  }),
 };
 
 exports.loaders = {

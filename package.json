@@ -105,6 +105,7 @@
     "stylelint": "^4.0.0",
     "stylelint-config-standard": "^3.0.0",
     "van": "0.0.4",
+    "velocity-animate": "^1.2.3",
     "walk": "^2.3.9",
     "watch": "^0.17.1",
     "webpack": "^1.12.11",
