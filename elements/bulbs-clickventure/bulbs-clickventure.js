@@ -20,11 +20,7 @@ function collapseResponsiveMenu () {
 class BulbsClickventure extends BulbsHTMLElement {
   attachedCallback () {
     let $element = $(this);
-    $element.data('clickventurePlugin', new Clickventure($element, {
-      hashState: true,
-      preventFirstAlignment: true,
-      analyticsManager: window.clickholean,
-    }));
+    $element.data('clickventurePlugin', new Clickventure($element));
     $element.on('clickventure-page-change', fireAnalytics);
     $element.on('clickventure-page-change-complete', collapseResponsiveMenu);
     // new ClickventureManager('.clickventure-container');
