@@ -1,9 +1,9 @@
 import {
   registerElement,
-  EmbededCMSElement,
+  EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
-class EmbeddedBulbsQuiz extends EmbededCMSElement {
+class EmbeddedBulbsQuiz extends EmbeddedCMSElement {
   get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>

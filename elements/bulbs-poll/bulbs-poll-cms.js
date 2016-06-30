@@ -1,6 +1,6 @@
 import {
   registerElement,
-  EmbededCMSElement,
+  EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
 let promiseCache = {};
@@ -13,7 +13,7 @@ function getPreviewData (src, callback) {
   });
 }
 
-class EmbeddedBulbsPoll extends EmbededCMSElement {
+class EmbeddedBulbsPoll extends EmbeddedCMSElement {
   get embedContentPreview () {
     let src = this.getAttribute('src');
     let title = '';
