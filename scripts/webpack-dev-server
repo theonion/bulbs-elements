@@ -1,14 +1,57 @@
-#!/usr/bin/env bash
-export node_env=hot
-node_modules/.bin/webpack-dev-server \
-  --devtool cheap-module-eval-source-map \
-  --inline \
-  --hot \
-  --watch \
-  --color \
-  --output-pathinfo \
-  --history-api-fallback \
-  --content-base examples/ \
-  --output-path / \
-  --display-error-details \
-  --config webpack.config.hot.js
+#! /usr/bin/env node
+'use strict';
+
+const WebpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
+const hotConfig = require('../webpack.config.hot');
+const compiler = webpack(hotConfig);
+const chokidar = require('chokidar');
+const path = require('path');
+
+const server = new WebpackDevServer(compiler, {
+  devtool: 'cheap-module-eval-sourcemap',
+  color: true,
+  inline: true,
+  hot: true,
+  watch: true,
+  outputPathinfo: true,
+  historyApiFallback: true,
+  contentBase: 'examples/',
+  outputPath: '/',
+  displayErrorDetails: true,
+  setup: (app) => {
+    app.get('/test-update-stream', (req, res) => {
+      let messageCount = 0;
+      req.socket.setTimeout(Number.MAX_SAFE_INTEGER);
+      const watcher = chokidar.watch('./{lib,elements}/**/*.js');
+
+      function changeHandler () {
+        try {
+          messageCount++; // Increment our message count
+
+          // inline is a little too quick for webpack
+          setTimeout(() => {
+            let message = '{ update: true }';
+            res.write('id: ' + messageCount + '\n');
+            res.write('data: ' + message + '\n\n'); // Note the extra newline
+          }, 500);
+        }
+        catch (errer) {
+          watcher.close();
+        }
+      }
+
+      watcher.on('change', changeHandler);
+      watcher.on('unlink', changeHandler);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+      });
+      res.write('\n');
+    });
+  }
+});
+
+server.listen(8080);

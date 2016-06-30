@@ -81,7 +81,7 @@ export default class Revealed extends React.Component {
     ga(prefixedSet, 'dimension6', specialCoverage);
     ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
     ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
-    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Campaign Number
+    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Tunic Campaign Id
     ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
@@ -95,12 +95,18 @@ export default class Revealed extends React.Component {
       filteredTags.push(specialCoverage);
     }
 
+    if (this.props.targetCampaignNumber) {
+      filteredTags.push(this.props.targetCampaignNumber);
+    }
+
     this.props.video.tags.forEach(function (tag) {
       // Temporary until videojs_options completely removed from Onion Studios
       if (tag !== 'main') {
         filteredTags.push(tag);
       }
     });
+
+    videoMeta.tags = filteredTags;
 
     if (this.props.muted) {
       videoMeta.player_options.muted = true;
@@ -151,7 +157,7 @@ export default class Revealed extends React.Component {
     return results;
   }
 
-  vastTest (searchString) {
+  vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
       let vastId = this.parseParam('xgid', searchString);
 
@@ -190,7 +196,7 @@ export default class Revealed extends React.Component {
 
     player.videoMeta = videoMeta;
 
-    player.setup({
+    let playerOptions = {
       key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
       skin: {
         name: 'onion',
@@ -210,11 +216,16 @@ export default class Revealed extends React.Component {
       preload: 'none',
       primary: 'html5',
       width: '100%',
-      sharing: {
+    };
+
+    if (!this.props.disableSharing) {
+      playerOptions.sharing = {
         link: videoMeta.player_options.shareUrl,
         code: videoMeta.player_options.embedCode,
-      },
-    });
+      };
+    }
+
+    player.setup(playerOptions);
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
@@ -233,9 +244,11 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  disableSharing: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
+  targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,

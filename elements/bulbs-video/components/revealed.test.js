@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 
@@ -119,6 +121,7 @@ describe('<bulbs-video> <Revealed>', () => {
         props = {
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: 'campaign',
+          targetCampaignNumber: '123456',
           targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
@@ -202,26 +205,32 @@ describe('<bulbs-video> <Revealed>', () => {
           });
         });
 
+        it('overrides `main` in the tags to use attribute host channel', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('host_channel');
+          expect(tags).not.to.include('main');
+        });
+
+        it('includes special coverage in the tags for targeting', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('sc-slug');
+        });
+
+        it('includes the campaign number in the tags for targeting', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('123456');
+        });
+
         it('passes through the muted value', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta
-          );
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
 
         it('sets sharetools config', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta
-          );
           expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(window.location.href);
         });
 
         it('sets ga config', () => {
-          let videoMeta = Object.assign({}, props.video);
-          expect(makeVideoPlayerSpy).to.have.been.calledWithMatch(
-            videoRef, videoMeta);
+          expect(makeVideoPlayerSpy.args[0][1].gaPrefix).to.match(/^videoplayer\d+$/);
         });
       });
 
@@ -494,66 +503,95 @@ describe('<bulbs-video> <Revealed>', () => {
       };
     });
 
-    context('player set up', () => {
+    describe('player set up', () => {
       let sources;
       let extractSourcesStub;
       let vastUrlStub;
 
-      beforeEach(() => {
-        sources = [
-          {
-            'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
-          },
-          {
-            'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
-          },
-        ];
-        extractSourcesStub = sinon.stub().returns(sources);
-        vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+      context('regular setup', () => {
+        beforeEach(() => {
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
 
-        Revealed.prototype.makeVideoPlayer.call({
-          extractSources: extractSourcesStub,
-          vastUrl: vastUrlStub,
-        }, element, videoMeta);
+          Revealed.prototype.makeVideoPlayer.call({
+            props: {},
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
+
+        it('sets up the player', () => {
+          expect(playerSetup.called).to.be.true;
+        });
+
+        it('includes only the HLS & mp4 sources', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sources).to.eql(sources);
+        });
+
+        it('sets up the advertising VAST tag', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.advertising.client).to.equal('vast');
+          expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
+          expect(setupOptions.advertising.skipoffset).to.equal(5);
+        });
+
+        it('sets the image as the poster image', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
+        });
+
+        it('sets up the sharing link', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing.link).to.equal(videoMeta.player_options.shareUrl);
+        });
+
+        it('sets up the sharing embed code', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing.code).to.equal(videoMeta.player_options.embedCode);
+        });
+
+        it('initializes the GoogleAnalytics plugin', () => {
+          expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+        });
+
+        it('initializes the Comscore plugin', () => {
+          expect(Comscore.init.calledWith(player)).to.be.true;
+        });
       });
 
-      it('sets up the player', () => {
-        expect(playerSetup.called).to.be.true;
-      });
+      context('sharing disabled', () => {
+        beforeEach(() => {
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
 
-      it('includes only the HLS & mp4 sources', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sources).to.eql(sources);
-      });
+          Revealed.prototype.makeVideoPlayer.call({
+            props: { disableSharing: true },
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
 
-      it('sets up the advertising VAST tag', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.advertising.client).to.equal('vast');
-        expect(setupOptions.advertising.tag).to.equal('http://localhost:8080/vast.xml');
-        expect(setupOptions.advertising.skipoffset).to.equal(5);
-      });
-
-      it('sets the image as the poster image', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.image).to.equal(videoMeta.player_options.poster);
-      });
-
-      it('sets up the sharing link', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sharing.link).to.equal(videoMeta.player_options.shareUrl);
-      });
-
-      it('sets up the sharing embed code', () => {
-        let setupOptions = playerSetup.args[0][0];
-        expect(setupOptions.sharing.code).to.equal(videoMeta.player_options.embedCode);
-      });
-
-      it('initializes the GoogleAnalytics plugin', () => {
-        expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
-      });
-
-      it('initializes the Comscore plugin', () => {
-        expect(Comscore.init.calledWith(player)).to.be.true;
+        it('does not set sharing configuration', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.sharing).to.be.undefined;
+        });
       });
     });
   });

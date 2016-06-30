@@ -1,3 +1,5 @@
+require('iframe-resizer/js/iframeResizer.contentWindow');
+
 require('whatwg-fetch');
 import chaiEnzyme from 'chai-enzyme';
 

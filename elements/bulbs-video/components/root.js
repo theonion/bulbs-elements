@@ -31,6 +31,7 @@ Root.propTypes = {
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
+  targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
   twitterHandle: PropTypes.string,
