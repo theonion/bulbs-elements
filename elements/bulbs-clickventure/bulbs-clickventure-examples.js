@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-clickventure',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-clickventure
             attribute="value"

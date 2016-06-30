@@ -23,7 +23,7 @@ export default class ClickventureManager {
   }
 
   pauseAll (exception) {
-    this.$audioTag.each(function(index, item) {
+    this.$audioTag.each((index, item) => {
       if (item !== exception) {
         item.pause();
       }
