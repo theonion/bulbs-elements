@@ -1,3 +1,4 @@
+/* eslint max-len: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DfpPixel from './dfp-pixel';
@@ -5,8 +6,10 @@ import DfpPixel from './dfp-pixel';
 describe('<campaign-display> <DfpPixel>', () => {
   let reactContainer;
   let renderSubject;
+  let sandbox;
 
   beforeEach(() => {
+    sandbox = sinon.sandbox.create();
     ['warn', 'log', 'error'].forEach(function (method) {
       sinon.stub(window.console, method);
     });
@@ -14,10 +17,15 @@ describe('<campaign-display> <DfpPixel>', () => {
     document.body.appendChild(reactContainer);
 
     renderSubject = function (props) {
-      let componentProps = Object.assign({
-        placement: 'junk',
+      let componentProps = {
+        placement: 'test',
         campaignId: 1,
-      }, props);
+      };
+      // Destructive merge of given properties
+      // (otherwise defaults cannot be removed via undefined)
+      for (let key in props) {
+        componentProps[key] = props[key];
+      }
 
       return ReactDOM.render(<DfpPixel {...componentProps} />, reactContainer);
     };
@@ -81,6 +89,11 @@ describe('<campaign-display> <DfpPixel>', () => {
   });
 
   context('targeting parameters', () => {
+    beforeEach(() => {
+      window.BULBS_ELEMENTS_ADS_MANAGER = {
+        loadAds: sandbox.spy(),
+      };
+    });
 
     it('should include ad unit placement', () => {
       let placement = 'top';
@@ -90,11 +103,10 @@ describe('<campaign-display> <DfpPixel>', () => {
     });
 
     it('should require ad unit placement', () => {
+      window.BULBS_ELEMENTS_ADS_MANAGER = undefined; // eslint-disable-line no-undefined
       renderSubject({ placement: window.undefined });
-
-      expect(console.error).to.have.been.calledWith(
-        'Warning: Failed propType: Required prop `placement` was not specified in `DfpPixel`.'
-      );
+      let expectedMessage = '<campaign-display> pixel will not trigger since `window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an AdsManager instance.';
+      expect(console.warn).to.have.been.calledWith(expectedMessage);
     });
 
     it('should include campaign id', () => {
@@ -105,10 +117,9 @@ describe('<campaign-display> <DfpPixel>', () => {
     });
 
     it('should require campaign id', () => {
-      renderSubject({ campaignId: window.undefined });
-      expect(console.error).to.have.been.calledWith(
-        'Warning: Failed propType: Required prop `campaignId` was not specified in `DfpPixel`.'
-      );
+      renderSubject({ campaignId: undefined }); // eslint-disable-line no-undefined
+      let errorMessagePattern = /Warning: Failed prop type: Required prop `campaignId` was not specified in `DfpPixel`/;
+      expect(console.error).to.have.been.calledWithMatch(errorMessagePattern);
     });
   });
 });
