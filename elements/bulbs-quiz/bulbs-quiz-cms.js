@@ -3,15 +3,15 @@ import {
   EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
-class EmbeddedBulbsVideo extends EmbeddedCMSElement {
+class EmbeddedBulbsQuiz extends EmbeddedCMSElement {
   get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>
         <i class='fa fa-puzzle-piece'></i>
-        Embedded BulbsVideo
+        Embedded BulbsQuiz
       </h1>
     `;
   }
 }
 
-registerElement('bulbs-video', EmbeddedBulbsVideo);
+registerElement('bulbs-quiz', EmbeddedBulbsQuiz);
