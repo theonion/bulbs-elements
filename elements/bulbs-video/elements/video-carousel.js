@@ -110,8 +110,8 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     );
 
     forEach.call(
-      this.querySelectorAll('campaign-display'),
-      (element) => element.setAttribute('src', this.state.campaignUrl)
+      this.querySelectorAll('bulbs-video-meta'),
+      (element) => element.setAttribute('campaign-url', this.state.campaignUrl)
     );
 
     forEach.call(
