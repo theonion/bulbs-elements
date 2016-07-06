@@ -40,8 +40,9 @@ class BulbsSlideshow extends BulbsHTMLElement {
 
   createNavigationLinkClickHandler (direction) {
     return function (event) {
+      let $element = $(event.currentTarget);
       event.preventDefault();
-      if (!event.currentTarget.hasClass('slides-disabled')) {
+      if (!$element.hasClass('slides-disabled')) {
         this.flexSlider.flexAnimate(this.flexSlider.getTarget(direction));
       }
     }.bind(this);
