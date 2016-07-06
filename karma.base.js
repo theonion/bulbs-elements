@@ -19,8 +19,8 @@ module.exports = {
   files: [
     // test/index.js loads all our tests
     // and sets up test helpers (chai-enzyme, etc.)
-    path.join(__dirname, 'node_modules/whatwg-fetch/fetch.js'),
-    path.join(__dirname, 'test/index.js'),
+    'node_modules/whatwg-fetch/fetch.js',
+    'test/index.js',
     'test/fixtures/**/*',
   ],
 
