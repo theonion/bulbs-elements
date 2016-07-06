@@ -1,17 +1,17 @@
 import {
   registerElement,
-  EmbeddedCMSElement,
+  EmbededCMSElement,
 } from 'bulbs-elements/register';
 
-class EmbeddedBulbsVideo extends EmbeddedCMSElement {
+class EmbeddedBulbsClickventure extends EmbededCMSElement {
   get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>
         <i class='fa fa-puzzle-piece'></i>
-        Embedded BulbsVideo
+        Embedded BulbsClickventure
       </h1>
     `;
   }
 }
 
-registerElement('bulbs-video', EmbeddedBulbsVideo);
+registerElement('bulbs-clickventure', EmbeddedBulbsClickventure);

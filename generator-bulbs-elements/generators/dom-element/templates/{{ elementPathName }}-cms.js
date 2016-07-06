@@ -1,9 +1,9 @@
 import {
   registerElement,
-  EmbededCMSElement,
+  EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
-class Embedded<%= elementClassName %> extends EmbededCMSElement {
+class Embedded<%= elementClassName %> extends EmbeddedCMSElement {
   get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>

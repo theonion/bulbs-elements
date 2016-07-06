@@ -1,15 +1,19 @@
 {
   "globals": {
-    "describe": true,
-    "it": true,
-    "xit": true,
-    "beforeEach": true,
-    "afterEach": true,
-    "context": true,
-    "chai": true,
-    "expect": true,
-    "assert": true,
-    "sinon": true,
+    "describe": false,
+    "it": false,
+    "xit": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "context": false,
+    "chai": false,
+    "expect": false,
+    "assert": false,
+    "sinon": false,
+    "ga": false,
+    "$": false,
+    "jQuery": false,
+    "Clickventure": false,
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
@@ -38,7 +42,8 @@
   },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jquery": true
   },
   "parser": "babel-eslint",
   "plugins": [
