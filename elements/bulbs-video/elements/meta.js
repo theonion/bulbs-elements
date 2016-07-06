@@ -16,8 +16,8 @@ export function VideoMetaView (props) {
     <div className='bulbs-video-meta'>
       <div className='bulbs-video-meta-copy'>
         <a 
-          href=''
-          data-track-action=''
+          href={props.video.series_url || props.video.channel_url}
+          data-track-action={props.titleTrackAction}
           data-track-label={props.video.series_name || props.video.channel_name}>
           <h2 className='bulbs-video-meta-series-name'>
             {props.video.series_name || props.video.channel_name}
@@ -47,6 +47,7 @@ VideoMetaView.propTypes = {
   shareTrackAction: PropTypes.string.isRequired,
   shareTwitterHandle: PropTypes.string.isRequired,
   shareUrl: PropTypes.string,
+  titleTrackAction: PropTypes.string.isRequired,
   video: PropTypes.object,
 };
 
@@ -76,6 +77,7 @@ Object.assign(VideoMeta, {
     shareEmailMessage: PropTypes.string.isRequired,
     shareTrackCatagory: PropTypes.string.isRequired,
     shareTwitterHandle: PropTypes.string.isRequired,
+    titleTrackAction: PropTypes.string.isRequired,
     shareUrl: PropTypes.string,
   },
 });
