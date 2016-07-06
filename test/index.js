@@ -15,5 +15,11 @@ chai.use(chaiEnzyme());
 let libContext = require.context('../lib', true, /.test$/);
 let elementsContext = require.context('../elements', true, /.test$/);
 
+beforeEach(() => {
+  fixture.setBase('test/fixtures');
+  let fixtureContainer = document.getElementById('fixture_container');
+  fixtureContainer.style.display = 'none';
+});
+
 libContext.keys().forEach(libContext);
 elementsContext.keys().forEach(elementsContext);
