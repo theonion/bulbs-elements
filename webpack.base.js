@@ -171,6 +171,7 @@ exports.config = {
       'bower_components',
       'node_modules',
       'lib',
+      'test',
     ],
     alias: {
     },

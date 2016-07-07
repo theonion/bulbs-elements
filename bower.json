@@ -17,7 +17,8 @@
     "tests"
   ],
   "devDependencies": {
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "flexslider": "^2.6.1"
   },
   "dependencies": {
     "bulbs-public-analytics-manager": "theonion/bulbs-public-analytics-manager#0.1.3"
