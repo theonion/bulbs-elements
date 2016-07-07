@@ -1,17 +1,20 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import { SplitPic, SplitPicVertical } from './splitpic';
+import invariant from 'invariant';
 import './bulbs-splitpic.scss';
 
 class BulbsSplitpic extends BulbsHTMLElement {
   attachedCallback () {
-    console.log('Attached bulbs-splitpic');
-    // $('.splitpic-horizontal .splitpic-images', elContent).each(function (i, v) {
-    //   var sp = new SplitPic(v);
-    // });
+    invariant(this.attributes.orientation.value, 'BulbsSplitpic: orientation attribute is required');
+    this.orientation = this.attributes.orientation.value;
 
-    // $('.splitpic-vertical .splitpic-images', elContent).each(function (i, v) {
-    //   var sp = new SplitPicVertical(v);
-    // });
+    if (this.orientation === 'horizontal') {
+      this.splitPic = new SplitPic(this);
+    }
+
+    if (this.orientation === 'vertical') {
+      this.splitPic = new SplitPicVertical(this);
+    }
   }
 }
 
