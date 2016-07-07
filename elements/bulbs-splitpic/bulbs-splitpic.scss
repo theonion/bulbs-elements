@@ -4,6 +4,8 @@ bulbs-splitpic {
   overflow: hidden;
 
   .splitpic-images {
+    position: relative;
+
     &.size-big {
       width: 100%;
     }
@@ -27,10 +29,8 @@ bulbs-splitpic {
     }
 
     .splitpic-image {
-      position: relative;
       overflow: hidden;
       margin-top: 0px;
-      background-color: orange;
 
       .image {
         height: auto;
