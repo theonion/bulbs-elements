@@ -19,9 +19,9 @@ module.exports = {
   files: [
     // test/index.js loads all our tests
     // and sets up test helpers (chai-enzyme, etc.)
-    'node_modules/whatwg-fetch/fetch.js',
-    'test/index.js',
-    'test/fixtures/**/*',
+    path.join(__dirname, 'node_modules', 'whatwg-fetch', 'fetch.js'),
+    path.join(__dirname, 'test', 'index.js'),
+    path.join(__dirname, 'test', 'fixtures', '**', '*'),
   ],
 
   // list of files to exclude
