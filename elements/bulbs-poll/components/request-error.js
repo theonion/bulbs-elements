@@ -11,6 +11,7 @@ export default function RequestError ({ error, children, reset }) {
       </div>
     );
   }
+
   return <div />;
 }
 

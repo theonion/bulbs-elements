@@ -30,12 +30,6 @@ describe('<campaign-display>', () => {
     fetchMock.mock(src, campaign);
   });
 
-  it('should require a src', () => {
-    expect(() => {
-      new CampaignDisplay({ placement: 'top' }); // eslint-disable-line
-    }).to.throw('campaign-display component requires a src');
-  });
-
   it('should require a placement', function () {
     expect(() => {
       new CampaignDisplay({ src: 'some/src '}); // eslint-disable-line
@@ -47,12 +41,65 @@ describe('<campaign-display>', () => {
     expect(subject).to.have.prop('noLink', true);
   });
 
+  describe('componentDidUpdate', () => {
+    beforeEach(() => {
+      let wrapper = shallow(
+        <CampaignDisplay
+          placement='test-placement'
+          src='http://example.com/campaign'
+        />
+      );
+      subject = wrapper.instance();
+
+      campaign = {};
+      sinon.spy(subject, 'initialDispatch');
+      subject.store.actions.handleFetchComplete({}, campaign);
+    });
+
+    context('src did not change', () => {
+      it('does not reset campaign state', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        expect(subject.state.campaign).to.eql(campaign);
+      });
+
+      it('does not call initialDispatch', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        expect(subject.initialDispatch).not.to.have.been.called;
+      });
+    });
+
+    context('src changed', () => {
+      it('resets the campaign state', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/other-campaign' });
+        expect(subject.state.campaign).to.be.null;
+      });
+
+      it('calls initialDispatch', () => {
+        subject.componentDidUpdate({ src: 'http://example.com/other-campaign' });
+        expect(subject.initialDispatch).to.have.been.called;
+      });
+    });
+  });
+
   describe('initialDispatch', () => {
-    it('fetches campaign data for display', () => {
-      subject = new CampaignDisplay(props);
-      let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
-      subject.initialDispatch();
-      expect(spy).to.have.been.calledWith(src);
+    context('src is falsey', () => {
+      beforeEach(() => delete props.src);
+
+      it('makes no request', () => {
+        subject = new CampaignDisplay(props);
+        let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
+        subject.initialDispatch();
+        expect(spy).not.to.have.been.called;
+      });
+    });
+
+    context('src is given', () => {
+      it('fetches campaign data for display', () => {
+        subject = new CampaignDisplay(props);
+        let spy = sinon.stub(subject.store.actions, 'fetchCampaign');
+        subject.initialDispatch();
+        expect(spy).to.have.been.calledWith(src);
+      });
     });
   });
 });

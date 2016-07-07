@@ -1,45 +1,52 @@
-import { calculatesTransform } from './carousel-slider';
+/* eslint-disable no-return-assign */
 
-describe('<bulbs-video-carousel-slider>', () => {
+import './bulbs-carousel';
+
+describe('<bulbs-carousel> BulbsCarouselState', () => {
   let container;
   let subject;
+  let carousel;
+  let track;
   let firstItem;
   let secondItem;
 
   beforeEach((done) => {
-    container = document.createElement('container');
+    container = document.createElement('test-container');
     container.innerHTML = `
-      <bulbs-video-carousel-slider>
-       <bulbs-video-carousel-item id="first"></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item id="second"></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-       <bulbs-video-carousel-item></bulbs-video-carousel-item>
-      </bulsb-video-carousel-slider>
+      <bulbs-carousel>
+        <bulbs-carousel-slider>
+          <bulbs-carousel-item id="first"></bulbs-carousel-item>
+          <bulbs-carousel-item id="second"></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+          <bulbs-carousel-item></bulbs-carousel-item>
+        </bulbs-carousel-slider>
+      </bulbs-carousel>
      `;
-    // ^^ There are ten carousel-items in there ^^
-
-    document.body.appendChild(container);
-    subject = container.children[0];
-
-    firstItem = subject.querySelector('#first');
-    secondItem = subject.querySelector('#second');
+    carousel = container.querySelector('bulbs-carousel');
+    firstItem = container.querySelector('#first');
+    secondItem = container.querySelector('#second');
 
     firstItem.style.width = '100px';
     firstItem.style.height = '100px';
     secondItem.style.width = '100px';
     secondItem.style.height = '100px';
     firstItem.style.transition = 'none'; // Kill animations for test
+
+    document.body.appendChild(container);
     // document.registerElement polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
-      subject.track.style.width = '100px';
-      subject.track.style.height = '100px';
+      subject = carousel.state;
+      track = carousel.track;
+      track.style.width = '100px';
+      track.style.height = '100px';
+
       done();
     });
   });
@@ -48,37 +55,53 @@ describe('<bulbs-video-carousel-slider>', () => {
     document.body.removeChild(container);
   });
 
-  describe('createdCallback', () => {
-    it('wraps content in a <bulbs-carousel-track>', () => {
-      expect(subject.children).to.have.length(1);
-      expect(
-        subject.children[0].querySelectorAll('bulbs-video-carousel-item')
-      ).to.have.length(10);
-    });
-
-    it('sets currentIndex to 0', () => {
-      expect(subject.currentIndex).to.eql(0);
-    });
-
-    describe('attachedCallback', () => {
-      it('slides items', () => {
-        sinon.spy(subject, 'slideItems');
-        subject.attachedCallback();
-        expect(subject.slideItems).to.have.been.called;
-      });
-    });
+  it('sets currentIndex to 0', () => {
+    expect(subject.props.currentIndex).to.eql(0);
   });
 
-  describe('carouselItems', () => {
-    it('is the track children', () => {
-      expect(subject.carouselItems).to.eql(subject.track.children);
+  describe('getActiveCarouselItem', () => {
+    context('an item is active', () => {
+      beforeEach(() => {
+        secondItem.setAttribute(
+          'href', window.location.pathname
+        );
+      });
+
+      it('returns that item', () => {
+        expect(subject.getActiveCarouselItem()).to.eql(
+          secondItem
+        );
+      });
+    });
+
+    context('multiple items are active', () => {
+      beforeEach(() => {
+        firstItem.setAttribute(
+          'href', window.location.pathname
+        );
+        secondItem.setAttribute(
+          'href', window.location.pathname
+        );
+      });
+
+      it('returns the first active item', () => {
+        expect(subject.getActiveCarouselItem()).to.eql(
+          firstItem
+        );
+      });
+    });
+
+    context('no items are active', () => {
+      it('returns undefined', () => {
+        expect(subject.getActiveCarouselItem()).to.be.undefined;
+      });
     });
   });
 
   describe('getGridRatio', () => {
     context('with no carouselItems', () => {
       beforeEach(() => {
-        subject.track.innerHTML = '';
+        track.innerHTML = '';
       });
 
       it('is zero', () => {
@@ -88,7 +111,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('two-up', () => {
       beforeEach(() => {
-        subject.style.width = '200px';
+        carousel.style.width = '200px';
       });
 
       it('is 1/2', () => {
@@ -98,7 +121,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('three-up', () => {
       beforeEach(() => {
-        subject.style.width = '300px';
+        carousel.style.width = '300px';
       });
 
       it('is 1/3', () => {
@@ -108,7 +131,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('ten-up', () => {
       beforeEach(() => {
-        subject.style.width = '1000px';
+        carousel.style.width = '1000px';
       });
 
       it('is 1/10', () => {
@@ -128,7 +151,6 @@ describe('<bulbs-video-carousel-slider>', () => {
       beforeEach(() => {
         firstItem.style.marginLeft = '10px';
         firstItem.style.marginRight = '20px';
-        // give render engine a chance to apply/compute styles
       });
 
       it('adds the margins together', () => {
@@ -140,7 +162,7 @@ describe('<bulbs-video-carousel-slider>', () => {
   describe('getItemWidth', () => {
     context('there are no items', () => {
       beforeEach(() => {
-        subject.track.innerHTML = '';
+        track.innerHTML = '';
       });
 
       it('is zero', () => {
@@ -152,7 +174,7 @@ describe('<bulbs-video-carousel-slider>', () => {
   describe('getChildrenPerPage', () => {
     context('there are no items', () => {
       beforeEach(() => {
-        subject.track.innerHTML = '';
+        track.innerHTML = '';
       });
 
       it('is zero', () => {
@@ -162,7 +184,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('two-up', () => {
       beforeEach(() => {
-        subject.style.width = '200px';
+        carousel.style.width = '200px';
       });
 
       it('is 2', () => {
@@ -172,7 +194,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('three-up', () => {
       beforeEach(() => {
-        subject.style.width = '300px';
+        carousel.style.width = '300px';
       });
 
       it('is 3', () => {
@@ -182,7 +204,7 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('ten-up', () => {
       beforeEach(() => {
-        subject.style.width = '1000px';
+        carousel.style.width = '1000px';
       });
 
       it('is 10', () => {
@@ -194,7 +216,7 @@ describe('<bulbs-video-carousel-slider>', () => {
   describe('getCurrentPage', () => {
     context('there are no items', () => {
       beforeEach(() => {
-        subject.track.innerHTML = '';
+        track.innerHTML = '';
       });
 
       it('is zero', () => {
@@ -204,59 +226,59 @@ describe('<bulbs-video-carousel-slider>', () => {
 
     context('three-up', () => {
       beforeEach(() => {
-        subject.style.width = '300px';
+        carousel.style.width = '300px';
       });
 
       context('currentIndex is 0', () => {
         it('is zero', () => {
-          subject.currentIndex = 0;
+          subject.props.currentIndex = 0;
           expect(subject.getCurrentPage()).to.eql(0);
         });
       });
 
       context('currentIndex is 2', () => {
         it('is zero', () => {
-          subject.currentIndex = 2;
+          subject.props.currentIndex = 2;
           expect(subject.getCurrentPage()).to.eql(0);
         });
       });
 
       context('currentIndex is 3', () => {
         it('is 1', () => {
-          subject.currentIndex = 3;
+          subject.props.currentIndex = 3;
           expect(subject.getCurrentPage()).to.eql(1);
         });
       });
 
       context('currentIndex is 6', () => {
         it('is 2', () => {
-          subject.currentIndex = 6;
+          subject.props.currentIndex = 6;
           expect(subject.getCurrentPage()).to.eql(2);
         });
       });
 
       context('currentIndex is 9', () => {
         it('is 3', () => {
-          subject.currentIndex = 9;
+          subject.props.currentIndex = 9;
           expect(subject.getCurrentPage()).to.eql(3);
         });
       });
 
       context('currentIndex is 10', () => {
         it('is 3', () => {
-          subject.currentIndex = 10;
+          subject.props.currentIndex = 10;
           expect(subject.getCurrentPage()).to.eql(3);
         });
       });
 
       context('five-up', () => {
         beforeEach(() => {
-          subject.style.width = '500px';
+          carousel.style.width = '500px';
         });
 
         context('currentIndex is 10', () => {
           it('is 1', () => {
-            subject.currentIndex = 10;
+            subject.props.currentIndex = 10;
             expect(subject.getCurrentPage()).to.eql(1);
           });
         });
@@ -267,51 +289,45 @@ describe('<bulbs-video-carousel-slider>', () => {
   describe('updateCurrentIndex', () => {
     context('two-up', () => {
       beforeEach(() => {
-        subject.style.width = '200px';
+        carousel.style.width = '200px';
       });
 
       it('increments the currentIndex', () => {
-        subject.currentIndex = 0;
+        subject.props.currentIndex = 0;
         subject.updateCurrentIndex(4);
-        expect(subject.currentIndex).to.eql(4);
+        expect(subject.props.currentIndex).to.eql(4);
       });
 
       it('enforces a lower bound of zero', () => {
-        subject.currentIndex = 5;
+        subject.props.currentIndex = 5;
         subject.updateCurrentIndex(-10);
-        expect(subject.currentIndex).to.eql(0);
+        expect(subject.props.currentIndex).to.eql(0);
       });
 
       it('pushes back one page if at end of items', () => {
-        subject.currentIndex = 9;
+        subject.props.currentIndex = 9;
         subject.updateCurrentIndex(1);
-        expect(subject.currentIndex).to.eql(8);
+        expect(subject.props.currentIndex).to.eql(8);
       });
 
       it('pushes back to last page if past end of items', () => {
-        subject.currentIndex = 9;
+        subject.props.currentIndex = 9;
         subject.updateCurrentIndex(10);
-        expect(subject.currentIndex).to.eql(8);
+        expect(subject.props.currentIndex).to.eql(8);
       });
     });
   });
 
   describe('paging', () => {
     beforeEach(() => {
-      sinon.spy(subject, 'updateCurrentIndex');
-      sinon.spy(subject, 'slideItems');
-      subject.style.width = '200px';
+      sinon.spy(subject,'updateCurrentIndex');
+      carousel.style.width = '200px';
     });
 
     describe('slideToNext', () => {
       it('updates currentIndex positively by the page size', () => {
         subject.slideToNext();
         expect(subject.updateCurrentIndex).to.have.been.calledWith(2);
-      });
-
-      it('calls slideItems', () => {
-        subject.slideToNext();
-        expect(subject.slideItems).to.have.been.called;
       });
     });
 
@@ -320,66 +336,78 @@ describe('<bulbs-video-carousel-slider>', () => {
         subject.slideToPrevious();
         expect(subject.updateCurrentIndex).to.have.been.calledWith(-2);
       });
-
-      it('calls slideItems', () => {
-        subject.slideToPrevious();
-        expect(subject.slideItems).to.have.been.called;
-      });
-    });
-  });
-
-  describe('slideItems', () => {
-    beforeEach(() => {
-      subject.style.width = '200px';
-    });
-
-    it('dispatches a `slide-items` event', (done) => {
-      subject.addEventListener('slide-items', (event) => {
-        expect(event.detail.currentIndex).to.eql(0);
-        expect(event.detail.carouselItems).to.eql(subject.carouselItems);
-        expect(event.detail.perPage).to.eql(2);
-        done();
-      });
-      subject.slideItems();
-    });
-
-    it('translates the slider track', () => {
-      subject.carouselItems[0].style.marginLeft = '10px';
-      subject.carouselItems[0].style.marginRight = '15px';
-      subject.updateCurrentIndex(2);
-      subject.slideItems();
-      if (calculatesTransform) {
-        expect(subject.track.style.transform).to.eql(
-          'translateX(calc(-100% - 25px))'
-        );
-      }
-      else {
-        expect(subject.track.style.transform).to.eql(
-          'translateX(-100%) translateX(-25px)'
-        );
-      }
     });
   });
 
   describe('pageToCarouselItem', () => {
     beforeEach(() => {
-      subject.style.width = '200px';
-      sinon.spy(subject, 'slideItems');
+      carousel.style.width = '200px';
     });
 
     it('pages to the correct page if item is start of page', () => {
-      subject.pageToCarouselItem(subject.carouselItems[4]);
+      subject.pageToCarouselItem(subject.props.carouselItems[4]);
       expect(subject.getCurrentPage()).to.eql(2);
     });
 
     it('pages to the correct page if item in middle of page', () => {
-      subject.pageToCarouselItem(subject.carouselItems[5]);
+      subject.pageToCarouselItem(subject.props.carouselItems[5]);
       expect(subject.getCurrentPage()).to.eql(2);
     });
 
     it('slides items', () => {
-      subject.pageToCarouselItem(subject.carouselItems[5]);
-      expect(subject.slideItems).to.have.been.called;
+      subject.pageToCarouselItem(subject.props.carouselItems[5]);
+    });
+  });
+
+  describe('isOnfirstPage', () => {
+    beforeEach(() => {
+      carousel.style.width = '500px';
+    });
+
+    context('currentIndex is first page', () => {
+      beforeEach(() => subject.props.currentIndex = 0);
+
+      it('is true', () => {
+        expect(subject.isOnfirstPage()).to.be.true;
+      });
+    });
+
+    context('currentIndex is not in first page', () => {
+      beforeEach(() => subject.props.currentIndex = 10);
+
+      it('page is not first page', () => {
+        expect(subject.isOnfirstPage()).to.be.false;
+      });
+    });
+  });
+
+  describe('isOnLastPage', () => {
+    beforeEach(() => {
+      carousel.style.width = '500px';
+    });
+
+    context('currentIndex is at beginning of last page', () => {
+      beforeEach(() => subject.props.currentIndex = 5);
+
+      it('is true', () => {
+        expect(subject.isOnLastPage()).to.be.true;
+      });
+    });
+
+    context('somewhere in last page', () => {
+      beforeEach(() => subject.props.currentIndex = 8);
+
+      it('is true', () => {
+        expect(subject.isOnLastPage()).to.be.true;
+      });
+    });
+
+    context('before last page', () => {
+      beforeEach(() => subject.props.currentIndex = 4);
+
+      it('is false', () => {
+        expect(subject.isOnLastPage()).to.be.false;
+      });
     });
   });
 });

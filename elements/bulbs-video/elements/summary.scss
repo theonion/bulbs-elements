@@ -1,5 +1,6 @@
 bulbs-video-summary {
   display: block;
+  position: relative;
 }
 
 .bulbs-video-poster {
@@ -33,4 +34,10 @@ bulbs-video-summary {
   position: absolute;
   bottom: .25em;
   left: .25em;
+}
+
+.bulbs-video-series-name {
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
 }
