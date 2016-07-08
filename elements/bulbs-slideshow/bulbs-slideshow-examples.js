@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-slideshow',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-slideshow
             attribute="value"
