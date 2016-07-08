@@ -87,7 +87,6 @@ export function SplitPic (element) {
 export function SplitPicVertical (element) {
   let el = $(element);
   let overPane = $('.splitpic-left-image', el);
-  let underPane = $('.splitpic-right-image', el);
   let bar = $('.splitpic-bar', el);
   let infoHidden = false;
   let img = $('.splitpic-left-image img', element);
@@ -160,7 +159,6 @@ export function SplitPicVertical (element) {
         isMoving = true;
       }
       // if we move a bit and it's vertically and not too fast
-      // TODO: something better, like light it on fire
       if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) < 10) {
         event.preventDefault();
         updateSplit(touch.pageY);
