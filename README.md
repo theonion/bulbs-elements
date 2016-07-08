@@ -110,17 +110,21 @@ Those components live at `lib/bulbs-elements/components`
 
 Bulbs Elements comes with code generators to help you develop components.
 
-#### Generating an Element
+#### Generating a DOM Element
 
-`scripts/generate-element`
+`scripts/generate-dom-element`
+
+#### Generating a React Element
+
+`scripts/generate-react-element`
 
 #### Generating Store Fields
 
-`scripts/generate-field`
+`scripts/generate-react-field`
 
 #### Generating Element Components
 
-`scripts/generate-component`
+`scripts/generate-react-component`
 
 ### Making HTTP Requests
 

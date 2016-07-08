@@ -230,6 +230,7 @@ export default class Revealed extends React.Component {
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+
   }
 
   render () {

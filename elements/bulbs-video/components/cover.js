@@ -8,6 +8,7 @@ export default function Cover (props) {
   return (
     <div
       className='bulbs-video-cover'
+      data-track-label='#'
       onClick={actions.revealPlayer}
     >
       <VideoPlayButton/>

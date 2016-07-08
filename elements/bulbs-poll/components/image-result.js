@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import SelectionMarker from './selection-marker';
-import find from 'array-find';
 
 export default function ImageResult (props) {
   let {
@@ -11,7 +10,7 @@ export default function ImageResult (props) {
     winningAnswers,
   } = props;
 
-  let isWinningAnswer = find(winningAnswers, (winningAnswer) => {
+  let isWinningAnswer = winningAnswers.find((winningAnswer) => {
     return winningAnswer.sodahead_id === answer.sodahead_id;
   });
 

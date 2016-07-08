@@ -56,6 +56,11 @@ exports.plugins = {
   clean: new CleanWebpackPlugin(['.test', 'dist'], {
     verbose: true,
   }),
+  jquery: new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    'window.jQuery': 'jquery'
+  }),
 };
 
 exports.loaders = {
@@ -166,6 +171,7 @@ exports.config = {
       'bower_components',
       'node_modules',
       'lib',
+      'test',
     ],
     alias: {
     },

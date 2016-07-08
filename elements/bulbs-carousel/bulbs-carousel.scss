@@ -1,0 +1,42 @@
+%bulbs-carousel-button {
+  align-items: center;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.5em;
+  height: 2em;
+  justify-content: space-around;
+  width: 2em;
+
+  &:hover {
+    opacity: .8;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: disabled;
+  }
+}
+
+bulbs-carousel {
+  display: block;
+}
+
+bulbs-carousel-next {
+  @extend %bulbs-carousel-button;
+}
+
+bulbs-carousel-previous {
+  @extend %bulbs-carousel-button;
+}
+
+bulbs-carousel-item {
+  display: block;
+  transition: .5s all;
+}
+
+bulbs-carousel-slider {
+  display: block;
+  overflow: hidden;
+}

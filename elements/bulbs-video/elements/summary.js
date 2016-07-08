@@ -8,41 +8,64 @@ import './summary.scss';
 import VideoField from '../fields/video';
 import VideoRequest from '../fields/video-request';
 
+export function VideoSummaryView (props) {
+  if (!props.video) {
+    return <div/>;
+  }
+
+  let { video } = props;
+
+  let nowPlaying;
+  if (props.nowPlaying) {
+    nowPlaying = (
+      <div className='bulbs-video-summary-playing'>
+        Now Playing
+      </div>
+    );
+  }
+
+  return (
+    <div className='bulbs-video-summary'>
+      <div className='bulbs-video-poster'>
+        <img src={video.poster_url}/>
+        <div className='bulbs-video-shade'/>
+        { nowPlaying }
+        <VideoPlayButton/>
+      </div>
+      <h2 className='bulbs-video-series-name'>
+        {video.series_name || video.channel_name}
+      </h2>
+      <h3 className='bulbs-video-summary-title'>
+        {video.title}
+      </h3>
+    </div>
+  );
+}
+
+VideoSummaryView.displayName = 'VideoSummaryView';
+
+VideoSummaryView.propTypes = {
+  nowPlaying: PropTypes.bool.isRequired,
+  video: PropTypes.object,
+};
+
 export default class VideoSummary extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
   }
 
-  componentWillReceiveProps (props) {
+  componentDidUpdate (props) {
     if (this.props.src !== props.src) {
       this.store.actions.fetchVideo(props.src);
     }
   }
 
   render () {
-    if (!this.state.video) {
-      return <div/>;
-    }
-    let { video } = this.state;
     return (
-      <div className='bulbs-video-summary'>
-        <div
-          className='bulbs-video-poster'
-          style={{ position: 'relative' }}
-        >
-          <img src={video.poster_url}/>
-          <div className='bulbs-video-shade'/>
-          { typeof this.props.nowPlaying === 'string' &&
-            <div className='bulbs-video-summary-playing'>
-              Now Playing
-            </div>
-          }
-          <VideoPlayButton/>
-        </div>
-        <h3 className='bulbs-video-summary-title'>
-          {this.state.video.title}
-        </h3>
-      </div>
+      <VideoSummaryView
+        video={this.state.video}
+        nowPlaying={typeof this.props.nowPlaying === 'string'}
+      />
     );
   }
 }
@@ -54,7 +77,7 @@ Object.assign(VideoSummary, {
     videoRequest: VideoRequest,
   },
   propTypes: {
-    nowPlaying: PropTypes.bool,
+    nowPlaying: PropTypes.string,
   },
 });
 
