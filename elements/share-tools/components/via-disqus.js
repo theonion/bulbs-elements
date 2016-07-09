@@ -1,6 +1,6 @@
 /* global BULBS_ELEMENTS_ANALYTICS_MANAGER */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ShareTool from './share-tool';
 import ShareButton from './share-button';
 

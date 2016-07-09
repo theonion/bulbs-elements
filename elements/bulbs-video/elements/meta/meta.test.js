@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { shallow } from 'enzyme';
 
 import video from '../../fixtures/video.json';
