@@ -31,26 +31,6 @@ describe('<bulbs-video-meta>', () => {
     });
   });
 
-  describe('propTypes', () => {
-    beforeEach(() => subject = BulbsVideoMeta.propTypes);
-
-    it('requires shareEmailMessage string', () => {
-      expect(subject.shareEmailMessage).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('requires shareTrackCatagory string', () => {
-      expect(subject.shareTrackCatagory).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('requires shareTwitterHandle string', () => {
-      expect(subject.shareTwitterHandle).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('accepts a shareUrl string', () => {
-      expect(subject.shareUrl).to.eq(PropTypes.string);
-    });
-  });
-
   beforeEach(() => {
     props = { src: '//example.com/video.json' };
     subject = new BulbsVideoMeta(props);
