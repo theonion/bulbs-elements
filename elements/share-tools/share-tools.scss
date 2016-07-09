@@ -1,6 +1,7 @@
 $email-grey: rgb(149, 169, 162);
 $facebook-blue: rgb(55, 87, 162);
 $twitter-blue: rgb(45, 159, 216);
+$disqus-orange: rgb(240,141,87);
 
 share-tools {
   > :not(:last-child) {
@@ -51,4 +52,9 @@ share-tools {
 .share-via-email {
   @extend %share-tool;
   background-color: $email-grey;
+}
+
+.share-via-disqus {
+  @extend %share-tool;
+  background-color: $disqus-orange;
 }
