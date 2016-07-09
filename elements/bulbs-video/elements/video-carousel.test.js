@@ -28,6 +28,7 @@ describe('<bulbs-video-carousel>', () => {
             <bulbs-carousel-item
               id='second'
               share-url='//example.org/share-me'
+              share-title='Rad Example Title!'
               video-url='//example.org/video.json'
               campaign-url='//example.org/campaign'
             >
@@ -217,10 +218,6 @@ describe('<bulbs-video-carousel>', () => {
       it('updates the src of the <bulbs-video-meta>', () => {
         expect(videoMeta.getAttribute('src')).to.eql('//example.org/video.json');
       });
-
-      it('updates the share-url of the <bulbs-video-meta>', () => {
-        expect(videoMeta.getAttribute('share-url')).to.eql('//example.org/share-me');
-      });
     });
   });
 
@@ -263,6 +260,13 @@ describe('<bulbs-video-carousel>', () => {
       it('reads from the currentItem share-url attribute', () => {
         subject.props.currentItem = secondItem;
         expect(subject.shareUrl).to.eql('//example.org/share-me');
+      });
+    });
+
+    describe('shareTitle', () => {
+      it('reads from the currentItem share-title attribute', () => {
+        subject.props.currentItem = secondItem;
+        expect(subject.shareTitle).to.eql('Rad Example Title!');
       });
     });
 
