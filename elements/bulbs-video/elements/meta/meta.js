@@ -36,10 +36,6 @@ Object.assign(VideoMeta, {
     campaignPreamble: PropTypes.string.isRequired,
     campaignTrackAction: PropTypes.string.isRequired,
     campaignUrl: PropTypes.string.isRequired,
-    shareEmailMessage: PropTypes.string.isRequired,
-    shareTrackCatagory: PropTypes.string.isRequired,
-    shareTwitterHandle: PropTypes.string.isRequired,
-    shareUrl: PropTypes.string,
     titleTrackAction: PropTypes.string.isRequired,
   },
 });
