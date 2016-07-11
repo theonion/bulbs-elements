@@ -1,0 +1,217 @@
+[
+  {
+    "name": "United States",
+    "abbreviation": "USA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Russia",
+    "abbreviation": "RUS",
+    "jokeEntry": false
+  },
+  {
+    "name": "Germany",
+    "abbreviation": "GER",
+    "jokeEntry": false
+  },
+  {
+    "name": "Great Britain",
+    "abbreviation": "GBK",
+    "jokeEntry": false
+  },
+  {
+    "name": "Frace",
+    "abbreviation": "FRA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Italy",
+    "abbreviation": "ITA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Australia",
+    "abbreviation": "AUS",
+    "jokeEntry": false
+  },
+  {
+    "name": "Sweded",
+    "abbreviation": "SWE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Hungary",
+    "abbreviation": "HUN",
+    "jokeEntry": false
+  },
+  {
+    "name": "China",
+    "abbreviation": "CHI",
+    "jokeEntry": false
+  },
+  {
+    "name": "Japan",
+    "abbreviation": "JAP",
+    "jokeEntry": false
+  },
+  {
+    "name": "Finland",
+    "abbreviation": "FIN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Romania",
+    "abbreviation": "ROM",
+    "jokeEntry": false
+  },
+  {
+    "name": "Poland",
+    "abbreviation": "POL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Canada",
+    "abbreviation": "CAN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Netherlands",
+    "abbreviation": "NED",
+    "jokeEntry": false
+  },
+  {
+    "name": "South Korea",
+    "abbreviation": "KOR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Bulgaria",
+    "abbreviation": "BUL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Switzerland",
+    "abbreviation": "SUI",
+    "jokeEntry": false
+  },
+  {
+    "name": "Czech Republic",
+    "abbreviation": "CZE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Denmark",
+    "abbreviation": "DEN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Belgium",
+    "abbreviation": "BEL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Spain",
+    "abbreviation": "ESP",
+    "jokeEntry": false
+  },
+  {
+    "name": "Greece",
+    "abbreviation": "GRE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Jamaica",
+    "abbreviation": "JAM",
+    "jokeEntry": false
+  },
+  {
+    "name": "Ukraine",
+    "abbreviation": "UKR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Brazil",
+    "abbreviation": "BRA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Austria",
+    "abbreviation": "AUT",
+    "jokeEntry": false
+  },
+  {
+    "name": "New Zealand",
+    "abbreviation": "NZL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Turkey",
+    "abbreviation": "TUR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Kenya",
+    "abbreviation": "KEN",
+    "jokeEntry": false
+  },
+  {
+    "name": "South Africa",
+    "abbreviation": "RSA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Argentina",
+    "abbreviation": "ARG",
+    "jokeEntry": false
+  },
+  {
+    "name": "Bahamas",
+    "abbreviation": "BAH",
+    "jokeEntry": false
+  },
+  {
+    "name": "Mexico",
+    "abbreviation": "MEX",
+    "jokeEntry": false
+  },
+  {
+    "name": "Milwaukee Bucks",
+    "abbreviation": "MIL",
+    "jokeEntry": true
+  },
+  {
+  "name": "Bruce",
+  "abbreviation": "BRU",
+  "jokeEntry": true
+  },
+  {
+    "name": "Unknown",
+    "abbreviation": "???",
+    "jokeEntry": true
+  },
+  {
+    "name": "The Isle Of Four Security Guards",
+    "abbreviation": "4SG",
+    "jokeEntry": true
+  },
+  {
+    "name": "Presbyterians",
+    "abbreviation": "PRB",
+    "jokeEntry": true
+  },
+  {
+    "name": "Japan and Belgium",
+    "abbreviation": "J&B",
+    "jokeEntry": true
+  },
+  {
+    "name": "Bev",
+    "abbreviation": "BEV",
+    "jokeEntry": true
+  },
+  {
+    "name": "Samuel and Samuel's Trained Ape",
+    "abbreviation": "APE",
+    "jokeEntry": true
+  }
+]
