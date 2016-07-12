@@ -1,0 +1,59 @@
+clickhole-medal-tracker {
+  display: block;
+
+  header {
+    background-color: #343434;
+    color: white;
+    line-height: 56px;
+    min-height: 56px;
+    overflow: hidden;
+  }
+
+  .row {
+    line-height: 82px;
+    min-height: 82px;
+    overflow: hidden;
+    border-bottom: solid 1px black;
+  }
+
+  .contender-name {
+    float: left;
+    vertical-align: middle;
+    width: 50%;
+  }
+
+  .contender-abbreviation {
+    display: none;
+    float: left;
+    vertical-align: middle;
+    width: 50%;
+  }
+
+  .contender-flag {
+    width: 58px;
+  }
+
+  .gold-medal-totals {
+    float: left;
+    vertical-align: middle;
+    width: 10%;
+  }
+
+  .silver-medal-totals {
+    float: left;
+    vertical-align: middle;
+    width: 10%;
+  }
+
+  .bronze-medal-totals {
+    float: left;
+    vertical-align: middle;
+    width: 10%;
+  }
+
+  .all-medal-totals {
+    float: left;
+    vertical-align: middle;
+    width: 20%;
+  }
+}
