@@ -7,7 +7,7 @@ export default class Contender extends Component {
   }
   render () {
     return (
-      <div className='row'>
+      <div className='contender'>
         <div className='contender-name'>
           <img className='contender-flag' src={this.props.flagImage} />
           {this.props.name}
