@@ -55,7 +55,6 @@ export default class MultipleChoiceQuiz {
         let datum = formData[i];
         let outcomeId = parseInt(datum.value, 10);
         // sometimes the answer doesnt correspond to an outcome:
-
         if (!isNaN(outcomeId)) {
           let thisCount = counts[outcomeId] ? counts[outcomeId] + 1 : 1;
           counts[outcomeId] = thisCount;
@@ -65,18 +64,18 @@ export default class MultipleChoiceQuiz {
     else {
       // Sometimes we get really zen and don't want any questions at all.
       // In that case, we just select the first outcome.
-      let outcome = $('.outcome', this.element)[0];
-      counts[$(outcome).data('id')] = 1;
+      let outcomeId = $('.outcome', this.element).data('id');
+      counts[outcomeId] = 1;
     }
 
     // Create an ordered list of outcome possibilities:
     let countStack = [];
     for (let key in counts) {
       if (counts.hasOwnProperty(key)) {
-        let count = counts[key];
+        let countNum = counts[key];
         countStack.push({
           id: key,
-          count,
+          count: countNum,
         });
       }
     }
@@ -90,12 +89,10 @@ export default class MultipleChoiceQuiz {
 
     // walk through the potential outcomes until we find something suitable:
     while (!outcomeId && countStack.length > 0) {
+      // filter require-perfect outcomes with imperfect counts
       let count = countStack.pop();
       bestOutcome = $('#outcome-' + count.id);
-
-      // filter require-perfect outcomes with imperfect counts
-      if (!bestOutcome.data('require-perfect') && count.count === formData.length) {
-        // alright, we have an outcome
+      if (!(bestOutcome.data('require-perfect') && count.count !== formData.length)) {
         outcomeId = count.id;
       }
     }
