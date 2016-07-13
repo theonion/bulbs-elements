@@ -1,7 +1,7 @@
 export default {
   element: 'rail-player',
   examples: {
-    'with channel logo': {
+    'with ClickHole channel logo': {
       render () {
         return `
           <rail-player
@@ -9,6 +9,32 @@ export default {
             recirc-url="http://www.onionstudios.com"
             channel='clickhole'
             src="http://localhost:8080/fixtures/rail-player/clickhole-channel.json"
+          >
+          </rail-player>
+        `;
+      },
+    },
+    'with The Onion channel logo': {
+      render () {
+        return `
+          <rail-player
+            style="width: 300px; margin: 0 auto;"
+            recirc-url="http://www.onionstudios.com"
+            channel='the-onion'
+            src="http://localhost:8080/fixtures/rail-player/onion-channel.json"
+          >
+          </rail-player>
+        `;
+      },
+    },
+    'with The A.V. Club channel logo': {
+      render () {
+        return `
+          <rail-player
+            style="width: 300px; margin: 0 auto;"
+            recirc-url="http://www.onionstudios.com"
+            channel='the-av-club'
+            src="http://localhost:8080/fixtures/rail-player/avclub-channel.json"
           >
           </rail-player>
         `;

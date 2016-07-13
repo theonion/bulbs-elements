@@ -3,19 +3,27 @@ rail-player {
 }
 
 .rail-player {
-  background-color: #454545;
+  background-color: #EEEEEE;
   border-top: 5px solid #999;
-  color: white;
+  color: #262626;
   font-family: "Helvetica Neue", sans-serif;
   font-style: Thin;
   font-weight: 100;
   padding: 0 10px 10px;
+
+  .jw-controlbar {
+    .jw-icon-hd {
+      display: none;
+    }
+  }
 }
 
 .rail-player-content-sponsorship {
   a {
     color: #ccc;
+    font-size: 11px;
     text-decoration: none;
+    text-transform: uppercase;
   }
 
   .campaign-display-preamble {
@@ -35,11 +43,20 @@ rail-player {
     margin-right: 1em;
     position: relative;
     transform: translateY(5px);
+
+    circle {
+      fill: #333333;
+    }
+
+    polygon {
+      fill: #EEEEEE;
+    }
+
   }
 }
 
 .rail-player-logo {
-  max-width: 100px;
+  max-width: 150px;
 }
 
 .rail-player-title {
@@ -53,13 +70,17 @@ rail-player {
 
 .rail-player-recirc-link {
   border-radius: 4px;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid #262626;
+  color: #262626;
   cursor: pointer;
   margin-left: auto;
-  padding: 4px 16px;
+  padding: 8px 16px;
   text-decoration: none;
+  -webkit-transition: 0.3s all;
   transition: 0.3s all;
+  text-transform: uppercase;
+  font-family: Arial;
+  font-size: 10px;
 
   &:hover {
     background-color: #9b9b9b;

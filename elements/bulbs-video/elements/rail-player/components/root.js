@@ -16,10 +16,6 @@ export default class Root extends React.Component {
         <div className='rail-player-header'>
           <RailPlayerHeader {...this.props}/>
 
-          <div className='rail-player-logo'>
-            Video
-          </div>
-
           <a
             className='rail-player-recirc-link'
             target='_blank'
