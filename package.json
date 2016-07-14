@@ -119,5 +119,8 @@
     "yo": "^1.6.0",
     "chokidar": "^1.6.0",
     "iframe-resizer": "^3.5.5"
+  },
+  "dependencies": {
+    "react-flip-move": "^2.4.0"
   }
 }
