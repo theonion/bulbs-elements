@@ -1,5 +1,11 @@
+%column {
+  float: left;
+  vertical-align: middle;
+}
+
 clickhole-medal-tracker {
   display: block;
+  width: 575px;
 
   header {
     background-color: #343434;
@@ -10,50 +16,42 @@ clickhole-medal-tracker {
   }
 
   .contender {
-    line-height: 82px;
-    min-height: 82px;
     overflow: hidden;
-    border-bottom: solid 1px black;
   }
 
   .contender-name {
-    float: left;
-    vertical-align: middle;
+    @extend %column;
     width: 50%;
   }
 
   .contender-abbreviation {
+    @extend %column;
     display: none;
-    float: left;
-    vertical-align: middle;
     width: 50%;
   }
 
   .contender-flag {
     width: 58px;
+    height: 32px;
   }
 
   .gold-medal-totals {
-    float: left;
-    vertical-align: middle;
+    @extend %column;
     width: 10%;
   }
 
   .silver-medal-totals {
-    float: left;
-    vertical-align: middle;
+    @extend %column;
     width: 10%;
   }
 
   .bronze-medal-totals {
-    float: left;
-    vertical-align: middle;
+    @extend %column;
     width: 10%;
   }
 
   .all-medal-totals {
-    float: left;
-    vertical-align: middle;
+    @extend %column;
     width: 20%;
   }
 }

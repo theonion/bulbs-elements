@@ -4,6 +4,7 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { filterBadResponse, getResponseJSON } from 'bulbs-elements/util';
 import { registerReactElement } from 'bulbs-elements/register';
+import { sortedRandomizedContenders } from './randomizer';
 import './clickhole-medal-tracker.scss';
 
 class ClickholeMedalTracker extends BulbsElement {
@@ -19,7 +20,7 @@ class ClickholeMedalTracker extends BulbsElement {
   }
 
   handleRequestSuccess (contenders) {
-    this.setState({ contenders });
+    this.setState({ contenders: sortedRandomizedContenders(contenders) });
   }
 
   handleRequestError () {
