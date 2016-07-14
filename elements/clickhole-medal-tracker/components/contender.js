@@ -8,15 +8,19 @@ export default class Contender extends Component {
   render () {
     return (
       <div className='contender'>
-        <div className='contender-name'>
-          <img className='contender-flag' src={this.props.flagImage} />
-          {this.props.name}
+        <div className='left-column'>
+          <div className='contender-name'>
+            <img className='contender-flag' src={this.props.flagImage} />
+            {this.props.name}
+          </div>
+          <div className='contender-abbreviation'>{this.props.abbreviation}</div>
         </div>
-        <div className='contender-abbreviation'>{this.props.abbreviation}</div>
-        <div className='gold-medal-totals'>{this.props.goldTotal}</div>
-        <div className='silver-medal-totals'>{this.props.silverTotal}</div>
-        <div className='bronze-medal-totals'>{this.props.bronzeTotal}</div>
-        <div className='all-medal-totals'>{this.props.allTotal}</div>
+        <div className='right-column'>
+          <div className='gold-medal-totals'>{this.props.goldTotal}</div>
+          <div className='silver-medal-totals'>{this.props.silverTotal}</div>
+          <div className='bronze-medal-totals'>{this.props.bronzeTotal}</div>
+          <div className='all-medal-totals'>{this.props.allTotal}</div>
+        </div>
       </div>);
   }
 }

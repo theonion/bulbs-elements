@@ -1,57 +1,87 @@
-%column {
-  float: left;
-  vertical-align: middle;
-}
+$header-bg: #343434;
+$header-text-color: #fff;
 
 clickhole-medal-tracker {
   display: block;
-  width: 575px;
+  overflow: hidden;
+
+  .left-column {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    width: 70%;
+  }
+
+  .right-column {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 30%;
+  }
 
   header {
-    background-color: #343434;
-    color: white;
+    background-color: $header-bg;
+    color: $header-text-color;
+    height: 56px;
     line-height: 56px;
-    min-height: 56px;
     overflow: hidden;
+    padding-left: 15px;
+    vertical-align: middle;
+
+    .contender-name,
+    .gold-medal-totals,
+    .silver-medal-totals,
+    .bronze-medal-totals,
+    .all-medal-totals {
+      padding: 0;
+    }
   }
 
   .contender {
+    border-bottom: solid 2px $header-bg;
     overflow: hidden;
-  }
 
-  .contender-name {
-    @extend %column;
-    width: 50%;
-  }
-
-  .contender-abbreviation {
-    @extend %column;
-    display: none;
-    width: 50%;
+    &:last-child {
+      border: none;
+    }
   }
 
   .contender-flag {
-    width: 58px;
     height: 32px;
+    margin-right: 15px;
+    width: 58px;
+  }
+
+  .contender-name {
+    float: left;
+    overflow: hidden;
+    padding: 15px;
+    text-transform: uppercase;
+  }
+
+  .contender-abbreviation {
+    display: none;
+  }
+
+  %medal-total {
+    float: left;
+    width: 25%;
+    padding-top: 35px;
   }
 
   .gold-medal-totals {
-    @extend %column;
-    width: 10%;
+    @extend %medal-total;
   }
 
   .silver-medal-totals {
-    @extend %column;
-    width: 10%;
+    @extend %medal-total;
   }
 
   .bronze-medal-totals {
-    @extend %column;
-    width: 10%;
+    @extend %medal-total;
   }
 
   .all-medal-totals {
-    @extend %column;
-    width: 20%;
+    @extend %medal-total;
   }
 }

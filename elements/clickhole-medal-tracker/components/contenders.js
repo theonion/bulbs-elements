@@ -32,11 +32,15 @@ export default class Contenders extends Component {
     return (
       <div className='contenders'>
         <header>
-          <div className='contender-name'>Country</div>
-          <div className='gold-medal-totals'>G</div>
-          <div className='silver-medal-totals'>S</div>
-          <div className='bronze-medal-totals'>B</div>
-          <div className='all-medal-totals'>Total</div>
+          <div className='left-column'>
+            <div className='contender-name'>Country</div>
+          </div>
+          <div className='right-column'>
+            <div className='gold-medal-totals'>G</div>
+            <div className='silver-medal-totals'>S</div>
+            <div className='bronze-medal-totals'>B</div>
+            <div className='all-medal-totals'>Total</div>
+          </div>
         </header>
         <FlipMove enterAnimation="fade" leaveAnimation="fade" staggerDelayBy={50}>
           {this.topContenderComponents()}
@@ -49,7 +53,7 @@ Object.assign(Contenders, {
   displayName: 'Contenders',
   defaultProps: {
     contenders: [],
-    updateInterval: 1500,
+    updateInterval: 2000,
   },
   propTypes: {
     contenders: PropTypes.array,
