@@ -120,7 +120,11 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
     forEach.call(
       this.querySelectorAll('share-tools'),
-      (element) => element.setAttribute('share-url', this.state.shareUrl),
+      (element) => element.setAttribute('share-url', this.state.shareUrl)
+    );
+
+    forEach.call(
+      this.querySelectorAll('share-tools'),
       (element) => element.setAttribute('share-title', this.state.shareTitle)
     );
   }
