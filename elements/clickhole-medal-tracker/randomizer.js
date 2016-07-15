@@ -1,4 +1,11 @@
-import { random, sortBy, take, clone, includes, merge } from 'lodash';
+import {
+  clone,
+  includes,
+  merge,
+  random,
+  sortBy,
+  take,
+} from 'lodash';
 
 export function createRandomStats (contender) {
   let goldTotal = random(1, 300);
@@ -34,13 +41,13 @@ export function shuffleContenders (contenders) {
   return contenders;
 }
 
-export function topFive (contenders) {
+export function topFiveContenders (contenders) {
   return take(sortByTotal(contenders), 5);
 }
 
 export function boostNewContender (contenders) {
   let randomLoser = getRandomContender(getLosers(contenders));
-  let randomLeader = getRandomContender(topFive(contenders));
+  let randomLeader = getRandomContender(topFiveContenders(contenders));
   swapStats(randomLeader, randomLoser);
 
   return randomLoser;
@@ -60,13 +67,16 @@ export function getRandomContender (contenders) {
 
 export function getRandomContenderWithout (contenders, ...excludeContenders) {
   let randomContender = getRandomContender(contenders);
-  let excludedNames = excludeContenders.map((c) => c.name);
-  // If we got one we want to exclude, do it again
-  while (includes(excludedNames, randomContender.name)) {
+
+  while (chosenContenderIsInExclusions(randomContender, excludeContenders)) {
     randomContender = getRandomContender(contenders);
   }
 
   return randomContender;
+}
+
+export function chosenContenderIsInExclusions (contender, exclusions) {
+  return includes(exclusions.map((exclusion) => exclusion.name), contender.name);
 }
 
 export function swapStats (contenderA, contenderB) {
@@ -82,7 +92,7 @@ export function swapStats (contenderA, contenderB) {
 }
 
 export function swapRandomLeaders (contenders, newContender) {
-  let top5 = topFive(contenders);
+  let top5 = topFiveContenders(contenders);
   let leaderA = getRandomContenderWithout(top5, newContender);
   let leaderB = getRandomContenderWithout(top5, leaderA, newContender);
 

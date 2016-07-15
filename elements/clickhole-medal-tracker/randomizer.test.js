@@ -10,9 +10,9 @@ import {
   sortByTotal,
   swapRandomLeaders,
   swapStats,
-  topFive,
+  topFiveContenders,
 } from './randomizer';
-describe('randomizeContenders', () => {
+describe('randomizer', () => {
   let contenders;
   beforeEach(() => {
     contenders = [
@@ -102,9 +102,9 @@ describe('randomizeContenders', () => {
     });
   });
 
-  describe('topFive', () => {
+  describe('topFiveContenders', () => {
     it('returns the top 5 contenders', () => {
-      let top5 = topFive(contenders);
+      let top5 = topFiveContenders(contenders);
 
       expect(top5[0].name).to.equal('Six');
       expect(top5[1].name).to.equal('Five');
@@ -116,9 +116,9 @@ describe('randomizeContenders', () => {
 
   describe('boostNewContender', () => {
     it('modifies a contender out of the top 5 to be in the top 5', () => {
-      let originalTopFive = topFive(contenders);
+      let originalTopFive = topFiveContenders(contenders);
       boostNewContender(contenders);
-      let newTopFive = topFive(contenders);
+      let newTopFive = topFiveContenders(contenders);
       expect(newTopFive).to.not.eql(originalTopFive);
     });
   });
@@ -163,9 +163,9 @@ describe('randomizeContenders', () => {
 
   describe('swapRandomLeaders', () => {
     it('swaps the stats of two random leaders', () => {
-      let originalTopFive = topFive(contenders);
+      let originalTopFive = topFiveContenders(contenders);
       swapRandomLeaders(contenders, contenders[5]);
-      let newTopFive = topFive(contenders);
+      let newTopFive = topFiveContenders(contenders);
       expect(newTopFive).to.not.eql(originalTopFive);
     });
   });

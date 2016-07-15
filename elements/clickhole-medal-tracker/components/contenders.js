@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import Contender from './contender';
 import React, { PropTypes, Component } from 'react';
-import { shuffleContenders, topFive, } from '../randomizer';
+import { shuffleContenders, topFiveContenders } from '../randomizer';
 import FlipMove from 'react-flip-move';
 
 export default class Contenders extends Component {
@@ -19,7 +19,7 @@ export default class Contenders extends Component {
   }
 
   topContenderComponents () {
-    let top5 = topFive(this.props.contenders);
+    let top5 = topFiveContenders(this.props.contenders);
     return top5.map((contender) => <Contender {...contender} key={contender.name} />);
   }
 
