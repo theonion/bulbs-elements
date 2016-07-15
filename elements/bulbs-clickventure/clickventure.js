@@ -174,15 +174,12 @@ export default class Clickventure {
   }
 
   gotoNodeId (nodeId, transitionName) {
-    if (this.options.hashState) {
-      document.location.hash = [nodeId, transitionName].join(',');
-    }
+    document.location.hash = [nodeId, transitionName].join(',');
     this.gotoNode(nodeId, transitionName);
   }
 
   showNewNode (nodeId, transition) {
     let newNode = this.element.find('#clickventure-node-' + nodeId);
-
     velocity(newNode[0], transition.show.fx, {
       duration: 200,
       complete: (function () {
