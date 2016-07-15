@@ -1,6 +1,7 @@
 $email-grey: rgb(149, 169, 162);
 $facebook-blue: rgb(55, 87, 162);
 $twitter-blue: rgb(45, 159, 216);
+$disqus-orange: #f08d57;
 
 @mixin share-button($background-color: black, $share-button-icon-color: white, $border-color: red, $border-radius: 50%) {
   background-color: $background-color;
@@ -42,6 +43,9 @@ share-tools {
     .share-via-email {
       @include share-button($email-grey, white, $email-grey, 50%);
     }
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 50%);
+    }
   }
   &.circle-transparent {
     .share-via-facebook {
@@ -52,6 +56,9 @@ share-tools {
     }
     .share-via-email {
       @include share-button(transparent, $email-grey, $email-grey, 50%);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 50%);
     }    
   }
   &.square {
@@ -63,7 +70,10 @@ share-tools {
     }
     .share-via-email {
       @include share-button($email-grey, white, $email-grey, 0);
-    }     
+    } 
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 0);
+    }    
   }
   &.square-transparent {
     .share-via-facebook {
@@ -74,6 +84,9 @@ share-tools {
     }
     .share-via-email {
       @include share-button(transparent, $email-grey, $email-grey, 0);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 0);
     }     
   }
   &.square-rounded {
@@ -85,6 +98,9 @@ share-tools {
     }
     .share-via-email {
       @include share-button($email-grey, white, $email-grey, 3px);
+    }
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 3px);
     }     
   }
   &.square-rounded-transparent {
@@ -96,6 +112,9 @@ share-tools {
     }
     .share-via-email {
       @include share-button(transparent, $email-grey, $email-grey, 3px);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 3px);
     }     
   }
 }
