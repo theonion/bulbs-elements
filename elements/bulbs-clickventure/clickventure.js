@@ -111,7 +111,7 @@ export default class Clickventure {
       });
     });
 
-    this.restartButton.click(() => this.restart());
+    this.restartButton.click(this.restart.bind(this));
 
     if (hash) {
       this.gotoHash(hash);
