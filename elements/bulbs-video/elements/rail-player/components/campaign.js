@@ -11,6 +11,7 @@ export default function RailPlayerCampaign (props) {
         src={props.video.tunic_campaign_url}
         preamble-text='Sponsored By'
         placement='rail-player'
+        name-only
       />
     );
   }
