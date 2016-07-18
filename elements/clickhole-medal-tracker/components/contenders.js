@@ -1,9 +1,9 @@
 /* eslint react/prop-types: 0 */
 import Contender from './contender';
+import FlipMove from 'react-flip-move';
+import Medal from './medal';
 import React, { PropTypes, Component } from 'react';
 import { shuffleContenders, topFiveContenders } from '../randomizer';
-import FlipMove from 'react-flip-move';
-
 export default class Contenders extends Component {
   constructor (props) {
     super(props);
@@ -36,9 +36,15 @@ export default class Contenders extends Component {
             <div className='contender-name'>Country</div>
           </div>
           <div className='right-column'>
-            <div className='gold-medal-totals'>G</div>
-            <div className='silver-medal-totals'>S</div>
-            <div className='bronze-medal-totals'>B</div>
+            <div className='gold-medal-totals'>
+              <Medal color="#ead89d" />
+            </div>
+            <div className='silver-medal-totals'>
+              <Medal color="#e1e1e1" />
+            </div>
+            <div className='bronze-medal-totals'>
+              <Medal color="#d8b195" />
+            </div>
             <div className='all-medal-totals'>Total</div>
           </div>
         </header>

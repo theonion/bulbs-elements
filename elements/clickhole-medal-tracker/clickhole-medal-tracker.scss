@@ -5,6 +5,12 @@ clickhole-medal-tracker {
   display: block;
   overflow: hidden;
 
+  .Medal {
+    margin-top: 10px;
+    width: 29px;
+    height: 29px;
+  }
+
   .left-column {
     float: left;
     overflow: hidden;
@@ -28,12 +34,29 @@ clickhole-medal-tracker {
     padding-left: 15px;
     vertical-align: middle;
 
-    .contender-name,
-    .gold-medal-totals,
-    .silver-medal-totals,
-    .bronze-medal-totals,
-    .all-medal-totals {
+    %total-column {
       padding: 0;
+    }
+
+    .contender-name {
+      @extend %total-column;
+    }
+
+    .gold-medal-totals {
+      @extend %total-column;
+    }
+
+    .silver-medal-totals {
+      @extend %total-column;
+    }
+
+    .bronze-medal-totals {
+      @extend %total-column;
+    }
+
+    .all-medal-totals {
+      @extend %total-column;
+      text-transform: uppercase;
     }
   }
 
