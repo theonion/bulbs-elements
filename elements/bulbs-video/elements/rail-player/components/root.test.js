@@ -41,14 +41,6 @@ describe('<rail-player> <RailPlayerRoot>', () => {
         expect(subject).to.contain(<RailPlayerHeader {...props}/>);
       });
 
-      it('renders a rail-player-logo', () => {
-        expect(subject).to.contain(
-          <div className='rail-player-logo'>
-            Video
-          </div>
-        );
-      });
-
       it('renders a recirc link', () => {
         expect(subject).to.contain(
           <a
