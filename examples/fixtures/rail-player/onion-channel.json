@@ -1,0 +1,121 @@
+{
+  "id": 4131,
+  "title": "Unique Summer Vacation Ideas",
+  "channel_slug": "the-onion",
+  "channel_name": "The Onion",
+  "channel_logo_url": "http://i.onionstatic.com/onionstudios/1998/original/600.png",
+  "series_name": "Onion Info Clips",
+  "season": null,
+  "series_slug": "onion-info-clips",
+  "series_logo_url": "http://i.onionstatic.com/onionstudios/None/original/600.jpg",
+  "sponsor_id": null,
+  "duration": 0,
+  "poster_url": "http://i.onionstatic.com/onionstudios/5077/original/600.jpg",
+  "targeting": {
+    "target_video_id": 4131,
+    "target_series": "onion-info-clips",
+    "target_channel": "the-onion",
+    "target_host_channel": "main"
+  },
+  "tags": [
+    "4131",
+    "onion-info-clips",
+    "the-onion",
+    "main"
+  ],
+  "category": "main/the-onion/onion-info-clips",
+  "videojs_options": {
+    "videoId": 4131,
+    "shareUrl": "http://www.onionstudios.com/videos/unique-summer-vacation-ideas-4131",
+    "isDiscoverable": true,
+    "poster": "http://i.onionstatic.com/onionstudios/5077/16x9/800.jpg",
+    "pluginConfig": {
+      "videoanalytics": {
+        "id": 6036328
+      },
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/4131/"
+      },
+      "videometrix": {
+        "metadata": {
+          "c4": "onion",
+          "c3": "onionstudios",
+          "ns_st_ci": "onionstudios.4131"
+        },
+        "id": 6036328
+      }
+    },
+    "techOrder": [
+      "html5",
+      "flash"
+    ]
+  },
+  "player_options": {
+    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4131\"></iframe>\n",
+    "comscore": {
+      "metadata": {
+        "c4": "onion",
+        "c3": "onionstudios",
+        "ns_st_ci": "onionstudios.4131"
+      },
+      "id": 6036328
+    },
+    "poster": "http://i.onionstatic.com/onionstudios/5077/16x9/800.jpg",
+    "shareUrl": "http://www.onionstudios.com/videos/unique-summer-vacation-ideas-4131"
+  },
+  "sources": [
+    {
+      "id": 19503,
+      "url": "http://v.theonion.com/onionstudios/video/4131/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 434,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4131
+    },
+    {
+      "id": 19502,
+      "url": "http://v.theonion.com/onionstudios/video/4131/640.mp4",
+      "content_type": "video/mp4",
+      "width": 640,
+      "bitrate": 639,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4131
+    },
+    {
+      "id": 19504,
+      "url": "http://v.theonion.com/onionstudios/video/4131/720.mp4",
+      "content_type": "720/video/mp4",
+      "width": 1280,
+      "bitrate": 3498,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4131
+    },
+    {
+      "id": 19505,
+      "url": "http://v.theonion.com/onionstudios/video/4131/1080.mp4",
+      "content_type": "1080/video/mp4",
+      "width": 1920,
+      "bitrate": 7943,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4131
+    },
+    {
+      "id": 19501,
+      "url": "http://v.theonion.com/onionstudios/video/4131/hls_playlist.m3u8",
+      "content_type": "application/x-mpegURL",
+      "width": null,
+      "bitrate": null,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4131
+    }
+  ],
+  "tunic_campaign_url": null,
+  "series_url": "http://www.onionstudios.com/series/onion-info-clips",
+  "channel_url": "http://www.onionstudios.com/channels/the-onion"
+}

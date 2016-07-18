@@ -1,0 +1,119 @@
+{
+  "id": 4163,
+  "title": "Match Game 6",
+  "channel_slug": "the-av-club",
+  "channel_name": "The A.V. Club",
+  "channel_logo_url": "http://i.onionstatic.com/onionstudios/3662/original/600.png",
+  "series_name": null,
+  "season": null,
+  "series_slug": null,
+  "series_logo_url": null,
+  "sponsor_id": null,
+  "duration": 0,
+  "poster_url": "http://i.onionstatic.com/onionstudios/5115/original/600.jpg",
+  "targeting": {
+    "target_video_id": 4163,
+    "target_channel": "the-av-club",
+    "target_host_channel": "main"
+  },
+  "tags": [
+    "4163",
+    "the-av-club",
+    "main"
+  ],
+  "category": "main/the-av-club",
+  "videojs_options": {
+    "videoId": 4163,
+    "shareUrl": "http://www.onionstudios.com/videos/match-game-6-4163",
+    "isDiscoverable": false,
+    "poster": "http://i.onionstatic.com/onionstudios/5115/16x9/800.jpg",
+    "pluginConfig": {
+      "videoanalytics": {
+        "id": 6036328
+      },
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/4163/"
+      },
+      "videometrix": {
+        "metadata": {
+          "c4": "AVCLUB",
+          "c3": "onionstudios",
+          "ns_st_ci": "onionstudios.4163"
+        },
+        "id": 6036328
+      }
+    },
+    "techOrder": [
+      "html5",
+      "flash"
+    ]
+  },
+  "player_options": {
+    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4163\"></iframe>\n",
+    "comscore": {
+      "metadata": {
+        "c4": "AVCLUB",
+        "c3": "onionstudios",
+        "ns_st_ci": "onionstudios.4163"
+      },
+      "id": 6036328
+    },
+    "poster": "http://i.onionstatic.com/onionstudios/5115/16x9/800.jpg",
+    "shareUrl": "http://www.onionstudios.com/videos/match-game-6-4163"
+  },
+  "sources": [
+    {
+      "id": 19667,
+      "url": "http://v.theonion.com/onionstudios/video/4163/640.mp4",
+      "content_type": "video/mp4",
+      "width": 640,
+      "bitrate": 1333,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4163
+    },
+    {
+      "id": 19668,
+      "url": "http://v.theonion.com/onionstudios/video/4163/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 1543,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4163
+    },
+    {
+      "id": 19669,
+      "url": "http://v.theonion.com/onionstudios/video/4163/720.mp4",
+      "content_type": "720/video/mp4",
+      "width": 1280,
+      "bitrate": 3481,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4163
+    },
+    {
+      "id": 19670,
+      "url": "http://v.theonion.com/onionstudios/video/4163/1080.mp4",
+      "content_type": "1080/video/mp4",
+      "width": 1920,
+      "bitrate": 7969,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4163
+    },
+    {
+      "id": 19666,
+      "url": "http://v.theonion.com/onionstudios/video/4163/hls_playlist.m3u8",
+      "content_type": "application/x-mpegURL",
+      "width": null,
+      "bitrate": null,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4163
+    }
+  ],
+  "tunic_campaign_url": null,
+  "series_url": null,
+  "channel_url": "http://www.onionstudios.com/channels/the-av-club"
+}

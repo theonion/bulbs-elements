@@ -1,0 +1,88 @@
+rail-player {
+  display: block;
+}
+
+.rail-player {
+  background-color: #EEEEEE;
+  border-top: 5px solid #999;
+  color: #262626;
+  font-family: "Helvetica Neue", sans-serif;
+  font-style: Thin;
+  font-weight: 100;
+  padding: 0 10px 10px;
+
+  .jw-controlbar {
+    .jw-icon-hd {
+      display: none;
+    }
+  }
+}
+
+.rail-player-content-sponsorship {
+  a {
+    color: #ccc;
+    font-size: 11px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .campaign-display-preamble {
+    margin-right: 1ex;
+  }
+}
+
+.rail-player-header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 8px 0;
+
+  .bulbs-video-play-button {
+    height: 2em;
+    margin-left: 0;
+    margin-right: 1em;
+    position: relative;
+    transform: translateY(5px);
+
+    circle {
+      fill: #333333;
+    }
+
+    polygon {
+      fill: #EEEEEE;
+    }
+
+  }
+}
+
+.rail-player-logo {
+  max-width: 150px;
+}
+
+.rail-player-title {
+  font-size: 1.2em;
+  padding: 10px 0;
+}
+
+.rail-player-logo {
+  font-size: 1.7em;
+}
+
+.rail-player-recirc-link {
+  border-radius: 4px;
+  border: 1px solid #262626;
+  color: #262626;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 8px 16px;
+  text-decoration: none;
+  -webkit-transition: 0.3s all;
+  transition: 0.3s all;
+  text-transform: uppercase;
+  font-family: Arial;
+  font-size: 10px;
+
+  &:hover {
+    background-color: #9b9b9b;
+  }
+}
