@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { shallow } from 'enzyme';
 
 import video from '../../fixtures/video.json';
@@ -28,26 +28,6 @@ describe('<bulbs-video-meta>', () => {
 
     it('has a video request field', () => {
       expect(subject.videoRequest).to.eq(VideoRequestField);
-    });
-  });
-
-  describe('propTypes', () => {
-    beforeEach(() => subject = BulbsVideoMeta.propTypes);
-
-    it('requires shareEmailMessage string', () => {
-      expect(subject.shareEmailMessage).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('requires shareTrackCatagory string', () => {
-      expect(subject.shareTrackCatagory).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('requires shareTwitterHandle string', () => {
-      expect(subject.shareTwitterHandle).to.eq(PropTypes.string.isRequired);
-    });
-
-    it('accepts a shareUrl string', () => {
-      expect(subject.shareUrl).to.eq(PropTypes.string);
     });
   });
 

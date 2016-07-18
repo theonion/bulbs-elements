@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-splitpic',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-splitpic
             attribute="value"

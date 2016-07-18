@@ -26,15 +26,6 @@ export default function VideoMetaRoot (props) {
           {props.video.title}
         </h1>
       </div>
-      <share-tools
-        share-title={props.video.title}
-        share-url={props.shareUrl || window.location}
-        data-track-action={props.shareTrackAction}
-      >
-        <share-via-facebook label icon/>
-        <share-via-twitter label icon twitter-handle={props.shareTwitterHandle}/>
-        <share-via-email label icon message={props.shareEmailMessage}/>
-      </share-tools>
     </div>
   );
 }
@@ -46,10 +37,6 @@ VideoMetaRoot.propTypes = {
   campaignPreamble: PropTypes.string,
   campaignTrackAction: PropTypes.string,
   campaignUrl: PropTypes.string,
-  shareEmailMessage: PropTypes.string.isRequired,
-  shareTrackAction: PropTypes.string.isRequired,
-  shareTwitterHandle: PropTypes.string.isRequired,
-  shareUrl: PropTypes.string,
   titleTrackAction: PropTypes.string.isRequired,
   video: PropTypes.object,
 };

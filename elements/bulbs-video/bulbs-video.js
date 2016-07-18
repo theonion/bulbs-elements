@@ -90,7 +90,7 @@ Object.assign(BulbsVideo, {
     targetCampaignNumber: PropTypes.string,
     targetHostChannel: PropTypes.string,
     targetSpecialCoverage: PropTypes.string,
-    twitterHandle: PropTypes.isRequired,
+    twitterHandle: PropTypes.string,
   },
 });
 
