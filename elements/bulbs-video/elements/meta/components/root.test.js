@@ -59,7 +59,7 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
         expect(campaign).to.have.length(1);
       });
 
-      it('passes all prps through', () => {
+      it('passes all props through', () => {
         Object.keys(props).forEach((key) => {
           expect(campaign).to.have.prop(key, props[key]);
         });

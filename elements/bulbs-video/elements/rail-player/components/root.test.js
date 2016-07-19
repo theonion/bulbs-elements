@@ -59,6 +59,7 @@ describe('<rail-player> <RailPlayerRoot>', () => {
             <Revealed
               muted={true}
               disableSharing={true}
+              targetHostChannel='right_rail'
               {...props}
             />
           </div>
