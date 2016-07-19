@@ -98,4 +98,5 @@ registerReactElement('bulbs-video', BulbsVideo);
 
 import './elements/meta';
 import './elements/summary';
+import './elements/rail-player';
 import './elements/video-carousel';
