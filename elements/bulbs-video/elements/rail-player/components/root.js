@@ -29,6 +29,7 @@ export default class Root extends React.Component {
           <Revealed
             disableSharing={true}
             muted={true}
+            targetHostChannel='right_rail'
             {...this.props}
           />
         </div>
