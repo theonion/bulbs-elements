@@ -39,4 +39,12 @@ bulbs-carousel-item {
 bulbs-carousel-slider {
   display: block;
   overflow: hidden;
+  .bulbs-video-play-button {
+    .st0 {
+      opacity: 0.5;
+    }
+    .st1 {
+      fill: #FFFFFF;
+    }
+  }
 }
