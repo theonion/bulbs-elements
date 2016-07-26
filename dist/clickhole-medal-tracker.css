@@ -1,0 +1,49 @@
+clickhole-medal-tracker {
+  display: block;
+  overflow: hidden; }
+  clickhole-medal-tracker .left-column {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    width: 70%; }
+  clickhole-medal-tracker .right-column {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 30%; }
+  clickhole-medal-tracker header {
+    background-color: #343434;
+    color: #fff;
+    height: 56px;
+    line-height: 56px;
+    overflow: hidden;
+    padding-left: 15px;
+    vertical-align: middle; }
+    clickhole-medal-tracker header .contender-name,
+    clickhole-medal-tracker header .gold-medal-totals,
+    clickhole-medal-tracker header .silver-medal-totals,
+    clickhole-medal-tracker header .bronze-medal-totals,
+    clickhole-medal-tracker header .all-medal-totals {
+      padding: 0; }
+  clickhole-medal-tracker .contender {
+    border-bottom: solid 2px #343434;
+    overflow: hidden; }
+    clickhole-medal-tracker .contender:last-child {
+      border: none; }
+  clickhole-medal-tracker .contender-flag {
+    height: 32px;
+    margin-right: 15px;
+    width: 58px; }
+  clickhole-medal-tracker .contender-name {
+    float: left;
+    overflow: hidden;
+    padding: 15px;
+    text-transform: uppercase; }
+  clickhole-medal-tracker .contender-abbreviation {
+    display: none; }
+  clickhole-medal-tracker .gold-medal-totals, clickhole-medal-tracker .silver-medal-totals, clickhole-medal-tracker .bronze-medal-totals, clickhole-medal-tracker .all-medal-totals {
+    float: left;
+    width: 25%;
+    padding-top: 35px; }
+
+/*# sourceMappingURL=clickhole-medal-tracker.css.map*/
