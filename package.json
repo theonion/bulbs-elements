@@ -119,6 +119,12 @@
     "write-file-webpack-plugin": "^3.1.4",
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
+    "yo": "^1.6.0",
+    "chokidar": "^1.6.0",
+    "iframe-resizer": "^3.5.5"
+  },
+  "dependencies": {
+    "react-flip-move": "^2.4.0",
     "yo": "^1.6.0"
   }
 }

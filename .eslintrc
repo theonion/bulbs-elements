@@ -14,7 +14,8 @@
     "$": false,
     "jQuery": false,
     "Clickventure": false,
-    "fixture": false
+    "fixture": false,
+    "Promise": false
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
