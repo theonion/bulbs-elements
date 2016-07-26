@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
+import url from 'url';
 
 import Revealed from './revealed';
 import GoogleAnalytics from '../plugins/google-analytics';
@@ -407,21 +408,57 @@ describe('<bulbs-video> <Revealed>', () => {
     let cacheBusterStub;
     let vastTestStub;
 
-    beforeEach(() => {
-      cacheBusterStub = sinon.stub().returns('456');
-      vastTestStub = sinon.stub().returns(null);
-      videoMeta = {
-        tags: ['clickhole', 'main', '12345'],
-        category: 'main/clickhole',
-      };
+    context('default', () => {
+      beforeEach(() => {
+        cacheBusterStub = sinon.stub().returns('456');
+        vastTestStub = sinon.stub().returns(null);
+        videoMeta = {
+          tags: ['clickhole', 'main', '12345'],
+          category: 'main/clickhole',
+          channel_slug: 'channel_slug',
+          hostChannel: 'host_channel',
+        };
+      });
+
+      it('returns the vast url', function () {
+        let vastUrl = Revealed.prototype.vastUrl.call({
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+        }, videoMeta);
+        let parsed = url.parse(vastUrl, true);
+        expect(parsed.protocol).to.eql('http:');
+        expect(parsed.host).to.eql('us-theonion.videoplaza.tv');
+        expect(parsed.pathname).to.eql('/proxy/distributor/v2');
+        expect(Object.keys(parsed.query)).to.eql(['rt', 'tt', 't', 's', 'rnd']);
+        expect(parsed.query.rt).to.eql('vast_2.0');
+        expect(parsed.query.tt).to.eql('p');
+        expect(parsed.query.t).to.eql('clickhole,main,12345,html5');
+        expect(parsed.query.s).to.eql('host_channel/channel_slug');
+        expect(parsed.query.rnd).to.eql('456');
+      });
     });
 
-    it('returns the vast url', function () {
-      let vastUrl = Revealed.prototype.vastUrl.call({
-        cacheBuster: cacheBusterStub,
-        vastTest: vastTestStub,
-      }, videoMeta);
-      expect(vastUrl).to.equal('http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=clickhole,main,12345,html5&s=main/clickhole&rnd=456'); // eslint-disable-line max-len
+    context('when series_slug is given', () => {
+      beforeEach(() => {
+        cacheBusterStub = sinon.stub().returns('456');
+        vastTestStub = sinon.stub().returns(null);
+        videoMeta = {
+          tags: ['clickhole', 'main', '12345'],
+          category: 'main/clickhole',
+          channel_slug: 'channel_slug',
+          series_slug: 'series_slug',
+          hostChannel: 'host_channel',
+        };
+      });
+
+      it('returns the vast url', function () {
+        let vastUrl = Revealed.prototype.vastUrl.call({
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+        }, videoMeta);
+        let parsed = url.parse(vastUrl, true);
+        expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
+      });
     });
   });
 

@@ -90,7 +90,7 @@ Object.assign(BulbsVideo, {
     targetCampaignNumber: PropTypes.string,
     targetHostChannel: PropTypes.string,
     targetSpecialCoverage: PropTypes.string,
-    twitterHandle: PropTypes.isRequired,
+    twitterHandle: PropTypes.string,
   },
 });
 
@@ -98,4 +98,5 @@ registerReactElement('bulbs-video', BulbsVideo);
 
 import './elements/meta';
 import './elements/summary';
+import './elements/rail-player';
 import './elements/video-carousel';

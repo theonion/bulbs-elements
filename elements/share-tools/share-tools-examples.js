@@ -25,6 +25,7 @@ export default {
             <share-via-facebook icon></share-via-facebook>
             <share-via-twitter twitter-handle='realTwitterUser' icon></share-via-twitter>
             <share-via-email message='Message' icon></share-via-email>
+            <share-via-disqus icon></share-via-disqus>
           </share-tools>
         `;
       },

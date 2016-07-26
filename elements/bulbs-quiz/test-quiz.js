@@ -20,8 +20,8 @@ export default class TestQuiz {
         $elQuestion.attr('data-unanswered', 'true');
         $('input', elAnswer).change(() => {
           // You may only answer once per question:
-          $('input', $elQuestion).prop('disabled', true);
-          $(this).prop('disabled', false);
+          $('input', $elQuestion).attr('readonly', 'readonly');
+          $(this).attr('readonly', null);
           $($elQuestion).attr('data-unanswered', 'false');
 
           // reveal explanation for the the selected answer only

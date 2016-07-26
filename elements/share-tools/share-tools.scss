@@ -1,54 +1,120 @@
 $email-grey: rgb(149, 169, 162);
 $facebook-blue: rgb(55, 87, 162);
 $twitter-blue: rgb(45, 159, 216);
+$disqus-orange: #f08d57;
 
-share-tools {
-  > :not(:last-child) {
-    margin-right: 0.25em;
-  }
-}
-
-%share-tool {
-  background-color: black;
+@mixin share-button($background-color: black, $share-button-icon-color: white, $border-color: red, $border-radius: 50%) {
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
   display: inline-flex;
   font-size: 1.5em;
-
+  justify-content: space-around;
+  text-decoration: none;
   .share-button-icon {
     box-sizing: content-box;
-    color: white;
+    color: $share-button-icon-color;
     padding: .5em;
     text-align: center;
     width: 1em;
   }
-
-  a {
-    display: flex;
-    justify-content: space-around;
-    text-decoration: none;
-  }
-
+  // Text For Button
   .share-button-label {
     color: white;
     font-family: sans-serif;
     padding: .5em;
-
     &:not(:first-child) {
       padding-left: 0;
     }
   }
 }
 
-.share-via-facebook {
-  @extend %share-tool;
-  background-color: $facebook-blue;
-}
-
-.share-via-twitter {
-  @extend %share-tool;
-  background-color: $twitter-blue;
-}
-
-.share-via-email {
-  @extend %share-tool;
-  background-color: $email-grey;
+share-tools {
+  > :not(:last-child) {
+    margin-right: 0.25em;
+  }
+  &.circle {
+    .share-via-facebook {
+      @include share-button($facebook-blue, white, $facebook-blue, 50%);
+    }
+    .share-via-twitter {
+      @include share-button($twitter-blue, white, $twitter-blue, 50%);
+    }
+    .share-via-email {
+      @include share-button($email-grey, white, $email-grey, 50%);
+    }
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 50%);
+    }
+  }
+  &.circle-transparent {
+    .share-via-facebook {
+      @include share-button(transparent, $facebook-blue, $facebook-blue, 50%);
+    }
+    .share-via-twitter {
+      @include share-button(transparent, $twitter-blue, $twitter-blue, 50%);
+    }
+    .share-via-email {
+      @include share-button(transparent, $email-grey, $email-grey, 50%);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 50%);
+    }    
+  }
+  &.square {
+    .share-via-facebook {
+      @include share-button($facebook-blue, white, $facebook-blue, 0);
+    }
+    .share-via-twitter {
+      @include share-button($twitter-blue, white, $twitter-blue, 0);
+    }
+    .share-via-email {
+      @include share-button($email-grey, white, $email-grey, 0);
+    } 
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 0);
+    }    
+  }
+  &.square-transparent {
+    .share-via-facebook {
+      @include share-button(transparent, $facebook-blue, $facebook-blue, 0);
+    }
+    .share-via-twitter {
+      @include share-button(transparent, $twitter-blue, $twitter-blue, 0);
+    }
+    .share-via-email {
+      @include share-button(transparent, $email-grey, $email-grey, 0);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 0);
+    }     
+  }
+  &.square-rounded {
+    .share-via-facebook {
+      @include share-button($facebook-blue, white, $facebook-blue, 3px);
+    }
+    .share-via-twitter {
+      @include share-button($twitter-blue, white, $twitter-blue, 3px);
+    }
+    .share-via-email {
+      @include share-button($email-grey, white, $email-grey, 3px);
+    }
+    .share-via-disqus {
+      @include share-button($disqus-orange, white, $disqus-orange, 3px);
+    }     
+  }
+  &.square-rounded-transparent {
+    .share-via-facebook {
+      @include share-button(transparent, $facebook-blue, $facebook-blue, 3px);
+    }
+    .share-via-twitter {
+      @include share-button(transparent, $twitter-blue, $twitter-blue, 3px);
+    }
+    .share-via-email {
+      @include share-button(transparent, $email-grey, $email-grey, 3px);
+    }
+    .share-via-disqus {
+      @include share-button(transparent, $disqus-orange, $disqus-orange, 3px);
+    }     
+  }
 }

@@ -1,115 +1,119 @@
 {
-  "id": 4053,
-  "title": "Beautiful: Watch This Woman Use A Raw Steak To Bang Out The Word ‘Equality’ In Morse Code On The Hood Of Her Car",
+  "id": 4149,
+  "title": "Heartbreaking: Fisherman Struggles To Pronounce â€˜Christâ€™",
   "channel_slug": "clickhole",
   "channel_name": "ClickHole",
-	"channel_logo_url": "http://i.onionstatic.com/onionstudios/578/3x1/600.png",
+  "channel_logo_url": "http://i.onionstatic.com/onionstudios/733/original/600.png",
+  "series_name": null,
   "season": null,
   "series_slug": null,
   "series_logo_url": null,
   "sponsor_id": null,
   "duration": 0,
-  "poster_url": "http://i.onionstatic.com/onionstudios/4974/original/600.jpg",
+  "poster_url": "http://i.onionstatic.com/onionstudios/5101/original/600.jpg",
   "targeting": {
+    "target_channel": "clickhole",
     "target_host_channel": "main",
-    "target_video_id": 4053,
-    "target_channel": "clickhole"
+    "target_video_id": 4149
   },
   "tags": [
+    "clickhole",
     "main",
-    "4053",
-    "clickhole"
+    "4149"
   ],
   "category": "main/clickhole",
-  "player_options": {
-    "poster": "http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg",
-    "shareUrl": "http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053",
-    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>",
-    "comscore": {
-      "id": 6036328,
-      "metadata": {
-        "c3": "onionstudios",
-        "c4": "CLICKHOLE",
-        "ns_st_ci": "onionstudios.4053"
-      }
-    }
-  },
   "videojs_options": {
-    "videoId": 4053,
-    "poster": "http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg",
-    "isDiscoverable": true,
-    "pluginConfig": {
-      "endcard": {
-        "URL": "http://www.onionstudios.com/end-cards/4053/"
-      },
-      "videometrix": {
-        "id": 6036328,
-        "metadata": {
-          "c3": "onionstudios",
-          "c4": "CLICKHOLE",
-          "ns_st_ci": "onionstudios.4053"
-        }
-      },
-      "videoanalytics": {
-        "id": 6036328
-      }
-    },
+    "poster": "http://i.onionstatic.com/onionstudios/5101/16x9/800.jpg",
+    "shareUrl": "http://www.onionstudios.com/videos/heartbreaking-fisherman-struggles-to-pronounce-christ-4149",
     "techOrder": [
       "html5",
       "flash"
     ],
-    "shareUrl": "http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053"
+    "isDiscoverable": true,
+    "videoId": 4149,
+    "pluginConfig": {
+      "videometrix": {
+        "metadata": {
+          "c4": "CLICKHOLE",
+          "ns_st_ci": "onionstudios.4149",
+          "c3": "onionstudios"
+        },
+        "id": 6036328
+      },
+      "videoanalytics": {
+        "id": 6036328
+      },
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/4149/"
+      }
+    }
+  },
+  "player_options": {
+    "poster": "http://i.onionstatic.com/onionstudios/5101/16x9/800.jpg",
+    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4149\"></iframe>\n",
+    "comscore": {
+      "metadata": {
+        "c4": "CLICKHOLE",
+        "ns_st_ci": "onionstudios.4149",
+        "c3": "onionstudios"
+      },
+      "id": 6036328
+    },
+    "shareUrl": "http://www.onionstudios.com/videos/heartbreaking-fisherman-struggles-to-pronounce-christ-4149"
   },
   "sources": [
     {
-      "id": 19077,
-      "url": "http://v.theonion.com/onionstudios/video/4053/640.webm",
-      "content_type": "video/webm",
-      "width": 640,
-      "bitrate": 469,
-      "enabled": true,
-      "is_legacy_source": false,
-      "video": 4053
-    },
-    {
-      "id": 19078,
-      "url": "http://v.theonion.com/onionstudios/video/4053/640.mp4",
+      "id": 19597,
+      "url": "http://v.theonion.com/onionstudios/video/4149/640.mp4",
       "content_type": "video/mp4",
       "width": 640,
-      "bitrate": 569,
+      "bitrate": 610,
       "enabled": true,
       "is_legacy_source": false,
-      "video": 4053
+      "video": 4149
     },
     {
-      "id": 19079,
-      "url": "http://v.theonion.com/onionstudios/video/4053/720.mp4",
+      "id": 19598,
+      "url": "http://v.theonion.com/onionstudios/video/4149/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 858,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 4149
+    },
+    {
+      "id": 19600,
+      "url": "http://v.theonion.com/onionstudios/video/4149/720.mp4",
       "content_type": "720/video/mp4",
       "width": 1280,
-      "bitrate": 3528,
+      "bitrate": 3491,
       "enabled": true,
       "is_legacy_source": false,
-      "video": 4053
+      "video": 4149
     },
     {
-      "id": 19080,
-      "url": "http://v.theonion.com/onionstudios/video/4053/1080.mp4",
+      "id": 19599,
+      "url": "http://v.theonion.com/onionstudios/video/4149/1080.mp4",
       "content_type": "1080/video/mp4",
       "width": 1920,
-      "bitrate": 8002,
+      "bitrate": 7961,
       "enabled": true,
       "is_legacy_source": false,
-      "video": 4053
+      "video": 4149
     },
     {
-      "id": 19076,
-      "url": "http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8",
+      "id": 19596,
+      "url": "http://v.theonion.com/onionstudios/video/4149/hls_playlist.m3u8",
       "content_type": "application/x-mpegURL",
       "width": null,
       "bitrate": null,
       "enabled": true,
       "is_legacy_source": false,
-      "video": 4053
+      "video": 4149
     }
-  ]
+  ],
+  "tunic_campaign_url": null,
+  "series_url": null,
+  "channel_url": "http://www.onionstudios.com/channels/clickhole"
 }

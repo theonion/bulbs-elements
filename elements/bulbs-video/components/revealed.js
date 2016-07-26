@@ -86,6 +86,7 @@ export default class Revealed extends React.Component {
 
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
+    videoMeta.hostChannel = hostChannel;
     videoMeta.gaPrefix = gaPrefix;
     videoMeta.player_options.shareUrl = window.location.href;
 
@@ -180,7 +181,14 @@ export default class Revealed extends React.Component {
     // Tags
     baseUrl += '&t=' + videoMeta.tags;
     //Category
-    baseUrl += '&s=' + videoMeta.category;
+    let hostChannel = videoMeta.hostChannel;
+    let channel = videoMeta.channel_slug;
+    let series = videoMeta.series_slug;
+    let category = `${hostChannel}/${channel}`;
+    if (series) {
+      category += `/${series}`;
+    }
+    baseUrl += '&s=' + category;
     baseUrl += '&rnd=' + this.cacheBuster();
 
     if (vastTestId) {
@@ -212,6 +220,7 @@ export default class Revealed extends React.Component {
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
       aspectratio: '16:9',
       autostart: true,
+      hlshtml: true,
       mute: videoMeta.player_options.muted || false,
       preload: 'none',
       primary: 'html5',

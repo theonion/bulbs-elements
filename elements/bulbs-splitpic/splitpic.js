@@ -6,7 +6,7 @@ export function SplitPic (element) {
   let isMoving = false;
   let lastX = 0;
   let lastY = 0;
-  let startPercentage = parseInt(el.attr('data-start-percent'), 10);
+  let startPercentage = el.find('.splitpic-images').eq(0).data('start-percent');
 
   // split the image at the cursor
   function updateSplit (x, isRelative) {

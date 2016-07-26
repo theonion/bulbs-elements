@@ -83,6 +83,9 @@ export default class BulbsCarouselState {
     if(this.getCurrentPage() > maxPage) {
       this.props.currentIndex = maxPage * perPage;
     }
+    if (this.props.currentIndex < 0) {
+      this.props.currentIndex = 0;
+    }
   }
 
   pageToCarouselItem (item) {

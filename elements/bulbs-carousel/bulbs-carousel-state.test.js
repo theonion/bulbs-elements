@@ -287,6 +287,15 @@ describe('<bulbs-carousel> BulbsCarouselState', () => {
   });
 
   describe('updateCurrentIndex', () => {
+    context('less than one page of items', () => {
+      it('cannot be < zero', () => {
+        carousel.style.width = '100000px';
+        subject.props.currentIndex = 0;
+        subject.updateCurrentIndex(-1);
+        expect(subject.props.currentIndex).to.eql(0);
+      });
+    });
+
     context('two-up', () => {
       beforeEach(() => {
         carousel.style.width = '200px';

@@ -25,6 +25,10 @@ export class VideoCarouselState {
     return this.currentItem.getAttribute('share-url') || '';
   }
 
+  get shareTitle () {
+    return this.currentItem.getAttribute('share-title') || '';
+  }
+
   selectItem (carouselItem) {
     this.props.currentItem = carouselItem;
     this.validate();
@@ -74,12 +78,14 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
   handleClick (event) {
     let item = event.target.closest('bulbs-carousel-item');
-    let anchor = item.querySelector('a');
+    if (item) {
+      let anchor = item.querySelector('a');
 
-    if (item && !anchor) {
-      event.preventDefault();
-      this.selectItem(item);
-      this.applyState();
+      if (item && !anchor) {
+        event.preventDefault();
+        this.selectItem(item);
+        this.applyState();
+      }
     }
   }
 
@@ -115,8 +121,13 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     );
 
     forEach.call(
-      this.querySelectorAll('bulbs-video-meta'),
+      this.querySelectorAll('share-tools'),
       (element) => element.setAttribute('share-url', this.state.shareUrl)
+    );
+
+    forEach.call(
+      this.querySelectorAll('share-tools'),
+      (element) => element.setAttribute('share-title', this.state.shareTitle)
     );
   }
 }
