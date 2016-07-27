@@ -11,8 +11,7 @@ class NotificationContainer extends BulbsElement {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
     this.state = {
-      notifications: [],
-      notification: null
+      notification: {}
     };
   }
 
@@ -31,14 +30,8 @@ class NotificationContainer extends BulbsElement {
   }
 
   render () {
-    var notification = null;
-    if (this.state.notification) {
-      notification = this.state.notification;
-    } else {
-      notification = {};
-    }
     return (
-      <NotificationDisplay notification={ notification } />
+      <NotificationDisplay notification={ this.state.notification } />
     );
   }
 }
