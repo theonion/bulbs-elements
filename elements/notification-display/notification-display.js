@@ -3,8 +3,6 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
-var LocalStorageMixin = require('react-localstorage');
-
 
 class NotificationDisplay extends BulbsElement {
 

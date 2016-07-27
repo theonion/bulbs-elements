@@ -4,12 +4,18 @@ import NotificationDisplay from './notification-display';
 import { mount, render, shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
+
+var ls = global.localStorage;
+
+
 describe('<notification-display>', () => {
-  let subject;
   let props;
   let src;
   let notifications;
   beforeEach(() => {
+    ls.clear();
+    console.log(ls);
+
     src = 'http://example.com/notifications';
     notifications = [{
       id: 1,
@@ -48,6 +54,25 @@ describe('<notification-display>', () => {
         const wrapper = shallow(<NotificationContainer {...props}/>);
         wrapper.setState({ notification: notifications[0] });
         expect(wrapper.html()).to.equal('<div>Chief Keef gang gang.</div>');
+      });
+
+      it('handleRequestSuccess stores values in LocalStorage', () => {
+        const instance = mount(<NotificationContainer {...props}/>).instance();
+        instance.handleRequestSuccess(notifications);
+        expect(ls.getItem('NotificationContainer')).to.eql(
+          JSON.stringify({'local_notification_ids': [1]})
+        );
+      });
+
+      it('retrieves value from LocalStorage', () => {
+        const instance = mount(<NotificationContainer {...props}/>).instance();
+        instance.handleRequestSuccess(notifications);
+        expect(ls.getItem('NotificationContainer')).to.eql(
+          JSON.stringify({'local_notification_ids': [1]})
+        );
+
+        const new_instance = mount(<NotificationContainer {...props}/>).instance();
+        expect(new_instance.state.local_notification_ids).to.eql([1]);
       });
 
     });
