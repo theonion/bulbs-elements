@@ -1,0 +1,260 @@
+[
+  {
+    "name": "United States",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/United_States.jpg",
+    "abbreviation": "USA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Russia",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Russia.jpg",
+    "abbreviation": "RUS",
+    "jokeEntry": false
+  },
+  {
+    "name": "Germany",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Germany.jpg",
+    "abbreviation": "GER",
+    "jokeEntry": false
+  },
+  {
+    "name": "Great Britain",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/UK.jpg",
+    "abbreviation": "GBK",
+    "jokeEntry": false
+  },
+  {
+    "name": "France",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/France.jpg",
+    "abbreviation": "FRA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Italy",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Italy.jpg",
+    "abbreviation": "ITA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Australia",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Australia.jpg",
+    "abbreviation": "AUS",
+    "jokeEntry": false
+  },
+  {
+    "name": "Sweden",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Sweden.jpg",
+    "abbreviation": "SWE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Hungary",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Hungary.jpg",
+    "abbreviation": "HUN",
+    "jokeEntry": false
+  },
+  {
+    "name": "China",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/China.jpg",
+    "abbreviation": "CHI",
+    "jokeEntry": false
+  },
+  {
+    "name": "Japan",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Japan.jpg",
+    "abbreviation": "JAP",
+    "jokeEntry": false
+  },
+  {
+    "name": "Finland",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Finland.jpg",
+    "abbreviation": "FIN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Romania",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Romania.jpg",
+    "abbreviation": "ROM",
+    "jokeEntry": false
+  },
+  {
+    "name": "Poland",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Poland.jpg",
+    "abbreviation": "POL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Canada",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Canada.jpg",
+    "abbreviation": "CAN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Netherlands",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Netherlands.jpg",
+    "abbreviation": "NED",
+    "jokeEntry": false
+  },
+  {
+    "name": "South Korea",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/South_Korea.jpg",
+    "abbreviation": "KOR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Bulgaria",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Bulgaria.jpg",
+    "abbreviation": "BUL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Switzerland",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Switzerland.jpg",
+    "abbreviation": "SUI",
+    "jokeEntry": false
+  },
+  {
+    "name": "Czech Republic",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Czech_Republic.jpg",
+    "abbreviation": "CZE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Denmark",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Denmark.jpg",
+    "abbreviation": "DEN",
+    "jokeEntry": false
+  },
+  {
+    "name": "Belgium",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Belgium.jpg",
+    "abbreviation": "BEL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Spain",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Spain.jpg",
+    "abbreviation": "ESP",
+    "jokeEntry": false
+  },
+  {
+    "name": "Greece",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Greece.jpg",
+    "abbreviation": "GRE",
+    "jokeEntry": false
+  },
+  {
+    "name": "Jamaica",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Jamaica.jpg",
+    "abbreviation": "JAM",
+    "jokeEntry": false
+  },
+  {
+    "name": "Ukraine",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Ukraine.jpg",
+    "abbreviation": "UKR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Brazil",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Brazil.jpg",
+    "abbreviation": "BRA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Austria",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Austria.jpg",
+    "abbreviation": "AUT",
+    "jokeEntry": false
+  },
+  {
+    "name": "New Zealand",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/New_Zealand.jpg",
+    "abbreviation": "NZL",
+    "jokeEntry": false
+  },
+  {
+    "name": "Turkey",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Turkey.jpg",
+    "abbreviation": "TUR",
+    "jokeEntry": false
+  },
+  {
+    "name": "Kenya",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Kenya.jpg",
+    "abbreviation": "KEN",
+    "jokeEntry": false
+  },
+  {
+    "name": "South Africa",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/South_Africa.jpg",
+    "abbreviation": "RSA",
+    "jokeEntry": false
+  },
+  {
+    "name": "Argentina",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Argentina.jpg",
+    "abbreviation": "ARG",
+    "jokeEntry": false
+  },
+  {
+    "name": "Bahamas",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Bahamas.jpg",
+    "abbreviation": "BAH",
+    "jokeEntry": false
+  },
+  {
+    "name": "Mexico",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Mexico.jpg",
+    "abbreviation": "MEX",
+    "jokeEntry": false
+  },
+  {
+    "name": "Milwaukee Bucks",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Milwaukee_Bucks.jpg",
+    "abbreviation": "MIL",
+    "jokeEntry": true
+  },
+  {
+  "name": "Bruce",
+  "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Bruce.jpg",
+  "abbreviation": "BRU",
+  "jokeEntry": true
+  },
+  {
+    "name": "Unknown",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Unknown.jpg",
+    "abbreviation": "???",
+    "jokeEntry": true
+  },
+  {
+    "name": "The Isle Of Four Security Guards",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/flag.jpg",
+    "abbreviation": "4SG",
+    "jokeEntry": true
+  },
+  {
+    "name": "Presbyterians",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Presbyterians.png",
+    "abbreviation": "PRB",
+    "jokeEntry": true
+  },
+  {
+    "name": "Japan and Belgium",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Belgium_Japan.jpg",
+    "abbreviation": "J&B",
+    "jokeEntry": true
+  },
+  {
+    "name": "Bev",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/Bev.jpg",
+    "abbreviation": "BEV",
+    "jokeEntry": true
+  },
+  {
+    "name": "Samuel and Samuel's Trained Ape",
+    "flagImage": "http://localhost:8080/fixtures/clickhole-medal-tracker/flag.jpg",
+    "abbreviation": "APE",
+    "jokeEntry": true
+  }
+]
