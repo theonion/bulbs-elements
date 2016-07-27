@@ -1,6 +1,7 @@
 import React from 'react';
+import NotificationContainer from './notification-container';
 import NotificationDisplay from './notification-display';
-import { shallow } from 'enzyme';
+import { mount, render, shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
 describe('<notification-display>', () => {
@@ -27,13 +28,25 @@ describe('<notification-display>', () => {
     fetchMock.mock(src, notifications);
   });
 
-  describe('handleRequestSuccess', () => {
-    context('src is truthy', () => {
-      it('fetches notification data for display', () => {
-        let subject = shallow(<NotificationDisplay {...props}/>);
-        expect(subject.equals(<div>Chief Keef gang gang</div>)).to.be.true;
+  describe('NotificationContainer', () => {
+    context('passes notifications to NotificationDisplay', () => {
+
+      it('calls componentDidMount', () => {
+        sinon.spy(NotificationContainer.prototype, 'componentDidMount');
+        const wrapper = mount(<NotificationContainer {...props}/>);
+        expect(NotificationContainer.prototype.componentDidMount).to.have.property('callCount', 1);
+        NotificationContainer.prototype.componentDidMount.restore();
       });
+
+      it('fetches notifications', () => {
+        sinon.spy(NotificationContainer.prototype, 'componentDidMount');
+        const wrapper = mount(<NotificationContainer {...props}/>);
+        expect(wrapper.props().src).to.equal(src);
+        expect(NotificationContainer.prototype.componentDidMount.calledOnce).to.equal(true);
+        console.log(wrapper.state());
+        expect(wrapper.state().notifications).to.equal(notifications);
+      });
+
     });
   });
-
 });
