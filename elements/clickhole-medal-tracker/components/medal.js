@@ -9,7 +9,7 @@ export default class Medal extends Component {
 
   render () {
     return (
-      <div className='Medal'>
+      <div className='medal'>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
           <title>
             Medal
