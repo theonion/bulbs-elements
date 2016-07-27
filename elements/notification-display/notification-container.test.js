@@ -29,7 +29,7 @@ describe('<notification-display>', () => {
   });
 
   describe('NotificationContainer', () => {
-    context('passes notifications to NotificationDisplay', () => {
+    context('Makes fetch request for notifications', () => {
 
       it('calls componentDidMount', () => {
         sinon.spy(NotificationContainer.prototype, 'componentDidMount');
@@ -38,13 +38,16 @@ describe('<notification-display>', () => {
         NotificationContainer.prototype.componentDidMount.restore();
       });
 
-      it('fetches notifications', () => {
-        sinon.spy(NotificationContainer.prototype, 'componentDidMount');
-        const wrapper = mount(<NotificationContainer {...props}/>);
-        expect(wrapper.props().src).to.equal(src);
-        expect(NotificationContainer.prototype.componentDidMount.calledOnce).to.equal(true);
-        console.log(wrapper.state());
-        expect(wrapper.state().notifications).to.equal(notifications);
+      it('handles request success', () => {
+        const instance = mount(<NotificationContainer {...props}/>).instance();
+        instance.handleRequestSuccess(notifications);
+        expect(instance.state.notification).to.equal(notifications[0]);
+      });
+
+      it('passes notifications to NotificationDisplay', () => {
+        const wrapper = shallow(<NotificationContainer {...props}/>);
+        wrapper.setState({ notification: notifications[0] });
+        expect(wrapper.html()).to.equal('<div>Chief Keef gang gang.</div>');
       });
 
     });

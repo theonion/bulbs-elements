@@ -9,28 +9,19 @@ var LocalStorageMixin = require('react-localstorage');
 class NotificationDisplay extends BulbsElement {
 
   constructor (props) {
-    invariant(!!props.notifications, 'notification-display component requires notifications');
+    invariant(!!props.notification, 'notification-display component requires notification');
     super(props);
-    this.mixins = [LocalStorageMixin];
-    this.state = {
-      notification: null,
-      notifications: []
-    };
-
   }
 
   render () {
-    if (this.state.notifications.length > 0) {
+    if (this.props.notification) {
       return (
         <div>
-          this.state.notification.headline
+          { this.props.notification.headline }
         </div>
       );
     } else {
-      return (
-        <div>
-        </div>
-      );
+      return (<div></div>)
     }
   }
 }
@@ -38,7 +29,7 @@ class NotificationDisplay extends BulbsElement {
 Object.assign(NotificationDisplay, {
   displayName: 'NotificationDisplay',
   propTypes: {
-    notifications: PropTypes.array.isRequired,
+    notification: PropTypes.object.isRequired,
   }
 });
 

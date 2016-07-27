@@ -10,7 +10,10 @@ class NotificationContainer extends BulbsElement {
   constructor (props) {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
-    this.state = {notifications: []};
+    this.state = {
+      notifications: [],
+      notification: null
+    };
   }
 
   componentDidMount () {
@@ -22,13 +25,20 @@ class NotificationContainer extends BulbsElement {
   }
 
   handleRequestSuccess (notifications) {
-    this.setState({notifications: notifications});
-    console.log(this.state.notifications);
+    if (notifications.length > 0) {
+      this.setState({ notification: notifications[0] });
+    }
   }
 
   render () {
+    var notification = null;
+    if (this.state.notification) {
+      notification = this.state.notification;
+    } else {
+      notification = {};
+    }
     return (
-      <NotificationDisplay notifications={this.state.notifications} />
+      <NotificationDisplay notification={ notification } />
     );
   }
 }
