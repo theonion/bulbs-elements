@@ -4,25 +4,33 @@ $header-text-color: #fff;
 clickhole-medal-tracker {
   display: block;
   overflow: hidden;
+  width: 100%;
 
-  .Medal {
-    margin-top: 10px;
+  .medal {
+    margin: 0 auto;
     width: 29px;
     height: 29px;
+
+    svg {
+      display: block;
+    }
   }
 
   .left-column {
     float: left;
     overflow: hidden;
     position: relative;
-    width: 70%;
+    width: 60%;
   }
 
   .right-column {
-    position: relative;
+    display: flex;
+    align-items: center;
     float: left;
     overflow: hidden;
-    width: 30%;
+    position: relative;
+    text-align: center;
+    width: 40%;
   }
 
   header {
@@ -60,12 +68,19 @@ clickhole-medal-tracker {
     }
   }
 
+  .contenders {
+    position: relative;
+  }
+
   .contender {
-    border-bottom: solid 2px $header-bg;
+    background: #fff;
+    display: flex;
+    margin-bottom: 3px;
     overflow: hidden;
+    padding: 10px 0 10px 10px;
 
     &:last-child {
-      border: none;
+      margin-bottom: 0;
     }
   }
 
@@ -76,9 +91,10 @@ clickhole-medal-tracker {
   }
 
   .contender-name {
+    display: flex;
+    align-items: center;
     float: left;
     overflow: hidden;
-    padding: 15px;
     text-transform: uppercase;
   }
 
@@ -89,7 +105,6 @@ clickhole-medal-tracker {
   %medal-total {
     float: left;
     width: 25%;
-    padding-top: 35px;
   }
 
   .gold-medal-totals {
