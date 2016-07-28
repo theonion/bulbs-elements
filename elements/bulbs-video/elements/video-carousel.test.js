@@ -63,7 +63,10 @@ describe('<bulbs-video-carousel>', () => {
     });
   });
 
-  afterEach(() => container.remove());
+  afterEach(() => {
+    container.remove();
+    window.location.hash = '';
+  });
 
   describe('attachedCallback', () => {
     it('attaches playerEnded handler to videoPlayer', () => {
