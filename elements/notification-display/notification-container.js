@@ -15,6 +15,7 @@ class NotificationContainer extends BulbsElement {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
     this.state = {
+      next: null,
       local_notification_ids: [],
       notification: {}
     };
@@ -24,21 +25,44 @@ class NotificationContainer extends BulbsElement {
     return ['local_notification_ids'];
   }
 
-  componentDidMount () {
-    fetch(this.props.src)
+  requestNotifications (src) {
+    fetch(src)
       .then(function(response) {
         return response.json();
       })
       .then(this.handleRequestSuccess.bind(this));
   }
 
-  handleRequestSuccess (notifications) {
+  componentDidMount () {
+    this.requestNotifications(this.props.src);
+  }
+
+  handleRequestSuccess (response) {
+    var notifications = response.results;
+    this.setState({ next: response.next });
+
+    if (this.state.local_notification_ids.length > 0) {
+      notifications = this.removeLocalNotifications(notifications);
+    }
+
     if (notifications.length > 0) {
       this.setState({ notification: notifications[0] });
       this.setState({
         local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id])
-      });
+      });;
+    } else if (this.state.next !== null) {
+      this.requestNotifications(this.state.next);
     }
+
+  }
+
+  removeLocalNotifications (notifications) {
+    for (var i = notifications.length - 1; i >= 0; i--) {
+      if (this.state.local_notification_ids.indexOf(notifications[i].id) != -1) {
+        notifications.splice(i, 1);
+      }
+    }
+    return notifications;
   }
 
   render () {
