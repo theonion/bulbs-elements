@@ -11,7 +11,9 @@ export default class Contenders extends Component {
   }
 
   componentDidMount () {
-    this.scheduleContenderUpdates();
+    if (!this.props.disableAnimation) {
+      this.scheduleContenderUpdates();
+    }
   }
 
   scheduleContenderUpdates () {
@@ -63,6 +65,7 @@ Object.assign(Contenders, {
   },
   propTypes: {
     contenders: PropTypes.array,
+    disableAnimation: PropTypes.boolean,
     updateInterval: PropTypes.number,
   },
 });
