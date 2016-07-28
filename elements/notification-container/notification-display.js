@@ -12,10 +12,22 @@ class NotificationDisplay extends BulbsElement {
   }
 
   render () {
+    console.log(this.props.headline);
     if (this.props.notification) {
       return (
-        <div>
-          { this.props.notification.headline }
+        <div className="row">
+          <div className="notification-image">
+            <img src="" width="60"/>
+          </div>
+          <div className="notification-body">
+            { this.props.notification.headline }
+            { this.props.notification.body }
+
+            <a src={this.props.notification.clickthrough_url}>
+              { this.props.notification.clickthrough_cta }
+            </a>
+
+          </div>
         </div>
       );
     } else {

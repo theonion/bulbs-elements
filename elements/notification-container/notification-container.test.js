@@ -30,6 +30,7 @@ describe('<notification-display>', () => {
         body: 'we out here',
         image: {'id': 1},
         image_url: 'http://example.com/campain-img.jpg',
+        clickthrough_cta: 'Read More...',
         clickthrough_url: 'http://example.com/clickthrough',
       }]
     };
@@ -42,6 +43,7 @@ describe('<notification-display>', () => {
         body: 'Seriously, that my baby!',
         image: {'id': 2},
         image_url: 'http://example.com/baby-future.jpg',
+        clickthrough_cta: 'Read More...',
         clickthrough_url: 'comethru and click'
       }]
     };
@@ -74,7 +76,7 @@ describe('<notification-display>', () => {
       it('passes notifications to NotificationDisplay', () => {
         const wrapper = shallow(<NotificationContainer {...props}/>);
         wrapper.setState({ notification: notifications.results[0] });
-        expect(wrapper.html()).to.equal('<div>Chief Keef gang gang.</div>');
+        expect(wrapper.html()).to.contain(notifications.results[0].body);
       });
 
       it('handleRequestSuccess stores values in LocalStorage', () => {

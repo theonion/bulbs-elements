@@ -38,6 +38,7 @@ class NotificationContainer extends BulbsElement {
   }
 
   handleRequestSuccess (response) {
+    console.log(response);
     var notifications = response.results;
     this.setState({ next: response.next });
 
