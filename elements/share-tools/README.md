@@ -1,8 +1,8 @@
 # `<share-tools>`
 
 Attributes
-  * `share-url` *(required)* Used in all nested share tools.
-  * `share-title` Used in all nested share tools. Default: `window.location.toString()`
+  * `share-url`  Used in all nested share tools. Default: `window.location.toString()`
+  * `share-title` *(required)* sed in all nested share tools.
 
 #### `<share-via-*>`
 
