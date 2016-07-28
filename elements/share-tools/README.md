@@ -2,7 +2,7 @@
 
 Attributes
   * `share-url` *(required)* Used in all nested share tools.
-  * `share-title` *(required)* Used in all nested share tools.
+  * `share-title` Used in all nested share tools. Default: `window.location.toString()`
 
 #### `<share-via-*>`
 
