@@ -3,6 +3,7 @@ import Contender from './contender';
 import FlipMove from 'react-flip-move';
 import Medal from './medal';
 import React, { PropTypes, Component } from 'react';
+import { requestInterval } from 'bulbs-elements/util';
 import { shuffleContenders, topFiveContenders } from '../randomizer';
 export default class Contenders extends Component {
   constructor (props) {

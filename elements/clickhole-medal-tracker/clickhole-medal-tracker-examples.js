@@ -5,7 +5,9 @@ let examples = {
       render () {
         return `
           <clickhole-medal-tracker
-            src="http://localhost:8080/fixtures/clickhole-medal-tracker/medals.json">
+            src="http://localhost:8080/fixtures/clickhole-medal-tracker/medals.json"
+            enter-animation="fade"
+            leave-animation="fade">
           </clickhole-medal-tracker>`;
       },
     },
@@ -14,7 +16,7 @@ let examples = {
         return `
           <clickhole-medal-tracker
             src="http://localhost:8080/fixtures/clickhole-medal-tracker/medals.json"
-            disable-animation >
+            disable-animation>
           </clickhole-medal-tracker>`;
       },
     },
@@ -25,8 +27,8 @@ let examples = {
             src="http://localhost:8080/fixtures/clickhole-medal-tracker/medals.json"
             stagger-delay="500"
             update-interval="5000"
-            enter-animation="elevator"
-            leave-animation="accordian" >
+            enter-animation="fade"
+            leave-animation="fade">
           </clickhole-medal-tracker>`;
       },
     },
