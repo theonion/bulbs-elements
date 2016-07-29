@@ -68,7 +68,7 @@ Object.assign(Contenders, {
   },
   propTypes: {
     contenders: PropTypes.array,
-    disableAnimation: PropTypes.boolean,
+    disableAnimation: PropTypes.bool,
     enterAnimation: PropTypes.string.isRequired,
     leaveAnimation: PropTypes.string.isRequired,
     staggerDelay: PropTypes.number.isRequired,

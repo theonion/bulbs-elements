@@ -35,7 +35,9 @@ class ClickholeMedalTracker extends BulbsElement {
           contenders={this.state.contenders}
           disableAnimation={isString(this.props.disableAnimation)}
           updateInterval={this.props.updateInterval}
-          staggerDelay={this.props.staggerDelay} />
+          staggerDelay={this.props.staggerDelay}
+          enterAnimation={this.props.enterAnimation}
+          leaveAnimation={this.props.leaveAnimation} />
       </div>);
   }
 }
@@ -49,7 +51,7 @@ Object.assign(ClickholeMedalTracker, {
     updateInterval: 2000,
   },
   propTypes: {
-    disableAnimation: PropTypes.boolean,
+    disableAnimation: PropTypes.string,
     enterAnimation: PropTypes.string,
     leaveAnimation: PropTypes.string,
     src: PropTypes.string.isRequired,
