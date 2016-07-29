@@ -12,9 +12,15 @@ export default class CommentViaDisqus extends ShareTool {
 
   share (event) {
     event.preventDefault();
-    window.open(
-      this.shareUrl + '#comments'
-    );
+    debugger
+    if (this.shareUrl === window.location.toString()) {
+      window.location.hash = '#comments';
+    }
+    else {
+      window.open(
+        this.shareUrl + '#comments'
+      );
+    }
   }
 
   render () {
