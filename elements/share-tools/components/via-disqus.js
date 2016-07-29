@@ -12,7 +12,6 @@ export default class CommentViaDisqus extends ShareTool {
 
   share (event) {
     event.preventDefault();
-    debugger
     if (this.shareUrl === window.location.toString()) {
       window.location.hash = '#comments';
     }
