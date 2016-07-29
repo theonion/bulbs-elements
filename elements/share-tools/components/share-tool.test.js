@@ -58,6 +58,11 @@ describe('<share-tools> <ShareTool>', () => {
       it('is the url of the containing share-tools', () => {
         expect(subject.shareUrl).to.eql('//example.org/share-url');
       });
+
+      it('defaults to the current url', () => {
+        closestShareTools.removeAttribute('share-url');
+        expect(subject.shareUrl).to.eql(window.location.toString());
+      });
     });
 
     describe('shareTitle', () => {

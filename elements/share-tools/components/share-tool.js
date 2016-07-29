@@ -11,7 +11,7 @@ export default class ShareTool extends React.Component {
   }
 
   get shareUrl () {
-    return this.shareTools.getAttribute('share-url');
+    return this.shareTools.getAttribute('share-url') || window.location.toString();
   }
 
   get shareTitle () {
