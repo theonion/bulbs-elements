@@ -14,11 +14,24 @@ export default class Contenders extends Component {
   componentDidMount () {
     if (!this.props.disableAnimation) {
       this.scheduleContenderUpdates();
+      this.preventCrazyAnimations();
     }
   }
 
+  preventCrazyAnimations () {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && this.contenderUpdater) {
+        clearInterval(this.contenderUpdater);
+      }
+      else {
+        this.updateContenderStats();
+        this.scheduleContenderUpdates();
+      }
+    });
+  }
+
   scheduleContenderUpdates () {
-    setInterval(this.updateContenderStats.bind(this), this.props.updateInterval);
+    this.contenderUpdater = setInterval(this.updateContenderStats.bind(this), this.props.updateInterval);
   }
 
   topContenderComponents () {
