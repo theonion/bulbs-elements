@@ -1,0 +1,125 @@
+$header-bg: #343434;
+$header-text-color: #fff;
+
+clickhole-medal-tracker {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+
+  .medal {
+    margin: 0 auto;
+    width: 29px;
+    height: 29px;
+
+    svg {
+      display: block;
+    }
+  }
+
+  .left-column {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    width: 60%;
+  }
+
+  .right-column {
+    display: flex;
+    align-items: center;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    width: 40%;
+  }
+
+  header {
+    background-color: $header-bg;
+    color: $header-text-color;
+    height: 56px;
+    line-height: 56px;
+    overflow: hidden;
+    padding-left: 15px;
+    vertical-align: middle;
+
+    %total-column {
+      padding: 0;
+    }
+
+    .contender-name {
+      @extend %total-column;
+    }
+
+    .gold-medal-totals {
+      @extend %total-column;
+    }
+
+    .silver-medal-totals {
+      @extend %total-column;
+    }
+
+    .bronze-medal-totals {
+      @extend %total-column;
+    }
+
+    .all-medal-totals {
+      @extend %total-column;
+      text-transform: uppercase;
+    }
+  }
+
+  .contenders {
+    position: relative;
+  }
+
+  .contender {
+    background: #fff;
+    display: flex;
+    margin-bottom: 3px;
+    overflow: hidden;
+    padding: 10px 0 10px 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .contender-flag {
+    height: 32px;
+    margin-right: 15px;
+    width: 58px;
+  }
+
+  .contender-name {
+    display: flex;
+    align-items: center;
+    float: left;
+    overflow: hidden;
+    text-transform: uppercase;
+  }
+
+  .contender-abbreviation {
+    display: none;
+  }
+
+  %medal-total {
+    float: left;
+    width: 25%;
+  }
+
+  .gold-medal-totals {
+    @extend %medal-total;
+  }
+
+  .silver-medal-totals {
+    @extend %medal-total;
+  }
+
+  .bronze-medal-totals {
+    @extend %medal-total;
+  }
+
+  .all-medal-totals {
+    @extend %medal-total;
+  }
+}

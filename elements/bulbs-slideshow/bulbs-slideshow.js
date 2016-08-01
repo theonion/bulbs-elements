@@ -3,7 +3,7 @@ import './bulbs-slideshow.scss';
 
 function getInitialSlideIndex (hash) {
   let index = 0;
-  if (hash.length) {
+  if (hash.length > 1) {
     index = parseInt(hash.match(/(\d+)/)[1], 10) - 1;
   }
   return index;
