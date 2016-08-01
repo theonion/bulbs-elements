@@ -3,7 +3,6 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
-
 class NotificationDisplay extends BulbsElement {
 
   constructor (props) {
@@ -30,9 +29,8 @@ class NotificationDisplay extends BulbsElement {
           </div>
         </div>
       );
-    } else {
-      return (<div></div>)
     }
+    return <div className="inactive-notification-display"></div>;
   }
 }
 
@@ -40,7 +38,7 @@ Object.assign(NotificationDisplay, {
   displayName: 'NotificationDisplay',
   propTypes: {
     notification: PropTypes.object.isRequired,
-  }
+  },
 });
 
 registerReactElement('notification-display', NotificationDisplay);

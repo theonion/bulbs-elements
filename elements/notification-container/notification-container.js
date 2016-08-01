@@ -4,10 +4,8 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
-
-var localStorageMixin = require('react-localstorage');
-var reactMixin = require('react-mixin');
-
+let localStorageMixin = require('react-localstorage');
+let reactMixin = require('react-mixin');
 
 class NotificationContainer extends BulbsElement {
 
@@ -17,7 +15,7 @@ class NotificationContainer extends BulbsElement {
     this.state = {
       next: null,
       local_notification_ids: [],
-      notification: {}
+      notification: {},
     };
   }
 
@@ -27,7 +25,7 @@ class NotificationContainer extends BulbsElement {
 
   requestNotifications (src) {
     fetch(src)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
       .then(this.handleRequestSuccess.bind(this));
@@ -39,7 +37,7 @@ class NotificationContainer extends BulbsElement {
 
   handleRequestSuccess (response) {
     console.log(response);
-    var notifications = response.results;
+    let notifications = response.results;
     this.setState({ next: response.next });
 
     if (this.state.local_notification_ids.length > 0) {
@@ -49,17 +47,17 @@ class NotificationContainer extends BulbsElement {
     if (notifications.length > 0) {
       this.setState({ notification: notifications[0] });
       this.setState({
-        local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id])
-      });;
-    } else if (this.state.next !== null) {
+        local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id]),
+      });
+    }
+    else if (this.state.next !== null) {
       this.requestNotifications(this.state.next);
     }
-
   }
 
   removeLocalNotifications (notifications) {
-    for (var i = notifications.length - 1; i >= 0; i--) {
-      if (this.state.local_notification_ids.indexOf(notifications[i].id) != -1) {
+    for (let i = notifications.length - 1; i >= 0; i--) {
+      if (this.state.local_notification_ids.indexOf(notifications[i].id) !== -1) {
         notifications.splice(i, 1);
       }
     }
@@ -77,7 +75,7 @@ Object.assign(NotificationContainer, {
   displayName: 'NotificationContainer',
   propTypes: {
     src: PropTypes.string.isRequired,
-  }
+  },
 });
 
 registerReactElement('notification-container', NotificationContainer);

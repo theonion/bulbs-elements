@@ -1,12 +1,9 @@
 import React from 'react';
 import NotificationContainer from './notification-container';
-import NotificationDisplay from './notification-display';
-import { mount, render, shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
-
-var ls = global.localStorage;
-
+let ls = global.localStorage;
 
 describe('<notification-display>', () => {
 
@@ -28,11 +25,11 @@ describe('<notification-display>', () => {
         internal_title: 'da boys',
         headline: 'Chief Keef gang gang.',
         body: 'we out here',
-        image: {'id': 1},
+        image: { 'id': 1 },
         image_url: 'http://example.com/campain-img.jpg',
         clickthrough_cta: 'Read More...',
         clickthrough_url: 'http://example.com/clickthrough',
-      }]
+      }],
     };
     notifications2 = {
       'next': null,
@@ -41,15 +38,15 @@ describe('<notification-display>', () => {
         internal_title: 'da fellas',
         headline: 'Keep Russell Wilson away from baby future',
         body: 'Seriously, that my baby!',
-        image: {'id': 2},
+        image: { 'id': 2 },
         image_url: 'http://example.com/baby-future.jpg',
         clickthrough_cta: 'Read More...',
-        clickthrough_url: 'comethru and click'
-      }]
+        clickthrough_url: 'comethru and click',
+      }],
     };
 
     props = {
-      src
+      src,
     };
 
     fetchMock
@@ -62,7 +59,7 @@ describe('<notification-display>', () => {
 
       it('calls componentDidMount', () => {
         sinon.spy(NotificationContainer.prototype, 'componentDidMount');
-        const wrapper = mount(<NotificationContainer {...props}/>);
+        mount(<NotificationContainer {...props}/>);
         expect(NotificationContainer.prototype.componentDidMount).to.have.property('callCount', 1);
         NotificationContainer.prototype.componentDidMount.restore();
       });
@@ -83,7 +80,7 @@ describe('<notification-display>', () => {
         const instance = mount(<NotificationContainer {...props}/>).instance();
         instance.handleRequestSuccess(notifications);
         expect(ls.getItem('NotificationContainer')).to.eql(
-          JSON.stringify({'local_notification_ids': [1]})
+          JSON.stringify({ 'local_notification_ids': [1] })
         );
       });
 
@@ -91,7 +88,7 @@ describe('<notification-display>', () => {
         const instance = mount(<NotificationContainer {...props}/>).instance();
         instance.handleRequestSuccess(notifications);
         expect(ls.getItem('NotificationContainer')).to.eql(
-          JSON.stringify({'local_notification_ids': [1]})
+          JSON.stringify({ 'local_notification_ids': [1] })
         );
         const new_instance = mount(<NotificationContainer {...props}/>).instance();
         expect(new_instance.state.local_notification_ids).to.eql([1]);
@@ -102,7 +99,7 @@ describe('<notification-display>', () => {
         instance.handleRequestSuccess(notifications);
         expect(instance.state.next).to.eql(src2);
 
-        const new_instance  = mount(<NotificationContainer {...props}/>).instance();
+        const new_instance = mount(<NotificationContainer {...props}/>).instance();
         expect(new_instance.state.local_notification_ids).to.eql([1]);
         new_instance.handleRequestSuccess(notifications2);
         expect(new_instance.state.notification).to.eql(notifications2.results[0]);
