@@ -15,7 +15,7 @@ class NotificationDisplay extends BulbsElement {
     console.log(this.props.headline);
     if (this.props.notification) {
       return (
-        <div className="row">
+        <div className="notification-display">
           <div className="notification-image">
             <img src="" width="60"/>
           </div>
