@@ -40,6 +40,4 @@ Object.assign(NotificationDisplay, {
   },
 });
 
-registerReactElement('notification-display', NotificationDisplay);
-
 export default NotificationDisplay;
