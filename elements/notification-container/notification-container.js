@@ -4,8 +4,6 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
-let localStorageMixin = require('react-localstorage');
-let reactMixin = require('react-mixin');
 
 class NotificationContainer extends BulbsElement {
 
@@ -36,7 +34,6 @@ class NotificationContainer extends BulbsElement {
   }
 
   handleRequestSuccess (response) {
-    console.log(response);
     let notifications = response.results;
     this.setState({ next: response.next });
 
@@ -79,6 +76,4 @@ Object.assign(NotificationContainer, {
 });
 
 registerReactElement('notification-container', NotificationContainer);
-
-reactMixin.onClass(NotificationContainer, localStorageMixin);
 export default NotificationContainer;

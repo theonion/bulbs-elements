@@ -11,7 +11,6 @@ class NotificationDisplay extends BulbsElement {
   }
 
   render () {
-    console.log(this.props.headline);
     if (this.props.notification) {
       return (
         <div className="notification-display">
