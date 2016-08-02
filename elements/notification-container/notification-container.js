@@ -10,15 +10,13 @@ class NotificationContainer extends BulbsElement {
   constructor (props) {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
+    let local_notification_ids = this.getFromLocalStorage('local_notification_ids');
+    if (local_notification_ids == null) { local_notification_ids = []; }
     this.state = {
       next: null,
-      local_notification_ids: [],
+      local_notification_ids: local_notification_ids,
       notification: {},
     };
-  }
-
-  getStateFilterKeys () {
-    return ['local_notification_ids'];
   }
 
   requestNotifications (src) {
@@ -31,6 +29,14 @@ class NotificationContainer extends BulbsElement {
 
   componentDidMount () {
     this.requestNotifications(this.props.src);
+  }
+
+  setToLocalStorage(stateKey) {
+    global.localStorage.setItem(stateKey, JSON.stringify(this.state[stateKey]));
+  }
+
+  getFromLocalStorage(stateKey) {
+    return JSON.parse(global.localStorage.getItem(stateKey));
   }
 
   handleRequestSuccess (response) {
@@ -46,6 +52,7 @@ class NotificationContainer extends BulbsElement {
       this.setState({
         local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id]),
       });
+      this.setToLocalStorage('local_notification_ids');
     }
     else if (this.state.next !== null) {
       this.requestNotifications(this.state.next);

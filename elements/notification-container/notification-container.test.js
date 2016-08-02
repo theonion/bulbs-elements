@@ -76,33 +76,31 @@ describe('<notification-display>', () => {
         expect(wrapper.html()).to.contain(notifications.results[0].body);
       });
 
-      // it('handleRequestSuccess stores values in LocalStorage', () => {
-      //   const instance = mount(<NotificationContainer {...props}/>).instance();
-      //   instance.handleRequestSuccess(notifications);
-      //   expect(ls.getItem('NotificationContainer')).to.eql(
-      //     JSON.stringify({ 'local_notification_ids': [1] })
-      //   );
-      // });
+      it('handleRequestSuccess stores values in LocalStorage', () => {
+        const instance = mount(<NotificationContainer {...props}/>).instance();
+        instance.handleRequestSuccess(notifications);
+        expect(ls.getItem('local_notification_ids')).to.eql(
+          JSON.stringify([1])
+        );
+      });
 
-      // it('retrieves value from LocalStorage', () => {
-      //   const instance = mount(<NotificationContainer {...props}/>).instance();
-      //   instance.handleRequestSuccess(notifications);
-      //   expect(ls.getItem('local_notification_ids')).to.eql(
-      //     JSON.stringify({ 'local_notification_ids': [1] })
-      //   );
-      //   const new_instance = mount(<NotificationContainer {...props}/>).instance();
-      //   expect(new_instance.state.local_notification_ids).to.eql([1]);
-      // });
+      it('retrieves value from LocalStorage', () => {
+        const instance = mount(<NotificationContainer {...props}/>).instance();
+        instance.handleRequestSuccess(notifications);
+        expect(ls.getItem('local_notification_ids')).to.eql(JSON.stringify([1]));
+        const new_instance = mount(<NotificationContainer {...props}/>).instance();
+        expect(new_instance.state.local_notification_ids).to.eql([1]);
+      });
 
       it('exhausts notifications with pagination', () => {
         const instance = mount(<NotificationContainer {...props}/>).instance();
         instance.handleRequestSuccess(notifications);
         expect(instance.state.next).to.eql(src2);
 
-        // const new_instance = mount(<NotificationContainer {...props}/>).instance();
-        // expect(new_instance.state.local_notification_ids).to.eql([1]);
-        // new_instance.handleRequestSuccess(notifications2);
-        // expect(new_instance.state.notification).to.eql(notifications2.results[0]);
+        const new_instance = mount(<NotificationContainer {...props}/>).instance();
+        expect(new_instance.state.local_notification_ids).to.eql([1]);
+        new_instance.handleRequestSuccess(notifications2);
+        expect(new_instance.state.notification).to.eql(notifications2.results[0]);
       });
 
     });
