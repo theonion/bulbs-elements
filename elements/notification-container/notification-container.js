@@ -4,7 +4,6 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
-
 class NotificationContainer extends BulbsElement {
 
   constructor (props) {
@@ -57,7 +56,7 @@ class NotificationContainer extends BulbsElement {
   removeLocalNotifications (notifications) {
     let withoutLocal = [];
     notifications.forEach((notification) => {
-      if (this.state.local_notification_ids.indexOf(notification.id) == -1) {
+      if (this.state.local_notification_ids.indexOf(notification.id) === -1) {
         withoutLocal.push(notification);
       }
     });
