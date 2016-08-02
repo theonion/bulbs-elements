@@ -10,11 +10,12 @@ class NotificationContainer extends BulbsElement {
   constructor (props) {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
-    let local_notification_ids = this.getFromLocalStorage('local_notification_ids');
-    if (local_notification_ids == null) { local_notification_ids = []; }
+    let idsFromStorage = JSON.parse(
+      global.localStorage.getItem('onion-local-notification-ids') || '[]'
+    );
     this.state = {
       next: null,
-      local_notification_ids: local_notification_ids,
+      local_notification_ids: idsFromStorage,
       notification: {},
     };
   }
@@ -31,14 +32,6 @@ class NotificationContainer extends BulbsElement {
     this.requestNotifications(this.props.src);
   }
 
-  setToLocalStorage(stateKey) {
-    global.localStorage.setItem(stateKey, JSON.stringify(this.state[stateKey]));
-  }
-
-  getFromLocalStorage(stateKey) {
-    return JSON.parse(global.localStorage.getItem(stateKey));
-  }
-
   handleRequestSuccess (response) {
     let notifications = response.results;
     this.setState({ next: response.next });
@@ -52,7 +45,9 @@ class NotificationContainer extends BulbsElement {
       this.setState({
         local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id]),
       });
-      this.setToLocalStorage('local_notification_ids');
+      global.localStorage.setItem(
+        'onion-local-notification-ids', JSON.stringify(this.state.local_notification_ids)
+      );
     }
     else if (this.state.next !== null) {
       this.requestNotifications(this.state.next);
@@ -60,12 +55,13 @@ class NotificationContainer extends BulbsElement {
   }
 
   removeLocalNotifications (notifications) {
-    for (let i = notifications.length - 1; i >= 0; i--) {
-      if (this.state.local_notification_ids.indexOf(notifications[i].id) !== -1) {
-        notifications.splice(i, 1);
+    let withoutLocal = [];
+    notifications.forEach((notification) => {
+      if (this.state.local_notification_ids.indexOf(notification.id) == -1) {
+        withoutLocal.push(notification);
       }
-    }
-    return notifications;
+    });
+    return withoutLocal;
   }
 
   render () {
