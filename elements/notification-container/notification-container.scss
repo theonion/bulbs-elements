@@ -1,5 +1,32 @@
+$notification-grey: #3c3c3c;
+
 notification-container {
-  display: block;
-  margin: 0 auto;
-  width: 66%;
+
+  .notification-display {
+    display: flex;
+    height: 100px;
+    margin: 0 auto 20px;
+    align-items: center;
+    width: 100%;
+    padding: 1em 2em;
+
+    a {
+      margin-left: 5px;
+    }
+
+    .notification-body {
+      color: $notification-grey;
+    }
+
+    .notification-close {
+      position: absolute;
+      line-height: 37px;
+      top: 0;
+      right: 10px;
+      height: 37px;
+      width: 37px;
+      text-align: center;
+    }
+
+  }
 }

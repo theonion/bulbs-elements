@@ -14,18 +14,15 @@ class NotificationDisplay extends BulbsElement {
     if (this.props.notification) {
       return (
         <div className="notification-display">
-          <div className="notification-image">
-            <img src="" width="60"/>
-          </div>
+          <div className="notification-logo"></div>
           <div className="notification-body">
-            { this.props.notification.headline }
-            { this.props.notification.body }
-
-            <a src={this.props.notification.clickthrough_url}>
-              { this.props.notification.clickthrough_cta }
-            </a>
-
+            <p>{ this.props.notification.body }
+              <a href={this.props.notification.clickthrough_url}>
+                { this.props.notification.clickthrough_cta }
+              </a>
+            </p>
           </div>
+          <div className="notification-close">&#10006;</div>
         </div>
       );
     }

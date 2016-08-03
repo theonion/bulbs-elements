@@ -4,6 +4,8 @@ import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 
+import './notification-container.scss';
+
 class NotificationContainer extends BulbsElement {
 
   constructor (props) {
@@ -64,9 +66,12 @@ class NotificationContainer extends BulbsElement {
   }
 
   render () {
-    return (
-      <NotificationDisplay notification={ this.state.notification } />
-    );
+    if ( this.state.notification ) {
+      return (
+        <NotificationDisplay notification={ this.state.notification }
+        />
+      );
+    }
   }
 }
 
