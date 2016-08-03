@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 
 import ShareViaEmail from './via-email';
 import ShareButton from './share-button';
@@ -36,7 +35,7 @@ describe('<share-tools> <ViaEmail>', () => {
           icon={true}
           label={true}
           labelText='Email'
-          href={undefined}
+          href={undefined} // eslint-disable-line no-undefined
         />
       );
       expect(subject.render().type).to.eql(expected.type);
