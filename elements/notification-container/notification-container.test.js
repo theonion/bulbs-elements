@@ -95,7 +95,6 @@ describe('<notification-display>', () => {
       it('exhausts notifications with pagination', () => {
         const instance = mount(<NotificationContainer {...props}/>).instance();
         instance.handleRequestSuccess(notifications);
-        expect(instance.state.next).to.eql(src2);
 
         const new_instance = mount(<NotificationContainer {...props}/>).instance();
         expect(new_instance.state.local_notification_ids).to.eql([1]);

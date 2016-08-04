@@ -15,7 +15,6 @@ class NotificationContainer extends BulbsElement {
       global.localStorage.getItem('onion-local-notification-ids') || '[]'
     );
     this.state = {
-      next: null,
       notifications_are_off: JSON.parse(
         window.sessionStorage.getItem('onion-notifications-off') || 'false'
       ),
@@ -38,23 +37,23 @@ class NotificationContainer extends BulbsElement {
 
   handleRequestSuccess (response) {
     let notifications = response.results;
-    this.setState({ next: response.next });
+    let next = response.next || null;
 
     if (this.state.local_notification_ids.length > 0) {
       notifications = this.removeLocalNotifications(notifications);
     }
 
     if (notifications.length > 0) {
-      this.setState({ notification: notifications[0] });
       this.setState({
+        notification: notifications[0],
         local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id]),
       });
       global.localStorage.setItem(
         'onion-local-notification-ids', JSON.stringify(this.state.local_notification_ids)
       );
     }
-    else if (this.state.next !== null) {
-      this.requestNotifications(this.state.next);
+    else if (next) {
+      this.requestNotifications(next);
     }
   }
 
