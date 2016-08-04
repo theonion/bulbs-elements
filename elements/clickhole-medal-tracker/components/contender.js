@@ -11,7 +11,7 @@ export default class Contender extends Component {
         <div className='left-column'>
           <div className='contender-name'>
             <img className='contender-flag' src={this.props.flagImage} />
-            {this.props.name}
+            <span className='contender-fullname'>{this.props.name}</span>
           </div>
           <div className='contender-abbreviation'>{this.props.abbreviation}</div>
         </div>

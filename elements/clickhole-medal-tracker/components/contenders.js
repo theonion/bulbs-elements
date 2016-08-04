@@ -11,11 +11,26 @@ export default class Contenders extends Component {
   }
 
   componentDidMount () {
-    this.scheduleContenderUpdates();
+    if (!this.props.disableAnimation) {
+      this.scheduleContenderUpdates();
+      this.preventCrazyAnimations();
+    }
+  }
+
+  preventCrazyAnimations () {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && this.contenderUpdater) {
+        clearInterval(this.contenderUpdater);
+      }
+      else {
+        this.updateContenderStats();
+        this.scheduleContenderUpdates();
+      }
+    });
   }
 
   scheduleContenderUpdates () {
-    setInterval(this.updateContenderStats.bind(this), this.props.updateInterval);
+    this.contenderUpdater = setInterval(this.updateContenderStats.bind(this), this.props.updateInterval);
   }
 
   topContenderComponents () {
@@ -48,7 +63,10 @@ export default class Contenders extends Component {
             <div className='all-medal-totals'>Total</div>
           </div>
         </header>
-        <FlipMove enterAnimation="fade" leaveAnimation="fade" staggerDelayBy={50}>
+        <FlipMove
+          enterAnimation={this.props.enterAnimation}
+          leaveAnimation={this.props.leaveAnimation}
+          staggerDelayBy={this.props.staggerDelay}>
           {this.topContenderComponents()}
         </FlipMove>
       </div>);
@@ -59,10 +77,13 @@ Object.assign(Contenders, {
   displayName: 'Contenders',
   defaultProps: {
     contenders: [],
-    updateInterval: 2000,
   },
   propTypes: {
     contenders: PropTypes.array,
-    updateInterval: PropTypes.number,
+    disableAnimation: PropTypes.bool,
+    enterAnimation: PropTypes.string.isRequired,
+    leaveAnimation: PropTypes.string.isRequired,
+    staggerDelay: PropTypes.number.isRequired,
+    updateInterval: PropTypes.number.isRequired,
   },
 });
