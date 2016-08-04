@@ -1,6 +1,7 @@
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import invariant from 'invariant';
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { registerReactElement } from 'bulbs-elements/register';
 
 class NotificationDisplay extends BulbsElement {
@@ -8,6 +9,13 @@ class NotificationDisplay extends BulbsElement {
   constructor (props) {
     invariant(!!props.notification, 'notification-display component requires notification');
     super(props);
+  }
+
+  deleteThis () {
+    let display = ReactDOM.findDOMNode(this);
+    let container = display.closest('notification-container');
+    container.remove();
+    window.sessionStorage.setItem('onion-notifications-off', JSON.stringify(true));
   }
 
   render () {
@@ -22,7 +30,7 @@ class NotificationDisplay extends BulbsElement {
               </a>
             </p>
           </div>
-          <div className="notification-close">&#10006;</div>
+          <div className="notification-close" onClick={ this.deleteThis.bind(this) }>&#10006;</div>
         </div>
       );
     }

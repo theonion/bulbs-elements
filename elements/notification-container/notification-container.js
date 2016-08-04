@@ -16,6 +16,9 @@ class NotificationContainer extends BulbsElement {
     );
     this.state = {
       next: null,
+      notifications_are_off: JSON.parse(
+        window.sessionStorage.getItem('onion-notifications-off') || 'false'
+      ),
       local_notification_ids: idsFromStorage,
       notification: {},
     };
@@ -65,8 +68,13 @@ class NotificationContainer extends BulbsElement {
     return withoutLocal;
   }
 
+  notificationsAreActive () {
+    let areOff = global.sessionStorage.getItem('onion-notifications-off');
+    return !areOff;
+  }
+
   render () {
-    if ( this.state.notification ) {
+    if ( this.state.notification && this.notificationsAreActive() ) {
       return (
         <NotificationDisplay notification={ this.state.notification }
         />
