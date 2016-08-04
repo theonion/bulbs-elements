@@ -74,13 +74,15 @@ class NotificationContainer extends BulbsElement {
   }
 
   render () {
-    if ( this.state.notification && this.notificationsAreActive() ) {
+    if (this.state.notification && this.notificationsAreActive()) {
       return (
         <NotificationDisplay notification={ this.state.notification }
         />
       );
     }
+    return null;
   }
+
 }
 
 Object.assign(NotificationContainer, {

@@ -2,7 +2,6 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { registerReactElement } from 'bulbs-elements/register';
 
 class NotificationDisplay extends BulbsElement {
 
