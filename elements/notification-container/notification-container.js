@@ -16,7 +16,7 @@ class NotificationContainer extends BulbsElement {
     );
     this.state = {
       localNotificationIds: idsFromStorage,
-      notification: {},
+      notification: null,
     };
   }
 
