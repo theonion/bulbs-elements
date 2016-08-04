@@ -21,7 +21,7 @@ class NotificationContainer extends BulbsElement {
   }
 
   requestNotifications (src) {
-    fetch(src)
+    fetch(src, { credentials: 'include' })
       .then(function (response) {
         return response.json();
       })
