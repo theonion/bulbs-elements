@@ -15,10 +15,7 @@ class NotificationContainer extends BulbsElement {
       global.localStorage.getItem('onion-local-notification-ids') || '[]'
     );
     this.state = {
-      notifications_are_off: JSON.parse(
-        window.sessionStorage.getItem('onion-notifications-off') || 'false'
-      ),
-      local_notification_ids: idsFromStorage,
+      localNotificationIds: idsFromStorage,
       notification: {},
     };
   }
@@ -39,17 +36,17 @@ class NotificationContainer extends BulbsElement {
     let notifications = response.results;
     let next = response.next || null;
 
-    if (this.state.local_notification_ids.length > 0) {
+    if (this.state.localNotificationIds.length > 0) {
       notifications = this.removeLocalNotifications(notifications);
     }
 
     if (notifications.length > 0) {
       this.setState({
         notification: notifications[0],
-        local_notification_ids: this.state.local_notification_ids.concat([notifications[0].id]),
+        localNotificationIds: this.state.localNotificationIds.concat([notifications[0].id]),
       });
       global.localStorage.setItem(
-        'onion-local-notification-ids', JSON.stringify(this.state.local_notification_ids)
+        'onion-local-notification-ids', JSON.stringify(this.state.localNotificationIds)
       );
     }
     else if (next) {
@@ -60,7 +57,7 @@ class NotificationContainer extends BulbsElement {
   removeLocalNotifications (notifications) {
     let withoutLocal = [];
     notifications.forEach((notification) => {
-      if (this.state.local_notification_ids.indexOf(notification.id) === -1) {
+      if (this.state.localNotificationIds.indexOf(notification.id) === -1) {
         withoutLocal.push(notification);
       }
     });
@@ -68,7 +65,7 @@ class NotificationContainer extends BulbsElement {
   }
 
   notificationsAreActive () {
-    let areOff = global.sessionStorage.getItem('onion-notifications-off');
+    let areOff = JSON.parse(global.sessionStorage.getItem('onion-notifications-off') || 'false');
     return !areOff;
   }
 

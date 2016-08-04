@@ -89,7 +89,7 @@ describe('<notification-display>', () => {
         instance.handleRequestSuccess(notifications);
         expect(ls.getItem('onion-local-notification-ids')).to.eql(JSON.stringify([1]));
         const new_instance = mount(<NotificationContainer {...props}/>).instance();
-        expect(new_instance.state.local_notification_ids).to.eql([1]);
+        expect(new_instance.state.localNotificationIds).to.eql([1]);
       });
 
       it('exhausts notifications with pagination', () => {
@@ -97,7 +97,7 @@ describe('<notification-display>', () => {
         instance.handleRequestSuccess(notifications);
 
         const new_instance = mount(<NotificationContainer {...props}/>).instance();
-        expect(new_instance.state.local_notification_ids).to.eql([1]);
+        expect(new_instance.state.localNotificationIds).to.eql([1]);
         new_instance.handleRequestSuccess(notifications2);
         expect(new_instance.state.notification).to.eql(notifications2.results[0]);
       });
