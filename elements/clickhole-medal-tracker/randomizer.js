@@ -38,7 +38,7 @@ export function shuffleContenders (contenders) {
   let newContender = boostNewContender(contenders);
   swapRandomLeaders(contenders, newContender);
 
-  return contenders;
+  return contenders.map((contender) => createRandomStats(contender));
 }
 
 export function topFiveContenders (contenders) {
