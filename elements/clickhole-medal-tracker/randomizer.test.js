@@ -13,7 +13,7 @@ import {
   topFiveContenders,
   minTotal,
   maxTotal,
-  createRandomStatsFromRange
+  createRandomStatsFromRange,
 } from './randomizer';
 describe('randomizer', () => {
   let contenders;
@@ -71,14 +71,14 @@ describe('randomizer', () => {
     });
   });
 
-  describe('maxTotal', function() {
+  describe('maxTotal', function () {
     it('returns the max total for contenders', () => {
       let max = maxTotal(contenders);
       expect(max).to.equal(6);
     });
   });
 
-  describe('createRandomStatsFromRange', function() {
+  describe('createRandomStatsFromRange', function () {
     it('generates random medal counts that match up to a random total in a range', () => {
       let random = createRandomStatsFromRange(contenders[1], 600, 700);
       expect(random.allTotal).to.be.at.least(600);

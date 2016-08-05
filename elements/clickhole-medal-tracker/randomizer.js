@@ -35,7 +35,7 @@ export function createRandomStatsFromRange (contender, min, max) {
     goldTotal,
     silverTotal,
     bronzeTotal,
-    allTotal: randomTotal
+    allTotal: randomTotal,
   });
 
   return contender;
