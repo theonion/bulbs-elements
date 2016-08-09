@@ -4,7 +4,7 @@ import {
 } from 'bulbs-elements/register';
 import './bulbs-reading-list.scss';
 
-class BulbsReading-list extends BulbsHTMLElement {
+class BulbsReadingList extends BulbsHTMLElement {
   createdCallback () {
     console.log('Created bulbs-reading-list');
   }

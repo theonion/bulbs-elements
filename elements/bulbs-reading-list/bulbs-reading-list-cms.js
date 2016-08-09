@@ -3,7 +3,7 @@ import {
   EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
-class EmbeddedBulbsReading-list extends EmbeddedCMSElement {
+class EmbeddedBulbsReadingList extends EmbeddedCMSElement {
   get embedContentPreview () {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>
