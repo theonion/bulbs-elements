@@ -8,10 +8,10 @@ class EmbeddedBulbsReadingList extends EmbeddedCMSElement {
     return `
       <h1 style='text-align: center; font-family: "Droid Serif"'>
         <i class='fa fa-puzzle-piece'></i>
-        Embedded BulbsReading-list
+        Embedded BulbsReadingList
       </h1>
     `;
   }
 }
 
-registerElement('bulbs-reading-list', EmbeddedBulbsReading-list);
+registerElement('bulbs-reading-list', EmbeddedBulbsReadingList);

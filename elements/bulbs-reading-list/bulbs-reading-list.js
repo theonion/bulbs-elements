@@ -2,29 +2,17 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
+import './components/reading-list-item';
+import './components/reading-list-menu';
 import './bulbs-reading-list.scss';
 
 class BulbsReadingList extends BulbsHTMLElement {
-  createdCallback () {
-    console.log('Created bulbs-reading-list');
-  }
-
   attachedCallback () {
-    console.log('Attached bulbs-reading-list');
-  }
-
-  detachedCallback () {
-    console.log('Detached bulbs-reading-list');
-  }
-
-  attributeChangedCallback (name, previousValue, value) {
-    console.log(
-      'Attribute Changed bulbs-reading-list changed ${name} from: ',
-      previousValue, 'to:', value
-    );
+    this.readingListItemElements = document.getElementsByTagName('bulbs-reading-list-item');
+    console.log(this);
   }
 }
 
-registerElement('bulbs-reading-list', BulbsReading-list);
+registerElement('bulbs-reading-list', BulbsReadingList);
 
-export default BulbsReading-list;
+export default BulbsReadingList;

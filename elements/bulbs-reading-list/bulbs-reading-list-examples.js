@@ -2,11 +2,10 @@ let examples = {
   element: 'bulbs-reading-list',
   examples: {
     'Basic Example': {
-      render: function () {
+      render () {
         return `
           <bulbs-reading-list
-            attribute="value"
-          >
+            attribute="value">
           </bulbs-reading-list>
         `;
       },
