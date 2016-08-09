@@ -75,7 +75,8 @@ export default class BulbsCarouselState {
 
   updateCurrentIndex (magnitude) {
     let perPage = this.getChildrenPerPage();
-    let maxPage = parseInt(this.props.carouselItems.length / perPage, 10) - 1;
+    let maxPage = Math.ceil(this.props.carouselItems.length / perPage) - 1;
+
     this.props.currentIndex = Math.max(0, this.props.currentIndex + parseInt(magnitude, 10));
     if (this.props.currentIndex >= this.props.carouselItems.length) {
       this.props.currentIndex -= perPage;
