@@ -27,7 +27,7 @@ class NotificationDisplay extends BulbsElement {
               <a 
                 href={this.props.notification.clickthrough_url} 
                 data-track-action="Notifications: Clickthrough" 
-                data-track-label=this.props.notification.clickthrough_url}>
+                data-track-label={this.props.notification.clickthrough_url}>
                 { this.props.notification.clickthrough_cta }
               </a>
             </p>
