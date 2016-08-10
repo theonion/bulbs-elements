@@ -138,7 +138,7 @@ describe('<bulbs-carousel>', () => {
         expect(subject.applyState).to.have.been.called;
       });
 
-      it('calls `stateChanged` description', function() {
+      it('calls `stateChanged` description', function () {
         expect(subject.stateChanged.calledWith('previous'));
       });
     });
@@ -154,14 +154,14 @@ describe('<bulbs-carousel>', () => {
         expect(subject.applyState).to.have.been.called;
       });
 
-      it('calls `stateChanged` description', function() {
+      it('calls `stateChanged` description', function () {
         expect(subject.stateChanged.calledWith('next'));
       });
     });
   });
 
   describe('stateChanged', () => {
-    it('dispatches a custom event with the state change description', function(done) {
+    it('dispatches a custom event with the state change description', function (done) {
       subject.addEventListener('bulbs-carousel:stateChange', function (detailObj) {
         expect(detailObj.detail.desc).to.equal('next');
         expect(detailObj.detail.state).to.eql(subject.state);

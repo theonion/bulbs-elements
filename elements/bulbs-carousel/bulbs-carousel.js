@@ -37,9 +37,9 @@ export default class BulbsCarousel extends BulbsHTMLElement {
   stateChanged (desc) {
     let detail = {
       state: this.state,
-      desc: desc,
+      desc,
     };
-    let event = new CustomEvent('bulbs-carousel:stateChange', { 'detail': detail });
+    let event = new CustomEvent('bulbs-carousel:stateChange', { detail });
     this.dispatchEvent(event);
   }
 
