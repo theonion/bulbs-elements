@@ -35,7 +35,8 @@ class NotificationDisplay extends BulbsElement {
           <div 
             className="notification-close" 
             data-track-action="Notifications: Close" 
-            data-track-label="#" onClick={ this.deleteThis.bind(this) }>&#10006;</div>
+            data-track-label="#" 
+            onClick={ this.deleteThis.bind(this) }>&#10006;</div>
         </div>
       );
     }
