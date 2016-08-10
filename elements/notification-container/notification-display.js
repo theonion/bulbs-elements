@@ -24,12 +24,18 @@ class NotificationDisplay extends BulbsElement {
           <div className="notification-logo"></div>
           <div className="notification-body">
             <p>{ this.props.notification.body }
-              <a href={this.props.notification.clickthrough_url} data-track-action="Notifications: Clickthrough" data-track-label=this.props.notification.clickthrough_url}>
+              <a 
+                href={this.props.notification.clickthrough_url} 
+                data-track-action="Notifications: Clickthrough" 
+                data-track-label=this.props.notification.clickthrough_url}>
                 { this.props.notification.clickthrough_cta }
               </a>
             </p>
           </div>
-          <div className="notification-close" data-track-action="Notifications: Close" data-track-label="#" onClick={ this.deleteThis.bind(this) }>&#10006;</div>
+          <div 
+            className="notification-close" 
+            data-track-action="Notifications: Close" 
+            data-track-label="#" onClick={ this.deleteThis.bind(this) }>&#10006;</div>
         </div>
       );
     }
