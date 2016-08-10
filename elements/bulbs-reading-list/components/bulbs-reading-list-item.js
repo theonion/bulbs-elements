@@ -3,11 +3,7 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 
-class BulbsReadingListItem extends BulbsHTMLElement {
-  attachedCallback () {
-
-  }
-}
+class BulbsReadingListItem extends BulbsHTMLElement {}
 
 registerElement('bulbs-reading-list-item', BulbsReadingListItem);
 

@@ -13,14 +13,14 @@ import {
 } from 'lodash';
 
 import invariant from 'invariant';
-import './components/reading-list-item';
-import './components/reading-list-menu';
 import './bulbs-reading-list.scss';
+import './components/bulbs-reading-list-menu';
+import './components/bulbs-reading-list-item';
 
 class BulbsReadingList extends BulbsHTMLElement {
   attachedCallback () {
-    this.readingListMenu = first(document.getElementsByTagName('bulbs-reading-list-menu'));
-    this.readingListItemElements = document.getElementsByTagName('bulbs-reading-list-item');
+    this.readingListMenu = first(this.getElementsByTagName('bulbs-reading-list-menu'));
+    this.readingListItemElements = this.getElementsByTagName('bulbs-reading-list-item');
     this.readingListItems = this.buildReadingListItemsFromElements(this.readingListItemElements);
     this.currentListItem = this.listItemAtPosition(0);
     this.registerReadingListElementEvents();
