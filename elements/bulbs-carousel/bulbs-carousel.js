@@ -34,15 +34,26 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     this.applyState();
   }
 
+  stateChanged (desc) {
+    let detail = {
+      state: this.state,
+      desc: desc,
+    };
+    let event = new CustomEvent('bulbs-carousel:stateChange', { 'detail': detail });
+    this.dispatchEvent(event);
+  }
+
   handleClick (event) {
     if (event.target.closest('bulbs-carousel-previous')) {
       this.state.slideToPrevious();
       this.applyState();
+      this.stateChanged('previous');
     }
 
     if (event.target.closest('bulbs-carousel-next')) {
       this.state.slideToNext();
       this.applyState();
+      this.stateChanged('next');
     }
   }
 
