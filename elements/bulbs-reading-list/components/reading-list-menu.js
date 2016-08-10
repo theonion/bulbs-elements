@@ -5,7 +5,6 @@ import {
 
 class BulbsReadingListMenu extends BulbsHTMLElement {
   attachedCallback () {
-    console.log('BulbsReadingListMenu attached', this);
   }
 }
 

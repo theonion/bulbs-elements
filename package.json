@@ -8,7 +8,9 @@
     "test": "karma start --single-run",
     "karma": "karma start",
     "lint": "node_modules/.bin/eslint elements lib --max-warnings=1 --cache",
-    "coverage": "karma start karma.coverage.js --single-run"
+    "coverage": "karma start karma.coverage.js --single-run",
+    "build": "scripts/webpack-dev-build",
+    "server": "scripts/webpack-dev-server"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
