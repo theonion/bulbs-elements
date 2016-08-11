@@ -85,6 +85,7 @@ describe('<rail-player>', () => {
         let props = {
           channel: 'channel',
           recircUrl: 'http://example.org/recirc',
+          targetCampaignId: '12345',
         };
         railPlayer = new RailPlayer(props);
         subject = railPlayer.render().props;
@@ -100,6 +101,10 @@ describe('<rail-player>', () => {
 
       it('passes recircUrl through', () => {
         expect(subject.recircUrl).to.eql('http://example.org/recirc');
+      });
+
+      it('passes targetCampaignId through', () => {
+        expect(subject.targetCampaignId).to.eql('12345');
       });
 
       it('merges video from state', () => {

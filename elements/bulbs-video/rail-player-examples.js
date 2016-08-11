@@ -61,6 +61,7 @@ export default {
             recirc-url="http://www.onionstudios.com"
             channel='avclub'
             src="http://localhost:8080/fixtures/rail-player/with-campaign.json"
+            target-campaign-id="1234"
           >
           </rail-player>
         `;
