@@ -53,4 +53,5 @@ Root.propTypes = {
   channel: PropTypes.string,
   recircUrl: PropTypes.string.isRequired,
   video: PropTypes.object,
+  targetCampaignId: PropTypes.string,
 };

@@ -25,6 +25,7 @@ export default class RailPlayer extends BulbsElement {
       <RailPlayerRoot
         {...this.state}
         recircUrl={this.props.recircUrl}
+        targetCampaignId={this.props.targetCampaignId}
         actions={this.store.actions}
         channel={this.props.channel}
       />
@@ -42,6 +43,7 @@ Object.assign(RailPlayer, {
     channel: PropTypes.string.isRequired,
     recircUrl: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
+    targetCampaignId: PropTypes.string,
   },
 });
 
