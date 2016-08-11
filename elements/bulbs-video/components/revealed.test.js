@@ -121,7 +121,7 @@ describe('<bulbs-video> <Revealed>', () => {
       beforeEach(function () {
         props = {
           targetSpecialCoverage: 'sc-slug',
-          targetCampaignId: 'campaign',
+          targetCampaignId: '5678',
           targetCampaignNumber: '123456',
           targetHostChannel: 'host_channel',
           videojs_options: {},
@@ -224,7 +224,7 @@ describe('<bulbs-video> <Revealed>', () => {
 
         it('includes the campaign id in the tags for targeting', () => {
           let tags = makeVideoPlayerSpy.args[0][1].tags;
-          expect(tags).to.include('campaign');
+          expect(tags).to.include('campaign-5678');
         });
 
         it('passes through the muted value', () => {
@@ -305,7 +305,7 @@ describe('<bulbs-video> <Revealed>', () => {
 
         it('sets dimension9 to targeting.targetCampaignId', () => {
           expect(global.ga).to.have.been.calledWithMatch(
-           trackerRegex, 'dimension9', 'campaign'
+           trackerRegex, 'dimension9', '5678'
           );
         });
 
