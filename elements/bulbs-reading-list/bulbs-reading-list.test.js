@@ -1,169 +1,89 @@
-import { assert } from 'chai';
-import { first } from 'lodash'
-import BulbsReadingList from './bulbs-reading-list';
+import './bulbs-reading-list';
+import ReadingListItems from './lib/reading-list-items';
 
 describe('<bulbs-reading-list>', () => {
   let subject;
-  let readingListMenu;
-  let readingListItemElements;
   let sandbox;
 
-  beforeEach(function () {
+  beforeEach(() => {
     sandbox = sinon.sandbox.create();
     fixture.load('bulbs-reading-list.html');
     subject = fixture.el.firstChild;
-    readingListMenu = subject.getElementsByTagName('bulbs-reading-list-menu')[0];
-    readingListItemElements = subject.getElementsByTagName('bulbs-reading-list-item');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it('renders an <bulbs-reading-list>', () => {
     expect(subject.tagName.toLowerCase()).to.equal('bulbs-reading-list');
   });
 
-  it('saves a reference to the reading list menu', () => {
-    expect(subject.readingListMenu).to.equal(readingListMenu);
+  it('has a reading list menu', () => {
+    expect(subject.readingListMenu).to.be.an.instanceof(ReadingListItems);
   });
 
-  it('saves a reference to the reading list elements', () => {
-    expect(subject.readingListItemElements).to.eql(readingListItemElements);
+  it('has an article list', () => {
+    expect(subject.articleList).to.be.an.instanceof(ReadingListItems);
   });
 
-  it('sets the current list item', () => {
-    expect(subject.currentListItem).to.equal(subject.readingListItems[0]);
-  });
+  describe('handleMenuItemClick', () => {
+    let eventStub;
 
-  describe('isInsideReadingListMenu', () => {
-    it('throws an error if no element is given', () => {
-      expect(() => {
-        subject.isInsideReadingListMenu();
-      }).to.throw('BulbsReadingList.isInsideReadingListMenu(element): element is undefined');
+    beforeEach(() => {
+      eventStub = {
+        target: document.createElement('a'),
+        preventDefault: sandbox.spy(),
+      };
     });
 
-    it('determines if the given element is inside the reading list', () => {
-      expect(subject.isInsideReadingListMenu(readingListItemElements[0])).to.equal(true);
-      expect(subject.isInsideReadingListMenu(fixture.el)).to.equal(false);
-    });
-  });
-
-  describe('buildReadingListItemsFromElements', () => {
-    it('throws an error if no elements are given', () => {
-      expect(() => {
-        subject.buildReadingListItemsFromElements();
-      }).to.throw('BulbsReadingList.buildReadingListItemsFromElements(elements): elements is undefined');
+    it('does not prevent default behavior if the clicked element is not in the menu', () => {
+      subject.handleMenuItemClick(eventStub);
+      expect(eventStub.preventDefault).to.not.have.been.called;
     });
 
-    it('throws an error if the given elements do not have an id', () => {
-      let element = document.createElement('div');
-      let elements = [element];
-      expect(() => {
-        subject.buildReadingListItemsFromElements(elements);
-      }).to.throw(`BulbsReadingList.buildReadingListItemsFromElements(elements): element has no id ${element}`);
+    it('prevents the default behavior if the target is inside a bulbs-reading-list-item', () => {
+      let itemElement = subject.readingListMenu.listItemAtPosition(0).element;
+      eventStub.target = itemElement.getElementsByTagName('a')[0];
+      subject.handleMenuItemClick(eventStub);
+      expect(eventStub.preventDefault).to.have.been.called;
     });
 
-    it('throws an error if the given elements do not have a data-href attribute', () => {
-      let element = document.createElement('div');
-      element.id = 'an-id';
-      let elements = [element];
-      expect(() => {
-        subject.buildReadingListItemsFromElements(elements);
-      }).to.throw(`BulbsReadingList.buildReadingListItemsFromElements(elements): element has no data-href ${element}`);
-    });
-
-    it('throws an error if the given elements do not have a data-title attribute', () => {
-      let element = document.createElement('div');
-      element.id = 'an-id';
-      element.dataset.href = 'some-url';
-      let elements = [element];
-      expect(() => {
-        subject.buildReadingListItemsFromElements(elements);
-      }).to.throw(`BulbsReadingList.buildReadingListItemsFromElements(elements): element has no data-title ${element}`);
-    });
-
-    it('creates an array of reading list item objects', () => {
-      subject.readingListItems.forEach((listItem) => {
-        expect(listItem).to.be.an('object');
-        expect(listItem.id).to.be.a('string');
-        expect(listItem.position).to.be.a('number');
-        expect(listItem.href).to.be.a('string');
-        expect(listItem.title).to.be.a('string');
-        expect(listItem.element).to.be.an.instanceof(HTMLElement);
-      });
-
-      let element = readingListItemElements[0];
-      let item = subject.readingListItems[0];
-
-      expect(item.title).to.equal(element.dataset.title);
-      expect(item.href).to.equal(element.dataset.href);
-      expect(item.position).to.equal(0);
-      expect(item.element).to.equal(element);
+    it('sets the clicked item as current', () => {
+      let item = subject.readingListMenu.listItemAtPosition(1);
+      let itemElement = item.element;
+      eventStub.target = itemElement.getElementsByTagName('a')[0];
+      subject.handleMenuItemClick(eventStub);
+      expect(item.isCurrent()).to.equal(true);
     });
   });
 
-  describe('listItemAtPosition', () => {
-    it('throws an error if no position is given', () => {
+  describe('elementIsInsideMenu', () => {
+    it('throws an error when no element is given', () => {
       expect(() => {
-        subject.listItemAtPosition();
-      }).to.throw('BulbsReadingList.listItemAtPosition(position): position is undefined');
+        subject.elementIsInsideMenu();
+      }).to.throw('BulbsReadingList.elementIsInsideMenu(element): element is undefined');
     });
 
-    it('sets the current list item by a given position', () => {
-      let listItem = subject.listItemAtPosition(2);
-      expect(listItem).to.equal(subject.readingListItems[2]);
+    it('returns false if the given element is not inside the menu', () => {
+      let element = document.createElement('a');
+      document.body.appendChild(element);
+      expect(subject.elementIsInsideMenu(element)).to.equal(false);
+    });
+
+    it('returns true when the given element is inside the menu', () => {
+      let element = subject.readingListMenu.listItemAtPosition(0).element;
+      expect(subject.elementIsInsideMenu(element)).to.equal(true);
     });
   });
 
-  describe('isNextListItem', () => {
-    it('throws an error if no list item is given', () => {
-      expect(() => {
-        subject.isNextListItem();
-      }).to.throw('BulbsReadingList.isNextListItem(listItem): listItem is undefined');
-    });
+  describe('getClickedMenuItem', () => {
+    it('returns the list item that was clicked', () => {
+      let item = subject.readingListMenu.listItemAtPosition(1);
+      let itemElement = item.element;
+      let el = itemElement.getElementsByTagName('a')[0];
 
-    it('returns true if the given item is the next item', () => {
-      subject.currentListItem = subject.listItemAtPosition(2);
-      expect(subject.isNextListItem(subject.listItemAtPosition(3))).to.equal(true);
-    });
-
-    it('returns false if the given item is not the next item', () => {
-      subject.currentListItem = subject.listItemAtPosition(2);
-      expect(subject.isNextListItem(subject.listItemAtPosition(1))).to.equal(false);
-      subject.currentListItem = subject.listItemAtPosition(1);
-      expect(subject.isNextListItem(subject.listItemAtPosition(3))).to.equal(false);
-    });
-  });
-
-  describe('isBeforeCurrentItem', () => {
-    it('throws an error if no list item is given', () => {
-      expect(() => {
-        subject.isBeforeCurrentItem();
-      }).to.throw('BulbsReadingList.isBeforeCurrentItem(listItem): listItem is undefined');
-    });
-
-    it('returns true if the item is before the given item', () => {
-      subject.currentListItem = subject.listItemAtPosition(3);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(2))).to.equal(true);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(1))).to.equal(true);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(0))).to.equal(true);
-    });
-
-    it('returns false if the item is after the given item', () => {
-      subject.currentListItem = subject.listItemAtPosition(0);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(1))).to.equal(false);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(2))).to.equal(false);
-      expect(subject.isBeforeCurrentItem(subject.listItemAtPosition(3))).to.equal(false);
-    });
-  });
-
-  describe('getListItemById', () => {
-    it('throws an error if there is no id given', () => {
-      expect(() => {
-        subject.getListItemById();
-      }).to.throw('BulbsReadingList.getListItemById(id): id is undefined');
-    });
-
-    it('returns the list item with the given id', () => {
-      let item = subject.listItemAtPosition(0);
-      expect(subject.getListItemById('test-article-1')).to.equal(item);
+      expect(subject.getClickedMenuItem(el)).to.equal(item);
     });
   });
 });

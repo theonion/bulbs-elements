@@ -1,17 +1,24 @@
 /* eslint no-new: 0, max-len: 0 */
+import fetchMock from 'fetch-mock';
 import '../components/bulbs-reading-list-item';
 import ReadingListItem from './reading-list-item';
 
 describe('ReadingListItem', () => {
+  let sandbox;
   let subject;
 
   beforeEach(() => {
     let element;
+    sandbox = sinon.sandbox.create();
     element = document.createElement('bulbs-reading-list-item');
     element.id = 'test-article';
     element.dataset.href = 'test-url';
     element.dataset.title = 'Test Article';
     subject = new ReadingListItem(element, 0);
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it('throws an error when no element is provided', () => {
@@ -91,6 +98,10 @@ describe('ReadingListItem', () => {
     expect(subject.element).to.be.an.instanceof(HTMLElement);
   });
 
+  it('has a position', () => {
+    expect(subject.position).to.equal(0);
+  });
+
   describe('elementIsReadingListItem', () => {
     it('throws an error if no element is given', () => {
       expect(() => {
@@ -129,6 +140,63 @@ describe('ReadingListItem', () => {
       element.dataset.href = 'a-url';
       element.dataset.title = 'Test Article';
       expect(subject.elementIsReadingListItem(element)).to.equal(true);
+    });
+  });
+
+  describe('isCurrent', () => {
+    it('returns true when the element has a current class', () => {
+      subject.element.classList.add('current');
+      expect(subject.isCurrent()).to.equal(true);
+    });
+
+    it('returns false when the element does not have a current class', () => {
+      expect(subject.isCurrent()).to.equal(false);
+    });
+  });
+
+  describe('setAsCurrent', () => {
+    it('adds the current class to the element', () => {
+      subject.setAsCurrent();
+      expect(subject.element.classList.contains('current')).to.equal(true);
+    });
+  });
+
+  describe('setAsNotCurrent', () => {
+    it('removes the current class on the element', () => {
+      subject.element.classList.add('current');
+      subject.setAsNotCurrent();
+      expect(subject.element.classList.contains('current')).to.equal(false);
+    });
+  });
+
+  describe('loadContent', () => {
+    let body;
+
+    beforeEach(() => {
+      body = '<p>Article Content</p>';
+      fetchMock.mock(subject.href, body);
+    });
+
+    it('fetches the content', () => {
+      subject.loadContent();
+      expect(fetchMock.called(subject.href)).to.equal(true);
+    });
+  });
+
+  describe('handleLoadContentComplete', () => {
+    it('sets the content', () => {
+      let content = '<p>Article content</p>';
+      subject.handleLoadContentComplete(content);
+      expect(subject.content).to.equal(content);
+    });
+  });
+
+  describe('handleLoadContentError', () => {
+    it('throws an error with the status code and text', () => {
+      let response = new Response('', { status: 500, statusText: 'Internal Server Error' });
+      expect(() => {
+        subject.handleLoadContentError(response);
+      }).to.throw(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`);
     });
   });
 });
