@@ -100,6 +100,10 @@ export default class Revealed extends React.Component {
       filteredTags.push(this.props.targetCampaignNumber);
     }
 
+    if (this.props.targetCampaignId) {
+      filteredTags.push(`campaign-${this.props.targetCampaignId}`);
+    }
+
     this.props.video.tags.forEach(function (tag) {
       // Temporary until videojs_options completely removed from Onion Studios
       if (tag !== 'main') {
