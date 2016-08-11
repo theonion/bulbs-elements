@@ -222,6 +222,11 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(tags).to.include('123456');
         });
 
+        it('includes the campaign id in the tags for targeting', () => {
+          let tags = makeVideoPlayerSpy.args[0][1].tags;
+          expect(tags).to.include('campaign');
+        });
+
         it('passes through the muted value', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
