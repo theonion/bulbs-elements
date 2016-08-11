@@ -101,7 +101,7 @@ export default class Revealed extends React.Component {
     }
 
     if (this.props.targetCampaignId) {
-      filteredTags.push('campaign-' + this.props.targetCampaignId);
+      filteredTags.push(`campaign-${this.props.targetCampaignId}`);
     }
 
     this.props.video.tags.forEach(function (tag) {
