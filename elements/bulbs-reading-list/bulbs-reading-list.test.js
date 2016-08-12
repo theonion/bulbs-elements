@@ -1,5 +1,6 @@
 import './bulbs-reading-list';
 import ReadingListItems from './lib/reading-list-items';
+import ReadingListArticles from 'reading-list-articles';
 
 describe('<bulbs-reading-list>', () => {
   let subject;
@@ -24,7 +25,15 @@ describe('<bulbs-reading-list>', () => {
   });
 
   it('has an article list', () => {
-    expect(subject.articleList).to.be.an.instanceof(ReadingListItems);
+    expect(subject.articleList).to.be.an.instanceof(ReadingListArticles);
+  });
+
+  it('has a lastKnownScrollPosition', () => {
+    expect(subject.lastKnownScrollPosition).to.equal(0);
+  });
+
+  it('has an scrollCalculationIsIdle flag', () => {
+    expect(subject.scrollCalculationIsIdle).to.equal(true);
   });
 
   describe('handleMenuItemClick', () => {
@@ -85,5 +94,8 @@ describe('<bulbs-reading-list>', () => {
 
       expect(subject.getClickedMenuItem(el)).to.equal(item);
     });
+  });
+
+  describe('handleDocumentScrolled', () => {
   });
 });

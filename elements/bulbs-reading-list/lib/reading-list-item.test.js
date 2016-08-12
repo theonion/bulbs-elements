@@ -1,5 +1,4 @@
 /* eslint no-new: 0, max-len: 0 */
-import fetchMock from 'fetch-mock';
 import '../components/bulbs-reading-list-item';
 import ReadingListItem from './reading-list-item';
 
@@ -166,37 +165,6 @@ describe('ReadingListItem', () => {
       subject.element.classList.add('current');
       subject.setAsNotCurrent();
       expect(subject.element.classList.contains('current')).to.equal(false);
-    });
-  });
-
-  describe('loadContent', () => {
-    let body;
-
-    beforeEach(() => {
-      body = '<p>Article Content</p>';
-      fetchMock.mock(subject.href, body);
-    });
-
-    it('fetches the content', () => {
-      subject.loadContent();
-      expect(fetchMock.called(subject.href)).to.equal(true);
-    });
-  });
-
-  describe('handleLoadContentComplete', () => {
-    it('sets the content', () => {
-      let content = '<p>Article content</p>';
-      subject.handleLoadContentComplete(content);
-      expect(subject.content).to.equal(content);
-    });
-  });
-
-  describe('handleLoadContentError', () => {
-    it('throws an error with the status code and text', () => {
-      let response = new Response('', { status: 500, statusText: 'Internal Server Error' });
-      expect(() => {
-        subject.handleLoadContentError(response);
-      }).to.throw(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`);
     });
   });
 });
