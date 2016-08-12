@@ -30,6 +30,7 @@ export default class Root extends React.Component {
             disableSharing={true}
             muted={true}
             targetHostChannel='right_rail'
+            defaultCaptions={true}
             {...this.props}
           />
         </div>

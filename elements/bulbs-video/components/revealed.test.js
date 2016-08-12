@@ -129,6 +129,7 @@ describe('<bulbs-video> <Revealed>', () => {
           autoplay: true,
           autoplayNext: true,
           muted: true,
+          defaultCaptions: true,
           video: Object.assign({}, video, {
             title: 'video_title',
             tags: ['main', 'tag'],
@@ -231,6 +232,10 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
 
+        it('passes through the defaultCaptions value', () => {
+          expect(makeVideoPlayerSpy.args[0][1].player_options.defaultCaptions).to.be.true;
+        });
+
         it('sets sharetools config', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(window.location.href);
         });
@@ -316,6 +321,112 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
     });
+  });
+
+  describe('extractTrackCaptions', () => {
+    let sources;
+
+    context('no caption tracks', () => {
+      beforeEach(() => {
+        sources = [
+          {
+            'id': 19077,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/640.webm',
+            'content_type': 'video/webm',
+            'width': 640,
+            'bitrate': 469,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+          {
+            'id': 19078,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            'content_type': 'video/mp4',
+            'width': 640,
+            'bitrate': 569,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+          {
+            'id': 19076,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            'content_type': 'application/x-mpegURL',
+            'width': null,
+            'bitrate': null,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+        ];
+      });
+
+      it('returns an empty array', function() {
+        let extractedCaptions = Revealed.prototype.extractTrackCaptions.call({}, sources);
+        expect(extractedCaptions).to.eql([]);
+      });
+    });
+
+    context('with caption tracks', () => {
+      beforeEach(() => {
+        sources = [
+          {
+            'id': 19077,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/640.webm',
+            'content_type': 'video/webm',
+            'width': 640,
+            'bitrate': 469,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+          {
+            'id': 19078,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            'content_type': 'video/mp4',
+            'width': 640,
+            'bitrate': 569,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+          {
+            'id': 19076,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            'content_type': 'application/x-mpegURL',
+            'width': null,
+            'bitrate': null,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+          {
+            'id': 19011,
+            'url': 'http://v.theonion.com/onionstudios/video/4053/captioning.vtt',
+            'content_type': 'text/vtt',
+            'width': null,
+            'bitrate': null,
+            'enabled': true,
+            'is_legacy_source': false,
+            'video': 4053,
+          },
+        ];
+      });
+
+      it('returns the caption track info', function() {
+        let extractedCaptions = Revealed.prototype.extractTrackCaptions.call({}, sources, false);
+        expect(extractedCaptions).to.eql([
+          {
+            file: 'http://v.theonion.com/onionstudios/video/4053/captioning.vtt',
+            label: 'English',
+            kind: 'captions',
+            default: false
+          }
+        ]);
+      });
+    });
+
   });
 
   describe('extractSources', () => {
@@ -549,6 +660,7 @@ describe('<bulbs-video> <Revealed>', () => {
       let sources;
       let extractSourcesStub;
       let vastUrlStub;
+      let extractTrackCaptionsStub;
 
       context('regular setup', () => {
         beforeEach(() => {
@@ -562,11 +674,13 @@ describe('<bulbs-video> <Revealed>', () => {
           ];
           extractSourcesStub = sinon.stub().returns(sources);
           vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+          extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
             props: {},
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });
 
@@ -610,6 +724,45 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
 
+      context('with captions in the sources', function() {
+        let extractCaptionsStub;
+        let captioningTracks;
+
+        beforeEach(() => {
+          let sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          let extractSourcesStub = sinon.stub().returns(sources);
+          let vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+          captioningTracks = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/captioning.vtt',
+              'label': 'English',
+              'kind': 'captions',
+              'default': 'true',
+            },
+          ];
+          extractCaptionsStub = sinon.stub().returns(captioningTracks);
+
+          Revealed.prototype.makeVideoPlayer.call({
+            props: {},
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+            extractTrackCaptions: extractCaptionsStub,
+          }, element, videoMeta);
+        });
+
+        it('sets up any provided captioning tracks', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.tracks).to.eql(captioningTracks);
+        });
+      });
+
       context('sharing disabled', () => {
         beforeEach(() => {
           sources = [
@@ -622,11 +775,13 @@ describe('<bulbs-video> <Revealed>', () => {
           ];
           extractSourcesStub = sinon.stub().returns(sources);
           vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+          extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
             props: { disableSharing: true },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });
 
