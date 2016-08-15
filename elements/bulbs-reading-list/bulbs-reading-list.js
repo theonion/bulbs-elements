@@ -5,17 +5,16 @@ import './components/bulbs-reading-list-item';
 import './components/bulbs-reading-list-items';
 import './components/bulbs-reading-list-menu';
 import ReadingListItems from './lib/reading-list-items';
-import ReadingListArticles from './lib/reading-list-articles';
 
 class BulbsReadingList extends BulbsHTMLElement {
   attachedCallback () {
     let menu = this.getElementsByTagName('bulbs-reading-list-menu')[0];
     let articles = this.getElementsByTagName('bulbs-reading-list-items')[0];
 
-    this.lastKnownScrollPosition = 0;
     this.scrollCalculationIsIdle = true;
+    this.lastKnownScrollPosition = 0;
     this.readingListMenu = new ReadingListItems(menu);
-    this.articleList = new ReadingListArticles(articles);
+    this.articleList = new ReadingListItems(articles);
     this.addEventListener('click', this.handleMenuItemClick.bind(this));
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
   }
@@ -24,7 +23,7 @@ class BulbsReadingList extends BulbsHTMLElement {
     if (this.elementIsInsideMenu(evnt.target)) {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
-      this.readingListMenu.setCurrentListItemById(item.id);
+      this.readingListMenu.setCurrentItemById(item.id);
     }
   }
 
@@ -39,13 +38,45 @@ class BulbsReadingList extends BulbsHTMLElement {
   }
 
   handleDocumentScrolled () {
-    window.requestAnimationFrame(this.processScrollPosition.bind(this));
+    if (this.isScrollingDown()) {
+      window.requestAnimationFrame(this.processScrollPosition.bind(this));
+    }
   }
 
   processScrollPosition () {
-    console.log(this.lastKnownScrollPosition, window.scrollY);
-    console.log(window.scrollY - this.lastKnownScrollPosition);
-    this.lastKnownScrollPosition = window.scrollY;
+    if (this.articleList.hasMoreItems()) {
+      this.loadNextArticle();
+    }
+    else {
+      this.loadNewArticleList();
+    }
+  }
+
+  shouldLoadNextArticle (nextArticle) {
+    return !!(nextArticle && nextArticle.isWithinViewThreshold(window.scrollY));
+  }
+
+  loadNextArticle () {
+    let nextArticle = this.articleList.nextItem();
+    if (this.shouldLoadNextArticle(nextArticle)) {
+      nextArticle.loadContent();
+      this.articleList.setCurrentItemById(nextArticle.id);
+    }
+    else {
+      console.log('not ready to load');
+    }
+  }
+
+  loadNewArticleList () {
+
+  }
+
+  isScrollingDown (scrollPosition = window.scrollY) {
+    return scrollPosition > this.lastKnownScrollPosition;
+  }
+
+  isScrollingUp (scrollPosition = window.scrollY) {
+    return scrollPosition < this.lastKnownScrollPosition;
   }
 }
 
