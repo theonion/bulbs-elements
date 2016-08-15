@@ -2,19 +2,19 @@ import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
 import './bulbs-reading-list.scss';
 import './components/bulbs-reading-list-item';
-import './components/bulbs-reading-list-items';
+import './components/bulbs-reading-item-list';
 import './components/bulbs-reading-list-menu';
-import ReadingListItems from './lib/reading-list-items';
+import ReadingItemList from './lib/reading-item-list';
 
 class BulbsReadingList extends BulbsHTMLElement {
   attachedCallback () {
     let menu = this.getElementsByTagName('bulbs-reading-list-menu')[0];
-    let articles = this.getElementsByTagName('bulbs-reading-list-items')[0];
+    let articles = this.getElementsByTagName('bulbs-reading-item-list')[0];
 
     this.scrollCalculationIsIdle = true;
     this.lastKnownScrollPosition = 0;
-    this.readingListMenu = new ReadingListItems(menu);
-    this.articleList = new ReadingListItems(articles);
+    this.readingListMenu = new ReadingItemList(menu);
+    this.articleList = new ReadingItemList(articles);
     this.addEventListener('click', this.handleMenuItemClick.bind(this));
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
   }

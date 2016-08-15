@@ -1,22 +1,22 @@
 /* eslint no-new: 0 */
 import '../components/bulbs-reading-list-item';
-import ReadingListItems from './reading-list-items';
+import ReadingItemList from './reading-item-list';
 import ReadingListItem from './reading-list-item';
 
-describe('ReadingListItems', () => {
+describe('ReadingItemList', () => {
   let subject;
   let element;
 
   beforeEach(() => {
-    fixture.load('reading-list-items.html');
+    fixture.load('reading-item-list.html');
     element = fixture.el.firstChild;
-    subject = new ReadingListItems(element);
+    subject = new ReadingItemList(element);
   });
 
   it('throws an error if no element is given', () => {
     expect(() => {
-      new ReadingListItems();
-    }).to.throw('ReadingListItems(element): element is undefined');
+      new ReadingItemList();
+    }).to.throw('ReadingItemList(element): element is undefined');
   });
 
   it('saves a reference to the element', () => {
@@ -44,7 +44,7 @@ describe('ReadingListItems', () => {
     it('throws an error if no index is given', () => {
       expect(() => {
         subject.itemAtIndex();
-      }).to.throw('ReadingListItems.itemAtIndex(index): index is undefined');
+      }).to.throw('ReadingItemList.itemAtIndex(index): index is undefined');
     });
 
     it('returns the list item with the given index', () => {
@@ -57,7 +57,7 @@ describe('ReadingListItems', () => {
     it('throws an error if no id is provided', () => {
       expect(() => {
         subject.getListItemById();
-      }).to.throw('ReadingListItems.getListItemById(id): id is undefined');
+      }).to.throw('ReadingItemList.getListItemById(id): id is undefined');
     });
 
     it('returns the item with the given id', () => {
@@ -70,13 +70,13 @@ describe('ReadingListItems', () => {
     it('throws an error if no attribute is provided', () => {
       expect(() => {
         subject.setCurrentItemByAttribute();
-      }).to.throw('ReadingListItems.setCurrentItemByAttribute(attribute, value): attribute is undefined');
+      }).to.throw('ReadingItemList.setCurrentItemByAttribute(attribute, value): attribute is undefined');
     });
 
     it('throws an error if no value is provided', () => {
       expect(() => {
         subject.setCurrentItemByAttribute('index');
-      }).to.throw('ReadingListItems.setCurrentItemByAttribute(attribute, value): value is undefined');
+      }).to.throw('ReadingItemList.setCurrentItemByAttribute(attribute, value): value is undefined');
     });
 
     it('sets the current item to the item with the given attribute value', () => {
@@ -106,13 +106,13 @@ describe('ReadingListItems', () => {
     it('throws an error if no index is provided', () => {
       expect(() => {
         subject.setCurrentItemByIndex();
-      }).to.throw('ReadingListItems.setCurrentItemByIndex(index): index is undefined');
+      }).to.throw('ReadingItemList.setCurrentItemByIndex(index): index is undefined');
     });
 
     it('throws an error if no list item exists with the index', () => {
       expect(() => {
         subject.setCurrentItemByIndex(99);
-      }).to.throw('ReadingListItems.setCurrentItemByIndex(index): no item with the index value of 99');
+      }).to.throw('ReadingItemList.setCurrentItemByIndex(index): no item with the index value of 99');
     });
 
     it('sets the current item to the item with the given index', () => {
@@ -142,13 +142,13 @@ describe('ReadingListItems', () => {
     it('throws an error if no index is provided', () => {
       expect(() => {
         subject.setCurrentItemById();
-      }).to.throw('ReadingListItems.setCurrentItemById(id): id is undefined');
+      }).to.throw('ReadingItemList.setCurrentItemById(id): id is undefined');
     });
 
     it('throws an error if no list item exists with the id', () => {
       expect(() => {
         subject.setCurrentItemById('non-existent-id');
-      }).to.throw('ReadingListItems.setCurrentItemById(id): no item with the id value of "non-existent-id"');
+      }).to.throw('ReadingItemList.setCurrentItemById(id): no item with the id value of "non-existent-id"');
     });
 
     it('sets the current item to the item with the given id', () => {
@@ -162,7 +162,7 @@ describe('ReadingListItems', () => {
     it('throws an error if no list item is given', () => {
       expect(() => {
         subject.isNextItem();
-      }).to.throw('ReadingListItems.isNextItem(listItem): listItem is undefined');
+      }).to.throw('ReadingItemList.isNextItem(listItem): listItem is undefined');
     });
 
     it('returns true if the given item is the next item', () => {

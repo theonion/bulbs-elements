@@ -18,7 +18,6 @@ export default class ReadingListItem {
     this.id = element.id;
     this.index = index;
     this.title = element.dataset.title;
-
     this.loadDistanceThreshold = 100;
     this.loaded = false;
     this.fetchPending = false;

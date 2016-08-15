@@ -134,12 +134,12 @@ describe('randomizer', () => {
   describe('getRandomContender', () => {
     it('returns a random contender from the list', () => {
       let randomContenders = [
-        getRandomContender(contenders),
-        getRandomContender(contenders),
-        getRandomContender(contenders),
+        contenders[0],
+        contenders[1],
+        contenders[2],
       ];
-      let uniqueCount = uniq(randomContenders.map((c) => c.name)).length;
-      expect(uniqueCount).to.be.greaterThan(1);
+      let contender = getRandomContender(contenders);
+      expect(contenders).to.contain(contender);
     });
   });
 

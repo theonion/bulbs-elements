@@ -1,5 +1,5 @@
 import './bulbs-reading-list';
-import ReadingListItems from './lib/reading-list-items';
+import ReadingItemList from './lib/reading-item-list';
 
 describe('<bulbs-reading-list>', () => {
   let subject;
@@ -20,11 +20,11 @@ describe('<bulbs-reading-list>', () => {
   });
 
   it('has a reading list menu', () => {
-    expect(subject.readingListMenu).to.be.an.instanceof(ReadingListItems);
+    expect(subject.readingListMenu).to.be.an.instanceof(ReadingItemList);
   });
 
   it('has an article list', () => {
-    expect(subject.articleList).to.be.an.instanceof(ReadingListItems);
+    expect(subject.articleList).to.be.an.instanceof(ReadingItemList);
   });
 
   it('has an scrollCalculationIsIdle flag', () => {
