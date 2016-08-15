@@ -138,8 +138,8 @@ describe('randomizer', () => {
         contenders[1],
         contenders[2],
       ];
-      let contender = getRandomContender(contenders);
-      expect(contenders).to.contain(contender);
+      let contender = getRandomContender(randomContenders);
+      expect(randomContenders).to.contain(contender);
     });
   });
 
