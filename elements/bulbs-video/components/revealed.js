@@ -215,7 +215,7 @@ export default class Revealed extends React.Component {
           file: source.url,
           label: 'English',
           kind: 'captions',
-          default: defaultCaptions || false
+          default: defaultCaptions || false,
         });
       }
     });
@@ -284,6 +284,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,

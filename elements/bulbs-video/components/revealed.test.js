@@ -362,7 +362,7 @@ describe('<bulbs-video> <Revealed>', () => {
         ];
       });
 
-      it('returns an empty array', function() {
+      it('returns an empty array', () => {
         let extractedCaptions = Revealed.prototype.extractTrackCaptions.call({}, sources);
         expect(extractedCaptions).to.eql([]);
       });
@@ -414,15 +414,15 @@ describe('<bulbs-video> <Revealed>', () => {
         ];
       });
 
-      it('returns the caption track info', function() {
+      it('returns the caption track info', () => {
         let extractedCaptions = Revealed.prototype.extractTrackCaptions.call({}, sources, false);
         expect(extractedCaptions).to.eql([
           {
             file: 'http://v.theonion.com/onionstudios/video/4053/captioning.vtt',
             label: 'English',
             kind: 'captions',
-            default: false
-          }
+            default: false,
+          },
         ]);
       });
     });
@@ -724,12 +724,12 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
 
-      context('with captions in the sources', function() {
+      context('with captions in the sources', () => {
         let extractCaptionsStub;
         let captioningTracks;
 
         beforeEach(() => {
-          let sources = [
+          sources = [
             {
               'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
             },
@@ -737,8 +737,8 @@ describe('<bulbs-video> <Revealed>', () => {
               'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
             },
           ];
-          let extractSourcesStub = sinon.stub().returns(sources);
-          let vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
+          extractSourcesStub = sinon.stub().returns(sources);
+          vastUrlStub = sinon.stub().returns('http://localhost:8080/vast.xml');
           captioningTracks = [
             {
               'file': 'http://v.theonion.com/onionstudios/video/4053/captioning.vtt',
