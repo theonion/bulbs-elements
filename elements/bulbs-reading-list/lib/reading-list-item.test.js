@@ -199,11 +199,28 @@ describe('ReadingListItem', () => {
       expect(fetchMock.called(subject.href)).to.equal(true);
     });
 
+    it('returns a promise', (done) => {
+      subject.loadContent().then(() => {
+        expect(true).to.equal(true);
+        done();
+      });
+    });
+
     context('when the article is already loaded', () => {
-      it('does not fetch the article', () => {
+      beforeEach(function() {
         subject.loaded = true;
+      });
+
+      it('does not fetch the article', () => {
         subject.loadContent();
         expect(fetchMock.called(subject.href)).to.equal(false);
+      });
+
+      it('returns a rejected promise', (done) => {
+        subject.loadContent().catch((message) => {
+          expect(message).to.equal('Article should not load');
+          done();
+        });
       });
     });
 
@@ -234,11 +251,13 @@ describe('ReadingListItem', () => {
   });
 
   describe('handleLoadContentError', () => {
-    it('throws an error with the status code and text', () => {
+    it('returns a rejected promise with the status code and text', (done) => {
       let response = new Response('', { status: 500, statusText: 'Internal Server Error' });
-      expect(() => {
-        subject.handleLoadContentError(response);
-      }).to.throw(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`);
+      subject.handleLoadContentError(response)
+        .catch((message) => {
+          expect(message).to.equal(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`);
+          done();
+        });
     });
   });
 

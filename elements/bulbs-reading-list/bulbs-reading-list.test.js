@@ -31,8 +31,8 @@ describe('<bulbs-reading-list>', () => {
     expect(subject.scrollCalculationIsIdle).to.equal(true);
   });
 
-  it('has a lastKnownScrollPosition', () => {
-    expect(subject.lastKnownScrollPosition).to.equal(0);
+  it('has an isFetchingNextArticle flag', () => {
+    expect(subject.isFetchingNextArticle).to.equal(false);
   });
 
   describe('handleMenuItemClick', () => {
@@ -95,32 +95,15 @@ describe('<bulbs-reading-list>', () => {
     });
   });
 
-  describe('isScrollingDown', () => {
-    it('returns true when the given position is greater than the last known position', () => {
-      expect(subject.isScrollingDown(100)).to.equal(true);
-    });
-
-    it('returns false when the given position is less than the last known position', () => {
-      subject.lastKnownScrollPosition = 200;
-      expect(subject.isScrollingDown(100)).to.equal(false);
-    });
-  });
-
-  describe('isScrollingUp', () => {
-    it('returns false when the given position is greater than the last known position', () => {
-      expect(subject.isScrollingUp(100)).to.equal(false);
-    });
-
-    it('returns true when the given position is less than the last known position', () => {
-      subject.lastKnownScrollPosition = 200;
-      expect(subject.isScrollingUp(100)).to.equal(true);
-    });
-  });
-
   describe('shouldLoadNextArticle', () => {
     let nextArticle;
     beforeEach(() => {
       nextArticle = subject.articleList.itemAtIndex(1);
+    });
+
+    it('returns false if the reading list as an article with a pending fetch', () => {
+      sandbox.stub(subject.articleList, 'hasPendingFetch').returns(true);
+      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
     });
 
     it('returns true when the next article is within the viewport threshold', () => {
@@ -144,8 +127,14 @@ describe('<bulbs-reading-list>', () => {
       let nextArticle;
       beforeEach(() => {
         nextArticle = subject.articleList.itemAtIndex(1);
-        sandbox.stub(nextArticle, 'loadContent');
+        sandbox.stub(nextArticle, 'loadContent').returns(Promise.resolve(nextArticle));
         sandbox.stub(subject.articleList, 'nextItem').returns(nextArticle);
+      });
+
+      it('sets the isFetchingNextArticle flag to true', () => {
+        sandbox.stub(subject, 'handleLoadNextArticleComplete');
+        subject.loadNextArticle();
+        expect(subject.isFetchingNextArticle).to.equal(true);
       });
 
       it('does nothing if the article is not within the view threshold', () => {
@@ -160,8 +149,51 @@ describe('<bulbs-reading-list>', () => {
         expect(nextArticle.loadContent).to.have.been.called;
       });
     });
+
+    context('when the content should not be loaded', () => {
+      it('sets the isFetchingNextArticle flag to false', () => {
+        sandbox.stub(subject, 'shouldLoadNextArticle').returns(false);
+        subject.loadNextArticle();
+        expect(subject.isFetchingNextArticle).to.equal(false);
+      });
+    });
+  });
+
+  describe('handleLoadNextArticleComplete', () => {
+    let article;
+    beforeEach(() => {
+      article = subject.articleList.itemAtIndex(2);
+    });
+
+    it('sets the current articleList item by id', () => {
+      subject.handleLoadNextArticleComplete(article);
+      expect(subject.articleList.currentItem).to.equal(article);
+    });
+
+    it('sets the isFetchingNextArticle flag to false', () => {
+      subject.isFetchingNextArticle = true;
+      subject.handleLoadNextArticleComplete(article);
+      expect(subject.isFetchingNextArticle).to.equal(false);
+    });
   });
 
   describe('handleDocumentScrolled', () => {
+    beforeEach(() => {
+      sandbox.stub(window, 'requestAnimationFrame');
+    });
+
+    it('calls processScrollPosition on next animation frame', () => {
+      subject.handleDocumentScrolled();
+      expect(window.requestAnimationFrame).to.have.been.called;
+      expect(window.requestAnimationFrame.args[0][0].name).to.equal('bound processScrollPosition');
+    });
+
+    context('when fetching the next article', () => {
+      it('does nothing', () => {
+        subject.isFetchingNextArticle = true;
+        subject.handleDocumentScrolled();
+        expect(window.requestAnimationFrame).to.not.have.been.called;
+      });
+    });
   });
 });

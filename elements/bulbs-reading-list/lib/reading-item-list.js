@@ -5,6 +5,7 @@ import {
   map,
   maxBy,
   minBy,
+  some,
 } from 'lodash';
 import ReadingListItem from 'reading-list-item';
 import invariant from 'invariant';
@@ -14,12 +15,8 @@ export default class ReadingItemList {
     invariant(element, 'ReadingItemList(element): element is undefined');
     this.element = element;
     this.readingListItemElements = map(element.getElementsByTagName('bulbs-reading-list-item'));
-    this.createReadingItemList(this.readingListItemElements);
+    this.readingListItems = map(this.readingListItemElements, (el, i) => new ReadingListItem(el, i));
     this.currentItem = this.firstItem();
-  }
-
-  createReadingItemList (itemElements) {
-    this.readingListItems = map(itemElements, (el, i) => new ReadingListItem(el, i));
   }
 
   firstItem () {
@@ -86,5 +83,9 @@ export default class ReadingItemList {
 
   hasMoreItems () {
     return !this.isAtTheEnd();
+  }
+
+  hasPendingFetch () {
+    return some(this.readingListItems, (item) => item.fetchPending);
   }
 }

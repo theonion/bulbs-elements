@@ -243,4 +243,12 @@ describe('ReadingItemList', () => {
       expect(subject.hasMoreItems()).to.equal(false);
     });
   });
+
+  describe('hasPendingFetch', () => {
+    it('returns true when there is an article in the list with a pending fetch', () => {
+      let item = subject.itemAtIndex(0);
+      item.fetchPending = true;
+      expect(subject.hasPendingFetch()).to.equal(true);
+    });
+  });
 });

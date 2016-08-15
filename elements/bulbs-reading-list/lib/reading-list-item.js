@@ -43,12 +43,14 @@ export default class ReadingListItem {
 
   loadContent () {
     if (this.shouldLoad()) {
-      fetch(this.href)
+      return fetch(this.href)
         .then(filterBadResponse)
         .then(getResponseText)
         .then(this.handleLoadContentComplete.bind(this))
         .catch(this.handleLoadContentError);
     }
+
+    return new Promise((resolve, reject) => reject('Article should not load'));
   }
 
   shouldLoad () {
@@ -58,10 +60,11 @@ export default class ReadingListItem {
   handleLoadContentComplete (content) {
     this.fillContent(content);
     this.loaded = true;
+    return new Promise((resolve) => resolve(this));
   }
 
   handleLoadContentError (response) {
-    throw new Error(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`);
+    return new Promise((resolve, reject) => reject(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`)); // eslint-disable-line max-len
   }
 
   fillContent (content) {
