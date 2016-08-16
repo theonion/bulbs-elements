@@ -1,19 +1,19 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
+import { map } from 'lodash';
 import './bulbs-reading-list.scss';
 import './components/bulbs-reading-list-item';
-import './components/bulbs-reading-item-list';
+import './components/bulbs-reading-list-articles';
 import './components/bulbs-reading-list-menu';
 import ReadingItemList from './lib/reading-item-list';
 
 class BulbsReadingList extends BulbsHTMLElement {
   attachedCallback () {
     let menu = this.getElementsByTagName('bulbs-reading-list-menu')[0];
-    let articles = this.getElementsByTagName('bulbs-reading-item-list')[0];
+    let articles = this.getElementsByTagName('bulbs-reading-list-articles')[0];
 
     this.scrollCalculationIsIdle = true;
-    this.readingListMenu = new ReadingItemList(menu);
-    this.articleList = new ReadingItemList(articles);
+    this.readingItemList = new ReadingItemList(menu, articles);
     this.addEventListener('click', this.handleMenuItemClick.bind(this));
     this.isFetchingNextArticle = false;
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
@@ -23,13 +23,13 @@ class BulbsReadingList extends BulbsHTMLElement {
     if (this.elementIsInsideMenu(evnt.target)) {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
-      this.readingListMenu.setCurrentItemById(item.id);
+      this.readingItemList.setCurrentItemById(item.id);
     }
   }
 
   getClickedMenuItem (element) {
-    let id = element.closest('bulbs-reading-list-item').id;
-    return this.readingListMenu.getListItemById(id);
+    let id = element.closest('bulbs-reading-list-item').dataset.id;
+    return this.readingItemList.getListItemById(id);
   }
 
   elementIsInsideMenu (element) {
@@ -44,7 +44,7 @@ class BulbsReadingList extends BulbsHTMLElement {
   }
 
   processScrollPosition () {
-    if (this.articleList.hasMoreItems()) {
+    if (this.readingItemList.hasMoreItems()) {
       this.loadNextArticle();
     }
     else {
@@ -54,14 +54,14 @@ class BulbsReadingList extends BulbsHTMLElement {
 
   shouldLoadNextArticle (nextArticle) {
     return !!(
-      !this.articleList.hasPendingFetch() &&
+      !this.readingItemList.hasPendingFetch() &&
       nextArticle &&
       nextArticle.isWithinViewThreshold(window.scrollY)
     );
   }
 
   loadNextArticle () {
-    let nextArticle = this.articleList.nextItem();
+    let nextArticle = this.readingItemList.nextItem();
     if (this.shouldLoadNextArticle(nextArticle)) {
       this.isFetchingNextArticle = true;
       nextArticle.loadContent()
@@ -75,7 +75,7 @@ class BulbsReadingList extends BulbsHTMLElement {
 
   handleLoadNextArticleComplete (article) {
     this.isFetchingNextArticle = false;
-    this.articleList.setCurrentItemById(article.id);
+    this.readingItemList.setCurrentItemById(article.id);
   }
 
   loadNewArticleList () {

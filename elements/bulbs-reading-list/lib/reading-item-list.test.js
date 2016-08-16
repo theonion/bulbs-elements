@@ -2,31 +2,30 @@
 import '../components/bulbs-reading-list-item';
 import ReadingItemList from './reading-item-list';
 import ReadingListItem from './reading-list-item';
+import { take } from 'lodash';
 
 describe('ReadingItemList', () => {
   let subject;
-  let element;
+  let menu;
+  let articles;
 
   beforeEach(() => {
-    fixture.load('reading-item-list.html');
-    element = fixture.el.firstChild;
-    subject = new ReadingItemList(element);
+    fixture.load('bulbs-reading-list.html');
+    menu = fixture.el.getElementsByTagName('bulbs-reading-list-menu')[0];
+    articles = fixture.el.getElementsByTagName('bulbs-reading-list-articles')[0];
+    subject = new ReadingItemList(menu, articles);
   });
 
-  it('throws an error if no element is given', () => {
+  it('throws an error if no menu element is given', () => {
     expect(() => {
       new ReadingItemList();
-    }).to.throw('ReadingItemList(element): element is undefined');
+    }).to.throw('ReadingItemList(menu, articles): menu is undefined');
   });
 
-  it('saves a reference to the element', () => {
-    expect(subject.element).to.equal(element);
-  });
-
-  it('saves a reference to the reading list item elements', () => {
-    subject.readingListItemElements.forEach((el) => {
-      expect(el).to.be.an.instanceof(HTMLElement);
-    });
+  it('throws an error if no articles element is given', () => {
+    expect(() => {
+      new ReadingItemList(menu);
+    }).to.throw('ReadingItemList(menu, articles): articles is undefined');
   });
 
   it('creates a ReadingListItem for each item element', () => {
@@ -38,6 +37,42 @@ describe('ReadingItemList', () => {
 
   it('has a currentItem', () => {
     expect(subject.currentItem).to.equal(subject.readingListItems[0]);
+  });
+
+  describe('getReadingListElementPairs', () => {
+    it('returns a list of menu and article element objects', () => {
+      let pairs = subject.getReadingListElementPairs(menu, articles);
+      expect(pairs[0].menuItem).to.equal(menu.children[0]);
+      expect(pairs[0].article).to.equal(articles.children[0]);
+
+      expect(pairs[1].menuItem).to.equal(menu.children[1]);
+      expect(pairs[1].article).to.equal(articles.children[1]);
+
+      expect(pairs[2].menuItem).to.equal(menu.children[2]);
+      expect(pairs[2].article).to.equal(articles.children[2]);
+
+      expect(pairs[3].menuItem).to.equal(menu.children[3]);
+      expect(pairs[3].article).to.equal(articles.children[3]);
+    });
+  });
+
+  describe('getArticleElementForMenuItemElement', () => {
+    it('returns a function that closes over the articles variable', () => {
+      let iterator = subject.getArticleElementForMenuItemElement(articles.children);
+      expect(iterator(menu.children[0])).to.eql({
+        menuItem: menu.children[0],
+        article: articles.children[0],
+      });
+    });
+
+    it('throws an error if there is a mismatch', () => {
+      let mismatchedArticles = take(articles.children, 3);
+      let iterator = subject.getArticleElementForMenuItemElement(mismatchedArticles);
+      let mismatchedMenuItem = menu.children[3];
+      expect(() => {
+        iterator(mismatchedMenuItem);
+      }).to.throw(`ReadingItemList.getArticleElementForMenuItemElement(articles): menu item with id ${mismatchedMenuItem.dataset.id} has no corresponding article`); // eslint-disable-line max-len
+    });
   });
 
   describe('itemAtIndex', () => {
@@ -61,8 +96,8 @@ describe('ReadingItemList', () => {
     });
 
     it('returns the item with the given id', () => {
-      let item = subject.getListItemById('test-article-2');
-      expect(item.id).to.equal('test-article-2');
+      let item = subject.getListItemById('2');
+      expect(item.id).to.equal('2');
     });
   });
 
@@ -153,8 +188,8 @@ describe('ReadingItemList', () => {
 
     it('sets the current item to the item with the given id', () => {
       subject.currentItem = subject.readingListItems[0];
-      subject.setCurrentItemById('test-article-2');
-      expect(subject.currentItem.id).to.equal('test-article-2');
+      subject.setCurrentItemById('2');
+      expect(subject.currentItem.id).to.equal('2');
     });
   });
 

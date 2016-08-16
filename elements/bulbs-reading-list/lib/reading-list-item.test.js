@@ -5,15 +5,19 @@ import fetchMock from 'fetch-mock';
 describe('ReadingListItem', () => {
   let sandbox;
   let subject;
-
+  let menuElement;
+  let articleElement;
   beforeEach(() => {
-    let element;
     sandbox = sinon.sandbox.create();
-    element = document.createElement('bulbs-reading-list-item');
-    element.id = 'test-article';
-    element.dataset.href = 'test-url';
-    element.dataset.title = 'Test Article';
-    subject = new ReadingListItem(element, 0);
+    menuElement = document.createElement('bulbs-reading-list-item');
+    menuElement.dataset.id = '1';
+    menuElement.dataset.href = 'test-url';
+    menuElement.dataset.title = 'Test Article';
+    articleElement = document.createElement('bulbs-reading-list-item');
+    articleElement.dataset.id = '1';
+    articleElement.dataset.href = 'test-url';
+    articleElement.dataset.title = 'Test Article';
+    subject = new ReadingListItem(menuElement, articleElement, 0);
   });
 
   afterEach(() => {
@@ -21,69 +25,61 @@ describe('ReadingListItem', () => {
     sandbox.restore();
   });
 
-  it('throws an error when no element is provided', () => {
+  it('throws an error when no menuElement is provided', () => {
     expect(() => {
       new ReadingListItem();
-    }).to.throw('ReadingListItem(element, index): element is undefined');
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement is undefined');
   });
 
   it('throws an error if no index is given', () => {
     expect(() => {
-      let element = document.createElement('bulbs-reading-list-item');
-      element.id = 'an-id';
-      element.dataset.href = 'a-url';
-      element.dataset.title = 'Test Article';
-      new ReadingListItem(element);
-    }).to.throw('ReadingListItem(element, index): index is undefined');
+      new ReadingListItem(menuElement, articleElement);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): index is undefined');
   });
 
   it('throws an error if the index is not a number', () => {
     expect(() => {
-      let element = document.createElement('bulbs-reading-list-item');
-      element.id = 'an-id';
-      element.dataset.href = 'a-url';
-      element.dataset.title = 'Test Article';
-      new ReadingListItem(element, 'string');
-    }).to.throw('ReadingListItem(element, index): index is not a number');
+      new ReadingListItem(menuElement, articleElement, 'string');
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): index is not a number');
   });
 
-  it('throws an error if the element has no id', () => {
+  it('throws an error if the menuElement has no id', () => {
     expect(() => {
-      let element = document.createElement('div');
-      new ReadingListItem(element);
-    }).to.throw('ReadingListItem(element, index): element has no id');
+      menuElement = document.createElement('div');
+      new ReadingListItem(menuElement, articleElement, 0);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement has no data-id');
   });
 
-  it('throws an error if the element has no data-href', () => {
+  it('throws an error if the menuElement has no data-href', () => {
     expect(() => {
-      let element = document.createElement('div');
-      element.id = 'an-id';
-      element.dataset.title = 'a title';
-      new ReadingListItem(element);
-    }).to.throw('ReadingListItem(element, index): element has no data-href');
+      menuElement = document.createElement('div');
+      menuElement.dataset.id = '1';
+      menuElement.dataset.title = 'a title';
+      new ReadingListItem(menuElement, articleElement, 0);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement has no data-href');
   });
 
-  it('throws an error if the element has no data-title', () => {
+  it('throws an error if the menuElement has no data-title', () => {
     expect(() => {
-      let element = document.createElement('div');
-      element.id = 'an-id';
-      element.dataset.href = 'a-url';
-      new ReadingListItem(element);
-    }).to.throw('ReadingListItem(element, index): element has no data-title');
+      menuElement = document.createElement('div');
+      menuElement.dataset.id = '1';
+      menuElement.dataset.href = 'a-url';
+      new ReadingListItem(menuElement, articleElement, 0);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement has no data-title');
   });
 
-  it('throws an error if the element is not a reading list item', () => {
-    let element = document.createElement('div');
-    element.id = 'an-id';
-    element.dataset.href = 'a-url';
-    element.dataset.title = 'Test Article';
+  it('throws an error if the menuElement is not a reading list item', () => {
+    menuElement = document.createElement('div');
+    menuElement.dataset.id = '1';
+    menuElement.dataset.href = 'a-url';
+    menuElement.dataset.title = 'Test Article';
     expect(() => {
-      new ReadingListItem(element);
-    }).to.throw('ReadingListItem(element, index): element must be a bulbs-reading-list-item or have a reading-list-item class');
+      new ReadingListItem(menuElement, articleElement, 0);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement must be a bulbs-reading-list-item or have a reading-list-item class');
   });
 
   it('has an id', () => {
-    expect(subject.id).to.equal('test-article');
+    expect(subject.id).to.equal('1');
   });
 
   it('has an href', () => {
@@ -94,14 +90,13 @@ describe('ReadingListItem', () => {
     expect(subject.title).to.equal('Test Article');
   });
 
-  it('saves a reference to the element', () => {
-    expect(subject.element).to.be.an.instanceof(HTMLElement);
+  it('saves a reference to the menuElement', () => {
+    expect(subject.menuElement).to.be.an.instanceof(HTMLElement);
   });
 
   it('has a index', () => {
     expect(subject.index).to.equal(0);
   });
-
 
   it('extends ReadingListItem', () => {
     expect(subject).to.be.an.instanceof(ReadingListItem);
@@ -123,12 +118,12 @@ describe('ReadingListItem', () => {
     it('throws an error if no element is given', () => {
       expect(() => {
         subject.elementIsReadingListItem();
-      }).to.throw('ReadingListItem.elementIsReadingListItem(element, index): element is undefined');
+      }).to.throw('ReadingListItem.elementIsReadingListItem(element): element is undefined');
     });
 
     it('returns false if the given element is not a bulbs-reading-list-item', () => {
       let element = document.createElement('div');
-      element.id = 'an-id';
+      element.dataset.id = '1';
       element.dataset.href = 'a-url';
       element.dataset.title = 'Test Article';
       expect(subject.elementIsReadingListItem(element)).to.equal(false);
@@ -136,7 +131,7 @@ describe('ReadingListItem', () => {
 
     it('returns false if the given element does not have a reading-list-item class', () => {
       let element = document.createElement('div');
-      element.id = 'an-id';
+      element.dataset.id = '1';
       element.dataset.href = 'a-url';
       element.dataset.title = 'Test Article';
       expect(subject.elementIsReadingListItem(element)).to.equal(false);
@@ -144,7 +139,7 @@ describe('ReadingListItem', () => {
 
     it('returns true if the given element is a bulbs-reading-list-item', () => {
       let element = document.createElement('bulbs-reading-list-item');
-      element.id = 'an-id';
+      element.dataset.id = '1';
       element.dataset.href = 'a-url';
       element.dataset.title = 'Test Article';
       expect(subject.elementIsReadingListItem(element)).to.equal(true);
@@ -152,7 +147,7 @@ describe('ReadingListItem', () => {
 
     it('returns true if the given element has a reading-list-item class', () => {
       let element = document.createElement('div');
-      element.id = 'an-id';
+      element.dataset.id = '1';
       element.classList.add('reading-list-item');
       element.dataset.href = 'a-url';
       element.dataset.title = 'Test Article';
@@ -161,28 +156,28 @@ describe('ReadingListItem', () => {
   });
 
   describe('isCurrent', () => {
-    it('returns true when the element has a current class', () => {
-      subject.element.classList.add('current');
+    it('returns true when the menuElement has a current class', () => {
+      subject.menuElement.classList.add('current');
       expect(subject.isCurrent()).to.equal(true);
     });
 
-    it('returns false when the element does not have a current class', () => {
+    it('returns false when the menuElement does not have a current class', () => {
       expect(subject.isCurrent()).to.equal(false);
     });
   });
 
   describe('setAsCurrent', () => {
-    it('adds the current class to the element', () => {
+    it('adds the current class to the menuElement', () => {
       subject.setAsCurrent();
-      expect(subject.element.classList.contains('current')).to.equal(true);
+      expect(subject.menuElement.classList.contains('current')).to.equal(true);
     });
   });
 
   describe('setAsNotCurrent', () => {
-    it('removes the current class on the element', () => {
-      subject.element.classList.add('current');
+    it('removes the current class on the menuElement', () => {
+      subject.menuElement.classList.add('current');
       subject.setAsNotCurrent();
-      expect(subject.element.classList.contains('current')).to.equal(false);
+      expect(subject.menuElement.classList.contains('current')).to.equal(false);
     });
   });
 
@@ -199,15 +194,13 @@ describe('ReadingListItem', () => {
       expect(fetchMock.called(subject.href)).to.equal(true);
     });
 
-    it('returns a promise', (done) => {
-      subject.loadContent().then(() => {
-        expect(true).to.equal(true);
-        done();
-      });
+    it('returns a promise', () => {
+      let promise = subject.loadContent();
+      expect(promise).to.be.an.instanceof(Promise);
     });
 
     context('when the article is already loaded', () => {
-      beforeEach(function() {
+      beforeEach(() => {
         subject.loaded = true;
       });
 
@@ -241,7 +234,7 @@ describe('ReadingListItem', () => {
 
     it('fills the content', () => {
       subject.handleLoadContentComplete(content);
-      expect(subject.element.innerHTML).to.equal('<p>Article content</p>');
+      expect(subject.articleElement.innerHTML).to.equal('<p>Article content</p>');
     });
 
     it('sets the loaded flag to true', () => {
@@ -262,14 +255,14 @@ describe('ReadingListItem', () => {
   });
 
   describe('fillContent', () => {
-    it('appends the content to the element', () => {
+    it('appends the content to the articleElement', () => {
       subject.fillContent('<p>Test</p>');
-      expect(subject.element.innerHTML).to.equal('<p>Test</p>');
+      expect(subject.articleElement.innerHTML).to.equal('<p>Test</p>');
     });
   });
 
   describe('isWithinViewThreshold', () => {
-    it('returns true when the top of the elment is within the load threshold distance', () => {
+    it('returns true when the top of the articleElement is within the load threshold distance', () => {
       expect(subject.isWithinViewThreshold(0)).to.equal(true);
     });
 
@@ -280,7 +273,7 @@ describe('ReadingListItem', () => {
   });
 
   describe('shouldLoad', () => {
-    it('returns false if the article is loaded', () => {
+    it('returns false if the article is already loaded', () => {
       subject.loaded = true;
       expect(subject.shouldLoad()).to.equal(false);
     });

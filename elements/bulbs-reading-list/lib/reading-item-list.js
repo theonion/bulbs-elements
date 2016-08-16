@@ -11,12 +11,29 @@ import ReadingListItem from 'reading-list-item';
 import invariant from 'invariant';
 
 export default class ReadingItemList {
-  constructor (element) {
-    invariant(element, 'ReadingItemList(element): element is undefined');
-    this.element = element;
-    this.readingListItemElements = map(element.getElementsByTagName('bulbs-reading-list-item'));
-    this.readingListItems = map(this.readingListItemElements, (el, i) => new ReadingListItem(el, i));
+  constructor (menu, articles) {
+    invariant(menu, 'ReadingItemList(menu, articles): menu is undefined');
+    invariant(articles, 'ReadingItemList(menu, articles): articles is undefined');
+    let elementPairs = this.getReadingListElementPairs(menu, articles);
+    this.readingListItems = map(elementPairs, (elements, i) => {
+      return new ReadingListItem(elements.menuItem, elements.article, i);
+    });
     this.currentItem = this.firstItem();
+  }
+
+  getReadingListElementPairs (menu, articles) {
+    return map(menu.children, this.getArticleElementForMenuItemElement(articles.children));
+  }
+
+  getArticleElementForMenuItemElement (articles) {
+    return function (menuItemElement) {
+      let articleElement = find(articles, (article) => article.dataset.id === menuItemElement.dataset.id);
+      invariant(articleElement, `ReadingItemList.getArticleElementForMenuItemElement(articles): menu item with id ${menuItemElement.dataset.id} has no corresponding article`); // eslint-disable-line max-len
+      return {
+        menuItem: menuItemElement,
+        article: articleElement,
+      };
+    };
   }
 
   firstItem () {

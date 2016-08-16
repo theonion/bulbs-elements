@@ -1,44 +1,45 @@
+/* eslint max-len: 0 */
 import { isUndefined, isNumber } from 'lodash';
 import invariant from 'invariant';
 import { filterBadResponse, getResponseText } from 'bulbs-elements/util';
 
 export default class ReadingListItem {
-  constructor (element, index) {
-    invariant(element, 'ReadingListItem(element, index): element is undefined');
-    invariant(element.id, 'ReadingListItem(element, index): element has no id');
-    invariant(element.dataset.href, 'ReadingListItem(element, index): element has no data-href');
-    invariant(element.dataset.title, 'ReadingListItem(element, index): element has no data-title');
-    let elementMessage = 'ReadingListItem(element, index): element must be a bulbs-reading-list-item or have a reading-list-item class'; // eslint-disable-line max-len
-    invariant(this.elementIsReadingListItem(element), elementMessage);
-    invariant(!isUndefined(index), 'ReadingListItem(element, index): index is undefined');
-    invariant(isNumber(index), 'ReadingListItem(element, index): index is not a number');
+  constructor (menuElement, articleElement, index) {
+    invariant(menuElement, 'ReadingListItem(menuElement, articleElement, index): menuElement is undefined');
+    invariant(menuElement.dataset.id, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-id');
+    invariant(menuElement.dataset.href, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-href');
+    invariant(menuElement.dataset.title, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-title');
+    invariant(this.elementIsReadingListItem(menuElement), 'ReadingListItem(menuElement, articleElement, index): menuElement must be a bulbs-reading-list-item or have a reading-list-item class');
+    invariant(!isUndefined(index), 'ReadingListItem(menuElement, articleElement, index): index is undefined');
+    invariant(isNumber(index), 'ReadingListItem(menuElement, articleElement, index): index is not a number');
 
-    this.element = element;
-    this.href = element.dataset.href;
-    this.id = element.id;
+    this.menuElement = menuElement;
+    this.articleElement = articleElement;
+    this.href = menuElement.dataset.href;
+    this.id = menuElement.dataset.id;
     this.index = index;
-    this.title = element.dataset.title;
+    this.title = menuElement.dataset.title;
     this.loadDistanceThreshold = 100;
     this.loaded = false;
     this.fetchPending = false;
   }
 
   elementIsReadingListItem (element) {
-    invariant(element, 'ReadingListItem.elementIsReadingListItem(element, index): element is undefined');
+    invariant(element, 'ReadingListItem.elementIsReadingListItem(element): element is undefined');
     let tagName = element.tagName.toLowerCase();
     return tagName === 'bulbs-reading-list-item' || element.classList.contains('reading-list-item');
   }
 
   isCurrent () {
-    return this.element.classList.contains('current');
+    return this.menuElement.classList.contains('current');
   }
 
   setAsCurrent () {
-    this.element.classList.add('current');
+    this.menuElement.classList.add('current');
   }
 
   setAsNotCurrent () {
-    this.element.classList.remove('current');
+    this.menuElement.classList.remove('current');
   }
 
   loadContent () {
@@ -68,12 +69,12 @@ export default class ReadingListItem {
   }
 
   fillContent (content) {
-    this.element.innerHTML = content;
+    this.articleElement.innerHTML = content;
     console.log(`content filled for article: ${this.title}`);
   }
 
   isWithinViewThreshold (scrollPosition = 0) {
-    let difference = this.element.offsetTop - scrollPosition;
+    let difference = this.articleElement.offsetTop - scrollPosition;
     return difference <= this.loadDistanceThreshold;
   }
 }

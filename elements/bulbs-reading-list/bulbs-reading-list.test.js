@@ -19,12 +19,8 @@ describe('<bulbs-reading-list>', () => {
     expect(subject.tagName.toLowerCase()).to.equal('bulbs-reading-list');
   });
 
-  it('has a reading list menu', () => {
-    expect(subject.readingListMenu).to.be.an.instanceof(ReadingItemList);
-  });
-
-  it('has an article list', () => {
-    expect(subject.articleList).to.be.an.instanceof(ReadingItemList);
+  it('has a reading item list', () => {
+    expect(subject.readingItemList).to.be.an.instanceof(ReadingItemList);
   });
 
   it('has an scrollCalculationIsIdle flag', () => {
@@ -37,7 +33,6 @@ describe('<bulbs-reading-list>', () => {
 
   describe('handleMenuItemClick', () => {
     let eventStub;
-
     beforeEach(() => {
       eventStub = {
         target: document.createElement('a'),
@@ -51,15 +46,15 @@ describe('<bulbs-reading-list>', () => {
     });
 
     it('prevents the default behavior if the target is inside a bulbs-reading-list-item', () => {
-      let itemElement = subject.readingListMenu.itemAtIndex(0).element;
+      let itemElement = subject.readingItemList.itemAtIndex(0).menuElement;
       eventStub.target = itemElement.getElementsByTagName('a')[0];
       subject.handleMenuItemClick(eventStub);
       expect(eventStub.preventDefault).to.have.been.called;
     });
 
     it('sets the clicked item as current', () => {
-      let item = subject.readingListMenu.itemAtIndex(1);
-      let itemElement = item.element;
+      let item = subject.readingItemList.itemAtIndex(1);
+      let itemElement = item.menuElement;
       eventStub.target = itemElement.getElementsByTagName('a')[0];
       subject.handleMenuItemClick(eventStub);
       expect(item.isCurrent()).to.equal(true);
@@ -80,15 +75,15 @@ describe('<bulbs-reading-list>', () => {
     });
 
     it('returns true when the given element is inside the menu', () => {
-      let element = subject.readingListMenu.itemAtIndex(0).element;
+      let element = subject.readingItemList.itemAtIndex(0).menuElement;
       expect(subject.elementIsInsideMenu(element)).to.equal(true);
     });
   });
 
   describe('getClickedMenuItem', () => {
     it('returns the list item that was clicked', () => {
-      let item = subject.readingListMenu.itemAtIndex(1);
-      let itemElement = item.element;
+      let item = subject.readingItemList.itemAtIndex(1);
+      let itemElement = item.menuElement;
       let el = itemElement.getElementsByTagName('a')[0];
 
       expect(subject.getClickedMenuItem(el)).to.equal(item);
@@ -98,11 +93,11 @@ describe('<bulbs-reading-list>', () => {
   describe('shouldLoadNextArticle', () => {
     let nextArticle;
     beforeEach(() => {
-      nextArticle = subject.articleList.itemAtIndex(1);
+      nextArticle = subject.readingItemList.itemAtIndex(1);
     });
 
     it('returns false if the reading list as an article with a pending fetch', () => {
-      sandbox.stub(subject.articleList, 'hasPendingFetch').returns(true);
+      sandbox.stub(subject.readingItemList, 'hasPendingFetch').returns(true);
       expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
     });
 
@@ -126,9 +121,9 @@ describe('<bulbs-reading-list>', () => {
     context('when there is a next item', () => {
       let nextArticle;
       beforeEach(() => {
-        nextArticle = subject.articleList.itemAtIndex(1);
+        nextArticle = subject.readingItemList.itemAtIndex(1);
         sandbox.stub(nextArticle, 'loadContent').returns(Promise.resolve(nextArticle));
-        sandbox.stub(subject.articleList, 'nextItem').returns(nextArticle);
+        sandbox.stub(subject.readingItemList, 'nextItem').returns(nextArticle);
       });
 
       it('sets the isFetchingNextArticle flag to true', () => {
@@ -162,12 +157,12 @@ describe('<bulbs-reading-list>', () => {
   describe('handleLoadNextArticleComplete', () => {
     let article;
     beforeEach(() => {
-      article = subject.articleList.itemAtIndex(2);
+      article = subject.readingItemList.itemAtIndex(2);
     });
 
-    it('sets the current articleList item by id', () => {
+    it('sets the current readingItemList item by id', () => {
       subject.handleLoadNextArticleComplete(article);
-      expect(subject.articleList.currentItem).to.equal(article);
+      expect(subject.readingItemList.currentItem).to.equal(article);
     });
 
     it('sets the isFetchingNextArticle flag to false', () => {
