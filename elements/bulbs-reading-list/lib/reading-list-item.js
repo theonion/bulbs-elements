@@ -1,4 +1,3 @@
-/* eslint max-len: 0 */
 import { isUndefined, isNumber } from 'lodash';
 import invariant from 'invariant';
 import { filterBadResponse, getResponseText } from 'bulbs-elements/util';
@@ -22,6 +21,8 @@ export default class ReadingListItem {
     this.loadDistanceThreshold = 100;
     this.loaded = false;
     this.fetchPending = false;
+    this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
+    this.isCurrent = false;
   }
 
   elementIsReadingListItem (element) {
@@ -30,20 +31,21 @@ export default class ReadingListItem {
     return tagName === 'bulbs-reading-list-item' || element.classList.contains('reading-list-item');
   }
 
-  isCurrent () {
-    return this.menuElement.classList.contains('current');
-  }
-
   setAsCurrent () {
     this.menuElement.classList.add('current');
+    this.articleElement.classList.add('current');
+    this.isCurrent = true;
   }
 
   setAsNotCurrent () {
     this.menuElement.classList.remove('current');
+    this.articleElement.classList.remove('current');
+    this.isCurrent = false;
   }
 
   loadContent () {
     if (this.shouldLoad()) {
+      this.fillContent(this.loadingTemplate);
       return fetch(this.href)
         .then(filterBadResponse)
         .then(getResponseText)
@@ -65,12 +67,11 @@ export default class ReadingListItem {
   }
 
   handleLoadContentError (response) {
-    return new Promise((resolve, reject) => reject(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`)); // eslint-disable-line max-len
+    return new Promise((resolve, reject) => reject(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`));
   }
 
   fillContent (content) {
     this.articleElement.innerHTML = content;
-    console.log(`content filled for article: ${this.title}`);
   }
 
   isWithinViewThreshold (scrollPosition = 0) {

@@ -310,7 +310,7 @@ describe('Google Analytics', () => {
     });
 
     it('filters out any querystring key/value based on passed in key when sandwiched query param', () => {
-      let filtered = googleAnalytics.filterQueryString('http://us-theonion.videoplaza.tv?foo=bar&rnd=12345&tags=1', 'rnd'); // eslint-disable-line max-len
+      let filtered = googleAnalytics.filterQueryString('http://us-theonion.videoplaza.tv?foo=bar&rnd=12345&tags=1', 'rnd');
       expect(filtered).to.equal('http://us-theonion.videoplaza.tv?foo=bar&tags=1');
     });
 
@@ -339,7 +339,7 @@ describe('Google Analytics', () => {
       let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
       eventStub = {
         tag:
-          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now?rt=vast_2.0&rnd=12345', // eslint-disable-line max-len
+          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now?rt=vast_2.0&rnd=12345',
       };
 
       googleAnalytics.onAdSkipped(eventStub);
@@ -351,7 +351,7 @@ describe('Google Analytics', () => {
         'event',
         'Video:The Onion',
         'adskipped',
-        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now?rt=vast_2.0' // eslint-disable-line max-len
+        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now?rt=vast_2.0'
       );
     });
   });
@@ -379,7 +379,7 @@ describe('Google Analytics', () => {
     it('sends an "aderror" event without making any change if no rnd value', () => {
       eventStub = {
         tag:
-          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now', // eslint-disable-line max-len
+          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now',
         message: 'Ad Tag Empty',
       };
 
@@ -389,14 +389,14 @@ describe('Google Analytics', () => {
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
-        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now' // eslint-disable-line max-len
+        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now'
       );
     });
 
     it('sends an "aderror" event filtering out rnd value when at the end', () => {
       eventStub = {
         tag:
-          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&rnd=2768879373', // eslint-disable-line max-len
+          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&rnd=2768879373',
         message: 'Ad Tag Empty',
       };
 
@@ -406,14 +406,14 @@ describe('Google Analytics', () => {
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
-        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now' // eslint-disable-line max-len
+        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now'
       );
     });
 
     it('sends an "aderror" event filtering out rnd value when sandwiched', () => {
       eventStub = {
         tag:
-          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&rnd=2768879373&foo=bar', // eslint-disable-line max-len
+          'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&rnd=2768879373&foo=bar',
         message: 'Ad Tag Empty',
       };
 
@@ -423,7 +423,7 @@ describe('Google Analytics', () => {
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
-        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&foo=bar' // eslint-disable-line max-len
+        'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now&foo=bar'
       );
     });
   });

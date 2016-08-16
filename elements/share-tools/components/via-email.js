@@ -13,7 +13,7 @@ export default class ShareViaEmail extends ShareTool {
 
   share (event) {
     event.preventDefault();
-    let emailUrl = `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}`; // eslint-disable-line max-len
+    let emailUrl = `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}`;
     window.open(emailUrl, 'email-share', 'width=580,height=300');
   }
 

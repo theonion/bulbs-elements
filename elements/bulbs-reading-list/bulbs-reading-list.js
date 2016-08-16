@@ -1,6 +1,5 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
-import { map } from 'lodash';
 import './bulbs-reading-list.scss';
 import './components/bulbs-reading-list-item';
 import './components/bulbs-reading-list-articles';
@@ -15,7 +14,6 @@ class BulbsReadingList extends BulbsHTMLElement {
     this.scrollCalculationIsIdle = true;
     this.readingItemList = new ReadingItemList(menu, articles);
     this.addEventListener('click', this.handleMenuItemClick.bind(this));
-    this.isFetchingNextArticle = false;
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
   }
 
@@ -38,48 +36,18 @@ class BulbsReadingList extends BulbsHTMLElement {
   }
 
   handleDocumentScrolled () {
-    if (!this.isFetchingNextArticle) {
+    if (!this.readingItemList.isFetchingNextArticle) {
       window.requestAnimationFrame(this.processScrollPosition.bind(this));
     }
   }
 
   processScrollPosition () {
     if (this.readingItemList.hasMoreItems()) {
-      this.loadNextArticle();
+      this.readingItemList.loadNextArticle();
     }
     else {
-      this.loadNewArticleList();
+      // load more reading list articles
     }
-  }
-
-  shouldLoadNextArticle (nextArticle) {
-    return !!(
-      !this.readingItemList.hasPendingFetch() &&
-      nextArticle &&
-      nextArticle.isWithinViewThreshold(window.scrollY)
-    );
-  }
-
-  loadNextArticle () {
-    let nextArticle = this.readingItemList.nextItem();
-    if (this.shouldLoadNextArticle(nextArticle)) {
-      this.isFetchingNextArticle = true;
-      nextArticle.loadContent()
-        .then(this.handleLoadNextArticleComplete.bind(this));
-    }
-    else {
-      this.isFetchingNextArticle = false;
-      console.log('not ready to load');
-    }
-  }
-
-  handleLoadNextArticleComplete (article) {
-    this.isFetchingNextArticle = false;
-    this.readingItemList.setCurrentItemById(article.id);
-  }
-
-  loadNewArticleList () {
-
   }
 }
 

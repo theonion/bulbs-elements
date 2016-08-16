@@ -1,4 +1,3 @@
-/* eslint no-new: 0, max-len: 0 */
 import '../components/bulbs-reading-list-item';
 import ReadingListItem from './reading-list-item';
 import fetchMock from 'fetch-mock';
@@ -114,6 +113,14 @@ describe('ReadingListItem', () => {
     expect(subject.fetchPending).to.equal(false);
   });
 
+  it('has a loadingTemplate', () => {
+    expect(subject.loadingTemplate).to.equal('<p class="reading-list-article-loading">Loading...</p>');
+  });
+
+  it('has an isCurrent flag', () => {
+    expect(subject.isCurrent).to.equal(false);
+  });
+
   describe('elementIsReadingListItem', () => {
     it('throws an error if no element is given', () => {
       expect(() => {
@@ -155,21 +162,20 @@ describe('ReadingListItem', () => {
     });
   });
 
-  describe('isCurrent', () => {
-    it('returns true when the menuElement has a current class', () => {
-      subject.menuElement.classList.add('current');
-      expect(subject.isCurrent()).to.equal(true);
-    });
-
-    it('returns false when the menuElement does not have a current class', () => {
-      expect(subject.isCurrent()).to.equal(false);
-    });
-  });
-
   describe('setAsCurrent', () => {
     it('adds the current class to the menuElement', () => {
       subject.setAsCurrent();
       expect(subject.menuElement.classList.contains('current')).to.equal(true);
+    });
+
+    it('adds the current class to the articleElement', () => {
+      subject.setAsCurrent();
+      expect(subject.articleElement.classList.contains('current')).to.equal(true);
+    });
+
+    it('sets the isCurrent flag to true', () => {
+      subject.setAsCurrent();
+      expect(subject.isCurrent).to.equal(true);
     });
   });
 
@@ -178,6 +184,17 @@ describe('ReadingListItem', () => {
       subject.menuElement.classList.add('current');
       subject.setAsNotCurrent();
       expect(subject.menuElement.classList.contains('current')).to.equal(false);
+    });
+
+    it('removes the current class on the articleElement', () => {
+      subject.articleElement.classList.add('current');
+      subject.setAsNotCurrent();
+      expect(subject.articleElement.classList.contains('current')).to.equal(false);
+    });
+
+    it('sets the isCurrent flag to false', () => {
+      subject.setAsNotCurrent();
+      expect(subject.isCurrent).to.equal(false);
     });
   });
 
@@ -197,6 +214,12 @@ describe('ReadingListItem', () => {
     it('returns a promise', () => {
       let promise = subject.loadContent();
       expect(promise).to.be.an.instanceof(Promise);
+    });
+
+    it('sets the innerHTML to the loading template', () => {
+      sandbox.stub(subject, 'handleLoadContentComplete');
+      subject.loadContent();
+      expect(subject.articleElement.innerHTML).to.equal(subject.loadingTemplate);
     });
 
     context('when the article is already loaded', () => {

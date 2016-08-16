@@ -8,8 +8,10 @@ describe('ReadingItemList', () => {
   let subject;
   let menu;
   let articles;
+  let sandbox;
 
   beforeEach(() => {
+    sandbox = sinon.sandbox.create();
     fixture.load('bulbs-reading-list.html');
     menu = fixture.el.getElementsByTagName('bulbs-reading-list-menu')[0];
     articles = fixture.el.getElementsByTagName('bulbs-reading-list-articles')[0];
@@ -29,14 +31,18 @@ describe('ReadingItemList', () => {
   });
 
   it('creates a ReadingListItem for each item element', () => {
-    expect(subject.readingListItems).to.be.an('array');
-    subject.readingListItems.forEach((item) => {
+    expect(subject.items).to.be.an('array');
+    subject.items.forEach((item) => {
       expect(item).to.be.an.instanceof(ReadingListItem);
     });
   });
 
   it('has a currentItem', () => {
-    expect(subject.currentItem).to.equal(subject.readingListItems[0]);
+    expect(subject.currentItem).to.equal(subject.items[0]);
+  });
+
+  it('has an isFetchingNextArticle flag', () => {
+    expect(subject.isFetchingNextArticle).to.equal(false);
   });
 
   describe('getReadingListElementPairs', () => {
@@ -57,21 +63,40 @@ describe('ReadingItemList', () => {
   });
 
   describe('getArticleElementForMenuItemElement', () => {
-    it('returns a function that closes over the articles variable', () => {
+    it('returns a function that closes over the articles variable, and returns an element object', () => {
       let iterator = subject.getArticleElementForMenuItemElement(articles.children);
       expect(iterator(menu.children[0])).to.eql({
         menuItem: menu.children[0],
         article: articles.children[0],
       });
     });
+  });
 
-    it('throws an error if there is a mismatch', () => {
+  describe('createReadingListItem', () => {
+    it('returns a ReadingListItem object for each element object', () => {
+      let elements = {
+        menuItem: menu.children[0],
+        article: articles.children[0],
+      };
+      let index = 1;
+      let readingListItem = subject.createReadingListItem(elements, index);
+      expect(readingListItem.menuElement).to.equal(elements.menuItem);
+    });
+  });
+
+  describe('findArticleElementForMenuItemElement', () => {
+    it('throws an error if no article for the given menu item', () => {
       let mismatchedArticles = take(articles.children, 3);
-      let iterator = subject.getArticleElementForMenuItemElement(mismatchedArticles);
       let mismatchedMenuItem = menu.children[3];
       expect(() => {
-        iterator(mismatchedMenuItem);
-      }).to.throw(`ReadingItemList.getArticleElementForMenuItemElement(articles): menu item with id ${mismatchedMenuItem.dataset.id} has no corresponding article`); // eslint-disable-line max-len
+        subject.findArticleElementForMenuItemElement(mismatchedArticles, mismatchedMenuItem);
+      }).to.throw(`ReadingItemList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${mismatchedMenuItem.dataset.id}" has no corresponding article`);
+    });
+
+    it('returns the article element matching the menu element data-id', () => {
+      let menuItemElement = menu.children[3];
+      let expectedArticleElement = articles.children[3];
+      expect(subject.findArticleElementForMenuItemElement(articles.children, menuItemElement)).to.equal(expectedArticleElement);
     });
   });
 
@@ -115,25 +140,21 @@ describe('ReadingItemList', () => {
     });
 
     it('sets the current item to the item with the given attribute value', () => {
-      subject.currentItem = subject.readingListItems[0];
+      subject.currentItem = subject.items[0];
       subject.setCurrentItemByAttribute('index', 2);
       expect(subject.currentItem.index).to.equal(2);
     });
+  });
 
-    it('sets the item as current', () => {
-      subject.currentItem = subject.readingListItems[0];
-      subject.setCurrentItemByAttribute('index', 2);
-      expect(subject.currentItem.isCurrent()).to.equal(true);
-    });
-
-    it('sets other items as NOT current', () => {
-      subject.readingListItems.forEach((i) => i.setAsCurrent());
-      subject.currentItem = subject.readingListItems[0];
-      subject.setCurrentItemByAttribute('index', 2);
-      expect(subject.itemAtIndex(0).isCurrent()).to.equal(false);
-      expect(subject.itemAtIndex(1).isCurrent()).to.equal(false);
-      expect(subject.itemAtIndex(2).isCurrent()).to.equal(true);
-      expect(subject.itemAtIndex(3).isCurrent()).to.equal(false);
+  describe('setCurrentItem', () => {
+    it('sets the item as current, and all others as not current', () => {
+      let newCurrentItem = subject.items[2];
+      subject.setCurrentItem(newCurrentItem);
+      expect(subject.currentItem).to.equal(subject.itemAtIndex(2));
+      expect(subject.itemAtIndex(0).isCurrent).to.equal(false);
+      expect(subject.itemAtIndex(1).isCurrent).to.equal(false);
+      expect(subject.itemAtIndex(2).isCurrent).to.equal(true);
+      expect(subject.itemAtIndex(3).isCurrent).to.equal(false);
     });
   });
 
@@ -151,25 +172,25 @@ describe('ReadingItemList', () => {
     });
 
     it('sets the current item to the item with the given index', () => {
-      subject.currentItem = subject.readingListItems[0];
+      subject.currentItem = subject.items[0];
       subject.setCurrentItemByIndex(2);
       expect(subject.currentItem.index).to.equal(2);
     });
 
     it('sets the item as current', () => {
-      subject.currentItem = subject.readingListItems[0];
+      subject.currentItem = subject.items[0];
       subject.setCurrentItemByIndex(2);
-      expect(subject.currentItem.isCurrent()).to.equal(true);
+      expect(subject.currentItem.isCurrent).to.equal(true);
     });
 
     it('sets other items as NOT current', () => {
-      subject.readingListItems.forEach((i) => i.setAsCurrent());
-      subject.currentItem = subject.readingListItems[0];
+      subject.items.forEach((i) => i.setAsCurrent());
+      subject.currentItem = subject.items[0];
       subject.setCurrentItemByIndex(2);
-      expect(subject.itemAtIndex(0).isCurrent()).to.equal(false);
-      expect(subject.itemAtIndex(1).isCurrent()).to.equal(false);
-      expect(subject.itemAtIndex(2).isCurrent()).to.equal(true);
-      expect(subject.itemAtIndex(3).isCurrent()).to.equal(false);
+      expect(subject.itemAtIndex(0).isCurrent).to.equal(false);
+      expect(subject.itemAtIndex(1).isCurrent).to.equal(false);
+      expect(subject.itemAtIndex(2).isCurrent).to.equal(true);
+      expect(subject.itemAtIndex(3).isCurrent).to.equal(false);
     });
   });
 
@@ -187,7 +208,7 @@ describe('ReadingItemList', () => {
     });
 
     it('sets the current item to the item with the given id', () => {
-      subject.currentItem = subject.readingListItems[0];
+      subject.currentItem = subject.items[0];
       subject.setCurrentItemById('2');
       expect(subject.currentItem.id).to.equal('2');
     });
@@ -284,6 +305,88 @@ describe('ReadingItemList', () => {
       let item = subject.itemAtIndex(0);
       item.fetchPending = true;
       expect(subject.hasPendingFetch()).to.equal(true);
+    });
+  });
+
+  describe('shouldLoadNextArticle', () => {
+    let nextArticle;
+    beforeEach(() => {
+      nextArticle = subject.itemAtIndex(1);
+    });
+
+    it('returns false if the reading list has an article with a pending fetch', () => {
+      sandbox.stub(subject, 'hasPendingFetch').returns(true);
+      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
+    });
+
+    it('returns true when the next article is within the viewport threshold', () => {
+      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
+      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(true);
+    });
+
+    it('returns false when there is no next item', () => {
+      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
+      expect(subject.shouldLoadNextArticle()).to.equal(false);
+    });
+
+    it('returns false when the next item is not within the view threshold', () => {
+      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
+      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
+    });
+  });
+
+  describe('loadNextArticle', () => {
+    context('when there is a next item', () => {
+      let nextArticle;
+      beforeEach(() => {
+        nextArticle = subject.itemAtIndex(1);
+        sandbox.stub(nextArticle, 'loadContent').returns(Promise.resolve(nextArticle));
+        sandbox.stub(subject, 'nextItem').returns(nextArticle);
+      });
+
+      it('sets the isFetchingNextArticle flag to true', () => {
+        sandbox.stub(subject, 'handleLoadNextArticleComplete');
+        subject.loadNextArticle();
+        expect(subject.isFetchingNextArticle).to.equal(true);
+      });
+
+      it('does nothing if the article is not within the view threshold', () => {
+        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
+        subject.loadNextArticle();
+        expect(nextArticle.loadContent).to.not.have.been.called;
+      });
+
+      it('loads the article if within view threshold', () => {
+        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
+        subject.loadNextArticle();
+        expect(nextArticle.loadContent).to.have.been.called;
+      });
+    });
+
+    context('when the content should not be loaded', () => {
+      it('sets the isFetchingNextArticle flag to false', () => {
+        sandbox.stub(subject, 'shouldLoadNextArticle').returns(false);
+        subject.loadNextArticle();
+        expect(subject.isFetchingNextArticle).to.equal(false);
+      });
+    });
+  });
+
+  describe('handleLoadNextArticleComplete', () => {
+    let article;
+    beforeEach(() => {
+      article = subject.itemAtIndex(2);
+    });
+
+    it('sets the current readingItemList item by id', () => {
+      subject.handleLoadNextArticleComplete(article);
+      expect(subject.currentItem).to.equal(article);
+    });
+
+    it('sets the isFetchingNextArticle flag to false', () => {
+      subject.isFetchingNextArticle = true;
+      subject.handleLoadNextArticleComplete(article);
+      expect(subject.isFetchingNextArticle).to.equal(false);
     });
   });
 });

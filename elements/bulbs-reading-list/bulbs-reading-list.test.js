@@ -27,10 +27,6 @@ describe('<bulbs-reading-list>', () => {
     expect(subject.scrollCalculationIsIdle).to.equal(true);
   });
 
-  it('has an isFetchingNextArticle flag', () => {
-    expect(subject.isFetchingNextArticle).to.equal(false);
-  });
-
   describe('handleMenuItemClick', () => {
     let eventStub;
     beforeEach(() => {
@@ -57,7 +53,7 @@ describe('<bulbs-reading-list>', () => {
       let itemElement = item.menuElement;
       eventStub.target = itemElement.getElementsByTagName('a')[0];
       subject.handleMenuItemClick(eventStub);
-      expect(item.isCurrent()).to.equal(true);
+      expect(item.isCurrent).to.equal(true);
     });
   });
 
@@ -90,91 +86,10 @@ describe('<bulbs-reading-list>', () => {
     });
   });
 
-  describe('shouldLoadNextArticle', () => {
-    let nextArticle;
-    beforeEach(() => {
-      nextArticle = subject.readingItemList.itemAtIndex(1);
-    });
-
-    it('returns false if the reading list as an article with a pending fetch', () => {
-      sandbox.stub(subject.readingItemList, 'hasPendingFetch').returns(true);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
-    });
-
-    it('returns true when the next article is within the viewport threshold', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(true);
-    });
-
-    it('returns false when there is no next item', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-      expect(subject.shouldLoadNextArticle()).to.equal(false);
-    });
-
-    it('returns false when the next item is not within the view threshold', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
-    });
-  });
-
-  describe('loadNextArticle', () => {
-    context('when there is a next item', () => {
-      let nextArticle;
-      beforeEach(() => {
-        nextArticle = subject.readingItemList.itemAtIndex(1);
-        sandbox.stub(nextArticle, 'loadContent').returns(Promise.resolve(nextArticle));
-        sandbox.stub(subject.readingItemList, 'nextItem').returns(nextArticle);
-      });
-
-      it('sets the isFetchingNextArticle flag to true', () => {
-        sandbox.stub(subject, 'handleLoadNextArticleComplete');
-        subject.loadNextArticle();
-        expect(subject.isFetchingNextArticle).to.equal(true);
-      });
-
-      it('does nothing if the article is not within the view threshold', () => {
-        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
-        subject.loadNextArticle();
-        expect(nextArticle.loadContent).to.not.have.been.called;
-      });
-
-      it('loads the article if within view threshold', () => {
-        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-        subject.loadNextArticle();
-        expect(nextArticle.loadContent).to.have.been.called;
-      });
-    });
-
-    context('when the content should not be loaded', () => {
-      it('sets the isFetchingNextArticle flag to false', () => {
-        sandbox.stub(subject, 'shouldLoadNextArticle').returns(false);
-        subject.loadNextArticle();
-        expect(subject.isFetchingNextArticle).to.equal(false);
-      });
-    });
-  });
-
-  describe('handleLoadNextArticleComplete', () => {
-    let article;
-    beforeEach(() => {
-      article = subject.readingItemList.itemAtIndex(2);
-    });
-
-    it('sets the current readingItemList item by id', () => {
-      subject.handleLoadNextArticleComplete(article);
-      expect(subject.readingItemList.currentItem).to.equal(article);
-    });
-
-    it('sets the isFetchingNextArticle flag to false', () => {
-      subject.isFetchingNextArticle = true;
-      subject.handleLoadNextArticleComplete(article);
-      expect(subject.isFetchingNextArticle).to.equal(false);
-    });
-  });
-
   describe('handleDocumentScrolled', () => {
     beforeEach(() => {
       sandbox.stub(window, 'requestAnimationFrame');
+      sandbox.stub(subject.readingItemList, 'loadNextArticle');
     });
 
     it('calls processScrollPosition on next animation frame', () => {
@@ -185,7 +100,7 @@ describe('<bulbs-reading-list>', () => {
 
     context('when fetching the next article', () => {
       it('does nothing', () => {
-        subject.isFetchingNextArticle = true;
+        subject.readingItemList.isFetchingNextArticle = true;
         subject.handleDocumentScrolled();
         expect(window.requestAnimationFrame).to.not.have.been.called;
       });
