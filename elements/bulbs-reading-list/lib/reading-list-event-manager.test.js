@@ -68,13 +68,13 @@ describe('ReadingListEventManager', () => {
     });
 
     it('returns false if the given element is not inside the menu', () => {
-      let element = document.createElement('a');
+      element = document.createElement('a');
       document.body.appendChild(element);
       expect(subject.elementIsInsideMenu(element)).to.equal(false);
     });
 
     it('returns true when the given element is inside the menu', () => {
-      let element = subject.readingItemList.itemAtIndex(0).menuElement;
+      element = subject.readingItemList.itemAtIndex(0).menuElement;
       expect(subject.elementIsInsideMenu(element)).to.equal(true);
     });
   });

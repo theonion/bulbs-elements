@@ -1,3 +1,4 @@
+/* eslint no-new: 0 */
 import '../components/bulbs-reading-list-item';
 import ReadingListItem from './reading-list-item';
 import fetchMock from 'fetch-mock';

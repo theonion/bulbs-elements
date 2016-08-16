@@ -1,4 +1,4 @@
-import { uniq, times } from 'lodash';
+import { times } from 'lodash';
 import {
   boostNewContender,
   createRandomStats,
@@ -12,6 +12,7 @@ import {
   swapStats,
   topFiveContenders,
 } from './randomizer';
+
 describe('randomizer', () => {
   let contenders;
   beforeEach(() => {
