@@ -143,26 +143,7 @@ describe('<share-tools> <ViaTwitter>', () => {
     });
 
     it('reads from parent <share-tools>', () => {
-      expect(subject.getShareTitle()).to.eql('Share Title');
-    });
-
-    it('reads from  meta tag if it exists', () => {
-      shareTools.removeAttribute('share-title');
-      let metaTag = document.createElement('meta');
-      metaTag.name = 'twitter:title';
-      metaTag.content = 'Meta Title';
-      document.head.appendChild(metaTag);
-      expect(subject.getShareTitle()).to.eql('Meta Title');
-      metaTag.remove();
-    });
-
-    it('prefers reading from parent <share-tools>', () => {
-      let metaTag = document.createElement('meta');
-      metaTag.name = 'twitter:title';
-      metaTag.content = 'Meta Title';
-      document.head.appendChild(metaTag);
-      expect(subject.getShareTitle()).to.eql('Share Title');
-      metaTag.remove();
+      expect(subject.shareTitle).to.eql('Share Title');
     });
   });
 });

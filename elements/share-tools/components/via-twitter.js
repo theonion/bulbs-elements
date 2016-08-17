@@ -25,24 +25,11 @@ export default class ShareViaTwitter extends ShareTool {
     return null;
   }
 
-  getShareTitle () {
-    if (this.shareTitle) {
-      return this.shareTitle;
-    }
-
-    let metaTitle = document.querySelector("[name='twitter:title']");
-    if (metaTitle) {
-      return metaTitle.content;
-    }
-
-    return this.shareTitle;
-  }
-
   share (event) {
     event.preventDefault();
     window.open(
       TWITTER_BASE +
-      'text=' + this.getShareTitle() + '&url=' + this.shareUrl +
+      'text=' + this.shareTitle + '&url=' + this.shareUrl +
       '&via=' + this.twitterHandle + '&source=webclient',
       'twitter-share',
       'width=550,height=235'
