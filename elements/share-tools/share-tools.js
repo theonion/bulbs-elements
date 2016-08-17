@@ -6,7 +6,16 @@ import {
 
 import './share-tools.scss';
 
-export default class ShareTools extends BulbsHTMLElement {}
+export default class ShareTools extends BulbsHTMLElement {
+  attributeChangedCallback () {
+    // <share-via-email> doesn't update properly when <share-tools> props update.
+    // We have to manually update it.
+    let viaEmail = this.querySelector('share-via-email');
+    if (viaEmail) {
+      viaEmail.reactElement.componentDidMount();
+    }
+  }
+}
 
 registerElement('share-tools', ShareTools);
 
