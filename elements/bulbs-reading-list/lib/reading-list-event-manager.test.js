@@ -91,7 +91,7 @@ describe('ReadingListEventManager', () => {
 
   describe('handleDocumentScrolled', () => {
     beforeEach(() => {
-      sandbox.stub(window, 'requestAnimationFrame');
+      sandbox.spy(window, 'requestAnimationFrame');
       sandbox.stub(subject.readingItemList, 'loadNextArticle');
     });
 
