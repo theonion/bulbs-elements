@@ -4,7 +4,11 @@ import './bulbs-cinemagraph.scss';
 // Usage:
 // <video src="/path/to/cinemagraph.mp4" is="bulbs-cinemagraph">
 
-class BulbsCinemagraph extends BulbsHTMLElement {
+// We have to do this little dance to properly subclass elements in Safari
+function BulbsHTMLVideoElement () {}
+BulbsHTMLVideoElement.prototype = HTMLVideoElement.prototype;
+
+class BulbsCinemagraph extends BulbsHTMLVideoElement {
   createdCallback () {
     if (!this.hasAttribute('cinemagraph-duration')) {
       console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
