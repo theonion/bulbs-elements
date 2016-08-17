@@ -98,7 +98,7 @@ describe('ReadingListEventManager', () => {
     it('calls processScrollPosition on next animation frame', () => {
       subject.handleDocumentScrolled();
       expect(window.requestAnimationFrame).to.have.been.called;
-      expect(window.requestAnimationFrame.args[0][0].name).to.equal('bound processScrollPosition');
+      expect(window.requestAnimationFrame.args[0][0].name).to.match(/processScrollPosition/);
     });
 
     context('when fetching the next article', () => {
