@@ -12,12 +12,38 @@ export default class ShareViaTwitter extends ShareTool {
     this.share = this.share.bind(this);
   }
 
+  get twitterHandle () {
+    if (this.props.twitterHandle) {
+      return this.props.twitterHandle;
+    }
+
+    let twitterSiteMeta = document.querySelector("[name='twitter:site']");
+    if (twitterSiteMeta) {
+      return twitterSiteMeta.content.replace('@', '');
+    }
+
+    return null;
+  }
+
+  getShareTitle () {
+    if (this.shareTitle) {
+      return this.shareTitle;
+    }
+
+    let metaTitle = document.querySelector("[name='twitter:title']");
+    if (metaTitle) {
+      return metaTitle.content;
+    }
+
+    return this.shareTitle;
+  }
+
   share (event) {
     event.preventDefault();
     window.open(
       TWITTER_BASE +
-      'text=' + this.shareTitle + '&url=' + this.shareUrl +
-      '&via=' + this.props.twitterHandle + '&source=webclient',
+      'text=' + this.getShareTitle() + '&url=' + this.shareUrl +
+      '&via=' + this.twitterHandle + '&source=webclient',
       'twitter-share',
       'width=550,height=235'
     );
@@ -39,5 +65,5 @@ export default class ShareViaTwitter extends ShareTool {
 }
 
 ShareViaTwitter.propTypes = Object.assign({}, ShareTool.propTypes, {
-  twitterHandle: PropTypes.string.isRequired,
+  twitterHandle: PropTypes.string,
 });
