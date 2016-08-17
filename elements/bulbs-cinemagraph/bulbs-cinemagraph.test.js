@@ -1,3 +1,5 @@
+import './bulbs-cinemagraph';
+
 describe('<video is="bulbs-cinemagraph">', () => {
   let subject;
 

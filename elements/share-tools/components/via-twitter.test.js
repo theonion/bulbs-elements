@@ -122,7 +122,6 @@ describe('<share-tools> <ViaTwitter>', () => {
   });
 
   describe('getShareTitle', () => {
-    let shareTools;
     let subject;
 
     beforeEach(() => {
@@ -139,7 +138,6 @@ describe('<share-tools> <ViaTwitter>', () => {
         <ShareViaTwitter twitterHandle='real-slim-shady'/>,
         container.querySelector('#render-target')
       );
-      shareTools = container.querySelector('share-tools');
     });
 
     it('reads from parent <share-tools>', () => {
