@@ -46,7 +46,8 @@ describe('<notification-display>', () => {
     };
 
     props = {
-      src,
+      src: src,
+      closeContent: 'X',
     };
 
     fetchMock
@@ -100,6 +101,13 @@ describe('<notification-display>', () => {
         expect(new_instance.state.localNotificationIds).to.eql([1]);
         new_instance.handleRequestSuccess(notifications2);
         expect(new_instance.state.notification).to.eql(notifications2.results[0]);
+      });
+
+      it('passes closeContent to NotificationDisplay', () => {
+        const wrapper = shallow(<NotificationContainer {...props}/>);
+        wrapper.setState({ notification: notifications.results[0] });
+        console.log(wrapper.html())
+        expect(wrapper.html()).to.contain('>X</div>');
       });
 
     });
