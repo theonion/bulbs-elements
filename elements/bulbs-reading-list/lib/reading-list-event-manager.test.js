@@ -17,6 +17,7 @@ describe('ReadingListEventManager', () => {
 
   afterEach(() => {
     sandbox.restore();
+    fixture.cleanup();
   });
 
   it('has a reading item list', () => {
@@ -115,26 +116,12 @@ describe('ReadingListEventManager', () => {
 
       expect(subject.getClickedMenuItem(el)).to.equal(item);
     });
-  });
 
-  describe('handleDocumentScrolled', () => {
-    beforeEach(() => {
-      sandbox.spy(window, 'requestAnimationFrame');
-      sandbox.stub(subject.readingList, 'loadNextItem');
-    });
+    it('returns the list item if the list item itself was clicked', () => {
+      let item = subject.readingList.itemAtIndex(1);
+      let itemElement = item.menuElement;
 
-    it('calls processScrollPosition on next animation frame', () => {
-      subject.handleDocumentScrolled();
-      expect(window.requestAnimationFrame).to.have.been.called;
-      expect(window.requestAnimationFrame.args[0][0].name).to.match(/processScrollPosition/);
-    });
-
-    context('when fetching the next article', () => {
-      it('does nothing', () => {
-        subject.readingList.isFetchingNextItem = true;
-        subject.handleDocumentScrolled();
-        expect(window.requestAnimationFrame).to.not.have.been.called;
-      });
+      expect(subject.getClickedMenuItem(itemElement)).to.equal(item);
     });
   });
 });

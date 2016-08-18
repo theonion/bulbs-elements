@@ -48,8 +48,5 @@ export default class ReadingListEventManager {
     if (this.readingList.hasMoreItems()) {
       this.readingList.loadNextItem();
     }
-    else {
-      // load more reading list articles
-    }
   }
 }

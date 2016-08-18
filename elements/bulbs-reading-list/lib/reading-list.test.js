@@ -4,7 +4,7 @@ import ReadingList from './reading-list';
 import ReadingListItem from './reading-list-item';
 import { take } from 'lodash';
 
-describe.only('ReadingList', () => {
+describe('ReadingList', () => {
   let subject;
   let menu;
   let articles;
@@ -21,6 +21,7 @@ describe.only('ReadingList', () => {
 
   afterEach(() => {
     sandbox.restore();
+    fixture.cleanup();
   });
 
   it('throws an error if no menu element is given', () => {

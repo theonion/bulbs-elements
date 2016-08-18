@@ -12,6 +12,7 @@ describe('<bulbs-reading-list>', () => {
 
   afterEach(() => {
     sandbox.restore();
+    fixture.cleanup();
   });
 
   it('renders an <bulbs-reading-list>', () => {
