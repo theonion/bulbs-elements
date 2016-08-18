@@ -1,8 +1,7 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
-import makeVideoPlayableInline from 'iphone-inline-video';
+import { registerElement } from 'bulbs-elements/register';
+import { InViewMonitor } from 'bulbs-elements/util';
+import * as iphoneInlineVideo from 'iphone-inline-video';
 import './bulbs-cinemagraph.scss';
-// Usage:
-// <video src="/path/to/cinemagraph.mp4" is="bulbs-cinemagraph">
 
 // We have to do this little dance to properly subclass elements in Safari
 function BulbsHTMLVideoElement () {}
@@ -25,12 +24,27 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
     });
 
     this.setAttribute('loop', true);
-    this.setAttribute('autoplay', true);
     this.setAttribute('webkit-playsinline', true);
+
+    this.addEventListener('enterviewport', this.handleEnterViewport);
+    this.addEventListener('exitviewport', this.handleExitViewport);
   }
 
   attachedCallback () {
-    makeVideoPlayableInline(this, /* hasAudio */ false);
+    iphoneInlineVideo.default(this, /* hasAudio */ false);
+    InViewMonitor.add(this);
+  }
+
+  detachedCallback () {
+    InViewMonitor.remove(this);
+  }
+
+  handleEnterViewport () {
+    this.play();
+  }
+
+  handleExitViewport () {
+    this.pause();
   }
 }
 
