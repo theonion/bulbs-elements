@@ -1,3 +1,4 @@
+import * as iphoneInlineVideo from 'iphone-inline-video';
 import './bulbs-cinemagraph';
 
 describe('<video is="bulbs-cinemagraph">', () => {
@@ -25,6 +26,12 @@ describe('<video is="bulbs-cinemagraph">', () => {
   });
 
   describe('attachedCallback', () => {
-    // Not sure how to assert the makeVideoPlayableInline function was called.
+    // Can't actually spy on the export like this.
+    // Any testing ideas welcome.
+    xit('calls makeVideoPlayableInline', () => {
+      let spy = sinon.spy(iphoneInlineVideo, 'default');
+      subject.attachedCallback();
+      expect(spy).to.have.been.called;
+    });
   });
 });
