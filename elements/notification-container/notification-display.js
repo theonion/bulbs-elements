@@ -1,3 +1,4 @@
+
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import invariant from 'invariant';
 import React, { PropTypes } from 'react';
@@ -22,21 +23,26 @@ class NotificationDisplay extends BulbsElement {
       return (
         <div className="notification-display">
           <div className="notification-logo"></div>
-          <div className="notification-body">
-            <p>{ this.props.notification.body }
-              <a
-                href={this.props.notification.clickthrough_url}
-                data-track-action="Notifications: Clickthrough"
-                data-track-label={this.props.notification.clickthrough_url}>
-                { this.props.notification.clickthrough_cta }
-              </a>
-            </p>
+          <div className="notification-content">
+            <div className="notification-headline">
+              { this.props.notification.headline }
+            </div>
+            <div className="notification-body">
+              <p>{ this.props.notification.body }
+                <a
+                  href={this.props.notification.clickthrough_url}
+                  data-track-action="Notifications: Clickthrough"
+                  data-track-label={this.props.notification.clickthrough_url}>
+                  { this.props.notification.clickthrough_cta }
+                </a>
+              </p>
+            </div>
           </div>
           <div
             className="notification-close"
             data-track-action="Notifications: Close"
             data-track-label="#"
-            onClick={ this.deleteThis.bind(this) }>&#10006;</div>
+            onClick={ this.deleteThis.bind(this) }>{ this.props.closeContent }</div>
         </div>
       );
     }
@@ -47,6 +53,7 @@ class NotificationDisplay extends BulbsElement {
 Object.assign(NotificationDisplay, {
   displayName: 'NotificationDisplay',
   propTypes: {
+    closeContent: PropTypes.string,
     notification: PropTypes.object.isRequired,
   },
 });

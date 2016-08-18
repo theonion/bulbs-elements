@@ -7,6 +7,7 @@ let ls = global.localStorage;
 
 describe('<notification-display>', () => {
 
+  let closeContent;
   let props;
   let src;
   let src2;
@@ -16,6 +17,7 @@ describe('<notification-display>', () => {
   beforeEach(() => {
     ls.clear();
 
+    closeContent = 'X';
     src = 'http://example.com/notifications';
     src2 = 'http://example.com/notifications/page';
     notifications = {
@@ -46,6 +48,7 @@ describe('<notification-display>', () => {
     };
 
     props = {
+      closeContent,
       src,
     };
 
@@ -100,6 +103,12 @@ describe('<notification-display>', () => {
         expect(new_instance.state.localNotificationIds).to.eql([1]);
         new_instance.handleRequestSuccess(notifications2);
         expect(new_instance.state.notification).to.eql(notifications2.results[0]);
+      });
+
+      it('passes closeContent to NotificationDisplay', () => {
+        const wrapper = shallow(<NotificationContainer {...props}/>);
+        wrapper.setState({ notification: notifications.results[0] });
+        expect(wrapper.html()).to.contain('>X</div>');
       });
 
     });
