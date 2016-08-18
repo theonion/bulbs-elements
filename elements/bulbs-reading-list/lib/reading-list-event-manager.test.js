@@ -1,6 +1,6 @@
 import '../bulbs-reading-list';
 import ReadingListEventManager from './reading-list-event-manager';
-import ReadingItemList from './reading-item-list';
+import ReadingList from './reading-list';
 
 describe('ReadingListEventManager', () => {
   let subject;
@@ -9,6 +9,7 @@ describe('ReadingListEventManager', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
+    sandbox.stub(window, 'addEventListener');
     fixture.load('bulbs-reading-list.html');
     element = fixture.el.firstChild;
     subject = new ReadingListEventManager(element);
@@ -19,7 +20,7 @@ describe('ReadingListEventManager', () => {
   });
 
   it('has a reading item list', () => {
-    expect(subject.readingItemList).to.be.an.instanceof(ReadingItemList);
+    expect(subject.readingList).to.be.an.instanceof(ReadingList);
   });
 
   it('saves a reference to the element', () => {
@@ -45,18 +46,45 @@ describe('ReadingListEventManager', () => {
     });
 
     it('prevents the default behavior if the target is inside a bulbs-reading-list-item', () => {
-      let itemElement = subject.readingItemList.itemAtIndex(0).menuElement;
+      let itemElement = subject.readingList.itemAtIndex(0).menuElement;
       eventStub.target = itemElement.getElementsByTagName('a')[0];
       subject.handleMenuItemClick(eventStub);
       expect(eventStub.preventDefault).to.have.been.called;
     });
 
-    it('sets the clicked item as current', () => {
-      let item = subject.readingItemList.itemAtIndex(1);
-      let itemElement = item.menuElement;
-      eventStub.target = itemElement.getElementsByTagName('a')[0];
-      subject.handleMenuItemClick(eventStub);
-      expect(item.isCurrent).to.equal(true);
+    context('when the article is already loaded', () => {
+      it('navigates to the item', () => {
+        let item = subject.readingList.itemAtIndex(1);
+        sandbox.stub(subject.readingList, 'navigateToItem');
+        sandbox.stub(item, 'isLoaded').returns(true);
+        eventStub.target = item.menuElement;
+        subject.handleMenuItemClick(eventStub);
+        expect(subject.readingList.navigateToItem).to.have.been.called;
+      });
+    });
+
+    context('when the article is not loaded', () => {
+      it('loads the next article if the article is next', () => {
+        let item = subject.readingList.itemAtIndex(1);
+        sandbox.stub(item, 'isLoaded').returns(false);
+        sandbox.stub(subject.readingList, 'loadNextItem');
+        sandbox.stub(subject.readingList, 'isNextItem').returns(true);
+        eventStub.target = item.menuElement;
+        subject.handleMenuItemClick(eventStub);
+        expect(subject.readingList.loadNextItem).to.have.been.called;
+      });
+    });
+
+    context('when the article is more than one ahead in the list', () => {
+      it('redirects to the item', () => {
+        let item = subject.readingList.itemAtIndex(1);
+        item.loaded = false;
+        sandbox.stub(subject.readingList, 'redirectToItem');
+        sandbox.stub(subject.readingList, 'isMoreThanOneAhead').returns(true);
+        eventStub.target = item.menuElement;
+        subject.handleMenuItemClick(eventStub);
+        expect(subject.readingList.redirectToItem).to.have.been.called;
+      });
     });
   });
 
@@ -74,14 +102,14 @@ describe('ReadingListEventManager', () => {
     });
 
     it('returns true when the given element is inside the menu', () => {
-      element = subject.readingItemList.itemAtIndex(0).menuElement;
+      element = subject.readingList.itemAtIndex(0).menuElement;
       expect(subject.elementIsInsideMenu(element)).to.equal(true);
     });
   });
 
   describe('getClickedMenuItem', () => {
     it('returns the list item that was clicked', () => {
-      let item = subject.readingItemList.itemAtIndex(1);
+      let item = subject.readingList.itemAtIndex(1);
       let itemElement = item.menuElement;
       let el = itemElement.getElementsByTagName('a')[0];
 
@@ -92,7 +120,7 @@ describe('ReadingListEventManager', () => {
   describe('handleDocumentScrolled', () => {
     beforeEach(() => {
       sandbox.spy(window, 'requestAnimationFrame');
-      sandbox.stub(subject.readingItemList, 'loadNextArticle');
+      sandbox.stub(subject.readingList, 'loadNextItem');
     });
 
     it('calls processScrollPosition on next animation frame', () => {
@@ -103,7 +131,7 @@ describe('ReadingListEventManager', () => {
 
     context('when fetching the next article', () => {
       it('does nothing', () => {
-        subject.readingItemList.isFetchingNextArticle = true;
+        subject.readingList.isFetchingNextItem = true;
         subject.handleDocumentScrolled();
         expect(window.requestAnimationFrame).to.not.have.been.called;
       });

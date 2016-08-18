@@ -1,5 +1,6 @@
 import {
   find,
+  includes,
   isUndefined,
   map,
   maxBy,
@@ -9,15 +10,15 @@ import {
 import ReadingListItem from 'reading-list-item';
 import invariant from 'invariant';
 
-export default class ReadingItemList {
+export default class ReadingList {
   constructor (menu, articles) {
-    invariant(menu, 'ReadingItemList(menu, articles): menu is undefined');
-    invariant(articles, 'ReadingItemList(menu, articles): articles is undefined');
+    invariant(menu, 'ReadingList(menu, articles): menu is undefined');
+    invariant(articles, 'ReadingList(menu, articles): articles is undefined');
 
     let elementPairs = this.getReadingListElementPairs(menu, articles);
     this.items = map(elementPairs, this.createReadingListItem);
     this.currentItem = this.firstItem();
-    this.isFetchingNextArticle = false;
+    this.isFetchingNextItem = false;
   }
 
   createReadingListItem (elements, index) {
@@ -30,7 +31,7 @@ export default class ReadingItemList {
 
   findArticleElementForMenuItemElement (articles, menuItemElement) {
     let articleElement = find(articles, (article) => article.dataset.id === menuItemElement.dataset.id);
-    invariant(articleElement, `ReadingItemList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${menuItemElement.dataset.id}" has no corresponding article`);
+    invariant(articleElement, `ReadingList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${menuItemElement.dataset.id}" has no corresponding article`);
     return articleElement;
   }
 
@@ -52,36 +53,23 @@ export default class ReadingItemList {
     return maxBy(this.items, 'index');
   }
 
+  isFirstItem (item) {
+    return item === this.firstItem();
+  }
+
   itemAtIndex (index) {
-    invariant(!isUndefined(index), 'ReadingItemList.itemAtIndex(index): index is undefined');
+    invariant(!isUndefined(index), 'ReadingList.itemAtIndex(index): index is undefined');
     return find(this.items, (item) => item.index === index);
   }
 
   getListItemById (id) {
-    invariant(id, 'ReadingItemList.getListItemById(id): id is undefined');
+    invariant(id, 'ReadingList.getListItemById(id): id is undefined');
     return find(this.items, (item) => item.id === id);
   }
 
-  setCurrentItemByIndex (index) {
-    invariant(!isUndefined(index), 'ReadingItemList.setCurrentItemByIndex(index): index is undefined');
-    this.setCurrentItemByAttribute('index', index);
-    invariant(this.currentItem, `ReadingItemList.setCurrentItemByIndex(index): no item with the index value of ${index}`);
-  }
-
-  setCurrentItemById (id) {
-    invariant(id, 'ReadingItemList.setCurrentItemById(id): id is undefined');
-    this.setCurrentItemByAttribute('id', id);
-    invariant(this.currentItem, `ReadingItemList.setCurrentItemById(id): no item with the id value of "${id}"`);
-  }
-
-  setCurrentItemByAttribute (attribute, value) {
-    invariant(attribute, 'ReadingItemList.setCurrentItemByAttribute(attribute, value): attribute is undefined');
-    invariant(!isUndefined(value), 'ReadingItemList.setCurrentItemByAttribute(attribute, value): value is undefined');
-    let listItem = find(this.items, (item) => item[attribute] === value);
-    this.setCurrentItem(listItem);
-  }
-
   setCurrentItem (item) {
+    invariant(item, 'ReadingList.setCurrentItem(item): item is undefined');
+    invariant(includes(this.items, item), 'ReadingList.setCurrentItem(item): item is not in reading list');
     this.items.forEach((li) => {
       (li === item) ? li.setAsCurrent() : li.setAsNotCurrent();
     });
@@ -89,7 +77,7 @@ export default class ReadingItemList {
   }
 
   isNextItem (listItem) {
-    invariant(listItem, 'ReadingItemList.isNextItem(listItem): listItem is undefined');
+    invariant(listItem, 'ReadingList.isNextItem(listItem): listItem is undefined');
     let nextItem = this.itemAtIndex(this.currentItem.index + 1);
     return nextItem ? (listItem.index === nextItem.index) : false;
   }
@@ -107,6 +95,10 @@ export default class ReadingItemList {
     return this.currentItem === this.lastItem();
   }
 
+  isMoreThanOneAhead (item) {
+    return (item.index - this.currentItem.index) > 1;
+  }
+
   hasMoreItems () {
     return !this.isAtTheEnd();
   }
@@ -115,28 +107,38 @@ export default class ReadingItemList {
     return some(this.items, (item) => item.fetchPending);
   }
 
-  shouldLoadNextArticle (nextArticle) {
+  shouldLoadNextItem (nextItem) {
     return !!(
       !this.hasPendingFetch() &&
-      nextArticle &&
-      nextArticle.isWithinViewThreshold(window.scrollY)
+      nextItem &&
+      nextItem.isWithinViewThreshold(window.scrollY)
     );
   }
 
-  loadNextArticle () {
-    let nextArticle = this.nextItem();
-    if (this.shouldLoadNextArticle(nextArticle)) {
-      this.isFetchingNextArticle = true;
-      nextArticle.loadContent()
+  loadNextItem () {
+    let nextItem = this.nextItem();
+    if (this.shouldLoadNextItem(nextItem)) {
+      this.isFetchingNextItem = true;
+      nextItem.loadContent()
         .then(this.handleLoadNextArticleComplete.bind(this));
     }
     else {
-      this.isFetchingNextArticle = false;
+      this.isFetchingNextItem = false;
     }
   }
 
+  redirectToItem (item) {
+    window.location.href = item.href;
+  }
+
   handleLoadNextArticleComplete (article) {
-    this.isFetchingNextArticle = false;
-    this.setCurrentItemById(article.id);
+    this.isFetchingNextItem = false;
+    this.navigateToItem(article);
+  }
+
+  navigateToItem (item) {
+    this.setCurrentItem(item);
+    item.scrollIntoView();
+    window.history.pushState(null, item.title, item.href);
   }
 }

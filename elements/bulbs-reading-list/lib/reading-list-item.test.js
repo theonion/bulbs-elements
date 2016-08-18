@@ -9,6 +9,7 @@ describe('ReadingListItem', () => {
   let articleElement;
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
+    sandbox.stub(window, 'addEventListener');
     menuElement = document.createElement('bulbs-reading-list-item');
     menuElement.dataset.id = '1';
     menuElement.dataset.href = 'test-url';
@@ -106,10 +107,6 @@ describe('ReadingListItem', () => {
     expect(subject.loadDistanceThreshold).to.be.a('number');
   });
 
-  it('has a loaded flag', () => {
-    expect(subject.loaded).to.equal(false);
-  });
-
   it('has a fetchPending flag', () => {
     expect(subject.fetchPending).to.equal(false);
   });
@@ -120,6 +117,13 @@ describe('ReadingListItem', () => {
 
   it('has an isCurrent flag', () => {
     expect(subject.isCurrent).to.equal(false);
+  });
+
+  describe('isLoaded', () => {
+    it('returns true if the item has article content', () => {
+      subject.fillContent('<p>Not empty</p>');
+      expect(subject.isLoaded()).to.equal(true);
+    });
   });
 
   describe('elementIsReadingListItem', () => {
@@ -225,7 +229,7 @@ describe('ReadingListItem', () => {
 
     context('when the article is already loaded', () => {
       beforeEach(() => {
-        subject.loaded = true;
+        sandbox.stub(subject, 'isLoaded').returns(true);
       });
 
       it('does not fetch the article', () => {
@@ -241,9 +245,9 @@ describe('ReadingListItem', () => {
       });
     });
 
-    context('when the article has a current fetch pending', () => {
+    context('when the article should not load', () => {
       it('does not fetch the article', () => {
-        subject.fetchPending = true;
+        sandbox.stub(subject, 'shouldLoad').returns(false);
         subject.loadContent();
         expect(fetchMock.called(subject.href)).to.equal(false);
       });
@@ -259,11 +263,6 @@ describe('ReadingListItem', () => {
     it('fills the content', () => {
       subject.handleLoadContentComplete(content);
       expect(subject.articleElement.innerHTML).to.equal('<p>Article content</p>');
-    });
-
-    it('sets the loaded flag to true', () => {
-      subject.handleLoadContentComplete(content);
-      expect(subject.loaded).to.equal(true);
     });
   });
 
@@ -298,14 +297,22 @@ describe('ReadingListItem', () => {
 
   describe('shouldLoad', () => {
     it('returns false if the article is already loaded', () => {
-      subject.loaded = true;
+      sandbox.stub(subject, 'isLoaded').returns(true);
       expect(subject.shouldLoad()).to.equal(false);
     });
 
     it('returns false if there is a current fetch pending', () => {
-      subject.loaded = false;
+      sandbox.stub(subject, 'isLoaded').returns(false);
       subject.fetchPending = true;
       expect(subject.shouldLoad()).to.equal(false);
+    });
+  });
+
+  describe('scrollIntoView', () => {
+    it('scrolls the article element into view', () => {
+      sandbox.stub(subject.articleElement, 'scrollIntoView');
+      subject.scrollIntoView();
+      expect(subject.articleElement.scrollIntoView).to.have.been.called;
     });
   });
 });

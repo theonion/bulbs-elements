@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import ReadingItemList from './reading-item-list';
+import ReadingList from './reading-list';
 
 export default class ReadingListEventManager {
   constructor (element) {
@@ -8,20 +8,29 @@ export default class ReadingListEventManager {
     let articles = element.getElementsByTagName('bulbs-reading-list-articles')[0];
 
     this.scrollCalculationIsIdle = true;
-    this.readingItemList = new ReadingItemList(menu, articles);
+    this.readingList = new ReadingList(menu, articles);
   }
 
   handleMenuItemClick (evnt) {
     if (this.elementIsInsideMenu(evnt.target)) {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
-      this.readingItemList.setCurrentItemById(item.id);
+
+      if (this.readingList.isMoreThanOneAhead(item)) {
+        this.readingList.redirectToItem(item);
+      }
+      else if (item.isLoaded()) {
+        this.readingList.navigateToItem(item);
+      }
+      else if (this.readingList.isNextItem(item)) {
+        this.readingList.loadNextItem();
+      }
     }
   }
 
   getClickedMenuItem (element) {
     let id = element.closest('bulbs-reading-list-item').dataset.id;
-    return this.readingItemList.getListItemById(id);
+    return this.readingList.getListItemById(id);
   }
 
   elementIsInsideMenu (element) {
@@ -30,14 +39,14 @@ export default class ReadingListEventManager {
   }
 
   handleDocumentScrolled () {
-    if (!this.readingItemList.isFetchingNextArticle) {
+    if (!this.readingList.isFetchingNextItem) {
       window.requestAnimationFrame(this.processScrollPosition.bind(this));
     }
   }
 
   processScrollPosition () {
-    if (this.readingItemList.hasMoreItems()) {
-      this.readingItemList.loadNextArticle();
+    if (this.readingList.hasMoreItems()) {
+      this.readingList.loadNextItem();
     }
     else {
       // load more reading list articles

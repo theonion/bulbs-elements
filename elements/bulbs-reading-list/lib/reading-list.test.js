@@ -1,10 +1,10 @@
 /* eslint no-new: 0 */
 import '../components/bulbs-reading-list-item';
-import ReadingItemList from './reading-item-list';
+import ReadingList from './reading-list';
 import ReadingListItem from './reading-list-item';
 import { take } from 'lodash';
 
-describe('ReadingItemList', () => {
+describe.only('ReadingList', () => {
   let subject;
   let menu;
   let articles;
@@ -12,22 +12,27 @@ describe('ReadingItemList', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
+    sandbox.stub(window, 'addEventListener');
     fixture.load('bulbs-reading-list.html');
     menu = fixture.el.getElementsByTagName('bulbs-reading-list-menu')[0];
     articles = fixture.el.getElementsByTagName('bulbs-reading-list-articles')[0];
-    subject = new ReadingItemList(menu, articles);
+    subject = new ReadingList(menu, articles);
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it('throws an error if no menu element is given', () => {
     expect(() => {
-      new ReadingItemList();
-    }).to.throw('ReadingItemList(menu, articles): menu is undefined');
+      new ReadingList();
+    }).to.throw('ReadingList(menu, articles): menu is undefined');
   });
 
   it('throws an error if no articles element is given', () => {
     expect(() => {
-      new ReadingItemList(menu);
-    }).to.throw('ReadingItemList(menu, articles): articles is undefined');
+      new ReadingList(menu);
+    }).to.throw('ReadingList(menu, articles): articles is undefined');
   });
 
   it('creates a ReadingListItem for each item element', () => {
@@ -41,8 +46,8 @@ describe('ReadingItemList', () => {
     expect(subject.currentItem).to.equal(subject.items[0]);
   });
 
-  it('has an isFetchingNextArticle flag', () => {
-    expect(subject.isFetchingNextArticle).to.equal(false);
+  it('has an isFetchingNextItem flag', () => {
+    expect(subject.isFetchingNextItem).to.equal(false);
   });
 
   describe('getReadingListElementPairs', () => {
@@ -90,7 +95,7 @@ describe('ReadingItemList', () => {
       let mismatchedMenuItem = menu.children[3];
       expect(() => {
         subject.findArticleElementForMenuItemElement(mismatchedArticles, mismatchedMenuItem);
-      }).to.throw(`ReadingItemList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${mismatchedMenuItem.dataset.id}" has no corresponding article`);
+      }).to.throw(`ReadingList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${mismatchedMenuItem.dataset.id}" has no corresponding article`);
     });
 
     it('returns the article element matching the menu element data-id', () => {
@@ -104,7 +109,7 @@ describe('ReadingItemList', () => {
     it('throws an error if no index is given', () => {
       expect(() => {
         subject.itemAtIndex();
-      }).to.throw('ReadingItemList.itemAtIndex(index): index is undefined');
+      }).to.throw('ReadingList.itemAtIndex(index): index is undefined');
     });
 
     it('returns the list item with the given index', () => {
@@ -117,7 +122,7 @@ describe('ReadingItemList', () => {
     it('throws an error if no id is provided', () => {
       expect(() => {
         subject.getListItemById();
-      }).to.throw('ReadingItemList.getListItemById(id): id is undefined');
+      }).to.throw('ReadingList.getListItemById(id): id is undefined');
     });
 
     it('returns the item with the given id', () => {
@@ -126,27 +131,28 @@ describe('ReadingItemList', () => {
     });
   });
 
-  describe('setCurrentItemByAttribute', () => {
-    it('throws an error if no attribute is provided', () => {
-      expect(() => {
-        subject.setCurrentItemByAttribute();
-      }).to.throw('ReadingItemList.setCurrentItemByAttribute(attribute, value): attribute is undefined');
-    });
-
-    it('throws an error if no value is provided', () => {
-      expect(() => {
-        subject.setCurrentItemByAttribute('index');
-      }).to.throw('ReadingItemList.setCurrentItemByAttribute(attribute, value): value is undefined');
-    });
-
-    it('sets the current item to the item with the given attribute value', () => {
-      subject.currentItem = subject.items[0];
-      subject.setCurrentItemByAttribute('index', 2);
-      expect(subject.currentItem.index).to.equal(2);
-    });
-  });
-
   describe('setCurrentItem', () => {
+    it('throws an error if no item is given', () => {
+      expect(() => {
+        subject.setCurrentItem();
+      }).to.throw('ReadingList.setCurrentItem(item): item is undefined');
+    });
+
+    it('throws an error if the item does not exist in the list', () => {
+      let menuElement = document.createElement('bulbs-reading-list-item');
+      let articleElement = document.createElement('bulbs-reading-list-item');
+      menuElement.dataset.id = '1';
+      menuElement.dataset.href = 'test-url';
+      menuElement.dataset.title = 'Test Article';
+      articleElement.dataset.id = '1';
+      articleElement.dataset.href = 'test-url';
+      articleElement.dataset.title = 'Test Article';
+      let foreignItem = new ReadingListItem(menuElement, articleElement, 0);
+      expect(() => {
+        subject.setCurrentItem(foreignItem);
+      }).to.throw('ReadingList.setCurrentItem(item): item is not in reading list');
+    });
+
     it('sets the item as current, and all others as not current', () => {
       let newCurrentItem = subject.items[2];
       subject.setCurrentItem(newCurrentItem);
@@ -158,67 +164,11 @@ describe('ReadingItemList', () => {
     });
   });
 
-  describe('setCurrentItemByIndex', () => {
-    it('throws an error if no index is provided', () => {
-      expect(() => {
-        subject.setCurrentItemByIndex();
-      }).to.throw('ReadingItemList.setCurrentItemByIndex(index): index is undefined');
-    });
-
-    it('throws an error if no list item exists with the index', () => {
-      expect(() => {
-        subject.setCurrentItemByIndex(99);
-      }).to.throw('ReadingItemList.setCurrentItemByIndex(index): no item with the index value of 99');
-    });
-
-    it('sets the current item to the item with the given index', () => {
-      subject.currentItem = subject.items[0];
-      subject.setCurrentItemByIndex(2);
-      expect(subject.currentItem.index).to.equal(2);
-    });
-
-    it('sets the item as current', () => {
-      subject.currentItem = subject.items[0];
-      subject.setCurrentItemByIndex(2);
-      expect(subject.currentItem.isCurrent).to.equal(true);
-    });
-
-    it('sets other items as NOT current', () => {
-      subject.items.forEach((i) => i.setAsCurrent());
-      subject.currentItem = subject.items[0];
-      subject.setCurrentItemByIndex(2);
-      expect(subject.itemAtIndex(0).isCurrent).to.equal(false);
-      expect(subject.itemAtIndex(1).isCurrent).to.equal(false);
-      expect(subject.itemAtIndex(2).isCurrent).to.equal(true);
-      expect(subject.itemAtIndex(3).isCurrent).to.equal(false);
-    });
-  });
-
-  describe('setCurrentItemById', () => {
-    it('throws an error if no index is provided', () => {
-      expect(() => {
-        subject.setCurrentItemById();
-      }).to.throw('ReadingItemList.setCurrentItemById(id): id is undefined');
-    });
-
-    it('throws an error if no list item exists with the id', () => {
-      expect(() => {
-        subject.setCurrentItemById('non-existent-id');
-      }).to.throw('ReadingItemList.setCurrentItemById(id): no item with the id value of "non-existent-id"');
-    });
-
-    it('sets the current item to the item with the given id', () => {
-      subject.currentItem = subject.items[0];
-      subject.setCurrentItemById('2');
-      expect(subject.currentItem.id).to.equal('2');
-    });
-  });
-
   describe('isNextItem', () => {
     it('throws an error if no list item is given', () => {
       expect(() => {
         subject.isNextItem();
-      }).to.throw('ReadingItemList.isNextItem(listItem): listItem is undefined');
+      }).to.throw('ReadingList.isNextItem(listItem): listItem is undefined');
     });
 
     it('returns true if the given item is the next item', () => {
@@ -276,6 +226,12 @@ describe('ReadingItemList', () => {
     });
   });
 
+  describe('isFirstItem', () => {
+    it('returns true when the given item is the first in the list', () => {
+      expect(subject.isFirstItem(subject.firstItem())).to.equal(true);
+    });
+  });
+
   describe('isAtTheEnd', () => {
     it('returns false when the current item is not the last', () => {
       subject.currentItem = subject.firstItem();
@@ -308,7 +264,7 @@ describe('ReadingItemList', () => {
     });
   });
 
-  describe('shouldLoadNextArticle', () => {
+  describe('shouldLoadNextItem', () => {
     let nextArticle;
     beforeEach(() => {
       nextArticle = subject.itemAtIndex(1);
@@ -316,26 +272,26 @@ describe('ReadingItemList', () => {
 
     it('returns false if the reading list has an article with a pending fetch', () => {
       sandbox.stub(subject, 'hasPendingFetch').returns(true);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
+      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
 
     it('returns true when the next article is within the viewport threshold', () => {
       sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(true);
+      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(true);
     });
 
     it('returns false when there is no next item', () => {
       sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-      expect(subject.shouldLoadNextArticle()).to.equal(false);
+      expect(subject.shouldLoadNextItem()).to.equal(false);
     });
 
     it('returns false when the next item is not within the view threshold', () => {
       sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
-      expect(subject.shouldLoadNextArticle(nextArticle)).to.equal(false);
+      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
   });
 
-  describe('loadNextArticle', () => {
+  describe('loadNextItem', () => {
     context('when there is a next item', () => {
       let nextArticle;
       beforeEach(() => {
@@ -344,30 +300,30 @@ describe('ReadingItemList', () => {
         sandbox.stub(subject, 'nextItem').returns(nextArticle);
       });
 
-      it('sets the isFetchingNextArticle flag to true', () => {
+      it('sets the isFetchingNextItem flag to true', () => {
         sandbox.stub(subject, 'handleLoadNextArticleComplete');
-        subject.loadNextArticle();
-        expect(subject.isFetchingNextArticle).to.equal(true);
+        subject.loadNextItem();
+        expect(subject.isFetchingNextItem).to.equal(true);
       });
 
       it('does nothing if the article is not within the view threshold', () => {
         sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
-        subject.loadNextArticle();
+        subject.loadNextItem();
         expect(nextArticle.loadContent).to.not.have.been.called;
       });
 
       it('loads the article if within view threshold', () => {
         sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-        subject.loadNextArticle();
+        subject.loadNextItem();
         expect(nextArticle.loadContent).to.have.been.called;
       });
     });
 
     context('when the content should not be loaded', () => {
-      it('sets the isFetchingNextArticle flag to false', () => {
-        sandbox.stub(subject, 'shouldLoadNextArticle').returns(false);
-        subject.loadNextArticle();
-        expect(subject.isFetchingNextArticle).to.equal(false);
+      it('sets the isFetchingNextItem flag to false', () => {
+        sandbox.stub(subject, 'shouldLoadNextItem').returns(false);
+        subject.loadNextItem();
+        expect(subject.isFetchingNextItem).to.equal(false);
       });
     });
   });
@@ -378,15 +334,72 @@ describe('ReadingItemList', () => {
       article = subject.itemAtIndex(2);
     });
 
-    it('sets the current readingItemList item by id', () => {
+    it('sets the current readingList item by id', () => {
       subject.handleLoadNextArticleComplete(article);
       expect(subject.currentItem).to.equal(article);
     });
 
-    it('sets the isFetchingNextArticle flag to false', () => {
-      subject.isFetchingNextArticle = true;
+    it('sets the isFetchingNextItem flag to false', () => {
+      subject.isFetchingNextItem = true;
       subject.handleLoadNextArticleComplete(article);
-      expect(subject.isFetchingNextArticle).to.equal(false);
+      expect(subject.isFetchingNextItem).to.equal(false);
+    });
+
+    it('scrolls the article into view', () => {
+      sandbox.stub(article, 'scrollIntoView');
+      subject.handleLoadNextArticleComplete(article);
+      expect(article.scrollIntoView).to.have.been.called;
+    });
+  });
+
+  describe('navigateToItem', () => {
+    let item;
+    beforeEach(() => {
+      item = subject.itemAtIndex(1);
+    });
+
+    it('sets the given item as current', () => {
+      subject.navigateToItem(item);
+      expect(subject.currentItem).to.equal(item);
+      expect(item.isCurrent).to.equal(true);
+    });
+
+    it('scrolls the article into view', () => {
+      sandbox.stub(item, 'scrollIntoView');
+      subject.navigateToItem(item);
+      expect(item.scrollIntoView).to.have.been.called;
+    });
+
+    it('sets the push state to the article url', () => {
+      subject.navigateToItem(item);
+      expect(window.location.href).to.match(new RegExp(item.href));
+    });
+  });
+
+  describe('redirectToItem', () => {
+    it('redirects to the given item', () => {
+      let item = subject.itemAtIndex(3);
+      subject.redirectToItem(item);
+      expect(window.location.href).to.match(new RegExp(item.href));
+    });
+  });
+
+  describe('isMoreThanOneAhead', () => {
+    it('returns false when the given item is the current item', () => {
+      let item = subject.currentItem;
+      expect(subject.isMoreThanOneAhead(item)).to.equal(false);
+    });
+
+    it('returns false if the given item is before the current item', () => {
+      subject.currentItem = subject.itemAtIndex(2);
+      let item = subject.itemAtIndex(1);
+      expect(subject.isMoreThanOneAhead(item)).to.equal(false);
+    });
+
+    it('returns true if the given item is more than one ahead', () => {
+      subject.currentItem = subject.itemAtIndex(0);
+      let item = subject.itemAtIndex(2);
+      expect(subject.isMoreThanOneAhead(item)).to.equal(true);
     });
   });
 });
