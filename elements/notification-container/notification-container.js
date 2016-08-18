@@ -72,9 +72,9 @@ class NotificationContainer extends BulbsElement {
   render () {
     if (this.state.notification && this.notificationsAreActive()) {
       return (
-        <NotificationDisplay 
-          notification={ this.state.notification } 
-          closeContent={ this.props.closecontent }
+        <NotificationDisplay
+          notification={ this.state.notification }
+          closeContent={ this.props.closeContent }
         />
       );
     }
@@ -86,8 +86,8 @@ class NotificationContainer extends BulbsElement {
 Object.assign(NotificationContainer, {
   displayName: 'NotificationContainer',
   propTypes: {
-    src: PropTypes.string.isRequired,
     closeContent: PropTypes.string,
+    src: PropTypes.string.isRequired,
   },
 });
 

@@ -53,8 +53,8 @@ class NotificationDisplay extends BulbsElement {
 Object.assign(NotificationDisplay, {
   displayName: 'NotificationDisplay',
   propTypes: {
-    notification: PropTypes.object.isRequired,
     closeContent: PropTypes.string,
+    notification: PropTypes.object.isRequired,
   },
 });
 
