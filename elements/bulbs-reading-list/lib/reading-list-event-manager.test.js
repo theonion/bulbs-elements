@@ -1,6 +1,11 @@
 import '../bulbs-reading-list';
 import ReadingListEventManager from './reading-list-event-manager';
 import ReadingList from './reading-list';
+import buildReadingListFixture from './reading-list-test-helper';
+import {
+  appendFixtureContainer,
+  removeFixtures,
+} from 'bulbs-elements/test/fixtures';
 
 describe('ReadingListEventManager', () => {
   let subject;
@@ -10,14 +15,16 @@ describe('ReadingListEventManager', () => {
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
-    fixture.load('bulbs-reading-list.html');
-    element = fixture.el.firstChild;
+    let fixtureContainer = appendFixtureContainer();
+    let readingListElement = buildReadingListFixture();
+    fixtureContainer.appendChild(readingListElement);
+    element = readingListElement;
     subject = new ReadingListEventManager(element);
   });
 
   afterEach(() => {
     sandbox.restore();
-    fixture.cleanup();
+    removeFixtures();
   });
 
   it('has a reading item list', () => {

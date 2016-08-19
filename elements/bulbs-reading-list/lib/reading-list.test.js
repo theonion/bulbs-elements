@@ -3,25 +3,32 @@ import '../components/bulbs-reading-list-item';
 import ReadingList from './reading-list';
 import ReadingListItem from './reading-list-item';
 import { take } from 'lodash';
+import buildReadingListFixture from './reading-list-test-helper';
+import {
+  appendFixtureContainer,
+  removeFixtures,
+} from 'bulbs-elements/test/fixtures';
 
 describe('ReadingList', () => {
   let subject;
   let menu;
   let articles;
   let sandbox;
-
+  let readingListElement;
   beforeEach(() => {
+    let fixtureContainer = appendFixtureContainer();
+    readingListElement = buildReadingListFixture();
+    fixtureContainer.appendChild(readingListElement);
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
-    fixture.load('bulbs-reading-list.html');
-    menu = fixture.el.getElementsByTagName('bulbs-reading-list-menu')[0];
-    articles = fixture.el.getElementsByTagName('bulbs-reading-list-articles')[0];
+    menu = readingListElement.getElementsByTagName('bulbs-reading-list-menu')[0];
+    articles = readingListElement.getElementsByTagName('bulbs-reading-list-articles')[0];
     subject = new ReadingList(menu, articles);
   });
 
   afterEach(() => {
     sandbox.restore();
-    fixture.cleanup();
+    removeFixtures();
   });
 
   it('throws an error if no menu element is given', () => {
