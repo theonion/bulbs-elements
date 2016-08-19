@@ -1,4 +1,9 @@
 import './bulbs-reading-list';
+import buildReadingListFixture from './lib/reading-list-test-helper';
+import {
+  appendFixtureContainer,
+  removeFixtures,
+} from 'bulbs-elements/test/fixtures';
 
 describe('<bulbs-reading-list>', () => {
   let subject;
@@ -6,13 +11,15 @@ describe('<bulbs-reading-list>', () => {
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
-    fixture.load('bulbs-reading-list.html');
-    subject = fixture.el.firstChild;
+    let fixtureContainer = appendFixtureContainer();
+    let readingListElement = buildReadingListFixture();
+    fixtureContainer.appendChild(readingListElement);
+    subject = readingListElement;
   });
 
   afterEach(() => {
     sandbox.restore();
-    fixture.cleanup();
+    removeFixtures();
   });
 
   it('renders an <bulbs-reading-list>', () => {
