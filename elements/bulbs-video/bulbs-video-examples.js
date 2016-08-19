@@ -72,6 +72,20 @@ let examples = {
         `;
       },
     },
+    'VTT Captioning Example': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/vtt-captioning.json"
+            target-host-channel="right_rail"
+            target-campaign-number="campaign_605759"
+            autoplay
+            muted
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 

@@ -11,6 +11,9 @@ import {
   swapRandomLeaders,
   swapStats,
   topFiveContenders,
+  minTotal,
+  maxTotal,
+  createRandomStatsFromRange,
 } from './randomizer';
 
 describe('randomizer', () => {
@@ -60,6 +63,29 @@ describe('randomizer', () => {
         allTotal: 6,
       },
     ];
+  });
+
+  describe('minTotal', () => {
+    it('returns min total for the contenders', () => {
+      let min = minTotal(contenders);
+      expect(min).to.equal(1);
+    });
+  });
+
+  describe('maxTotal', function () {
+    it('returns the max total for contenders', () => {
+      let max = maxTotal(contenders);
+      expect(max).to.equal(6);
+    });
+  });
+
+  describe('createRandomStatsFromRange', function () {
+    it('generates random medal counts that match up to a random total in a range', () => {
+      let random = createRandomStatsFromRange(contenders[1], 600, 700);
+      expect(random.allTotal).to.be.at.least(600);
+      expect(random.allTotal).to.be.at.most(800);
+      expect(random.goldTotal + random.silverTotal + random.bronzeTotal).to.equal(random.allTotal);
+    });
   });
 
   describe('sortByTotal', () => {

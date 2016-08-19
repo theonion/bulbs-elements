@@ -61,6 +61,21 @@ export default {
             recirc-url="http://www.onionstudios.com"
             channel='avclub'
             src="http://localhost:8080/fixtures/rail-player/with-campaign.json"
+            target-campaign-id="1234"
+          >
+          </rail-player>
+        `;
+      },
+    },
+    'with captioning': {
+      render () {
+        return `
+          <rail-player
+            style="width: 300px; margin: 0 auto;"
+            recirc-url="http://www.onionstudios.com"
+            channel='avclub'
+            src="http://localhost:8080/fixtures/rail-player/with-captioning.json"
+            target-campaign-id="1234"
           >
           </rail-player>
         `;

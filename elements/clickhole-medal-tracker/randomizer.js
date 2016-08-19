@@ -1,6 +1,8 @@
 import {
   clone,
   includes,
+  maxBy,
+  minBy,
   merge,
   random,
   sortBy,
@@ -22,6 +24,31 @@ export function createRandomStats (contender) {
   return contender;
 }
 
+export function createRandomStatsFromRange (contender, min, max) {
+  let maxCeiling = random(max, max + 100);
+  let randomTotal = random(min, maxCeiling);
+  let goldTotal = random(1, randomTotal);
+  let silverTotal = random(1, randomTotal - goldTotal);
+  let bronzeTotal = randomTotal - silverTotal - goldTotal;
+
+  merge(contender, {
+    goldTotal,
+    silverTotal,
+    bronzeTotal,
+    allTotal: randomTotal,
+  });
+
+  return contender;
+}
+
+export function minTotal (contenders) {
+  return minBy(contenders, 'allTotal').allTotal;
+}
+
+export function maxTotal (contenders) {
+  return maxBy(contenders, 'allTotal').allTotal;
+}
+
 export function sortByTotal (contenders) {
   return sortBy(contenders, (c) => -c.allTotal);
 }
@@ -38,7 +65,13 @@ export function shuffleContenders (contenders) {
   let newContender = boostNewContender(contenders);
   swapRandomLeaders(contenders, newContender);
 
-  return contenders;
+  let top5 = topFiveContenders(contenders);
+  let min = minTotal(top5);
+  let max = maxTotal(top5);
+
+  top5.map((contender) => createRandomStatsFromRange(contender, min, max));
+
+  return sortByTotal(contenders);
 }
 
 export function topFiveContenders (contenders) {

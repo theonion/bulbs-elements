@@ -9,7 +9,7 @@ describe('<share-tools> <ViaTwitter>', () => {
     let subject = ShareViaTwitter.propTypes;
 
     it('requires a twitterHandle', () => {
-      expect(subject.twitterHandle).to.eql(PropTypes.string.isRequired);
+      expect(subject.twitterHandle).to.eql(PropTypes.string);
     });
   });
 
@@ -78,6 +78,72 @@ describe('<share-tools> <ViaTwitter>', () => {
        'twitter-share',
        'width=550,height=235'
       );
+    });
+  });
+
+  describe('twitterHandle', () => {
+    let subject;
+
+    it('reads twitterHandle from props', () => {
+      subject = new ShareViaTwitter({
+        icon: '',
+        label: '',
+        twitterHandle: 'ShaolinFantastic',
+      });
+      expect(subject.twitterHandle).to.eql('ShaolinFantastic');
+    });
+
+    it('reads from meta tag if it exists', () => {
+      subject = new ShareViaTwitter({
+        icon: '',
+        label: '',
+      });
+      let metaTag = document.createElement('meta');
+      metaTag.name = 'twitter:site';
+      metaTag.content = '@GrandmasterFlash';
+      document.head.appendChild(metaTag);
+      expect(subject.twitterHandle).to.eql('GrandmasterFlash');
+      metaTag.remove();
+    });
+
+    it('favors reading from props', () => {
+      subject = new ShareViaTwitter({
+        icon: '',
+        label: '',
+        twitterHandle: 'ShaolinFantastic',
+      });
+      let metaTag = document.createElement('meta');
+      metaTag.name = 'twitter:site';
+      metaTag.content = '@GrandmasterFlash';
+      document.head.appendChild(metaTag);
+      expect(subject.twitterHandle).to.eql('ShaolinFantastic');
+      metaTag.remove();
+    });
+  });
+
+  describe('getShareTitle', () => {
+    let shareTools;
+    let subject;
+
+    beforeEach(() => {
+      let container = document.createElement('div');
+      container.innerHTML = `
+        <share-tools
+          share-url='//example.org'
+          share-title='Share Title'
+        >
+          <div id='render-target'></div>
+        </share-tools>
+      `;
+      subject = ReactDOM.render(
+        <ShareViaTwitter twitterHandle='real-slim-shady'/>,
+        container.querySelector('#render-target')
+      );
+      shareTools = container.querySelector('share-tools');
+    });
+
+    it('reads from parent <share-tools>', () => {
+      expect(subject.shareTitle).to.eql('Share Title');
     });
   });
 });
