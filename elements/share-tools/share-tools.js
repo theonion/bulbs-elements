@@ -9,7 +9,11 @@ import './share-tools.scss';
 export default class ShareTools extends BulbsHTMLElement {
   attributeChangedCallback () {
     // <share-via-email> doesn't update properly when <share-tools> props update.
-    // We have to manually update it.
+    // <share-via-twitter> and <share-via-facebook> open up pop-ups with window.open
+    // and read the share properties just in time.
+    // On mobile, the email mailto href must be constructed ahead of time,
+    // So we have to manually kick off the react life cycle again.
+    // This might not be the best way to do it. But it should work.
     let viaEmail = this.querySelector('share-via-email');
     if (viaEmail) {
       viaEmail.reactElement.setEmailUrl(this.props.shareTitle, this.props.shareUrl);
