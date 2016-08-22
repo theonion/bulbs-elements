@@ -69,6 +69,25 @@ describe('<share-tools> <ShareTool>', () => {
       it('is the title of the containing share-tools', () => {
         expect(subject.shareTitle).to.eql('Example Thing');
       });
+
+      it('reads from  meta tag if it exists', () => {
+        container.querySelector('[share-title]').removeAttribute('share-title');
+        let metaTag = document.createElement('meta');
+        metaTag.setAttribute('property', 'og:title');
+        metaTag.content = 'Meta Title';
+        document.head.appendChild(metaTag);
+        expect(subject.shareTitle).to.eql('Meta Title');
+        metaTag.remove();
+      });
+
+      it('prefers reading from parent <share-tools>', () => {
+        let metaTag = document.createElement('meta');
+        metaTag.property = 'og:title';
+        metaTag.content = 'Meta Title';
+        document.head.appendChild(metaTag);
+        expect(subject.shareTitle).to.eql('Example Thing');
+        metaTag.remove();
+      });
     });
 
     describe('hasIcon', () => {
