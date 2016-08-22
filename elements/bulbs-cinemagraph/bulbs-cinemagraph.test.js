@@ -1,19 +1,25 @@
-import * as iphoneInlineVideo from 'iphone-inline-video';
+import { InViewMonitor } from 'bulbs-elements/util';
 import './bulbs-cinemagraph';
+import * as iphoneInlineVideo from 'iphone-inline-video';
 
 describe('<video is="bulbs-cinemagraph">', () => {
   let subject;
 
   beforeEach(() => {
     subject = document.createElement('video', 'bulbs-cinemagraph');
+    sinon.spy(InViewMonitor, 'add');
+    sinon.spy(InViewMonitor, 'remove');
+    sinon.spy(subject, 'pause');
+    sinon.spy(subject, 'play');
+  });
+
+  afterEach(() => {
+    InViewMonitor.add.restore();
+    InViewMonitor.remove.restore();
   });
 
   it('sets the loop attribute', () => {
     expect(subject.getAttribute('loop')).to.eql('true');
-  });
-
-  it('sets the autoplay attribute', () => {
-    expect(subject.getAttribute('autoplay')).to.eql('true');
   });
 
   it('sets the webkit-playsinline attribute', () => {
@@ -32,6 +38,32 @@ describe('<video is="bulbs-cinemagraph">', () => {
       let spy = sinon.spy(iphoneInlineVideo, 'default');
       subject.attachedCallback();
       expect(spy).to.have.been.called;
+    });
+
+    it('registers with the InViewMonitor', () => {
+      subject.attachedCallback();
+      expect(InViewMonitor.add).to.have.been.called.once;
+    });
+  });
+
+  describe('detachedCallback', () => {
+    it('removes selve  from InViewMonitor', () => {
+      subject.detachedCallback();
+      expect(InViewMonitor.remove).to.have.been.called.once;
+    });
+  });
+
+  describe('enterviewport event', () => {
+    it('plays the video', () => {
+      subject.dispatchEvent(new CustomEvent('enterviewport'));
+      expect(subject.play).to.have.been.called.once;
+    });
+  });
+
+  describe('exitviewport event', () => {
+    it('pauses the video', () => {
+      subject.dispatchEvent(new CustomEvent('exitviewport'));
+      expect(subject.pause).to.have.been.called.once;
     });
   });
 });

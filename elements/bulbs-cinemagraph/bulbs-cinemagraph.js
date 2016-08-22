@@ -26,8 +26,8 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
     this.setAttribute('loop', true);
     this.setAttribute('webkit-playsinline', true);
 
-    this.addEventListener('enterviewport', this.handleEnterViewport);
-    this.addEventListener('exitviewport', this.handleExitViewport);
+    this.addEventListener('enterviewport', () => this.play());
+    this.addEventListener('exitviewport', () => this.pause());
   }
 
   attachedCallback () {
@@ -37,14 +37,6 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
 
   detachedCallback () {
     InViewMonitor.remove(this);
-  }
-
-  handleEnterViewport () {
-    this.play();
-  }
-
-  handleExitViewport () {
-    this.pause();
   }
 }
 
