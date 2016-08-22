@@ -12,7 +12,7 @@ export default class ShareTools extends BulbsHTMLElement {
     // We have to manually update it.
     let viaEmail = this.querySelector('share-via-email');
     if (viaEmail) {
-      viaEmail.reactElement.componentDidMount();
+      viaEmail.reactElement.setEmailUrl(this.props.shareTitle, this.props.shareUrl);
     }
   }
 }
