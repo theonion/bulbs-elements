@@ -13,11 +13,7 @@ export default class ShareViaEmail extends ShareTool {
   }
 
   componentDidMount () {
-    this.setEmailUrl(this.shareTitle, this.shareUrl);
-  }
-
-  setEmailUrl (title, url) {
-    this.setState({ emailUrl: `mailto:?subject=${encodeURIComponent(title)}&body=${url} %0D%0A%0D%0A${this.props.message}` }); // eslint-disable-line max-len
+    this.setState({ emailUrl: `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}` }); // eslint-disable-line max-len
   }
 
   render () {
