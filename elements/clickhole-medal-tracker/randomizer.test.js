@@ -157,18 +157,6 @@ describe('randomizer', () => {
     });
   });
 
-  describe('getRandomContender', () => {
-    it('returns a random contender from the list', () => {
-      let randomContenders = [
-        getRandomContender(contenders),
-        getRandomContender(contenders),
-        getRandomContender(contenders),
-      ];
-      let uniqueCount = uniq(randomContenders.map((c) => c.name)).length;
-      expect(uniqueCount).to.be.greaterThan(1);
-    });
-  });
-
   describe('getRandomContenderWithout', () => {
     it('allows you to exclude a given contender from the result', () => {
       let newContenders = [contenders[0], contenders[1]];
