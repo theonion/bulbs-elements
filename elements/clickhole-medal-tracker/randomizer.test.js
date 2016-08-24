@@ -1,9 +1,8 @@
-import { uniq, times } from 'lodash';
+import { times } from 'lodash';
 import {
   boostNewContender,
   createRandomStats,
   getLosers,
-  getRandomContender,
   getRandomContenderWithout,
   randomizeContenders,
   shuffleContenders,
