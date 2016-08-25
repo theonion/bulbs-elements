@@ -7,6 +7,7 @@ describe('<video is="bulbs-cinemagraph">', () => {
 
   beforeEach(() => {
     subject = document.createElement('video', 'bulbs-cinemagraph');
+    document.body.appendChild(subject);
     sinon.spy(InViewMonitor, 'add');
     sinon.spy(InViewMonitor, 'remove');
     sinon.spy(subject, 'pause');
