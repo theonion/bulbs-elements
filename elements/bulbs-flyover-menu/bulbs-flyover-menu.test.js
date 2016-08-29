@@ -11,14 +11,14 @@ describe('bulbs-flyover-menu', () => {
     container.innerHTML = `
       <button
         is="bulbs-flyover-open"
-        target="#example-menu"
+        menu-name="example-menu"
       >
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
-      <bulbs-flyover-menu id="example-menu">
+      <bulbs-flyover-menu menu-name="example-menu">
         <button
           is="bulbs-flyover-close"
-          target="#example-menu"
+          menu-name="example-menu"
         >
           +
         </button>
@@ -26,6 +26,7 @@ describe('bulbs-flyover-menu', () => {
         <h1>
           HOT LINKS
         </h2>
+
         <p>
           GET YOUR HOT LINKS RIGHT HERE
         </p>

@@ -6,7 +6,7 @@ export default {
         return `
           <button
             is="bulbs-flyover-open"
-            target="#example-menu"
+            menu-name="example-menu"
             style="
               margin: 1rem;
               display: block;
@@ -14,8 +14,8 @@ export default {
           >
             <i class="fa fa-bars" aria-hidden="true"></i>
           </button>
-          <bulbs-flyover-menu id="example-menu">
-            <button is="bulbs-flyover-close" target="#example-menu">
+          <bulbs-flyover-menu menu-name="example-menu">
+            <button is="bulbs-flyover-close" menu-name="example-menu">
               +
             </button>
 
