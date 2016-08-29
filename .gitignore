@@ -12,3 +12,4 @@ bower_components/
 stats.json
 .eslintcache
 coverage/*
+.DS_Store

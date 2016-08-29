@@ -8,7 +8,6 @@ BulbsHTMLButtonElement.prototype = HTMLButtonElement.prototype;
 class FlyoverMenu extends BulbsHTMLElement {
   createdCallback () {
     this.openers = [];
-    this.closers = [];
   }
 
   attachedCallback () {
@@ -17,18 +16,21 @@ class FlyoverMenu extends BulbsHTMLElement {
 
   openFlyover () {
     this.classList.add('bulbs-flyover-open');
+    this.openers.forEach((opener) => {
+      opener.setAttribute('aria-expanded', 'true');
+    });
   }
 
   closeFlyover () {
     this.classList.remove('bulbs-flyover-open');
+
+    this.openers.forEach((opener) => {
+      opener.setAttribute('aria-expanded', 'false');
+    });
   }
 
   registerOpenButton (openButton) {
     this.openers.push(openButton);
-  }
-
-  registerCloseButton (closeButton) {
-    this.closers.push(closeButton);
   }
 }
 
@@ -45,7 +47,6 @@ function invokeOnTarget (element, methodToInvoke) {
 class FlyoverClose extends BulbsHTMLButtonElement {
   attachedCallback () {
     this.addEventListener('click', invokeOnTarget.bind(null, this, 'closeFlyover'));
-    invokeOnTarget(this, 'registerCloseButton');
   }
 }
 
@@ -53,6 +54,8 @@ FlyoverClose.extends = 'button';
 
 class FlyoverOpen extends BulbsHTMLButtonElement {
   attachedCallback () {
+    this.setAttribute('aria-haspopup', 'true');
+    this.setAttribute('aria-expanded', 'false');
     this.addEventListener('click', invokeOnTarget.bind(null, this, 'openFlyover'));
     invokeOnTarget(this, 'registerOpenButton');
   }
