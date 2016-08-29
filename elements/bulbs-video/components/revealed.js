@@ -100,6 +100,10 @@ export default class Revealed extends React.Component {
       filteredTags.push(this.props.targetCampaignNumber);
     }
 
+    if (this.props.targetCampaignId) {
+      filteredTags.push(`campaign-${this.props.targetCampaignId}`);
+    }
+
     this.props.video.tags.forEach(function (tag) {
       // Temporary until videojs_options completely removed from Onion Studios
       if (tag !== 'main') {
@@ -111,6 +115,10 @@ export default class Revealed extends React.Component {
 
     if (this.props.muted) {
       videoMeta.player_options.muted = true;
+    }
+
+    if (this.props.defaultCaptions) {
+      videoMeta.player_options.defaultCaptions = true;
     }
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
@@ -198,6 +206,23 @@ export default class Revealed extends React.Component {
     return baseUrl;
   }
 
+  extractTrackCaptions (sources, defaultCaptions) {
+    let captions = [];
+
+    sources.forEach(function (source) {
+      if (source.content_type === 'text/vtt') {
+        captions.push({
+          file: source.url,
+          label: 'English',
+          kind: 'captions',
+          default: defaultCaptions || false,
+        });
+      }
+    });
+
+    return captions;
+  }
+
   makeVideoPlayer (element, videoMeta) {
     element.id = videoMeta.gaPrefix;
     let player = global.jwplayer(element);
@@ -227,6 +252,11 @@ export default class Revealed extends React.Component {
       width: '100%',
     };
 
+    let tracks = this.extractTrackCaptions(videoMeta.sources, videoMeta.player_options.defaultCaptions);
+    if (tracks.length > 0) {
+      playerOptions.tracks = tracks;
+    }
+
     if (!this.props.disableSharing) {
       playerOptions.sharing = {
         link: videoMeta.player_options.shareUrl,
@@ -254,6 +284,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,

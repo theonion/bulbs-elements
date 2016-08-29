@@ -30,6 +30,7 @@ export default class Root extends React.Component {
             disableSharing={true}
             muted={true}
             targetHostChannel='right_rail'
+            defaultCaptions={true}
             {...this.props}
           />
         </div>
@@ -52,5 +53,6 @@ Root.displayName = 'RailPlayerRoot';
 Root.propTypes = {
   channel: PropTypes.string,
   recircUrl: PropTypes.string.isRequired,
+  targetCampaignId: PropTypes.string,
   video: PropTypes.object,
 };

@@ -6,15 +6,14 @@ import ShareTool from './share-tool';
 import ShareButton from './share-button';
 
 export default class ShareViaEmail extends ShareTool {
+
   constructor (props) {
     super(props);
-    this.share = this.share.bind(this);
+    this.state = {};
   }
 
-  share (event) {
-    event.preventDefault();
-    let emailUrl = `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}`; // eslint-disable-line max-len
-    window.open(emailUrl, 'email-share', 'width=580,height=300');
+  componentDidMount () {
+    this.setState({ emailUrl: `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}` }); // eslint-disable-line max-len
   }
 
   render () {
@@ -26,7 +25,7 @@ export default class ShareViaEmail extends ShareTool {
         icon={this.hasIcon()}
         label={this.hasLabel()}
         labelText='Email'
-        onClick={this.share}
+        href={this.state.emailUrl}
       />
     );
   }
