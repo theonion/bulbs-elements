@@ -13,26 +13,26 @@ describe('<bulbs-datamap>', function () {
     assert.equal(element.tagName.toLowerCase(), 'bulbs-datamap');
   });
 
-  it('renders a div inside', function() {
+  it('renders a div inside', function () {
     expect(element.firstChild.matches('div.bulbs-datamap')).to.be.true;
   });
 
-  it('instantiates a datamap object', function() {
+  it('instantiates a datamap object', function () {
     expect(element.map.options.element).to.eql(element.firstChild);
   });
 
   describe('#resizeMap', () => {
-    beforeEach(function() {
+    beforeEach(function () {
       sinon.stub(element.map, 'resize');
       element.resizeMap();
     });
 
-    it('resizes the map', function() {
+    it('resizes the map', function () {
       expect(element.map.resize.called).to.be.true;
     });
   });
 
-  describe('#stateClicked', function() {
+  describe('#stateClicked', function () {
     let path;
     let path2;
     let stateObj;
@@ -51,7 +51,7 @@ describe('<bulbs-datamap>', function () {
       window.d3.select(path2).classed('selected', true);
     });
 
-    it('sets selected class to true for selected path', function() {
+    it('sets selected class to true for selected path', function () {
       element.stateClicked(path, stateObj, element);
       expect(window.d3.select(path2).classed('selected')).to.be.false;
       expect(window.d3.select(path2).classed('selected')).to.be.false;

@@ -1,5 +1,3 @@
-/* global BULBS_ELEMENTS_ANALYTICS_MANAGER */
-
 import React, { PropTypes } from 'react';
 import ShareTool from './share-tool';
 
@@ -13,7 +11,7 @@ export default class ShareViaEmail extends ShareTool {
   }
 
   componentDidMount () {
-    this.setState({ emailUrl: `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}` }); // eslint-disable-line max-len
+    this.setState({ emailUrl: `mailto:?subject=${encodeURIComponent(this.shareTitle)}&body=${this.shareUrl} %0D%0A%0D%0A${this.props.message}` }); // eslint-disable-line max-len, react/no-did-mount-set-state
   }
 
   render () {

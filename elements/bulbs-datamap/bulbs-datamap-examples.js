@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-datamap',
   examples: {
     'Basic Example': {
-      render: function () {
+      renderi () {
         return `
           <bulbs-datamap>
           </bulbs-datamap>

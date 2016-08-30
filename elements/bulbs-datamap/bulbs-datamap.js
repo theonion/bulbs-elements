@@ -1,3 +1,4 @@
+/* global Datamap */
 require('!imports?this=>window!d3/d3.js');
 require('expose?topojson!topojson/topojson.js');
 require('expose?Datamap!datamaps/dist/datamaps.usa.js');
@@ -19,11 +20,11 @@ class BulbsDatamap extends BulbsHTMLElement {
       scope: 'usa',
       responsive: true,
       fills: {
-        defaultFill: ''
+        defaultFill: '',
       },
       geographyConfig: {
-        highlightOnHover: false
-      }
+        highlightOnHover: false,
+      },
     });
 
     window.addEventListener('resize', this.resizeMap.bind(this));
@@ -39,7 +40,7 @@ class BulbsDatamap extends BulbsHTMLElement {
       .classed('selected', false);
     window.d3.select(path).classed('selected', true);
 
-    var event = new CustomEvent('bulbs-datamap:selected', { 'detail': stateObj });
+    let event = new CustomEvent('bulbs-datamap:selected', { 'detail': stateObj });
     mapContainer.dispatchEvent(event);
   }
 
