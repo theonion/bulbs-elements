@@ -1,9 +1,8 @@
-import { uniq, times } from 'lodash';
+import { times } from 'lodash';
 import {
   boostNewContender,
   createRandomStats,
   getLosers,
-  getRandomContender,
   getRandomContenderWithout,
   randomizeContenders,
   shuffleContenders,
@@ -154,18 +153,6 @@ describe('randomizer', () => {
       let losers = getLosers(contenders);
       expect(losers.length).to.equal(1);
       expect(losers[0].name).to.equal('One');
-    });
-  });
-
-  describe('getRandomContender', () => {
-    it('returns a random contender from the list', () => {
-      let randomContenders = [
-        getRandomContender(contenders),
-        getRandomContender(contenders),
-        getRandomContender(contenders),
-      ];
-      let uniqueCount = uniq(randomContenders.map((c) => c.name)).length;
-      expect(uniqueCount).to.be.greaterThan(1);
     });
   });
 
