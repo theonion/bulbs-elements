@@ -1,0 +1,8 @@
+video[is="bulbs-cinemagraph"] {
+  &::-webkit-media-controls-play-button,
+  &::-webkit-media-controls-start-playback-button {
+    opacity: 0;
+    pointer-events: none;
+    width: 5px;
+  }
+}

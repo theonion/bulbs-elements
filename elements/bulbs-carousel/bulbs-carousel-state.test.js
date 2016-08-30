@@ -325,6 +325,22 @@ describe('<bulbs-carousel> BulbsCarouselState', () => {
         expect(subject.props.currentIndex).to.eql(8);
       });
     });
+
+    context('page calculations', function () {
+      beforeEach(() => {
+        carousel.style.width = '500px';
+      });
+
+      it('should ensure index is correct when number of items is not divisible by number of items per page', () => {
+        let slider = carousel.querySelector('bulbs-carousel-track');
+        let newCarouselItem = document.createElement('bulbs-carousel-item');
+        slider.appendChild(newCarouselItem);
+
+        subject.updateCurrentIndex(10);
+
+        expect(subject.props.currentIndex).to.eql(10);
+      });
+    });
   });
 
   describe('paging', () => {

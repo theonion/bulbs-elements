@@ -15,7 +15,15 @@ export default class ShareTool extends React.Component {
   }
 
   get shareTitle () {
-    return this.shareTools.getAttribute('share-title');
+    let shareTitle = this.shareTools.getAttribute('share-title');
+    if (!shareTitle) {
+      let metaTitle = document.querySelector("[property='og:title']");
+      if (metaTitle) {
+        shareTitle = metaTitle.content;
+      }
+    }
+
+    return shareTitle;
   }
 
   hasIcon () {

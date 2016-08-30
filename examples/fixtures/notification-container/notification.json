@@ -1,0 +1,13 @@
+{
+  "next": null,
+  "results": [{
+    "id": 1,
+    "internal_title": "da fellas",
+    "headline": "Keep Russell Wilson away from baby future",
+    "body": "Seriously, that my baby!",
+    "image": {"id": 2},
+    "image_url": "http://example.com/baby-future.jpg",
+    "clickthrough_cta": "Read More...",
+    "clickthrough_url": "comethru and click"
+  }]
+}
