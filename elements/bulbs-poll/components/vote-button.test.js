@@ -8,19 +8,16 @@ describe('<bulbs-poll> <VoteButton>', function () {
     it('renders active vote button', function () {
       let props = {
         selectedAnswer: { id: 1 },
-        makeVoteRequest () {},
+        makeVoteRequest: sinon.spy(),
       };
 
-      expect(shallow(<VoteButton {...props} />).equals(
-        <button
-          data-track-label='Submit'
-          className="bulbs-poll-vote bulbs-poll-footer"
-          onClick={VoteButton.prototype.makeVoteRequest}
-          disabled={false}
-        >
-          Vote
-        </button>
-      )).to.be.true;
+      let subject = shallow(<VoteButton {...props} />);
+      expect(subject).to.contain('Vote');
+      expect(subject).to.have.prop('data-track-label', 'Submit');
+      expect(subject).to.have.prop('className', 'bulbs-poll-vote bulbs-poll-footer');
+      expect(subject).to.have.prop('disabled', false);
+      subject.node.props.onClick();
+      expect(props.makeVoteRequest).to.have.been.called.once;
     });
   });
 
@@ -31,31 +28,21 @@ describe('<bulbs-poll> <VoteButton>', function () {
         makeVoteRequest () {},
       };
 
-      expect(shallow(<VoteButton {...props} />).equals(
-        <button
-          data-track-label='Submit'
-          className="bulbs-poll-vote bulbs-poll-footer"
-          onClick={VoteButton.prototype.makeVoteRequest}
-          disabled={true}
-        >
-          Vote
-        </button>
-      )).to.be.true;
+      let subject = shallow(<VoteButton {...props} />);
+      expect(subject).to.contain('Vote');
+      expect(subject).to.have.prop('data-track-label', 'Submit');
+      expect(subject).to.have.prop('className', 'bulbs-poll-vote bulbs-poll-footer');
+      expect(subject).to.have.prop('disabled', true);
     });
   });
 
   context('without properties', function () {
     it('renders a disabled vote button', function () {
-      expect(shallow(<VoteButton/>).equals(
-        <button
-          data-track-label='Submit'
-          className="bulbs-poll-vote bulbs-poll-footer"
-          onClick={VoteButton.prototype.makeVoteRequest}
-          disabled={true}
-        >
-          Vote
-        </button>
-      )).to.be.true;
+      let subject = shallow(<VoteButton/>);
+      expect(subject).to.contain('Vote');
+      expect(subject).to.have.prop('data-track-label', 'Submit');
+      expect(subject).to.have.prop('className', 'bulbs-poll-vote bulbs-poll-footer');
+      expect(subject).to.have.prop('disabled', true);
     });
   });
 });

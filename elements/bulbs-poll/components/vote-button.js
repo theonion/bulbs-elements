@@ -23,7 +23,7 @@ export default class VoteButton extends React.Component {
       <button
         data-track-label='Submit'
         className={classes}
-        onClick={this.makeVoteRequest}
+        onClick={this.makeVoteRequest.bind(this)}
         disabled={buttonIsDisabled}
       >
         Vote
