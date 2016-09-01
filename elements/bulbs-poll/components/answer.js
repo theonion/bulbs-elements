@@ -22,7 +22,7 @@ export default class Answer extends React.Component {
       <li
         data-track-label='Option'
         className={className}
-        onClick={this.selectAnswer.bind(this)}
+        onClick={this.selectAnswer}
       >
         <SelectionMarker isSelected={isSelected} />
         { answer.answer_text }

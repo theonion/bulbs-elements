@@ -9,7 +9,7 @@ describe('<bulbs-poll> <Answer>', function () {
     it('renders answer as not selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };
       let otherAnswer = { answer_text: 'Another', id: 2 };
-      let selectAnswer = sinon.spy();
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: otherAnswer,
@@ -18,18 +18,23 @@ describe('<bulbs-poll> <Answer>', function () {
       };
 
       let subject = shallow(<Answer {...props}/>);
-      expect(subject).to.contain(<SelectionMarker isSelected={false}/>);
-      expect(subject).to.have.prop('data-track-label', 'Option');
-      expect(subject).to.have.prop('className', 'bulbs-poll-answer');
-      subject.simulate('click');
-      expect(selectAnswer).to.have.been.calledWith(answer).once;
+      expect(subject.equals(
+        <li
+          data-track-label='Option'
+          className='bulbs-poll-answer'
+          onClick={Answer.prototype.selectAnswer}
+        >
+          <SelectionMarker isSelected={false}/>
+          Answer
+        </li>
+      )).to.be.true;
     });
   });
 
   context('answer is the selected answer', function () {
     it('renders answer as selected', function () {
       let answer = { answer_text: 'Answer', id: 1 };
-      let selectAnswer = sinon.spy();
+      let selectAnswer = function () {};
       let props = {
         answer,
         selectedAnswer: answer,
@@ -38,11 +43,16 @@ describe('<bulbs-poll> <Answer>', function () {
       };
 
       let subject = shallow(<Answer {...props}/>);
-      expect(subject).to.contain(<SelectionMarker isSelected={true}/>);
-      expect(subject).to.have.prop('data-track-label', 'Option');
-      expect(subject).to.have.prop('className', 'bulbs-poll-answer bulbs-poll-answer-selected');
-      subject.simulate('click');
-      expect(selectAnswer).to.have.been.calledWith(answer).once;
+      expect(subject.equals(
+        <li
+          data-track-label='Option'
+          className="bulbs-poll-answer bulbs-poll-answer-selected"
+          onClick={Answer.prototype.selectAnswer}
+        >
+          <SelectionMarker isSelected={true}/>
+          Answer
+        </li>
+      )).to.be.true;
     });
   });
 });
