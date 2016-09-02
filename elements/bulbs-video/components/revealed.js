@@ -8,7 +8,7 @@ import Comscore from '../plugins/comscore';
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-
+import { InViewMonitor } from 'bulbs-elements/util';
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
@@ -227,8 +227,6 @@ export default class Revealed extends React.Component {
     element.id = videoMeta.gaPrefix;
     let player = global.jwplayer(element);
 
-    player.videoMeta = videoMeta;
-
     let playerOptions = {
       key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
       skin: {
@@ -268,7 +266,9 @@ export default class Revealed extends React.Component {
 
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
-
+    InViewMonitor.add(element);
+    element.addEventListener('exitviewport', () => player.pause());
+    player.videoMeta = videoMeta;
   }
 
   render () {

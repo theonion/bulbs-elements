@@ -6,10 +6,13 @@ import Revealed from './revealed';
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
 import video from '../fixtures/video.json';
+import { InViewMonitor } from 'bulbs-elements/util';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
     global.jwplayer = () => {};
+
+    sinon.stub(InViewMonitor, 'add');
     sinon.stub(GoogleAnalytics, 'init');
     sinon.stub(Comscore, 'init');
   });
@@ -17,6 +20,7 @@ describe('<bulbs-video> <Revealed>', () => {
   afterEach(() => {
     GoogleAnalytics.init.restore();
     Comscore.init.restore();
+    InViewMonitor.add.restore();
   });
 
   describe('propTypes', () => {
@@ -583,7 +587,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let videoMeta;
 
     beforeEach(() => {
-      element = {};
+      element = document.createElement('div');
       videoMeta = Object.assign({}, video, {
         title: 'video_title',
         tags: 'tags',
