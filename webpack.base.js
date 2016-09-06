@@ -32,6 +32,28 @@ const styleExtractor = new ExtractTextPlugin('[name].css');
 
 let entries = {};
 
+// We will vendor common dependencies of our elements.
+entries['dist/vendor'] = [
+  'array-find',
+  'react',
+  'react-dom',
+  'classnames',
+  'document-register-element',
+  'document-register-element/build/innerHTML',
+  'es6-promise',
+  'isomorphic-fetch',
+  'dom4',
+  'camelcase',
+  'object-map-to-array',
+  './lib/bulbs-elements/register',
+  './lib/bulbs-elements/store',
+  './lib/bulbs-elements/bulbs-element',
+	'./lib/bulbs-elements/util/load-on-demand',
+	'invariant/browser',
+	'./lib/bulbs-elements/util/in-view-monitor',
+	'./lib/bulbs-elements/util/index',
+];
+
 elementDirs.forEach(function (dir) {
   let elementName = path.basename(dir);
   let elementEntryPoint = path.join(dir, elementName + '.js');
@@ -44,9 +66,7 @@ glob.sync(path.join(elementsDir, '*/*-cms.js')).forEach(function (cmsFile) {
 });
 
 exports.plugins = {
-  chunker: new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor.bundle',
-  }),
+  chunker: new webpack.optimize.CommonsChunkPlugin('dist/vendor', 'vendor.bundle.js'),
   styleExtractor: styleExtractor, // eslint-disable-line
   uglify: new webpack.optimize.UglifyJsPlugin({
     compress: {
