@@ -71,19 +71,19 @@ karmaConfig.customLaunchers = {
     browser: 'safari',
     browser_version: '8',
   },
-  bs_chrome_47: {
+  bs_chrome_50: {
     base: 'BrowserStack',
     os: 'osx',
     os_version: 'yosemite',
     browser: 'chrome',
-    browser_version: '47',
+    browser_version: '50',
   },
-  bs_firefox_43: {
+  bs_firefox_47: {
     base: 'BrowserStack',
     os: 'osx',
     os_version: 'yosemite',
     browser: 'firefox',
-    browser_version: '43',
+    browser_version: '47',
   },
 };
 

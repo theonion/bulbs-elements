@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "5.16.2",
+  "version": "5.18.0",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -10,7 +10,7 @@
     "lint": "node_modules/.bin/eslint elements lib --max-warnings=1 --cache",
     "coverage": "karma start karma.coverage.js --single-run",
     "build": "scripts/webpack-dev-build",
-    "server": "scripts/webpack-dev-server"
+    "start": "scripts/webpack-dev-server"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
@@ -45,6 +45,8 @@
     "clone": "^1.0.2",
     "console-shim": "^1.0.3",
     "css-loader": "^0.23.1",
+    "d3": "3.3.13",
+    "datamaps": "0.4.0",
     "diff": "^2.2.1",
     "document-register-element": "^0.5.4",
     "dom4": "^1.6.0",
@@ -110,6 +112,7 @@
     "style-loader": "^0.13.0",
     "stylelint": "^4.0.0",
     "stylelint-config-standard": "^3.0.0",
+    "topojson": "1.6.9",
     "url": "^0.11.0",
     "van": "0.0.4",
     "velocity-animate": "^1.2.3",

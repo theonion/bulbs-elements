@@ -1,0 +1,12 @@
+bulbs-datamap {
+  display: block;
+
+  path {
+    cursor: pointer;
+    fill: lightgray;
+
+    &.selected {
+      fill: darkgray;
+    }
+  }
+}

@@ -13,3 +13,4 @@ stats.json
 .eslintcache
 coverage/*
 Procfile
+.DS_Store

@@ -2,18 +2,17 @@ import { times } from 'lodash';
 import {
   boostNewContender,
   createRandomStats,
+  createRandomStatsFromRange,
   getLosers,
-  getRandomContender,
   getRandomContenderWithout,
+  maxTotal,
+  minTotal,
   randomizeContenders,
   shuffleContenders,
   sortByTotal,
   swapRandomLeaders,
   swapStats,
   topFiveContenders,
-  minTotal,
-  maxTotal,
-  createRandomStatsFromRange,
 } from './randomizer';
 
 describe('randomizer', () => {
@@ -155,18 +154,6 @@ describe('randomizer', () => {
       let losers = getLosers(contenders);
       expect(losers.length).to.equal(1);
       expect(losers[0].name).to.equal('One');
-    });
-  });
-
-  describe('getRandomContender', () => {
-    it('returns a random contender from the list', () => {
-      let randomContenders = [
-        contenders[0],
-        contenders[1],
-        contenders[2],
-      ];
-      let contender = getRandomContender(randomContenders);
-      expect(randomContenders).to.contain(contender);
     });
   });
 
