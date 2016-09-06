@@ -48,10 +48,10 @@ entries['dist/vendor'] = [
   './lib/bulbs-elements/register',
   './lib/bulbs-elements/store',
   './lib/bulbs-elements/bulbs-element',
-	'./lib/bulbs-elements/util/load-on-demand',
-	'invariant/browser',
-	'./lib/bulbs-elements/util/in-view-monitor',
-	'./lib/bulbs-elements/util/index',
+  './lib/bulbs-elements/util/load-on-demand',
+  'invariant/browser',
+  './lib/bulbs-elements/util/in-view-monitor',
+  './lib/bulbs-elements/util/index',
 ];
 
 elementDirs.forEach(function (dir) {
