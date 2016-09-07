@@ -8,6 +8,7 @@ export default class ReadingListItem {
     invariant(menuElement.dataset.id, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-id');
     invariant(menuElement.dataset.href, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-href');
     invariant(menuElement.dataset.title, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-title');
+    invariant(menuElement.dataset.partialUrl, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-partial-url');
     invariant(this.elementIsReadingListItem(menuElement), 'ReadingListItem(menuElement, articleElement, index): menuElement must be a bulbs-reading-list-item or have a reading-list-item class');
     invariant(!isUndefined(index), 'ReadingListItem(menuElement, articleElement, index): index is undefined');
     invariant(isNumber(index), 'ReadingListItem(menuElement, articleElement, index): index is not a number');
@@ -15,6 +16,7 @@ export default class ReadingListItem {
     this.menuElement = menuElement;
     this.articleElement = articleElement;
     this.href = menuElement.dataset.href;
+    this.partialUrl = menuElement.dataset.partialUrl;
     this.id = menuElement.dataset.id;
     this.index = index;
     this.title = menuElement.dataset.title;
@@ -49,7 +51,7 @@ export default class ReadingListItem {
   loadContent () {
     if (this.shouldLoad()) {
       this.fillContent(this.loadingTemplate);
-      return fetch(this.href)
+      return fetch(this.partialUrl)
         .then(filterBadResponse)
         .then(getResponseText)
         .then(this.handleLoadContentComplete.bind(this))

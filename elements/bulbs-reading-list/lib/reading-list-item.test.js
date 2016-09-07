@@ -14,6 +14,7 @@ describe('ReadingListItem', () => {
     menuElement.dataset.id = '1';
     menuElement.dataset.href = 'test-url';
     menuElement.dataset.title = 'Test Article';
+    menuElement.dataset.partialUrl = 'test-url?partial=true';
     articleElement = document.createElement('bulbs-reading-list-item');
     articleElement.dataset.id = '1';
     articleElement.dataset.href = 'test-url';
@@ -56,8 +57,19 @@ describe('ReadingListItem', () => {
       menuElement = document.createElement('div');
       menuElement.dataset.id = '1';
       menuElement.dataset.title = 'a title';
+      menuElement.dataset.partialUrl = 'url';
       new ReadingListItem(menuElement, articleElement, 0);
     }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement has no data-href');
+  });
+
+  it('throws an error if the menuElement has no data-partial-url', () => {
+    expect(() => {
+      menuElement = document.createElement('div');
+      menuElement.dataset.id = '1';
+      menuElement.dataset.title = 'a title';
+      menuElement.dataset.href = 'http://example.com';
+      new ReadingListItem(menuElement, articleElement, 0);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement has no data-partial-url');
   });
 
   it('throws an error if the menuElement has no data-title', () => {
@@ -73,6 +85,7 @@ describe('ReadingListItem', () => {
     menuElement = document.createElement('div');
     menuElement.dataset.id = '1';
     menuElement.dataset.href = 'a-url';
+    menuElement.dataset.partialUrl = 'a-url?partial=true';
     menuElement.dataset.title = 'Test Article';
     expect(() => {
       new ReadingListItem(menuElement, articleElement, 0);
@@ -85,6 +98,10 @@ describe('ReadingListItem', () => {
 
   it('has an href', () => {
     expect(subject.href).to.equal('test-url');
+  });
+
+  it('has a partialUrl', () => {
+    expect(subject.partialUrl).to.equal('test-url?partial=true');
   });
 
   it('has a title', () => {
@@ -208,12 +225,12 @@ describe('ReadingListItem', () => {
 
     beforeEach(() => {
       body = '<p>Article Content</p>';
-      fetchMock.mock(subject.href, body);
+      fetchMock.mock(subject.partialUrl, body);
     });
 
     it('fetches the content', () => {
       subject.loadContent();
-      expect(fetchMock.called(subject.href)).to.equal(true);
+      expect(fetchMock.called(subject.partialUrl)).to.equal(true);
     });
 
     it('returns a promise', () => {

@@ -15,7 +15,6 @@ export default class ReadingListEventManager {
     if (this.elementIsInsideMenu(evnt.target)) {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
-
       if (this.readingList.isMoreThanOneAhead(item)) {
         this.readingList.redirectToItem(item);
       }

@@ -13,6 +13,7 @@ function createReadingListItems () {
         id,
         href: `#example.com/test-article-${id}`,
         title: `Test Article ${id}`,
+        partialUrl: `#example.com/test-article-${id}?partial=true`,
       },
     });
     let content = createElement('a', {

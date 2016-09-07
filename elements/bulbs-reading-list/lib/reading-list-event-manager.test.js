@@ -25,6 +25,7 @@ describe('ReadingListEventManager', () => {
   afterEach(() => {
     sandbox.restore();
     removeFixtures();
+    window.location.hash = '#';
   });
 
   it('has a reading item list', () => {

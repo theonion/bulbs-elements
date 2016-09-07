@@ -29,6 +29,7 @@ describe('ReadingList', () => {
   afterEach(() => {
     sandbox.restore();
     removeFixtures();
+    window.location.hash = '#';
   });
 
   it('throws an error if no menu element is given', () => {
@@ -151,6 +152,7 @@ describe('ReadingList', () => {
       let articleElement = document.createElement('bulbs-reading-list-item');
       menuElement.dataset.id = '1';
       menuElement.dataset.href = 'test-url';
+      menuElement.dataset.partialUrl = 'test-url?partial=true';
       menuElement.dataset.title = 'Test Article';
       articleElement.dataset.id = '1';
       articleElement.dataset.href = 'test-url';
@@ -378,17 +380,19 @@ describe('ReadingList', () => {
       expect(item.scrollIntoView).to.have.been.called;
     });
 
-    it('sets the push state to the article url', () => {
+    it('sets the push state to the scrubbed article url', () => {
       subject.navigateToItem(item);
       expect(window.location.href).to.match(new RegExp(item.href));
+      expect(window.location.href).to.not.match(/partial=true/);
     });
   });
 
   describe('redirectToItem', () => {
-    it('redirects to the given item', () => {
+    it('redirects to the scrubbed url of the given item', () => {
       let item = subject.itemAtIndex(3);
       subject.redirectToItem(item);
       expect(window.location.href).to.match(new RegExp(item.href));
+      expect(window.location.href).to.not.match(/partial=true/);
     });
   });
 
