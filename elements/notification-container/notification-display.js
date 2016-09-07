@@ -33,7 +33,7 @@ class NotificationDisplay extends BulbsElement {
               </div>
               <div className="notification-body">
                 <p>{ this.props.notification.body }
-                  <a>
+                  <a className="notification-cta">
                     { this.props.notification.clickthrough_cta }
                   </a>
                 </p>
