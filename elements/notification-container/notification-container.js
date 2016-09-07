@@ -65,7 +65,7 @@ class NotificationContainer extends BulbsElement {
   }
 
   notificationsAreActive () {
-    let areOff = JSON.parse(global.sessionStorage.getItem('onion-notifications-off') || 'false');
+    let areOff = JSON.parse(global.localStorage.getItem('onion-notifications-off') || 'false');
     return !areOff;
   }
 

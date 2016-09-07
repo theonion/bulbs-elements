@@ -15,7 +15,7 @@ class NotificationDisplay extends BulbsElement {
     let display = ReactDOM.findDOMNode(this);
     let container = display.closest('notification-container');
     container.remove();
-    window.sessionStorage.setItem('onion-notifications-off', JSON.stringify(true));
+    window.localStorage.setItem('onion-notifications-off', JSON.stringify(true));
   }
 
   render () {
