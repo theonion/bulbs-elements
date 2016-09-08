@@ -93,7 +93,7 @@ describe('<notification-display>', () => {
         const instance = mount(<NotificationContainer {...props}/>).instance();
         instance.handleRequestSuccess(notifications);
         let notificationStorage = JSON.parse(ls.getItem(sessionKey));
-        expect(notificationStorage.ids]).to.eql([1]);
+        expect(notificationStorage.ids).to.eql([1]);
         const new_instance = mount(<NotificationContainer {...props}/>).instance();
         expect(new_instance.state.notificationIds).to.eql([1]);
       });
