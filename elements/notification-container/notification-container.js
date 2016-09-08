@@ -1,5 +1,6 @@
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import NotificationDisplay from './notification-display';
+import { NotificationSession } from './notification-session.js';
 import invariant from 'invariant';
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
@@ -11,11 +12,9 @@ class NotificationContainer extends BulbsElement {
   constructor (props) {
     invariant(!!props.src, 'notification-container component requires a src');
     super(props);
-    let idsFromStorage = JSON.parse(
-      global.localStorage.getItem('onion-local-notification-ids') || '[]'
-    );
+    this.session = new NotificationSession();
     this.state = {
-      localNotificationIds: idsFromStorage,
+      notificationIds: this.session.getItem('ids'),
       notification: null,
     };
   }
@@ -35,19 +34,16 @@ class NotificationContainer extends BulbsElement {
   handleRequestSuccess (response) {
     let notifications = response.results;
     let next = response.next || null;
-
-    if (this.state.localNotificationIds.length > 0) {
+    if (this.state.notificationIds.length > 0) {
       notifications = this.removeLocalNotifications(notifications);
     }
 
     if (notifications.length > 0) {
       this.setState({
         notification: notifications[0],
-        localNotificationIds: this.state.localNotificationIds.concat([notifications[0].id]),
+        notificationIds: this.state.notificationIds.concat([notifications[0].id]),
       });
-      global.localStorage.setItem(
-        'onion-local-notification-ids', JSON.stringify(this.state.localNotificationIds)
-      );
+      this.session.setItem('ids', this.state.notificationIds);
     }
     else if (next) {
       this.requestNotifications(next);
@@ -57,7 +53,7 @@ class NotificationContainer extends BulbsElement {
   removeLocalNotifications (notifications) {
     let withoutLocal = [];
     notifications.forEach((notification) => {
-      if (this.state.localNotificationIds.indexOf(notification.id) === -1) {
+      if (this.state.notificationIds.indexOf(notification.id) === -1) {
         withoutLocal.push(notification);
       }
     });
@@ -65,8 +61,11 @@ class NotificationContainer extends BulbsElement {
   }
 
   notificationsAreActive () {
-    let areOff = JSON.parse(global.localStorage.getItem('onion-notifications-off') || 'false');
-    return !areOff;
+    let active = this.session.getItem('active');
+    if (active === null) {
+      active = true;
+    }
+    return active;
   }
 
   render () {

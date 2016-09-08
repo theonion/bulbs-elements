@@ -1,6 +1,6 @@
-
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import invariant from 'invariant';
+import { NotificationSession } from './notification-session.js';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,13 +9,14 @@ class NotificationDisplay extends BulbsElement {
   constructor (props) {
     invariant(!!props.notification, 'notification-display component requires notification');
     super(props);
+    this.session = new NotificationSession();
   }
 
   deleteThis () {
     let display = ReactDOM.findDOMNode(this);
     let container = display.closest('notification-container');
     container.remove();
-    window.localStorage.setItem('onion-notifications-off', JSON.stringify(true));
+    this.session.setItem('active', false);
   }
 
   render () {
