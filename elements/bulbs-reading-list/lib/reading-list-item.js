@@ -21,7 +21,7 @@ export default class ReadingListItem {
     this.id = menuElement.dataset.id;
     this.index = index;
     this.title = menuElement.dataset.title;
-    this.loadDistanceThreshold = 100;
+    this.loadDistanceThreshold = 300;
     this.fetchPending = false;
     this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
     this.isCurrent = false;

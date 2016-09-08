@@ -97,6 +97,7 @@ export default class ReadingList {
 
   setPreviousItemAsCurrent () {
     this.setCurrentItem(this.previousItem());
+    this.navigateToItem(this.currentItem);
   }
 
   isAtTheEnd () {
