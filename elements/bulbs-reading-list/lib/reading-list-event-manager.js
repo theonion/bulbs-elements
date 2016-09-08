@@ -1,5 +1,7 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
+import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
+import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
   constructor (element) {
@@ -8,6 +10,7 @@ export default class ReadingListEventManager {
     let articles = element.getElementsByTagName('bulbs-reading-list-articles')[0];
 
     this.scrollCalculationIsIdle = true;
+    this.lastKnownScrollPosition = 0;
     this.readingList = new ReadingList(menu, articles);
   }
 
@@ -35,6 +38,26 @@ export default class ReadingListEventManager {
   elementIsInsideMenu (element) {
     invariant(element, 'BulbsReadingList.elementIsInsideMenu(element): element is undefined');
     return !!element.closest('bulbs-reading-list-menu');
+  }
+
+  isScrollingUp (lastOffset, currentOffset) {
+    invariant(!isUndefined(lastOffset), 'ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): lastOffset is undefined');
+    invariant(!isUndefined(currentOffset), 'ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): currentOffset is undefined');
+
+    return lastOffset > currentOffset;
+  }
+
+  isScrollingDown (lastOffset, currentOffset) {
+    invariant(!isUndefined(lastOffset), 'ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): lastOffset is undefined');
+    invariant(!isUndefined(currentOffset), 'ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): currentOffset is undefined');
+
+    return lastOffset < currentOffset;
+  }
+
+  shouldFetchNextItem (offset) {
+    invariant(!isUndefined(offset), 'ReadingListEventManager.shouldFetchNextItem(offset): offset is undefined');
+
+    return this.isScrollingDown(this.lastKnownScrollPosition, offset) && !this.readingList.isFetchingNextItem;
   }
 
   handleDocumentScrolled () {

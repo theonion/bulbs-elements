@@ -40,6 +40,10 @@ describe('ReadingListEventManager', () => {
     expect(subject.scrollCalculationIsIdle).to.equal(true);
   });
 
+  it('has a lastKnownScrollPosition', () => {
+    expect(subject.lastKnownScrollPosition).to.equal(0);
+  });
+
   describe('handleMenuItemClick', () => {
     let eventStub;
     beforeEach(() => {
@@ -135,7 +139,6 @@ describe('ReadingListEventManager', () => {
 
   describe('processScrollPosition', () => {
     beforeEach(() => {
-      sandbox.stub(subject.readingList, 'updateProgress');
       sandbox.stub(subject.readingList, 'loadNextItem');
     });
 
@@ -150,10 +153,73 @@ describe('ReadingListEventManager', () => {
       subject.processScrollPosition();
       expect(subject.readingList.loadNextItem).to.not.have.been.called;
     });
+  });
 
-    it('updates the reading list progress', () => {
-      subject.processScrollPosition();
-      expect(subject.readingList.updateProgress).to.have.been.called;
+  describe('shouldFetchNextItem', () => {
+    it('requires an offset', () => {
+      expect(() => {
+        subject.shouldFetchNextItem();
+      }).to.throw('ReadingListEventManager.shouldFetchNextItem(offset): offset is undefined');
+    });
+
+    it('returns true if scrolling down and not fetching an article', () => {
+      sandbox.stub(subject, 'isScrollingDown').returns(true);
+      expect(subject.shouldFetchNextItem(0)).to.equal(true);
+    });
+
+    it('returns false if not scrolling down', () => {
+      sandbox.stub(subject, 'isScrollingDown').returns(false);
+      expect(subject.shouldFetchNextItem(0)).to.equal(false);
+    });
+
+    it('returns false if already fetching an article', () => {
+      sandbox.stub(subject, 'isScrollingDown').returns(true);
+      subject.readingList.isFetchingNextItem = true;
+      expect(subject.shouldFetchNextItem(0)).to.equal(false);
+    });
+  });
+
+  describe('isScrollingUp', () => {
+    it('requires a lastOffset', () => {
+      expect(() => {
+        subject.isScrollingUp();
+      }).to.throw('ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): lastOffset is undefined');
+    });
+
+    it('requires a currentOffset', () => {
+      expect(() => {
+        subject.isScrollingUp(0);
+      }).to.throw('ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): currentOffset is undefined');
+    });
+
+    it('returns true if the lastOffset is greater than the currentOffset', () => {
+      expect(subject.isScrollingUp(1, 0)).to.equal(true);
+    });
+
+    it('returns false if the lastOffset is less than the currentOffset', () => {
+      expect(subject.isScrollingUp(0, 1)).to.equal(false);
+    });
+  });
+
+  describe('isScrollingDown', () => {
+    it('requires a lastOffset', () => {
+      expect(() => {
+        subject.isScrollingDown();
+      }).to.throw('ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): lastOffset is undefined');
+    });
+
+    it('requires a currentOffset', () => {
+      expect(() => {
+        subject.isScrollingDown(0);
+      }).to.throw('ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): currentOffset is undefined');
+    });
+
+    it('returns false if the lastOffset is greater than the currentOffset', () => {
+      expect(subject.isScrollingDown(1, 0)).to.equal(false);
+    });
+
+    it('returns true if the lastOffset is less than the currentOffset', () => {
+      expect(subject.isScrollingDown(0, 1)).to.equal(true);
     });
   });
 });

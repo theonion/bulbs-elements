@@ -120,7 +120,8 @@ export default class ReadingList {
     if (this.shouldLoadNextItem(nextItem)) {
       this.isFetchingNextItem = true;
       nextItem.loadContent()
-        .then(this.handleLoadNextArticleComplete.bind(this));
+        .then(this.handleLoadNextArticleComplete.bind(this))
+        .catch((reason) => { console.log(reason); });
     }
     else {
       this.isFetchingNextItem = false;
