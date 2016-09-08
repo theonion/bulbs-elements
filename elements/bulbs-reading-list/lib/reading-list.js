@@ -91,6 +91,14 @@ export default class ReadingList {
     return this.itemAtIndex(this.currentItem.index + 1);
   }
 
+  previousItem () {
+    return this.itemAtIndex(this.currentItem.index - 1);
+  }
+
+  setPreviousItemAsCurrent () {
+    this.setCurrentItem(this.previousItem());
+  }
+
   isAtTheEnd () {
     return this.currentItem === this.lastItem();
   }

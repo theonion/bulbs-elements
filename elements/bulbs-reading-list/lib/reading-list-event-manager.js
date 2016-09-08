@@ -60,10 +60,30 @@ export default class ReadingListEventManager {
     return this.isScrollingDown(this.lastKnownScrollPosition, offset) && !this.readingList.isFetchingNextItem;
   }
 
+  shouldSetPreviousItemToCurrent (offset) { // eslint-disable-line consistent-return
+    if (this.isScrollingUp(this.lastKnownScrollPosition, offset)) {
+      let windowDimensions = getWindowDimensions();
+      let articleBounds = this.readingList.currentItem.articleElement.getBoundingClientRect();
+      if (articleBounds.top > windowDimensions.height) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+
   handleDocumentScrolled () {
-    if (!this.readingList.isFetchingNextItem) {
+    let offset = getScrollOffset();
+
+    if (this.shouldFetchNextItem(offset.y)) {
       window.requestAnimationFrame(this.processScrollPosition.bind(this));
     }
+
+    if (this.shouldSetPreviousItemToCurrent(offset.y)) {
+      this.readingList.setPreviousItemAsCurrent();
+    }
+
+    this.lastKnownScrollPosition = offset.y;
   }
 
   processScrollPosition () {
