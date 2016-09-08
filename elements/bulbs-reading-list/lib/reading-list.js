@@ -17,7 +17,7 @@ export default class ReadingList {
 
     let elementPairs = this.getReadingListElementPairs(menu, articles);
     this.items = map(elementPairs, this.createReadingListItem);
-    this.currentItem = this.firstItem();
+    this.setCurrentItem(this.firstItem());
     this.isFetchingNextItem = false;
   }
 

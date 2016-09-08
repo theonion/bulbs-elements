@@ -132,4 +132,28 @@ describe('ReadingListEventManager', () => {
       expect(subject.getClickedMenuItem(itemElement)).to.equal(item);
     });
   });
+
+  describe('processScrollPosition', () => {
+    beforeEach(() => {
+      sandbox.stub(subject.readingList, 'updateProgress');
+      sandbox.stub(subject.readingList, 'loadNextItem');
+    });
+
+    it('loads more items if the reading list has more items', () => {
+      sandbox.stub(subject.readingList, 'hasMoreItems').returns(true);
+      subject.processScrollPosition();
+      expect(subject.readingList.loadNextItem).to.have.been.called;
+    });
+
+    it('does not load more items if the reading list has no more items', () => {
+      sandbox.stub(subject.readingList, 'hasMoreItems').returns(false);
+      subject.processScrollPosition();
+      expect(subject.readingList.loadNextItem).to.not.have.been.called;
+    });
+
+    it('updates the reading list progress', () => {
+      subject.processScrollPosition();
+      expect(subject.readingList.updateProgress).to.have.been.called;
+    });
+  });
 });

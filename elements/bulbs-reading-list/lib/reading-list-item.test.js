@@ -2,6 +2,7 @@
 import '../components/bulbs-reading-list-item';
 import ReadingListItem from './reading-list-item';
 import fetchMock from 'fetch-mock';
+
 describe('ReadingListItem', () => {
   let sandbox;
   let subject;
@@ -31,6 +32,12 @@ describe('ReadingListItem', () => {
     expect(() => {
       new ReadingListItem();
     }).to.throw('ReadingListItem(menuElement, articleElement, index): menuElement is undefined');
+  });
+
+  it('throws an error when no articleElement is provided', () => {
+    expect(() => {
+      new ReadingListItem(menuElement);
+    }).to.throw('ReadingListItem(menuElement, articleElement, index): articleElement is undefined');
   });
 
   it('throws an error if no index is given', () => {

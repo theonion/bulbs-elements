@@ -20,6 +20,7 @@ describe('<bulbs-quiz>', () => {
 
   afterEach(() => {
     sandbox.restore();
+    document.body.removeChild(fixtureContainer);
   });
 
   describe('TestQuiz', () => {

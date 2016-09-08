@@ -5,13 +5,14 @@ import { filterBadResponse, getResponseText } from 'bulbs-elements/util';
 export default class ReadingListItem {
   constructor (menuElement, articleElement, index) {
     invariant(menuElement, 'ReadingListItem(menuElement, articleElement, index): menuElement is undefined');
+    invariant(articleElement, 'ReadingListItem(menuElement, articleElement, index): articleElement is undefined');
+    invariant(!isUndefined(index), 'ReadingListItem(menuElement, articleElement, index): index is undefined');
+    invariant(isNumber(index), 'ReadingListItem(menuElement, articleElement, index): index is not a number');
     invariant(menuElement.dataset.id, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-id');
     invariant(menuElement.dataset.href, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-href');
     invariant(menuElement.dataset.title, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-title');
     invariant(menuElement.dataset.partialUrl, 'ReadingListItem(menuElement, articleElement, index): menuElement has no data-partial-url');
     invariant(this.elementIsReadingListItem(menuElement), 'ReadingListItem(menuElement, articleElement, index): menuElement must be a bulbs-reading-list-item or have a reading-list-item class');
-    invariant(!isUndefined(index), 'ReadingListItem(menuElement, articleElement, index): index is undefined');
-    invariant(isNumber(index), 'ReadingListItem(menuElement, articleElement, index): index is not a number');
 
     this.menuElement = menuElement;
     this.articleElement = articleElement;
