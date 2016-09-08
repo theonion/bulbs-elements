@@ -121,7 +121,7 @@ export default class ReadingList {
       this.isFetchingNextItem = true;
       nextItem.loadContent()
         .then(this.handleLoadNextArticleComplete.bind(this))
-        .catch((reason) => { console.log(reason); });
+        .catch((reason) => { /* console.log(reason); */ }); // eslint-disable-line
     }
     else {
       this.isFetchingNextItem = false;
