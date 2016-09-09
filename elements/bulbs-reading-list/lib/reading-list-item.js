@@ -1,6 +1,10 @@
 import { isUndefined, isNumber } from 'lodash';
 import invariant from 'invariant';
-import { filterBadResponse, getResponseText } from 'bulbs-elements/util';
+import {
+  filterBadResponse,
+  getResponseText,
+  getWindowDimensions,
+} from 'bulbs-elements/util';
 
 export default class ReadingListItem {
   constructor (menuElement, articleElement, index) {
@@ -21,14 +25,11 @@ export default class ReadingListItem {
     this.id = menuElement.dataset.id;
     this.index = index;
     this.title = menuElement.dataset.title;
-    this.loadDistanceThreshold = 300;
+    this.loadDistanceThreshold = 200;
+    this.isLoaded = false;
     this.fetchPending = false;
     this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
     this.isCurrent = false;
-  }
-
-  isLoaded () {
-    return !!this.articleElement.children.length;
   }
 
   elementIsReadingListItem (element) {
@@ -63,11 +64,12 @@ export default class ReadingListItem {
   }
 
   shouldLoad () {
-    return !(this.isLoaded() || this.fetchPending);
+    return !(this.isLoaded || this.fetchPending);
   }
 
   handleLoadContentComplete (content) {
     this.fillContent(content);
+    this.isLoaded = true;
     return new Promise((resolve) => resolve(this));
   }
 
@@ -80,8 +82,16 @@ export default class ReadingListItem {
   }
 
   isWithinViewThreshold (scrollPosition = 0) {
-    let difference = this.articleElement.offsetTop - scrollPosition;
-    return difference <= this.loadDistanceThreshold;
+    let difference = this.articleElement.getBoundingClientRect().top - this.loadDistanceThreshold;
+
+    return difference <= scrollPosition;
+  }
+
+  isAlmostFinished () {
+    let articleDimensions = this.articleElement.getBoundingClientRect();
+    let distance = articleDimensions.bottom + this.loadDistanceThreshold;
+
+    return distance <= getWindowDimensions().height;
   }
 
   scrollIntoView () {

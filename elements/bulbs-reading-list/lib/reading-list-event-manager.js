@@ -18,10 +18,11 @@ export default class ReadingListEventManager {
     if (this.elementIsInsideMenu(evnt.target)) {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
+
       if (this.readingList.isMoreThanOneAhead(item)) {
         this.readingList.redirectToItem(item);
       }
-      else if (item.isLoaded()) {
+      else if (item.isLoaded) {
         this.readingList.navigateToItem(item);
       }
       else if (this.readingList.isNextItem(item)) {
@@ -64,11 +65,8 @@ export default class ReadingListEventManager {
     if (this.isScrollingUp(this.lastKnownScrollPosition, offset)) {
       let windowDimensions = getWindowDimensions();
       let articleBounds = this.readingList.currentItem.articleElement.getBoundingClientRect();
-      if (articleBounds.top > windowDimensions.height) {
-        return true;
-      }
 
-      return false;
+      return articleBounds.top > windowDimensions.height;
     }
   }
 

@@ -69,7 +69,7 @@ describe('ReadingListEventManager', () => {
       it('navigates to the item', () => {
         let item = subject.readingList.itemAtIndex(1);
         sandbox.stub(subject.readingList, 'navigateToItem');
-        sandbox.stub(item, 'isLoaded').returns(true);
+        item.isLoaded = true;
         eventStub.target = item.menuElement;
         subject.handleMenuItemClick(eventStub);
         expect(subject.readingList.navigateToItem).to.have.been.called;
@@ -79,7 +79,7 @@ describe('ReadingListEventManager', () => {
     context('when the article is not loaded', () => {
       it('loads the next article if the article is next', () => {
         let item = subject.readingList.itemAtIndex(1);
-        sandbox.stub(item, 'isLoaded').returns(false);
+        item.isLoaded = false;
         sandbox.stub(subject.readingList, 'loadNextItem');
         sandbox.stub(subject.readingList, 'isNextItem').returns(true);
         eventStub.target = item.menuElement;

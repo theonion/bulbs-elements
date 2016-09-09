@@ -97,7 +97,6 @@ export default class ReadingList {
 
   setPreviousItemAsCurrent () {
     this.setCurrentItem(this.previousItem());
-    this.navigateToItem(this.currentItem);
   }
 
   isAtTheEnd () {
@@ -120,12 +119,13 @@ export default class ReadingList {
     return !!(
       !this.hasPendingFetch() &&
       nextItem &&
-      nextItem.isWithinViewThreshold(window.scrollY)
+      this.currentItem.isAlmostFinished()
     );
   }
 
   loadNextItem () {
     let nextItem = this.nextItem();
+
     if (this.shouldLoadNextItem(nextItem)) {
       this.isFetchingNextItem = true;
       nextItem.loadContent()
@@ -141,9 +141,9 @@ export default class ReadingList {
     window.location.href = item.href;
   }
 
-  handleLoadNextArticleComplete (article) {
+  handleLoadNextArticleComplete (nextItem) {
+    this.setCurrentItem(nextItem);
     this.isFetchingNextItem = false;
-    this.navigateToItem(article);
   }
 
   navigateToItem (item) {

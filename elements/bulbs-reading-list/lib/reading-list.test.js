@@ -295,8 +295,8 @@ describe('ReadingList', () => {
       expect(subject.shouldLoadNextItem()).to.equal(false);
     });
 
-    it('returns false when the next item is not within the view threshold', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
+    it('returns false when the item is not almost finished', () => {
+      sandbox.stub(subject.currentItem, 'isAlmostFinished').returns(false);
       expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
   });
@@ -311,18 +311,14 @@ describe('ReadingList', () => {
       });
 
       it('sets the isFetchingNextItem flag to true', () => {
+        nextArticle.isLoaded = false;
         sandbox.stub(subject, 'handleLoadNextArticleComplete');
         subject.loadNextItem();
         expect(subject.isFetchingNextItem).to.equal(true);
       });
 
-      it('does nothing if the article is not within the view threshold', () => {
-        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(false);
-        subject.loadNextItem();
-        expect(nextArticle.loadContent).to.not.have.been.called;
-      });
-
       it('loads the article if within view threshold', () => {
+        nextArticle.isLoaded = false;
         sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
         subject.loadNextItem();
         expect(nextArticle.loadContent).to.have.been.called;
@@ -353,12 +349,6 @@ describe('ReadingList', () => {
       subject.isFetchingNextItem = true;
       subject.handleLoadNextArticleComplete(article);
       expect(subject.isFetchingNextItem).to.equal(false);
-    });
-
-    it('scrolls the article into view', () => {
-      sandbox.stub(article, 'scrollIntoView');
-      subject.handleLoadNextArticleComplete(article);
-      expect(article.scrollIntoView).to.have.been.called;
     });
   });
 

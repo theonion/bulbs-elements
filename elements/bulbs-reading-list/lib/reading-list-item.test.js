@@ -143,11 +143,8 @@ describe('ReadingListItem', () => {
     expect(subject.isCurrent).to.equal(false);
   });
 
-  describe('isLoaded', () => {
-    it('returns true if the item has article content', () => {
-      subject.fillContent('<p>Not empty</p>');
-      expect(subject.isLoaded()).to.equal(true);
-    });
+  it('has an isLoaded flag', () => {
+    expect(subject.isLoaded).to.equal(false);
   });
 
   describe('elementIsReadingListItem', () => {
@@ -253,7 +250,7 @@ describe('ReadingListItem', () => {
 
     context('when the article is already loaded', () => {
       beforeEach(() => {
-        sandbox.stub(subject, 'isLoaded').returns(true);
+        subject.isLoaded = true;
       });
 
       it('does not fetch the article', () => {
@@ -321,12 +318,12 @@ describe('ReadingListItem', () => {
 
   describe('shouldLoad', () => {
     it('returns false if the article is already loaded', () => {
-      sandbox.stub(subject, 'isLoaded').returns(true);
+      subject.isLoaded = true;
       expect(subject.shouldLoad()).to.equal(false);
     });
 
     it('returns false if there is a current fetch pending', () => {
-      sandbox.stub(subject, 'isLoaded').returns(false);
+      subject.isLoaded = false;
       subject.fetchPending = true;
       expect(subject.shouldLoad()).to.equal(false);
     });
