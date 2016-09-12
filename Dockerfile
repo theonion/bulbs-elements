@@ -16,7 +16,7 @@ ENV PATH /bulbs/node_modules/.bin:$PATH
 
 # Only build Bower on config change
 ADD bower.json /bulbs/
-RUN bower install --config.interactive=false install --allow-root --force-latest
+RUN bower install --config.interactive=false install --allow-root
 
 ADD . /bulbs
 
