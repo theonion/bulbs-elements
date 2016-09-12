@@ -16,7 +16,7 @@ WORKDIR /bulbs
 
 # Only build NPM on config change
 ADD package.json /bulbs/
-RUN npm install
+RUN npm --loglevel=warn install
 
 ENV PATH /bulbs/node_modules/.bin:$PATH
 
