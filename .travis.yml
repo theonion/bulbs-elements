@@ -13,7 +13,6 @@ env:
   #- RUNNER=scripts/ci BROWSER=bs_firefox_47
   #- RUNNER=scripts/ci BROWSER=bs_safari_8
   #- RUNNER=scripts/ci BROWSER=bs_ie_11
-  - RUNNER=scripts/lint
   # Jun 26, 2016 (looks like the chrome runner is crashing on travis)
   # - RUNNER=scripts/report-coverage
   global:
