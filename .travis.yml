@@ -6,7 +6,6 @@ before_script:
     - scripts/docker-build
 script:
     - docker run -e BROWSER_STACK_USERNAME=${BROWSER_STACK_USERNAME} -e BROWSER_STACK_ACCESS_KEY=${BROWSER_STACK_ACCESS_KEY} bulbs-elements scripts/ci
-    - docker run bulbs-elements scripts/lint
 env:
   global:
   - secure: XxbtSW9aolp50p4opm5VRjY3v3xs5+yy9jylCDaFBw8CHNoAye/huhf0EoUYeiBTPS8mdM7ZMFlzBn97TSAHPnIak0/u0Js2B7trQOTLRHVbaW7/jXlgZyCJ8Ps40AF1UuJgSgR0WX1Zo53V0T1wunB/1hk/JtCyP3plZoS5EAWuMwDuQJlvM/UAjy9KcjJ6yD3Mzg8GW3vyWVybPx73aObFMf86B92TnoAHcSm5/ulx5s2Tj+O5XsDmu5Kj+u+Vqc+emr0ScIPTjv2H6i7qAyLxPBiRTnF4Fr7NfxjtaQwdgiqJ7w0BcJ+ZkIEd/CIU8NwRp+WTBqZT4485keJxLs6r6cYNx/AOJNyfO9YNx55Ut86kQIL3RdD6ys/6PFgLdVw/GV8xJF94czztuCFn+9IrRF7BT39nvDhb7o+egpCFKVtV7SyMThfo5gRA5u7kHEY3BgKOYkxfN07mSB4IVrbSqE4PiE0VxN0cIC9w0GqwSfDhS1gaLaWUzxESC3inAeqZ1DYzwCL3SVfKJaXOC2bWYVhXN0TOEetndU6nyWClbNazeLjNWPEX4wdvn60hmp7Ewz2gvtSUjMJfZx3ls4f4l/3vAITknEg+u0TjlKpCCT/a5B7uWb8qYGJKYCDb69caMnsTj5/gz/OFH009XIRIf2nOv98gJYzAj+FZTV4=

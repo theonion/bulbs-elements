@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-
+#!/bin/sh
+set -e
 
 # List of browsers to test
 BROWSERS=(
@@ -12,3 +12,6 @@ BROWSERS=(
 for B in ${BROWSERS[@]}; do
     BROWSER=$B ./node_modules/.bin/karma start karma.devicelab.js --single-run
 done
+
+# Lint
+npm run lint
