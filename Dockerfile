@@ -1,4 +1,4 @@
-FROM node:5.12
+FROM node:6
 MAINTAINER Onion Tech <webtech@theonion.com>
 
 RUN apt-get update \
