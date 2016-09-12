@@ -11,21 +11,20 @@ RUN apt-get update \
 #RUN add-apt-repository ppa:ubuntu-toolchain-r/test
 #RUN apt-get install -y g++-4.8
 
-# TODO: Better folder name than "project"
-
-RUN mkdir -p /project
-WORKDIR /project
+RUN mkdir -p /bulbs
+WORKDIR /bulbs
 
 # Only build NPM on config change
-ADD package.json /project/
+ADD package.json /bulbs/
 RUN npm install
 
-ENV PATH /project/node_modules/.bin:$PATH
+ENV PATH /bulbs/node_modules/.bin:$PATH
 
 # Only build Bower on config change
-ADD bower.json /project/
+ADD bower.json /bulbs/
 RUN bower install --config.interactive=false install --allow-root --force-latest
 
-ADD . /project
+ADD . /bulbs
 
-# TODO: webpack build? (so don't need to run for every test)
+# TODO: Move to top
+# RUN apt-get install xvfb
