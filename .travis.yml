@@ -3,7 +3,7 @@ sudo: required
 services:
     - docker
 before_script:
-    - docker build --pull --tag bulbs-elements .
+    - scripts/docker-build
 script:
     - docker run -e BROWSER_STACK_USERNAME=${BROWSER_STACK_USERNAME} -e BROWSER_STACK_ACCESS_KEY=${BROWSER_STACK_ACCESS_KEY} bulbs-elements scripts/ci
     - docker run bulbs-elements scripts/lint
