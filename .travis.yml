@@ -5,7 +5,7 @@ services:
 before_script:
     - docker build -t bulbs-elements .
 script:
-    - docker run -e BROWSER=${BROWSER} -e BROWSER_STACK_USERNAME=${BROWSER_STACK_USERNAME} -e BROWSER_STACK_ACCESS_KEY=${BROWSER_STACK_ACCESS_KEY} bulbs-elements scripts/ci
+    - docker run -e BROWSER_STACK_USERNAME=${BROWSER_STACK_USERNAME} -e BROWSER_STACK_ACCESS_KEY=${BROWSER_STACK_ACCESS_KEY} bulbs-elements scripts/ci
     - docker run bulbs-elements scripts/lint
 env:
   global:
