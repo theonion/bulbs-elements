@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
-import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
+import { getScrollOffset } from 'bulbs-elements/util';
 import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
@@ -31,14 +31,14 @@ export default class ReadingListEventManager {
     }
   }
 
-  getClickedMenuItem (element) {
-    let id = element.closest('bulbs-reading-list-item').dataset.id;
-    return this.readingList.getListItemById(id);
-  }
-
   elementIsInsideMenu (element) {
     invariant(element, 'BulbsReadingList.elementIsInsideMenu(element): element is undefined');
     return !!element.closest('bulbs-reading-list-menu');
+  }
+
+  getClickedMenuItem (element) {
+    let id = element.closest('bulbs-reading-list-item').dataset.id;
+    return this.readingList.getListItemById(id);
   }
 
   isScrollingUp (lastOffset, currentOffset) {
@@ -55,38 +55,21 @@ export default class ReadingListEventManager {
     return lastOffset < currentOffset;
   }
 
-  shouldFetchNextItem (offset) {
-    invariant(!isUndefined(offset), 'ReadingListEventManager.shouldFetchNextItem(offset): offset is undefined');
-
-    return this.isScrollingDown(this.lastKnownScrollPosition, offset) && !this.readingList.isFetchingNextItem;
-  }
-
-  shouldSetPreviousItemToCurrent (offset) { // eslint-disable-line consistent-return
-    if (this.isScrollingUp(this.lastKnownScrollPosition, offset)) {
-      let windowDimensions = getWindowDimensions();
-      let articleBounds = this.readingList.currentItem.articleElement.getBoundingClientRect();
-
-      return articleBounds.top > windowDimensions.height;
-    }
-  }
-
   handleDocumentScrolled () {
-    let offset = getScrollOffset();
-
-    if (this.shouldFetchNextItem(offset.y)) {
-      window.requestAnimationFrame(this.processScrollPosition.bind(this));
-    }
-
-    if (this.shouldSetPreviousItemToCurrent(offset.y)) {
-      this.readingList.setPreviousItemAsCurrent();
-    }
-
-    this.lastKnownScrollPosition = offset.y;
+    window.requestAnimationFrame(this.processScrollPosition.bind(this));
   }
 
   processScrollPosition () {
-    if (this.readingList.hasMoreItems()) {
-      this.readingList.loadNextItem();
+    let offset = getScrollOffset();
+
+    if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
+      this.readingList.scrollDown();
     }
+
+    if (this.isScrollingUp(this.lastKnownScrollPosition, offset.y)) {
+      this.readingList.scrollUp();
+    }
+
+    this.lastKnownScrollPosition = offset.y;
   }
 }

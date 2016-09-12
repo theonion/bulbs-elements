@@ -21,18 +21,12 @@ export default class ReadingList {
     this.isFetchingNextItem = false;
   }
 
-  createReadingListItem (elements, index) {
-    return new ReadingListItem(elements.menuItem, elements.article, index);
-  }
-
   getReadingListElementPairs (menu, articles) {
     return map(menu.children, this.getArticleElementForMenuItemElement(articles.children));
   }
 
-  findArticleElementForMenuItemElement (articles, menuItemElement) {
-    let articleElement = find(articles, (article) => article.dataset.id === menuItemElement.dataset.id);
-    invariant(articleElement, `ReadingList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${menuItemElement.dataset.id}" has no corresponding article`);
-    return articleElement;
+  createReadingListItem (elements, index) {
+    return new ReadingListItem(elements.menuItem, elements.article, index);
   }
 
   getArticleElementForMenuItemElement (articles) {
@@ -45,6 +39,12 @@ export default class ReadingList {
     }.bind(this);
   }
 
+  findArticleElementForMenuItemElement (articles, menuItemElement) {
+    let articleElement = find(articles, (article) => article.dataset.id === menuItemElement.dataset.id);
+    invariant(articleElement, `ReadingList.findArticleElementForMenuItemElement(articles, menuItem): menu item element with data-id="${menuItemElement.dataset.id}" has no corresponding article`);
+    return articleElement;
+  }
+
   firstItem () {
     return minBy(this.items, 'index');
   }
@@ -53,8 +53,12 @@ export default class ReadingList {
     return maxBy(this.items, 'index');
   }
 
-  isFirstItem (item) {
-    return item === this.firstItem();
+  nextItem () {
+    return this.itemAtIndex(this.currentItem.index + 1);
+  }
+
+  previousItem () {
+    return this.itemAtIndex(this.currentItem.index - 1);
   }
 
   itemAtIndex (index) {
@@ -67,13 +71,8 @@ export default class ReadingList {
     return find(this.items, (item) => item.id === id);
   }
 
-  setCurrentItem (item) {
-    invariant(item, 'ReadingList.setCurrentItem(item): item is undefined');
-    invariant(includes(this.items, item), 'ReadingList.setCurrentItem(item): item is not in reading list');
-    this.items.forEach((li) => {
-      (li === item) ? li.setAsCurrent() : li.setAsNotCurrent();
-    });
-    this.currentItem = item;
+  isFirstItem (item) {
+    return item === this.firstItem();
   }
 
   isNextItem (listItem) {
@@ -85,18 +84,6 @@ export default class ReadingList {
   isBeforeCurrentItem (listItem) {
     invariant(listItem, 'BulbsReadingList.isBeforeCurrentItem(listItem): listItem is undefined');
     return listItem.index < this.currentItem.index;
-  }
-
-  nextItem () {
-    return this.itemAtIndex(this.currentItem.index + 1);
-  }
-
-  previousItem () {
-    return this.itemAtIndex(this.currentItem.index - 1);
-  }
-
-  setPreviousItemAsCurrent () {
-    this.setCurrentItem(this.previousItem());
   }
 
   isAtTheEnd () {
@@ -111,21 +98,61 @@ export default class ReadingList {
     return !this.isAtTheEnd();
   }
 
+  setCurrentItem (item) {
+    invariant(item, 'ReadingList.setCurrentItem(item): item is undefined');
+    invariant(includes(this.items, item), 'ReadingList.setCurrentItem(item): item is not in reading list');
+    this.items.forEach((li) => {
+      (li === item) ? li.setAsCurrent() : li.setAsNotCurrent();
+    });
+    this.currentItem = item;
+    window.history.pushState(null, item.title, item.href);
+  }
+
+  setPreviousItemAsCurrent () {
+    let previousItem = this.previousItem();
+    if (previousItem) { this.setCurrentItem(previousItem); }
+  }
+
+  setNextItemAsCurrent () {
+    let nextItem = this.nextItem();
+    if (nextItem) { this.setCurrentItem(nextItem); }
+  }
+
   hasPendingFetch () {
     return some(this.items, (item) => item.fetchPending);
+  }
+
+  scrollUp () {
+    this.updateItemProgress();
+    if (this.currentItem.progress === 0) {
+      this.setPreviousItemAsCurrent();
+    }
+  }
+
+  scrollDown () {
+    this.updateItemProgress();
+    let nextItem = this.nextItem();
+
+    if (this.shouldLoadNextItem(nextItem)) {
+      this.loadNextItem();
+    }
+
+    if (this.currentItem.progress === 100) {
+      this.setNextItemAsCurrent();
+    }
   }
 
   shouldLoadNextItem (nextItem) {
     return !!(
       !this.hasPendingFetch() &&
       nextItem &&
-      this.currentItem.isAlmostFinished()
+      !nextItem.isLoaded &&
+      nextItem.isNearlyInView()
     );
   }
 
   loadNextItem () {
     let nextItem = this.nextItem();
-
     if (this.shouldLoadNextItem(nextItem)) {
       this.isFetchingNextItem = true;
       nextItem.loadContent()
@@ -141,14 +168,16 @@ export default class ReadingList {
     window.location.href = item.href;
   }
 
-  handleLoadNextArticleComplete (nextItem) {
-    this.setCurrentItem(nextItem);
+  handleLoadNextArticleComplete () {
     this.isFetchingNextItem = false;
   }
 
   navigateToItem (item) {
     this.setCurrentItem(item);
     item.scrollIntoView();
-    window.history.pushState(null, item.title, item.href);
+  }
+
+  updateItemProgress () {
+    this.items.forEach((item) => item.updateProgress());
   }
 }

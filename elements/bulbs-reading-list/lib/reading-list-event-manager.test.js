@@ -139,43 +139,28 @@ describe('ReadingListEventManager', () => {
 
   describe('processScrollPosition', () => {
     beforeEach(() => {
-      sandbox.stub(subject.readingList, 'loadNextItem');
+      sandbox.stub(subject.readingList, 'scrollDown');
+      sandbox.stub(subject.readingList, 'scrollUp');
+      sandbox.stub(subject.readingList, 'updateItemProgress');
     });
 
-    it('loads more items if the reading list has more items', () => {
-      sandbox.stub(subject.readingList, 'hasMoreItems').returns(true);
-      subject.processScrollPosition();
-      expect(subject.readingList.loadNextItem).to.have.been.called;
-    });
-
-    it('does not load more items if the reading list has no more items', () => {
-      sandbox.stub(subject.readingList, 'hasMoreItems').returns(false);
-      subject.processScrollPosition();
-      expect(subject.readingList.loadNextItem).to.not.have.been.called;
-    });
-  });
-
-  describe('shouldFetchNextItem', () => {
-    it('requires an offset', () => {
-      expect(() => {
-        subject.shouldFetchNextItem();
-      }).to.throw('ReadingListEventManager.shouldFetchNextItem(offset): offset is undefined');
-    });
-
-    it('returns true if scrolling down and not fetching an article', () => {
+    it('scrolls the reading list down when scrolling down', () => {
       sandbox.stub(subject, 'isScrollingDown').returns(true);
-      expect(subject.shouldFetchNextItem(0)).to.equal(true);
+      subject.processScrollPosition();
+      expect(subject.readingList.scrollDown).to.have.been.called;
     });
 
-    it('returns false if not scrolling down', () => {
-      sandbox.stub(subject, 'isScrollingDown').returns(false);
-      expect(subject.shouldFetchNextItem(0)).to.equal(false);
+    it('scrolls the reading list up when scrolling up', () => {
+      sandbox.stub(subject, 'isScrollingUp').returns(true);
+      subject.processScrollPosition();
+      expect(subject.readingList.scrollUp).to.have.been.called;
     });
 
-    it('returns false if already fetching an article', () => {
-      sandbox.stub(subject, 'isScrollingDown').returns(true);
-      subject.readingList.isFetchingNextItem = true;
-      expect(subject.shouldFetchNextItem(0)).to.equal(false);
+    it('sets the lastKnownScrollPosition', () => {
+      let position = 9999999;
+      subject.lastKnownScrollPosition = position;
+      subject.processScrollPosition();
+      expect(subject.lastKnownScrollPosition).to.not.equal(position);
     });
   });
 

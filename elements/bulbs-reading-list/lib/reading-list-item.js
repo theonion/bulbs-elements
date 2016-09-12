@@ -3,6 +3,7 @@ import invariant from 'invariant';
 import {
   filterBadResponse,
   getResponseText,
+  getScrollOffset,
   getWindowDimensions,
 } from 'bulbs-elements/util';
 
@@ -22,10 +23,13 @@ export default class ReadingListItem {
     this.articleElement = articleElement;
     this.href = menuElement.dataset.href;
     this.partialUrl = menuElement.dataset.partialUrl;
+    this.progressBar = menuElement.getElementsByTagName('progress-bar')[0];
+    this.progress = 0;
     this.id = menuElement.dataset.id;
     this.index = index;
     this.title = menuElement.dataset.title;
     this.loadDistanceThreshold = 200;
+    this.readDistanceOffset = 200;
     this.isLoaded = false;
     this.fetchPending = false;
     this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
@@ -87,14 +91,45 @@ export default class ReadingListItem {
     return difference <= scrollPosition;
   }
 
-  isAlmostFinished () {
-    let articleDimensions = this.articleElement.getBoundingClientRect();
-    let distance = articleDimensions.bottom + this.loadDistanceThreshold;
+  isNearlyInView () {
+    let { bottom } = this.articleElement.getBoundingClientRect();
+    let distance = getWindowDimensions().height + this.loadDistanceThreshold;
 
-    return distance <= getWindowDimensions().height;
+    return bottom < distance;
   }
 
   scrollIntoView () {
     this.articleElement.scrollIntoView();
+  }
+
+  calculateProgress (scrollPosition, articleDimensions) {
+    let percentage = 0;
+    let start = 0;
+    let height = Math.abs(Math.floor(articleDimensions.height)) - this.readDistanceOffset;
+
+    let top = articleDimensions.top;
+
+    if (articleDimensions.top <= start && height > 0) {
+      let position = top;
+      if (position < 0) {
+        position = position * -1;
+      }
+      percentage = position / height * 100;
+    }
+    return Math.abs(Math.floor(percentage));
+  }
+
+  setProgress (progress) {
+    this.progress = progress;
+    this.progressBar.setAttribute('progress', this.progress);
+  }
+
+  updateProgress () {
+    let articleDimensions = this.articleElement.getBoundingClientRect();
+    let scrollPosition = getScrollOffset();
+    let calculatedProgress = this.calculateProgress(scrollPosition, articleDimensions);
+    let progress = calculatedProgress > 100 ? 100 : calculatedProgress;
+
+    this.setProgress(progress);
   }
 }

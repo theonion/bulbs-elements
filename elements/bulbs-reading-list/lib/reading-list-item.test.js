@@ -1,5 +1,6 @@
 /* eslint no-new: 0 */
 import '../components/bulbs-reading-list-item';
+import '../../progress-bar/progress-bar';
 import ReadingListItem from './reading-list-item';
 import fetchMock from 'fetch-mock';
 
@@ -8,14 +9,17 @@ describe('ReadingListItem', () => {
   let subject;
   let menuElement;
   let articleElement;
+  let progressBarElement;
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
+    progressBarElement = document.createElement('progress-bar');
     menuElement = document.createElement('bulbs-reading-list-item');
     menuElement.dataset.id = '1';
     menuElement.dataset.href = 'test-url';
     menuElement.dataset.title = 'Test Article';
     menuElement.dataset.partialUrl = 'test-url?partial=true';
+    menuElement.appendChild(progressBarElement);
     articleElement = document.createElement('bulbs-reading-list-item');
     articleElement.dataset.id = '1';
     articleElement.dataset.href = 'test-url';
@@ -145,6 +149,14 @@ describe('ReadingListItem', () => {
 
   it('has an isLoaded flag', () => {
     expect(subject.isLoaded).to.equal(false);
+  });
+
+  it('has a progress number', () => {
+    expect(subject.progress).to.equal(0);
+  });
+
+  it('saves a reference to the progressBar', () => {
+    expect(subject.progressBar).to.equal(progressBarElement);
   });
 
   describe('elementIsReadingListItem', () => {

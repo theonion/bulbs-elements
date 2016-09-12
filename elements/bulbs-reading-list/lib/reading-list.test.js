@@ -285,18 +285,18 @@ describe('ReadingList', () => {
       expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
 
-    it('returns true when the next article is within the viewport threshold', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
+    it('returns true when the next article is nearly in the viewport', () => {
+      sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
       expect(subject.shouldLoadNextItem(nextArticle)).to.equal(true);
     });
 
     it('returns false when there is no next item', () => {
-      sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
+      sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
       expect(subject.shouldLoadNextItem()).to.equal(false);
     });
 
-    it('returns false when the item is not almost finished', () => {
-      sandbox.stub(subject.currentItem, 'isAlmostFinished').returns(false);
+    it('returns false when the item is not nearly in the viewport', () => {
+      sandbox.stub(nextArticle, 'isNearlyInView').returns(false);
       expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
   });
@@ -338,11 +338,6 @@ describe('ReadingList', () => {
     let article;
     beforeEach(() => {
       article = subject.itemAtIndex(2);
-    });
-
-    it('sets the current readingList item by id', () => {
-      subject.handleLoadNextArticleComplete(article);
-      expect(subject.currentItem).to.equal(article);
     });
 
     it('sets the isFetchingNextItem flag to false', () => {
