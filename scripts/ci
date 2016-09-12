@@ -5,4 +5,15 @@ export CHROME_BIN=chromium-browser
 export DISPLAY=:99.0
 sh -e /etc/init.d/xvfb start
 
-./node_modules/.bin/karma start karma.devicelab.js --single-run
+
+# List of browsers to test
+BROWSERS=(
+    bs_chrome_50
+    bs_firefox_47
+    bs_safari_8
+    bs_ie_11
+)
+
+for B in ${BROWSERS[@]}; do
+    BROWSER=$B ./node_modules/.bin/karma start karma.devicelab.js --single-run
+done
