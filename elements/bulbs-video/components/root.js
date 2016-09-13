@@ -19,7 +19,7 @@ export default function Root (props) {
 
   return (
     <div className={className}>
-      <Cover video={props.video} actions={props.actions}/>
+      <Cover video={props.video} actions={props.actions} displayTitle={props.displayTitle}/>
     </div>
   );
 }
@@ -28,6 +28,7 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
+  displayTitle: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,

@@ -99,6 +99,14 @@ bulbs-video {
     }
   }
 
+  .bulbs-video-poster-overlay {
+    bottom: 0;
+    height: 50%;
+    left: 0;
+    position: absolute;
+    width: 100%
+  }
+
   .bulbs-video-play-button {
     bottom: 20px;
     left: 20px;
@@ -112,6 +120,21 @@ bulbs-video {
     .st1 {
       fill: #FFFFFF;
     }
+  }
+
+  .bulbs-video-text {
+    bottom: 27px;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    left: 120px;
+    line-height: 1.17;
+    margin-left: 20px;
+    opacity: .7;
+    position: absolute;
+    text-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    width: 35vw;
+    z-index: 1;
   }
 
   .bulbs-video-video {

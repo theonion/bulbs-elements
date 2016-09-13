@@ -65,6 +65,7 @@ export default class BulbsVideo extends BulbsElement {
         targetHostChannel={this.props.targetHostChannel}
         targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
+        displayTitle={typeof this.props.displayTitle === 'string'}
         muted={typeof this.props.muted === 'string'}
         noEndcard={typeof this.props.noEndcard === 'string'}
         actions={this.store.actions}
@@ -83,6 +84,7 @@ Object.assign(BulbsVideo, {
   propTypes: {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
+    displayTitle: PropTypes.string,
     muted: PropTypes.string,
     noEndcard: PropTypes.string,
     src: PropTypes.string.isRequired,
