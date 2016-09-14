@@ -9,22 +9,6 @@ import RailPlayerCampaign from './campaign';
 
 export default class Root extends React.Component {
 
-  handlePlay() {
-    getAnalyticsManager().sendEvent({
-      eventCategory: 'rMVP',
-      eventAction: 'Control: Play',
-      eventLabel: '#'
-    });
-  }
-
-  handlePause() {
-    getAnalyticsManager().sendEvent({
-      eventCategory: 'rMVP',
-      eventAction: 'Control: Pause',
-      eventLabel: '#'
-    });
-  }
-
   render () {
     if (!this.props.video) {
       return <div/>;
@@ -50,8 +34,6 @@ export default class Root extends React.Component {
           <Revealed
             disableSharing={true}
             muted={true}
-            onPlay={this.handlePlay.bind(this)}
-            onPause={this.handlePause.bind(this)}
             targetHostChannel='right_rail'
             defaultCaptions={true}
             {...this.props}

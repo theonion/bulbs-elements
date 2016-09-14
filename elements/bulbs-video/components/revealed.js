@@ -245,14 +245,6 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(player, videoMeta.gaPrefix);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
-    if (this.props.onPlay) {
-      player.on('play', this.props.onPlay)
-    }
-
-    if (this.props.onPause) {
-      player.on('pause', this.props.onPause)
-    }
-
   }
 
   render () {
