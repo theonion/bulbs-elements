@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { VideoInfo } from './info';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 export default function Cover (props) {
@@ -28,10 +29,11 @@ export default function Cover (props) {
       />
       <div className='bulbs-video-poster-overlay'>
         <VideoPlayButton/>
-        <div className='bulbs-video-text'>
-          { channelElement }
-          { titleElement }
-        </div>
+        <VideoInfo
+          channel={video.channel_name}
+          duration={video.duration}
+          title={video.title}
+        />
       </div>
     </div>
   );
