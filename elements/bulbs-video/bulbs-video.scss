@@ -104,7 +104,8 @@ bulbs-video {
     height: 50%;
     left: 0;
     position: absolute;
-    width: 100%
+    width: 100%;
+    z-index: 1;
   }
 
   .bulbs-video-play-button {
@@ -123,18 +124,21 @@ bulbs-video {
   }
 
   .bulbs-video-text {
-    bottom: 27px;
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: bold;
+    bottom: 12px;
     left: 120px;
-    line-height: 1.17;
     margin-left: 20px;
-    opacity: .7;
     position: absolute;
-    text-shadow: 0 0 8px rgba(0, 0, 0, .8);
     width: 35vw;
     z-index: 1;
+
+    h1 {
+      color: #FFFFFF;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1.17;
+      opacity: .9;
+      text-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    }
   }
 
   .bulbs-video-video {

@@ -2,11 +2,17 @@ import React, { PropTypes } from 'react';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 export default function Cover (props) {
-  let { video, actions, displayTitle } = props;
+  let { video, actions, displayChannel, displayDuration, displayTitle } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
+  let channelElement = null;
   let titleElement = null;
-  if (displayTitle) {
-    titleElement = <h1 className='bulbs-video-text'>{video.title}</h1>;
+
+  if (displayChannel === true) {
+    channelElement = <h1 className='bulbs-video-channel'>{video.channel_name}</h1>;
+  }
+
+  if (displayTitle === true) {
+    titleElement = <h1 className='bulbs-video-title'>{video.title}</h1>;
   }
 
   return (
@@ -22,7 +28,10 @@ export default function Cover (props) {
       />
       <div className='bulbs-video-poster-overlay'>
         <VideoPlayButton/>
-        { titleElement }
+        <div className='bulbs-video-text'>
+          { channelElement }
+          { titleElement }
+        </div>
       </div>
     </div>
   );
@@ -30,6 +39,8 @@ export default function Cover (props) {
 
 Cover.propTypes = {
   actions: PropTypes.object.isRequired,
-  coverText: PropTypes.string,
+  displayChannel: PropTypes.bool,
+  displayDuration: PropTypes.bool,
+  displayTitle: PropTypes.bool,
   video: PropTypes.object.isRequired,
 };
