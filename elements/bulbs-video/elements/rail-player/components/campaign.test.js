@@ -50,7 +50,7 @@ describe('<rail-player> <RailPlayerCampaign>', () => {
       expect(campaignDisplay).to.have.attr('name-only');
     });
 
-    it('props.data-track-action is Sponsored By', () => {
+    it('props.data-track-action is Sponsor', () => {
       expect(campaignDisplay).to.have.attr('data-track-action', 'Sponsor');
     });
 
