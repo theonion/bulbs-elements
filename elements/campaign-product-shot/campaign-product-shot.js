@@ -4,39 +4,25 @@ import {
 } from 'bulbs-elements/register';
 
 class CampaignProductShot extends BulbsHTMLElement {
-  constructor (props) {
-    invariant(!!props.src, 'campaign-product-shot component requires a src');
-    super(props);
-    this.state = { productShotUrl: '' };
-    fetch(this.props.src)
+
+  handleRequestSuccess (data) {
+    this.innerHTML =
+      `<div className='campaign-product-shot'>
+        <img src='${data.productShotUrl}'>
+      </div>`;
+  }
+
+  handleRequestError () {
+    console.log('error');
+  }
+
+  attachedCallback () {
+    invariant(!!this.hasAttribute('src'), 'campaign-product-shot component requires a src');
+    fetch(this.getAttribute('src'))
       .then(filterBadResponse)
       .then(getResponseJSON)
       .then(this.handleRequestSuccess.bind(this))
       .catch(this.handleRequestError);
-
-      handleRequestSuccess (data) {
-        console.log(data);
-        this.setState({ productShotUrl: data.productShotUrl });
-      }
-
-      handleRequestError () {
-        console.log('error');
-      }
-
-      render () {
-        return (
-          <div className='campaign-product-shot'>
-            <img src={this.state.productShotUrl}>
-          </div>);
-      }
-  }
-
-  createdCallback () {
-    console.log('Created campaign-product-shot');
-  }
-
-  attachedCallback () {
-    console.log('Attached campaign-product-shot');
   }
 
   detachedCallback () {
@@ -44,19 +30,16 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attributeChangedCallback (name, previousValue, value) {
+    if (name == 'src' && previousValue != value) {
+      this.attachedCallback();
+    }
+
     console.log(
       'Attribute Changed campaign-product-shot changed ${name} from: ',
       previousValue, 'to:', value
     );
   }
 }
-
-Object.assign(CampaignProductShot, {
-  displayName: 'CampaignProductShot',
-  propTypes: {
-    src: PropTypes.string.isRequired,
-  },
-});
 
 registerElement('campaign-product-shot', CampaignProductShot);
 
