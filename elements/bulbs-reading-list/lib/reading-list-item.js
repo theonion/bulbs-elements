@@ -105,7 +105,12 @@ export default class ReadingListItem {
   }
 
   scrollIntoView () {
-    scrollIntoView(this.articleElement);
+    scrollIntoView(this.articleElement, {
+      align: {
+        top: 1,
+        left: 0,
+      },
+    });
   }
 
   calculateProgress (scrollPosition, articleDimensions) {

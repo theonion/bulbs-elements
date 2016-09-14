@@ -17,7 +17,9 @@ export default class ReadingList {
 
     let elementPairs = this.getReadingListElementPairs(menu, articles);
     this.items = map(elementPairs, this.createReadingListItem);
-    this.setCurrentItem(this.firstItem());
+    let firstItem = this.firstItem();
+    firstItem.isLoaded = true;
+    this.setCurrentItem(firstItem);
     this.isFetchingItem = false;
   }
 
@@ -115,7 +117,7 @@ export default class ReadingList {
 
   scrollUp () {
     this.updateItemProgress();
-    if (this.currentItem.progress === 0) {
+    if (this.previousItem().progress < 100) {
       this.setPreviousItemAsCurrent();
     }
   }
@@ -163,9 +165,9 @@ export default class ReadingList {
   }
 
   navigateToItem (item) {
-    this.setCurrentItem(item);
     item.scrollIntoView();
     this.updateItemProgress();
+    this.setCurrentItem(item);
   }
 
   updateItemProgress () {
