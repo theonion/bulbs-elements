@@ -5,8 +5,9 @@ import {
 
 class CampaignProductShot extends BulbsHTMLElement {
   constructor (props) {
+    invariant(!!props.src, 'campaign-product-shot component requires a src');
     super(props);
-    this.state = { };
+    this.state = {};
     fetch(this.props.src)
       .then(filterBadResponse)
       .then(getResponseJSON)
@@ -53,7 +54,7 @@ class CampaignProductShot extends BulbsHTMLElement {
 Object.assign(CampaignProductShot, {
   displayName: 'CampaignProductShot',
   propTypes: {
-    productShotUrl: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
   },
 });
 
