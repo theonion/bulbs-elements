@@ -5,7 +5,7 @@ let examples = {
       render: function () {
         return `
           <campaign-product-shot
-            attribute="value"
+            src="http://localhost:8080/fixtures/campaign-display/campaign.json"
           >
           </campaign-product-shot>
         `;
