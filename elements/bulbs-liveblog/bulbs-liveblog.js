@@ -170,7 +170,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.debug('handleBlogUpdate ', url);
     let url = `${this.getAttribute('liveblog-url')}?entry_ids=${entryIds.join(',')}`;
     this.fetching = true;
-    fetch(url)
+    fetch(url, { credentials: 'include' })
       .then(filterBadResponse)
       .then((response) => response.text())
       .then(this.handleBlogFetchSuccess.bind(this))
