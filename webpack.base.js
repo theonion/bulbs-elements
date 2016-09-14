@@ -34,7 +34,6 @@ let entries = {};
 
 // We will vendor common dependencies of our elements.
 entries['dist/vendor'] = [
-  'array-find',
   'react',
   'react-dom',
   'classnames',
