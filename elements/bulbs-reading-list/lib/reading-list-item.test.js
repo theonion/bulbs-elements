@@ -269,13 +269,6 @@ describe('ReadingListItem', () => {
         subject.loadContent();
         expect(fetchMock.called(subject.href)).to.equal(false);
       });
-
-      it('returns a rejected promise', (done) => {
-        subject.loadContent().catch((message) => {
-          expect(message).to.equal('Article should not load');
-          done();
-        });
-      });
     });
 
     context('when the article should not load', () => {

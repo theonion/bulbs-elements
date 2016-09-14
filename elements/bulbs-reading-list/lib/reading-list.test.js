@@ -55,8 +55,8 @@ describe('ReadingList', () => {
     expect(subject.currentItem).to.equal(subject.items[0]);
   });
 
-  it('has an isFetchingNextItem flag', () => {
-    expect(subject.isFetchingNextItem).to.equal(false);
+  it('has an isFetchingItem flag', () => {
+    expect(subject.isFetchingItem).to.equal(false);
   });
 
   describe('getReadingListElementPairs', () => {
@@ -194,28 +194,6 @@ describe('ReadingList', () => {
     });
   });
 
-  describe('isBeforeCurrentItem', () => {
-    it('throws an error if no list item is given', () => {
-      expect(() => {
-        subject.isBeforeCurrentItem();
-      }).to.throw('BulbsReadingList.isBeforeCurrentItem(listItem): listItem is undefined');
-    });
-
-    it('returns true if the item is before the given item', () => {
-      subject.currentItem = subject.itemAtIndex(3);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(2))).to.equal(true);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(1))).to.equal(true);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(0))).to.equal(true);
-    });
-
-    it('returns false if the item is after the given item', () => {
-      subject.currentItem = subject.itemAtIndex(0);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(1))).to.equal(false);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(2))).to.equal(false);
-      expect(subject.isBeforeCurrentItem(subject.itemAtIndex(3))).to.equal(false);
-    });
-  });
-
   describe('nextItem', () => {
     it('returns the next item in the list', () => {
       subject.currentItem = subject.itemAtIndex(0);
@@ -233,12 +211,6 @@ describe('ReadingList', () => {
   describe('firstItem', () => {
     it('returns the item with the largest index', () => {
       expect(subject.firstItem()).to.equal(subject.itemAtIndex(0));
-    });
-  });
-
-  describe('isFirstItem', () => {
-    it('returns true when the given item is the first in the list', () => {
-      expect(subject.isFirstItem(subject.firstItem())).to.equal(true);
     });
   });
 
@@ -285,65 +257,73 @@ describe('ReadingList', () => {
       expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
     });
 
-    it('returns true when the next article is nearly in the viewport', () => {
-      sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
-      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(true);
-    });
-
     it('returns false when there is no next item', () => {
       sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
       expect(subject.shouldLoadNextItem()).to.equal(false);
     });
 
-    it('returns false when the item is not nearly in the viewport', () => {
-      sandbox.stub(nextArticle, 'isNearlyInView').returns(false);
-      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(false);
+    it('returns false if the nextItem is already loaded', () => {
+      nextArticle.isLoaded = true;
+      sandbox.stub(subject, 'hasPendingFetch').returns(false);
+      sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
+      expect(subject.shouldLoadNextItem()).to.equal(false);
+    });
+
+    it('returns true when there are no pending fetches, and the item is not loaded', () => {
+      nextArticle.isLoaded = false;
+      sandbox.stub(subject, 'hasPendingFetch').returns(false);
+      sandbox.stub(nextArticle, 'isNearlyInView').returns(true);
+      expect(subject.shouldLoadNextItem(nextArticle)).to.equal(true);
     });
   });
 
   describe('loadNextItem', () => {
-    context('when there is a next item', () => {
-      let nextArticle;
-      beforeEach(() => {
-        nextArticle = subject.itemAtIndex(1);
-        sandbox.stub(nextArticle, 'loadContent').returns(Promise.resolve(nextArticle));
-        sandbox.stub(subject, 'nextItem').returns(nextArticle);
-      });
-
-      it('sets the isFetchingNextItem flag to true', () => {
-        nextArticle.isLoaded = false;
-        sandbox.stub(subject, 'handleLoadNextArticleComplete');
-        subject.loadNextItem();
-        expect(subject.isFetchingNextItem).to.equal(true);
-      });
-
-      it('loads the article if within view threshold', () => {
-        nextArticle.isLoaded = false;
-        sandbox.stub(nextArticle, 'isWithinViewThreshold').returns(true);
-        subject.loadNextItem();
-        expect(nextArticle.loadContent).to.have.been.called;
-      });
+    let nextItem;
+    beforeEach(() => {
+      nextItem = subject.itemAtIndex(1);
+      sandbox.stub(subject, 'nextItem').returns(nextItem);
     });
 
-    context('when the content should not be loaded', () => {
-      it('sets the isFetchingNextItem flag to false', () => {
-        sandbox.stub(subject, 'shouldLoadNextItem').returns(false);
-        subject.loadNextItem();
-        expect(subject.isFetchingNextItem).to.equal(false);
-      });
+    it('loads the next item', () => {
+      sandbox.stub(subject, 'loadItem');
+      subject.loadNextItem();
+      expect(subject.loadItem).to.have.been.calledWith(nextItem);
+    });
+
+    it('returns the promise', () => {
+      expect(subject.loadNextItem()).to.be.an.instanceof(Promise);
     });
   });
 
-  describe('handleLoadNextArticleComplete', () => {
-    let article;
+  describe('loadItem', () => {
+    let item;
     beforeEach(() => {
-      article = subject.itemAtIndex(2);
+      item = subject.itemAtIndex(1);
+      sandbox.stub(item, 'loadContent').returns(Promise.resolve(item));
     });
 
-    it('sets the isFetchingNextItem flag to false', () => {
-      subject.isFetchingNextItem = true;
-      subject.handleLoadNextArticleComplete(article);
-      expect(subject.isFetchingNextItem).to.equal(false);
+    it('requires an item', () => {
+      expect(() => subject.loadItem()).to.throw('ReadingList.loadItem(item): item is undefined');
+    });
+
+    it('sets the isFetchingItem flag to true', () => {
+      subject.loadItem(item);
+      expect(subject.isFetchingItem).to.equal(true);
+    });
+
+    it('loads the content of the item', () => {
+      subject.loadItem(item);
+      expect(item.loadContent).to.have.been.called;
+    });
+
+    it('returns a promise', () => {
+      expect(subject.loadItem(item)).to.be.an.instanceof(Promise);
+    });
+
+    it('sets the isFetchingItem flag to false when complete', () => {
+      sandbox.stub(subject, 'handleLoadArticleComplete');
+      subject.loadItem(item);
+      expect(subject.isFetchingItem).to.equal(true);
     });
   });
 

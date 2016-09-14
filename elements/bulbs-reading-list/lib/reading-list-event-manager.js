@@ -26,9 +26,16 @@ export default class ReadingListEventManager {
         this.readingList.navigateToItem(item);
       }
       else if (this.readingList.isNextItem(item)) {
-        this.readingList.loadNextItem();
+        if (this.readingList.shouldLoadNextItem(item)) {
+          this.readingList.loadNextItem()
+            .then(this.handleLoadNextItemComplete.bind(this));
+        }
       }
     }
+  }
+
+  handleLoadNextItemComplete (item) {
+    this.readingList.navigateToItem(item);
   }
 
   elementIsInsideMenu (element) {

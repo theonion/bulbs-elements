@@ -7,7 +7,7 @@ import {
   minBy,
   some,
 } from 'lodash';
-import ReadingListItem from 'reading-list-item';
+import ReadingListItem from './reading-list-item';
 import invariant from 'invariant';
 
 export default class ReadingList {
@@ -18,7 +18,7 @@ export default class ReadingList {
     let elementPairs = this.getReadingListElementPairs(menu, articles);
     this.items = map(elementPairs, this.createReadingListItem);
     this.setCurrentItem(this.firstItem());
-    this.isFetchingNextItem = false;
+    this.isFetchingItem = false;
   }
 
   getReadingListElementPairs (menu, articles) {
@@ -71,19 +71,10 @@ export default class ReadingList {
     return find(this.items, (item) => item.id === id);
   }
 
-  isFirstItem (item) {
-    return item === this.firstItem();
-  }
-
   isNextItem (listItem) {
     invariant(listItem, 'ReadingList.isNextItem(listItem): listItem is undefined');
     let nextItem = this.itemAtIndex(this.currentItem.index + 1);
     return nextItem ? (listItem.index === nextItem.index) : false;
-  }
-
-  isBeforeCurrentItem (listItem) {
-    invariant(listItem, 'BulbsReadingList.isBeforeCurrentItem(listItem): listItem is undefined');
-    return listItem.index < this.currentItem.index;
   }
 
   isAtTheEnd () {
@@ -133,7 +124,7 @@ export default class ReadingList {
     this.updateItemProgress();
     let nextItem = this.nextItem();
 
-    if (this.shouldLoadNextItem(nextItem)) {
+    if (this.shouldLoadNextItem(nextItem) && nextItem.isNearlyInView()) {
       this.loadNextItem();
     }
 
@@ -144,37 +135,37 @@ export default class ReadingList {
 
   shouldLoadNextItem (nextItem) {
     return !!(
-      !this.hasPendingFetch() &&
       nextItem &&
-      !nextItem.isLoaded &&
-      nextItem.isNearlyInView()
+      !this.hasPendingFetch() &&
+      !nextItem.isLoaded
     );
   }
 
   loadNextItem () {
     let nextItem = this.nextItem();
-    if (this.shouldLoadNextItem(nextItem)) {
-      this.isFetchingNextItem = true;
-      nextItem.loadContent()
-        .then(this.handleLoadNextArticleComplete.bind(this))
-        .catch((reason) => { /* console.log(reason); */ }); // eslint-disable-line
-    }
-    else {
-      this.isFetchingNextItem = false;
-    }
+    return this.loadItem(nextItem);
+  }
+
+  loadItem (item) {
+    invariant(item, 'ReadingList.loadItem(item): item is undefined');
+    this.isFetchingItem = true;
+    let promise = item.loadContent();
+    promise.then(this.handleLoadArticleComplete.bind(this));
+    return promise;
   }
 
   redirectToItem (item) {
     window.location.href = item.href;
   }
 
-  handleLoadNextArticleComplete () {
-    this.isFetchingNextItem = false;
+  handleLoadArticleComplete () {
+    this.isFetchingItem = false;
   }
 
   navigateToItem (item) {
     this.setCurrentItem(item);
     item.scrollIntoView();
+    this.updateItemProgress();
   }
 
   updateItemProgress () {

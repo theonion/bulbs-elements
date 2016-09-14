@@ -80,7 +80,7 @@ describe('ReadingListEventManager', () => {
       it('loads the next article if the article is next', () => {
         let item = subject.readingList.itemAtIndex(1);
         item.isLoaded = false;
-        sandbox.stub(subject.readingList, 'loadNextItem');
+        sandbox.stub(subject.readingList, 'loadNextItem').returns(Promise.resolve(item));
         sandbox.stub(subject.readingList, 'isNextItem').returns(true);
         eventStub.target = item.menuElement;
         subject.handleMenuItemClick(eventStub);

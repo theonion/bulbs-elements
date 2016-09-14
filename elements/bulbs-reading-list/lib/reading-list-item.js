@@ -1,4 +1,5 @@
 import { isUndefined, isNumber } from 'lodash';
+import scrollIntoView from 'scroll-into-view';
 import invariant from 'invariant';
 import {
   filterBadResponse,
@@ -29,7 +30,7 @@ export default class ReadingListItem {
     this.index = index;
     this.title = menuElement.dataset.title;
     this.loadDistanceThreshold = 200;
-    this.readDistanceOffset = 200;
+    this.readDistanceOffset = 250;
     this.isLoaded = false;
     this.fetchPending = false;
     this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
@@ -55,16 +56,22 @@ export default class ReadingListItem {
   }
 
   loadContent () {
-    if (this.shouldLoad()) {
-      this.fillContent(this.loadingTemplate);
-      return fetch(this.partialUrl)
-        .then(filterBadResponse)
-        .then(getResponseText)
-        .then(this.handleLoadContentComplete.bind(this))
-        .catch(this.handleLoadContentError);
-    }
-
-    return new Promise((resolve, reject) => reject('Article should not load'));
+    return new Promise((resolve, reject) => {
+      if (this.shouldLoad()) {
+        this.fillContent(this.loadingTemplate);
+        fetch(this.partialUrl)
+          .then(filterBadResponse)
+          .then(getResponseText)
+          .then((response) => {
+            this.handleLoadContentComplete(response);
+            resolve(this);
+          })
+          .catch((response) => {
+            this.handleLoadContentError(response);
+            reject(this);
+          });
+      }
+    });
   }
 
   shouldLoad () {
@@ -74,7 +81,6 @@ export default class ReadingListItem {
   handleLoadContentComplete (content) {
     this.fillContent(content);
     this.isLoaded = true;
-    return new Promise((resolve) => resolve(this));
   }
 
   handleLoadContentError (response) {
@@ -99,7 +105,7 @@ export default class ReadingListItem {
   }
 
   scrollIntoView () {
-    this.articleElement.scrollIntoView();
+    scrollIntoView(this.articleElement);
   }
 
   calculateProgress (scrollPosition, articleDimensions) {
