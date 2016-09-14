@@ -30,7 +30,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attributeChangedCallback (name, previousValue, value) {
-    if (name == 'src' && previousValue != value) {
+    if (name === 'src' && previousValue !== value) {
       this.attachedCallback();
     }
 
