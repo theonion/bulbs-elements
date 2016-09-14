@@ -7,7 +7,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   constructor (props) {
     invariant(!!props.src, 'campaign-product-shot component requires a src');
     super(props);
-    this.state = {};
+    this.state = { productShotUrl: '' };
     fetch(this.props.src)
       .then(filterBadResponse)
       .then(getResponseJSON)
@@ -16,7 +16,7 @@ class CampaignProductShot extends BulbsHTMLElement {
 
       handleRequestSuccess (data) {
         console.log(data);
-        // this.setState({ contenders: sortedRandomizedContenders(contenders) });
+        this.setState({ productShotUrl: data.productShotUrl });
       }
 
       handleRequestError () {
@@ -26,7 +26,7 @@ class CampaignProductShot extends BulbsHTMLElement {
       render () {
         return (
           <div className='campaign-product-shot'>
-            <img src={this.props.productShotUrl}>
+            <img src={this.state.productShotUrl}>
           </div>);
       }
   }
