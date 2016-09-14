@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import {getAnalyticsManager} from 'bulbs-elements/util';
-
 import Revealed from '../../../components/revealed';
 
 import RailPlayerHeader from './header';
