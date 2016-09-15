@@ -9,7 +9,7 @@ describe('<campaign-product-shot>', function () {
 
   beforeEach(function (done) {
     fetchMock.restore();
-    src = 'http://example.com/campaign.json'
+    src = 'http://example.com/campaign.json';
     campaign = {
       id: 1,
       active: true,
@@ -17,14 +17,14 @@ describe('<campaign-product-shot>', function () {
       image_url: 'http://example.com/campaign-img.jpg',
       name: 'Test Campaign',
       product_shot_url: 'http://example.com/prodcut-shot.jpg',
-      brand_messaging: 'Buy our shit'
+      brand_messaging: 'Buy our shit',
     };
     fetchMock.mock(src, campaign);
 
     element = document.createElement('campaign-product-shot');
     element.setAttribute('src', src);
 
-    setImmediate(function() {
+    setImmediate(function () {
       done();
     });
   });
@@ -35,11 +35,11 @@ describe('<campaign-product-shot>', function () {
 
   it('tries to make a request based on the source', function () {
     element.attachedCallback();
-    expect(fetchMock.called('http://example.com/campaign.json')).to.be.true
+    expect(fetchMock.called('http://example.com/campaign.json')).to.be.true;
   });
 
   it('sets the image source appropriately', function () {
     element.handleRequestSuccess(campaign);
-    expect(element.innerHTML).to.contain('http://example.com/prodcut-shot.jpg')
+    expect(element.innerHTML).to.contain('http://example.com/prodcut-shot.jpg');
   });
 });
