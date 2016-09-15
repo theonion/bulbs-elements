@@ -40,7 +40,6 @@ describe('<campaign-product-shot>', function () {
 
   it('sets the image source appropriately', function () {
     element.handleRequestSuccess(campaign);
-    expect(element.innerHTML.includes('http://example.com/prodcut-shot.jpg')).to.be.true
+    expect(element.innerHTML).to.contain('http://example.com/prodcut-shot.jpg')
   });
-
 });

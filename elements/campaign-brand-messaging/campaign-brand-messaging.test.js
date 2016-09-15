@@ -40,7 +40,6 @@ describe('<campaign-brand-messaging>', function () {
 
   it('sets the span appropriately', function () {
     element.handleRequestSuccess(campaign);
-    expect(element.innerHTML.includes('<span>Buy our shit</span>')).to.be.true
+    expect(element.innerHTML).to.contain('<span>Buy our shit</span>')
   });
-
 });
