@@ -22,7 +22,6 @@ describe('<campaign-product-shot>', function () {
     element = document.createElement('campaign-product-shot');
     element.setAttribute('src', src);
 
-
     fetchMock.mock(src, campaign);
 
     setImmediate(function() {

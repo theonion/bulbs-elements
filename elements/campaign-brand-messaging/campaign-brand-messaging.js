@@ -9,8 +9,8 @@ class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
     this.innerHTML =
-      `<div class='campaign-product-shot'>
-        <img src='${data.product_shot_url}'>
+      `<div class='campaign-brand-messaging'>
+        <span>${data.product_shot_url}</span>
       </div>`;
   }
 
@@ -19,7 +19,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    invariant(!!this.hasAttribute('src'), 'campaign-product-shot component requires a src');
+    invariant(!!this.hasAttribute('src'), 'campaign-brand-messaging component requires a src');
     fetch(this.getAttribute('src'))
       .then(filterBadResponse)
       .then(getResponseJSON)
@@ -28,7 +28,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   detachedCallback () {
-    console.log('Detached campaign-product-shot');
+    console.log('Detached campaign-brand-messaging');
   }
 
   attributeChangedCallback (name, previousValue, value) {
@@ -37,12 +37,12 @@ class CampaignProductShot extends BulbsHTMLElement {
     }
 
     console.log(
-      'Attribute Changed campaign-product-shot changed ${name} from: ',
+      'Attribute Changed campaign-brand-messaging changed ${name} from: ',
       previousValue, 'to:', value
     );
   }
 }
 
-registerElement('campaign-product-shot', CampaignProductShot);
+registerElement('campaign-brand-messaging', CampaignProductShot);
 
 export default CampaignProductShot;
