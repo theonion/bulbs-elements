@@ -14,8 +14,8 @@ class CampaignProductShot extends BulbsHTMLElement {
       </div>`;
   }
 
-  handleRequestError () {
-    console.log('error');
+  handleRequestError (error) {
+    console.log(error);
   }
 
   attachedCallback () {
@@ -32,14 +32,16 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attributeChangedCallback (name, previousValue, value) {
-    if (name === 'src' && previousValue !== value) {
-      this.attachedCallback();
-    }
+    if (document.body.contains(this)) {
+      if (name === 'src' && previousValue !== value) {
+        this.attachedCallback();
+      }
 
-    console.log(
-      'Attribute Changed campaign-product-shot changed ${name} from: ',
-      previousValue, 'to:', value
-    );
+      console.log(
+        'Attribute Changed campaign-product-shot changed ${name} from: ',
+        previousValue, 'to:', value
+      );
+    }
   }
 }
 
