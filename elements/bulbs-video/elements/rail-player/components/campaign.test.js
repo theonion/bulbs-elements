@@ -50,6 +50,14 @@ describe('<rail-player> <RailPlayerCampaign>', () => {
       expect(campaignDisplay).to.have.attr('name-only');
     });
 
+    it('props.data-track-action is Sponsor', () => {
+      expect(campaignDisplay).to.have.attr('data-track-action', 'Sponsor');
+    });
+
+    it('props.data-track-label is the tunic_campaign_url', () => {
+      expect(campaignDisplay).to.have.attr('data-track-label', 'http://example.org/tunic-url');
+    });
+
     it('placement is rail-player', () => {
       expect(campaignDisplay).to.have.attr('placement', 'rail-player');
     });

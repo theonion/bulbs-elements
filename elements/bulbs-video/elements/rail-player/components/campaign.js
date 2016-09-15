@@ -9,6 +9,8 @@ export default function RailPlayerCampaign (props) {
       <campaign-display
         class='rail-player-content-sponsorship'
         src={props.video.tunic_campaign_url}
+        data-track-action='Sponsor'
+        data-track-label={props.video.tunic_campaign_url}
         preamble-text='Sponsored By'
         placement='rail-player'
         name-only
