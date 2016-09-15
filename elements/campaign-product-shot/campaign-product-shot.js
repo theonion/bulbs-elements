@@ -9,8 +9,8 @@ class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
     this.innerHTML =
-      `<div className='campaign-product-shot'>
-        <img src='${data.productShotUrl}'>
+      `<div class='campaign-product-shot'>
+        <img src='${data.product_shot_url}'>
       </div>`;
   }
 
@@ -19,6 +19,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attachedCallback () {
+    console.log("I was called");
     invariant(!!this.hasAttribute('src'), 'campaign-product-shot component requires a src');
     fetch(this.getAttribute('src'))
       .then(filterBadResponse)
