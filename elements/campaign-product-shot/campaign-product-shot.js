@@ -9,7 +9,7 @@ class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
     if (!data.product_shot_url) {
-      console.log('Product shot url not set on this campa')
+      console.log('Product shot url not set on this campaign');
       return;
     }
 

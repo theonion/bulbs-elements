@@ -9,7 +9,7 @@ class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
     if (!data.brand_messaging) {
-      console.log('Brand messaging not set on this campaign')
+      console.log('Brand messaging not set on this campaign');
       return;
     }
 
