@@ -24,10 +24,8 @@ export default class RailPlayer extends BulbsElement {
     return (
       <RailPlayerRoot
         {...this.state}
-        recircUrl={this.props.recircUrl}
-        targetCampaignId={this.props.targetCampaignId}
+        {...this.props}
         actions={this.store.actions}
-        channel={this.props.channel}
       />
     );
   }
