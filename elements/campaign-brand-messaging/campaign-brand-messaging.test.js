@@ -9,7 +9,6 @@ describe('<campaign-brand-messaging>', function () {
 
   beforeEach(function (done) {
     fetchMock.restore();
-
     src = 'http://example.com/campaign.json'
     campaign = {
       id: 1,
@@ -20,11 +19,10 @@ describe('<campaign-brand-messaging>', function () {
       product_shot_url: 'http://example.com/prodcut-shot.jpg',
       brand_messaging: 'Buy our shit'
     };
+    fetchMock.mock(src, campaign);
 
     element = document.createElement('campaign-brand-messaging');
     element.setAttribute('src', src);
-
-    fetchMock.mock(src, campaign);
 
     setImmediate(function() {
       done();
