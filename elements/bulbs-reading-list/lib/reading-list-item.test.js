@@ -333,12 +333,4 @@ describe('ReadingListItem', () => {
       expect(subject.shouldLoad()).to.equal(false);
     });
   });
-
-  describe('scrollIntoView', () => {
-    it('scrolls the article element into view', () => {
-      sandbox.stub(subject.articleElement, 'scrollIntoView');
-      subject.scrollIntoView();
-      expect(subject.articleElement.scrollIntoView).to.have.been.called;
-    });
-  });
 });

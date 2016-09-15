@@ -61,6 +61,7 @@ describe('ReadingListEventManager', () => {
     it('prevents the default behavior if the target is inside a bulbs-reading-list-item', () => {
       let itemElement = subject.readingList.itemAtIndex(0).menuElement;
       eventStub.target = itemElement.getElementsByTagName('a')[0];
+      sandbox.stub(subject.readingList, 'updateItemProgress');
       subject.handleMenuItemClick(eventStub);
       expect(eventStub.preventDefault).to.have.been.called;
     });

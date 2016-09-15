@@ -330,6 +330,7 @@ describe('ReadingList', () => {
   describe('navigateToItem', () => {
     let item;
     beforeEach(() => {
+      sandbox.stub(subject, 'updateItemProgress');
       item = subject.itemAtIndex(1);
     });
 
