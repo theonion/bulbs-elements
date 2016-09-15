@@ -23,20 +23,32 @@ function parseEntry (entry) {
 
 const LIVEBLOG_LATENCY = 5000;
 
-export const allEntries = {};
-class BulbsLiveblogEntry extends BulbsHTMLElement {
-  createdCallback () {
-  }
+export const Entries = {
+  all: {},
+};
 
+class BulbsLiveblogEntry extends BulbsHTMLElement {
   attachedCallback () {
     invariant(this.hasAttribute('entry-id'),
        '<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
 
-    allEntries[this.getAttribute('entry-id')] = this;
+    invariant(this.hasAttribute('entry-published'),
+       '<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
+
+    let thisEntry = {
+      element: this,
+      published: new Date(this.getAttribute('entry-published')),
+    };
+
+    Entries.all[this.getAttribute('entry-id')] = thisEntry;
+
+    if (!Entries.oldestEntryDate || thisEntry.published < Entries.oldestEntryDate) {
+      Entries.oldestEntryDate = thisEntry.published;
+    }
   }
 
   detachedCallback () {
-    delete allEntries[this.getAttribute('entry-id')];
+    delete Entries.all[this.getAttribute('entry-id')];
   }
 }
 
@@ -57,8 +69,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     invariant(this.hasAttribute('firebase-api-key'),
       '<bulbs-liveblog> element MUST specify a `firebase-api-key` attribute');
 
-    invariant(this.hasAttribute('liveblog-url'),
-      '<bulbs-liveblog> element MUST specify a `liveblog-url` attribute');
+    invariant(this.hasAttribute('liveblog-new-entries-url'),
+      '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute');
 
     this.setupFirebase();
     this.setupInterval();
@@ -125,19 +137,26 @@ class BulbsLiveblog extends BulbsHTMLElement {
       this.debug('handleInterval: bailing out: already fetching data');
       return;
     }
-    let now = new Date();
-    let entryIds = [];
-    Object.keys(this.entriesData).forEach((entryId) => {
-      let entry = this.entriesData[entryId];
-      if (entry.published < now && !allEntries[entryId]) {
-        entryIds.push(entryId);
-      }
-    });
 
+    let entryIds = this.getEntryIdsToFetch();
     if (entryIds.length) {
       this.debug('handleInterval: entryIds', entryIds);
       this.handleBlogUpdate(entryIds);
     }
+  }
+
+  getEntryIdsToFetch () {
+    let now = new Date();
+    let entryIds = [];
+    Object.keys(this.entriesData).forEach((entryId) => {
+      let entry = this.entriesData[entryId];
+      if (entry.published < now && !Entries.all[entryId]) {
+        if (entry.published >= Entries.oldestEntryDate) {
+          entryIds.push(entryId);
+        }
+      }
+    });
+    return entryIds;
   }
 
   handleClick (event) {
@@ -152,7 +171,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   showNewEntries (newEntries) {
     this.removeNewEntriesButton();
-    while (event.target.newEntries[0]) {
+    while (newEntries[0]) {
       this.entriesContainer[0].prepend(event.target.newEntries[0]);
     }
     scrollToElement(this.entriesContainer[0].childNodes[0], {
@@ -168,7 +187,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   handleBlogUpdate (entryIds) {
     this.debug('handleBlogUpdate ', url);
-    let url = `${this.getAttribute('liveblog-url')}?entry_ids=${entryIds.join(',')}`;
+    let url = `${this.getAttribute('liveblog-new-entries-url')}?entry_ids=${entryIds.join(',')}`;
     this.fetching = true;
     fetch(url, { credentials: 'include' })
       .then(filterBadResponse)
@@ -181,21 +200,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
   handleBlogFetchSuccess (htmlText) {
     this.fetching = false;
     this.entryStaging.innerHTML += htmlText;
-
-    // <noscript> tag are parsed by DOMParser
-    //
-    //  Our picturefill does a query to find an <img> tag, and it finds the img
-    //  inside the <noscript> tag. This is bad. So we have to manually remove the
-    //   <noscript> elements.
-    //
-    //  Things get extra weird, we can't use the [].prototype.forEach hack here.
-    //  So, while there is a first <noscript> element, we remove it.
-    //  getElementsByTagName is a live  collection, so once we have removed each
-    //  item, it will no longer be in the collection.
-    let noscripts = this.entryStaging.getElementsByTagName('noscript');
-    while (noscripts[0]) {
-      noscripts[0].remove();
-    }
     let newEntries = this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
     this.removeNewEntriesButton();
     if (newEntries.length > 0) {

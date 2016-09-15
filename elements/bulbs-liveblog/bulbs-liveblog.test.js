@@ -148,6 +148,20 @@ describe.only('<bulbs-liveblog>', () => {
     });
   });
 
+  describe('getEntryIdsToFetch', () => {
+    xit('gets entry ids that are in entriesData, but not in allEntries', () => {
+
+    });
+
+    xit('skips unpublished entries', () => {
+
+    });
+
+    xit('skips entries that are older than the oldestEntryDate', () => {
+
+    });
+  });
+
   describe('handleClick', () => {
     xit('handles showing new entries', () => {
 
