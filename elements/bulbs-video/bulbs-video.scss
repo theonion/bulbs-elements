@@ -123,21 +123,30 @@ bulbs-video {
     }
   }
 
-  .bulbs-video-text {
-    bottom: 12px;
+  .bulbs-video-meta-copy {
+    bottom: 25px;
     left: 120px;
     margin-left: 20px;
     position: absolute;
     width: 35vw;
     z-index: 1;
 
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: 1.17;
+    opacity: .9;
+    text-shadow: 0 0 8px rgba(0, 0, 0, .8);
+
+    h1, h2 {
+      margin: 7px;
+    }
+
     h1 {
-      color: #FFFFFF;
       font-size: 20px;
-      font-weight: bold;
-      line-height: 1.17;
-      opacity: .9;
-      text-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    }
+
+    h2 {
+      font-size: 15px;
     }
   }
 
