@@ -8,6 +8,11 @@ import invariant from 'invariant';
 class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
+    if (!data.brand_messaging) {
+      console.log('Brand messaging not set on this campaign')
+      return;
+    }
+
     this.innerHTML =
       `<div class='campaign-brand-messaging'>
         <span>${data.brand_messaging}</span>
@@ -27,20 +32,11 @@ class CampaignProductShot extends BulbsHTMLElement {
       .catch(this.handleRequestError);
   }
 
-  detachedCallback () {
-    console.log('Detached campaign-brand-messaging');
-  }
-
   attributeChangedCallback (name, previousValue, value) {
     if (document.body.contains(this)) {
       if (name === 'src' && previousValue !== value) {
         this.attachedCallback();
       }
-
-      console.log(
-        'Attribute Changed campaign-brand-messaging changed ${name} from: ',
-        previousValue, 'to:', value
-      );
     }
   }
 }
