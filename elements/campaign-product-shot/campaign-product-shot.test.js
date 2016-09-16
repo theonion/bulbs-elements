@@ -1,4 +1,3 @@
-import { assert } from 'chai';
 import './campaign-product-shot';
 import fetchMock from 'fetch-mock';
 

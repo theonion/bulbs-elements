@@ -8,7 +8,9 @@ import invariant from 'invariant';
 export default class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
-    invariant(data.product_shot_url, 'CampaignProductShot.handleRequestSuccess(data): data.brand_messaging is undefined');
+    invariant(
+        data.product_shot_url,
+        'CampaignProductShot.handleRequestSuccess(data): data.brand_messaging is undefined');
     this.innerHTML =
       `<div class='campaign-brand-messaging'>
         <span>${data.brand_messaging}</span>
