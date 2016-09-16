@@ -4,7 +4,7 @@ import {
 } from 'bulbs-elements/register';
 import './<%= elementPathName %>.scss';
 
-class <%= elementClassName %> extends BulbsHTMLElement {
+export default class <%= elementClassName %> extends BulbsHTMLElement {
   createdCallback () {
     console.log('Created <%= elementName %>');
   }
@@ -26,5 +26,3 @@ class <%= elementClassName %> extends BulbsHTMLElement {
 }
 
 registerElement('<%= elementName %>', <%= elementClassName %>);
-
-export default <%= elementClassName %>;
