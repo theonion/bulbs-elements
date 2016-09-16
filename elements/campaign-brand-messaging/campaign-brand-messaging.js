@@ -8,11 +8,7 @@ import invariant from 'invariant';
 class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
-    if (!data.brand_messaging) {
-      console.log('Brand messaging not set on this campaign');
-      return;
-    }
-
+    invariant(data.product_shot_url, 'CampaignProductShot.handleRequestSuccess(data): data.brand_messaging is undefined');
     this.innerHTML =
       `<div class='campaign-brand-messaging'>
         <span>${data.brand_messaging}</span>
@@ -24,7 +20,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    invariant(!!this.hasAttribute('src'), 'campaign-brand-messaging component requires a src');
+    invariant(this.hasAttribute('src'), 'campaign-brand-messaging component requires a src');
     fetch(this.getAttribute('src'))
       .then(filterBadResponse)
       .then(getResponseJSON)
@@ -43,4 +39,4 @@ class CampaignProductShot extends BulbsHTMLElement {
 
 registerElement('campaign-brand-messaging', CampaignProductShot);
 
-export default CampaignProductShot;
+export default CampaignProductShot extends BulbsHTMLElement;

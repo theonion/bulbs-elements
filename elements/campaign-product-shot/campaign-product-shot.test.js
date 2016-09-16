@@ -30,7 +30,7 @@ describe('<campaign-product-shot>', function () {
   });
 
   it('renders an <campaign-product-shot>', function () {
-    assert.equal(element.tagName.toLowerCase(), 'campaign-product-shot');
+    expect(element.tagName.toLowerCase()).to.equal('campaign-product-shot');
   });
 
   it('tries to make a request based on the source', function () {

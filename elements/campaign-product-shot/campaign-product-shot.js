@@ -8,11 +8,7 @@ import invariant from 'invariant';
 class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
-    if (!data.product_shot_url) {
-      console.log('Product shot url not set on this campaign');
-      return;
-    }
-
+    invariant(data.product_shot_url, 'CampaignProductShot.handleRequestSuccess(data): data.product_shot_url is undefined');
     this.innerHTML =
       `<div class='campaign-product-shot'>
         <img src='${data.product_shot_url}'>
@@ -24,7 +20,7 @@ class CampaignProductShot extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    invariant(!!this.hasAttribute('src'), 'campaign-product-shot component requires a src');
+    invariant(this.hasAttribute('src'), 'campaign-product-shot component requires a src');
     fetch(this.getAttribute('src'))
       .then(filterBadResponse)
       .then(getResponseJSON)
@@ -43,4 +39,4 @@ class CampaignProductShot extends BulbsHTMLElement {
 
 registerElement('campaign-product-shot', CampaignProductShot);
 
-export default CampaignProductShot;
+export default CampaignProductShot extends BulbsHTMLElement;

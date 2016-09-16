@@ -30,7 +30,7 @@ describe('<campaign-brand-messaging>', function () {
   });
 
   it('renders an <campaign-brand-messaging>', function () {
-    assert.equal(element.tagName.toLowerCase(), 'campaign-brand-messaging');
+    expect(element.tagName.toLowerCase()).to.equal('campaign-brand-messaging');
   });
 
   it('tries to make a request based on the source', function () {

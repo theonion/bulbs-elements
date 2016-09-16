@@ -27,4 +27,4 @@ class <%= elementClassName %> extends BulbsHTMLElement {
 
 registerElement('<%= elementName %>', <%= elementClassName %>);
 
-export default <%= elementClassName %>;
+export default <%= elementClassName %> extends BulbsHTMLElement;
