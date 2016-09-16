@@ -23,7 +23,7 @@ export default class VideoMeta extends BulbsElement {
   render () {
     return <VideoMetaRoot
               {...this.props}
-              disableMetaLink={typeof this.props.disableMetaLink === 'string'}
+              disableLink={typeof this.props.disableMetaLink === 'string'}
               video={this.state.video}/>;
   }
 }
