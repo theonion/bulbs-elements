@@ -1,3 +1,9 @@
+$screen-sm:   450px;
+$screen-md:   600px;
+$screen-lg:   768px;
+$screen-xlg:  1000px;
+$screen-xxl:  1200px;
+
 @mixin aspect-ratio($width, $height) {
   position: relative;
   &:before {
@@ -124,18 +130,22 @@ bulbs-video {
   }
 
   .bulbs-video-meta-copy {
-    bottom: 25px;
-    left: 120px;
-    margin-left: 20px;
-    position: absolute;
-    width: 35vw;
-    z-index: 1;
 
+    position: absolute;
+    bottom: 15px;
     color: #FFFFFF;
+    font-size: 15px;
     font-weight: bold;
+    left: 70px;
     line-height: 1.17;
     opacity: .9;
     text-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    width: 75%;
+    z-index: 1;
+
+    .bulbs-video-alt-title {
+        display: none;
+    }
 
     h1, h2 {
       margin: 7px;
@@ -145,9 +155,25 @@ bulbs-video {
       font-size: 20px;
     }
 
-    h2 {
-      font-size: 15px;
+    @media (max-width: $screen-md) {
+
+      .bulbs-video-meta-series-name, .bulbs-video-meta-title {
+        display: none;
+      }
+
+      .bulbs-video-alt-title {
+        display: block;
+      }
     }
+
+    @media (min-width: $screen-sm) {
+      bottom: 20px;
+      left: 100px;
+    }
+
+    @media (min-width: $screen-xlg) {
+      bottom: 25px;
+      left: 135px; }
   }
 
   .bulbs-video-video {

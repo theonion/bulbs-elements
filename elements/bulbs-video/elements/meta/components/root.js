@@ -7,6 +7,8 @@ export default function VideoMetaRoot (props) {
     return <div/>;
   }
 
+  let altTitle = 'Play Video';
+
   let seriesElement;
   let seriesNameElement = <h2 className='bulbs-video-meta-series-name'>
                     {props.video.series_name || props.video.channel_name}
@@ -33,6 +35,10 @@ export default function VideoMetaRoot (props) {
         <h1 className='bulbs-video-meta-title'>
           {props.video.title}
         </h1>
+
+        <h1 className='bulbs-video-alt-title'>
+          {altTitle}
+        </h1>
       </div>
     </div>
   );
@@ -41,6 +47,7 @@ export default function VideoMetaRoot (props) {
 VideoMetaRoot.displayName = 'VideoMetaRoot';
 
 VideoMetaRoot.propTypes = {
+  altTitle: PropTypes.string,
   campaignPlacement: PropTypes.string,
   campaignPreamble: PropTypes.string,
   campaignTrackAction: PropTypes.string,
