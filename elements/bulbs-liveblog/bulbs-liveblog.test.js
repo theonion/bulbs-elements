@@ -11,14 +11,14 @@ describe.only('<bulbs-liveblog>', () => {
     subject.setAttribute('firebase-path', 'path/to/liveblog');
     subject.setAttribute('firebase-url', 'http://example.org');
     subject.setAttribute('firebase-api-key', 'fake-api-key');
-    subject.setAttribute('liveblog-url', 'http://example.org/path/to/liveblog');
+    subject.setAttribute('liveblog-new-entries-url', 'http://example.org/path/to/liveblog');
   });
 
   describe('attachedCallback', () => {
     beforeEach(() => {
-      sinon.spy(subject, 'setupFirebase');
-      sinon.spy(subject, 'setupInterval');
-      sinon.spy(subject, 'setupEvents');
+      sinon.stub(subject, 'setupFirebase');
+      sinon.stub(subject, 'setupInterval');
+      sinon.stub(subject, 'setupEvents');
     });
 
     it('requires a `firebase-path` attribute', () => {
@@ -42,10 +42,10 @@ describe.only('<bulbs-liveblog>', () => {
       );
     });
 
-    it('requires a `liveblog-url` attribute', () => {
-      subject.removeAttribute('liveblog-url');
+    it('requires a `liveblog-new-entries-url` attribute', () => {
+      subject.removeAttribute('liveblog-new-entries-url');
       expect(() => subject.attachedCallback()).to.throw(
-        '<bulbs-liveblog> element MUST specify a `liveblog-url` attribute'
+        '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute'
       );
     });
 
