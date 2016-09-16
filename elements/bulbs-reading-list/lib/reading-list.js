@@ -116,6 +116,7 @@ export default class ReadingList {
   }
 
   scrollUp () {
+    if (this.hasPendingFetch()) return;
     this.updateItemProgress();
     if (this.previousItem().progress < 100) {
       this.setPreviousItemAsCurrent();
@@ -123,6 +124,7 @@ export default class ReadingList {
   }
 
   scrollDown () {
+    if (this.hasPendingFetch()) return;
     this.updateItemProgress();
     let nextItem = this.nextItem();
 
