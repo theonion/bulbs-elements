@@ -28,11 +28,11 @@ testElement('<bulbs-poll> <BulbsPoll>', function () {
     });
     this.element = this.renderElement({
       done: () => {
-        this.actions = this.element.reactElement.store.actions;
+        this.actions = this.element.reactInstance.store.actions;
         setSrcSpy = sinon.stub(this.actions, 'setSrc');
         fetchPollDataSpy = sinon.stub(this.actions, 'fetchPollData');
         getCachedVoteDataSpy = sinon.stub(this.actions, 'getCachedVoteData');
-        this.element.reactElement.initialDispatch();
+        this.element.reactInstance.initialDispatch();
         done();
       },
       tag: 'bulbs-poll',

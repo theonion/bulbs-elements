@@ -16,7 +16,7 @@ export default class ShareTools extends BulbsHTMLElement {
     // This might not be the best way to do it. But it should work.
     let viaEmail = this.querySelector('share-via-email');
     if (viaEmail) {
-      viaEmail.reactElement.componentDidMount();
+      viaEmail.reactInstance.componentDidMount();
     }
   }
 }

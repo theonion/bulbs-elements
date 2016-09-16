@@ -27,7 +27,7 @@
 //         src: pollEndpoint,
 //       },
 //     });
-//     this.actions = this.element.reactElement.store.actions;
+//     this.actions = this.element.reactInstance.store.actions;
 //   });
 
 //   it('renders a poll', function () {
