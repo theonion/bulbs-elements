@@ -5,17 +5,8 @@ import VideoMetaRoot from '../elements/meta/components/root';
 
 
 export default function Cover (props) {
-  let { video, actions, displayChannel, displayDuration, displayTitle } = props;
+  let { video, actions, mobileTitle } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
-  let disableLink = true;
-
-  if (displayChannel === true) {
-    channelElement = <h1 className='bulbs-video-channel'>{video.channel_name}</h1>;
-  }
-
-  if (displayTitle === true) {
-    titleElement = <h1 className='bulbs-video-title'>{video.title}</h1>;
-  }
 
   return (
     <div
@@ -30,7 +21,10 @@ export default function Cover (props) {
       />
       <div className='bulbs-video-poster-overlay'>
         <VideoPlayButton/>
-        <VideoMetaRoot video={video} disableLink={disableLink}/>
+        <VideoMetaRoot
+          video={video}
+          disableLink={props.disableMetaLink}
+          mobileTitle={mobileTitle}/>
       </div>
     </div>
   );
@@ -38,8 +32,7 @@ export default function Cover (props) {
 
 Cover.propTypes = {
   actions: PropTypes.object.isRequired,
-  displayChannel: PropTypes.bool,
-  displayDuration: PropTypes.bool,
-  displayTitle: PropTypes.bool,
+  disableMetaLink: PropTypes.bool,
+  mobileTitle: PropTypes.string,
   video: PropTypes.object.isRequired,
 };

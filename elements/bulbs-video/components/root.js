@@ -22,9 +22,8 @@ export default function Root (props) {
       <Cover
         video={props.video}
         actions={props.actions}
-        displayChannel={props.displayChannel}
-        displayDuration={props.displayDuration}
-        displayTitle={props.displayTitle}/>
+        disableMetaLink={props.disableMetaLink}
+        mobileTitle={props.mobileTitle}/>
     </div>
   );
 }
@@ -33,9 +32,8 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
-  displayChannel: PropTypes.bool,
-  displayDuration: PropTypes.bool,
-  displayTitle: PropTypes.bool,
+  disableMetaLink: PropTypes.bool,
+  mobileTitle: PropTypes.string,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
