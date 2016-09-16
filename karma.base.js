@@ -41,6 +41,19 @@ module.exports = {
   webpackMiddleware: {
     stats: {
       colors: true,
+      hash: false,
+      version: false,
+      timings: false,
+      assets: false,
+      chunks: false,
+      modules: false,
+      reasons: true,
+      children: false,
+      source: false,
+      errors: true,
+      errorDetails: true,
+      warnings: true,
+      publicPath: false
     },
   },
 
@@ -52,7 +65,15 @@ module.exports = {
   // test results reporter to use
   // possible values: 'dots', 'progress'
   // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-  reporters: ['progress'],
+  reporters: ['spec'],
+
+  specReporter: {
+    maxLogLines: 5,         // limit number of lines logged per test
+    suppressFailed: false,  // do not print information about failed tests
+    suppressPassed: true,  // do not print information about passed tests
+    suppressSkipped: false,  // do not print information about skipped tests
+    showSpecTiming: false // print the time elapsed for each spec
+  },
 
   client: {
     mocha: {
@@ -79,6 +100,7 @@ module.exports = {
     'karma-sinon',
     'karma-sinon-chai',
     'karma-sourcemap-loader',
+    'karma-spec-reporter',
     'karma-webpack',
   ],
 

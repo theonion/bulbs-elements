@@ -33,6 +33,10 @@ describe('<rail-player> <RailPlayerRoot>', () => {
         subject = shallow(<RailPlayerRoot {...props}/>);
       });
 
+      it('props.data-track-category is rMVP', () => {
+        expect(subject).to.have.attr('data-track-category', 'rMVP');
+      });
+
       it('renders a header', () => {
         expect(subject).to.have.descendants('div.rail-player-header');
       });
@@ -47,6 +51,8 @@ describe('<rail-player> <RailPlayerRoot>', () => {
             className='rail-player-recirc-link'
             target='_blank'
             href='http://example.org/recirc'
+            data-track-action='Watch More'
+            data-track-label='http://example.org/recirc'
           >
             Watch More
           </a>
