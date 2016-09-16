@@ -5,7 +5,7 @@ import {
 import { filterBadResponse, getResponseJSON } from 'bulbs-elements/util';
 import invariant from 'invariant';
 
-class CampaignProductShot extends BulbsHTMLElement {
+export default class CampaignProductShot extends BulbsHTMLElement {
 
   handleRequestSuccess (data) {
     invariant(data.product_shot_url, 'CampaignProductShot.handleRequestSuccess(data): data.brand_messaging is undefined');
@@ -38,5 +38,3 @@ class CampaignProductShot extends BulbsHTMLElement {
 }
 
 registerElement('campaign-brand-messaging', CampaignProductShot);
-
-export default CampaignProductShot extends BulbsHTMLElement;
