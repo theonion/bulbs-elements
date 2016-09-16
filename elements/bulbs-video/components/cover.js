@@ -5,7 +5,7 @@ import VideoMetaRoot from '../elements/meta/components/root';
 
 
 export default function Cover (props) {
-  let { video, actions, mobileTitle } = props;
+  let { video, actions, disableMetaLink, mobileTitle } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
 
   return (
@@ -23,7 +23,7 @@ export default function Cover (props) {
         <VideoPlayButton/>
         <VideoMetaRoot
           video={video}
-          disableLink={props.disableMetaLink}
+          disableLink={disableMetaLink}
           mobileTitle={mobileTitle}/>
       </div>
     </div>

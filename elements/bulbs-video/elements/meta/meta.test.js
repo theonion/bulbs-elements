@@ -63,6 +63,7 @@ describe('<bulbs-video-meta>', () => {
   describe('render', () => {
     it('renders a <VideoMetaRoot/>', () => {
       props = {
+        mobileTitle: undefined,
         shareEmailMessage: 'message',
         shareTrackCatagory: 'category',
         shareTwitterHandle: 'handle',
@@ -70,7 +71,7 @@ describe('<bulbs-video-meta>', () => {
       let component = shallow(<BulbsVideoMeta {...props}/>);
       component.setState({ video });
       expect(component.equals(
-        <VideoMetaRoot {...props} video={video}/>
+        <VideoMetaRoot {...props} video={video} disableLink=false />
       )).to.be.true;
     });
   });
