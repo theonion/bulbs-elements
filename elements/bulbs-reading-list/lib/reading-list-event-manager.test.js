@@ -94,6 +94,7 @@ describe('ReadingListEventManager', () => {
         let item = subject.readingList.itemAtIndex(1);
         item.loaded = false;
         sandbox.stub(subject.readingList, 'redirectToItem');
+        sandbox.stub(subject.readingList, 'isNextItem').returns(false);
         sandbox.stub(subject.readingList, 'isMoreThanOneAhead').returns(true);
         eventStub.target = item.menuElement;
         subject.handleMenuItemClick(eventStub);
