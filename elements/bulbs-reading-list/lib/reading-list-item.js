@@ -60,7 +60,7 @@ export default class ReadingListItem {
       if (this.shouldLoad()) {
         this.fillContent(this.loadingTemplate);
         fetch(this.partialUrl, {
-          include: 'credentials',
+          include: 'same-origin',
         })
           .then(filterBadResponse)
           .then(getResponseText)
