@@ -18,7 +18,8 @@ export default function VideoMetaRoot (props) {
             data-track-action={props.titleTrackAction}
             data-track-label={props.video.series_name || props.video.channel_name}
           > {seriesNameElement} </a>;
-  } else {
+  }
+  else {
     seriesElement = seriesNameElement;
   }
 

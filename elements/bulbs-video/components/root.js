@@ -19,7 +19,11 @@ export default function Root (props) {
 
   return (
     <div className={className}>
-      <Cover video={props.video} actions={props.actions} disableMetaLink={props.disableMetaLink} mobileTitle={props.mobileTitle}/>
+      <Cover
+        video={props.video}
+        actions={props.actions}
+        disableMetaLink={props.disableMetaLink}
+        mobileTitle={props.mobileTitle}/>
     </div>
   );
 }

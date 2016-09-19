@@ -3,7 +3,6 @@ import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
 import VideoMetaRoot from '../elements/meta/components/root';
 
-
 export default function Cover (props) {
   let { video, actions, disableMetaLink, mobileTitle } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
