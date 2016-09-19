@@ -120,53 +120,6 @@ bulbs-video {
     }
   }
 
-  .bulbs-video-meta-copy {
-
-    position: absolute;
-    bottom: 15px;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: bold;
-    left: 70px;
-    line-height: 1.17;
-    opacity: .9;
-    text-shadow: 0 0 8px rgba(0, 0, 0, .8);
-    width: 75%;
-    z-index: 1;
-
-    .bulbs-video-mobile-title {
-        display: none;
-    }
-
-    h1, h2 {
-      margin: 7px;
-    }
-
-    h1 {
-      font-size: 20px;
-    }
-
-    @media (max-width: $screen-md) {
-
-      .bulbs-video-meta-series-name, .bulbs-video-meta-title {
-        display: none;
-      }
-
-      .bulbs-video-mobile-title {
-        display: block;
-      }
-    }
-
-    @media (min-width: $screen-sm) {
-      bottom: 20px;
-      left: 100px;
-    }
-
-    @media (min-width: $screen-xlg) {
-      bottom: 25px;
-      left: 135px; }
-  }
-
   .bulbs-video-video {
     position: absolute;
     top: 0;
