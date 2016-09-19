@@ -59,7 +59,9 @@ export default class ReadingListItem {
     return new Promise((resolve, reject) => {
       if (this.shouldLoad()) {
         this.fillContent(this.loadingTemplate);
-        fetch(this.partialUrl)
+        fetch(this.partialUrl, {
+          include: 'credentials',
+        })
           .then(filterBadResponse)
           .then(getResponseText)
           .then((response) => {
