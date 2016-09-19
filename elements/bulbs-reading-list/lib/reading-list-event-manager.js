@@ -19,10 +19,7 @@ export default class ReadingListEventManager {
       evnt.preventDefault();
       let item = this.getClickedMenuItem(evnt.target);
 
-      if (this.readingList.isMoreThanOneAhead(item)) {
-        this.readingList.redirectToItem(item);
-      }
-      else if (item.isLoaded) {
+      if (item.isLoaded) {
         this.readingList.navigateToItem(item);
       }
       else if (this.readingList.isNextItem(item)) {
@@ -30,6 +27,9 @@ export default class ReadingListEventManager {
           this.readingList.loadNextItem()
             .then(this.handleLoadNextItemComplete.bind(this));
         }
+      }
+      else if (this.readingList.isMoreThanOneAhead(item)) {
+        this.readingList.redirectToItem(item);
       }
     }
   }
