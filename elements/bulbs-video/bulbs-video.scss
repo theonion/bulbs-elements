@@ -1,9 +1,3 @@
-$screen-sm:   450px;
-$screen-md:   600px;
-$screen-lg:   768px;
-$screen-xlg:  1000px;
-$screen-xxl:  1200px;
-
 @mixin aspect-ratio($width, $height) {
   position: relative;
   &:before {
