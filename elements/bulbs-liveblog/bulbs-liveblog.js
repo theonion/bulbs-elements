@@ -5,17 +5,9 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import scrollToElement from 'scroll-to-element';
 
-function makeNewEntriesButton (newEntries) {
-  let button = document.createElement('button');
-  button.classList.add('liveblog-new-entries');
-  button.innerHTML = `Show ${newEntries.length} New Articles`;
-  button.newEntries = newEntries;
-  return button;
-}
-
 function parseEntry (entry) {
   if ('published' in entry) {
-    entry.published = new Date(entry.published);
+    entry.published = new Date(Date.parse(entry.published));
   }
 
   return entry;
@@ -27,7 +19,15 @@ export const Entries = {
   all: {},
 };
 
+const DEBUG = false;
+
 class BulbsLiveblogEntry extends BulbsHTMLElement {
+  debug (...message) {
+    if (DEBUG) {
+      console.log('<bulbs-liveblog-entry>', ...message);
+    }
+  }
+
   attachedCallback () {
     invariant(this.hasAttribute('entry-id'),
        '<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
@@ -45,10 +45,13 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     if (!Entries.oldestEntryDate || thisEntry.published < Entries.oldestEntryDate) {
       Entries.oldestEntryDate = thisEntry.published;
     }
+
+    this.debug('attachedCallback', this.getAttribute('entry-id'));
   }
 
   detachedCallback () {
     delete Entries.all[this.getAttribute('entry-id')];
+    this.debug('detachedCallback', this.getAttribute('entry-id'));
   }
 }
 
@@ -56,7 +59,16 @@ registerElement('bulbs-liveblog-entry', BulbsLiveblogEntry);
 
 class BulbsLiveblog extends BulbsHTMLElement {
   debug (...message) {
-    console.log('<bulbs-liveblog>', ...message);
+    if (DEBUG) {
+      console.log('<bulbs-liveblog>', ...message);
+    }
+  }
+
+  makeNewEntriesButton () {
+    let button = document.createElement('button');
+    button.classList.add('liveblog-new-entries');
+    button.innerHTML = `Show ${this.newEntries.length} New Articles`;
+    return button;
   }
 
   attachedCallback () {
@@ -72,6 +84,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     invariant(this.hasAttribute('liveblog-new-entries-url'),
       '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute');
 
+    this.bindHandlers();
+
     this.setupFirebase();
     this.setupInterval();
     this.setupEvents();
@@ -79,11 +93,19 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.newEntriesButtons = this.getElementsByClassName('liveblog-new-entries');
     this.entryStaging = document.createElement('div');
     this.entryStaging.style.display = 'none';
+    this.newEntries = this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
     this.append(this.entryStaging);
 
     this.entriesContainer = this.getElementsByClassName('liveblog-entries');
     this.entriesElements = this.getElementsByTagName('liveblog-entry');
     this.entriesData = {};
+
+  }
+
+  bindHandlers () {
+    this.handleInterval = this.handleInterval.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
   }
 
   detachedCallback () {
@@ -107,12 +129,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   setupInterval () {
-    this.interval = setInterval(this.handleInterval.bind(this), LIVEBLOG_LATENCY);
+    this.interval = setInterval(this.handleInterval, LIVEBLOG_LATENCY);
   }
 
   setupEvents () {
-    this.addEventListener('click', this.handleClick.bind(this));
-    this.firebaseRef.on('value', this.handleFirebaseValue.bind(this));
+    this.addEventListener('click', this.handleClick);
+    this.firebaseRef.on('value', this.handleFirebaseValue);
   }
 
   teardownFirebase () {
@@ -129,6 +151,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
       parseEntry(this.entriesData[entryId]);
     });
     this.debug('handleFirebaseValue:', this.entriesData);
+    this.handleInterval();
   }
 
   handleInterval () {
@@ -148,20 +171,28 @@ class BulbsLiveblog extends BulbsHTMLElement {
   getEntryIdsToFetch () {
     let now = new Date();
     let entryIds = [];
+    this.debug('getEntryIdsToFetch', Object.keys(this.entriesData), Object.keys(Entries.all));
     Object.keys(this.entriesData).forEach((entryId) => {
       let entry = this.entriesData[entryId];
       if (entry.published < now && !Entries.all[entryId]) {
-        if (entry.published >= Entries.oldestEntryDate) {
+        this.debug('getEntryIdsToFetch', entry.published, entryId, Entries.oldestEntryDate);
+        if (Entries.oldestEntryDate) {
+          if (entry.published >= Entries.oldestEntryDate) {
+            entryIds.push(entryId);
+          }
+        }
+        else {
           entryIds.push(entryId);
         }
       }
     });
+    this.debug('getEntryIdsToFetch: return', entryIds);
     return entryIds;
   }
 
   handleClick (event) {
     if (event.target.matches('button.liveblog-new-entries')) {
-      this.showNewEntries(event.target.newEntries);
+      this.showNewEntries();
     }
 
     if (event.target.matches('button.liveblog-entry-reset')) {
@@ -169,20 +200,20 @@ class BulbsLiveblog extends BulbsHTMLElement {
     }
   }
 
-  showNewEntries (newEntries) {
+  showNewEntries () {
     this.removeNewEntriesButton();
-    while (newEntries[0]) {
-      this.entriesContainer[0].prepend(event.target.newEntries[0]);
+    while (this.entryStaging.firstElementChild) {
+      this.entriesContainer[0].prepend(this.entryStaging.firstElementChild);
     }
     scrollToElement(this.entriesContainer[0].childNodes[0], {
-      duration: 500,
+      duration: 250,
     });
-    this.entriesContainer[0].childNodes[0].scrollIntoView();
     window.picturefill();
   }
 
   resetSelectedEntry () {
-    document.querySelector('.liveblog-entry-shared').classList.remove('liveblog-entry-shared');
+    let sharedEntry = document.querySelector('.liveblog-entry-shared');
+    sharedEntry.classList.remove('liveblog-entry-shared');
   }
 
   handleBlogUpdate (entryIds) {
@@ -199,11 +230,14 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   handleBlogFetchSuccess (htmlText) {
     this.fetching = false;
-    this.entryStaging.innerHTML += htmlText;
-    let newEntries = this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
+    let parser = document.createElement('div');
+    parser.innerHTML = htmlText;
+    while (parser.firstElementChild) {
+      this.entryStaging.append(parser.firstElementChild);
+    }
     this.removeNewEntriesButton();
-    if (newEntries.length > 0) {
-      let newEntriesButton = makeNewEntriesButton(newEntries);
+    if (this.newEntries.length > 0) {
+      let newEntriesButton = this.makeNewEntriesButton();
       this.entriesContainer[0].prepend(newEntriesButton);
     }
   }

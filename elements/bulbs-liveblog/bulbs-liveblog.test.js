@@ -1,17 +1,43 @@
-import { allEntries } from './bulbs-liveblog';
+import fetchMock from 'fetch-mock';
 
-describe.only('<bulbs-liveblog>', () => {
+import { Entries } from './bulbs-liveblog';
+
+
+const HTMLCollectionClass = document.getElementsByTagName('a-tag').constructor;
+
+let futureDate = new Date((new Date()).getTime() + 10000000000);
+let pastDate = new Date((new Date()).getTime() - 10000000000);
+let currentDate = new Date();
+
+describe('<bulbs-liveblog>', () => {
+  beforeEach(() => {
+    Entries.all = {};
+    delete Entries.oldestEntryDate;
+  });
+
   let container;
   let subject;
 
+  window.picturefill = sinon.spy();
+
   beforeEach(() => {
-    container = document.createElement('div');
-    document.body.prepend(container);
     subject = document.createElement('bulbs-liveblog');
     subject.setAttribute('firebase-path', 'path/to/liveblog');
-    subject.setAttribute('firebase-url', 'http://example.org');
+    subject.setAttribute('firebase-url', 'http://example.firebaseio.com');
     subject.setAttribute('firebase-api-key', 'fake-api-key');
+    subject.setAttribute('liveblog-id', String(Math.random()).replace(/^0\./, ''));
     subject.setAttribute('liveblog-new-entries-url', 'http://example.org/path/to/liveblog');
+
+    subject.innerHTML = `
+      <div class="liveblog-entries">
+        <bulbs-liveblog-entry
+          entry-id="1234"
+          entry-published="${pastDate}"
+          class="liveblog-entry-shared"
+        >
+        </bulbs-livebloge-entry>
+      </div>
+    `;
   });
 
   describe('attachedCallback', () => {
@@ -64,16 +90,34 @@ describe.only('<bulbs-liveblog>', () => {
       expect(subject.setupEvents).to.have.been.called.once;
     });
 
-    xit('tracks newEntriesButtons', () => {
-
+    it('tracks newEntriesButtons', () => {
+      subject.attachedCallback();
+      expect(subject.newEntriesButtons).to.be.an.instanceof(HTMLCollectionClass);
     });
 
-    xit('creates a staging pad for new entries', () => {
-
+    it('creates a staging pad for new entries', () => {
+      subject.attachedCallback();
+      expect(subject.entryStaging.matches('div')).to.be.true;
     });
 
-    xit('tracks the liveblog-entries', () => {
+    it('hides the staging pad for new entries', () => {
+      subject.attachedCallback();
+      expect(subject.entryStaging.style.display).to.eql('none');
+    });
 
+    it('initializes entriesData', () => {
+      subject.attachedCallback();
+      expect(subject.entriesData).to.eql({});
+    });
+
+    it('tracks the liveblog entries container', () => {
+      subject.attachedCallback();
+      expect(subject.entriesContainer).to.be.an.instanceof(HTMLCollectionClass);
+    });
+
+    it('tracks the liveblog-entries', () => {
+      subject.attachedCallback();
+      expect(subject.entriesElements).to.be.an.instanceof(HTMLCollectionClass);
     });
   });
 
@@ -86,153 +130,353 @@ describe.only('<bulbs-liveblog>', () => {
 
     });
 
-    xit('limits the firebasequery to 100 items', () => {
+    xit('limits the firebase query to 100 items', () => {
 
     });
   });
 
   describe('setupInterval', () => {
-    xit('connects an interval handler every LIVEBLOG_LATENCY seconds', () => {
-
+    it('connects an interval handler every LIVEBLOG_LATENCY seconds', () => {
+      sinon.stub(window, 'setInterval');
+      subject.setupInterval();
+      expect(window.setInterval).to.have.been.calledWith(subject.handleInterval, 5000);
+      window.setInterval.restore();
     });
   });
 
   describe('setupEvents', () => {
-    xit('attaches a click handler', () => {
+    beforeEach(() => {
+      subject.firebaseRef = { on: sinon.spy() };
+      sinon.spy(subject, 'addEventListener');
     });
 
-    xit('attaches a firebase value handler', () => {
+    it('attaches a click handler', () => {
+      subject.setupEvents();
+      expect(subject.addEventListener).to.have.been.calledWith('click', subject.handleClick);
+    });
 
+    it('attaches a firebase value handler', () => {
+      subject.setupEvents();
+      expect(subject.firebaseRef.on).to.have.been.calledWith('value', subject.handleFirebaseValue);
     });
   });
 
   describe('detachedCallback', () => {
-    xit('tears down firebase', () => {
-
+    beforeEach(() => {
+      sinon.stub(subject, 'teardownFirebase');
+      sinon.spy(subject, 'teardownInterval');
     });
 
-    xit('tears down the interval', () => {
+    it('tears down firebase', () => {
+      subject.detachedCallback();
+      expect(subject.teardownFirebase).to.have.been.called;
+    });
 
+    it('tears down the interval', () => {
+      subject.detachedCallback();
+      expect(subject.teardownInterval).to.have.been.called;
     });
   });
 
   describe('teardownFirebase', () => {
-    xit('disconnects firebase events', () => {
-
+    it('disconnects firebase events', () => {
+      subject.firebaseRef = { off: sinon.spy() };
+      subject.teardownFirebase();
+      expect(subject.firebaseRef.off).to.have.been.called;
     });
   });
 
   describe('teardownInterval', () => {
-    xit('clears the interval', () => {
-
+    it('clears the interval', () => {
+      sinon.spy(window, 'clearInterval');
+      subject.interval = 'our-interval';
+      subject.teardownInterval();
+      expect(window.clearInterval).to.have.been.calledWith('our-interval');
+      window.clearInterval.restore();
     });
   });
 
   describe('handleFirebaseValue', () => {
-    xit('stores the snapshot value', () => {
-
+    it('stores the snapshot value', () => {
+      let snapshot = [];
+      subject.handleFirebaseValue({
+        val: () => snapshot,
+      });
+      expect(subject.entriesData).to.eql(snapshot);
     });
 
-    xit('parses entry published dates', () => {
+    it('parses entry published dates', () => {
+      let snapshot = {
+        one: {
+          published: '2016-09-19T11:09:06.668617',
+        },
+      };
+      subject.handleFirebaseValue({
+        val: () => snapshot,
+      });
 
-    });
-  });
+      let { published } = subject.entriesData.one;
 
-  describe('handleInterval', () => {
-    xit('requests new content', () => {
-
-    });
-
-    xit('bails out if liveblog is fetching new content', () => {
-
-    });
-  });
-
-  describe('getEntryIdsToFetch', () => {
-    xit('gets entry ids that are in entriesData, but not in allEntries', () => {
-
-    });
-
-    xit('skips unpublished entries', () => {
-
-    });
-
-    xit('skips entries that are older than the oldestEntryDate', () => {
-
+      expect(published.getDate()).to.eql(19);
     });
   });
 
-  describe('handleClick', () => {
-    xit('handles showing new entries', () => {
-
+  context('attached', () => {
+    beforeEach((done) => {
+      container = document.createElement('div');
+      document.body.append(container);
+      container.append(subject);
+      setImmediate(() => {
+        done();
+      });
     });
 
-    xit('handles resetting the selected entry', () => {
-
-    });
-  });
-
-  describe('showNewEntries', () => {
-    xit('removes the show new entries button', () => {
-
+    afterEach((done) => {
+      subject.remove();
+      setImmediate(() => {
+        done();
+      });
     });
 
-    xit('places the entries in the entries container', () => {
+    describe('handleInterval', () => {
+      beforeEach(() => sinon.spy(subject, 'handleBlogUpdate'));
 
+      context('no new content to fetch', () => {
+        it('does nothing', () => {
+          subject.entriesData = {};
+          subject.handleInterval();
+          expect(subject.handleBlogUpdate).to.not.have.been.called;
+        });
+      });
+
+      context('there is new content to fetch', () => {
+        it('requests new content', () => {
+          subject.entriesData = {
+            1: {
+              published: new Date(1987, 3, 11),
+            },
+          };
+          subject.handleInterval();
+          expect(subject.handleBlogUpdate).to.not.have.been.calledWith([1]);
+        });
+
+        context('liveblog is in `fetching` state', () => {
+          it('does not attempt to fetch new content', () => {
+            subject.entriesData = {
+              1: {
+                published: new Date(1987, 3, 11),
+              },
+            };
+            subject.fetching = true;
+            subject.handleInterval();
+            expect(subject.handleBlogUpdate).to.not.have.been.called;
+          });
+        });
+      });
     });
 
-    xit('scrolls to the new entries', () => {
+    describe('getEntryIdsToFetch', () => {
 
+      it('gets entry ids that are in entriesData, but not in Entries.all', () => {
+        subject.entriesData = {
+          1: { published: pastDate },
+          2: { published: pastDate },
+          3: { published: pastDate },
+          4: { published: pastDate },
+        };
+
+        Entries.all[1] = {};
+        Entries.all[2] = {};
+
+        expect(subject.getEntryIdsToFetch()).to.eql(['3', '4']);
+      });
+
+      it('skips unpublished entries', () => {
+        subject.entriesData = {
+          1: { published: futureDate },
+          2: { published: pastDate },
+          3: { published: futureDate },
+          4: { published: pastDate },
+        };
+
+        expect(subject.getEntryIdsToFetch()).to.eql(['2', '4']);
+      });
+
+      it('skips entries that are older than the oldestEntryDate', () => {
+        subject.entriesData = {
+          1: { published: futureDate },
+          2: { published: pastDate },
+          3: { published: futureDate },
+          4: { published: pastDate },
+        };
+
+        Entries.oldestEntryDate = currentDate;
+
+        expect(subject.getEntryIdsToFetch()).to.eql([]);
+      });
+
+      it('tolerates oldestEntryDate being blank', () => {
+        subject.entriesData = {
+          1: { published: futureDate },
+          2: { published: pastDate },
+          3: { published: futureDate },
+          4: { published: pastDate },
+        };
+
+        delete Entries.oldestEntryDate;
+
+        expect(subject.getEntryIdsToFetch()).to.eql(['2', '4']);
+      });
     });
 
-    xit('runs the picturefill', () => {
+    describe('handleClick', () => {
+      context('clicked on `button.liveblog-new-entries`', () => {
+        it('handles showing new entries', () => {
+          sinon.spy(subject, 'showNewEntries');
+          let newEntry = document.createElement('bulbs-liveblog-entry');
+          newEntry.setAttribute('entry-id', 1);
+          newEntry.setAttribute('entry-published', pastDate);
+          let newEntries = [newEntry];
+          let button = document.createElement('button');
+          button.classList.add('liveblog-new-entries');
+          button.newEntries = newEntries;
 
+          subject.handleClick({
+            target: button,
+          });
+
+          expect(subject.showNewEntries).to.have.been.calledWith(newEntries);
+        });
+      });
+
+      context('clicked on `button.liveblog-entry-reset`', () => {
+        it('handles resetting the selected entry', () => {
+          sinon.spy(subject, 'resetSelectedEntry');
+          let button = document.createElement('button');
+          button.classList.add('liveblog-entry-reset');
+
+          subject.handleClick({
+            target: button,
+          });
+
+          expect(subject.resetSelectedEntry).to.have.been.called;
+        });
+      });
     });
-  });
 
-  describe('resetSelectedEntry', () => {
-    xit('removes the .liveblog-entry-shared class from the entry', () => {
+    describe('showNewEntries', () => {
+      let entry1 = document.createElement('bulbs-liveblog-entry');
+      entry1.setAttribute('entry-id', 1);
+      entry1.setAttribute('entry-published', pastDate);
+      let entry2 = document.createElement('bulbs-liveblog-entry');
+      entry2.setAttribute('entry-id', 2);
+      entry2.setAttribute('entry-published', pastDate);
 
+      it('removes the show new entries button', () => {
+        sinon.spy(subject, 'removeNewEntriesButton');
+        subject.showNewEntries([entry1]);
+        expect(subject.removeNewEntriesButton).to.have.been.called;
+      });
+
+      it('places the entries in the entries container', () => {
+        subject.showNewEntries([entry1, entry2]);
+        expect(subject.entriesContainer[0].contains(entry1)).to.be.true;
+        expect(subject.entriesContainer[0].contains(entry2)).to.be.true;
+      });
+
+      xit('scrolls to the new entries', () => {
+
+      });
+
+      xit('runs the picturefill', () => {
+
+      });
+
+      xit('emits liveblog-content-loaded event', () => {
+
+      });
     });
-  });
 
-  describe('handleBlogUpdate', () => {
-    xit('fetches new content for the given entry ids', () => {
-
+    describe('resetSelectedEntry', () => {
+      it('removes the .liveblog-entry-shared class from the entry', () => {
+        expect(subject.querySelectorAll('.liveblog-entry-shared').length).to.eql(1);
+        subject.resetSelectedEntry();
+        expect(subject.querySelectorAll('.liveblog-entry-shared').length).to.eql(0);
+      });
     });
 
-    xit('records that liveblog is fetching new content', () => {
+    describe('handleBlogUpdate', () => {
+      beforeEach(() => {
+        fetchMock.mock('http://example.org/path/to/liveblog?entry_ids=1,2,3', {});
+      });
 
+      afterEach(() => {
+        fetchMock.restore();
+      });
+
+      it('fetches new content for the given entry ids', () => {
+        subject.handleBlogUpdate([1, 2, 3]);
+        expect(fetchMock.called(
+          'http://example.org/path/to/liveblog?entry_ids=1,2,3'
+        )).to.be.true;
+      });
+
+      it('records that liveblog is fetching new content', () => {
+        subject.handleBlogUpdate([1, 2, 3]);
+        expect(subject.fetching).to.be.true;
+      });
     });
-  });
 
-  describe('handleBlogFetchSuccess', () => {
-    xit('adds the new content to the staging area', () => {
+    describe('handleBlogFetchSuccess', () => {
+      let fetchSuccessContent = `
+        <bulbs-liveblog-entry
+          entry-id="789"
+          entry-published="${pastDate}"
+        >
+        </bulbs-liveblog-entry>
 
+        <bulbs-liveblog-entry
+          entry-id="456"
+          entry-published="${pastDate}"
+        >
+        </bulbs-liveblog-entry>
+      `;
+
+      it('adds the new content to the staging area', () => {
+        subject.handleBlogFetchSuccess(fetchSuccessContent);
+        expect(subject.entryStaging.querySelectorAll('bulbs-liveblog-entry').length).to.eql(2);
+      });
+
+      it('displays a button to show the new entries', () => {
+        expect(subject.querySelector('button.liveblog-new-entries')).to.be.null;
+        subject.handleBlogFetchSuccess(fetchSuccessContent);
+        expect(subject.querySelector('button.liveblog-new-entries')).to.not.be.null;
+      });
+
+      it('records that the liveblog is no longer fetching content', () => {
+        subject.fetching = true;
+        subject.handleBlogFetchSuccess(fetchSuccessContent);
+        expect(subject.fetching).to.be.false;
+      });
     });
 
-    xit('removes <noscript> tags from the new content', () => {
-
+    describe('handleBlogFetchError', () => {
+      it('records that the liveblog is no longer fetching content', () => {
+        subject.fetching = true;
+        subject.handleBlogFetchError();
+        expect(subject.fetching).to.be.false;
+      });
     });
 
-    xit('displays a button to show the new entries', () => {
-
-    });
-
-    xit('records that the liveblog is no longer fetching content', () => {
-
-    });
-  });
-
-  describe('handleBlogFetchError', () => {
-    xit('records that the liveblog is no longer fetching content', () => {
-
-    });
-  });
-
-  describe('removeNewEntriesButton', () => {
-    xit('removes the show new entries button', () => {
-
+    describe('removeNewEntriesButton', () => {
+      it('removes the show new entries button', () => {
+        let button = document.createElement('button');
+        button.classList.add('liveblog-new-entries');
+        subject.entriesContainer[0].appendChild(button);
+        expect(subject.querySelector('button.liveblog-new-entries')).not.to.be.null;
+        subject.removeNewEntriesButton();
+        expect(subject.querySelector('button.liveblog-new-entries')).to.be.null;
+      });
     });
   });
 });
@@ -245,6 +489,8 @@ describe('<bulbs-liveblog-entry>', () => {
     container = document.createElement('div');
     document.body.prepend(container);
     subject = document.createElement('bulbs-liveblog-entry');
+    subject.setAttribute('entry-id', '1234');
+    subject.setAttribute('entry-published', pastDate);
   });
 
   afterEach(() => container.remove());
@@ -258,11 +504,20 @@ describe('<bulbs-liveblog-entry>', () => {
       }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
     });
 
+    it('requires an `entry-published` attribute', () => {
+      subject.removeAttribute('entry-published');
+
+      expect(() => {
+        subject.attachedCallback();
+      }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
+    });
+
     it('registers itself as an entry', () => {
       let entry = document.createElement('bulbs-liveblog-entry');
       entry.setAttribute('entry-id', '1234');
+      entry.setAttribute('entry-published', pastDate);
       container.appendChild(entry);
-      expect(allEntries['1234']).to.not.be.undefined;
+      expect(Entries.all['1234']).to.not.be.undefined;
     });
   });
 
@@ -270,10 +525,11 @@ describe('<bulbs-liveblog-entry>', () => {
     it('unregisters itself as an entry', () => {
       let entry = document.createElement('bulbs-liveblog-entry');
       entry.setAttribute('entry-id', '1234');
+      entry.setAttribute('entry-published', pastDate);
       container.appendChild(entry);
-      expect(allEntries['1234']).to.not.be.undefined;
+      expect(Entries.all['1234']).to.not.be.undefined;
       entry.remove();
-      expect(allEntries['1234']).to.be.undefined;
+      expect(Entries.all['1234']).to.be.undefined;
     });
   });
 });
