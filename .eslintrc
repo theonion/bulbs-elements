@@ -10,6 +10,8 @@
     "expect": false,
     "assert": false,
     "sinon": false,
+    "xdescribe": false,
+    "xit": false,
     "ga": false,
     "$": false,
     "jQuery": false,
