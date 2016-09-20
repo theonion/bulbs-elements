@@ -93,8 +93,7 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
-
-    this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER
+    this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     this.analyticsManager = window.BULBS_ELEMENTS_ANALYTICS_MANAGER;
     this.element = element;
     this.options = defaults(options, DEFAULTS);
