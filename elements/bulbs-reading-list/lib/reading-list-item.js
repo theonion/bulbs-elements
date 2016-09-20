@@ -95,7 +95,6 @@ export default class ReadingListItem {
 
   isWithinViewThreshold (scrollPosition = 0) {
     let difference = this.articleElement.getBoundingClientRect().top - this.loadDistanceThreshold;
-
     return difference <= scrollPosition;
   }
 

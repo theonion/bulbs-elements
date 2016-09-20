@@ -4,10 +4,7 @@ import {
   removeFixtures,
 } from 'bulbs-elements/test/fixtures';
 
-// Not sure why these tests aren't passing but
-// I don't have time to figure out why Travis
-// doesn't like them
-xdescribe('<progress-bar>', () => {
+describe('<progress-bar>', () => {
   let subject;
   let sandbox;
   let fixtureContainer;
@@ -15,6 +12,7 @@ xdescribe('<progress-bar>', () => {
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     subject = document.createElement('progress-bar');
+    document.body.append(subject);
     subject.setAttribute('progress', '35');
     fixtureContainer = appendFixtureContainer();
     fixtureContainer.appendChild(subject);

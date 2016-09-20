@@ -24,6 +24,8 @@ describe('ReadingListItem', () => {
     articleElement.dataset.id = '1';
     articleElement.dataset.href = 'test-url';
     articleElement.dataset.title = 'Test Article';
+    document.body.appendChild(menuElement);
+    document.body.appendChild(articleElement);
     subject = new ReadingListItem(menuElement, articleElement, 0);
   });
 
@@ -312,11 +314,13 @@ describe('ReadingListItem', () => {
 
   describe('isWithinViewThreshold', () => {
     it('returns true when the top of the articleElement is within the load threshold distance', () => {
+      sandbox.stub(subject.articleElement, 'getBoundingClientRect').returns({ top: 100 });
       expect(subject.isWithinViewThreshold(0)).to.equal(true);
     });
 
     it('defaults to 0 when no scroll position is passed', () => {
       subject.loadDistanceThreshold = 0;
+      sandbox.stub(subject.articleElement, 'getBoundingClientRect').returns({ top: 0 });
       expect(subject.isWithinViewThreshold()).to.equal(true);
     });
   });
