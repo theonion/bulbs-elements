@@ -2,6 +2,7 @@
 import { defaults } from 'lodash';
 import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
+import { getAnalyticsManager } from 'bulbs-elements/util';
 
 velocity
   .RegisterUI('transition.turnPageIn', {
@@ -94,7 +95,7 @@ export default class Clickventure {
     let hash = window.location.hash;
 
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
-    this.analyticsManager = window.BULBS_ELEMENTS_ANALYTICS_MANAGER;
+    this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
     this.nodeLinkButtons = this.element.find('.clickventure-node-link-button');
