@@ -23,8 +23,7 @@ export default function Root (props) {
         video={props.video}
         actions={props.actions}
         enablePosterMeta={props.enablePosterMeta}
-        disableMetaLink={props.disableMetaLink}
-        mobileTitle={props.mobileTitle}/>
+        disableMetaLink={props.disableMetaLink}/>
     </div>
   );
 }
@@ -35,7 +34,6 @@ Root.propTypes = {
   controller: PropTypes.object.isRequired,
   disableMetaLink: PropTypes.bool,
   enablePosterMeta: PropTypes.bool,
-  mobileTitle: PropTypes.string,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,

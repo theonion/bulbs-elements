@@ -77,6 +77,16 @@ bulbs-video {
 
   .bulbs-video-poster-overlay {
     position: absolute;
+    bottom: 0;
+    left: 0;
+
+    .bulbs-video-meta-series-name {
+      width: 300px;
+    }
+
+    .bulbs-video-meta-title{
+      width: 425px;
+    }
   }
 
   .bulbs-video-cover,

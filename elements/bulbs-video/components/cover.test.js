@@ -25,12 +25,10 @@ describe('<bulbs-video> <Cover>', function () {
     let imageId = 394839;
     let posterUrl = `/video-poster-url/${imageId}/whatever.png`;
     let disableMetaLink = false;
-    let mobileTitle = '';
 
     beforeEach(() => {
       props = {
         disableMetaLink,
-        mobileTitle,
         video: Object.assign({}, video, {
           poster_url: posterUrl,
         }),
@@ -60,8 +58,7 @@ describe('<bulbs-video> <Cover>', function () {
       expect(subject).to.not.contain(
         <VideoMetaRoot
           video={props.video}
-          disableLink={disableMetaLink}
-          mobileTitle={mobileTitle}/>
+          disableLink={disableMetaLink}/>
       );
     });
 
@@ -71,8 +68,7 @@ describe('<bulbs-video> <Cover>', function () {
       expect(subject).to.contain(
         <VideoMetaRoot
           video={props.video}
-          disableLink={disableMetaLink}
-          mobileTitle={mobileTitle}/>
+          disableLink={disableMetaLink}/>
       );
     });
 
