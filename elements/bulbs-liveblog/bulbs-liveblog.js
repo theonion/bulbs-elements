@@ -6,7 +6,7 @@ import 'firebase/database';
 import scrollToElement from 'scroll-to-element';
 
 function parseEntry (entry) {
-  if ('published' in entry) {
+  if ('published' in entry && entry.published !== false) {
     entry.published = new Date(Date.parse(entry.published));
   }
 
@@ -43,6 +43,7 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     Entries.all[this.getAttribute('entry-id')] = thisEntry;
 
     if (!Entries.oldestEntryDate || thisEntry.published < Entries.oldestEntryDate) {
+      this.debug('new oldestEntryDate', thisEntry.published);
       Entries.oldestEntryDate = thisEntry.published;
     }
 
@@ -174,8 +175,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.debug('getEntryIdsToFetch', Object.keys(this.entriesData), Object.keys(Entries.all));
     Object.keys(this.entriesData).forEach((entryId) => {
       let entry = this.entriesData[entryId];
-      if (entry.published < now && !Entries.all[entryId]) {
-        this.debug('getEntryIdsToFetch', entry.published, entryId, Entries.oldestEntryDate);
+      if (entry.published && entry.published < now && !Entries.all[entryId]) {
+        this.debug('getEntryIdsToFetch', entryId, '>= oldestEntryDate', entry.published >= Entries.oldestEntryDate, 'entry.published', entry.published, 'oldestEntryDate', Entries.oldestEntryDate);
         if (Entries.oldestEntryDate) {
           if (entry.published >= Entries.oldestEntryDate) {
             entryIds.push(entryId);
