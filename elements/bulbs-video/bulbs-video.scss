@@ -88,13 +88,26 @@ bulbs-video {
   }
 
   .bulbs-video-cover {
-    background: black;
     cursor: pointer;
     height: 100%;
     width: 100%;
+    &:before {
+      background: linear-gradient(to bottom, blue, red);
+      content: '';
+      display: block;
+      height: 50%;
+      position: relative;
+      width: 100%;
+    } 
     &:hover {
       .bulbs-video-play-button {
         opacity: 1;
+        .circle {
+          opacity: 1;
+        }
+        .circle-border {
+          fill: #000000;
+        }
       }
     }
   }
