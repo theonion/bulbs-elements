@@ -10,8 +10,7 @@ class BulbsEllipsize extends BulbsHTMLElement {
 
     let lineCount = parseInt(this.getAttribute('line-count'));
 
-    debugger;
-    $(this).truncate({ lines: {lineCount} });
+    $(this).truncate({ lines: lineCount });
   }
 };
 

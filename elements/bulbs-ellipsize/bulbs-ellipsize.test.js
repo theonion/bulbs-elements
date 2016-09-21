@@ -16,23 +16,12 @@ describe('bulbs-ellipsize', () => {
     element.remove();
   });
 
-  it('requires a line-count attribute on element', () => {
-    element.removeAttribute('line-count');
-    setImmediate(() => {
-      expect(() => {
-        document.body.appendChild(element)
-      }).to.throw('BulbsEllipsize: Expects a line-count attribute')
-    });
-  });
-
   it('it truncates multi-line text', () => {
-    let expected = 'this is a really really long st...';
     element.style.width = '100px';
     element.style.display = 'block';
     element.style.lineHeight = '10px';
-    setImmediate(() => {
-      document.body.appendChild(element)
-    });
-    expect(element.textContent).to.eql(expected);
+    document.body.appendChild(element)
+    element.attachedCallback();
+    expect(element.clientHeight).to.eql(20)
   });
 });
