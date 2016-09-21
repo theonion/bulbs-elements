@@ -36,23 +36,6 @@ rail-player {
   display: flex;
   flex-direction: row;
   padding: 8px 0;
-
-  .bulbs-video-play-button {
-    height: 2em;
-    margin-left: 0;
-    margin-right: 1em;
-    position: relative;
-    transform: translateY(5px);
-
-    circle {
-      fill: #333333;
-    }
-
-    polygon {
-      fill: #EEEEEE;
-    }
-
-  }
 }
 
 .rail-player-logo {
