@@ -8,7 +8,6 @@ import VideoRequest from '../../fields/video-request';
 import RailPlayerRoot from './components/root';
 
 import './rail-player.scss';
-import '../../bulbs-video-play-button.scss';
 
 export default class RailPlayer extends BulbsElement {
   initialDispatch () {
