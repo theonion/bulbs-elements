@@ -19,7 +19,12 @@ export default function Root (props) {
 
   return (
     <div className={className}>
-      <Cover video={props.video} actions={props.actions}/>
+      <Cover
+        video={props.video}
+        actions={props.actions}
+        enablePosterMeta={props.enablePosterMeta}
+        disableMetaLink={props.disableMetaLink}
+        mobileTitle={props.mobileTitle}/>
     </div>
   );
 }
@@ -28,6 +33,9 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
+  disableMetaLink: PropTypes.bool,
+  enablePosterMeta: PropTypes.bool,
+  mobileTitle: PropTypes.string,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
