@@ -4,8 +4,16 @@ import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 import VideoMetaRoot from '../elements/meta/components/root';
 
 export default function Cover (props) {
-  let { video, actions, disableMetaLink, mobileTitle } = props;
+  let { video, actions, enablePosterMeta, disableMetaLink, mobileTitle } = props;
   let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
+  let metaElement;
+
+  if (enablePosterMeta) {
+    metaElement = <VideoMetaRoot
+                    video={video}
+                    disableLink={disableMetaLink}
+                    mobileTitle={mobileTitle}/>;
+  }
 
   return (
     <div
@@ -20,10 +28,7 @@ export default function Cover (props) {
       />
       <div className='bulbs-video-poster-overlay'>
         <VideoPlayButton/>
-        <VideoMetaRoot
-          video={video}
-          disableLink={disableMetaLink}
-          mobileTitle={mobileTitle}/>
+        {metaElement}
       </div>
     </div>
   );
@@ -32,6 +37,7 @@ export default function Cover (props) {
 Cover.propTypes = {
   actions: PropTypes.object.isRequired,
   disableMetaLink: PropTypes.bool,
+  enablePosterMeta: PropTypes.bool,
   mobileTitle: PropTypes.string,
   video: PropTypes.object.isRequired,
 };

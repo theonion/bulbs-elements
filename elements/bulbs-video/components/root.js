@@ -22,6 +22,7 @@ export default function Root (props) {
       <Cover
         video={props.video}
         actions={props.actions}
+        enablePosterMeta={props.enablePosterMeta}
         disableMetaLink={props.disableMetaLink}
         mobileTitle={props.mobileTitle}/>
     </div>
@@ -33,6 +34,7 @@ Root.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   disableMetaLink: PropTypes.bool,
+  enablePosterMeta: PropTypes.bool,
   mobileTitle: PropTypes.string,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,

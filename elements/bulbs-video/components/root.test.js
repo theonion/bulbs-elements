@@ -29,6 +29,7 @@ describe('<bulbs-video> <Root>', () => {
     let video = {};
     let controller = {};
     let twitterHandle = 'twitterHandle';
+    let enablePosterMeta = true;
     let disableMetaLink = false;
     let mobileTitle;
 
@@ -73,6 +74,7 @@ describe('<bulbs-video> <Root>', () => {
         props = {
           actions,
           video,
+          enablePosterMeta,
           disableMetaLink,
           mobileTitle,
           controller: { revealed: false },
@@ -89,6 +91,7 @@ describe('<bulbs-video> <Root>', () => {
           <Cover
             video={video}
             actions={actions}
+            enablePosterMeta={enablePosterMeta}
             disableMetaLink={disableMetaLink}
             mobileTitle={mobileTitle}/>
         );
