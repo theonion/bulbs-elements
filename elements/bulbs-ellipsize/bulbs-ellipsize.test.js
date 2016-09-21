@@ -5,25 +5,15 @@ describe('bulbs-ellipsize', () => {
 
   beforeEach(() => {
     element = document.createElement('bulbs-ellipsize');
-    element.setAttribute('length', 0);
     element.setAttribute('line-count', 2);
-    element.setAttribute('text',  `
-    this is a really really long string it goes on for
-    a long ass time, just keeps going. It will stop
-    eventually, but not until the end of this line
-    `);
+    element.innerHTML = `
+      this is a really really long string it goes on for
+      a long ass time, just keeps going. It will stop
+      eventually, but not until the end of this line
+    `;
   });
   afterEach(() => {
     element.remove();
-  });
-
-  it('requires a text attribute on element', () => {
-    element.removeAttribute('text');
-    setImmediate(() => {
-      expect(() => {
-        document.body.appendChild(element)
-      }).to.throw('BulbsEllipsize: Expects a text attribute')
-    });
   });
 
   it('requires a line-count attribute on element', () => {
@@ -36,9 +26,13 @@ describe('bulbs-ellipsize', () => {
   });
 
   it('it truncates multi-line text', () => {
-    document.body.appendChild(element);
+    let expected = 'this is a really really long st...';
     element.style.width = '100px';
-    element.style.height = '100px';
-    element.fontSize = '10px';
+    element.style.display = 'block';
+    element.style.lineHeight = '10px';
+    setImmediate(() => {
+      document.body.appendChild(element)
+    });
+    expect(element.textContent).to.eql(expected);
   });
 });
