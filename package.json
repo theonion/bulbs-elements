@@ -127,6 +127,7 @@
   "dependencies": {
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
+    "react-truncate": "^1.1.4",
     "yo": "^1.6.0"
   }
 }
