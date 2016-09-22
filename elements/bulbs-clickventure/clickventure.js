@@ -98,9 +98,10 @@ export default class Clickventure {
     this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
+    this.nodeClickCount = 0;
     this.nodeLinkButtons = this.element.find('.clickventure-node-link-button');
     this.restartButton = this.element.find('.clickventure-node-finish-links-restart');
-    this.nodeClickCount = 0;
+    this.sideAd = $('.dfp-slot-sidebar-primary');
 
     this.nodeLinkButtons.each((i, el) => {
       let $element = $(el);
@@ -222,8 +223,8 @@ export default class Clickventure {
   }
 
   adRefresh () {
-    if (this.nodeClickCount % 5 === 0) {
-      this.adsManager.reloadAds();
+    if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
+      this.adsManager.reloadAds(this.sideAd);
     }
   }
 }
