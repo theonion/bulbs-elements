@@ -98,7 +98,7 @@ export default class Clickventure {
     this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
-    this.nodeClickCount = 0;
+    this.nodeClickCount = 1;
     this.nodeLinkButtons = this.element.find('.clickventure-node-link-button');
     this.restartButton = this.element.find('.clickventure-node-finish-links-restart');
     this.sideAd = $('.dfp-slot-sidebar-primary');
