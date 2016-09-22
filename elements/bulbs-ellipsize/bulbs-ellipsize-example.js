@@ -4,10 +4,9 @@ export default {
     'Dot Dot Dot': {
       render() {
         return `
-          <bulbs-ellipsize
-            line-count="3"
-            text="abcsdadlfjkdalf"
-          />
+          <bulbs-ellipsize line-count="3">
+            abcsdadlfjkdalf"
+          </bulbs-ellipsize>
         `;
         },
       },

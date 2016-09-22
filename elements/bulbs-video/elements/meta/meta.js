@@ -16,6 +16,7 @@ export default class VideoMeta extends BulbsElement {
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
+      this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
       this.store.actions.fetchVideo(this.props.src);
     }
   }

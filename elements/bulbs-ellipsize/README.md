@@ -7,7 +7,7 @@ Attributes
 
 ```html
 <bulbs-ellipsize line-count="3">
- Example text Example textExample textExample textExample text
+  Example text
 </bulbs-ellipsize>
 ```
 

@@ -31,13 +31,13 @@ export default function VideoMetaRoot (props) {
 
         { props.campaignUrl ? <VideoMetaCampaign {...props}/> : null }
 
-        <h1 className='bulbs-video-meta-title'>
+        <bulbs-ellipsize class='bulbs-video-meta-title' line-count="3">
           {props.video.title}
-        </h1>
+        </bulbs-ellipsize>
 
-        <h1 className='bulbs-video-mobile-title'>
+        <bulbs-ellipsize class='bulbs-video-mobile-title' line-count="3">
           {props.mobileTitle}
-        </h1>
+        </bulbs-ellipsize>
       </div>
     </div>
   );
