@@ -9,6 +9,7 @@ import ControllerField from './fields/controller';
 import BulbsVideoRoot from './components/root';
 
 import './bulbs-video.scss';
+import './bulbs-video-play-button.scss';
 import './player-skin-seven.scss';
 import './player-skin-overrides.scss';
 import './endcard.scss';
@@ -65,6 +66,7 @@ export default class BulbsVideo extends BulbsElement {
         targetHostChannel={this.props.targetHostChannel}
         targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
+        enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
         disableMetaLink={typeof this.props.disableMetaLink === 'string'}
         mobileTitle={this.props.mobileTitle}
         muted={typeof this.props.muted === 'string'}
@@ -86,6 +88,7 @@ Object.assign(BulbsVideo, {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
     disableMetaLink: PropTypes.string,
+    enablePosterMeta: PropTypes.string,
     mobileTitle: PropTypes.string,
     muted: PropTypes.string,
     noEndcard: PropTypes.string,
