@@ -81,6 +81,14 @@ bulbs-video {
     position: absolute;
     right: 0;
     top: 0;
+
+    .bulbs-video-meta-series-name {
+      width: 300px;
+    }
+
+    .bulbs-video-meta-title{
+      width: 325px;
+    }
   }
 
   .bulbs-video-cover,
@@ -106,7 +114,7 @@ bulbs-video {
       position: absolute;
       width: 100%;
       z-index: 1;
-    } 
+    }
     &:hover {
       .bulbs-video-play-button {
         opacity: 1;

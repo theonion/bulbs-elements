@@ -31,7 +31,6 @@ describe('<bulbs-video> <Root>', () => {
     let twitterHandle = 'twitterHandle';
     let enablePosterMeta = true;
     let disableMetaLink = false;
-    let mobileTitle;
 
     context('without video', () => {
       beforeEach(() => {
@@ -76,7 +75,6 @@ describe('<bulbs-video> <Root>', () => {
           video,
           enablePosterMeta,
           disableMetaLink,
-          mobileTitle,
           controller: { revealed: false },
         };
         subject = shallow(<Root {...props}/>);
@@ -92,8 +90,7 @@ describe('<bulbs-video> <Root>', () => {
             video={video}
             actions={actions}
             enablePosterMeta={enablePosterMeta}
-            disableMetaLink={disableMetaLink}
-            mobileTitle={mobileTitle}/>
+            disableMetaLink={disableMetaLink}/>
         );
       });
     });

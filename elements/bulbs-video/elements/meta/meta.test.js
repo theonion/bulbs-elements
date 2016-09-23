@@ -14,7 +14,6 @@ import VideoField from '../../fields/video';
 describe('<bulbs-video-meta>', () => {
   let subject;
   let props;
-  let mobileTitle;
   let disableLink = false;
 
   it('has a displayName', () => {
@@ -65,7 +64,6 @@ describe('<bulbs-video-meta>', () => {
   describe('render', () => {
     it('renders a <VideoMetaRoot/>', () => {
       props = {
-        mobileTitle,
         shareEmailMessage: 'message',
         shareTrackCatagory: 'category',
         shareTwitterHandle: 'handle',
