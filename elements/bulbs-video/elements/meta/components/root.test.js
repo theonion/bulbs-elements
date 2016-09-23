@@ -40,9 +40,9 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
 
     it('renders a title', () => {
       expect(subject).to.contain(
-        <h1 className='bulbs-video-meta-title'>
+        <bulbs-ellipsize class='bulbs-video-meta-title' line-count='3'>
           {video.title}
-        </h1>
+        </bulbs-ellipsize>
       );
     });
 

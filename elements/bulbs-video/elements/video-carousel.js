@@ -81,10 +81,12 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     if (item) {
       let anchor = item.querySelector('a');
 
-      if (item && !anchor) {
-        event.preventDefault();
-        this.selectItem(item);
-        this.applyState();
+      event.preventDefault();
+      this.selectItem(item);
+      this.applyState();
+
+      if (anchor) {
+        history.pushState({}, '', anchor.href);
       }
     }
   }

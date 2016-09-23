@@ -118,9 +118,9 @@ describe('<bulbs-video-summary>', () => {
 
       it('renders a summary title', () => {
         expect(subject).to.contain(
-          <h3 className='bulbs-video-summary-title'>
+          <bulbs-ellipsize class='bulbs-video-summary-title' line-count='3'>
             {video.title}
-          </h3>
+          </bulbs-ellipsize>
         );
       });
     });

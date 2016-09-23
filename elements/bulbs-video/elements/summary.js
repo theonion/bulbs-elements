@@ -35,9 +35,9 @@ export function VideoSummaryView (props) {
       <h2 className='bulbs-video-series-name'>
         {video.series_name || video.channel_name}
       </h2>
-      <h3 className='bulbs-video-summary-title'>
+      <bulbs-ellipsize class='bulbs-video-summary-title' line-count='3'>
         {video.title}
-      </h3>
+      </bulbs-ellipsize>
     </div>
   );
 }
