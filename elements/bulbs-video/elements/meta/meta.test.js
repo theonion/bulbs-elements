@@ -14,6 +14,7 @@ import VideoField from '../../fields/video';
 describe('<bulbs-video-meta>', () => {
   let subject;
   let props;
+  let disableLink = false;
 
   it('has a displayName', () => {
     expect(BulbsVideoMeta.displayName).to.eq('BulbsVideoMeta');
@@ -70,7 +71,7 @@ describe('<bulbs-video-meta>', () => {
       let component = shallow(<BulbsVideoMeta {...props}/>);
       component.setState({ video });
       expect(component.equals(
-        <VideoMetaRoot {...props} video={video}/>
+        <VideoMetaRoot {...props} video={video} disableLink={disableLink} />
       )).to.be.true;
     });
   });

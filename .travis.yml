@@ -1,37 +1,13 @@
-
-language: node_js
-node_js:
-- '5.9'
-sudo: false
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
+language: generic
+sudo: required
+services:
+    - docker
 before_script:
-- bower install
-- npm install
-- 'export CHROME_BIN=chromium-browser'
-- 'export DISPLAY=:99.0'
-- 'sh -e /etc/init.d/xvfb start'
+    - scripts/docker-build
 script:
-- $RUNNER
-cache:
-  directories:
-  - node_modules
-  - bower_components
+    - docker run -e BROWSER_STACK_USERNAME=${BROWSER_STACK_USERNAME} -e BROWSER_STACK_ACCESS_KEY=${BROWSER_STACK_ACCESS_KEY} bulbs-elements scripts/ci
 env:
-  matrix:
-  - RUNNER=scripts/ci BROWSER=bs_chrome_50
-  - RUNNER=scripts/ci BROWSER=bs_firefox_47
-  - RUNNER=scripts/ci BROWSER=bs_safari_8
-  - RUNNER=scripts/ci BROWSER=bs_ie_11
-  - RUNNER=scripts/lint
-  # Jun 26, 2016 (looks like the chrome runner is crashing on travis)
-  # - RUNNER=scripts/report-coverage
   global:
-  - CXX=g++-4.8
   - secure: XxbtSW9aolp50p4opm5VRjY3v3xs5+yy9jylCDaFBw8CHNoAye/huhf0EoUYeiBTPS8mdM7ZMFlzBn97TSAHPnIak0/u0Js2B7trQOTLRHVbaW7/jXlgZyCJ8Ps40AF1UuJgSgR0WX1Zo53V0T1wunB/1hk/JtCyP3plZoS5EAWuMwDuQJlvM/UAjy9KcjJ6yD3Mzg8GW3vyWVybPx73aObFMf86B92TnoAHcSm5/ulx5s2Tj+O5XsDmu5Kj+u+Vqc+emr0ScIPTjv2H6i7qAyLxPBiRTnF4Fr7NfxjtaQwdgiqJ7w0BcJ+ZkIEd/CIU8NwRp+WTBqZT4485keJxLs6r6cYNx/AOJNyfO9YNx55Ut86kQIL3RdD6ys/6PFgLdVw/GV8xJF94czztuCFn+9IrRF7BT39nvDhb7o+egpCFKVtV7SyMThfo5gRA5u7kHEY3BgKOYkxfN07mSB4IVrbSqE4PiE0VxN0cIC9w0GqwSfDhS1gaLaWUzxESC3inAeqZ1DYzwCL3SVfKJaXOC2bWYVhXN0TOEetndU6nyWClbNazeLjNWPEX4wdvn60hmp7Ewz2gvtSUjMJfZx3ls4f4l/3vAITknEg+u0TjlKpCCT/a5B7uWb8qYGJKYCDb69caMnsTj5/gz/OFH009XIRIf2nOv98gJYzAj+FZTV4=
   - secure: a4oUYoPm3w1nywasc9hb1qP4bGPRjN1mj8V5K9l0hIX3/H0984sA+Zk9SbRuIqnLDcuRrpzMq+qYC4AUe6gIIAfo6bZQ9GiEvrczULWdHbK84fNDXNRR6NHXBmFnybwLnDqJ1/W4IkaAwIvllAgoGLVXziq4r+ZzxBdy9asS7DOvBUyi/AUnL3s2mbIXRNtD11XmTn257UsbFAJlMRPrQFJa/wpSejUPGn7pO9OlGB8kIwaSDY2oAgF07rsweidaZZfU+zlarqd9F5KGVL1GmiWCSBMn+JXDKxQZoxyW8H7h4frc0r6x5C/3YP07heN3B+s17CkgCQUioOtto+25jIuW37zsiPJRPfxmY53wMjg3Rjl2iBL+vc13Ujz2SRq3KJZgmiQJJPnK1yRo+taXiChclFX8Td+JDkKkQSrPGrGNaORzDzUH2COyXphL7Q4lV5RkpqyOnXI+Ti05usOsQUMlYNtQepfbn1neEEcFyzVhWUxT09KMrVJvlwZLMOqS4dYcqmCtf0He76ypS+QAGUGDSLXCgKZrXVApqAYWv9eP+zHXc0k2WZBGsH+Fn6I59YKsNDMpHxvpxdNdMimgWYAaehZLiHPuWHJGpDxTfYSDdpCWfbwMjFHxE/pruF9cgBiXS2wU24Mosey8y2s/9haG9vSVzlhbMNr+XXwF4Wk=
   - secure: I3r2kuh1wipl/WMIgEPlL/k6Q268Cmtd7EhZ/ibPF9p5tCCMBG9dLWlabS3hXRYlfJSG5Xl6o20HR8s9d1QoPXYGIdKURwErBYSnyj8x6q0892udoygyr5KWgCLnhO14S9Ox8YdZGRFzayPLnh9oIRi8ikCIJzIPX0b7U/uD/B9foIqq4ues5m8gWg9v8XSuiKMoIVyt8zQFNRhgxFe3cSHNjAfKTIrX6qcn09VGRri3t8aOM/vWMvfwnPAaJS9QdRHfbVSqF/MRi/VJkuBkOpuXpelsMS9ulKYupGkcLwqxnVv0j3omS44yrj6zZfDfEJrsl/60WVKGz3fpK46shikObeNnlA4kRPhdIt9xdlX2tCPyDsVBm4FZEdo6WU3nwnej9+7kOePtCT3UfRdLVx5GcwwC5Rs6DehRUgfXE22PhdPxO6eQ78jXf4hulU/ht9xrQelQlSTJPQ0qV4etxYJSUxZVS92Xk/qyZiIjGgXHLi7HVaD/MCEFtQjCgm/b+Et1+L2bf18Z55f/7gyzfm6oRwDnvpg0edFgpOuAj/Y/z1JQHmipFO5Uu/JfsJF7xZH76uTcIPhcKsMiUp1zxQHnMCZ2eiI/jsHnn+DfGK9OU1fvQh75S7nn5ptwM9XXjMvQuIvJegs6KwALPwRT9tEQlT/xs/YJlt94i5huaVA=

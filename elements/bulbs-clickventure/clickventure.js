@@ -2,6 +2,7 @@
 import { defaults } from 'lodash';
 import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
+import { getAnalyticsManager } from 'bulbs-elements/util';
 
 velocity
   .RegisterUI('transition.turnPageIn', {
@@ -93,11 +94,14 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
-    this.adsManager = window.BULBS_ELEMENTS_ANALYTICS_MANAGER;
+    this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
+    this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
+    this.nodeClickCount = 1;
     this.nodeLinkButtons = this.element.find('.clickventure-node-link-button');
     this.restartButton = this.element.find('.clickventure-node-finish-links-restart');
+    this.sideAd = $('.dfp-slot-sidebar-primary');
 
     this.nodeLinkButtons.each((i, el) => {
       let $element = $(el);
@@ -106,8 +110,9 @@ export default class Clickventure {
         let targetNode = $dataContainer.data('targetNode');
         let transitionName = $dataContainer.data('transition');
 
+        clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.adsManager.trackPageView(false, transitionName);
+        clickventure.analyticsManager.trackPageView(false, transitionName);
       });
     });
 
@@ -193,6 +198,7 @@ export default class Clickventure {
         this.element.trigger('clickventure-page-change-complete', [this]);
       }).bind(this),
     });
+    this.adRefresh();
   }
 
   gotoNode (nodeId, transitionName) {
@@ -213,6 +219,12 @@ export default class Clickventure {
     }
     else {
       this.showNewNode(nodeId, transition);
+    }
+  }
+
+  adRefresh () {
+    if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
+      this.adsManager.reloadAds(this.sideAd);
     }
   }
 }

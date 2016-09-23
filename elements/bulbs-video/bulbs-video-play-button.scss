@@ -1,0 +1,19 @@
+.bulbs-video-play-button {
+  bottom: 10px;
+  height: 34%;
+  left: 10px;
+  opacity: .8;
+  position: absolute;
+  width: auto;
+  z-index: 1;
+  .circle {
+    fill: #000000;
+    opacity: 0.6;
+  }
+  .circle-border {
+    fill: #FFFFFF;
+  }
+  .play-icon {
+    fill: #FFFFFF;
+  }
+}

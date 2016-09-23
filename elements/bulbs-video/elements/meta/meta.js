@@ -21,7 +21,10 @@ export default class VideoMeta extends BulbsElement {
   }
 
   render () {
-    return <VideoMetaRoot {...this.props} video={this.state.video}/>;
+    return <VideoMetaRoot
+              {...this.props}
+              disableLink={typeof this.props.disableMetaLink === 'string'}
+              video={this.state.video}/>;
   }
 }
 
@@ -32,11 +35,12 @@ Object.assign(VideoMeta, {
     videoRequest: VideoRequest,
   },
   propTypes: {
-    campaignPlacement: PropTypes.string.isRequired,
-    campaignPreamble: PropTypes.string.isRequired,
-    campaignTrackAction: PropTypes.string.isRequired,
-    campaignUrl: PropTypes.string.isRequired,
-    titleTrackAction: PropTypes.string.isRequired,
+    campaignPlacement: PropTypes.string,
+    campaignPreamble: PropTypes.string,
+    campaignTrackAction: PropTypes.string,
+    campaignUrl: PropTypes.string,
+    disableMetaLink: PropTypes.string,
+    titleTrackAction: PropTypes.string,
   },
 });
 
