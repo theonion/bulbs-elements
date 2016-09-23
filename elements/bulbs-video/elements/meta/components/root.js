@@ -34,10 +34,6 @@ export default function VideoMetaRoot (props) {
         <h1 className='bulbs-video-meta-title'>
           {props.video.title}
         </h1>
-
-        <h1 className='bulbs-video-mobile-title'>
-          {props.mobileTitle}
-        </h1>
       </div>
     </div>
   );
@@ -51,7 +47,6 @@ VideoMetaRoot.propTypes = {
   campaignTrackAction: PropTypes.string,
   campaignUrl: PropTypes.string,
   disableLink: PropTypes.bool,
-  mobileTitle: PropTypes.string,
   titleTrackAction: PropTypes.string,
   video: PropTypes.object,
 };

@@ -40,7 +40,6 @@ Object.assign(VideoMeta, {
     campaignTrackAction: PropTypes.string,
     campaignUrl: PropTypes.string,
     disableMetaLink: PropTypes.string,
-    mobileTitle: PropTypes.string,
     titleTrackAction: PropTypes.string,
   },
 });
