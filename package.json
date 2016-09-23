@@ -112,6 +112,7 @@
     "stylelint": "^4.0.0",
     "stylelint-config-standard": "^3.0.0",
     "topojson": "1.6.9",
+    "truncate.js": "^1.1.2",
     "url": "^0.11.0",
     "van": "0.0.4",
     "velocity-animate": "^1.2.3",
@@ -128,7 +129,6 @@
   "dependencies": {
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
-    "truncate.js": "^1.1.2",
     "yo": "^1.6.0"
   }
 }
