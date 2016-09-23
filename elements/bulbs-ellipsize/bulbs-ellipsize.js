@@ -1,6 +1,6 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
-import Truncate from 'truncate.js';
+import truncate from 'truncate.js'; // eslint-disable-line no-unused-vars
 
 class BulbsEllipsize extends BulbsHTMLElement {
   attachedCallback () {
@@ -11,13 +11,12 @@ class BulbsEllipsize extends BulbsHTMLElement {
     this.truncate();
   }
 
-
   truncate () {
-    let lineCount = parseInt(this.getAttribute('line-count'));
+    let lineCount = parseInt(this.getAttribute('line-count'), 10);
 
     $(this).truncate({ lines: lineCount, ellipsis: '...' });
   }
-};
+}
 
 registerElement('bulbs-ellipsize', BulbsEllipsize);
 export default BulbsEllipsize;

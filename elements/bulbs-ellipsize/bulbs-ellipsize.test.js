@@ -19,18 +19,24 @@ describe('bulbs-ellipsize', () => {
     element.remove();
   });
 
-  it('it truncates multi-line text', () => {
-    document.body.appendChild(element)
-    expect(element.clientHeight).to.eql(20)
+  it('it truncates multi-line text', (done) => {
+    document.body.appendChild(element);
+    setImmediate(() => {
+      expect(element.clientHeight).to.eql(20);
+      done();
+    });
   });
 
-  it('it updates when the dom updates', () => {
+  it('it updates when the dom updates', (done) => {
     element.innerHTML = `
       this is a different string, still pretty long
       but also very different. Not the same as the
       first string.
     `;
-    document.body.appendChild(element)
-    expect(element.clientHeight).to.eql(20)
+    document.body.appendChild(element);
+    setImmediate(() => {
+      expect(element.clientHeight).to.eql(20);
+      done();
+    });
   });
 });
