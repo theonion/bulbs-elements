@@ -19,15 +19,7 @@ export const Entries = {
   all: {},
 };
 
-const DEBUG = false;
-
 class BulbsLiveblogEntry extends BulbsHTMLElement {
-  debug (...message) {
-    if (DEBUG) {
-      console.log('<bulbs-liveblog-entry>', ...message);
-    }
-  }
-
   attachedCallback () {
     invariant(this.hasAttribute('entry-id'),
        '<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
@@ -43,31 +35,23 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     Entries.all[this.getAttribute('entry-id')] = thisEntry;
 
     if (!Entries.oldestEntryDate || thisEntry.published < Entries.oldestEntryDate) {
-      this.debug('new oldestEntryDate', thisEntry.published);
       Entries.oldestEntryDate = thisEntry.published;
     }
-
-    this.debug('attachedCallback', this.getAttribute('entry-id'));
   }
 
   detachedCallback () {
     delete Entries.all[this.getAttribute('entry-id')];
-    this.debug('detachedCallback', this.getAttribute('entry-id'));
   }
 }
 
 registerElement('bulbs-liveblog-entry', BulbsLiveblogEntry);
 
 class BulbsLiveblog extends BulbsHTMLElement {
-  debug (...message) {
-    if (DEBUG) {
-      console.log('<bulbs-liveblog>', ...message);
-    }
-  }
-
   makeNewEntriesButton () {
     let button = document.createElement('button');
     button.classList.add('liveblog-new-entries');
+    button.setAttribute('data-track-action', 'Alert: Show More');
+    button.setAttribute('data-track-label', '#');
     button.innerHTML = `Show ${this.newEntries.length} New Articles`;
     return button;
   }
@@ -151,20 +135,16 @@ class BulbsLiveblog extends BulbsHTMLElement {
     Object.keys(this.entriesData).forEach((entryId) => {
       parseEntry(this.entriesData[entryId]);
     });
-    this.debug('handleFirebaseValue:', this.entriesData);
     this.handleInterval();
   }
 
   handleInterval () {
-    this.debug('handleInterval');
     if (this.fetching) {
-      this.debug('handleInterval: bailing out: already fetching data');
       return;
     }
 
     let entryIds = this.getEntryIdsToFetch();
     if (entryIds.length) {
-      this.debug('handleInterval: entryIds', entryIds);
       this.handleBlogUpdate(entryIds);
     }
   }
@@ -172,11 +152,9 @@ class BulbsLiveblog extends BulbsHTMLElement {
   getEntryIdsToFetch () {
     let now = new Date();
     let entryIds = [];
-    this.debug('getEntryIdsToFetch', Object.keys(this.entriesData), Object.keys(Entries.all));
     Object.keys(this.entriesData).forEach((entryId) => {
       let entry = this.entriesData[entryId];
       if (entry.published && entry.published < now && !Entries.all[entryId]) {
-        this.debug('getEntryIdsToFetch', entryId, '>= oldestEntryDate', entry.published >= Entries.oldestEntryDate, 'entry.published', entry.published, 'oldestEntryDate', Entries.oldestEntryDate);
         if (Entries.oldestEntryDate) {
           if (entry.published >= Entries.oldestEntryDate) {
             entryIds.push(entryId);
@@ -187,13 +165,13 @@ class BulbsLiveblog extends BulbsHTMLElement {
         }
       }
     });
-    this.debug('getEntryIdsToFetch: return', entryIds);
     return entryIds;
   }
 
   handleClick (event) {
     if (event.target.matches('button.liveblog-new-entries')) {
       this.showNewEntries();
+      this.resetSelectedEntry();
     }
 
     if (event.target.matches('button.liveblog-entry-reset')) {
@@ -206,8 +184,14 @@ class BulbsLiveblog extends BulbsHTMLElement {
     while (this.entryStaging.firstElementChild) {
       this.entriesContainer[0].prepend(this.entryStaging.firstElementChild);
     }
+    let header = document.querySelector('header');
+    let offset;
+    if (header) {
+      offset = header.getBoundingClientRect().bottom;
+    }
     scrollToElement(this.entriesContainer[0].childNodes[0], {
       duration: 250,
+      offset: -offset,
     });
     window.picturefill();
   }
@@ -218,7 +202,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   handleBlogUpdate (entryIds) {
-    this.debug('handleBlogUpdate ', url);
     let url = `${this.getAttribute('liveblog-new-entries-url')}?entry_ids=${entryIds.join(',')}`;
     this.fetching = true;
     fetch(url, { credentials: 'include' })
