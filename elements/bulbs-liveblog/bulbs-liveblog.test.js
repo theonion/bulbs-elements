@@ -1,6 +1,7 @@
 import './bulbs-liveblog';
 import './bulbs-liveblog-entry';
 
+import * as scrollToElement from 'scroll-to-element';
 import fetchMock from 'fetch-mock';
 
 const HTMLCollectionClass = document.getElementsByTagName('a-tag').constructor;
@@ -17,6 +18,7 @@ describe('<bulbs-liveblog>', () => {
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
     window.picturefill = sandbox.spy();
+    sandbox.stub(scrollToElement, 'default');
     subject = document.createElement('bulbs-liveblog');
     subject.setAttribute('firebase-path', 'path/to/liveblog');
     subject.setAttribute('firebase-url', 'http://example.firebaseio.com');
@@ -124,15 +126,15 @@ describe('<bulbs-liveblog>', () => {
 
   describe('setupFirebase', () => {
     xit('creates a firebase ref to the `firebase-path`', () => {
-
+      // not sure how to test the firebase query yet
     });
 
     xit('orders the firebase query by published', () => {
-
+      // not sure how to test the firebase query yet
     });
 
     xit('limits the firebase query to 100 items', () => {
-
+      // not sure how to test the firebase query yet
     });
   });
 
@@ -408,15 +410,22 @@ describe('<bulbs-liveblog>', () => {
       });
 
       xit('scrolls to the new entries', () => {
-
+        // Still not sure how to test this raw exported function
+        subject.showNewEntries();
+        expect(scrollToElement.default).to.have.been.called;
       });
 
-      xit('runs the picturefill', () => {
-
+      xit('scrolls with the offset of the first header element by default', () => {
+        // Still not sure how to test this raw exported function
       });
 
-      xit('emits liveblog-content-loaded event', () => {
+      xit('scrolls with offset of element specified by scroll-offset-selector', () => {
+        // Still not sure how to test this raw exported function
+      });
 
+      it('runs the picturefill', () => {
+        subject.showNewEntries();
+        expect(window.picturefill).to.have.been.called;
       });
     });
 

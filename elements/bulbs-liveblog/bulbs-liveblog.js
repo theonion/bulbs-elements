@@ -3,7 +3,7 @@ import { filterBadResponse } from 'bulbs-elements/util';
 import invariant from 'invariant';
 import firebase from 'firebase/app';
 import 'firebase/database';
-import scrollToElement from 'scroll-to-element';
+import * as scrollToElement from 'scroll-to-element';
 
 function parseEntry (entry) {
   if ('published' in entry) {
@@ -189,11 +189,11 @@ class BulbsLiveblog extends BulbsHTMLElement {
       this.entriesContainer[0].prepend(this.entryStaging.firstElementChild);
     }
     let header = document.querySelector(this.getAttribute('scroll-offset-selector') || 'header');
-    let offset;
+    let offset = 0;
     if (header) {
       offset = header.getBoundingClientRect().bottom;
     }
-    scrollToElement(this.entriesContainer[0].childNodes[0], {
+    scrollToElement.default(this.entriesContainer[0].childNodes[0], {
       duration: 250,
       offset: -offset,
     });
