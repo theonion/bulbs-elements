@@ -126,6 +126,7 @@
     "yo": "^1.6.0"
   },
   "dependencies": {
+    "firebase": "^3.4.0",
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
     "yo": "^1.6.0"
