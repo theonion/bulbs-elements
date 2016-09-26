@@ -6,8 +6,10 @@ let pastDate = new Date((new Date()).getTime() - 10000000000);
 describe('<bulbs-liveblog-entry>', () => {
   let container;
   let subject;
+  let sandbox;
 
   beforeEach((done) => {
+    sandbox = sinon.sandbox.create();
     container = document.createElement('bulbs-liveblog');
     container.setAttribute('firebase-url', 'http://example.firebaseio.com');
     container.setAttribute('firebase-path', 'some-path');
@@ -22,7 +24,10 @@ describe('<bulbs-liveblog-entry>', () => {
     setImmediate(() => done());
   });
 
-  afterEach(() => container.remove());
+  afterEach(() => {
+    sandbox.restore();
+    container.remove();
+  });
 
   describe('attachedCallback', () => {
     it('it requires an `entry-id` attribute', () => {
@@ -49,7 +54,7 @@ describe('<bulbs-liveblog-entry>', () => {
 
     it('emits liveblog-entry-attached event', (done) => {
       let entry = document.createElement('bulbs-liveblog-entry');
-      let eventSpy = sinon.spy();
+      let eventSpy = sandbox.spy();
       entry.setAttribute('entry-id', '1234');
       entry.setAttribute('entry-published', pastDate);
       entry.addEventListener('liveblog-entry-attached', eventSpy);

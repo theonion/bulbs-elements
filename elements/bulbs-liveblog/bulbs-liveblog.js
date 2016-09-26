@@ -31,6 +31,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
     };
   }
 
+  get newEntries () {
+    // IE11 did not like us caching this element collection.
+    //  So we rebuild it whenever we need it.
+    return this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
+  }
+
   attachedCallback () {
     invariant(this.hasAttribute('firebase-path'),
       '<bulbs-liveblog> element MUST specify a `firebase-path` attribute');
@@ -56,7 +62,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.newEntriesButtons = this.getElementsByClassName('liveblog-new-entries');
     this.entryStaging = document.createElement('div');
     this.entryStaging.style.display = 'none';
-    this.newEntries = this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
+
     this.append(this.entryStaging);
 
     this.entriesContainer = this.getElementsByClassName('liveblog-entries');
@@ -153,15 +159,14 @@ class BulbsLiveblog extends BulbsHTMLElement {
     let entryIds = [];
     Object.keys(this.entriesData).forEach((entryId) => {
       let entry = this.entriesData[entryId];
-      if (entry.published && entry.published < now && !this.entriesStore.all[entryId]) {
-        if (this.entriesStore.oldestEntryDate) {
-          if (entry.published >= this.entriesStore.oldestEntryDate) {
-            entryIds.push(entryId);
-          }
-        }
-        else {
-          entryIds.push(entryId);
-        }
+      let entryIsPublished = entry.published && entry.published <= now;
+      let entryIsCached = this.entriesStore.all[entryId];
+      let entryIsOutOfBounds = entry.published
+                                && this.entriesStore.oldestEntryDate
+                                && this.entriesStore.oldestEntryDate > entry.published;
+
+      if (entryIsPublished && !entryIsCached && !entryIsOutOfBounds) {
+        entryIds.push(entryId);
       }
     });
     return entryIds;
@@ -219,7 +224,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
       this.entryStaging.append(parser.firstElementChild);
     }
     this.removeNewEntriesButton();
-    if (this.newEntries.length > 0) {
+    if (this.newEntries.length) {
       let newEntriesButton = this.makeNewEntriesButton();
       this.entriesContainer[0].prepend(newEntriesButton);
     }

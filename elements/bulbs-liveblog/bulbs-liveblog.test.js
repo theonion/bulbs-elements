@@ -12,10 +12,11 @@ let currentDate = new Date();
 describe('<bulbs-liveblog>', () => {
   let container;
   let subject;
-
-  window.picturefill = sinon.spy();
+  let sandbox;
 
   beforeEach((done) => {
+    sandbox = sinon.sandbox.create();
+    window.picturefill = sandbox.spy();
     subject = document.createElement('bulbs-liveblog');
     subject.setAttribute('firebase-path', 'path/to/liveblog');
     subject.setAttribute('firebase-url', 'http://example.firebaseio.com');
@@ -36,11 +37,15 @@ describe('<bulbs-liveblog>', () => {
     setImmediate(() => done());
   });
 
+  afterEach(() => {
+    sandbox.restore();
+  });
+
   describe('attachedCallback', () => {
     beforeEach(() => {
-      sinon.stub(subject, 'setupFirebase');
-      sinon.stub(subject, 'setupInterval');
-      sinon.stub(subject, 'setupEvents');
+      sandbox.stub(subject, 'setupFirebase');
+      sandbox.stub(subject, 'setupInterval');
+      sandbox.stub(subject, 'setupEvents');
     });
 
     it('requires a `firebase-path` attribute', () => {
@@ -133,7 +138,7 @@ describe('<bulbs-liveblog>', () => {
 
   describe('setupInterval', () => {
     it('connects an interval handler every LIVEBLOG_LATENCY seconds', () => {
-      sinon.stub(window, 'setInterval');
+      sandbox.stub(window, 'setInterval');
       subject.setupInterval();
       expect(window.setInterval).to.have.been.calledWith(subject.handleInterval, 5000);
       window.setInterval.restore();
@@ -142,8 +147,8 @@ describe('<bulbs-liveblog>', () => {
 
   describe('setupEvents', () => {
     beforeEach(() => {
-      subject.firebaseRef = { on: sinon.spy() };
-      sinon.spy(subject, 'addEventListener');
+      subject.firebaseRef = { on: sandbox.spy() };
+      sandbox.spy(subject, 'addEventListener');
     });
 
     it('attaches a click handler', () => {
@@ -159,8 +164,8 @@ describe('<bulbs-liveblog>', () => {
 
   describe('detachedCallback', () => {
     beforeEach(() => {
-      sinon.stub(subject, 'teardownFirebase');
-      sinon.spy(subject, 'teardownInterval');
+      sandbox.stub(subject, 'teardownFirebase');
+      sandbox.spy(subject, 'teardownInterval');
     });
 
     it('tears down firebase', () => {
@@ -176,7 +181,7 @@ describe('<bulbs-liveblog>', () => {
 
   describe('teardownFirebase', () => {
     it('disconnects firebase events', () => {
-      subject.firebaseRef = { off: sinon.spy() };
+      subject.firebaseRef = { off: sandbox.spy() };
       subject.teardownFirebase();
       expect(subject.firebaseRef.off).to.have.been.called;
     });
@@ -184,7 +189,7 @@ describe('<bulbs-liveblog>', () => {
 
   describe('teardownInterval', () => {
     it('clears the interval', () => {
-      sinon.spy(window, 'clearInterval');
+      sandbox.spy(window, 'clearInterval');
       subject.interval = 'our-interval';
       subject.teardownInterval();
       expect(window.clearInterval).to.have.been.calledWith('our-interval');
@@ -235,7 +240,7 @@ describe('<bulbs-liveblog>', () => {
     });
 
     describe('handleInterval', () => {
-      beforeEach(() => sinon.spy(subject, 'handleBlogUpdate'));
+      beforeEach(() => sandbox.spy(subject, 'handleBlogUpdate'));
 
       context('no new content to fetch', () => {
         it('does nothing', () => {
@@ -338,7 +343,7 @@ describe('<bulbs-liveblog>', () => {
         });
 
         it('handles showing new entries', () => {
-          sinon.spy(subject, 'showNewEntries');
+          sandbox.spy(subject, 'showNewEntries');
           let newEntry = document.createElement('bulbs-liveblog-entry');
           newEntry.setAttribute('entry-id', 1);
           newEntry.setAttribute('entry-published', pastDate);
@@ -357,7 +362,7 @@ describe('<bulbs-liveblog>', () => {
 
       context('clicked on `button.liveblog-entry-reset`', () => {
         it('handles resetting the selected entry', () => {
-          sinon.spy(subject, 'resetSelectedEntry');
+          sandbox.spy(subject, 'resetSelectedEntry');
           let button = document.createElement('button');
           button.classList.add('liveblog-entry-reset');
 
@@ -389,7 +394,7 @@ describe('<bulbs-liveblog>', () => {
       });
 
       it('removes the show new entries button', () => {
-        sinon.spy(subject, 'removeNewEntriesButton');
+        sandbox.spy(subject, 'removeNewEntriesButton');
         subject.showNewEntries([entry1]);
         expect(subject.removeNewEntriesButton).to.have.been.called;
       });
