@@ -1,3 +1,6 @@
+import './bulbs-liveblog';
+import './bulbs-liveblog-entry';
+
 import fetchMock from 'fetch-mock';
 
 const HTMLCollectionClass = document.getElementsByTagName('a-tag').constructor;
@@ -12,7 +15,7 @@ describe('<bulbs-liveblog>', () => {
 
   window.picturefill = sinon.spy();
 
-  beforeEach(() => {
+  beforeEach((done) => {
     subject = document.createElement('bulbs-liveblog');
     subject.setAttribute('firebase-path', 'path/to/liveblog');
     subject.setAttribute('firebase-url', 'http://example.firebaseio.com');
@@ -30,6 +33,7 @@ describe('<bulbs-liveblog>', () => {
         </bulbs-livebloge-entry>
       </div>
     `;
+    setImmediate(() => done());
   });
 
   describe('attachedCallback', () => {

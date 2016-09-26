@@ -47,28 +47,32 @@ describe('<bulbs-liveblog-entry>', () => {
       }).to.throw('<bulbs-liveblog-entry> element MUST be placed within a <bulbs-liveblog>');
     });
 
-    it('emits liveblog-entry-attached event', () => {
+    it('emits liveblog-entry-attached event', (done) => {
       let entry = document.createElement('bulbs-liveblog-entry');
       let eventSpy = sinon.spy();
       entry.setAttribute('entry-id', '1234');
       entry.setAttribute('entry-published', pastDate);
       entry.addEventListener('liveblog-entry-attached', eventSpy);
       container.appendChild(entry);
-      expect(eventSpy).to.have.been.called;
+      setImmediate(() => {
+        expect(eventSpy).to.have.been.called;
+        done();
+      });
     });
   });
 
   describe('detachedCallback', () => {
-    it('emits liveblog-entry-detached event', () => {
+    it('emits liveblog-entry-detached event', (done) => {
       let entry = document.createElement('bulbs-liveblog-entry');
-      let eventSpy = sinon.spy();
       entry.setAttribute('entry-id', '1234');
       entry.setAttribute('entry-published', pastDate);
       container.appendChild(entry);
-      entry.addEventListener('liveblog-entry-detached', eventSpy);
-      entry.remove();
-      expect(eventSpy).to.have.been.called;
+      setImmediate(() => {
+        entry.addEventListener('liveblog-entry-detached', () => {
+          done();
+        });
+        entry.remove();
+      });
     });
   });
 });
-

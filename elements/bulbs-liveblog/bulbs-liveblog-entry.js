@@ -3,6 +3,7 @@ import invariant from 'invariant';
 
 class BulbsLiveblogEntry extends BulbsHTMLElement {
   attachedCallback () {
+    console.log('attachedCallback???');
     invariant(this.closest('bulbs-liveblog'),
       '<bulbs-liveblog-entry> element MUST be placed within a <bulbs-liveblog>');
 
@@ -16,6 +17,7 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
   }
 
   detachedCallback () {
+    console.log('detachedCallback!!!@');
     this.dispatchEvent(new CustomEvent('liveblog-entry-detached'));
   }
 
