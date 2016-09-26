@@ -6,7 +6,7 @@ import 'firebase/database';
 import scrollToElement from 'scroll-to-element';
 
 function parseEntry (entry) {
-  if ('published' in entry && entry.published !== false) {
+  if ('published' in entry) {
     entry.published = new Date(Date.parse(entry.published));
   }
 
@@ -188,7 +188,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     while (this.entryStaging.firstElementChild) {
       this.entriesContainer[0].prepend(this.entryStaging.firstElementChild);
     }
-    let header = document.querySelector('header');
+    let header = document.querySelector(this.getAttribute('scroll-offset-selector') || 'header');
     let offset;
     if (header) {
       offset = header.getBoundingClientRect().bottom;
