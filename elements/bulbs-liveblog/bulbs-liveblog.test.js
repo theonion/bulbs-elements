@@ -1,8 +1,5 @@
 import fetchMock from 'fetch-mock';
 
-import { Entries } from './bulbs-liveblog';
-
-
 const HTMLCollectionClass = document.getElementsByTagName('a-tag').constructor;
 
 let futureDate = new Date((new Date()).getTime() + 10000000000);
@@ -10,11 +7,6 @@ let pastDate = new Date((new Date()).getTime() - 10000000000);
 let currentDate = new Date();
 
 describe('<bulbs-liveblog>', () => {
-  beforeEach(() => {
-    Entries.all = {};
-    delete Entries.oldestEntryDate;
-  });
-
   let container;
   let subject;
 
@@ -277,7 +269,7 @@ describe('<bulbs-liveblog>', () => {
 
     describe('getEntryIdsToFetch', () => {
 
-      it('gets entry ids that are in entriesData, but not in Entries.all', () => {
+      it('gets entry ids that are in entriesData, but not in this.entriesStore.all', () => {
         subject.entriesData = {
           1: { published: pastDate },
           2: { published: pastDate },
@@ -285,8 +277,8 @@ describe('<bulbs-liveblog>', () => {
           4: { published: pastDate },
         };
 
-        Entries.all[1] = {};
-        Entries.all[2] = {};
+        subject.entriesStore.all[1] = {};
+        subject.entriesStore.all[2] = {};
 
         expect(subject.getEntryIdsToFetch()).to.eql(['3', '4']);
       });
@@ -310,7 +302,7 @@ describe('<bulbs-liveblog>', () => {
           4: { published: pastDate },
         };
 
-        Entries.oldestEntryDate = currentDate;
+        subject.entriesStore.oldestEntryDate = currentDate;
 
         expect(subject.getEntryIdsToFetch()).to.eql([]);
       });
@@ -323,7 +315,7 @@ describe('<bulbs-liveblog>', () => {
           4: { published: pastDate },
         };
 
-        delete Entries.oldestEntryDate;
+        delete subject.entriesStore.oldestEntryDate;
 
         expect(subject.getEntryIdsToFetch()).to.eql(['2', '4']);
       });
@@ -331,6 +323,16 @@ describe('<bulbs-liveblog>', () => {
 
     describe('handleClick', () => {
       context('clicked on `button.liveblog-new-entries`', () => {
+        beforeEach((done) => {
+          subject.handleBlogFetchSuccess(`
+              <bulbs-liveblog-entry
+                entry-id="1234"
+                entry-published="${(new Date()).toISOString()}">
+              </bulbs-liveblog-entry>
+          `);
+          setImmediate(() => done());
+        });
+
         it('handles showing new entries', () => {
           sinon.spy(subject, 'showNewEntries');
           let newEntry = document.createElement('bulbs-liveblog-entry');
@@ -345,7 +347,7 @@ describe('<bulbs-liveblog>', () => {
             target: button,
           });
 
-          expect(subject.showNewEntries).to.have.been.calledWith(newEntries);
+          expect(subject.showNewEntries).to.have.been.calledWith();
         });
       });
 
@@ -372,6 +374,16 @@ describe('<bulbs-liveblog>', () => {
       entry2.setAttribute('entry-id', 2);
       entry2.setAttribute('entry-published', pastDate);
 
+      beforeEach((done) => {
+        subject.handleBlogFetchSuccess(`
+            <bulbs-liveblog-entry
+              entry-id="1234"
+              entry-published="${(new Date()).toISOString()}">
+            </bulbs-liveblog-entry>
+        `);
+        setImmediate(() => done());
+      });
+
       it('removes the show new entries button', () => {
         sinon.spy(subject, 'removeNewEntriesButton');
         subject.showNewEntries([entry1]);
@@ -379,7 +391,9 @@ describe('<bulbs-liveblog>', () => {
       });
 
       it('places the entries in the entries container', () => {
-        subject.showNewEntries([entry1, entry2]);
+        subject.entryStaging.appendChild(entry1);
+        subject.entryStaging.appendChild(entry2);
+        subject.showNewEntries();
         expect(subject.entriesContainer[0].contains(entry1)).to.be.true;
         expect(subject.entriesContainer[0].contains(entry2)).to.be.true;
       });
@@ -477,59 +491,6 @@ describe('<bulbs-liveblog>', () => {
         subject.removeNewEntriesButton();
         expect(subject.querySelector('button.liveblog-new-entries')).to.be.null;
       });
-    });
-  });
-});
-
-describe('<bulbs-liveblog-entry>', () => {
-  let container;
-  let subject;
-
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.prepend(container);
-    subject = document.createElement('bulbs-liveblog-entry');
-    subject.setAttribute('entry-id', '1234');
-    subject.setAttribute('entry-published', pastDate);
-  });
-
-  afterEach(() => container.remove());
-
-  describe('attachedCallback', () => {
-    it('it requires an `entry-id` attribute', () => {
-      subject.removeAttribute('entry-id');
-
-      expect(() => {
-        subject.attachedCallback();
-      }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
-    });
-
-    it('requires an `entry-published` attribute', () => {
-      subject.removeAttribute('entry-published');
-
-      expect(() => {
-        subject.attachedCallback();
-      }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
-    });
-
-    it('registers itself as an entry', () => {
-      let entry = document.createElement('bulbs-liveblog-entry');
-      entry.setAttribute('entry-id', '1234');
-      entry.setAttribute('entry-published', pastDate);
-      container.appendChild(entry);
-      expect(Entries.all['1234']).to.not.be.undefined;
-    });
-  });
-
-  describe('detachedCallback', () => {
-    it('unregisters itself as an entry', () => {
-      let entry = document.createElement('bulbs-liveblog-entry');
-      entry.setAttribute('entry-id', '1234');
-      entry.setAttribute('entry-published', pastDate);
-      container.appendChild(entry);
-      expect(Entries.all['1234']).to.not.be.undefined;
-      entry.remove();
-      expect(Entries.all['1234']).to.be.undefined;
     });
   });
 });

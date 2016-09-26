@@ -15,37 +15,6 @@ function parseEntry (entry) {
 
 const LIVEBLOG_LATENCY = 5000;
 
-export const Entries = {
-  all: {},
-};
-
-class BulbsLiveblogEntry extends BulbsHTMLElement {
-  attachedCallback () {
-    invariant(this.hasAttribute('entry-id'),
-       '<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
-
-    invariant(this.hasAttribute('entry-published'),
-       '<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
-
-    let thisEntry = {
-      element: this,
-      published: new Date(this.getAttribute('entry-published')),
-    };
-
-    Entries.all[this.getAttribute('entry-id')] = thisEntry;
-
-    if (!Entries.oldestEntryDate || thisEntry.published < Entries.oldestEntryDate) {
-      Entries.oldestEntryDate = thisEntry.published;
-    }
-  }
-
-  detachedCallback () {
-    delete Entries.all[this.getAttribute('entry-id')];
-  }
-}
-
-registerElement('bulbs-liveblog-entry', BulbsLiveblogEntry);
-
 class BulbsLiveblog extends BulbsHTMLElement {
   makeNewEntriesButton () {
     let button = document.createElement('button');
@@ -54,6 +23,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
     button.setAttribute('data-track-label', '#');
     button.innerHTML = `Show ${this.newEntries.length} New Articles`;
     return button;
+  }
+
+  createdCallback () {
+    this.entriesStore = {
+      all: {},
+    };
   }
 
   attachedCallback () {
@@ -68,6 +43,9 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
     invariant(this.hasAttribute('liveblog-new-entries-url'),
       '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute');
+
+    invariant(this.hasAttribute('liveblog-id'),
+      '<bulbs-liveblog> element MUST specify a `liveblog-id` attribute');
 
     this.bindHandlers();
 
@@ -91,6 +69,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.handleInterval = this.handleInterval.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
+    this.handleEntryAttached = this.handleEntryAttached.bind(this);
+    this.handleEntryDetached = this.handleEntryDetached.bind(this);
   }
 
   detachedCallback () {
@@ -119,6 +99,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   setupEvents () {
     this.addEventListener('click', this.handleClick);
+    this.addEventListener('liveblog-entry-attached', this.handleEntryAttached);
+    this.addEventListener('liveblog-entry-detached', this.handleEntryDetached);
     this.firebaseRef.on('value', this.handleFirebaseValue);
   }
 
@@ -149,14 +131,31 @@ class BulbsLiveblog extends BulbsHTMLElement {
     }
   }
 
+  handleEntryAttached () {
+    let thisEntry = {
+      element: event.target,
+      published: event.target.published,
+    };
+
+    this.entriesStore.all[event.target.getAttribute('entry-id')] = thisEntry;
+
+    if (!this.entriesStore.oldestEntryDate || thisEntry.published < this.entriesStore.oldestEntryDate) {
+      this.entriesStore.oldestEntryDate = thisEntry.published;
+    }
+  }
+
+  handleEntryDetached () {
+    delete this.entriesStore.all[this.getAttribute('entry-id')];
+  }
+
   getEntryIdsToFetch () {
     let now = new Date();
     let entryIds = [];
     Object.keys(this.entriesData).forEach((entryId) => {
       let entry = this.entriesData[entryId];
-      if (entry.published && entry.published < now && !Entries.all[entryId]) {
-        if (Entries.oldestEntryDate) {
-          if (entry.published >= Entries.oldestEntryDate) {
+      if (entry.published && entry.published < now && !this.entriesStore.all[entryId]) {
+        if (this.entriesStore.oldestEntryDate) {
+          if (entry.published >= this.entriesStore.oldestEntryDate) {
             entryIds.push(entryId);
           }
         }
