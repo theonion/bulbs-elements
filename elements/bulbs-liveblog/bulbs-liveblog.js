@@ -21,7 +21,14 @@ class BulbsLiveblog extends BulbsHTMLElement {
     button.classList.add('liveblog-new-entries');
     button.setAttribute('data-track-action', 'Alert: Show More');
     button.setAttribute('data-track-label', '#');
-    button.innerHTML = `Show ${this.newEntries.length} New Articles`;
+    button.innerHTML = `
+      Show ${this.newEntries.length} New Articles
+    `;
+    let dismiss = document.createElement('span');
+    dismiss.classList.add('liveblog-dismiss-new-entries');
+    dismiss.innerHTML = '&;times;';
+    dismiss.addEventListener('click', () => button.remove());
+    button.appendChild(dismiss);
     return button;
   }
 

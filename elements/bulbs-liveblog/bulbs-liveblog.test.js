@@ -241,6 +241,20 @@ describe('<bulbs-liveblog>', () => {
       });
     });
 
+    describe('makeNewEntriesButton', () => {
+      it('creates a cool button', () => {
+        let button = subject.makeNewEntriesButton();
+        expect(button.className).to.eql('liveblog-new-entries');
+      });
+
+      it('can be dismissed', () => {
+        let button = subject.makeNewEntriesButton();
+        sandbox.spy(button, 'remove');
+        button.querySelector('.liveblog-dismiss-new-entries').click();
+        expect(button.remove).to.have.been.called;
+      });
+    });
+
     describe('handleInterval', () => {
       beforeEach(() => sandbox.spy(subject, 'handleBlogUpdate'));
 
