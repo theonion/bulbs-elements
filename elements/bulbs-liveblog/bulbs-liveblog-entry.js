@@ -12,15 +12,25 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     invariant(this.hasAttribute('entry-published'),
        '<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
 
-    this.dispatchEvent(new CustomEvent('liveblog-entry-attached'));
+    // doing bad parent access because event emitters weren't working
+    if (this.liveblog && this.liveblog.handleEntryAttached) {
+      this.liveblog.handleEntryAttached({ target: this });
+    }
   }
 
   detachedCallback () {
-    this.dispatchEvent(new CustomEvent('liveblog-entry-detached'));
+    // doing bad parent access because event emitters weren't working
+    if (this.liveblog && this.liveblog.handleEntryDetached) {
+      this.liveblog.handleEntryDetached({ target: this });
+    }
   }
 
   get published () {
     return new Date(this.getAttribute('entry-published'));
+  }
+
+  get liveblog () {
+    return this.closest('bulbs-liveblog');
   }
 }
 

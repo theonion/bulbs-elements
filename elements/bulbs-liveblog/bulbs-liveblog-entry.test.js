@@ -52,32 +52,5 @@ describe('<bulbs-liveblog-entry>', () => {
       }).to.throw('<bulbs-liveblog-entry> element MUST be placed within a <bulbs-liveblog>');
     });
 
-    it('emits liveblog-entry-attached event', (done) => {
-      let entry = document.createElement('bulbs-liveblog-entry');
-      let eventSpy = sandbox.spy();
-      entry.setAttribute('entry-id', '1234');
-      entry.setAttribute('entry-published', pastDate);
-      entry.addEventListener('liveblog-entry-attached', eventSpy);
-      container.appendChild(entry);
-      setImmediate(() => {
-        expect(eventSpy).to.have.been.called;
-        done();
-      });
-    });
-  });
-
-  describe('detachedCallback', () => {
-    it('emits liveblog-entry-detached event', (done) => {
-      let entry = document.createElement('bulbs-liveblog-entry');
-      entry.setAttribute('entry-id', '1234');
-      entry.setAttribute('entry-published', pastDate);
-      container.appendChild(entry);
-      setImmediate(() => {
-        entry.addEventListener('liveblog-entry-detached', () => {
-          done();
-        });
-        entry.remove();
-      });
-    });
   });
 });

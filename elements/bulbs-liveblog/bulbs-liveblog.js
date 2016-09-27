@@ -5,6 +5,8 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import * as scrollToElement from 'scroll-to-element';
 
+import './bulbs-liveblog-entry';
+
 function parseEntry (entry) {
   if ('published' in entry) {
     entry.published = new Date(Date.parse(entry.published));
@@ -26,7 +28,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     `;
     let dismiss = document.createElement('span');
     dismiss.classList.add('liveblog-dismiss-new-entries');
-    dismiss.innerHTML = '&;times;';
+    dismiss.innerHTML = '&times;';
     dismiss.addEventListener('click', () => button.remove());
     button.appendChild(dismiss);
     return button;
@@ -75,15 +77,19 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.entriesContainer = this.getElementsByClassName('liveblog-entries');
     this.entriesElements = this.getElementsByTagName('liveblog-entry');
     this.entriesData = {};
+    this.handleInitialEntries();
+  }
 
+  handleInitialEntries () {
+    [].forEach.call(this.getElementsByTagName('bulbs-liveblog-entry'), (entry) => {
+      this.handleEntryAttached({ target: entry });
+    });
   }
 
   bindHandlers () {
     this.handleInterval = this.handleInterval.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
-    this.handleEntryAttached = this.handleEntryAttached.bind(this);
-    this.handleEntryDetached = this.handleEntryDetached.bind(this);
   }
 
   detachedCallback () {
@@ -112,8 +118,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   setupEvents () {
     this.addEventListener('click', this.handleClick);
-    this.addEventListener('liveblog-entry-attached', this.handleEntryAttached);
-    this.addEventListener('liveblog-entry-detached', this.handleEntryDetached);
     this.firebaseRef.on('value', this.handleFirebaseValue);
   }
 
@@ -144,7 +148,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     }
   }
 
-  handleEntryAttached () {
+  handleEntryAttached (event) {
     let thisEntry = {
       element: event.target,
       published: event.target.published,
@@ -157,8 +161,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     }
   }
 
-  handleEntryDetached () {
-    delete this.entriesStore.all[this.getAttribute('entry-id')];
+  handleEntryDetached (event) {
+    delete this.entriesStore.all[event.target.getAttribute('entry-id')];
   }
 
   getEntryIdsToFetch () {
