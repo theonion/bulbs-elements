@@ -13,7 +13,9 @@ export default class CampaignProductShot extends BulbsHTMLElement {
       'CampaignProductShot.handleRequestSuccess(data): data.product_shot_url is undefined');
     this.innerHTML =
       `<div class='campaign-product-shot'>
-        <img src='${data.product_shot_url}'>
+        <a href='${data.clickthrough_url}'>
+          <img src='${data.product_shot_url}'>
+        </a>
       </div>`;
   }
 
