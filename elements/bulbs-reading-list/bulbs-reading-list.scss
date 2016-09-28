@@ -26,5 +26,8 @@ bulbs-reading-list-articles {
 
 bulbs-reading-list-menu {
   @extend %clearfix;
-  display: block;
+
+  &.visible {
+    display: block;
+  }
 }

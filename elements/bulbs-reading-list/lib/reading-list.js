@@ -14,8 +14,9 @@ export default class ReadingList {
   constructor (menu, articles) {
     invariant(menu, 'ReadingList(menu, articles): menu is undefined');
     invariant(articles, 'ReadingList(menu, articles): articles is undefined');
-
-    let elementPairs = this.getReadingListElementPairs(menu, articles);
+    let menuItems = menu.getElementsByTagName('bulbs-reading-list-item');
+    let articleItems = articles.getElementsByTagName('bulbs-reading-list-item');
+    let elementPairs = this.getReadingListElementPairs(menuItems, articleItems);
     this.items = map(elementPairs, this.createReadingListItem);
     let firstItem = this.firstItem();
     firstItem.isLoaded = true;
@@ -23,8 +24,8 @@ export default class ReadingList {
     this.isFetchingItem = false;
   }
 
-  getReadingListElementPairs (menu, articles) {
-    return map(menu.children, this.getArticleElementForMenuItemElement(articles.children));
+  getReadingListElementPairs (menuItems, articles) {
+    return map(menuItems, this.getArticleElementForMenuItemElement(articles));
   }
 
   createReadingListItem (elements, index) {
@@ -117,8 +118,9 @@ export default class ReadingList {
 
   scrollUp () {
     if (this.hasPendingFetch()) { return; }
+
     this.updateItemProgress();
-    if (this.previousItem().progress < 100) {
+    if (this.previousItem() && this.previousItem().progress < 100) {
       this.setPreviousItemAsCurrent();
     }
   }

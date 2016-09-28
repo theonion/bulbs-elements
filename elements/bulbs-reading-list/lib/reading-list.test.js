@@ -1,5 +1,6 @@
 /* eslint no-new: 0 */
 import '../components/bulbs-reading-list-item';
+import '../components/bulbs-reading-list-articles';
 import ReadingList from './reading-list';
 import ReadingListItem from './reading-list-item';
 import { take } from 'lodash';
@@ -61,7 +62,9 @@ describe('ReadingList', () => {
 
   describe('getReadingListElementPairs', () => {
     it('returns a list of menu and article element objects', () => {
-      let pairs = subject.getReadingListElementPairs(menu, articles);
+      let menuItems = menu.getElementsByTagName('bulbs-reading-list-item');
+      let articleItems = articles.getElementsByTagName('bulbs-reading-list-item');
+      let pairs = subject.getReadingListElementPairs(menuItems, articleItems);
       expect(pairs[0].menuItem).to.equal(menu.children[0]);
       expect(pairs[0].article).to.equal(articles.children[0]);
 

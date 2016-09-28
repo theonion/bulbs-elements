@@ -63,7 +63,24 @@ export default class ReadingListEventManager {
   }
 
   handleDocumentScrolled () {
-    window.requestAnimationFrame(this.processScrollPosition.bind(this));
+    window.requestAnimationFrame(() => {
+      this.processScrollPosition();
+      this.processMenuButtonVisibility();
+    });
+  }
+
+  processMenuButtonVisibility () {
+    let headerContainer = document.getElementById('header-container');
+    let openMenuButton = document.querySelector('.reading-list-menu-toggle-on');
+    let headerDimensions = headerContainer.getBoundingClientRect();
+    let scrollOffset = getScrollOffset();
+
+    if (scrollOffset.y > headerDimensions.height) {
+      openMenuButton.classList.add('visible');
+    }
+    else {
+      openMenuButton.classList.remove('visible');
+    }
   }
 
   processScrollPosition () {

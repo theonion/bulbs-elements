@@ -1,4 +1,5 @@
 import '../bulbs-reading-list';
+import '../../progress-bar/progress-bar';
 import '../components/bulbs-reading-list-menu';
 import '../components/bulbs-reading-list-articles';
 import '../components/bulbs-reading-list-item';
@@ -33,7 +34,10 @@ export default function buildReadingListFixture () {
   let articleItems = createReadingListItems();
 
   menuItems.forEach((item) => readingListMenu.appendChild(item));
-  articleItems.forEach((item) => readingListArticles.appendChild(item));
+  articleItems.forEach((item) => {
+    item.appendChild(document.createElement('progress-bar'));
+    readingListArticles.appendChild(item);
+  });
   readingList.appendChild(readingListMenu);
   readingList.appendChild(readingListArticles);
 

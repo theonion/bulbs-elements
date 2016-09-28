@@ -47,6 +47,7 @@ class FlyoverMenu extends BulbsHTMLElement {
 
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'false');
+      button.classList.remove('bulbs-flyover-open');
     });
   }
 }
@@ -82,7 +83,10 @@ class FlyoverOpen extends BulbsHTMLButtonElement {
     this.flyoverState.openButtons.push(this);
     this.setAttribute('aria-haspopup', 'true');
     this.setAttribute('aria-expanded', 'false');
-    this.addEventListener('click', () => this.flyoverState.menu.openFlyover());
+    this.addEventListener('click', () => {
+      this.flyoverState.menu.openFlyover();
+      this.classList.add('bulbs-flyover-open');
+    });
   }
 }
 

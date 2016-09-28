@@ -132,11 +132,13 @@ export default class ReadingListItem {
   }
 
   setProgress (progress) {
+    if (!this.progressBar) { return; }
     this.progress = progress;
     this.progressBar.setAttribute('progress', this.progress);
   }
 
   updateProgress () {
+    if (!this.progressBar) { return; }
     let articleDimensions = this.articleElement.getBoundingClientRect();
     let scrollPosition = getScrollOffset();
     let calculatedProgress = this.calculateProgress(scrollPosition, articleDimensions);
