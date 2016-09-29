@@ -96,6 +96,13 @@ describe('<bulbs-carousel>', () => {
         );
       });
     });
+
+    context('called twice', () => {
+      it.only('does not create a second track', () => {
+        subject.createdCallback();
+        expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
+      });
+    });
   });
 
   describe('attachedCallback', () => {
