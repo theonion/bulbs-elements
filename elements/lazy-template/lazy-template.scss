@@ -1,3 +1,8 @@
+// we're using getBoundingClientRect to determine when our script
+// is in-view. Typically scripts are not part of the render tree
+// and their client rect is not meaningful. We can force them to be
+// an invisible 0x0 block element like this. Then we can meaninfully
+// track their position.
 script[is="lazy-template"] {
   display: block;
   width: 0px;
