@@ -5,27 +5,40 @@ import buildReadingListFixture from './reading-list-test-helper';
 import {
   appendFixtureContainer,
   removeFixtures,
+  createElement,
 } from 'bulbs-elements/test/fixtures';
 
 describe('ReadingListEventManager', () => {
   let subject;
   let sandbox;
   let element;
+  let stickyContainerSelector;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
+    stickyContainerSelector = '.sticky-container';
+    let stickyContainer = createElement('div', { 'class': stickyContainerSelector.replace(/^\./, '') });
     let fixtureContainer = appendFixtureContainer();
-    let readingListElement = buildReadingListFixture();
+    let readingListElement = buildReadingListFixture({
+      'sticky-nav-tether': stickyContainerSelector,
+    });
+    fixtureContainer.appendChild(stickyContainer);
     fixtureContainer.appendChild(readingListElement);
     element = readingListElement;
-    subject = new ReadingListEventManager(element);
+    subject = new ReadingListEventManager(element, stickyContainerSelector, stickyContainerSelector);
   });
 
   afterEach(() => {
     sandbox.restore();
     removeFixtures();
     window.location.hash = '#';
+  });
+
+  it('requires an element', function () {
+    expect(() => {
+      new ReadingListEventManager(); // eslint-disable-line no-new
+    }).to.throw('new ReadingListEventManager(element, stickyNavTetherSelector): element is undefined');
   });
 
   it('has a reading item list', () => {
@@ -36,12 +49,18 @@ describe('ReadingListEventManager', () => {
     expect(subject.element).to.equal(element);
   });
 
-  it('has an scrollCalculationIsIdle flag', () => {
+  it('has a scrollCalculationIsIdle flag', () => {
     expect(subject.scrollCalculationIsIdle).to.equal(true);
   });
 
   it('has a lastKnownScrollPosition', () => {
     expect(subject.lastKnownScrollPosition).to.equal(0);
+  });
+
+  it('requires the tether element to exist', function () {
+    expect(() => {
+      new ReadingListEventManager(element, '.missing-tether'); // eslint-disable-line no-new
+    }).to.throw('ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector ".missing-tether" is not in the DOM');
   });
 
   describe('handleMenuItemClick', () => {

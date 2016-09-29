@@ -8,6 +8,7 @@ import buildReadingListFixture from './reading-list-test-helper';
 import {
   appendFixtureContainer,
   removeFixtures,
+  createElement,
 } from 'bulbs-elements/test/fixtures';
 
 describe('ReadingList', () => {
@@ -18,7 +19,11 @@ describe('ReadingList', () => {
   let readingListElement;
   beforeEach(() => {
     let fixtureContainer = appendFixtureContainer();
-    readingListElement = buildReadingListFixture();
+    let stickyContainer = createElement('div', { 'class': 'sticky-container' });
+    readingListElement = buildReadingListFixture({
+      'sticky-nav-tether': '.sticky-container',
+    });
+    fixtureContainer.appendChild(stickyContainer);
     fixtureContainer.appendChild(readingListElement);
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');

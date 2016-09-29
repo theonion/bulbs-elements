@@ -26,8 +26,8 @@ function createReadingListItems () {
   });
 }
 
-export default function buildReadingListFixture () {
-  let readingList = createElement('bulbs-reading-list');
+export default function buildReadingListFixture (attributes = {}) {
+  let readingList = createElement('bulbs-reading-list', attributes);
   let readingListMenu = createElement('bulbs-reading-list-menu');
   let readingListArticles = createElement('bulbs-reading-list-articles');
   let menuItems = createReadingListItems();

@@ -4,14 +4,18 @@ import { getScrollOffset } from 'bulbs-elements/util';
 import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
-  constructor (element) {
+  constructor (element, stickyNavTetherSelector) {
+    invariant(element, 'new ReadingListEventManager(element, stickyNavTetherSelector): element is undefined');
+    invariant(this.stickyNavTether = document.querySelector(stickyNavTetherSelector),
+      `ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector "${stickyNavTetherSelector}" is not in the DOM`);
+
     this.element = element;
-    let menu = element.getElementsByTagName('bulbs-reading-list-menu')[0];
-    let articles = element.getElementsByTagName('bulbs-reading-list-articles')[0];
+    this.menuElement = element.getElementsByTagName('bulbs-reading-list-menu')[0];
+    this.articlesElement = element.getElementsByTagName('bulbs-reading-list-articles')[0];
 
     this.scrollCalculationIsIdle = true;
     this.lastKnownScrollPosition = 0;
-    this.readingList = new ReadingList(menu, articles);
+    this.readingList = new ReadingList(this.menuElement, this.articlesElement);
   }
 
   handleMenuItemClick (evnt) {
@@ -63,28 +67,48 @@ export default class ReadingListEventManager {
   }
 
   handleDocumentScrolled () {
-    window.requestAnimationFrame(() => {
-      this.processScrollPosition();
-      this.processMenuButtonVisibility();
-    });
+    window.requestAnimationFrame(this.processScrollPosition.bind(this));
   }
 
-  processMenuButtonVisibility () {
-    let headerContainer = document.getElementById('header-container');
-    let openMenuButton = document.querySelector('.reading-list-menu-toggle-on');
-    let headerDimensions = headerContainer.getBoundingClientRect();
+  stickyMenuTetherIsInvisible () {
+    let dimensions = this.stickyMenuTether.getBoundingClientRect();
     let scrollOffset = getScrollOffset();
 
-    if (scrollOffset.y > headerDimensions.height) {
-      openMenuButton.classList.add('visible');
+    return scrollOffset.y > dimensions.height;
+  }
+
+  stickyNavTetherIsInvisible () {
+    let dimensions = this.stickyNavTether.getBoundingClientRect();
+    let scrollOffset = getScrollOffset();
+
+    return scrollOffset.y > dimensions.height;
+  }
+
+  setMenuButtonVisibility () {
+    let openMenuButton = document.querySelector('.reading-list-menu-toggle-on');
+    let method = this.stickyMenuTetherIsInvisible() ? 'add' : 'remove';
+    openMenuButton.classList[method]('visible');
+  }
+
+  setMenuStickiness () {
+    if (this.stickyMenuTetherIsInvisible()) {
+      this.menuElement.classList.add('sticky');
     }
     else {
-      openMenuButton.classList.remove('visible');
+      this.menuElement.classList.remove('sticky');
     }
   }
 
   processScrollPosition () {
     let offset = getScrollOffset();
+
+    if (this.stickyMenuTetherSelector) {
+      this.setMenuStickiness();
+    }
+
+    if (this.stickyNavTetherSelector) {
+      this.setMenuButtonVisibility();
+    }
 
     if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
       this.readingList.scrollDown();
