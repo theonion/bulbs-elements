@@ -1,4 +1,5 @@
 import '../bulbs-reading-list';
+import '../../bulbs-flyover-menu/bulbs-flyover-menu';
 import ReadingListEventManager from './reading-list-event-manager';
 import ReadingList from './reading-list';
 import buildReadingListFixture from './reading-list-test-helper';
@@ -12,21 +13,34 @@ describe('ReadingListEventManager', () => {
   let subject;
   let sandbox;
   let element;
-  let stickyContainerSelector;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
-    stickyContainerSelector = '.sticky-container';
-    let stickyContainer = createElement('div', { 'class': stickyContainerSelector.replace(/^\./, '') });
-    let fixtureContainer = appendFixtureContainer();
-    let readingListElement = buildReadingListFixture({
-      'sticky-nav-tether': stickyContainerSelector,
+
+    let stickyContainer = createElement('div', { 'class': 'sticky-container' });
+    let pinnedContainer = createElement('div', { 'class': 'pinned-container' });
+    let pinnedTether = createElement('div', { 'class': 'article-detail-content' });
+    let menuOnButton = createElement('div', { 'class': 'reading-list-menu-toggle-on' });
+    element = buildReadingListFixture({
+      'sticky-nav-tether': '.sticky-container',
+      'pinned-tether': '.article-detail-content',
+      'pinned-container': '.pinned-container',
+      'pinned-container-min-width': 768,
     });
+    let fixtureContainer = appendFixtureContainer();
     fixtureContainer.appendChild(stickyContainer);
-    fixtureContainer.appendChild(readingListElement);
-    element = readingListElement;
-    subject = new ReadingListEventManager(element, stickyContainerSelector, stickyContainerSelector);
+    fixtureContainer.appendChild(pinnedTether);
+    fixtureContainer.appendChild(pinnedContainer);
+    fixtureContainer.appendChild(menuOnButton);
+    fixtureContainer.appendChild(element);
+
+    subject = new ReadingListEventManager(element, {
+      stickyNavTetherSelector: '.sticky-container',
+      pinnedContainerSelector: '.pinned-container',
+      pinnedTetherSelector: '.article-detail-content',
+      pinnedContainerMinWidth: 768,
+    });
   });
 
   afterEach(() => {
@@ -59,7 +73,9 @@ describe('ReadingListEventManager', () => {
 
   it('requires the tether element to exist', function () {
     expect(() => {
-      new ReadingListEventManager(element, '.missing-tether'); // eslint-disable-line no-new
+      new ReadingListEventManager(element, { // eslint-disable-line no-new
+        stickyNavTetherSelector: '.missing-tether',
+      });
     }).to.throw('ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector ".missing-tether" is not in the DOM');
   });
 

@@ -18,12 +18,21 @@ describe('ReadingList', () => {
   let sandbox;
   let readingListElement;
   beforeEach(() => {
-    let fixtureContainer = appendFixtureContainer();
     let stickyContainer = createElement('div', { 'class': 'sticky-container' });
+    let pinnedContainer = createElement('div', { 'class': 'pinned-container' });
+    let pinnedTether = createElement('div', { 'class': 'article-detail-content' });
+    let menuOnButton = createElement('div', { 'class': 'reading-list-menu-toggle-on' });
     readingListElement = buildReadingListFixture({
       'sticky-nav-tether': '.sticky-container',
+      'pinned-tether': '.article-detail-content',
+      'pinned-container': '.pinned-container',
+      'pinned-container-min-width': 768,
     });
+    let fixtureContainer = appendFixtureContainer();
     fixtureContainer.appendChild(stickyContainer);
+    fixtureContainer.appendChild(pinnedTether);
+    fixtureContainer.appendChild(pinnedContainer);
+    fixtureContainer.appendChild(menuOnButton);
     fixtureContainer.appendChild(readingListElement);
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');

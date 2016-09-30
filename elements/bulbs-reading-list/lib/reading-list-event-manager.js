@@ -1,21 +1,31 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
-import { getScrollOffset } from 'bulbs-elements/util';
+import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
 import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
-  constructor (element, stickyNavTetherSelector) {
+  constructor (element, options) {
     invariant(element, 'new ReadingListEventManager(element, stickyNavTetherSelector): element is undefined');
-    invariant(this.stickyNavTether = document.querySelector(stickyNavTetherSelector),
-      `ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector "${stickyNavTetherSelector}" is not in the DOM`);
+    this.stickyNavTether = document.querySelector(options.stickyNavTetherSelector);
+    invariant(this.stickyNavTether,
+      `ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector "${options.stickyNavTetherSelector}" is not in the DOM`);
 
     this.element = element;
     this.menuElement = element.getElementsByTagName('bulbs-reading-list-menu')[0];
     this.articlesElement = element.getElementsByTagName('bulbs-reading-list-articles')[0];
-
+    this.initializePinnedContainer(options);
     this.scrollCalculationIsIdle = true;
     this.lastKnownScrollPosition = 0;
     this.readingList = new ReadingList(this.menuElement, this.articlesElement);
+  }
+
+  initializePinnedContainer (options) {
+    if (options.pinnedContainerSelector) {
+      this.pinnedContainer = document.querySelector(options.pinnedContainerSelector);
+      this.pinnedTether = document.querySelector(options.pinnedTetherSelector);
+      this.pinnedContainerMinWidth = options.pinnedContainerMinWidth;
+      this.positionPinnedContainer();
+    }
   }
 
   handleMenuItemClick (evnt) {
@@ -70,13 +80,6 @@ export default class ReadingListEventManager {
     window.requestAnimationFrame(this.processScrollPosition.bind(this));
   }
 
-  stickyMenuTetherIsInvisible () {
-    let dimensions = this.stickyMenuTether.getBoundingClientRect();
-    let scrollOffset = getScrollOffset();
-
-    return scrollOffset.y > dimensions.height;
-  }
-
   stickyNavTetherIsInvisible () {
     let dimensions = this.stickyNavTether.getBoundingClientRect();
     let scrollOffset = getScrollOffset();
@@ -84,30 +87,37 @@ export default class ReadingListEventManager {
     return scrollOffset.y > dimensions.height;
   }
 
-  setMenuButtonVisibility () {
+  setNavButtonVisibility () {
     let openMenuButton = document.querySelector('.reading-list-menu-toggle-on');
-    let method = this.stickyMenuTetherIsInvisible() ? 'add' : 'remove';
+    let method = this.stickyNavTetherIsInvisible() ? 'add' : 'remove';
     openMenuButton.classList[method]('visible');
   }
 
-  setMenuStickiness () {
-    if (this.stickyMenuTetherIsInvisible()) {
-      this.menuElement.classList.add('sticky');
+  positionPinnedContainer () {
+    if (getWindowDimensions().width >= this.pinnedContainerMinWidth) {
+      let tetherDimensions = this.pinnedTether.getBoundingClientRect();
+      let pinnedDimensions = this.pinnedContainer.getBoundingClientRect();
+      let leftOffset = tetherDimensions.right - pinnedDimensions.width;
+
+      this.pinnedContainer.style.left = `${leftOffset}px`;
+      let top = tetherDimensions.top < 0 ? 0 : tetherDimensions.top;
+      this.pinnedContainer.style.top = `${top}px`;
     }
     else {
-      this.menuElement.classList.remove('sticky');
+      this.pinnedContainer.style.bottom = '';
+      this.pinnedContainer.style.left = '';
+      this.pinnedContainer.style.right = '';
+      this.pinnedContainer.style.top = '';
     }
   }
 
   processScrollPosition () {
     let offset = getScrollOffset();
 
-    if (this.stickyMenuTetherSelector) {
-      this.setMenuStickiness();
-    }
+    this.setNavButtonVisibility();
 
-    if (this.stickyNavTetherSelector) {
-      this.setMenuButtonVisibility();
+    if (this.pinnedContainer) {
+      this.positionPinnedContainer();
     }
 
     if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
