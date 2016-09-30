@@ -30,9 +30,6 @@ class LazyTemplate extends BulbsHTMLScriptElement {
   }
 
   detachedCallback () {
-    if (this.loadOn === 'page-load') {
-      this.tearDownLoadOnPageLoad();
-    }
     else if (this.loadOn === 'in-view') {
       this.tearDownLoadOnInView();
     }
@@ -51,9 +48,6 @@ class LazyTemplate extends BulbsHTMLScriptElement {
   setUpLoadOnInView () {
     InViewMonitor.add(this);
     this.addEventListener('enterviewport', this.handleEnterViewport);
-  }
-
-  tearDownLoadOnPageLoad () {
   }
 
   handleEnterViewport () {
