@@ -30,10 +30,9 @@ class LazyTemplate extends BulbsHTMLScriptElement {
   }
 
   detachedCallback () {
-    else if (this.loadOn === 'in-view') {
+    if (this.loadOn === 'in-view') {
       this.tearDownLoadOnInView();
     }
-
   }
 
   setupLoadOnPageLoad () {
