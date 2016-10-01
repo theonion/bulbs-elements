@@ -232,7 +232,7 @@ export default class Revealed extends React.Component {
         tag: this.vastUrl(videoMeta),
         skipoffset: 5,
         vpaidmode: 'insecure',
-      }
+      };
     }
 
     let tracks = this.extractTrackCaptions(videoMeta.sources, videoMeta.player_options.defaultCaptions);
