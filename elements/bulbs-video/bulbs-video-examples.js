@@ -86,6 +86,17 @@ let examples = {
         `;
       },
     },
+    'Embedded example, no-ad plugin': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
+            embedded
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 

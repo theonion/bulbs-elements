@@ -66,6 +66,7 @@ export default class BulbsVideo extends BulbsElement {
         targetHostChannel={this.props.targetHostChannel}
         targetSpecialCoverage={this.props.targetSpecialCoverage}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
+        embedded={typeof this.props.embedded === 'string'}
         enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
         disableMetaLink={typeof this.props.disableMetaLink === 'string'}
         muted={typeof this.props.muted === 'string'}
@@ -87,6 +88,7 @@ Object.assign(BulbsVideo, {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
     disableMetaLink: PropTypes.string,
+    embedded: PropTypes.string,
     enablePosterMeta: PropTypes.string,
     muted: PropTypes.string,
     noEndcard: PropTypes.string,

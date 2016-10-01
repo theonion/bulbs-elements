@@ -97,6 +97,10 @@ export default class Revealed extends React.Component {
       videoMeta.player_options.defaultCaptions = true;
     }
 
+    if (this.props.embedded) {
+      videoMeta.player_options.embedded = true;
+    }
+
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
@@ -212,12 +216,6 @@ export default class Revealed extends React.Component {
       },
       sources: this.extractSources(videoMeta.sources),
       image: videoMeta.player_options.poster,
-      advertising: {
-        client: 'vast',
-        tag: this.vastUrl(videoMeta),
-        skipoffset: 5,
-        vpaidmode: 'insecure',
-      },
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
       aspectratio: '16:9',
       autostart: true,
@@ -227,6 +225,15 @@ export default class Revealed extends React.Component {
       primary: 'html5',
       width: '100%',
     };
+
+    if (!videoMeta.player_options.embedded) {
+      playerOptions.advertising = {
+        client: 'vast',
+        tag: this.vastUrl(videoMeta),
+        skipoffset: 5,
+        vpaidmode: 'insecure',
+      }
+    }
 
     let tracks = this.extractTrackCaptions(videoMeta.sources, videoMeta.player_options.defaultCaptions);
     if (tracks.length > 0) {
@@ -262,6 +269,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
+  embedded: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,

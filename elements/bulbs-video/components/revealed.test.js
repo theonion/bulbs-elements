@@ -36,6 +36,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.muted).to.eql(PropTypes.bool);
     });
 
+    it('accepts embedded boolean', () => {
+      expect(subject.embedded).to.eql(PropTypes.bool);
+    });
+
     it('accepts noEndcard boolean', () => {
       expect(subject.noEndcard).to.eql(PropTypes.bool);
     });
@@ -128,6 +132,7 @@ describe('<bulbs-video> <Revealed>', () => {
           twitterHandle: 'twitter',
           autoplay: true,
           autoplayNext: true,
+          embedded: true,
           muted: true,
           defaultCaptions: true,
           video: Object.assign({}, video, {
@@ -230,6 +235,10 @@ describe('<bulbs-video> <Revealed>', () => {
 
         it('passes through the muted value', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
+        });
+
+        it('passes through the embedded value', () => {
+          expect(makeVideoPlayerSpy.args[0][1].player_options.embedded).to.be.true;
         });
 
         it('passes through the defaultCaptions value', () => {
@@ -788,6 +797,38 @@ describe('<bulbs-video> <Revealed>', () => {
         it('does not set sharing configuration', () => {
           let setupOptions = playerSetup.args[0][0];
           expect(setupOptions.sharing).to.be.undefined;
+        });
+      });
+
+      context('embedded setup', () => {
+        beforeEach(() => {
+          videoMeta.player_options.embedded = true;
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          extractTrackCaptionsStub = sinon.stub().returns([]);
+          vastUrlStub = sinon.stub();
+          Revealed.prototype.makeVideoPlayer.call({
+            props: {},
+            extractSources: extractSourcesStub,
+            extractTrackCaptions: extractTrackCaptionsStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
+
+        it('does not call the vast url', () => {
+          expect(vastUrlStub.called).be.false;
+        });
+
+        it('does not pass in advertising option', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.advertising).to.be.undefined;
         });
       });
     });
