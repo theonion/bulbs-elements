@@ -97,9 +97,7 @@ export default class Revealed extends React.Component {
       videoMeta.player_options.defaultCaptions = true;
     }
 
-    if (this.props.embedded) {
-      videoMeta.player_options.embedded = true;
-    }
+    videoMeta.player_options.embedded = this.props.embedded;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
