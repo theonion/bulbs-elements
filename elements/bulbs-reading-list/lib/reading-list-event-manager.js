@@ -5,7 +5,7 @@ import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
   constructor (element, options) {
-    invariant(element, 'new ReadingListEventManager(element, stickyNavTetherSelector): element is undefined');
+    invariant(element, 'new ReadingListEventManager(element, options): element is undefined');
     this.stickyNavTether = document.querySelector(options.stickyNavTetherSelector);
     invariant(this.stickyNavTether,
       `ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector "${options.stickyNavTetherSelector}" is not in the DOM`);
