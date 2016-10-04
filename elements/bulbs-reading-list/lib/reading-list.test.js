@@ -17,7 +17,8 @@ describe('ReadingList', () => {
   let articles;
   let sandbox;
   let readingListElement;
-  beforeEach(() => {
+
+  beforeEach((done) => {
     let stickyContainer = createElement('div', { 'class': 'sticky-container' });
     let pinnedContainer = createElement('div', { 'class': 'pinned-container' });
     let pinnedTether = createElement('div', { 'class': 'article-detail-content' });
@@ -38,6 +39,7 @@ describe('ReadingList', () => {
     sandbox.stub(window, 'addEventListener');
     menu = readingListElement.getElementsByTagName('bulbs-reading-list-menu')[0];
     articles = readingListElement.getElementsByTagName('bulbs-reading-list-articles')[0];
+    setImmediate(done);
     subject = new ReadingList(menu, articles);
   });
 
