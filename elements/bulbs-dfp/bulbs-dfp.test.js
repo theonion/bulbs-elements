@@ -53,7 +53,7 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     it('sends an attached bulbs-dfp-element Metric', () => {
-      element.handleExitViewport();
+      element.attachedCallback();
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'attached',
