@@ -52,6 +52,15 @@ describe('<div is="bulbs-dfp">', () => {
       );
     });
 
+    it('sends an attached bulbs-dfp-element Metric', () => {
+      element.handleExitViewport();
+      expect(sendEventSpy).to.have.been.calledWith({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'attached',
+        eventLabel: 'test-unit',
+      });
+    });
+
     it('attaches enterviewport listener', () => {
       element.attachedCallback();
       expect(element.addEventListener).to.have.been.calledWith('enterviewport', element.handleEnterViewport);
@@ -90,10 +99,10 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleEnterViewport', () => {
-    it('sends an enterviewport AdTech Metric', () => {
+    it('sends an enterviewport bulbs-dfp-element Metric', () => {
       element.handleEnterViewport();
       expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'AdTech Metrics',
+        eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'enterviewport',
         eventLabel: 'test-unit',
       });
@@ -101,10 +110,10 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleExitViewport', () => {
-    it('sends an exitviewport AdTech Metric', () => {
+    it('sends an exitviewport bulbs-dfp-element Metric', () => {
       element.handleExitViewport();
       expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'AdTech Metrics',
+        eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'exitviewport',
         eventLabel: 'test-unit',
       });
@@ -112,10 +121,10 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleInterval', () => {
-    it('sends a 30-second-refresh-candidate AdTech Metric', () => {
+    it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
       element.handleInterval();
       expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'AdTech Metrics',
+        eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: '30-second-refresh-candidate',
         eventLabel: 'test-unit',
       });
@@ -126,10 +135,10 @@ describe('<div is="bulbs-dfp">', () => {
         Object.defineProperty(element, 'isViewable', { get () { return true; } });
       });
 
-      it('sends a 30-second-refresh-triggered AdTech Metric', () => {
+      it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.have.been.calledWith({
-          eventCategory: 'AdTech Metrics',
+          eventCategory: 'bulbs-dfp-element Metrics',
           eventAction: '30-second-refresh-triggered',
           eventLabel: 'test-unit',
         });
@@ -137,10 +146,10 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     context('!isViewable', () => {
-      it('does not a 30-second-refresh-triggered AdTech Metric', () => {
+      it('does not a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.not.have.been.calledWith({
-          eventCategory: 'AdTech Metrics',
+          eventCategory: 'bulbs-dfp-element Metrics',
           eventAction: '30-second-refresh-triggered',
           eventLabel: 'test-unit',
         });

@@ -19,6 +19,12 @@ export default class BulbsDfp extends BulbsHTMLElement {
         'This value defines how many screens away from the viewport the slot ' +
         'will be in order to trigger an ad load. 1.2 = 120% viewport height.');
 
+    util.getAnalyticsManager().sendEvent({
+      eventCategory: 'bulbs-dfp-element Metrics',
+      eventAction: 'attached',
+      eventLabel: this.dataset.adUnit,
+    });
+
     this.handleEnterViewport = this.handleEnterViewport.bind(this);
     this.handleExitViewport = this.handleExitViewport.bind(this);
     this.handleInterval = this.handleInterval.bind(this);
@@ -47,7 +53,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
   handleEnterViewport () {
     util.getAnalyticsManager().sendEvent({
-      eventCategory: 'AdTech Metrics',
+      eventCategory: 'bulbs-dfp-element Metrics',
       eventAction: 'enterviewport',
       eventLabel: this.dataset.adUnit,
     });
@@ -64,7 +70,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
   handleExitViewport () {
     util.getAnalyticsManager().sendEvent({
-      eventCategory: 'AdTech Metrics',
+      eventCategory: 'bulbs-dfp-element Metrics',
       eventAction: 'exitviewport',
       eventLabel: this.dataset.adUnit,
     });
@@ -82,14 +88,14 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
   handleInterval () {
     util.getAnalyticsManager().sendEvent({
-      eventCategory: 'AdTech Metrics',
+      eventCategory: 'bulbs-dfp-element Metrics',
       eventAction: '30-second-refresh-candidate',
       eventLabel: this.dataset.adUnit,
     });
 
     if (this.isViewable) {
       util.getAnalyticsManager().sendEvent({
-        eventCategory: 'AdTech Metrics',
+        eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: '30-second-refresh-triggered',
         eventLabel: this.dataset.adUnit,
       });
