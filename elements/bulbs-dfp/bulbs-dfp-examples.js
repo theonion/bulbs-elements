@@ -1,5 +1,5 @@
 export default {
-  element: '<%= elementName %>',
+  element: 'bulbs-dfp',
   examples: {
     'Basic Example': {
       // Return an html string from the render function
@@ -11,10 +11,10 @@ export default {
       //    <my-example src="http://localhost:8080/fixtures/my-element/foo.json">
       render () {
         return `
-          <<%= elementName %>
+          <bulbs-dfp
             attribute="value"
           >
-          </<%= elementName %>>
+          </bulbs-dfp>
         `;
       },
 
