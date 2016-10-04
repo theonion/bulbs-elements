@@ -120,7 +120,7 @@ describe('<div is="bulbs-dfp">', () => {
     });
   });
 
-  describe('handleInterval', () => {
+  describe('what handleInterval', () => {
     it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
       element.handleInterval();
       expect(sendEventSpy).to.have.been.calledWith({
@@ -132,7 +132,7 @@ describe('<div is="bulbs-dfp">', () => {
 
     context('isViewable', () => {
       beforeEach(() => {
-        Object.defineProperty(element, 'isViewable', { get () { return true; } });
+        Object.defineProperty(element, 'isViewable', { get: () => { return true; } });
       });
 
       it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
