@@ -36,6 +36,14 @@ rail-player {
   display: flex;
   flex-direction: row;
   padding: 8px 0;
+  position: relative;
+
+  .bulbs-video-play-button {
+    bottom: initial;
+    height: 30px;
+    left: 0;
+    top: 8px;
+  }
 }
 
 .rail-player-logo {
