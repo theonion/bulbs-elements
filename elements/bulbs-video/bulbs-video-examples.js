@@ -97,6 +97,24 @@ let examples = {
         `;
       },
     },
+    'Lazy Load': {
+      render () {
+        return `
+          <marquee
+              scrollamount="10"
+              style="
+                height: 1000px;
+                font-size: 50px;
+                text-align: center;
+              ">
+            SPACE FOR LAZY LOADING EMULATION. SCROLL TO SEE THE VIDEO.
+          </marquee>
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json">
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 
