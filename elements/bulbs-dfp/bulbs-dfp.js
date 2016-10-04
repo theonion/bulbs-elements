@@ -1,7 +1,4 @@
-import {
-  InViewMonitor,
-  getAnalyticsManager,
-} from 'bulbs-elements/util';
+import util from 'bulbs-elements/util';
 import invariant from 'invariant';
 import {
   registerElement,
@@ -16,7 +13,7 @@ BulbsHTMLDivElement.prototype = HTMLDivElement.prototype;
 export default class BulbsDfp extends BulbsHTMLElement {
   attachedCallback () {
     invariant(this.hasAttribute('refresh-interval'),
-        '<div is="bulbs-dfp>" MUST specify a refresh-timeout attribute in ms');
+        '<div is="bulbs-dfp>" MUST specify a `refresh-interval` attribute in ms');
 
     invariant(this.hasAttribute('viewport-threshold'),
         '<div is="bulbs-dfp"> MUST specify a `viewport-threshold` property. ' +
@@ -28,29 +25,29 @@ export default class BulbsDfp extends BulbsHTMLElement {
     this.handleInterval = this.handleInterval.bind(this);
 
     this.addEventListener('enterviewport', this.handleEnterViewport);
-    this.addEventListener('enterviewport', this.handleExitViewport);
+    this.addEventListener('exitviewport', this.handleExitViewport);
 
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
-    InViewMonitor.add(this, {
-      get distanceFromBottom () {
-        return window.innerHeight * threshold;
-      },
+    util.InViewMonitor.add(this, {
       get distanceFromTop () {
         return window.innerHeight * threshold;
+      },
+      get distanceFromBottom () {
+        return -(window.innerHeight * threshold);
       },
     });
 
     let intervalLength = parseFloat(this.getAttribute('refresh-interval', 10));
-    this.interval = setInterval(this.handleInterval, intervalLength);
+    this.refreshInterval = window.setInterval(this.handleInterval, intervalLength);
   }
 
   detachedCallback () {
-    InViewMonitor.remove(this);
-    clearInterval(this.interval);
+    util.InViewMonitor.remove(this);
+    window.clearInterval(this.refreshInterval);
   }
 
   handleEnterViewport () {
-    getAnalyticsManager().sendEvent({
+    util.getAnalyticsManager().sendEvent({
       eventCategory: 'AdTech Metrics',
       eventAction: 'enterviewport',
       eventLabel: this.dataset.adUnit,
@@ -67,7 +64,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   handleExitViewport () {
-    getAnalyticsManager().sendEvent({
+    util.getAnalyticsManager().sendEvent({
       eventCategory: 'AdTech Metrics',
       eventAction: 'exitviewport',
       eventLabel: this.dataset.adUnit,
@@ -85,16 +82,16 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   handleInterval () {
-    getAnalyticsManager().sendEvent({
+    util.getAnalyticsManager().sendEvent({
       eventCategory: 'AdTech Metrics',
       eventAction: '30-second-refresh-candidate',
       eventLabel: this.dataset.adUnit,
     });
 
     if (this.isViewable) {
-      getAnalyticsManager().sendEvent({
+      util.getAnalyticsManager().sendEvent({
         eventCategory: 'AdTech Metrics',
-        eventAction: '30-second-refresh',
+        eventAction: '30-second-refresh-triggered',
         eventLabel: this.dataset.adUnit,
       });
       /* We are taking our time rolling out this change.
@@ -110,24 +107,17 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   get isViewable () {
-    return InViewMonitor.isElementInViewport(this, {
-      distanceFromTop: this.offsetHeight,
-      distanceFromBottom: -this.offsetHeight,
+    return util.InViewMonitor.isElementInViewport(this, {
+      distanceFromTop: this.offsetHeight * 0.66,
+      distanceFromBottom: -(this.offsetHeight * 0.66),
     });
   }
 
   get adsManager () {
-    const adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
-    if (!(adsManager && adsManager.loadAds === 'function')) {
-      console.warn(
-        '<div is="bulbs-dfp"> will not trigger since ' +
-        '`window.BULBS_ELEMENTS_ADS_MANAGER` is not configured to an ' +
-        'AdsManager instance.'
-      );
-    }
-
-    return adsManager;
+    return window.BULBS_ELEMENTS_ADS_MANAGER;
   }
 }
+
+BulbsDfp.extends = 'div';
 
 registerElement('bulbs-dfp', BulbsDfp);
