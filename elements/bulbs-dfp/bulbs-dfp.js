@@ -4,7 +4,6 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
-import './bulbs-dfp.scss';
 
 // We have to do this little dance to properly subclass elements in Safari
 function BulbsHTMLDivElement () {}

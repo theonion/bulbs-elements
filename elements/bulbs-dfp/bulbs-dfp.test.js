@@ -65,7 +65,7 @@ describe('<div is="bulbs-dfp">', () => {
     it('adds self to InViewMonitor', () => {
       element.attachedCallback();
       expect(util.InViewMonitor.add).to.have.been.calledWith(element, {
-        distanceFromBottom: window.innerHeight,
+        distanceFromTop: window.innerHeight,
         distanceFromBottom: -window.innerHeight,
       });
     });
