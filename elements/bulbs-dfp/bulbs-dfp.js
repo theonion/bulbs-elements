@@ -5,10 +5,6 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 
-// We have to do this little dance to properly subclass elements in Safari
-function BulbsHTMLDivElement () {}
-BulbsHTMLDivElement.prototype = HTMLDivElement.prototype;
-
 export default class BulbsDfp extends BulbsHTMLElement {
   attachedCallback () {
     invariant(this.hasAttribute('refresh-interval'),
