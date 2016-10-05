@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import LoadOnDemand from 'bulbs-elements/util'
+import { loadOnDemand } from 'bulbs-elements/util'
 
 import VideoField from './fields/video';
 import VideoRequest from './fields/video-request';
@@ -73,18 +73,11 @@ export default class BulbsVideo extends BulbsElement {
 
     if (!allProps.disableLazyLoading) {
 
-      return (
-        <LoadOnDemand
-          component={BulbsVideoRoot}
-          componentProps={allProps}
-        />
-      );
+      return loadOnDemand(BulbsVideoRoot)(allProps);
     }
 
     return (
-      <BulbsVideoRoot
-        {...allProps}
-      />
+      <BulbsVideoRoot {...allProps} />
     );
   }
 }
