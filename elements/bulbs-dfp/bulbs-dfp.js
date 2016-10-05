@@ -48,11 +48,14 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   handleEnterViewport () {
-    util.getAnalyticsManager().sendEvent({
-      eventCategory: 'bulbs-dfp-element Metrics',
-      eventAction: 'enterviewport',
-      eventLabel: this.dataset.adUnit,
-    });
+    if(!this.trackedEnterViewport) {
+      this.trackedEnterViewport = true;
+      util.getAnalyticsManager().sendEvent({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'enterviewport',
+        eventLabel: this.dataset.adUnit,
+      });
+    }
     /* We are taking our time rolling out this change.
      *  1) we want to make sure the page-speed implications of putting
      *      bulbs-elements in the critical path for ad loading isn't too heavy
@@ -65,11 +68,14 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   handleExitViewport () {
-    util.getAnalyticsManager().sendEvent({
-      eventCategory: 'bulbs-dfp-element Metrics',
-      eventAction: 'exitviewport',
-      eventLabel: this.dataset.adUnit,
-    });
+    if(!this.trackedExitViewport) {
+      this.trackedExitViewport = true;
+      util.getAnalyticsManager().sendEvent({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'exitviewport',
+        eventLabel: this.dataset.adUnit,
+      });
+    }
 
     /* We are taking our time rolling out this change.
      *  1) we want to make sure the page-speed implications of putting

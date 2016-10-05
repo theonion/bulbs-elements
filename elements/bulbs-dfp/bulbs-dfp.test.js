@@ -101,22 +101,24 @@ describe('<div is="bulbs-dfp">', () => {
   describe('handleEnterViewport', () => {
     it('sends an enterviewport bulbs-dfp-element Metric', () => {
       element.handleEnterViewport();
+      element.handleEnterViewport();
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'enterviewport',
         eventLabel: 'test-unit',
-      });
+      }).once;
     });
   });
 
   describe('handleExitViewport', () => {
     it('sends an exitviewport bulbs-dfp-element Metric', () => {
       element.handleExitViewport();
+      element.handleExitViewport();
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'exitviewport',
         eventLabel: 'test-unit',
-      });
+      }).once;
     });
   });
 
