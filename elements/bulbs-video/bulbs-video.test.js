@@ -1,7 +1,5 @@
-import React from 'react';
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
-import { mount } from 'enzyme';
 
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
