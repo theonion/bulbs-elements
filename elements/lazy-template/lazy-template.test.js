@@ -1,6 +1,6 @@
 import './lazy-template';
 
-describe.only('<script is="lazy-template">', () => {
+describe('<script is="lazy-template">', () => {
   let sandbox;
   let subject;
   let container;
