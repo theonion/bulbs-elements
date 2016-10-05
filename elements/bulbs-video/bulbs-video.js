@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
+import LoadOnDemand from 'bulbs-elements/util'
 
 import VideoField from './fields/video';
 import VideoRequest from './fields/video-request';
@@ -57,21 +58,32 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
+    let allProps = {
+      ...this.props,
+      ...this.state,
+      actions: this.store.actions,
+      autoplayNext: typeof this.props.twitterHandle === 'string',
+      disableLazyLoading: typeof this.props.disableLazyLoading === 'string',
+      disableMetaLink: typeof this.props.disableMetaLink === 'string',
+      embedded: typeof this.props.embedded === 'string',
+      enablePosterMeta: typeof this.props.enablePosterMeta === 'string',
+      muted: typeof this.props.muted === 'string',
+      noEndcard: typeof this.props.noEndcard === 'string',
+    };
+
+    if (!allProps.disableLazyLoading) {
+
+      return (
+        <LoadOnDemand
+          component={BulbsVideoRoot}
+          componentProps={allProps}
+        />
+      );
+    }
+
     return (
       <BulbsVideoRoot
-        {...this.state}
-        twitterHandle={this.props.twitterHandle}
-        targetCampaignId={this.props.targetCampaignId}
-        targetCampaignNumber={this.props.targetCampaignNumber}
-        targetHostChannel={this.props.targetHostChannel}
-        targetSpecialCoverage={this.props.targetSpecialCoverage}
-        autoplayNext={typeof this.props.twitterHandle === 'string'}
-        embedded={typeof this.props.embedded === 'string'}
-        enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
-        disableMetaLink={typeof this.props.disableMetaLink === 'string'}
-        muted={typeof this.props.muted === 'string'}
-        noEndcard={typeof this.props.noEndcard === 'string'}
-        actions={this.store.actions}
+        {...allProps}
       />
     );
   }
@@ -87,6 +99,7 @@ Object.assign(BulbsVideo, {
   propTypes: {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
+    disableLazyLoading: PropTypes.string,
     disableMetaLink: PropTypes.string,
     embedded: PropTypes.string,
     enablePosterMeta: PropTypes.string,
