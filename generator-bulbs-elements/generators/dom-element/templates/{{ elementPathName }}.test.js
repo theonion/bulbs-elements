@@ -1,13 +1,17 @@
-import { assert } from 'chai';
-
-describe('<<%= elementName %>>', function () {
+describe('<<%= elementName %>>', () => {
   let element;
+  let sandbox;
 
-  beforeEach(function () {
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
     element = document.createElement('<%= elementName %>');
   });
 
-  it('renders an <<%= elementName %>>', function () {
-    assert.equal(element.tagName.toLowerCase(), '<%= elementName %>');
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('renders an <<%= elementName %>>', () => {
+    expect(element.tagName).to.eql('<%= elementName.toUpperCase() %>');
   });
 });
