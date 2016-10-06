@@ -131,6 +131,7 @@
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
     "scroll-into-view": "^1.7.1",
+    "waypoints": "^4.0.1",
     "yo": "^1.6.0"
   }
 }

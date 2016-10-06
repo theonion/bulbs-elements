@@ -29,7 +29,7 @@ export default class ReadingListItem {
     this.id = menuElement.dataset.id;
     this.index = index;
     this.title = menuElement.dataset.title;
-    this.loadDistanceThreshold = 200;
+    this.loadDistanceThreshold = 400;
     this.readDistanceOffset = 250;
     this.isLoaded = false;
     this.fetchPending = false;
