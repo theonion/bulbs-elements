@@ -90,14 +90,14 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
   handleInterval () {
     util.getAnalyticsManager().sendEvent({
-      eventCategory: 'bulbs-dfp-element Hot Metrics',
+      eventCategory: 'bulbs-dfp-element Live Metrics',
       eventAction: '30-second-refresh-candidate',
       eventLabel: this.dataset.adUnit,
     });
 
     if (this.isViewable) {
       util.getAnalyticsManager().sendEvent({
-        eventCategory: 'bulbs-dfp-element Hot Metrics',
+        eventCategory: 'bulbs-dfp-element Live Metrics',
         eventAction: '30-second-refresh-triggered',
         eventLabel: this.dataset.adUnit,
       });

@@ -130,7 +130,7 @@ describe('<div is="bulbs-dfp">', () => {
     it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
       element.handleInterval();
       expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Hot Metrics',
+        eventCategory: 'bulbs-dfp-element Live Metrics',
         eventAction: '30-second-refresh-candidate',
         eventLabel: 'test-unit',
       });
@@ -144,7 +144,7 @@ describe('<div is="bulbs-dfp">', () => {
       it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.have.been.calledWith({
-          eventCategory: 'bulbs-dfp-element Hot Metrics',
+          eventCategory: 'bulbs-dfp-element Live Metrics',
           eventAction: '30-second-refresh-triggered',
           eventLabel: 'test-unit',
         });
@@ -160,7 +160,7 @@ describe('<div is="bulbs-dfp">', () => {
       it('does not a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.not.have.been.calledWith({
-          eventCategory: 'bulbs-dfp-element Hot Metrics',
+          eventCategory: 'bulbs-dfp-element Live Metrics',
           eventAction: '30-second-refresh-triggered',
           eventLabel: 'test-unit',
         });
