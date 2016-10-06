@@ -58,26 +58,19 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
-    let allProps = {
-      ...this.props,
-      ...this.state,
-      actions: this.store.actions,
-      autoplayNext: typeof this.props.twitterHandle === 'string',
-      disableLazyLoading: typeof this.props.disableLazyLoading === 'string',
-      disableMetaLink: typeof this.props.disableMetaLink === 'string',
-      embedded: typeof this.props.embedded === 'string',
-      enablePosterMeta: typeof this.props.enablePosterMeta === 'string',
-      muted: typeof this.props.muted === 'string',
-      noEndcard: typeof this.props.noEndcard === 'string',
-    };
-
-    if (!allProps.disableLazyLoading) {
-
-      return loadOnDemand(BulbsVideoRoot)(allProps);
-    }
 
     return (
-      <BulbsVideoRoot {...allProps} />
+      <BulbsVideoRoot
+        {...this.props}
+        {...this.state}
+        actions={this.store.actions}
+        autoplayNext={typeof this.props.twitterHandle === 'string'}
+        disableMetaLink={typeof this.props.disableMetaLink === 'string'}
+        embedded={typeof this.props.embedded === 'string'}
+        enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
+        muted={typeof this.props.muted === 'string'}
+        noEndcard={typeof this.props.noEndcard === 'string'}
+        />
     );
   }
 }
@@ -92,7 +85,6 @@ Object.assign(BulbsVideo, {
   propTypes: {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
-    disableLazyLoading: PropTypes.string,
     disableMetaLink: PropTypes.string,
     embedded: PropTypes.string,
     enablePosterMeta: PropTypes.string,
@@ -107,7 +99,7 @@ Object.assign(BulbsVideo, {
   },
 });
 
-registerReactElement('bulbs-video', BulbsVideo);
+registerReactElement('bulbs-video', loadOnDemand(BulbsVideo));
 
 import './elements/meta';
 import './elements/summary';
