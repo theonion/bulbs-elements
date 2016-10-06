@@ -90,26 +90,19 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
   handleInterval () {
     util.getAnalyticsManager().sendEvent({
-      eventCategory: 'bulbs-dfp-element Metrics',
+      eventCategory: 'bulbs-dfp-element Hot Metrics',
       eventAction: '30-second-refresh-candidate',
       eventLabel: this.dataset.adUnit,
     });
 
     if (this.isViewable) {
       util.getAnalyticsManager().sendEvent({
-        eventCategory: 'bulbs-dfp-element Metrics',
+        eventCategory: 'bulbs-dfp-element Hot Metrics',
         eventAction: '30-second-refresh-triggered',
         eventLabel: this.dataset.adUnit,
       });
-      /* We are taking our time rolling out this change.
-       *  1) we want to make sure the page-speed implications of putting
-       *      bulbs-elements in the critical path for ad loading isn't too heavy
-       *  2) we want to look at analytics to get some idea of how often this will
-       *      happen.
-       *
-       * The eventual strategy will be:
-      this.adsManager.reloadAds(this)
-       */
+
+      this.adsManager.reloadAds(this);
     }
   }
 
