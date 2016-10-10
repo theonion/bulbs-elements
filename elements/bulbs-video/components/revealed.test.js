@@ -246,7 +246,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('sets sharetools config', () => {
-          let expected = `${window.location.href}/v/3124`
+          let expected = `${window.location.href}/v/3124`;
           expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(expected);
         });
 
