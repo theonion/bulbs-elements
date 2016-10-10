@@ -94,6 +94,8 @@ describe('<bulbs-video> <Revealed>', () => {
 
   describe('componentDidMount globalsCheck', () => {
     global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
+    window.isMobile = () => {};
+    window.isMobile.any = false;
     global.ga = () => {};
 
     const globals = [
@@ -533,6 +535,8 @@ describe('<bulbs-video> <Revealed>', () => {
     let videoMeta;
     let cacheBusterStub;
     let vastTestStub;
+    let vastUrl;
+    let parsed;
 
     context('default', () => {
       beforeEach(() => {
@@ -547,20 +551,40 @@ describe('<bulbs-video> <Revealed>', () => {
       });
 
       it('returns the vast url', function () {
-        let vastUrl = Revealed.prototype.vastUrl.call({
+        vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
         }, videoMeta);
-        let parsed = url.parse(vastUrl, true);
+        parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
-        expect(parsed.host).to.eql('us-theonion.videoplaza.tv');
-        expect(parsed.pathname).to.eql('/proxy/distributor/v2');
-        expect(Object.keys(parsed.query)).to.eql(['rt', 'tt', 't', 's', 'rnd']);
-        expect(parsed.query.rt).to.eql('vast_2.0');
-        expect(parsed.query.tt).to.eql('p');
-        expect(parsed.query.t).to.eql('clickhole,main,12345,html5');
-        expect(parsed.query.s).to.eql('host_channel/channel_slug');
-        expect(parsed.query.rnd).to.eql('456');
+        expect(parsed.host).to.eql('111976v.fwmrm.net');
+        expect(parsed.pathname).to.eql('/ad/g/1');
+      });
+
+      it('populates keys for required global params', () => {
+        let expectedQueryKeys = [
+          'resp', 'prof', 'csid', 'caid', 'pvrn', 'vprn', 'cana'
+        ];
+        let queryKeys = Object.keys(parsed.query);
+        expect(queryKeys).to.eql(expectedQueryKeys);
+      });
+
+      context('populates values for required global params', () => {
+        it('resp', function () {
+          expect(parsed.query.resp).to.eql('vmap1');
+        });
+        it('prof', function () {
+          //desktop
+          expect(parsed.query.prof).to.eql('theonion_desktop_html5');
+          //mobile
+          window.isMobile.any = true;
+          vastUrl = Revealed.prototype.vastUrl.call({
+            cacheBuster: cacheBusterStub,
+            vastTest: vastTestStub,
+          }, videoMeta);
+          parsed = url.parse(vastUrl, true);
+          expect(parsed.query.prof).to.eql('theonion_mobileweb_html5');
+        });
       });
     });
 
