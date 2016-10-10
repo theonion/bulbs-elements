@@ -73,7 +73,6 @@
     "karma-bower": "^1.0.1",
     "karma-browserstack-launcher": "^0.1.9",
     "karma-chai": "^0.1.0",
-    "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^1.0.0",
     "karma-coveralls": "^1.1.2",
