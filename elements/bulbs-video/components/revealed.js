@@ -160,16 +160,20 @@ export default class Revealed extends React.Component {
     return false;
   }
 
+  getProfValue () {
+    if (window.isMobile.any) {
+      return 'theonion_mobileweb_html5';
+    } else {
+      return 'theonion_desktop_html5';
+    }
+  }
+
   vastUrl (videoMeta) {
     let baseUrl = `http://${SETTINGS.FREEWHEEL_NETWORK_ID}v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
-    if (window.isMobile.any) {
-      var prof = 'theonion_mobileweb_html5';
-    } else {
-      var prof = 'theonion_desktop_html5';
-    }
 
+    let prof = this.getProfValue();
     baseUrl += '&resp=' + SETTINGS.RESP;
     baseUrl += '&prof=' + prof;
 
@@ -193,6 +197,8 @@ export default class Revealed extends React.Component {
 
     return baseUrl;
   }
+
+
 
   extractTrackCaptions (sources, defaultCaptions) {
     let captions = [];

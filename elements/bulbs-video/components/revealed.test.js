@@ -531,17 +531,32 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('getProfValue', () => {
+    it('returns different values on desktop and mobile', () => {
+      // desktop
+      let response = Revealed.prototype.getProfValue.call();
+      expect(response).to.equal('theonion_desktop_html5');
+
+      // mobile
+      window.isMobile.any = true;
+      response = Revealed.prototype.getProfValue.call();
+      expect(response).to.equal('theonion_mobileweb_html5');
+    });
+  });
+
   describe('vastUrl', () => {
     let videoMeta;
     let cacheBusterStub;
     let vastTestStub;
     let vastUrl;
+    let getProfValueStub;
     let parsed;
 
     context('default', () => {
       beforeEach(() => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
+        getProfValueStub = sinon.stub().returns('testy');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -554,6 +569,7 @@ describe('<bulbs-video> <Revealed>', () => {
         vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
+          getProfValue: getProfValueStub,
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
@@ -574,16 +590,7 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(parsed.query.resp).to.eql('vmap1');
         });
         it('prof', function () {
-          //desktop
-          expect(parsed.query.prof).to.eql('theonion_desktop_html5');
-          //mobile
-          window.isMobile.any = true;
-          vastUrl = Revealed.prototype.vastUrl.call({
-            cacheBuster: cacheBusterStub,
-            vastTest: vastTestStub,
-          }, videoMeta);
-          parsed = url.parse(vastUrl, true);
-          expect(parsed.query.prof).to.eql('theonion_mobileweb_html5');
+          expect(parsed.query.prof).to.eql('testy');
         });
       });
     });
@@ -592,6 +599,7 @@ describe('<bulbs-video> <Revealed>', () => {
       beforeEach(() => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
+        getProfValueStub = sinon.stub().returns('testy');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -605,6 +613,7 @@ describe('<bulbs-video> <Revealed>', () => {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
+          getProfValue: getProfValueStub,
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
         expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
