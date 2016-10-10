@@ -6,15 +6,20 @@ describe('<bulbs-video>', () => {
   let subject;
   let props = {
     src,
+    disableLazyLoading: true,
   };
 
   beforeEach(() => {
     BulbsVideo.prototype.setState = sinon.spy();
     fetchMock.mock(src, {});
-    subject = new BulbsVideo(props);
   });
 
   describe('#initialDispatch', () => {
+
+    beforeEach(() => {
+      subject = new BulbsVideo(props);
+    });
+
     it('fetches video data', () => {
       let spy = sinon.spy(subject.store.actions, 'fetchVideo');
       subject.initialDispatch();
@@ -35,6 +40,10 @@ describe('<bulbs-video>', () => {
     let fetchSpy;
     let resetSpy;
     let newSrc;
+
+    beforeEach(() => {
+      subject = new BulbsVideo(props);
+    });
 
     context('src did not change', () => {
       beforeEach(() => {
@@ -69,6 +78,55 @@ describe('<bulbs-video>', () => {
 
       it('resets the controller', () => {
         expect(resetSpy).to.have.been.called;
+      });
+    });
+  });
+
+  describe('lazy loading', () => {
+    let container;
+
+    beforeEach((done) => {
+      props.disableLazyLoading = false;
+
+      container = document.createElement('div');
+
+      container.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 200%;
+            left: 0px;
+            display: block;
+            width: 10px;
+            height: 10px;
+          ">
+        </div>
+      `;
+      document.body.appendChild(container);
+      setImmediate(() => done());
+    });
+
+    afterEach(() => {
+      container.innerHTML = '';
+    });
+
+    it('should not load video until it is within viewing threshold', (done) => {
+      let videoElement = document.createElement('bulbs-video');
+      videoElement.setAttribute('src', src);
+      container.appendChild(videoElement);
+
+      container.firstElementChild.style.top = '0';
+      try {
+        window.dispatchEvent(new Event('scroll'));
+      }
+      catch (error) {
+        const event = document.createEvent('Event');
+        event.initEvent('scroll', false, true);
+        window.dispatchEvent(event);
+      }
+
+      requestAnimationFrame(() => {
+        expect($(container).find('.bulbs-video-root').length).to.equal(1);
+        done();
       });
     });
   });

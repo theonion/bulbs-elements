@@ -86,6 +86,47 @@ let examples = {
         `;
       },
     },
+    'Embedded example, no-ad plugin': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
+            embedded
+          >
+          </bulbs-video>
+        `;
+      },
+    },
+    'Lazy Load': {
+      render () {
+        return `
+          <div
+              style="text-align: center;">
+            Open the console<br>
+            And inspect the videos<br>
+            To see lazy load<br>
+          </div>
+          <marquee
+              scrollamount="10"
+              style="
+                height: 1000px;
+                font-size: 50px;
+                text-align: center;
+              ">
+            SPACE FOR LAZY LOADING EMULATION. SCROLL TO SEE THE VIDEO.
+          </marquee>
+          <div>The following video is not lazy loaded:</div>
+          <bulbs-video
+              src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+              disable-lazy-loading>
+          </bulbs-video>
+          <div>The following video is lazy loaded:</div>
+          <bulbs-video
+              src="http://localhost:8080/fixtures/bulbs-video/clickhole.json">
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 

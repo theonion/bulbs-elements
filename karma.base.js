@@ -79,6 +79,7 @@ module.exports = {
     mocha: {
       reporter: 'html',
       ui: 'bdd',
+      timeout: 6000,
     },
     chai: {
       includeStack: true,

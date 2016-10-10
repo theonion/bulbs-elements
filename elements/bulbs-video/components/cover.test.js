@@ -76,7 +76,6 @@ describe('<bulbs-video> <Cover>', function () {
       expect(subject).to.contain(
         <img
           className='bulbs-video-poster'
-          imageId={imageId}
           src={posterUrl}
         />
       );

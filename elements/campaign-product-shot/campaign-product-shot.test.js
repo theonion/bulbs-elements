@@ -41,4 +41,12 @@ describe('<campaign-product-shot>', function () {
     element.handleRequestSuccess(campaign);
     expect(element.innerHTML).to.contain('http://example.com/prodcut-shot.jpg');
   });
+
+  it('renders a link with given clickthrough url', function () {
+    element.handleRequestSuccess(campaign);
+
+    expect(
+      element.querySelector('a[href="' + campaign.clickthrough_url + '"]')
+    ).to.not.be.null;
+  });
 });

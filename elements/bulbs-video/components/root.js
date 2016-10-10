@@ -33,6 +33,7 @@ Root.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   disableMetaLink: PropTypes.bool,
+  embedded: PropTypes.bool,
   enablePosterMeta: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
