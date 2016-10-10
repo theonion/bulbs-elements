@@ -8,10 +8,11 @@ import Comscore from '../plugins/comscore';
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import SETTINGS from 'bulbs-elements/settings';
 
-global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = SETTINGS.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID;
-global.BULBS_ELEMENTS_COMSCORE_ID = SETTINGS.BULBS_ELEMENTS_COMSCORE_ID;
+// FIXME: where should this be defined? Per-app?
+//  Or in some better sort of settings file here?
+global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
+global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let prefixCount = 0;
 function makeGaPrefix () {
@@ -37,11 +38,6 @@ export default class Revealed extends React.Component {
     invariant(
       global.jwplayer,
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
-    );
-
-    invariant(
-      window.isMobile,
-      '`<bulbs-video>` requires `isMobile()` to be set on window.'
     );
 
     let gaPrefix = makeGaPrefix();
@@ -161,18 +157,12 @@ export default class Revealed extends React.Component {
   }
 
   vastUrl (videoMeta) {
-    let baseUrl = `http://${SETTINGS.FREEWHEEL_NETWORK_ID}v.fwmrm.net/ad/g/1?`;
+    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+
     let vastTestId = this.vastTest(window.location.search);
 
-    if (window.isMobile.any) {
-      var prof = 'theonion_mobileweb_html5';
-    } else {
-      var prof = 'theonion_desktop_html5';
-    }
-
-    baseUrl += '&resp=' + SETTINGS.RESP;
-    baseUrl += '&prof=' + prof;
-
+    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
+    baseUrl += '&tt=p';
     videoMeta.tags.push('html5'); // Force HTML 5
     // Tags
     baseUrl += '&t=' + videoMeta.tags;
