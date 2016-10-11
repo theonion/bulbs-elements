@@ -53,8 +53,8 @@ Object.assign(CampaignDisplay, {
   propTypes: {
     logoOnly: PropTypes.string,
     nameOnly: PropTypes.string,
-    noPixel: PropTypes.string,
     noLink: PropTypes.string,
+    noPixel: PropTypes.string,
     placement: PropTypes.string.isRequired,
     preambleText: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,

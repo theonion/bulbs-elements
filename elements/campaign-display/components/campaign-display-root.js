@@ -21,9 +21,9 @@ class CampaignDisplayRoot extends Component {
   pixelComponent () {
     if (this.props.noPixel) {
       return '';
-    } else {
-      return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
     }
+
+    return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
   }
 
   logoComponent () {
