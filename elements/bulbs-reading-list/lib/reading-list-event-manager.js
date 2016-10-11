@@ -1,7 +1,6 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
 import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
-import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
   constructor (element) {
