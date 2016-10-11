@@ -3,51 +3,26 @@ import '../../bulbs-flyover-menu/bulbs-flyover-menu';
 import ReadingListEventManager from './reading-list-event-manager';
 import ReadingList from './reading-list';
 import buildReadingListFixture from './reading-list-test-helper';
-import {
-  appendFixtureContainer,
-  removeFixtures,
-  createElement,
-} from 'bulbs-elements/test/fixtures';
+import { appendFixtureContainer, removeFixtures } from 'bulbs-elements/test/fixtures';
 
 describe('ReadingListEventManager', () => {
   let subject;
   let sandbox;
   let element;
   let fixtureContainer;
-  let stickyContainer;
-  let pinnedContainer;
-  let pinnedTether;
-  let menuOnButton;
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
     sandbox.stub(window, 'addEventListener');
 
-    stickyContainer = createElement('div', { 'class': 'sticky-container' });
-    pinnedContainer = createElement('div', { 'class': 'pinned-container' });
-    pinnedTether = createElement('div', { 'class': 'article-detail-content' });
-    menuOnButton = createElement('div', { 'class': 'reading-list-menu-toggle-on' });
     element = buildReadingListFixture({
-      'sticky-nav-tether': '.sticky-container',
-      'pinned-tether': '.article-detail-content',
-      'pinned-container': '.pinned-container',
-      'pinned-container-min-width': 768,
+      'fixed-menu-min-width': 768,
     });
     fixtureContainer = appendFixtureContainer();
-    fixtureContainer.appendChild(stickyContainer);
-    fixtureContainer.appendChild(pinnedTether);
-    fixtureContainer.appendChild(pinnedContainer);
-    fixtureContainer.appendChild(menuOnButton);
     fixtureContainer.appendChild(element);
 
-    subject = new ReadingListEventManager(element, {
-      stickyNavTetherSelector: '.sticky-container',
-      pinnedContainerSelector: '.pinned-container',
-      pinnedTetherSelector: '.article-detail-content',
-      pinnedContainerMinWidth: 768,
-    });
-
-    setTimeout(done, 1);
+    subject = new ReadingListEventManager(element);
+    setImmediate(done);
   });
 
   afterEach(() => {
@@ -59,7 +34,7 @@ describe('ReadingListEventManager', () => {
   it('requires an element', function () {
     expect(() => {
       new ReadingListEventManager(); // eslint-disable-line no-new
-    }).to.throw('new ReadingListEventManager(element, options): element is undefined');
+    }).to.throw('new ReadingListEventManager(element): element is undefined');
   });
 
   it('has a reading item list', () => {
@@ -76,14 +51,6 @@ describe('ReadingListEventManager', () => {
 
   it('has a lastKnownScrollPosition', () => {
     expect(subject.lastKnownScrollPosition).to.equal(0);
-  });
-
-  it('requires the tether element to exist', function () {
-    expect(() => {
-      new ReadingListEventManager(element, { // eslint-disable-line no-new
-        stickyNavTetherSelector: '.missing-tether',
-      });
-    }).to.throw('ReadingListEventManager(element, stickyNavTetherSelector): nav tether element with selector ".missing-tether" is not in the DOM');
   });
 
   describe('handleMenuItemClick', () => {
@@ -210,46 +177,38 @@ describe('ReadingListEventManager', () => {
   });
 
   describe('isScrollingUp', () => {
-    it('requires a lastOffset', () => {
-      expect(() => {
-        subject.isScrollingUp();
-      }).to.throw('ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): lastOffset is undefined');
-    });
-
-    it('requires a currentOffset', () => {
-      expect(() => {
-        subject.isScrollingUp(0);
-      }).to.throw('ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): currentOffset is undefined');
-    });
-
     it('returns true if the lastOffset is greater than the currentOffset', () => {
-      expect(subject.isScrollingUp(1, 0)).to.equal(true);
+      window.pageYOffset = 0;
+      document.body.scollTop = 0;
+      document.documentElement.scrollTop = 0;
+      subject.lastKnownScrollPosition = 1;
+      expect(subject.isScrollingUp()).to.equal(true);
     });
 
     it('returns false if the lastOffset is less than the currentOffset', () => {
-      expect(subject.isScrollingUp(0, 1)).to.equal(false);
+      window.pageYOffset = 1;
+      document.body.scollTop = 1;
+      document.documentElement.scrollTop = 1;
+      subject.lastKnownScrollPosition = 0;
+      expect(subject.isScrollingUp()).to.equal(false);
     });
   });
 
   describe('isScrollingDown', () => {
-    it('requires a lastOffset', () => {
-      expect(() => {
-        subject.isScrollingDown();
-      }).to.throw('ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): lastOffset is undefined');
-    });
-
-    it('requires a currentOffset', () => {
-      expect(() => {
-        subject.isScrollingDown(0);
-      }).to.throw('ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): currentOffset is undefined');
-    });
-
     it('returns false if the lastOffset is greater than the currentOffset', () => {
-      expect(subject.isScrollingDown(1, 0)).to.equal(false);
+      window.pageYOffset = 0;
+      document.body.scollTop = 0;
+      document.documentElement.scrollTop = 0;
+      subject.lastKnownScrollPosition = 1;
+      expect(subject.isScrollingDown()).to.equal(false);
     });
 
     it('returns true if the lastOffset is less than the currentOffset', () => {
-      expect(subject.isScrollingDown(0, 1)).to.equal(true);
+      window.pageYOffset = 1;
+      document.body.scollTop = 1;
+      document.documentElement.scrollTop = 1;
+      subject.lastKnownScrollPosition = 0;
+      expect(subject.isScrollingDown()).to.equal(true);
     });
   });
 });

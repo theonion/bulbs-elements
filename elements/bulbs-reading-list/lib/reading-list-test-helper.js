@@ -1,4 +1,5 @@
 import '../bulbs-reading-list';
+import '../../bulbs-flyover-menu/bulbs-flyover-menu';
 import '../../progress-bar/progress-bar';
 import '../components/bulbs-reading-list-menu';
 import '../components/bulbs-reading-list-articles';
@@ -27,9 +28,11 @@ function createReadingListItems () {
 }
 
 export default function buildReadingListFixture (attributes = {}) {
+  let flyoverMenu = createElement('bulbs-flyover-menu', { 'menu-name': 'menu' });
   let readingList = createElement('bulbs-reading-list', attributes);
   let readingListMenu = createElement('bulbs-reading-list-menu');
   let readingListArticles = createElement('bulbs-reading-list-articles');
+  let dfpAd = createElement('div', { class: 'dfp-slot-sidebar-primary' });
   let menuItems = createReadingListItems();
   let articleItems = createReadingListItems();
 
@@ -40,6 +43,8 @@ export default function buildReadingListFixture (attributes = {}) {
   });
   readingList.appendChild(readingListMenu);
   readingList.appendChild(readingListArticles);
+  flyoverMenu.appendChild(dfpAd);
+  flyoverMenu.appendChild(readingList);
 
-  return readingList;
+  return flyoverMenu;
 }

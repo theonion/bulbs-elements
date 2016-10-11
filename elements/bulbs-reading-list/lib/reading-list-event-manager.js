@@ -38,8 +38,7 @@ export default class ReadingListEventManager {
   }
 
   resetMenuPosition () {
-    const offset = getScrollOffset();
-    if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
+    if (this.isScrollingDown()) {
       if (this.menuIsBelowArticles()) {
         this.pinMenuToArticlesBottom();
       }
@@ -149,18 +148,14 @@ export default class ReadingListEventManager {
     return this.readingList.getListItemById(id);
   }
 
-  isScrollingUp (lastOffset, currentOffset) {
-    invariant(!isUndefined(lastOffset), 'ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): lastOffset is undefined');
-    invariant(!isUndefined(currentOffset), 'ReadingListEventManager.isScrollingUp(lastOffset, currentOffset): currentOffset is undefined');
-
-    return lastOffset > currentOffset;
+  isScrollingUp () {
+    const offset = getScrollOffset();
+    return this.lastKnownScrollPosition > offset.y;
   }
 
-  isScrollingDown (lastOffset, currentOffset) {
-    invariant(!isUndefined(lastOffset), 'ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): lastOffset is undefined');
-    invariant(!isUndefined(currentOffset), 'ReadingListEventManager.isScrollingDown(lastOffset, currentOffset): currentOffset is undefined');
-
-    return lastOffset < currentOffset;
+  isScrollingDown () {
+    const offset = getScrollOffset();
+    return this.lastKnownScrollPosition < offset.y;
   }
 
   handleDocumentScrolled () {
@@ -175,11 +170,11 @@ export default class ReadingListEventManager {
       this.resetMenuPosition();
     }
 
-    if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
+    if (this.isScrollingDown()) {
       this.readingList.scrollDown();
     }
 
-    if (this.isScrollingUp(this.lastKnownScrollPosition, offset.y)) {
+    if (this.isScrollingUp()) {
       this.readingList.scrollUp();
     }
 
