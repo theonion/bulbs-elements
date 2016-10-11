@@ -199,8 +199,11 @@ export default class Revealed extends React.Component {
     let siteName = this.getSiteName();
     let siteSection = this.getSiteSection();
 
-
     return `${deviceAcronym}.${siteName}_${siteSection}_${hostChannel}`;
+  }
+
+  buildCaid (videohubReferenceId) {
+    return `onion_${videohubReferenceId}`;
   }
 
 
@@ -211,6 +214,7 @@ export default class Revealed extends React.Component {
     baseUrl += '&resp=' + 'vmap1';
     baseUrl += '&prof=' + this.getProfValue();
     baseUrl += '&csid=' + this.buildCsid(videoMeta.hostChannel);
+    baseUrl += '&caid=' + this.buildCaid(videoMeta.id);
 
     videoMeta.tags.push('html5'); // Force HTML 5
     // Tags

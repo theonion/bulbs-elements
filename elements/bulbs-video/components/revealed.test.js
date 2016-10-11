@@ -612,6 +612,14 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('buildCaid', () => {
+    it('sets to onion studios id', () => {
+      let videohubReferenceId = 1234;
+      let response = Revealed.prototype.buildCaid.call({}, videohubReferenceId)
+      expect(response).to.eql('onion_1234');
+    });
+  });
+
   describe('vastUrl', () => {
     let videoMeta;
     let cacheBusterStub;
@@ -621,6 +629,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let getSiteNameStub;
     let parsed;
     let buildCsidStub;
+    let buildCaidStub;
 
     context('default', () => {
       beforeEach(() => {
@@ -630,6 +639,7 @@ describe('<bulbs-video> <Revealed>', () => {
         getProfValueStub = sinon.stub().returns('testy');
         getSiteNameStub = sinon.stub().returns('website');
         buildCsidStub = sinon.stub().returns('d.website_camping_channel');
+        buildCaidStub = sinon.stub().returns('onion_1234');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -644,6 +654,7 @@ describe('<bulbs-video> <Revealed>', () => {
           vastTest: vastTestStub,
           getProfValue: getProfValueStub,
           buildCsid: buildCsidStub,
+          buildCaid: buildCaidStub,
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
@@ -675,6 +686,7 @@ describe('<bulbs-video> <Revealed>', () => {
         vastTestStub = sinon.stub().returns(null);
         getProfValueStub = sinon.stub().returns('testy');
         buildCsidStub = sinon.stub().returns('d.website_camping_channel');
+        buildCaidStub = sinon.stub().returns('onion_1234');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -690,6 +702,7 @@ describe('<bulbs-video> <Revealed>', () => {
           vastTest: vastTestStub,
           getProfValue: getProfValueStub,
           buildCsid: buildCsidStub,
+          buildCaid: buildCaidStub,
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
         expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
