@@ -58,6 +58,7 @@ export default class ReadingListItem {
   loadContent () {
     return new Promise((resolve, reject) => {
       if (this.shouldLoad()) {
+        this.fetchPending = true;
         this.fillContent(this.loadingTemplate);
         fetch(this.partialUrl, {
           credentials: 'same-origin',
@@ -83,9 +84,11 @@ export default class ReadingListItem {
   handleLoadContentComplete (content) {
     this.fillContent(content);
     this.isLoaded = true;
+    this.fetchPending = false;
   }
 
   handleLoadContentError (response) {
+    this.fetchPending = false;
     return new Promise((resolve, reject) => reject(`ReadingListItem.loadContent(): fetch failed "${response.status} ${response.statusText}"`));
   }
 

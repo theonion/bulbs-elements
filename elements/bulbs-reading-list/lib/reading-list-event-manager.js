@@ -1,8 +1,7 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
-import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
+import { getScrollOffset } from 'bulbs-elements/util';
 import { isUndefined } from 'lodash';
-// TODO use waypoints instead of custom logic
 
 export default class ReadingListEventManager {
   constructor (element) {
@@ -38,43 +37,59 @@ export default class ReadingListEventManager {
   }
 
   resetMenuPosition () {
-    const viewport = getWindowDimensions();
-    const mobileMaxWidth = 768;
+    const offset = getScrollOffset();
+    if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
+      if (this.menuIsBelowArticles()) {
+        this.pinMenuToArticlesBottom();
+      }
+      else if (this.menuIsScrolledToTop()) {
+        this.pinMenuToTop();
+      }
+      else {
+        this.pinMenuToArticlesTop();
+      }
 
-    if (viewport.width < mobileMaxWidth) {
-      return;
     }
+    else {
+      if (this.menuIsOffScreen()) {
+        // debugger
+      }
+      if (this.menuIsBelowArticles()) {
+        // debugger
+      }
+    }
+  }
 
-    const topOffset = this.calculateMenuTopOffset();
+  menuIsBelowArticles () {
+    const dimensions = this.getDimensions();
+    return dimensions.menu.bottom > dimensions.articles.bottom;
+  }
+
+  menuIsOffScreen () {
+    const dimensions = this.getDimensions();
+    return dimensions.menu.top < 0;
+  }
+
+  menuIsScrolledToTop () {
+    const dimensions = this.getDimensions();
+    return dimensions.menu.top <= 0;
+  }
+
+  pinMenuToArticlesBottom () {
+    const dimensions = this.getDimensions();
+    const topOffset = dimensions.articles.bottom - dimensions.menuContainer.height;
     this.pinnedContainer.style.top = `${topOffset}px`;
   }
 
-  calculateMenuTopOffset () {
+  pinMenuToTop () {
     const dimensions = this.getDimensions();
-    const offset = getScrollOffset();
-    const scrollingDown = this.isScrollingDown(this.lastKnownScrollPosition, offset.y);
+    const offset = dimensions.menuContainer.top - dimensions.menu.top;
+    this.pinnedContainer.style.top = `${offset}px`;
+  }
 
-    if (scrollingDown) {
-      if (this.isStillScrollingArticles()) {
-        if (dimensions.articles.top + dimensions.ad.height > 0) {
-          return dimensions.articles.top;
-        }
-
-        return dimensions.ad.height * -1;
-      }
-
-      const difference = dimensions.menu.bottom - dimensions.articles.bottom;
-      return (dimensions.menu.top - dimensions.ad.height) - difference;
-    }
-
-    if (dimensions.articles.bottom > dimensions.menu.bottom) {
-      const difference = dimensions.menu.bottom - dimensions.articles.bottom;
-      return (dimensions.menu.top - dimensions.ad.height) - difference;
-    }
-
-    if (dimensions.ad.top > 0) {
-      return dimensions.articles.top;
-    }
+  pinMenuToArticlesTop () {
+    const dimensions = this.getDimensions();
+    this.pinnedContainer.style.top = `${dimensions.articles.top}px`;
   }
 
   getFullAdHeight (adDimensions) {
@@ -84,14 +99,6 @@ export default class ReadingListEventManager {
     return Object.assign({
       height: adDimensions.height + bottomMargin,
     }, adDimensions);
-  }
-
-  isStillScrollingArticles () {
-    const dimensions = this.getDimensions();
-    if (this.readingList.hasMoreItems()) {
-      return true;
-    }
-    return dimensions.articles.bottom > dimensions.menu.bottom;
   }
 
   handleMenuItemClick (evnt) {
