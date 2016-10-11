@@ -183,7 +183,7 @@ export default class Revealed extends React.Component {
     return window.location.host.split('.')[1];
   }
 
-  getSiteSection () {
+  getDfpSection () {
     if (window.TARGETING.dfp_section) {
       return window.TARGETING.dfp_section;
     } else if (window.TARGETING.dfp_specialcoverage) {
@@ -195,44 +195,32 @@ export default class Revealed extends React.Component {
   }
 
   buildCsid (hostChannel) {
+    // Custom Site Section ID
+    // format: <device acronym>.<site name>_<dfp section>_<host channel>
     let deviceAcronym = this.setDeviceAcronym();
     let siteName = this.getSiteName();
-    let siteSection = this.getSiteSection();
+    let siteSection = this.getDfpSection();
 
     return `${deviceAcronym}.${siteName}_${siteSection}_${hostChannel}`;
   }
 
   buildCaid (videohubReferenceId) {
+    // Custom content video asset id
+    // format: onion_<videohub reference id>
     return `onion_${videohubReferenceId}`;
   }
 
-
   vastUrl (videoMeta) {
+    let hostChannel = videoMeta.hostChannel;
+    let videohubReferenceId = videoMeta.id;
     let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
     baseUrl += '&resp=' + 'vmap1';
     baseUrl += '&prof=' + this.getProfValue();
-    baseUrl += '&csid=' + this.buildCsid(videoMeta.hostChannel);
-    baseUrl += '&caid=' + this.buildCaid(videoMeta.id);
-
-    videoMeta.tags.push('html5'); // Force HTML 5
-    // Tags
-    baseUrl += '&t=' + videoMeta.tags;
-    //Category
-    let hostChannel = videoMeta.hostChannel;
-    let channel = videoMeta.channel_slug;
-    let series = videoMeta.series_slug;
-    let category = `${hostChannel}/${channel}`;
-    if (series) {
-      category += `/${series}`;
-    }
-    baseUrl += '&s=' + category;
-    baseUrl += '&rnd=' + this.cacheBuster();
-
-    if (vastTestId) {
-      baseUrl += '&xgid=' + vastTestId;
-    }
+    baseUrl += '&csid=' + this.buildCsid(hostChannel);
+    baseUrl += '&caid=' + this.buildCaid(videohubReferenceId);
+    baseUrl += '&pvrn=' + this.cacheBuster();
 
     return baseUrl;
   }
