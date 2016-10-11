@@ -51,11 +51,14 @@ export default class ReadingListEventManager {
 
     }
     else {
-      if (this.menuIsOffScreen()) {
-        // debugger
+      if (this.menuIsOffScreen() && this.articlesAreBelowMenu()) {
+        this.pinMenuToArticlesBottom();
       }
-      if (this.menuIsBelowArticles()) {
-        // debugger
+      else if (this.articlesAreBelowMenuContainer()) {
+        this.pinMenuToArticlesTop();
+      }
+      else {
+        this.pinMenuToTop();
       }
     }
   }
@@ -68,6 +71,16 @@ export default class ReadingListEventManager {
   menuIsOffScreen () {
     const dimensions = this.getDimensions();
     return dimensions.menu.top < 0;
+  }
+
+  articlesAreBelowMenu () {
+    const dimensions = this.getDimensions();
+    return dimensions.articles.bottom > dimensions.menu.bottom;
+  }
+
+  articlesAreBelowMenuContainer () {
+    const dimensions = this.getDimensions();
+    return dimensions.articles.top > dimensions.menuContainer.top;
   }
 
   menuIsScrolledToTop () {
