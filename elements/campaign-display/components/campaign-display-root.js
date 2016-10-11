@@ -19,7 +19,11 @@ class CampaignDisplayRoot extends Component {
   }
 
   pixelComponent () {
-    return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
+    if (this.props.noPixel) {
+      return '';
+    } else {
+      return <DfpPixel campaignId={this.props.campaign.id} placement={this.props.placement} />;
+    }
   }
 
   logoComponent () {
@@ -97,6 +101,7 @@ CampaignDisplayRoot.defaultProps = {
   logoOnly: false,
   nameOnly: false,
   noLink: false,
+  noPixel: false,
 };
 
 CampaignDisplayRoot.propTypes = {
@@ -109,7 +114,7 @@ CampaignDisplayRoot.propTypes = {
   }).isRequired,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
-  noLink: PropTypes.bool,
+  noPixel: PropTypes.bool,
   placement: PropTypes.string.isRequired,
   preambleText: PropTypes.string.isRequired,
 };
