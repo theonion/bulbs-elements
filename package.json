@@ -12,7 +12,7 @@
   },
   "author": "Onion Product Team <webtech@theonion.com>",
   "license": "UNLICENSED",
-  "devDependencies": {
+  "dependencies": {
     "all": "0.0.0",
     "array-flatten": "^2.0.0",
     "array.prototype.find": "^2.0.0",
@@ -73,7 +73,6 @@
     "karma-bower": "^1.0.1",
     "karma-browserstack-launcher": "^0.1.9",
     "karma-chai": "^0.1.0",
-    "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^0.2.2",
     "karma-coverage": "^1.0.0",
     "karma-coveralls": "^1.1.2",
@@ -125,9 +124,7 @@
     "write-file-webpack-plugin": "^3.1.4",
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
-    "yo": "^1.6.0"
-  },
-  "dependencies": {
+    "yo": "^1.6.0",
     "firebase": "^3.4.0",
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
