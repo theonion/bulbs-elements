@@ -183,7 +183,7 @@ export default class Revealed extends React.Component {
     return window.location.host.split('.')[1];
   }
 
-  getDfpSection () {
+  getSiteSection () {
     if (window.TARGETING.dfp_section) {
       return window.TARGETING.dfp_section;
     } else if (window.TARGETING.dfp_specialcoverage) {
@@ -194,22 +194,23 @@ export default class Revealed extends React.Component {
     }
   }
 
-  getCsidValue (videoMeta) {
+  buildCsid (hostChannel) {
     let deviceAcronym = this.setDeviceAcronym();
     let siteName = this.getSiteName();
-    let dfpSection = this.getDfpSection();
+    let siteSection = this.getSiteSection();
 
 
-    return `${deviceAcronym}.${siteName}_${dfpSection}_${videoMeta.hostChannel}`;
+    return `${deviceAcronym}.${siteName}_${siteSection}_${hostChannel}`;
   }
+
 
   vastUrl (videoMeta) {
     let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
-    let prof = this.getProfValue();
     baseUrl += '&resp=' + 'vmap1';
-    baseUrl += '&prof=' + prof;
+    baseUrl += '&prof=' + this.getProfValue();
+    baseUrl += '&csid=' + this.buildCsid(videoMeta.hostChannel);
 
     videoMeta.tags.push('html5'); // Force HTML 5
     // Tags

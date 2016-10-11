@@ -545,25 +545,21 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
-  describe('getCsidValue', () => {
+  describe('buildCsid', () => {
     let response;
     let getSiteNameStub;
     let setDeviceAcronymStub;
-    let getDfpSectionStub;
-    let videoMeta;
+    let getSiteSectionStub;
 
     beforeEach(() => {
       getSiteNameStub = sinon.stub().returns('website');
       setDeviceAcronymStub = sinon.stub().returns('d');
-      getDfpSectionStub = sinon.stub().returns('fun');
-      videoMeta = {
-        hostChannel: 'host_channel',
-      };
-      response = Revealed.prototype.getCsidValue.call({
+      getSiteSectionStub = sinon.stub().returns('fun');
+      response = Revealed.prototype.buildCsid.call({
           getSiteName: getSiteNameStub,
           setDeviceAcronym: setDeviceAcronymStub,
-          getDfpSection: getDfpSectionStub,
-      }, videoMeta);
+          getSiteSection: getSiteSectionStub,
+      }, 'host_channel');
     });
 
     // csid format: <device acronym>.<site name>_<dfp_section>_<host channel>
@@ -584,33 +580,33 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(response.includes('website')).to.be.true;
     });
 
-    context('getDfpSection', () => {
+    context('getSiteSection', () => {
       it('window.TARGETING.dfp_section is set', () => {
         window.TARGETING = { dfp_section: 'sunshine' };
-        response = Revealed.prototype.getDfpSection.call();
+        response = Revealed.prototype.getSiteSection.call();
         expect(response).to.eql(window.TARGETING.dfp_section);
       });
 
       it('special coverage page', () => {
         window.TARGETING = { dfp_specialcoverage: 'forest-walk' };
-        response = Revealed.prototype.getDfpSection.call();
+        response = Revealed.prototype.getSiteSection.call();
         let expected = `specialcoverage_${window.TARGETING.dfp_specialcoverage}`;
         expect(response).to.eql(expected);
       });
 
       it('not special coverage or dfp_section', () => {
         window.TARGETING = {};
-        response = Revealed.prototype.getDfpSection.call();
+        response = Revealed.prototype.getSiteSection.call();
         expect(response).to.eql('video');
       });
     });
 
     it('populates csid', () => {
-      response = Revealed.prototype.getCsidValue.call({
+      response = Revealed.prototype.buildCsid.call({
           getSiteName: getSiteNameStub,
           setDeviceAcronym: setDeviceAcronymStub,
-          getDfpSection: getDfpSectionStub,
-      }, videoMeta);
+          getSiteSection: getSiteSectionStub,
+      }, 'host_channel');
       let expected = 'd.website_fun_host_channel';
       expect(response).to.eql(expected);
     });
@@ -624,6 +620,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let getProfValueStub;
     let getSiteNameStub;
     let parsed;
+    let buildCsidStub;
 
     context('default', () => {
       beforeEach(() => {
@@ -632,6 +629,7 @@ describe('<bulbs-video> <Revealed>', () => {
         vastTestStub = sinon.stub().returns(null);
         getProfValueStub = sinon.stub().returns('testy');
         getSiteNameStub = sinon.stub().returns('website');
+        buildCsidStub = sinon.stub().returns('d.website_camping_channel');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -645,6 +643,7 @@ describe('<bulbs-video> <Revealed>', () => {
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
           getProfValue: getProfValueStub,
+          buildCsid: buildCsidStub,
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
@@ -675,6 +674,7 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
         getProfValueStub = sinon.stub().returns('testy');
+        buildCsidStub = sinon.stub().returns('d.website_camping_channel');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -689,6 +689,7 @@ describe('<bulbs-video> <Revealed>', () => {
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
           getProfValue: getProfValueStub,
+          buildCsid: buildCsidStub,
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
         expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
