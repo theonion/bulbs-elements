@@ -79,6 +79,22 @@ describe('<div is="bulbs-dfp">', () => {
       });
     });
 
+    it('attaches a dfpSlotRenderEnded event', () => {
+      element.attachedCallback();
+      expect(element.addEventListener).to.have.been.calledWith('dfpSlotRenderEnded', element.handleSlotRenderEnded);
+    });
+
+    it('attaches a dfpImpressionViewabl event', () => {
+      element.attachedCallback();
+      expect(element.addEventListener).to.have.been
+        .calledWith('dfpImpressionViewable', element.handleImpressionViewable);
+    });
+
+    it('attaches a dfpSlotOnload event', () => {
+      element.attachedCallback();
+      expect(element.addEventListener).to.have.been.calledWith('dfpSlotOnload', element.handleSlotOnload);
+    });
+
     it('sets a refresh interval', () => {
       element.attachedCallback();
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, 30000);
@@ -122,12 +138,45 @@ describe('<div is="bulbs-dfp">', () => {
     });
   });
 
-  describe('what handleInterval', () => {
+  describe('handleSlotRenderEnded', () => {
+    it('sends a slotrendered event', () => {
+      element.handleSlotRenderEnded();
+      expect(sendEventSpy).to.have.been.calledWith({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'slotrenderended',
+        eventLabel: 'test-unit',
+      }).once;
+    });
+  });
+
+  describe('handleImpressionViewable', () => {
+    it('sends an impressionviewable event', () => {
+      element.handleImpressionViewable();
+      expect(sendEventSpy).to.have.been.calledWith({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'impressionviewable',
+        eventLabel: 'test-unit',
+      }).once;
+    });
+  });
+
+  describe('handleSlotOnload', () => {
+    it('sends a slotonload event', () => {
+      element.handleSlotOnload();
+      expect(sendEventSpy).to.have.been.calledWith({
+        eventCategory: 'bulbs-dfp-element Metrics',
+        eventAction: 'slotonload',
+        eventLabel: 'test-unit',
+      }).once;
+    });
+  });
+
+  describe('handleInterval', () => {
     it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
       element.handleInterval();
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: '30-second-refresh-candidate',
+        eventAction: `30-second-refresh-candidate-${document.visibilityState}`,
         eventLabel: 'test-unit',
       });
     });
@@ -141,7 +190,7 @@ describe('<div is="bulbs-dfp">', () => {
         element.handleInterval();
         expect(sendEventSpy).to.have.been.calledWith({
           eventCategory: 'bulbs-dfp-element Metrics',
-          eventAction: '30-second-refresh-triggered',
+          eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
           eventLabel: 'test-unit',
         });
       });
@@ -152,7 +201,7 @@ describe('<div is="bulbs-dfp">', () => {
         element.handleInterval();
         expect(sendEventSpy).to.not.have.been.calledWith({
           eventCategory: 'bulbs-dfp-element Metrics',
-          eventAction: '30-second-refresh-triggered',
+          eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
           eventLabel: 'test-unit',
         });
       });
