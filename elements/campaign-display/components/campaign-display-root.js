@@ -114,6 +114,7 @@ CampaignDisplayRoot.propTypes = {
   }).isRequired,
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
+  noLink: PropTypes.bool,
   noPixel: PropTypes.bool,
   placement: PropTypes.string.isRequired,
   preambleText: PropTypes.string.isRequired,
