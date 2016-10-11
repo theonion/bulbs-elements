@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "5.31.0",
+  "version": "5.32.0",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -128,7 +128,6 @@
     "firebase": "^3.4.0",
     "iphone-inline-video": "^1.9.3",
     "react-flip-move": "^2.4.0",
-    "scroll-to-element": "^2.0.0",
-    "yo": "^1.6.0"
+    "scroll-to-element": "^2.0.0"
   }
 }
