@@ -214,20 +214,24 @@ export default class Revealed extends React.Component {
     let hostChannel = videoMeta.hostChannel;
     let videohubReferenceId = videoMeta.id;
     let randomVideoPlayerNumber = videoMeta.vprn;
-    let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
-    baseUrl += '&resp=' + 'vmap1';
+    let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
+
+    // required global params
+    baseUrl += 'resp=' + 'vmap1';
     baseUrl += '&prof=' + this.getProfValue();
     baseUrl += '&csid=' + this.buildCsid(hostChannel);
     baseUrl += '&caid=' + this.buildCaid(videohubReferenceId);
     baseUrl += '&pvrn=' + this.cacheBuster();
     baseUrl += '&vprn=' + randomVideoPlayerNumber;
+    // optional global param
+    if (vastTestId) {
+      baseUrl += '&cana=' + vastTestId;
+    }
 
     return baseUrl;
   }
-
-
 
   extractTrackCaptions (sources, defaultCaptions) {
     let captions = [];

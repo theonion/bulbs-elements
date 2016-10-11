@@ -664,10 +664,24 @@ describe('<bulbs-video> <Revealed>', () => {
 
     it('populates keys for required global params', () => {
       let expectedQueryKeys = [
-        'resp', 'prof', 'csid', 'caid', 'pvrn', 'vprn', 'cana'
+        'resp', 'prof', 'csid', 'caid', 'pvrn', 'vprn'
       ];
       let queryKeys = Object.keys(parsed.query);
       expect(queryKeys).to.eql(expectedQueryKeys);
+    });
+
+    it('populates cana if vastTest returns value', () => {
+      vastTestStub = sinon.stub().returns(5678);
+      vastUrl = Revealed.prototype.vastUrl.call({
+        cacheBuster: cacheBusterStub,
+        vastTest: vastTestStub,
+        getProfValue: getProfValueStub,
+        buildCsid: buildCsidStub,
+        buildCaid: buildCaidStub,
+      }, videoMeta);
+      parsed = url.parse(vastUrl, true);
+      let queryKeys = Object.keys(parsed.query);
+      expect(queryKeys.includes('cana')).to.be.true;
     });
 
     context('populates values for required global params', () => {
@@ -917,6 +931,7 @@ describe('<bulbs-video> <Revealed>', () => {
             extractSources: extractSourcesStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
           }, element, videoMeta);
         });
 
