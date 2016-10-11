@@ -8,10 +8,9 @@ import Comscore from '../plugins/comscore';
 
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import SETTINGS from 'bulbs-elements/settings';
 
-global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = SETTINGS.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID;
-global.BULBS_ELEMENTS_COMSCORE_ID = SETTINGS.BULBS_ELEMENTS_COMSCORE_ID;
+global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
+global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let prefixCount = 0;
 function makeGaPrefix () {
@@ -44,6 +43,10 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `isMobile()` to be set on window.'
     );
 
+    invariant(
+      window.FREEWHEEL_NETWORK_ID,
+      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_ID` to be set on window.'
+    );
     let gaPrefix = makeGaPrefix();
     ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
 
@@ -201,7 +204,7 @@ export default class Revealed extends React.Component {
   }
 
   vastUrl (videoMeta) {
-    let baseUrl = `http://${SETTINGS.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
+    let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
     let prof = this.getProfValue();

@@ -627,6 +627,7 @@ describe('<bulbs-video> <Revealed>', () => {
 
     context('default', () => {
       beforeEach(() => {
+        window.FREEWHEEL_NETWORK_ID = '12345';
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
         getProfValueStub = sinon.stub().returns('testy');
@@ -647,7 +648,7 @@ describe('<bulbs-video> <Revealed>', () => {
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
-        expect(parsed.host).to.eql('111976.v.fwmrm.net');
+        expect(parsed.host).to.eql('12345.v.fwmrm.net');
         expect(parsed.pathname).to.eql('/ad/g/1');
       });
 
