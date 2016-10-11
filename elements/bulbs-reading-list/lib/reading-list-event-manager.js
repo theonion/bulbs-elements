@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import ReadingList from './reading-list';
-import { getScrollOffset } from 'bulbs-elements/util';
+import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
 import { isUndefined } from 'lodash';
 
 export default class ReadingListEventManager {
@@ -8,6 +8,7 @@ export default class ReadingListEventManager {
     invariant(element, 'new ReadingListEventManager(element): element is undefined');
     this.element = element;
     this.menuElement = element.getElementsByTagName('bulbs-reading-list-menu')[0];
+    this.fixedMenuMinWidth = parseInt(this.menuElement.getAttribute('fixed-menu-min-width'), 10);
     this.articlesElement = element.getElementsByTagName('bulbs-reading-list-articles')[0];
     this.scrollCalculationIsIdle = true;
     this.lastKnownScrollPosition = 0;
@@ -168,8 +169,11 @@ export default class ReadingListEventManager {
 
   processScrollPosition () {
     const offset = getScrollOffset();
+    const windowDimensions = getWindowDimensions();
 
-    this.resetMenuPosition();
+    if (windowDimensions.width > this.fixedMenuMinWidth) {
+      this.resetMenuPosition();
+    }
 
     if (this.isScrollingDown(this.lastKnownScrollPosition, offset.y)) {
       this.readingList.scrollDown();
