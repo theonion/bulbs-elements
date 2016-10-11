@@ -62,6 +62,29 @@ will produce:
 </div>
 ```
 
+### No Pixel
+
+```html
+<campaign-display
+  placement="my-custom-placement"
+  src="http://localhost:8080/fixtures/campaign-display/campaign.json"
+  preamble-text="Sponsored by"
+  no-pixel></campaign-display>
+```
+
+will produce: 
+
+```html
+<div class="campaign-display" data-label="http://example.com">
+  <span class="campaign-display-preamble">Sponsored by</span>
+  <span class="campaign-display-sponsor-name">
+    <a href="http://example.com">
+      <span>Example Campaign</span>
+    </a>
+  </span>
+</div>
+```
+
 ### Logo only
 
 ```html
