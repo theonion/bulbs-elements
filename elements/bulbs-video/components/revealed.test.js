@@ -685,6 +685,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let element;
     let player;
     let videoMeta;
+    let cacheBusterStub;
 
     beforeEach(() => {
       element = {};
@@ -750,6 +751,7 @@ describe('<bulbs-video> <Revealed>', () => {
         gaPrefix: 'videoplayer0',
       });
       playerSetup = sinon.spy();
+      cacheBusterStub = sinon.stub().returns('456');
       player = {
         setup: playerSetup,
       };
@@ -782,6 +784,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: {},
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });
@@ -855,6 +858,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: {},
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractCaptionsStub,
           }, element, videoMeta);
         });
@@ -883,6 +887,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: { disableSharing: true },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });

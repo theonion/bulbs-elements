@@ -213,6 +213,7 @@ export default class Revealed extends React.Component {
   vastUrl (videoMeta) {
     let hostChannel = videoMeta.hostChannel;
     let videohubReferenceId = videoMeta.id;
+    let randomVideoPlayerNumber = videoMeta.vprn;
     let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
@@ -221,6 +222,7 @@ export default class Revealed extends React.Component {
     baseUrl += '&csid=' + this.buildCsid(hostChannel);
     baseUrl += '&caid=' + this.buildCaid(videohubReferenceId);
     baseUrl += '&pvrn=' + this.cacheBuster();
+    baseUrl += '&vprn=' + randomVideoPlayerNumber;
 
     return baseUrl;
   }
@@ -247,6 +249,13 @@ export default class Revealed extends React.Component {
   makeVideoPlayer (element, videoMeta) {
     element.id = videoMeta.gaPrefix;
     let player = global.jwplayer(element);
+
+    // random video player number ending with video id
+    // to be used in vastUrl query string
+    let randomVideoPlayerNumber = parseInt(
+      `${this.cacheBuster()}${videoMeta.id}`
+    );
+    videoMeta.vprn = randomVideoPlayerNumber;
 
     player.videoMeta = videoMeta;
 
