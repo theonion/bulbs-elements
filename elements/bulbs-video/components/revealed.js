@@ -168,13 +168,44 @@ export default class Revealed extends React.Component {
     }
   }
 
+  setDeviceAcronym () {
+    if (window.isMobile.any) {
+      return 'm';
+    } else {
+      return 'd';
+    }
+  }
+
+  getSiteName () {
+    return window.location.host.split('.')[1];
+  }
+
+  getDfpSection () {
+    if (window.TARGETING.dfp_section) {
+      return window.TARGETING.dfp_section;
+    } else if (window.TARGETING.dfp_specialcoverage) {
+      let slug = window.TARGETING.dfp_specialcoverage;
+      return `specialcoverage_${slug}`;
+    } else {
+      return 'video';
+    }
+  }
+
+  getCsidValue (videoMeta) {
+    let deviceAcronym = this.setDeviceAcronym();
+    let siteName = this.getSiteName();
+    let dfpSection = this.getDfpSection();
+
+
+    return `${deviceAcronym}.${siteName}_${dfpSection}_${videoMeta.hostChannel}`;
+  }
+
   vastUrl (videoMeta) {
-    let baseUrl = `http://${SETTINGS.FREEWHEEL_NETWORK_ID}v.fwmrm.net/ad/g/1?`;
+    let baseUrl = `http://${SETTINGS.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
     let vastTestId = this.vastTest(window.location.search);
 
-
     let prof = this.getProfValue();
-    baseUrl += '&resp=' + SETTINGS.RESP;
+    baseUrl += '&resp=' + 'vmap1';
     baseUrl += '&prof=' + prof;
 
     videoMeta.tags.push('html5'); // Force HTML 5

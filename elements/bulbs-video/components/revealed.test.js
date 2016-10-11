@@ -534,6 +534,7 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('getProfValue', () => {
     it('returns different values on desktop and mobile', () => {
       // desktop
+      window.isMobile.any = false;
       let response = Revealed.prototype.getProfValue.call();
       expect(response).to.equal('theonion_desktop_html5');
 
@@ -544,12 +545,84 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('getCsidValue', () => {
+    let response;
+    let getSiteNameStub;
+    let setDeviceAcronymStub;
+    let getDfpSectionStub;
+    let videoMeta;
+
+    beforeEach(() => {
+      getSiteNameStub = sinon.stub().returns('website');
+      setDeviceAcronymStub = sinon.stub().returns('d');
+      getDfpSectionStub = sinon.stub().returns('fun');
+      videoMeta = {
+        hostChannel: 'host_channel',
+      };
+      response = Revealed.prototype.getCsidValue.call({
+          getSiteName: getSiteNameStub,
+          setDeviceAcronym: setDeviceAcronymStub,
+          getDfpSection: getDfpSectionStub,
+      }, videoMeta);
+    });
+
+    // csid format: <device acronym>.<site name>_<dfp_section>_<host channel>
+    // example: d.theonion_specialcoverage_boldness_main
+    it('#setDeviceAcronym device acronym ', () => {
+      // desktop
+      window.isMobile.any = false;
+      response = Revealed.prototype.setDeviceAcronym.call();
+      expect(response).to.equal('d');
+
+      // mobile
+      window.isMobile.any = true;
+      response = Revealed.prototype.setDeviceAcronym.call();
+      expect(response).to.equal('m');
+    });
+
+    it('sets site name', () => {
+      expect(response.includes('website')).to.be.true;
+    });
+
+    context('getDfpSection', () => {
+      it('window.TARGETING.dfp_section is set', () => {
+        window.TARGETING = { dfp_section: 'sunshine' };
+        response = Revealed.prototype.getDfpSection.call();
+        expect(response).to.eql(window.TARGETING.dfp_section);
+      });
+
+      it('special coverage page', () => {
+        window.TARGETING = { dfp_specialcoverage: 'forest-walk' };
+        response = Revealed.prototype.getDfpSection.call();
+        let expected = `specialcoverage_${window.TARGETING.dfp_specialcoverage}`;
+        expect(response).to.eql(expected);
+      });
+
+      it('not special coverage or dfp_section', () => {
+        window.TARGETING = {};
+        response = Revealed.prototype.getDfpSection.call();
+        expect(response).to.eql('video');
+      });
+    });
+
+    it('populates csid', () => {
+      response = Revealed.prototype.getCsidValue.call({
+          getSiteName: getSiteNameStub,
+          setDeviceAcronym: setDeviceAcronymStub,
+          getDfpSection: getDfpSectionStub,
+      }, videoMeta);
+      let expected = 'd.website_fun_host_channel';
+      expect(response).to.eql(expected);
+    });
+  });
+
   describe('vastUrl', () => {
     let videoMeta;
     let cacheBusterStub;
     let vastTestStub;
     let vastUrl;
     let getProfValueStub;
+    let getSiteNameStub;
     let parsed;
 
     context('default', () => {
@@ -557,6 +630,7 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
         getProfValueStub = sinon.stub().returns('testy');
+        getSiteNameStub = sinon.stub().returns('website');
         videoMeta = {
           tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
@@ -573,7 +647,7 @@ describe('<bulbs-video> <Revealed>', () => {
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         expect(parsed.protocol).to.eql('http:');
-        expect(parsed.host).to.eql('111976v.fwmrm.net');
+        expect(parsed.host).to.eql('111976.v.fwmrm.net');
         expect(parsed.pathname).to.eql('/ad/g/1');
       });
 
