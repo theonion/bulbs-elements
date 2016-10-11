@@ -201,6 +201,7 @@ describe('<bulbs-video> <Revealed>', () => {
         state = {};
         global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
         global.ga = sinon.spy();
+        window.FREEWHEEL_NETWORK_ID = '12345';
         makeVideoPlayerSpy = sinon.spy();
       });
 
