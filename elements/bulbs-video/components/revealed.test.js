@@ -598,7 +598,7 @@ describe('<bulbs-video> <Revealed>', () => {
     });
 
     it('includes site name', () => {
-      expect(response.includes('website')).to.be.true;
+      expect(response.indexOf('website') !== -1).to.be.true;
     });
 
     context('getDfpSection', () => {
@@ -731,16 +731,16 @@ describe('<bulbs-video> <Revealed>', () => {
       });
 
       it('null vastTestId cana not populated', () => {
-        expect(queryKeys.includes('cana')).to.be.false;
+        expect(queryKeys.indexOf('cana') === -1).to.be.true;
       });
       it('no series_slug series_slug not populated', () => {
-        expect(queryKeys.includes('series_slug')).to.be.false;
+        expect(queryKeys.indexOf('series_slug') === -1).to.be.true;
       });
       it('no targetCampaignId campaign_id not populated', () => {
-        expect(queryKeys.includes('campaign_id')).to.be.false;
+        expect(queryKeys.indexOf('campaign_id') === -1).to.be.true;
       });
       it('no targetSpecialCoverage special_coverage not populated', () => {
-        expect(queryKeys.includes('special_coverage')).to.be.false;
+        expect(queryKeys.indexOf('special_coverage') === -1).to.be.true;
       });
     });
   });
