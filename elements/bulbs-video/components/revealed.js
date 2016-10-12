@@ -164,19 +164,25 @@ export default class Revealed extends React.Component {
   }
 
   getProfValue () {
+    let prof;
     if (window.isMobile.any) {
-      return 'theonion_mobileweb_html5';
-    } else {
-      return 'theonion_desktop_html5';
+      prof = 'theonion_mobileweb_html5';
     }
+    else {
+      prof = 'theonion_desktop_html5';
+    }
+    return prof;
   }
 
   setDeviceAcronym () {
+    let deviceAcronym;
     if (window.isMobile.any) {
-      return 'm';
-    } else {
-      return 'd';
+      deviceAcronym = 'm';
     }
+    else {
+      deviceAcronym = 'd';
+    }
+    return deviceAcronym;
   }
 
   getSiteName () {
@@ -184,14 +190,18 @@ export default class Revealed extends React.Component {
   }
 
   getDfpSection () {
+    let dfpSection;
     if (window.TARGETING.dfp_section) {
-      return window.TARGETING.dfp_section;
-    } else if (window.TARGETING.dfp_specialcoverage) {
-      let slug = window.TARGETING.dfp_specialcoverage;
-      return `specialcoverage_${slug}`;
-    } else {
-      return 'video';
+      dfpSection = window.TARGETING.dfp_section;
     }
+    else if (window.TARGETING.dfp_specialcoverage) {
+      let slug = window.TARGETING.dfp_specialcoverage;
+      dfpSection = `specialcoverage_${slug}`;
+    }
+    else {
+      dfpSection = 'video';
+    }
+    return dfpSection;
   }
 
   buildCsid (hostChannel) {
@@ -271,7 +281,8 @@ export default class Revealed extends React.Component {
     // random video player number ending with video id
     // to be used in vastUrl query string
     let randomVideoPlayerNumber = parseInt(
-      `${this.cacheBuster()}${videoMeta.id}`
+      `${this.cacheBuster()}${videoMeta.id}`,
+      10
     );
     videoMeta.vprn = randomVideoPlayerNumber;
 

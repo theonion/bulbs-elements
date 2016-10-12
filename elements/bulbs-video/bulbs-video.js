@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import { loadOnDemand } from 'bulbs-elements/util'
+import { loadOnDemand } from 'bulbs-elements/util';
 
 import VideoField from './fields/video';
 import VideoRequest from './fields/video-request';

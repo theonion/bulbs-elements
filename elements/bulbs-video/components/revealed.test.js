@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
@@ -557,9 +558,9 @@ describe('<bulbs-video> <Revealed>', () => {
       setDeviceAcronymStub = sinon.stub().returns('d');
       getDfpSectionStub = sinon.stub().returns('fun');
       response = Revealed.prototype.buildCsid.call({
-          getSiteName: getSiteNameStub,
-          setDeviceAcronym: setDeviceAcronymStub,
-          getDfpSection: getDfpSectionStub,
+        getSiteName: getSiteNameStub,
+        setDeviceAcronym: setDeviceAcronymStub,
+        getDfpSection: getDfpSectionStub,
       }, 'host_channel');
     });
 
@@ -604,9 +605,9 @@ describe('<bulbs-video> <Revealed>', () => {
 
     it('populates csid', () => {
       response = Revealed.prototype.buildCsid.call({
-          getSiteName: getSiteNameStub,
-          setDeviceAcronym: setDeviceAcronymStub,
-          getDfpSection: getDfpSectionStub,
+        getSiteName: getSiteNameStub,
+        setDeviceAcronym: setDeviceAcronymStub,
+        getDfpSection: getDfpSectionStub,
       }, 'host_channel');
       let expected = 'd.website_fun_host_channel';
       expect(response).to.eql(expected);
@@ -616,7 +617,7 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('buildCaid', () => {
     it('sets to onion studios id', () => {
       let videohubReferenceId = 1234;
-      let response = Revealed.prototype.buildCaid.call({}, videohubReferenceId)
+      let response = Revealed.prototype.buildCaid.call({}, videohubReferenceId);
       expect(response).to.eql('onion_1234');
     });
   });
@@ -627,7 +628,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let vastTestStub;
     let vastUrl;
     let getProfValueStub;
-    let getSiteNameStub;
+    let getSiteNameStub; // eslint-disable no-unused-vars
     let parsed;
     let buildCsidStub;
     let buildCaidStub;
