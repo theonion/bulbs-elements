@@ -6,6 +6,7 @@ describe('<div is="bulbs-dfp">', () => {
   let element;
   let sandbox;
   let sendEventSpy;
+  let reloadAdsSpy;
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
@@ -19,6 +20,8 @@ describe('<div is="bulbs-dfp">', () => {
     sandbox.stub(util.InViewMonitor, 'add');
     sandbox.stub(util.InViewMonitor, 'remove');
     sendEventSpy = sandbox.spy();
+    reloadAdsSpy = sandbox.spy();
+    window.BULBS_ELEMENTS_ADS_MANAGER = { reloadAds: reloadAdsSpy };
     sandbox.stub(util, 'getAnalyticsManager', () => {
       return { sendEvent: sendEventSpy };
     });
@@ -29,6 +32,7 @@ describe('<div is="bulbs-dfp">', () => {
   afterEach(() => {
     sandbox.restore();
     element.remove();
+    delete window.BULBS_ELEMENTS_ADS_MANAGER;
   });
 
   describe('attachedCallback', () => {
@@ -175,7 +179,7 @@ describe('<div is="bulbs-dfp">', () => {
     it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
       element.handleInterval();
       expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
+        eventCategory: 'bulbs-dfp-element Live Metrics',
         eventAction: `30-second-refresh-candidate-${document.visibilityState}`,
         eventLabel: 'test-unit',
       });
@@ -189,10 +193,15 @@ describe('<div is="bulbs-dfp">', () => {
       it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.have.been.calledWith({
-          eventCategory: 'bulbs-dfp-element Metrics',
+          eventCategory: 'bulbs-dfp-element Live Metrics',
           eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
           eventLabel: 'test-unit',
         });
+      });
+
+      it('reloads ads', () => {
+        element.handleInterval();
+        expect(reloadAdsSpy).to.have.been.calledWith(element).once;
       });
     });
 
@@ -200,7 +209,7 @@ describe('<div is="bulbs-dfp">', () => {
       it('does not a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
         element.handleInterval();
         expect(sendEventSpy).to.not.have.been.calledWith({
-          eventCategory: 'bulbs-dfp-element Metrics',
+          eventCategory: 'bulbs-dfp-element Live Metrics',
           eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
           eventLabel: 'test-unit',
         });
