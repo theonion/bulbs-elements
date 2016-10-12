@@ -37,6 +37,7 @@ class CampaignDisplay extends BulbsElement {
     let options = Object.assign({}, this.state, this.props, {
       nameOnly: typeof this.props.nameOnly === 'string',
       logoOnly: typeof this.props.logoOnly === 'string',
+      noPixel: typeof this.props.noPixel === 'string',
       noLink: typeof this.props.noLink === 'string',
     });
     return (<CampaignDisplayRoot {...options} />);
@@ -53,6 +54,7 @@ Object.assign(CampaignDisplay, {
     logoOnly: PropTypes.string,
     nameOnly: PropTypes.string,
     noLink: PropTypes.string,
+    noPixel: PropTypes.string,
     placement: PropTypes.string.isRequired,
     preambleText: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,

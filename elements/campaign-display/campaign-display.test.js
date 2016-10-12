@@ -36,6 +36,12 @@ describe('<campaign-display>', () => {
     }).to.throw('campaign-display component requires a placement');
   });
 
+  it('accepts a no-pixel attribute', () => {
+    props.noPixel = '';
+    subject = shallow(<CampaignDisplay {...props} campaign={campaign} />);
+    expect(subject).to.have.prop('noPixel', true);
+  });
+
   it('accepts a no-link attribute', () => {
     subject = shallow(<CampaignDisplay {...props} campaign={campaign} />);
     expect(subject).to.have.prop('noLink', true);

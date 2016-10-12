@@ -94,6 +94,8 @@ Use this if developing elements within `bulbs-elements` locally
 $ ./scripts/webpack-dev-server
 ```
 
+You can access the examples site now by visiting [localhost:8080]().
+
 ## Common Components
 
 Some components can be used in more than one element.

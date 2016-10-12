@@ -24,9 +24,15 @@ export default class BulbsDfp extends BulbsHTMLElement {
     this.handleEnterViewport = this.handleEnterViewport.bind(this);
     this.handleExitViewport = this.handleExitViewport.bind(this);
     this.handleInterval = this.handleInterval.bind(this);
+    this.handleSlotRenderEnded = this.handleSlotRenderEnded.bind(this);
+    this.handleImpressionViewable = this.handleImpressionViewable.bind(this);
+    this.handleSlotOnload = this.handleSlotOnload.bind(this);
 
     this.addEventListener('enterviewport', this.handleEnterViewport);
     this.addEventListener('exitviewport', this.handleExitViewport);
+    this.addEventListener('dfpSlotRenderEnded', this.handleSlotRenderEnded);
+    this.addEventListener('dfpImpressionViewable', this.handleImpressionViewable);
+    this.addEventListener('dfpSlotOnload', this.handleSlotOnload);
 
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
     util.InViewMonitor.add(this, {
@@ -88,21 +94,49 @@ export default class BulbsDfp extends BulbsHTMLElement {
      */
   }
 
+  handleSlotRenderEnded () {
+    util.getAnalyticsManager().sendEvent({
+      eventCategory: 'bulbs-dfp-element Metrics',
+      eventAction: 'slotrenderended',
+      eventLabel: this.dataset.adUnit,
+    });
+  }
+
+  handleImpressionViewable () {
+    util.getAnalyticsManager().sendEvent({
+      eventCategory: 'bulbs-dfp-element Metrics',
+      eventAction: 'impressionviewable',
+      eventLabel: this.dataset.adUnit,
+    });
+  }
+
+  handleSlotOnload () {
+    util.getAnalyticsManager().sendEvent({
+      eventCategory: 'bulbs-dfp-element Metrics',
+      eventAction: 'slotonload',
+      eventLabel: this.dataset.adUnit,
+    });
+  }
+
   handleInterval () {
+    let browserVisibility = document.visibilityState;
+
     util.getAnalyticsManager().sendEvent({
       eventCategory: 'bulbs-dfp-element Live Metrics',
-      eventAction: '30-second-refresh-candidate',
+      eventAction: `30-second-refresh-candidate-${browserVisibility}`,
       eventLabel: this.dataset.adUnit,
     });
 
     if (this.isViewable) {
       util.getAnalyticsManager().sendEvent({
         eventCategory: 'bulbs-dfp-element Live Metrics',
-        eventAction: '30-second-refresh-triggered',
+        eventAction: `30-second-refresh-triggered-${browserVisibility}`,
         eventLabel: this.dataset.adUnit,
       });
 
-      this.adsManager.reloadAds(this);
+      if (browserVisibility === 'visible') {
+        this.adsManager.reloadAds(this);
+      }
     }
   }
 

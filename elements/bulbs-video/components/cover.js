@@ -5,7 +5,6 @@ import VideoMetaRoot from '../elements/meta/components/root';
 
 export default function Cover (props) {
   let { video, actions, enablePosterMeta, disableMetaLink } = props;
-  let imageId = parseInt(video.poster_url.match(/\d+/)[0], 10);
   let metaElement;
 
   if (enablePosterMeta) {
@@ -22,7 +21,6 @@ export default function Cover (props) {
     >
       <img
         className='bulbs-video-poster'
-        imageId={imageId}
         src={video.poster_url}
       />
       <div className='bulbs-video-poster-overlay'>
