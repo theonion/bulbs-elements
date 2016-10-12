@@ -547,6 +547,25 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('#getSiteName', () => {
+    let props;
+    let response;
+
+    beforeEach(() => {
+      props = { video: { targeting: { target_channel: 'avclub' } } };
+    });
+
+    it('pulls site name from props.video.targeting.target_channel', () => {
+      response = Revealed.prototype.getSiteName.call({ props });
+      expect(response).to.eql(props.video.targeting.target_channel);
+    });
+    it('it removes hypens from props.video.targeting.target_channel', () => {
+      props.video.targeting.target_channel = 'the-freakin-onion';
+      response = Revealed.prototype.getSiteName.call({ props });
+      expect(response).to.eql('thefreakinonion');
+    });
+  });
+
   describe('buildCsid', () => {
     let response;
     let getSiteNameStub;
@@ -578,7 +597,7 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(response).to.equal('m');
     });
 
-    it('sets site name', () => {
+    it('includes site name', () => {
       expect(response.includes('website')).to.be.true;
     });
 

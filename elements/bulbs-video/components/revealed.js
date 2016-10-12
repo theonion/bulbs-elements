@@ -9,6 +9,8 @@ import Comscore from '../plugins/comscore';
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
+// FIXME: where should this be defined? Per-app?
+// or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
@@ -186,7 +188,8 @@ export default class Revealed extends React.Component {
   }
 
   getSiteName () {
-    return window.location.host.split('.')[1];
+    let targetChannel = this.props.video.targeting.target_channel;
+    return targetChannel.replace(/-/g, '');
   }
 
   getDfpSection () {
