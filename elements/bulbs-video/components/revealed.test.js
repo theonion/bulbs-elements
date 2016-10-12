@@ -669,6 +669,7 @@ describe('<bulbs-video> <Revealed>', () => {
         'resp', 'prof', 'csid', 'caid', 'pvrn',
         'vprn', 'cana', 'video_id', 'channel_slug',
         'series_slug','campaign_id', 'special_coverage',
+        'slid', 'tpcl', 'ptgt',
       ];
       queryKeys = Object.keys(parsed.query);
 
@@ -687,7 +688,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(parsed.query.channel_slug).to.eql('channel_slug');
       expect(parsed.query.series_slug).to.eql('series-slug');
       expect(parsed.query.campaign_id).to.eql('66');
-      expect(parsed.query.special_coverage).to.eql('blooping');
+      expect(parsed.query.special_coverage).to.eql('blooping;');
+      expect(parsed.query.slid).to.eql('Preroll');
+      expect(parsed.query.tpcl).to.eql('PREROLL');
+      expect(parsed.query.ptgt).to.eql('a');
     });
 
     context('conditionally set parameters', () => {

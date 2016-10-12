@@ -239,6 +239,11 @@ export default class Revealed extends React.Component {
     if (campaignId) { baseUrl += '&campaign_id=' + campaignId; }
     if (specialCoverage) { baseUrl += '&special_coverage=' + specialCoverage; }
 
+    // Slot Params *Required Fields*
+    baseUrl += ';&slid=' + 'Preroll';
+    baseUrl += '&tpcl=' + 'PREROLL';
+    baseUrl += '&ptgt=' + 'a';
+
     return baseUrl;
   }
 
