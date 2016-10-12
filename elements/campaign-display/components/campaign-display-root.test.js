@@ -210,4 +210,12 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
       expect(subject).to.not.be.blank();
     });
   });
+
+  context('with no-pixel set', () => {
+    it('does not render a DFP Pixel', () => {
+      props.noPixel = true;
+      subject = shallow(<CampaignDisplayRoot {...props} />);
+      expect(subject).not.to.have.descendants(DfpPixel);
+    });
+  });
 });
