@@ -631,25 +631,32 @@ describe('<bulbs-video> <Revealed>', () => {
     let parsed;
     let buildCsidStub;
     let buildCaidStub;
+    let queryKeys;
 
     beforeEach(() => {
-      window.FREEWHEEL_NETWORK_ID = '12345';
-      cacheBusterStub = sinon.stub().returns('456');
-      vastTestStub = sinon.stub().returns(null);
+      cacheBusterStub = sinon.stub().returns(456);
+      vastTestStub = sinon.stub().returns(5678);
       getProfValueStub = sinon.stub().returns('testy');
       getSiteNameStub = sinon.stub().returns('website');
       buildCsidStub = sinon.stub().returns('d.website_camping_channel');
       buildCaidStub = sinon.stub().returns('onion_1234');
       videoMeta = {
+        id: 765,
+        vprn: 456765,
         tags: ['clickhole', 'main', '12345'],
         category: 'main/clickhole',
         channel_slug: 'channel_slug',
         hostChannel: 'host_channel',
+        series_slug: 'series-slug',
       };
     });
 
     it('returns the vast url', function () {
       vastUrl = Revealed.prototype.vastUrl.call({
+        props: {
+          targetCampaignId: 66,
+          targetSpecialCoverage: 'blooping',
+        },
         cacheBuster: cacheBusterStub,
         vastTest: vastTestStub,
         getProfValue: getProfValueStub,
@@ -657,39 +664,59 @@ describe('<bulbs-video> <Revealed>', () => {
         buildCaid: buildCaidStub,
       }, videoMeta);
       parsed = url.parse(vastUrl, true);
+
+      let expectedQueryKeys = [
+        'resp', 'prof', 'csid', 'caid', 'pvrn',
+        'vprn', 'cana', 'video_id', 'channel_slug',
+        'series_slug','campaign_id', 'special_coverage',
+      ];
+      queryKeys = Object.keys(parsed.query);
+
+      expect(queryKeys).to.eql(expectedQueryKeys);
       expect(parsed.protocol).to.eql('http:');
       expect(parsed.host).to.eql('12345.v.fwmrm.net');
       expect(parsed.pathname).to.eql('/ad/g/1');
+      expect(parsed.query.resp).to.eql('vmap1');
+      expect(parsed.query.prof).to.eql('testy');
+      expect(parsed.query.csid).to.eql('d.website_camping_channel');
+      expect(parsed.query.caid).to.eql('onion_1234');
+      expect(parsed.query.pvrn).to.eql('456');
+      expect(parsed.query.vprn).to.eql('456765');
+      expect(parsed.query.cana).to.eql('5678;');
+      expect(parsed.query.video_id).to.eql('765');
+      expect(parsed.query.channel_slug).to.eql('channel_slug');
+      expect(parsed.query.series_slug).to.eql('series-slug');
+      expect(parsed.query.campaign_id).to.eql('66');
+      expect(parsed.query.special_coverage).to.eql('blooping');
     });
 
-    it('populates keys for required global params', () => {
-      let expectedQueryKeys = [
-        'resp', 'prof', 'csid', 'caid', 'pvrn', 'vprn'
-      ];
-      let queryKeys = Object.keys(parsed.query);
-      expect(queryKeys).to.eql(expectedQueryKeys);
-    });
-
-    it('populates cana if vastTest returns value', () => {
-      vastTestStub = sinon.stub().returns(5678);
-      vastUrl = Revealed.prototype.vastUrl.call({
-        cacheBuster: cacheBusterStub,
-        vastTest: vastTestStub,
-        getProfValue: getProfValueStub,
-        buildCsid: buildCsidStub,
-        buildCaid: buildCaidStub,
-      }, videoMeta);
-      parsed = url.parse(vastUrl, true);
-      let queryKeys = Object.keys(parsed.query);
-      expect(queryKeys.includes('cana')).to.be.true;
-    });
-
-    context('populates values for required global params', () => {
-      it('resp', function () {
-        expect(parsed.query.resp).to.eql('vmap1');
+    context('conditionally set parameters', () => {
+      beforeEach(() => {
+        vastTestStub = sinon.stub().returns(null);
+        videoMeta.series_slug = null;
+        vastUrl = Revealed.prototype.vastUrl.call({
+          props: {},
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+          getProfValue: getProfValueStub,
+          buildCsid: buildCsidStub,
+          buildCaid: buildCaidStub,
+        }, videoMeta);
+        parsed = url.parse(vastUrl, true);
+        queryKeys = Object.keys(parsed.query);
       });
-      it('prof', function () {
-        expect(parsed.query.prof).to.eql('testy');
+
+      it('null vastTestId cana not populated', () => {
+        expect(queryKeys.includes('cana')).to.be.false;
+      });
+      it('no series_slug series_slug not populated', () => {
+        expect(queryKeys.includes('series_slug')).to.be.false;
+      });
+      it('no targetCampaignId campaign_id not populated', () => {
+        expect(queryKeys.includes('campaign_id')).to.be.false;
+      });
+      it('no targetSpecialCoverage special_coverage not populated', () => {
+        expect(queryKeys.includes('special_coverage')).to.be.false;
       });
     });
   });

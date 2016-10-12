@@ -215,6 +215,9 @@ export default class Revealed extends React.Component {
     let videohubReferenceId = videoMeta.id;
     let randomVideoPlayerNumber = videoMeta.vprn;
     let vastTestId = this.vastTest(window.location.search);
+    let series = videoMeta.series_slug;
+    let campaignId = this.props.targetCampaignId;
+    let specialCoverage = this.props.targetSpecialCoverage;
 
     let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
 
@@ -225,10 +228,16 @@ export default class Revealed extends React.Component {
     baseUrl += '&caid=' + this.buildCaid(videohubReferenceId);
     baseUrl += '&pvrn=' + this.cacheBuster();
     baseUrl += '&vprn=' + randomVideoPlayerNumber;
+
     // optional global param
-    if (vastTestId) {
-      baseUrl += '&cana=' + vastTestId;
-    }
+    if (vastTestId) { baseUrl += '&cana=' + vastTestId; }
+
+    // Key Values
+    baseUrl += ';&video_id=' + videohubReferenceId;
+    baseUrl += '&channel_slug=' + videoMeta.channel_slug;
+    if (series) { baseUrl += '&series_slug=' + series; }
+    if (campaignId) { baseUrl += '&campaign_id=' + campaignId; }
+    if (specialCoverage) { baseUrl += '&special_coverage=' + specialCoverage; }
 
     return baseUrl;
   }
