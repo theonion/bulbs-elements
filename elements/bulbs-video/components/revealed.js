@@ -46,9 +46,10 @@ export default class Revealed extends React.Component {
     );
 
     invariant(
-      window.FREEWHEEL_NETWORK_ID,
-      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_ID` to be set on window.'
+      window.FREEWHEEL_AD_SERVER,
+      '`<bulbs-video>` requires `FREEWHEEL_AD_SERVER` to be set on window.'
     );
+
     let gaPrefix = makeGaPrefix();
     ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
 
@@ -155,7 +156,7 @@ export default class Revealed extends React.Component {
 
   vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
-      let vastId = this.parseParam('xgid', searchString);
+      let vastId = this.parseParam('apid', searchString);
 
       if (vastId) {
         return vastId;
@@ -176,7 +177,7 @@ export default class Revealed extends React.Component {
     return prof;
   }
 
-  setDeviceAcronym () {
+  getDeviceAcronym () {
     let deviceAcronym;
     if (window.isMobile.any) {
       deviceAcronym = 'm';
@@ -207,23 +208,23 @@ export default class Revealed extends React.Component {
     return dfpSection;
   }
 
-  buildCsid (hostChannel) {
-    // Custom Site Section ID
+  buildCustomSiteSectionId (hostChannel) {
     // format: <device acronym>.<site name>_<dfp section>_<host channel>
-    let deviceAcronym = this.setDeviceAcronym();
+    let deviceAcronym = this.getDeviceAcronym();
     let siteName = this.getSiteName();
     let siteSection = this.getDfpSection();
 
     return `${deviceAcronym}.${siteName}_${siteSection}_${hostChannel}`;
   }
 
-  buildCaid (videohubReferenceId) {
-    // Custom content video asset id
+  buildCustomContentVideoAssetId (videohubReferenceId) {
     // format: onion_<videohub reference id>
     return `onion_${videohubReferenceId}`;
   }
 
   vastUrl (videoMeta) {
+    let networkHash = window.FREEWHEEL_AD_SERVER.NETWORK_HASH;
+    let networkId = window.FREEWHEEL_AD_SERVER.NETWORK_ID;
     let hostChannel = videoMeta.hostChannel;
     let videohubReferenceId = videoMeta.id;
     let randomVideoPlayerNumber = videoMeta.vprn;
@@ -232,13 +233,14 @@ export default class Revealed extends React.Component {
     let campaignId = this.props.targetCampaignId;
     let specialCoverage = this.props.targetSpecialCoverage;
 
-    let baseUrl = `http://${window.FREEWHEEL_NETWORK_ID}.v.fwmrm.net/ad/g/1?`;
+    let baseUrl = `http://${networkHash}.v.fwmrm.net/ad/g/1?`;
 
     // required global params
-    baseUrl += 'resp=' + 'vmap1';
+    baseUrl += 'nw=' + `${networkId}`;
+    baseUrl += '&resp=' + 'vmap1';
     baseUrl += '&prof=' + this.getProfValue();
-    baseUrl += '&csid=' + this.buildCsid(hostChannel);
-    baseUrl += '&caid=' + this.buildCaid(videohubReferenceId);
+    baseUrl += '&csid=' + this.buildCustomSiteSectionId(hostChannel);
+    baseUrl += '&caid=' + this.buildCustomContentVideoAssetId(videohubReferenceId);
     baseUrl += '&pvrn=' + this.cacheBuster();
     baseUrl += '&vprn=' + randomVideoPlayerNumber;
 
@@ -246,14 +248,14 @@ export default class Revealed extends React.Component {
     if (vastTestId) { baseUrl += '&cana=' + vastTestId; }
 
     // Key Values
-    baseUrl += ';&video_id=' + videohubReferenceId;
+    baseUrl += ';video_id=' + videohubReferenceId;
     baseUrl += '&channel_slug=' + videoMeta.channel_slug;
     if (series) { baseUrl += '&series_slug=' + series; }
     if (campaignId) { baseUrl += '&campaign_id=' + campaignId; }
     if (specialCoverage) { baseUrl += '&special_coverage=' + specialCoverage; }
 
     // Slot Params *Required Fields*
-    baseUrl += ';&slid=' + 'Preroll';
+    baseUrl += ';slid=' + 'Preroll';
     baseUrl += '&tpcl=' + 'PREROLL';
     baseUrl += '&ptgt=' + 'a';
 

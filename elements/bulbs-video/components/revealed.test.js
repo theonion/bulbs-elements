@@ -202,7 +202,10 @@ describe('<bulbs-video> <Revealed>', () => {
         state = {};
         global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
         global.ga = sinon.spy();
-        window.FREEWHEEL_NETWORK_ID = '12345';
+        window.FREEWHEEL_AD_SERVER = {
+          "NETWORK_HASH": "1a345",
+          "NETWORK_ID": "12345",
+        };
         makeVideoPlayerSpy = sinon.spy();
       });
 
@@ -566,34 +569,34 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
-  describe('buildCsid', () => {
+  describe('buildCustomSiteSectionId', () => {
     let response;
     let getSiteNameStub;
-    let setDeviceAcronymStub;
+    let getDeviceAcronymStub;
     let getDfpSectionStub;
 
     beforeEach(() => {
       getSiteNameStub = sinon.stub().returns('website');
-      setDeviceAcronymStub = sinon.stub().returns('d');
+      getDeviceAcronymStub = sinon.stub().returns('d');
       getDfpSectionStub = sinon.stub().returns('fun');
-      response = Revealed.prototype.buildCsid.call({
+      response = Revealed.prototype.buildCustomSiteSectionId.call({
         getSiteName: getSiteNameStub,
-        setDeviceAcronym: setDeviceAcronymStub,
+        getDeviceAcronym: getDeviceAcronymStub,
         getDfpSection: getDfpSectionStub,
       }, 'host_channel');
     });
 
     // csid format: <device acronym>.<site name>_<dfp_section>_<host channel>
     // example: d.theonion_specialcoverage_boldness_main
-    it('#setDeviceAcronym device acronym ', () => {
+    it('#getDeviceAcronym device acronym ', () => {
       // desktop
       window.isMobile.any = false;
-      response = Revealed.prototype.setDeviceAcronym.call();
+      response = Revealed.prototype.getDeviceAcronym.call();
       expect(response).to.equal('d');
 
       // mobile
       window.isMobile.any = true;
-      response = Revealed.prototype.setDeviceAcronym.call();
+      response = Revealed.prototype.getDeviceAcronym.call();
       expect(response).to.equal('m');
     });
 
@@ -623,9 +626,9 @@ describe('<bulbs-video> <Revealed>', () => {
     });
 
     it('populates csid', () => {
-      response = Revealed.prototype.buildCsid.call({
+      response = Revealed.prototype.buildCustomSiteSectionId.call({
         getSiteName: getSiteNameStub,
-        setDeviceAcronym: setDeviceAcronymStub,
+        getDeviceAcronym: getDeviceAcronymStub,
         getDfpSection: getDfpSectionStub,
       }, 'host_channel');
       let expected = 'd.website_fun_host_channel';
@@ -633,10 +636,10 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
-  describe('buildCaid', () => {
+  describe('buildCustomContentVideoAssetId', () => {
     it('sets to onion studios id', () => {
       let videohubReferenceId = 1234;
-      let response = Revealed.prototype.buildCaid.call({}, videohubReferenceId);
+      let response = Revealed.prototype.buildCustomContentVideoAssetId.call({}, videohubReferenceId);
       expect(response).to.eql('onion_1234');
     });
   });
@@ -649,8 +652,8 @@ describe('<bulbs-video> <Revealed>', () => {
     let getProfValueStub;
     let getSiteNameStub; // eslint-disable no-unused-vars
     let parsed;
-    let buildCsidStub;
-    let buildCaidStub;
+    let buildCustomSiteSectionIdStub;
+    let buildCustomContentVideoAssetIdStub;
     let queryKeys;
 
     beforeEach(() => {
@@ -658,8 +661,8 @@ describe('<bulbs-video> <Revealed>', () => {
       vastTestStub = sinon.stub().returns(5678);
       getProfValueStub = sinon.stub().returns('testy');
       getSiteNameStub = sinon.stub().returns('website');
-      buildCsidStub = sinon.stub().returns('d.website_camping_channel');
-      buildCaidStub = sinon.stub().returns('onion_1234');
+      buildCustomSiteSectionIdStub = sinon.stub().returns('d.website_camping_channel');
+      buildCustomContentVideoAssetIdStub = sinon.stub().returns('onion_1234');
       videoMeta = {
         id: 765,
         vprn: 456765,
@@ -669,9 +672,6 @@ describe('<bulbs-video> <Revealed>', () => {
         hostChannel: 'host_channel',
         series_slug: 'series-slug',
       };
-    });
-
-    it('returns the vast url', function () {
       vastUrl = Revealed.prototype.vastUrl.call({
         props: {
           targetCampaignId: 66,
@@ -680,37 +680,71 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBuster: cacheBusterStub,
         vastTest: vastTestStub,
         getProfValue: getProfValueStub,
-        buildCsid: buildCsidStub,
-        buildCaid: buildCaidStub,
+        buildCustomSiteSectionId: buildCustomSiteSectionIdStub,
+        buildCustomContentVideoAssetId: buildCustomContentVideoAssetIdStub,
       }, videoMeta);
       parsed = url.parse(vastUrl, true);
+    });
 
-      let expectedQueryKeys = [
-        'resp', 'prof', 'csid', 'caid', 'pvrn',
-        'vprn', 'cana', 'video_id', 'channel_slug',
-        'series_slug','campaign_id', 'special_coverage',
-        'slid', 'tpcl', 'ptgt',
-      ];
-      queryKeys = Object.keys(parsed.query);
-
-      expect(queryKeys).to.eql(expectedQueryKeys);
+    it('sets the http: protocol', function () {
       expect(parsed.protocol).to.eql('http:');
-      expect(parsed.host).to.eql('12345.v.fwmrm.net');
+    });
+    it('sets host', function () {
+      expect(parsed.host).to.eql('1a345.v.fwmrm.net');
+    });
+    it('sets pathname', function () {
       expect(parsed.pathname).to.eql('/ad/g/1');
+    });
+    it('sets nw', function () {
+      expect(parsed.query.nw).to.eql('12345');
+    });
+    it('sets resp', function () {
       expect(parsed.query.resp).to.eql('vmap1');
+    });
+    it('sets prof', function () {
       expect(parsed.query.prof).to.eql('testy');
+    });
+    it('sets csid', function () {
       expect(parsed.query.csid).to.eql('d.website_camping_channel');
+    });
+    it('sets caid', function () {
       expect(parsed.query.caid).to.eql('onion_1234');
+    });
+    it('sets pvrn', function () {
       expect(parsed.query.pvrn).to.eql('456');
+    });
+    it('sets vprn', function () {
       expect(parsed.query.vprn).to.eql('456765');
-      expect(parsed.query.cana).to.eql('5678;');
-      expect(parsed.query.video_id).to.eql('765');
+    });
+    it('sets cana', function () {
+      let canaIndex = parsed.search.indexOf('cana=5678');
+      expect(canaIndex !== -1).to.be.true;
+    });
+    it('sets video_id', function () {
+      let vidoeIdIndex = parsed.search.indexOf('video_id=765');
+      expect(vidoeIdIndex !== -1).to.be.true;
+    });
+    it('sets channel_slug', function () {
       expect(parsed.query.channel_slug).to.eql('channel_slug');
+    });
+    it('sets series_slug', function () {
       expect(parsed.query.series_slug).to.eql('series-slug');
+    });
+    it('sets campaign_id', function () {
       expect(parsed.query.campaign_id).to.eql('66');
-      expect(parsed.query.special_coverage).to.eql('blooping;');
-      expect(parsed.query.slid).to.eql('Preroll');
+    });
+    it('sets special_coverage', function () {
+      let specCovIndex = parsed.search.indexOf('special_coverage=blooping');
+      expect(specCovIndex !== -1).to.be.true;
+    });
+    it('sets slid', function () {
+      let slidIndex = parsed.search.indexOf('slid=Preroll');
+      expect(slidIndex !== -1).to.be.true;
+    });
+    it('sets tpcl', function () {
       expect(parsed.query.tpcl).to.eql('PREROLL');
+    });
+    it('sets ptgt', function () {
       expect(parsed.query.ptgt).to.eql('a');
     });
 
@@ -723,8 +757,8 @@ describe('<bulbs-video> <Revealed>', () => {
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
           getProfValue: getProfValueStub,
-          buildCsid: buildCsidStub,
-          buildCaid: buildCaidStub,
+          buildCustomSiteSectionId: buildCustomSiteSectionIdStub,
+          buildCustomContentVideoAssetId: buildCustomContentVideoAssetIdStub,
         }, videoMeta);
         parsed = url.parse(vastUrl, true);
         queryKeys = Object.keys(parsed.query);
