@@ -203,8 +203,8 @@ describe('<bulbs-video> <Revealed>', () => {
         global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
         global.ga = sinon.spy();
         window.FREEWHEEL_AD_SERVER = {
-          "NETWORK_HASH": "1a345",
-          "NETWORK_ID": "12345",
+          'NETWORK_HASH': '1a345',
+          'NETWORK_ID': '12345',
         };
         makeVideoPlayerSpy = sinon.spy();
       });
