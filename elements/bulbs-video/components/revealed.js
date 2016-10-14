@@ -46,8 +46,13 @@ export default class Revealed extends React.Component {
     );
 
     invariant(
-      window.FREEWHEEL_AD_SERVER,
-      '`<bulbs-video>` requires `FREEWHEEL_AD_SERVER` to be set on window.'
+      window.FREEWHEEL_NETWORK_ID,
+      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_ID` to be set on window.'
+    );
+
+    invariant(
+      window.FREEWHEEL_NETWORK_HASH,
+      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_HASH` to be set on window.'
     );
 
     let gaPrefix = makeGaPrefix();
@@ -223,8 +228,6 @@ export default class Revealed extends React.Component {
   }
 
   vastUrl (videoMeta) {
-    let networkHash = window.FREEWHEEL_AD_SERVER.NETWORK_HASH;
-    let networkId = window.FREEWHEEL_AD_SERVER.NETWORK_ID;
     let hostChannel = videoMeta.hostChannel;
     let videohubReferenceId = videoMeta.id;
     let randomVideoPlayerNumber = videoMeta.vprn;
@@ -233,10 +236,10 @@ export default class Revealed extends React.Component {
     let campaignId = this.props.targetCampaignId;
     let specialCoverage = this.props.targetSpecialCoverage;
 
-    let baseUrl = `http://${networkHash}.v.fwmrm.net/ad/g/1?`;
+    let baseUrl = `http://${window.FREEWHEEL_NETWORK_HASH}.v.fwmrm.net/ad/g/1?`;
 
     // required global params
-    baseUrl += 'nw=' + `${networkId}`;
+    baseUrl += 'nw=' + `${window.FREEWHEEL_NETWORK_ID}`;
     baseUrl += '&resp=' + 'vmap1';
     baseUrl += '&prof=' + this.getProfValue();
     baseUrl += '&csid=' + this.buildCustomSiteSectionId(hostChannel);
