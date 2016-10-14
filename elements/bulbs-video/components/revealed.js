@@ -214,7 +214,6 @@ export default class Revealed extends React.Component {
   }
 
   buildCustomSiteSectionId (hostChannel) {
-    // format: <device acronym>.<site name>_<dfp section>_<host channel>
     let deviceAcronym = this.getDeviceAcronym();
     let siteName = this.getSiteName();
     let siteSection = this.getDfpSection();
@@ -223,7 +222,6 @@ export default class Revealed extends React.Component {
   }
 
   buildCustomContentVideoAssetId (videohubReferenceId) {
-    // format: onion_<videohub reference id>
     return `onion_${videohubReferenceId}`;
   }
 
