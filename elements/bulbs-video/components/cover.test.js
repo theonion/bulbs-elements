@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import Cover from './cover';
 import video from '../fixtures/video.json';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
+import VideoMetaRoot from '../elements/meta/components/root';
 
 describe('<bulbs-video> <Cover>', function () {
   describe('propTypes', () => {
@@ -23,9 +24,11 @@ describe('<bulbs-video> <Cover>', function () {
     let revealPlayer = sinon.spy();
     let imageId = 394839;
     let posterUrl = `/video-poster-url/${imageId}/whatever.png`;
+    let disableMetaLink = false;
 
     beforeEach(() => {
       props = {
+        disableMetaLink,
         video: Object.assign({}, video, {
           poster_url: posterUrl,
         }),
@@ -51,11 +54,28 @@ describe('<bulbs-video> <Cover>', function () {
       );
     });
 
+    it('does not render meta by default', () => {
+      expect(subject).to.not.contain(
+        <VideoMetaRoot
+          video={props.video}
+          disableLink={disableMetaLink}/>
+      );
+    });
+
+    it('does render meta given parameter', () => {
+      props.enablePosterMeta = true;
+      subject = shallow(<Cover {...props}/>);
+      expect(subject).to.contain(
+        <VideoMetaRoot
+          video={props.video}
+          disableLink={disableMetaLink}/>
+      );
+    });
+
     it('renders an image', () => {
       expect(subject).to.contain(
         <img
           className='bulbs-video-poster'
-          imageId={imageId}
           src={posterUrl}
         />
       );
