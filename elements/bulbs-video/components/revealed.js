@@ -3,6 +3,7 @@ require('expose?jwplayer!../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
+import { GaPrefix } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -16,7 +17,6 @@ global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let prefixCount = 0;
 function makeGaPrefix () {
-  // ga demands tracker names be alphanumeric
   return `videoplayer${prefixCount++}`;
 }
 
@@ -40,8 +40,6 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
-    let gaPrefix = makeGaPrefix();
-    ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
 
     let targeting = this.props.video.targeting;
     let prefixedSet = `${gaPrefix}.set`;
@@ -49,16 +47,24 @@ export default class Revealed extends React.Component {
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
 
-    ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
-    ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
-    ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
-    ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', hostChannel);
-    ga(prefixedSet, 'dimension6', specialCoverage);
-    ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
-    ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
-    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Tunic Campaign Id
-    ga(prefixedSet, 'dimension10', 'None'); // Platform
+    let gaPrefix = makeGaPrefix();
+    let dimensions = {
+      'dimension1': targeting.target_channel || 'None',
+      'dimension2': targeting.target_series || 'None',
+      'dimension3': targeting.target_season || 'None',
+      'dimension4': targeting.target_video_id || 'None',
+      'dimension5': hostChannel,
+      'dimension6': specialCoverage,
+      'dimension7': true, // 'has_player' from old embed
+      'dimension8': this.props.autoplay || 'None',
+      'dimension9': this.props.targetCampaignId || 'None',
+      'dimension10': 'None',
+    };
+    let sendAnalyticsEvent = GaPrefix(
+      gaPrefix,
+      BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
+      dimensions
+    );
 
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
