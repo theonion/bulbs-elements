@@ -54,9 +54,9 @@ export default class Revealed extends React.Component {
       'dimension5': hostChannel,
       'dimension6': specialCoverage,
       'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || 'None',
-      'dimension9': this.props.targetCampaignId || 'None',
-      'dimension10': 'None',
+      'dimension8': this.props.autoplay || 'None', // autoplay
+      'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
+      'dimension10': 'None', // Platform
     };
     let sendAnalyticsEvent = prepGaEvent(
       gaPrefix,
