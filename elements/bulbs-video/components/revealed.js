@@ -3,7 +3,7 @@ require('expose?jwplayer!../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
-import { GaPrefix } from 'bulbs-elements/util';
+import { prepGaEvent } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -40,9 +40,7 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
-
     let targeting = this.props.video.targeting;
-    let prefixedSet = `${gaPrefix}.set`;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
@@ -60,7 +58,7 @@ export default class Revealed extends React.Component {
       'dimension9': this.props.targetCampaignId || 'None',
       'dimension10': 'None',
     };
-    let sendAnalyticsEvent = GaPrefix(
+    let sendAnalyticsEvent = prepGaEvent(
       gaPrefix,
       BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       dimensions
@@ -70,6 +68,7 @@ export default class Revealed extends React.Component {
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaPrefix = gaPrefix;
+    videoMeta.sendAnalyticsEvent = sendAnalyticsEvent;
     videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
@@ -253,7 +252,7 @@ export default class Revealed extends React.Component {
 
     player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.gaPrefix);
+    GoogleAnalytics.init(player, videoMeta.sendAnalyticsEvent);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
   }

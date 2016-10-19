@@ -593,9 +593,12 @@ describe('<bulbs-video> <Revealed>', () => {
     let element;
     let player;
     let videoMeta;
+    let sendAnalyticsEvent;
 
     beforeEach(() => {
       element = {};
+      sendAnalyticsEvent = () => {};
+
       videoMeta = Object.assign({}, video, {
         title: 'video_title',
         tags: 'tags',
@@ -656,6 +659,7 @@ describe('<bulbs-video> <Revealed>', () => {
           },
         ],
         gaPrefix: 'videoplayer0',
+        sendAnalyticsEvent,
       });
       playerSetup = sinon.spy();
       player = {
@@ -726,7 +730,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('initializes the GoogleAnalytics plugin', () => {
-          expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+          expect(GoogleAnalytics.init.calledWith(player, sendAnalyticsEvent)).to.be.true;
         });
 
         it('initializes the Comscore plugin', () => {

@@ -1,11 +1,7 @@
-let prefixedSend = (gaPrefix) => {
-  return `${gaPrefix}.send`;
-};
-
 class GoogleAnalytics {
-  constructor (player, gaPrefix) {
+  constructor (player, sendAnalyticsEvent) {
     this.player = player;
-    this.gaPrefix = gaPrefix;
+    this.sendAnalyticsEvent = sendAnalyticsEvent;
 
     this.player.gaEvents = {};
 
@@ -22,34 +18,27 @@ class GoogleAnalytics {
 
   onPlay () {
     if (!this.player.playedOnce) {
-      global.ga(
-        prefixedSend(this.gaPrefix),
-        'event', 'Video:' + this.player.videoMeta.channel_name,
-        'start',
-        this.player.videoMeta.player_options.shareUrl
+      this.sendAnalyticsEvent(
+        'Video:' + this.player.videoMeta.channel_name,
+        'start', this.player.videoMeta.player_options.shareUrl
       );
       this.player.playedOnce = true;
     }
-    global.ga(
-      prefixedSend(this.gaPrefix),
-      'event', 'Video:' + this.player.videoMeta.channel_name,
-      'play',
-      this.player.videoMeta.player_options.shareUrl
+    this.sendAnalyticsEvent(
+      'Video:' + this.player.videoMeta.channel_name,
+      'play', this.player.videoMeta.player_options.shareUrl
     );
   }
 
   onPause () {
-    global.ga(
-      prefixedSend(this.gaPrefix), 'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
-      'pause',
-      this.player.videoMeta.player_options.shareUrl
+      'pause', this.player.videoMeta.player_options.shareUrl
     );
   }
 
   onFullScreen (event) {
-    global.ga(
-      prefixedSend(this.gaPrefix), 'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'fullscreen:' + event.fullscreen,
       this.player.videoMeta.player_options.shareUrl
@@ -57,8 +46,7 @@ class GoogleAnalytics {
   }
 
   onResize (event) {
-    global.ga(
-      prefixedSend(this.gaPrefix), 'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'resize:' + event.width + 'x' + event.height,
       this.player.videoMeta.player_options.shareUrl
@@ -66,8 +54,7 @@ class GoogleAnalytics {
   }
 
   onFirstFrame (event) {
-    global.ga(
-      prefixedSend(this.gaPrefix), 'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'firstFrame',
       this.player.videoMeta.player_options.shareUrl,
@@ -76,9 +63,8 @@ class GoogleAnalytics {
   }
 
   onComplete () {
-    global.ga(
-      prefixedSend(this.gaPrefix),
-      'event', 'Video:' + this.player.videoMeta.channel_name,
+    this.sendAnalyticsEvent(
+      'Video:' + this.player.videoMeta.channel_name,
       'end',
       this.player.videoMeta.player_options.shareUrl
     );
@@ -86,9 +72,7 @@ class GoogleAnalytics {
   }
 
   onAdBlock () {
-    global.ga(
-      prefixedSend(this.gaPrefix),
-      'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'adblock:enabled',
       this.player.videoMeta.player_options.shareUrl
@@ -103,9 +87,7 @@ class GoogleAnalytics {
   onAdSkipped (event) {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
-    global.ga(
-      prefixedSend(this.gaPrefix),
-      'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'adskipped',
       filteredTag
@@ -115,9 +97,7 @@ class GoogleAnalytics {
   onAdError (event) {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
-    global.ga(
-      prefixedSend(this.gaPrefix),
-      'event',
+    this.sendAnalyticsEvent(
       'Video:' + this.player.videoMeta.channel_name,
       'aderror: ' + event.message,
       filteredTag
@@ -144,9 +124,8 @@ class GoogleAnalytics {
     let percentPlayed = Math.round(event.position / event.duration * 100);
 
     if (percentPlayed >= percent) {
-      global.ga(
-        prefixedSend(this.gaPrefix),
-        'event', 'Video:' + this.player.videoMeta.channel_name,
+      this.sendAnalyticsEvent(
+        'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
       );
@@ -162,9 +141,8 @@ class GoogleAnalytics {
     }
 
     if (event.position >= seconds) {
-      global.ga(
-        prefixedSend(this.gaPrefix),
-        'event', 'Video:' + this.player.videoMeta.channel_name,
+      this.sendAnalyticsEvent(
+        'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
       );
@@ -174,7 +152,7 @@ class GoogleAnalytics {
 }
 
 export default {
-  init (player, gaPrefix) {
-    return new GoogleAnalytics(player, gaPrefix);
+  init (player, sendAnalyticsEvent) {
+    return new GoogleAnalytics(player, sendAnalyticsEvent);
   },
 };
