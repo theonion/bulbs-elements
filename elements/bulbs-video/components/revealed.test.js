@@ -246,7 +246,8 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('sets sharetools config', () => {
-          expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(window.location.href);
+          let expected = `${window.location.href}/v/3124`;
+          expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(expected);
         });
 
         it('sets ga config', () => {
