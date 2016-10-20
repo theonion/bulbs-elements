@@ -36,8 +36,15 @@ export default class BulbsDfp extends BulbsHTMLElement {
       },
     });
 
-    if (this.hasAttribute('refresh-interval')) {
-      let intervalLength = parseFloat(this.getAttribute('refresh-interval', 10));
+    this.adUnitData = this.adsManager.units[this.dataset.adUnit];
+
+    if (!this.adUnitData.refreshDisabled &&
+        (this.hasAttribute('refresh-interval') ||
+          typeof this.adUnitData.refreshInterval !== 'undefined')) {
+
+      let intervalLength =
+          parseInt(this.getAttribute('refresh-interval'), 10) ||
+            this.adUnitData.refreshInterval;
       this.refreshInterval = window.setInterval(this.handleInterval, intervalLength);
     }
   }

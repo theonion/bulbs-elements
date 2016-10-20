@@ -3,6 +3,7 @@ import util from 'bulbs-elements/util';
 import './bulbs-dfp';
 
 describe('<div is="bulbs-dfp">', () => {
+  let adUnitName = 'test-unit';
   let element;
   let sandbox;
   let sendEventSpy;
@@ -10,8 +11,7 @@ describe('<div is="bulbs-dfp">', () => {
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
     element = document.createElement('div', 'bulbs-dfp');
-    element.setAttribute('data-ad-unit', 'test-unit');
-    element.setAttribute('refresh-interval', '30000');
+    element.setAttribute('data-ad-unit', adUnitName);
     element.setAttribute('viewport-threshold', '1');
     sandbox.spy(element, 'addEventListener');
     sandbox.stub(window, 'setInterval');
@@ -23,10 +23,16 @@ describe('<div is="bulbs-dfp">', () => {
       return { sendEvent: sendEventSpy };
     });
 
+    window.BULBS_ELEMENTS_ADS_MANAGER = {
+      units: {}
+    };
+    window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName] = {};
+
     setImmediate(() => done());
   });
 
   afterEach(() => {
+    delete window.BULBS_ELEMENTS_ADS_MANAGER;
     sandbox.restore();
     element.remove();
   });
@@ -49,7 +55,7 @@ describe('<div is="bulbs-dfp">', () => {
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'attached',
-        eventLabel: 'test-unit',
+        eventLabel: adUnitName,
       });
     });
 
@@ -72,8 +78,21 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     it('sets a refresh interval', () => {
+      let refreshInterval = 30000;
+
+      element.setAttribute('refresh-interval', '' + refreshInterval);
       element.attachedCallback();
-      expect(window.setInterval).to.have.been.calledWith(element.handleInterval, 30000);
+
+      expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
+    });
+
+    it('sets a refresh interval from ads manager if not given as an attribute', () => {
+      let refreshInterval = 30000;
+      
+      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshInterval = refreshInterval;
+      element.attachedCallback();
+
+      expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
     });
   });
 
@@ -97,7 +116,7 @@ describe('<div is="bulbs-dfp">', () => {
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'enterviewport',
-        eventLabel: 'test-unit',
+        eventLabel: adUnitName,
       }).once;
     });
   });
@@ -109,7 +128,7 @@ describe('<div is="bulbs-dfp">', () => {
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: 'exitviewport',
-        eventLabel: 'test-unit',
+        eventLabel: adUnitName,
       }).once;
     });
   });
@@ -120,7 +139,7 @@ describe('<div is="bulbs-dfp">', () => {
       expect(sendEventSpy).to.have.been.calledWith({
         eventCategory: 'bulbs-dfp-element Metrics',
         eventAction: '30-second-refresh-candidate',
-        eventLabel: 'test-unit',
+        eventLabel: adUnitName,
       });
     });
 
@@ -134,7 +153,7 @@ describe('<div is="bulbs-dfp">', () => {
         expect(sendEventSpy).to.have.been.calledWith({
           eventCategory: 'bulbs-dfp-element Metrics',
           eventAction: '30-second-refresh-triggered',
-          eventLabel: 'test-unit',
+          eventLabel: adUnitName,
         });
       });
     });
@@ -145,7 +164,7 @@ describe('<div is="bulbs-dfp">', () => {
         expect(sendEventSpy).to.not.have.been.calledWith({
           eventCategory: 'bulbs-dfp-element Metrics',
           eventAction: '30-second-refresh-triggered',
-          eventLabel: 'test-unit',
+          eventLabel: adUnitName,
         });
       });
     });
