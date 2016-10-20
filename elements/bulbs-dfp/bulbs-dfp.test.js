@@ -27,9 +27,11 @@ describe('<div is="bulbs-dfp">', () => {
 
     window.BULBS_ELEMENTS_ADS_MANAGER = {
       reloadAds: reloadAdsSpy,
-      units: {},
+      adUnits: {
+        units: {},
+      },
     };
-    window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName] = {};
+    window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName] = {};
 
     setImmediate(() => done());
   });
@@ -83,7 +85,7 @@ describe('<div is="bulbs-dfp">', () => {
     it('sets a refresh interval from ads manager', () => {
       let refreshInterval = 30000;
       
-      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshInterval = refreshInterval;
+      window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = refreshInterval;
       element.attachedCallback();
 
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
@@ -91,8 +93,8 @@ describe('<div is="bulbs-dfp">', () => {
 
     it('ignores refresh interval if ads manager also has refreshDisabled set to true for the slot', () => {
   
-      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshInterval = 666;
-      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshDisabled = true;
+      window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = 666;
+      window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshDisabled = true;
       element.attachedCallback(); 
 
       expect(window.setInterval.called).to.be.false;
