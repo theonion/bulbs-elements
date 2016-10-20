@@ -1,0 +1,2 @@
+notification-container .notification-display{display:-ms-flexbox;display:flex;height:100px;margin:0 auto 20px;-ms-flex-align:center;align-items:center;width:100%;padding:1em 2em}notification-container .notification-display a{margin-left:5px}notification-container .notification-display .notification-body{color:#3c3c3c}notification-container .notification-display .notification-close{position:absolute;line-height:37px;top:0;right:10px;height:37px;width:37px;text-align:center}
+/*# sourceMappingURL=notification-container.css.map*/
