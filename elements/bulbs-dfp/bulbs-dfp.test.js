@@ -35,7 +35,6 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   afterEach(() => {
-    delete window.BULBS_ELEMENTS_ADS_MANAGER;
     sandbox.restore();
     element.remove();
     delete window.BULBS_ELEMENTS_ADS_MANAGER;
