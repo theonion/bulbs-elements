@@ -90,6 +90,15 @@ describe('<div is="bulbs-dfp">', () => {
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
     });
 
+    it('ignores refresh interval if ads manager also has refreshDisabled set to true for the slot', () => {
+  
+      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshInterval = 666;
+      window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshDisabled = true;
+      element.attachedCallback(); 
+
+      expect(window.setInterval.called).to.be.false;
+    });
+
     it('attaches a dfpSlotRenderEnded event', () => {
       element.attachedCallback();
       expect(element.addEventListener).to.have.been.calledWith('dfpSlotRenderEnded', element.handleSlotRenderEnded);
