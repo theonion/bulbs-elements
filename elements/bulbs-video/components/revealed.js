@@ -3,7 +3,7 @@ require('expose?jwplayer!../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
-import { prepGaEvent } from 'bulbs-elements/util';
+import { prepGaEventTracker } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -58,7 +58,7 @@ export default class Revealed extends React.Component {
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
     };
-    let sendAnalyticsEvent = prepGaEvent(
+    let sendAnalyticsEvent = prepGaEventTracker(
       gaPrefix,
       BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       dimensions
