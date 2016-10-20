@@ -77,16 +77,7 @@ describe('<div is="bulbs-dfp">', () => {
       });
     });
 
-    it('sets a refresh interval', () => {
-      let refreshInterval = 30000;
-
-      element.setAttribute('refresh-interval', '' + refreshInterval);
-      element.attachedCallback();
-
-      expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
-    });
-
-    it('sets a refresh interval from ads manager if not given as an attribute', () => {
+    it('sets a refresh interval from ads manager', () => {
       let refreshInterval = 30000;
       
       window.BULBS_ELEMENTS_ADS_MANAGER.units[adUnitName].refreshInterval = refreshInterval;

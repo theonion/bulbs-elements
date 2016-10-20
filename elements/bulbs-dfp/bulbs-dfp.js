@@ -39,13 +39,12 @@ export default class BulbsDfp extends BulbsHTMLElement {
     this.adUnitData = this.adsManager.units[this.dataset.adUnit];
 
     if (!this.adUnitData.refreshDisabled &&
-        (this.hasAttribute('refresh-interval') ||
-          typeof this.adUnitData.refreshInterval !== 'undefined')) {
+        typeof this.adUnitData.refreshInterval !== 'undefined') {
 
-      let intervalLength =
-          parseInt(this.getAttribute('refresh-interval'), 10) ||
-            this.adUnitData.refreshInterval;
-      this.refreshInterval = window.setInterval(this.handleInterval, intervalLength);
+      this.refreshInterval = window.setInterval(
+        this.handleInterval,
+        this.adUnitData.refreshInterval
+      );
     }
   }
 
