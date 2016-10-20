@@ -32,14 +32,6 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('attachedCallback', () => {
-    it('requires a `refresh-interval` attribute', () => {
-      element.removeAttribute('refresh-interval');
-      expect(() => {
-        element.attachedCallback();
-      }).to.throw(
-        '<div is="bulbs-dfp>" MUST specify a `refresh-interval` attribute in ms'
-      );
-    });
 
     it('requires a `viewport-threshold` attribute', () => {
       element.removeAttribute('viewport-threshold');

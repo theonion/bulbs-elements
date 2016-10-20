@@ -7,8 +7,6 @@ import {
 
 export default class BulbsDfp extends BulbsHTMLElement {
   attachedCallback () {
-    invariant(this.hasAttribute('refresh-interval'),
-        '<div is="bulbs-dfp>" MUST specify a `refresh-interval` attribute in ms');
 
     invariant(this.hasAttribute('viewport-threshold'),
         '<div is="bulbs-dfp"> MUST specify a `viewport-threshold` property. ' +
@@ -38,13 +36,18 @@ export default class BulbsDfp extends BulbsHTMLElement {
       },
     });
 
-    let intervalLength = parseFloat(this.getAttribute('refresh-interval', 10));
-    this.refreshInterval = window.setInterval(this.handleInterval, intervalLength);
+    if (this.hasAttribute('refresh-interval')) {
+      let intervalLength = parseFloat(this.getAttribute('refresh-interval', 10));
+      this.refreshInterval = window.setInterval(this.handleInterval, intervalLength);
+    }
   }
 
   detachedCallback () {
     util.InViewMonitor.remove(this);
-    window.clearInterval(this.refreshInterval);
+
+    if (this.refreshInterval) {
+      window.clearInterval(this.refreshInterval);
+    }
   }
 
   handleEnterViewport () {
