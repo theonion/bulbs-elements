@@ -15,10 +15,7 @@ import invariant from 'invariant';
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
-let prefixCount = 0;
-function makeGaPrefix () {
-  return `videoplayer${prefixCount++}`;
-}
+let jwPlayerIdCounter = 0;
 
 export default class Revealed extends React.Component {
   componentDidMount () {
@@ -45,7 +42,6 @@ export default class Revealed extends React.Component {
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
 
-    let gaPrefix = makeGaPrefix();
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
       'dimension2': targeting.target_series || 'None',
@@ -58,8 +54,8 @@ export default class Revealed extends React.Component {
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
     };
-    let sendAnalyticsEvent = prepGaEventTracker(
-      gaPrefix,
+    let gaTrackerAction = prepGaEventTracker(
+      'videoplayer',
       BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       dimensions
     );
@@ -67,8 +63,7 @@ export default class Revealed extends React.Component {
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
-    videoMeta.gaPrefix = gaPrefix;
-    videoMeta.sendAnalyticsEvent = sendAnalyticsEvent;
+    videoMeta.gaTrackerAction = gaTrackerAction;
     videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
@@ -207,7 +202,7 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, videoMeta) {
-    element.id = videoMeta.gaPrefix;
+    element.id = jwPlayerIdCounter++;
     let player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
@@ -252,7 +247,7 @@ export default class Revealed extends React.Component {
 
     player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.sendAnalyticsEvent);
+    GoogleAnalytics.init(player, videoMeta.gaTrackerAction);
     Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
   }

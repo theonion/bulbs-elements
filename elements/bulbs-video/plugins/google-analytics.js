@@ -1,7 +1,7 @@
 class GoogleAnalytics {
-  constructor (player, sendAnalyticsEvent) {
+  constructor (player, gaTrackerAction) {
     this.player = player;
-    this.sendAnalyticsEvent = sendAnalyticsEvent;
+    this.gaTrackerAction = gaTrackerAction;
 
     this.player.gaEvents = {};
 
@@ -18,27 +18,31 @@ class GoogleAnalytics {
 
   onPlay () {
     if (!this.player.playedOnce) {
-      this.sendAnalyticsEvent(
+      this.gaTrackerAction(
+        'event',
         'Video:' + this.player.videoMeta.channel_name,
         'start', this.player.videoMeta.player_options.shareUrl
       );
       this.player.playedOnce = true;
     }
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'play', this.player.videoMeta.player_options.shareUrl
     );
   }
 
   onPause () {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'pause', this.player.videoMeta.player_options.shareUrl
     );
   }
 
   onFullScreen (event) {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'fullscreen:' + event.fullscreen,
       this.player.videoMeta.player_options.shareUrl
@@ -46,7 +50,8 @@ class GoogleAnalytics {
   }
 
   onResize (event) {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'resize:' + event.width + 'x' + event.height,
       this.player.videoMeta.player_options.shareUrl
@@ -54,7 +59,8 @@ class GoogleAnalytics {
   }
 
   onFirstFrame (event) {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'firstFrame',
       this.player.videoMeta.player_options.shareUrl,
@@ -63,7 +69,8 @@ class GoogleAnalytics {
   }
 
   onComplete () {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'end',
       this.player.videoMeta.player_options.shareUrl
@@ -72,7 +79,8 @@ class GoogleAnalytics {
   }
 
   onAdBlock () {
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adblock:enabled',
       this.player.videoMeta.player_options.shareUrl
@@ -87,7 +95,8 @@ class GoogleAnalytics {
   onAdSkipped (event) {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adskipped',
       filteredTag
@@ -97,7 +106,8 @@ class GoogleAnalytics {
   onAdError (event) {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
-    this.sendAnalyticsEvent(
+    this.gaTrackerAction(
+      'event',
       'Video:' + this.player.videoMeta.channel_name,
       'aderror: ' + event.message,
       filteredTag
@@ -124,7 +134,8 @@ class GoogleAnalytics {
     let percentPlayed = Math.round(event.position / event.duration * 100);
 
     if (percentPlayed >= percent) {
-      this.sendAnalyticsEvent(
+      this.gaTrackerAction(
+        'event',
         'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
@@ -141,7 +152,8 @@ class GoogleAnalytics {
     }
 
     if (event.position >= seconds) {
-      this.sendAnalyticsEvent(
+      this.gaTrackerAction(
+        'event',
         'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
@@ -152,7 +164,7 @@ class GoogleAnalytics {
 }
 
 export default {
-  init (player, sendAnalyticsEvent) {
-    return new GoogleAnalytics(player, sendAnalyticsEvent);
+  init (player, gaTrackerAction) {
+    return new GoogleAnalytics(player, gaTrackerAction);
   },
 };
