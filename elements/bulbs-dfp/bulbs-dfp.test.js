@@ -99,6 +99,14 @@ describe('<div is="bulbs-dfp">', () => {
       expect(window.setInterval.called).to.be.false;
     });
 
+    it('uses a default refresh interval of 30 seconds if not set in ads manager', () => {
+      let defaultRefreshInterval = 30000;
+
+      element.attachedCallback();
+
+      expect(window.setInterval).to.have.been.calledWith(element.handleInterval, defaultRefreshInterval);
+    });
+
     it('attaches a dfpSlotRenderEnded event', () => {
       element.attachedCallback();
       expect(element.addEventListener).to.have.been.calledWith('dfpSlotRenderEnded', element.handleSlotRenderEnded);

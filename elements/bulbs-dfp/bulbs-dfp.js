@@ -42,14 +42,13 @@ export default class BulbsDfp extends BulbsHTMLElement {
       },
     });
 
+    let defaultRefreshInterval = 30000;
     this.adUnitData = this.adsManager.units[this.dataset.adUnit];
-
-    if (!this.adUnitData.refreshDisabled &&
-        typeof this.adUnitData.refreshInterval !== 'undefined') {
+    if (!this.adUnitData.refreshDisabled) {
 
       this.refreshInterval = window.setInterval(
         this.handleInterval,
-        this.adUnitData.refreshInterval
+        this.adUnitData.refreshInterval || defaultRefreshInterval
       );
     }
   }
