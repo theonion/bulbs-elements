@@ -10,7 +10,7 @@ import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
 // FIXME: where should this be defined? Per-app?
-//  Or in some better sort of settings file here?
+// or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
@@ -38,6 +38,21 @@ export default class Revealed extends React.Component {
     invariant(
       global.jwplayer,
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
+    );
+
+    invariant(
+      window.isMobile,
+      '`<bulbs-video>` requires `isMobile()` to be set on window.'
+    );
+
+    invariant(
+      window.FREEWHEEL_NETWORK_ID,
+      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_ID` to be set on window.'
+    );
+
+    invariant(
+      window.FREEWHEEL_NETWORK_HASH,
+      '`<bulbs-video>` requires `FREEWHEEL_NETWORK_HASH` to be set on window.'
     );
 
     let gaPrefix = makeGaPrefix();
@@ -146,7 +161,7 @@ export default class Revealed extends React.Component {
 
   vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
-      let vastId = this.parseParam('xgid', searchString);
+      let vastId = this.parseParam('apid', searchString);
 
       if (vastId) {
         return vastId;
@@ -156,30 +171,94 @@ export default class Revealed extends React.Component {
     return false;
   }
 
+  getProfValue () {
+    let prof;
+    if (window.isMobile.any) {
+      prof = 'theonion_mobileweb_html5';
+    }
+    else {
+      prof = 'theonion_desktop_html5';
+    }
+    return prof;
+  }
+
+  getDeviceAcronym () {
+    let deviceAcronym;
+    if (window.isMobile.any) {
+      deviceAcronym = 'm';
+    }
+    else {
+      deviceAcronym = 'd';
+    }
+    return deviceAcronym;
+  }
+
+  getSiteName () {
+    let targetChannel = this.props.video.targeting.target_channel;
+    return targetChannel.replace(/-/g, '');
+  }
+
+  getDfpSection () {
+    let dfpSection;
+    if (window.TARGETING.dfp_section) {
+      dfpSection = window.TARGETING.dfp_section;
+    }
+    else if (window.TARGETING.dfp_specialcoverage) {
+      let slug = window.TARGETING.dfp_specialcoverage;
+      dfpSection = `specialcoverage_${slug}`;
+    }
+    else {
+      dfpSection = 'video';
+    }
+    return dfpSection;
+  }
+
+  buildCustomSiteSectionId (hostChannel) {
+    let deviceAcronym = this.getDeviceAcronym();
+    let siteName = this.getSiteName();
+    let siteSection = this.getDfpSection();
+
+    return `${deviceAcronym}.${siteName}_${siteSection}_${hostChannel}`;
+  }
+
+  buildCustomContentVideoAssetId (videohubReferenceId) {
+    return `onion_${videohubReferenceId}`;
+  }
+
   vastUrl (videoMeta) {
-    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
-
-    let vastTestId = this.vastTest(window.location.search);
-
-    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
-    baseUrl += '&tt=p';
-    videoMeta.tags.push('html5'); // Force HTML 5
-    // Tags
-    baseUrl += '&t=' + videoMeta.tags;
-    //Category
     let hostChannel = videoMeta.hostChannel;
-    let channel = videoMeta.channel_slug;
+    let videohubReferenceId = videoMeta.id;
+    let randomVideoPlayerNumber = videoMeta.vprn;
+    let vastTestId = this.vastTest(window.location.search);
     let series = videoMeta.series_slug;
-    let category = `${hostChannel}/${channel}`;
-    if (series) {
-      category += `/${series}`;
-    }
-    baseUrl += '&s=' + category;
-    baseUrl += '&rnd=' + this.cacheBuster();
+    let campaignId = this.props.targetCampaignId;
+    let specialCoverage = this.props.targetSpecialCoverage;
 
-    if (vastTestId) {
-      baseUrl += '&xgid=' + vastTestId;
-    }
+    let baseUrl = `http://${window.FREEWHEEL_NETWORK_HASH}.v.fwmrm.net/ad/g/1?`;
+
+    // required global params
+    baseUrl += 'nw=' + `${window.FREEWHEEL_NETWORK_ID}`;
+    baseUrl += '&resp=' + 'vmap1';
+    baseUrl += '&prof=' + this.getProfValue();
+    baseUrl += '&csid=' + this.buildCustomSiteSectionId(hostChannel);
+    baseUrl += '&caid=' + this.buildCustomContentVideoAssetId(videohubReferenceId);
+    baseUrl += '&pvrn=' + this.cacheBuster();
+    baseUrl += '&vprn=' + randomVideoPlayerNumber;
+
+    // optional global param
+    if (vastTestId) { baseUrl += '&cana=' + vastTestId; }
+
+    // Key Values
+    baseUrl += ';video_id=' + videohubReferenceId;
+    baseUrl += '&channel_slug=' + videoMeta.channel_slug;
+    if (series) { baseUrl += '&series_slug=' + series; }
+    if (campaignId) { baseUrl += '&campaign_id=' + campaignId; }
+    if (specialCoverage) { baseUrl += '&special_coverage=' + specialCoverage; }
+
+    // Slot Params *Required Fields*
+    baseUrl += ';slid=' + 'Preroll';
+    baseUrl += '&tpcl=' + 'PREROLL';
+    baseUrl += '&ptgt=' + 'a';
 
     return baseUrl;
   }
@@ -204,6 +283,14 @@ export default class Revealed extends React.Component {
   makeVideoPlayer (element, videoMeta) {
     element.id = videoMeta.gaPrefix;
     let player = global.jwplayer(element);
+
+    // random video player number ending with video id
+    // to be used in vastUrl query string
+    let randomVideoPlayerNumber = parseInt(
+      `${this.cacheBuster()}${videoMeta.id}`,
+      10
+    );
+    videoMeta.vprn = randomVideoPlayerNumber;
 
     player.videoMeta = videoMeta;
 

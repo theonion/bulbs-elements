@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
@@ -94,6 +95,8 @@ describe('<bulbs-video> <Revealed>', () => {
 
   describe('componentDidMount globalsCheck', () => {
     global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
+    window.isMobile = () => {};
+    window.isMobile.any = false;
     global.ga = () => {};
 
     const globals = [
@@ -199,6 +202,8 @@ describe('<bulbs-video> <Revealed>', () => {
         state = {};
         global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
         global.ga = sinon.spy();
+        window.FREEWHEEL_NETWORK_ID = '12345';
+        window.FREEWHEEL_NETWORK_HASH = '1a345';
         makeVideoPlayerSpy = sinon.spy();
       });
 
@@ -529,61 +534,245 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('getProfValue', () => {
+    it('returns different values on desktop and mobile', () => {
+      // desktop
+      window.isMobile.any = false;
+      let response = Revealed.prototype.getProfValue.call();
+      expect(response).to.equal('theonion_desktop_html5');
+
+      // mobile
+      window.isMobile.any = true;
+      response = Revealed.prototype.getProfValue.call();
+      expect(response).to.equal('theonion_mobileweb_html5');
+    });
+  });
+
+  describe('#getSiteName', () => {
+    let props;
+    let response;
+
+    beforeEach(() => {
+      props = { video: { targeting: { target_channel: 'avclub' } } };
+    });
+
+    it('pulls site name from props.video.targeting.target_channel', () => {
+      response = Revealed.prototype.getSiteName.call({ props });
+      expect(response).to.eql(props.video.targeting.target_channel);
+    });
+    it('it removes hypens from props.video.targeting.target_channel', () => {
+      props.video.targeting.target_channel = 'the-freakin-onion';
+      response = Revealed.prototype.getSiteName.call({ props });
+      expect(response).to.eql('thefreakinonion');
+    });
+  });
+
+  describe('buildCustomSiteSectionId', () => {
+    let response;
+    let getSiteNameStub;
+    let getDeviceAcronymStub;
+    let getDfpSectionStub;
+
+    beforeEach(() => {
+      getSiteNameStub = sinon.stub().returns('website');
+      getDeviceAcronymStub = sinon.stub().returns('d');
+      getDfpSectionStub = sinon.stub().returns('fun');
+      response = Revealed.prototype.buildCustomSiteSectionId.call({
+        getSiteName: getSiteNameStub,
+        getDeviceAcronym: getDeviceAcronymStub,
+        getDfpSection: getDfpSectionStub,
+      }, 'host_channel');
+    });
+
+    // csid format: <device acronym>.<site name>_<dfp_section>_<host channel>
+    // example: d.theonion_specialcoverage_boldness_main
+    it('#getDeviceAcronym device acronym ', () => {
+      // desktop
+      window.isMobile.any = false;
+      response = Revealed.prototype.getDeviceAcronym.call();
+      expect(response).to.equal('d');
+
+      // mobile
+      window.isMobile.any = true;
+      response = Revealed.prototype.getDeviceAcronym.call();
+      expect(response).to.equal('m');
+    });
+
+    it('includes site name', () => {
+      expect(response.indexOf('website') !== -1).to.be.true;
+    });
+
+    context('getDfpSection', () => {
+      it('window.TARGETING.dfp_section is set', () => {
+        window.TARGETING = { dfp_section: 'sunshine' };
+        response = Revealed.prototype.getDfpSection.call();
+        expect(response).to.eql(window.TARGETING.dfp_section);
+      });
+
+      it('special coverage page', () => {
+        window.TARGETING = { dfp_specialcoverage: 'forest-walk' };
+        response = Revealed.prototype.getDfpSection.call();
+        let expected = `specialcoverage_${window.TARGETING.dfp_specialcoverage}`;
+        expect(response).to.eql(expected);
+      });
+
+      it('not special coverage or dfp_section', () => {
+        window.TARGETING = {};
+        response = Revealed.prototype.getDfpSection.call();
+        expect(response).to.eql('video');
+      });
+    });
+
+    it('populates csid', () => {
+      response = Revealed.prototype.buildCustomSiteSectionId.call({
+        getSiteName: getSiteNameStub,
+        getDeviceAcronym: getDeviceAcronymStub,
+        getDfpSection: getDfpSectionStub,
+      }, 'host_channel');
+      let expected = 'd.website_fun_host_channel';
+      expect(response).to.eql(expected);
+    });
+  });
+
+  describe('buildCustomContentVideoAssetId', () => {
+    it('sets to onion studios id', () => {
+      let videohubReferenceId = 1234;
+      let response = Revealed.prototype.buildCustomContentVideoAssetId.call({}, videohubReferenceId);
+      expect(response).to.eql('onion_1234');
+    });
+  });
+
   describe('vastUrl', () => {
     let videoMeta;
     let cacheBusterStub;
     let vastTestStub;
+    let vastUrl;
+    let getProfValueStub;
+    let getSiteNameStub; // eslint-disable no-unused-vars
+    let parsed;
+    let buildCustomSiteSectionIdStub;
+    let buildCustomContentVideoAssetIdStub;
+    let queryKeys;
 
-    context('default', () => {
-      beforeEach(() => {
-        cacheBusterStub = sinon.stub().returns('456');
-        vastTestStub = sinon.stub().returns(null);
-        videoMeta = {
-          tags: ['clickhole', 'main', '12345'],
-          category: 'main/clickhole',
-          channel_slug: 'channel_slug',
-          hostChannel: 'host_channel',
-        };
-      });
-
-      it('returns the vast url', function () {
-        let vastUrl = Revealed.prototype.vastUrl.call({
-          cacheBuster: cacheBusterStub,
-          vastTest: vastTestStub,
-        }, videoMeta);
-        let parsed = url.parse(vastUrl, true);
-        expect(parsed.protocol).to.eql('http:');
-        expect(parsed.host).to.eql('us-theonion.videoplaza.tv');
-        expect(parsed.pathname).to.eql('/proxy/distributor/v2');
-        expect(Object.keys(parsed.query)).to.eql(['rt', 'tt', 't', 's', 'rnd']);
-        expect(parsed.query.rt).to.eql('vast_2.0');
-        expect(parsed.query.tt).to.eql('p');
-        expect(parsed.query.t).to.eql('clickhole,main,12345,html5');
-        expect(parsed.query.s).to.eql('host_channel/channel_slug');
-        expect(parsed.query.rnd).to.eql('456');
-      });
+    beforeEach(() => {
+      cacheBusterStub = sinon.stub().returns(456);
+      vastTestStub = sinon.stub().returns(5678);
+      getProfValueStub = sinon.stub().returns('testy');
+      getSiteNameStub = sinon.stub().returns('website');
+      buildCustomSiteSectionIdStub = sinon.stub().returns('d.website_camping_channel');
+      buildCustomContentVideoAssetIdStub = sinon.stub().returns('onion_1234');
+      videoMeta = {
+        id: 765,
+        vprn: 456765,
+        tags: ['clickhole', 'main', '12345'],
+        category: 'main/clickhole',
+        channel_slug: 'channel_slug',
+        hostChannel: 'host_channel',
+        series_slug: 'series-slug',
+      };
+      vastUrl = Revealed.prototype.vastUrl.call({
+        props: {
+          targetCampaignId: 66,
+          targetSpecialCoverage: 'blooping',
+        },
+        cacheBuster: cacheBusterStub,
+        vastTest: vastTestStub,
+        getProfValue: getProfValueStub,
+        buildCustomSiteSectionId: buildCustomSiteSectionIdStub,
+        buildCustomContentVideoAssetId: buildCustomContentVideoAssetIdStub,
+      }, videoMeta);
+      parsed = url.parse(vastUrl, true);
     });
 
-    context('when series_slug is given', () => {
-      beforeEach(() => {
-        cacheBusterStub = sinon.stub().returns('456');
-        vastTestStub = sinon.stub().returns(null);
-        videoMeta = {
-          tags: ['clickhole', 'main', '12345'],
-          category: 'main/clickhole',
-          channel_slug: 'channel_slug',
-          series_slug: 'series_slug',
-          hostChannel: 'host_channel',
-        };
-      });
+    it('sets the http: protocol', function () {
+      expect(parsed.protocol).to.eql('http:');
+    });
+    it('sets host', function () {
+      expect(parsed.host).to.eql('1a345.v.fwmrm.net');
+    });
+    it('sets pathname', function () {
+      expect(parsed.pathname).to.eql('/ad/g/1');
+    });
+    it('sets nw', function () {
+      expect(parsed.query.nw).to.eql('12345');
+    });
+    it('sets resp', function () {
+      expect(parsed.query.resp).to.eql('vmap1');
+    });
+    it('sets prof', function () {
+      expect(parsed.query.prof).to.eql('testy');
+    });
+    it('sets csid', function () {
+      expect(parsed.query.csid).to.eql('d.website_camping_channel');
+    });
+    it('sets caid', function () {
+      expect(parsed.query.caid).to.eql('onion_1234');
+    });
+    it('sets pvrn', function () {
+      expect(parsed.query.pvrn).to.eql('456');
+    });
+    it('sets vprn', function () {
+      expect(parsed.query.vprn).to.eql('456765');
+    });
+    it('sets cana', function () {
+      let canaIndex = parsed.search.indexOf('cana=5678');
+      expect(canaIndex !== -1).to.be.true;
+    });
+    it('sets video_id', function () {
+      let vidoeIdIndex = parsed.search.indexOf('video_id=765');
+      expect(vidoeIdIndex !== -1).to.be.true;
+    });
+    it('sets channel_slug', function () {
+      expect(parsed.query.channel_slug).to.eql('channel_slug');
+    });
+    it('sets series_slug', function () {
+      expect(parsed.query.series_slug).to.eql('series-slug');
+    });
+    it('sets campaign_id', function () {
+      expect(parsed.query.campaign_id).to.eql('66');
+    });
+    it('sets special_coverage', function () {
+      let specCovIndex = parsed.search.indexOf('special_coverage=blooping');
+      expect(specCovIndex !== -1).to.be.true;
+    });
+    it('sets slid', function () {
+      let slidIndex = parsed.search.indexOf('slid=Preroll');
+      expect(slidIndex !== -1).to.be.true;
+    });
+    it('sets tpcl', function () {
+      expect(parsed.query.tpcl).to.eql('PREROLL');
+    });
+    it('sets ptgt', function () {
+      expect(parsed.query.ptgt).to.eql('a');
+    });
 
-      it('returns the vast url', function () {
-        let vastUrl = Revealed.prototype.vastUrl.call({
+    context('conditionally set parameters', () => {
+      beforeEach(() => {
+        vastTestStub = sinon.stub().returns(null);
+        videoMeta.series_slug = null;
+        vastUrl = Revealed.prototype.vastUrl.call({
+          props: {},
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
+          getProfValue: getProfValueStub,
+          buildCustomSiteSectionId: buildCustomSiteSectionIdStub,
+          buildCustomContentVideoAssetId: buildCustomContentVideoAssetIdStub,
         }, videoMeta);
-        let parsed = url.parse(vastUrl, true);
-        expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
+        parsed = url.parse(vastUrl, true);
+        queryKeys = Object.keys(parsed.query);
+      });
+
+      it('null vastTestId cana not populated', () => {
+        expect(queryKeys.indexOf('cana') === -1).to.be.true;
+      });
+      it('no series_slug series_slug not populated', () => {
+        expect(queryKeys.indexOf('series_slug') === -1).to.be.true;
+      });
+      it('no targetCampaignId campaign_id not populated', () => {
+        expect(queryKeys.indexOf('campaign_id') === -1).to.be.true;
+      });
+      it('no targetSpecialCoverage special_coverage not populated', () => {
+        expect(queryKeys.indexOf('special_coverage') === -1).to.be.true;
       });
     });
   });
@@ -593,6 +782,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let element;
     let player;
     let videoMeta;
+    let cacheBusterStub;
 
     beforeEach(() => {
       element = {};
@@ -658,6 +848,7 @@ describe('<bulbs-video> <Revealed>', () => {
         gaPrefix: 'videoplayer0',
       });
       playerSetup = sinon.spy();
+      cacheBusterStub = sinon.stub().returns('456');
       player = {
         setup: playerSetup,
       };
@@ -690,6 +881,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: {},
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });
@@ -763,6 +955,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: {},
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractCaptionsStub,
           }, element, videoMeta);
         });
@@ -791,6 +984,7 @@ describe('<bulbs-video> <Revealed>', () => {
             props: { disableSharing: true },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
             extractTrackCaptions: extractTrackCaptionsStub,
           }, element, videoMeta);
         });
@@ -820,6 +1014,7 @@ describe('<bulbs-video> <Revealed>', () => {
             extractSources: extractSourcesStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             vastUrl: vastUrlStub,
+            cacheBuster: cacheBusterStub,
           }, element, videoMeta);
         });
 
