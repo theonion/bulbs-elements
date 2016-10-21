@@ -28,13 +28,13 @@ describe('Google Analytics', () => {
 
       it('sends a "play" event', () => {
         expect(gaTrackerAction).to.have.been.calledWith(
-         'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
+         'send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
         );
       });
 
       it('does not send a "start" event', () => {
         expect(gaTrackerAction).to.not.have.been.calledWith(
-         'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
+         'send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
         );
       });
     });
@@ -70,13 +70,13 @@ describe('Google Analytics', () => {
 
       it('sends a "play" event', () => {
         expect(gaTrackerAction).to.have.been.calledWith(
-          'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
+          'send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
         );
       });
 
       it('sends a "start" event', () => {
         expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
       );
       });
     });
@@ -104,7 +104,7 @@ describe('Google Analytics', () => {
 
     it('sends an "pause" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'pause','http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'pause','http://www.theonion.com/r/4053'
       );
     });
   });
@@ -136,7 +136,7 @@ describe('Google Analytics', () => {
 
     it('sends an "fullscreen" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'fullscreen:true', 'http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'fullscreen:true', 'http://www.theonion.com/r/4053'
       );
     });
   });
@@ -168,7 +168,7 @@ describe('Google Analytics', () => {
 
     it('sends an "resize" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'resize:1920x1080', 'http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'resize:1920x1080', 'http://www.theonion.com/r/4053'
       );
     });
   });
@@ -199,7 +199,7 @@ describe('Google Analytics', () => {
 
     it('sends an "firstFrame" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'firstFrame', 'http://www.theonion.com/r/4053', 300
+        'send', 'event', 'Video:The Onion', 'firstFrame', 'http://www.theonion.com/r/4053', 300
       );
     });
   });
@@ -228,7 +228,7 @@ describe('Google Analytics', () => {
 
     it('sends an "end" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'end', 'http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'end', 'http://www.theonion.com/r/4053'
       );
     });
 
@@ -258,7 +258,7 @@ describe('Google Analytics', () => {
 
     it('sends an "adblock" event', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
-        'event', 'Video:The Onion', 'adblock:enabled', 'http://www.theonion.com/r/4053'
+        'send', 'event', 'Video:The Onion', 'adblock:enabled', 'http://www.theonion.com/r/4053'
       );
     });
   });
@@ -323,6 +323,7 @@ describe('Google Analytics', () => {
 
     it('sends an "adskipped" event filtering out rnd value', () => {
       expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'adskipped',
@@ -360,6 +361,7 @@ describe('Google Analytics', () => {
 
       googleAnalytics.onAdError(eventStub);
       expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -376,6 +378,7 @@ describe('Google Analytics', () => {
 
       googleAnalytics.onAdError(eventStub);
       expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -392,6 +395,7 @@ describe('Google Analytics', () => {
 
       googleAnalytics.onAdError(eventStub);
       expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -539,7 +543,7 @@ describe('Google Analytics', () => {
 
       it('sends "3 seconds" event', () => {
         expect(gaTrackerAction).to.have.been.calledWith(
-          'event', 'Video:The Onion', '3 seconds', 'http://www.theonion.com/r/4053'
+          'send', 'event', 'Video:The Onion', '3 seconds', 'http://www.theonion.com/r/4053'
         );
       });
 
@@ -631,7 +635,7 @@ describe('Google Analytics', () => {
 
       it('sends "xx percent" event', () => {
         expect(gaTrackerAction).to.have.been.calledWith(
-          'event', 'Video:The Onion', '25 percent', 'http://www.theonion.com/r/4053'
+          'send', 'event', 'Video:The Onion', '25 percent', 'http://www.theonion.com/r/4053'
         );
       });
 

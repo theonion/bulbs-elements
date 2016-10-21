@@ -19,14 +19,14 @@ class GoogleAnalytics {
   onPlay () {
     if (!this.player.playedOnce) {
       this.gaTrackerAction(
-        'event',
+        'send', 'event',
         'Video:' + this.player.videoMeta.channel_name,
         'start', this.player.videoMeta.player_options.shareUrl
       );
       this.player.playedOnce = true;
     }
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'play', this.player.videoMeta.player_options.shareUrl
     );
@@ -34,7 +34,7 @@ class GoogleAnalytics {
 
   onPause () {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'pause', this.player.videoMeta.player_options.shareUrl
     );
@@ -42,7 +42,7 @@ class GoogleAnalytics {
 
   onFullScreen (event) {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'fullscreen:' + event.fullscreen,
       this.player.videoMeta.player_options.shareUrl
@@ -51,7 +51,7 @@ class GoogleAnalytics {
 
   onResize (event) {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'resize:' + event.width + 'x' + event.height,
       this.player.videoMeta.player_options.shareUrl
@@ -60,7 +60,7 @@ class GoogleAnalytics {
 
   onFirstFrame (event) {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'firstFrame',
       this.player.videoMeta.player_options.shareUrl,
@@ -70,7 +70,7 @@ class GoogleAnalytics {
 
   onComplete () {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'end',
       this.player.videoMeta.player_options.shareUrl
@@ -80,7 +80,7 @@ class GoogleAnalytics {
 
   onAdBlock () {
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adblock:enabled',
       this.player.videoMeta.player_options.shareUrl
@@ -96,7 +96,7 @@ class GoogleAnalytics {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'adskipped',
       filteredTag
@@ -107,7 +107,7 @@ class GoogleAnalytics {
     let filteredTag = this.filterQueryString(event.tag, 'rnd');
 
     this.gaTrackerAction(
-      'event',
+      'send', 'event',
       'Video:' + this.player.videoMeta.channel_name,
       'aderror: ' + event.message,
       filteredTag
@@ -135,7 +135,7 @@ class GoogleAnalytics {
 
     if (percentPlayed >= percent) {
       this.gaTrackerAction(
-        'event',
+        'send', 'event',
         'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
@@ -153,7 +153,7 @@ class GoogleAnalytics {
 
     if (event.position >= seconds) {
       this.gaTrackerAction(
-        'event',
+        'send', 'event',
         'Video:' + this.player.videoMeta.channel_name,
         eventAction,
         this.player.videoMeta.player_options.shareUrl
