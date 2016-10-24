@@ -2,6 +2,7 @@ import {
   InViewMonitor,
   LockScroll,
   onReadyOrNow,
+  getAnalyticsManager,
 } from 'bulbs-elements/util';
 import {
   registerElement,
@@ -15,22 +16,11 @@ export default class BulbsPage extends BulbsHTMLElement {
     InViewMonitor.add(this);
     onReadyOrNow(() => this.handleDocumentReady());
     this.addEventListener('pagestart', () => this.handlePageStart());
-
-    // FIXME:
-    // this.ga = makePrefixedGa('bulbs-page', this.gaDimensions);
   }
 
   detachedCallback () {
     InViewMonitor.remove(this);
   }
-
-  // FIXME:
-  //get gaDimensions () {
-  //  if (this.hasAttribute('ga-dimensions')) {
-  //    return JSON.parse(this.getAttribute('ga-dimensions'));
-  //  }
-  //  return {};
-  //}
 
   handleDocumentReady () {
     let lockScrollOnLoad = this.hasAttribute('lock-scroll-on-load');
@@ -48,13 +38,10 @@ export default class BulbsPage extends BulbsHTMLElement {
       this.getAttribute('pushstate-url')
     );
 
-    // FIXME:
-    // if (!this.hasTrackedPageView) {
-    //   if (this.hasAttribute('ga-dimensions') {
-    //     this.hasTrackedPageView = true;
-    //     this.ga('send', 'event', 'pageview', this.getAttribute('pushstate-url');
-    //   }
-    // }
+    getAnalyticsManager().trackPageView(
+      this.getAttribute('pushstate-url'),
+      this.getAttribute('pushstate-title')
+    );
   }
 }
 

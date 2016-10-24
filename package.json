@@ -126,7 +126,7 @@
     "yeoman-generator": "^0.22.5",
     "yo": "^1.6.0",
     "firebase": "^3.4.0",
-    "iphone-inline-video": "^1.9.3",
+    "iphone-inline-video": "^1.9.4",
     "react-flip-move": "^2.4.0",
     "scroll-to-element": "^2.0.0"
   }

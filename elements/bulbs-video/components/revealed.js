@@ -253,18 +253,10 @@ export default class Revealed extends React.Component {
 
   }
 
-  handleClick () {
-    if (this.props.hideControls) {
-      this.player.play();
-    }
-  }
-
   render () {
     return (
       <div
         className='bulbs-video-viewport'
-        onClick={event => this.handleClick(event)}
-        onTouchEnd={event => this.handleClick(event)}
       >
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
