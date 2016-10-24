@@ -66,12 +66,13 @@ export default class BulbsVideo extends BulbsElement {
         actions={this.store.actions}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
         disableMetaLink={typeof this.props.disableMetaLink === 'string'}
-        noCover={typeof this.props.noCover === 'string'}
         embedded={typeof this.props.embedded === 'string'}
         enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
+        hideControls={typeof this.props.hideControls === 'string'}
         muted={typeof this.props.muted === 'string'}
+        noCover={typeof this.props.noCover === 'string'}
         noEndcard={typeof this.props.noEndcard === 'string'}
-        />
+      />
     );
   }
 }
@@ -89,6 +90,7 @@ Object.assign(BulbsVideo, {
     disableMetaLink: PropTypes.string,
     embedded: PropTypes.string,
     enablePosterMeta: PropTypes.string,
+    hideControls: PropTypes.string,
     muted: PropTypes.string,
     noCover: PropTypes.string,
     noEndcard: PropTypes.string,

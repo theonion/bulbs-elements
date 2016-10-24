@@ -279,6 +279,7 @@ Revealed.propTypes = {
   defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
+  hideControls: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
