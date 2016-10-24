@@ -203,9 +203,9 @@ export default class Revealed extends React.Component {
 
   makeVideoPlayer (element, videoMeta) {
     element.id = videoMeta.gaPrefix;
-    let player = global.jwplayer(element);
+    this.player = global.jwplayer(element);
 
-    player.videoMeta = videoMeta;
+    this.player.videoMeta = videoMeta;
 
     let playerOptions = {
       key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
@@ -216,12 +216,13 @@ export default class Revealed extends React.Component {
       image: videoMeta.player_options.poster,
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
       aspectratio: '16:9',
-      autostart: true,
+      autostart: this.props.controller.revealed,
       hlshtml: true,
       mute: videoMeta.player_options.muted || false,
       preload: 'none',
       primary: 'html5',
       width: '100%',
+      controls: !this.props.hideControls,
     };
 
     if (!videoMeta.player_options.embedded) {
@@ -245,16 +246,25 @@ export default class Revealed extends React.Component {
       };
     }
 
-    player.setup(playerOptions);
+    this.player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.gaPrefix);
-    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+    GoogleAnalytics.init(this.player, videoMeta.gaPrefix);
+    Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+  }
+
+  handleClick () {
+    if (this.props.hideControls) {
+      this.player.play();
+    }
   }
 
   render () {
     return (
-      <div className='bulbs-video-viewport'>
+      <div
+        className='bulbs-video-viewport'
+        onClick={event => this.handleClick(event)}
+      >
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
       </div>
@@ -265,6 +275,7 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
