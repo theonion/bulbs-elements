@@ -1,0 +1,9 @@
+progress-bar {
+  display: block;
+  position: relative; }
+  progress-bar .progress-track {
+    position: absolute;
+    right: 0;
+    background: #fff; }
+
+/*# sourceMappingURL=progress-bar.css.map*/
