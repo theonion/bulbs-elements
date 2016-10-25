@@ -7,9 +7,7 @@ export default function Root (props) {
   let className = 'bulbs-video-root player';
 
   if (!props.video) {
-    if (typeof props.isAdBlocked === 'undefined') {
-      return <div className={className}/>;
-    }
+    return <div className={className}/>;
   }
   else if (props.noCover || props.controller.revealed) {
     return (
