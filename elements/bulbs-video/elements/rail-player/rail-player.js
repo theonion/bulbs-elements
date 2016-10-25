@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
-import { detectAdBlock } from 'bulbs-elements/util';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import VideoField from '../../fields/video';
@@ -11,12 +10,8 @@ import RailPlayerRoot from './components/root';
 import './rail-player.scss';
 
 export default class RailPlayer extends BulbsElement {
-
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
-    detectAdBlock((isAdBlocked) => {
-      this.setState({ isAdBlocked });
-    });
   }
 
   componentDidUpdate (prevProps) {
@@ -35,8 +30,6 @@ export default class RailPlayer extends BulbsElement {
     );
   }
 }
-
-
 
 Object.assign(RailPlayer, {
   displayName: 'RailPlayer',
