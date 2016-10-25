@@ -12,6 +12,7 @@ import './rail-player.scss';
 
 export default class RailPlayer extends BulbsElement {
   initialDispatch () {
+    this.store.actions.revealPlayer();
     this.store.actions.fetchVideo(this.props.src);
   }
 
