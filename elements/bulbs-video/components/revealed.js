@@ -21,6 +21,11 @@ function makeGaPrefix () {
 }
 
 export default class Revealed extends React.Component {
+
+  compenentWillUnmount () {
+    this.player.stop();
+  }
+
   componentDidMount () {
 
     invariant(
@@ -203,7 +208,7 @@ export default class Revealed extends React.Component {
 
   makeVideoPlayer (element, videoMeta) {
     element.id = videoMeta.gaPrefix;
-    let player = global.jwplayer(element);
+    this.player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
 
@@ -245,10 +250,10 @@ export default class Revealed extends React.Component {
       };
     }
 
-    player.setup(playerOptions);
+    this.player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.gaPrefix);
-    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+    GoogleAnalytics.init(this.player, videoMeta.gaPrefix);
+    Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
   }
 
