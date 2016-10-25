@@ -3,7 +3,6 @@ require('expose?jwplayer!../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
-import { prepGaEventTracker } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -15,9 +14,18 @@ import invariant from 'invariant';
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
-let jwPlayerIdCounter = 0;
+let prefixCount = 0;
+function makeGaPrefix () {
+  // ga demands tracker names be alphanumeric
+  return `videoplayer${prefixCount++}`;
+}
 
 export default class Revealed extends React.Component {
+
+  compenentWillUnmount () {
+    this.player.stop();
+  }
+
   componentDidMount () {
 
     invariant(
@@ -37,33 +45,30 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
+    let gaPrefix = makeGaPrefix();
+    ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
+
     let targeting = this.props.video.targeting;
+    let prefixedSet = `${gaPrefix}.set`;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
 
-    let dimensions = {
-      'dimension1': targeting.target_channel || 'None',
-      'dimension2': targeting.target_series || 'None',
-      'dimension3': targeting.target_season || 'None',
-      'dimension4': targeting.target_video_id || 'None',
-      'dimension5': hostChannel,
-      'dimension6': specialCoverage,
-      'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || 'None', // autoplay
-      'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
-      'dimension10': 'None', // Platform
-    };
-    let gaTrackerAction = prepGaEventTracker(
-      'videoplayer',
-      BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
-      dimensions
-    );
+    ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
+    ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
+    ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
+    ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
+    ga(prefixedSet, 'dimension5', hostChannel);
+    ga(prefixedSet, 'dimension6', specialCoverage);
+    ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
+    ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
+    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Tunic Campaign Id
+    ga(prefixedSet, 'dimension10', 'None'); // Platform
 
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
-    videoMeta.gaTrackerAction = gaTrackerAction;
+    videoMeta.gaPrefix = gaPrefix;
     videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
@@ -202,8 +207,8 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, videoMeta) {
-    element.id = jwPlayerIdCounter++;
-    let player = global.jwplayer(element);
+    element.id = videoMeta.gaPrefix;
+    this.player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
 
@@ -245,10 +250,10 @@ export default class Revealed extends React.Component {
       };
     }
 
-    player.setup(playerOptions);
+    this.player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.gaTrackerAction);
-    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+    GoogleAnalytics.init(this.player, videoMeta.gaPrefix);
+    Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
   }
 
