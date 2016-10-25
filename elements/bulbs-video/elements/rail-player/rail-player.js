@@ -4,6 +4,7 @@ import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import VideoField from '../../fields/video';
 import VideoRequest from '../../fields/video-request';
+import ControllerField from '../../fields/controller';
 
 import RailPlayerRoot from './components/root';
 
@@ -36,6 +37,7 @@ Object.assign(RailPlayer, {
   schema: {
     video: VideoField,
     videoRequest: VideoRequest,
+    controller: ControllerField,
   },
   propTypes: {
     channel: PropTypes.string.isRequired,

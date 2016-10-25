@@ -11,7 +11,12 @@ import video from '../fixtures/video.json';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
-    global.jwplayer = () => {};
+
+    global.jwplayer = () => {
+      return {
+        on: sinon.spy(),
+      };
+    };
     sinon.stub(GoogleAnalytics, 'init');
     sinon.stub(Comscore, 'init');
   });
@@ -664,6 +669,7 @@ describe('<bulbs-video> <Revealed>', () => {
       playerSetup = sinon.spy();
       player = {
         setup: playerSetup,
+        on: sinon.spy(),
       };
       global.jwplayer = () => {
         return player;
@@ -691,7 +697,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
@@ -764,7 +772,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractCaptionsStub = sinon.stub().returns(captioningTracks);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractCaptionsStub,
@@ -792,7 +802,10 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: { disableSharing: true },
+            props: {
+              disableSharing: true,
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
@@ -820,7 +833,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
           vastUrlStub = sinon.stub();
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             vastUrl: vastUrlStub,
