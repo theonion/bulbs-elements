@@ -251,7 +251,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('sets ga config', () => {
-          expect(makeVideoPlayerSpy.args[0][1].gaPrefix).to.match(/^videoplayer\d+$/);
+          expect(makeVideoPlayerSpy.args[0][1].gaTrackerAction).to.be.a('function');
         });
       });
 
@@ -593,9 +593,12 @@ describe('<bulbs-video> <Revealed>', () => {
     let element;
     let player;
     let videoMeta;
+    let gaTrackerAction;
 
     beforeEach(() => {
       element = {};
+      gaTrackerAction = () => {};
+
       videoMeta = Object.assign({}, video, {
         title: 'video_title',
         tags: 'tags',
@@ -656,6 +659,7 @@ describe('<bulbs-video> <Revealed>', () => {
           },
         ],
         gaPrefix: 'videoplayer0',
+        gaTrackerAction,
       });
       playerSetup = sinon.spy();
       player = {
@@ -726,7 +730,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('initializes the GoogleAnalytics plugin', () => {
-          expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+          expect(GoogleAnalytics.init.calledWith(player, gaTrackerAction)).to.be.true;
         });
 
         it('initializes the Comscore plugin', () => {
