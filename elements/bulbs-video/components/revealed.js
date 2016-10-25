@@ -251,12 +251,27 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(this.player, videoMeta.gaPrefix);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+    this.player.on('beforePlay', () => {
+      let videoEl = this.player.getContainer().querySelector('video');
+      if (videoEl && this.props.playsInline) {
+        videoEl.setAttribute('webkit-playsinline', true);
+        videoEl.setAttribute('playsinline', true);
+      }
+    });
+  }
+
+  handleClick () {
+    if (this.props.hideControls) {
+      this.player.play();
+    }
   }
 
   render () {
     return (
       <div
         className='bulbs-video-viewport'
+        onClick={event => this.handleClick(event)}
+        onTouchTap={event => this.handleClick(event)}
       >
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
@@ -275,6 +290,7 @@ Revealed.propTypes = {
   hideControls: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
+  playsInline: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
