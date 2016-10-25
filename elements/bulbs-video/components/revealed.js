@@ -202,7 +202,7 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, videoMeta) {
-    element.id = jwPlayerIdCounter++;
+    element.id = `jw-player-${jwPlayerIdCounter++}`;
     let player = global.jwplayer(element);
 
     player.videoMeta = videoMeta;
