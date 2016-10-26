@@ -1,5 +1,6 @@
 // Expose jwplayer on the global context
-require('expose?jwplayer!../plugins/jwplayer');
+// The jwplayer.js file calls window.jwplayer = /* HOT JWPLAYER JS */;
+require('../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
@@ -214,7 +215,7 @@ export default class Revealed extends React.Component {
       },
       sources: this.extractSources(videoMeta.sources),
       image: videoMeta.player_options.poster,
-      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
+      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.7.3/jwplayer.flash.swf',
       aspectratio: '16:9',
       autostart: this.props.controller.revealed,
       hlshtml: true,
