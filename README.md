@@ -142,6 +142,6 @@ To start continuous testing:
 $ npm run karma
 ```
 
-You can open the test results in your browser at [localhost:9876/debug.html]().
+You can open the test results in your browser at [http://localhost:9876/debug.html]().
 
 ### Examples
