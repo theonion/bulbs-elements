@@ -127,6 +127,19 @@ let examples = {
         `;
       },
     },
+    'American Voter Example': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/american-voter.json"
+            embedded
+            disable-sharing
+            no-cover
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 
