@@ -19,6 +19,11 @@ global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 let jwPlayerIdCounter = 0;
 
 export default class Revealed extends React.Component {
+
+  componentWillUnmount () {
+    this.player.stop();
+  }
+
   componentDidMount () {
 
     invariant(

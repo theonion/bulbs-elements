@@ -338,6 +338,15 @@ describe('<bulbs-video> <Revealed>', () => {
     });
   });
 
+  describe('componentWillUnmount', () => {
+    it('stops the player', () => {
+      let revealed = new Revealed({});
+      revealed.player = { stop: sinon.spy() };
+      revealed.componentWillUnmount();
+      expect(revealed.player.stop).to.have.been.called;
+    });
+  });
+
   describe('extractTrackCaptions', () => {
     let sources;
 
