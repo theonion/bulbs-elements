@@ -20,9 +20,7 @@ let jwPlayerIdCounter = 0;
 export default class Revealed extends React.Component {
 
   componentWillUnmount () {
-
     this.player.stop();
-
   }
 
   componentDidMount () {
