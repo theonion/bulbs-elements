@@ -40,8 +40,6 @@ class FlyoverMenu extends BulbsHTMLElement {
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'true');
     });
-
-    document.body.style.overflow = 'hidden';
   }
 
   closeFlyover () {
@@ -50,8 +48,6 @@ class FlyoverMenu extends BulbsHTMLElement {
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'false');
     });
-
-    document.body.style.overflow = '';
   }
 }
 
