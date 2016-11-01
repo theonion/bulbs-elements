@@ -12,17 +12,24 @@ import './rail-player.scss';
 
 export default class RailPlayer extends BulbsElement {
 
-  componentDidMount() {
-    detectAdBlock();
+  componentDidMount () {
+    detectAdBlock((isAdBlocked) => {
+      this.isAdBlocked = isAdBlocked;
+      this.fetchVideo();
+    });
   }
 
-  initialDispatch () {
-    this.store.actions.fetchVideo(this.props.src);
+  fetchVideo () {
+    if (this.isAdBlocked) {
+      this.store.actions.fetchVideo(this.props.src + '?adBlockActive');
+    } else {
+      this.store.actions.fetchVideo(this.props.src);
+    };
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
-      this.initialDispatch();
+      this.fetchVideo();
     }
   }
 
