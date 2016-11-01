@@ -53,7 +53,6 @@ export default class ReadingListMenu {
     const dimensions = this.getDimensions();
     this.pinnedContainer.style.position = 'fixed';
     this.pinnedContainer.style.top = `${dimensions.menuContainer.top}px`;
-    this.pinnedContainer.style.left = `${dimensions.menuContainer.left}px`;
   }
 
   getDimensions () {
