@@ -8,6 +8,8 @@ import VideoRequest from '../../fields/video-request';
 
 import RailPlayerRoot from './components/root';
 
+import Url from 'browser-url';
+
 import './rail-player.scss';
 
 export default class RailPlayer extends BulbsElement {
@@ -21,7 +23,9 @@ export default class RailPlayer extends BulbsElement {
 
   fetchVideo () {
     if (this.isAdBlocked) {
-      this.store.actions.fetchVideo(this.props.src + '?adBlockActive');
+      let parsedURL = new Url(this.props.src);
+      parsedURL.addQuery('adBlockActive', 'true');
+      this.store.actions.fetchVideo(parsedURL.toString());
     } else {
       this.store.actions.fetchVideo(this.props.src);
     };
