@@ -72,12 +72,18 @@ describe('<bulbs-video>', () => {
         subject.componentDidUpdate({ src });
       });
 
-      it('fetches video data', () => {
-        expect(fetchSpy).to.have.been.calledWith(newSrc);
+      it('fetches video data', (done) => {
+        setImmediate(() => {
+          expect(fetchSpy).to.have.been.calledWith(newSrc);
+          done();
+        });
       });
 
-      it('resets the controller', () => {
-        expect(resetSpy).to.have.been.called;
+      it('resets the controller', (done) => {
+        setImmediate(() => {
+          expect(resetSpy).to.have.been.called;
+          done();
+        });
       });
     });
   });
