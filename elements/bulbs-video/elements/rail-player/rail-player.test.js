@@ -51,7 +51,7 @@ describe('<rail-player>', () => {
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo).to.have.been.calledWith('http://example.org/a-src');
       });
-    })
+    });
     context('with campaign', () => {
       beforeEach(() => {
         subject = new RailPlayer({ src: 'http://example.org/a-src?campaign_id=534' });
@@ -60,7 +60,8 @@ describe('<rail-player>', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = true;
         subject.fetchVideo();
-        expect(subject.store.actions.fetchVideo).to.have.been.calledWith('http://example.org/a-src?campaign_id=534&adBlockActive=true');
+        expect(subject.store.actions.fetchVideo).to.have.been.calledWith(
+          'http://example.org/a-src?campaign_id=534&adBlockActive=true');
       });
       it('checks if ad block is disabled', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');
@@ -68,10 +69,10 @@ describe('<rail-player>', () => {
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo).to.have.been.calledWith('http://example.org/a-src?campaign_id=534');
       });
-    })
+    });
   });
 
-  describe('componentDidMount', () => {    
+  describe('componentDidMount', () => {
     beforeEach(() => {
       subject = new RailPlayer({ src: 'http://example.org/a-src' });
     });
