@@ -19,9 +19,9 @@ global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 let jwPlayerIdCounter = 0;
 
 export default class Revealed extends React.Component {
-
-  componentWillUnmount () {
-    this.player.stop();
+  constructor (props) {
+    super(props);
+    this.forwardJWEvent = this.forwardJWEvent.bind(this);
   }
 
   componentDidMount () {
@@ -106,6 +106,10 @@ export default class Revealed extends React.Component {
     videoMeta.player_options.embedded = this.props.embedded;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
+  }
+
+  componentWillUnmount () {
+    this.player.remove();
   }
 
   extractSources (sources) {
@@ -256,11 +260,16 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+    this.player.on('complete', this.forwardJWEvent);
+  }
+
+  forwardJWEvent (event) {
+    this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
   }
 
   render () {
     return (
-      <div className='bulbs-video-viewport'>
+      <div className='bulbs-video-viewport' ref='videoViewport'>
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
       </div>

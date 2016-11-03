@@ -57,7 +57,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    this.videoPlayer.addEventListener('ended', this.playerEnded = this.playerEnded.bind(this), true);
+    this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({

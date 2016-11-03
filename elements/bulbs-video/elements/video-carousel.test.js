@@ -72,7 +72,7 @@ describe('<bulbs-video-carousel>', () => {
     it('attaches playerEnded handler to videoPlayer', () => {
       subject.attachedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
-        'ended', subject.playerEnded, true
+        'jw-complete', subject.playerEnded, true
       );
     });
 

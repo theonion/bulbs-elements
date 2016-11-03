@@ -334,9 +334,9 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('componentWillUnmount', () => {
     it('stops the player', () => {
       let revealed = new Revealed({});
-      revealed.player = { stop: sinon.spy() };
+      revealed.player = { remove: sinon.spy() };
       revealed.componentWillUnmount();
-      expect(revealed.player.stop).to.have.been.called;
+      expect(revealed.player.remove).to.have.been.called;
     });
   });
 
@@ -597,6 +597,7 @@ describe('<bulbs-video> <Revealed>', () => {
 
   describe('makeVideoPlayer', () => {
     let playerSetup;
+    let playerOn;
     let element;
     let player;
     let videoMeta;
@@ -669,7 +670,9 @@ describe('<bulbs-video> <Revealed>', () => {
         gaTrackerAction,
       });
       playerSetup = sinon.spy();
+      playerOn = sinon.spy();
       player = {
+        on: playerOn,
         setup: playerSetup,
       };
       global.jwplayer = () => {
@@ -677,11 +680,21 @@ describe('<bulbs-video> <Revealed>', () => {
       };
     });
 
+    describe('contstructor', () => {
+      it('binds the forwardJWEvent method', () => {
+        sinon.spy(Revealed.prototype.forwardJWEvent, 'bind');
+        let revealed = new Revealed({});
+        expect(Revealed.prototype.forwardJWEvent.bind).to.have.been.calledWith(revealed);
+        sinon.restore();
+      });
+    });
+
     describe('player set up', () => {
       let sources;
       let extractSourcesStub;
       let vastUrlStub;
       let extractTrackCaptionsStub;
+      let forwardJWEvent = sinon.spy();
 
       context('regular setup', () => {
         beforeEach(() => {
@@ -702,11 +715,16 @@ describe('<bulbs-video> <Revealed>', () => {
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
+            forwardJWEvent,
           }, element, videoMeta);
         });
 
         it('sets up the player', () => {
           expect(playerSetup.called).to.be.true;
+        });
+
+        it('binds to player complete event', () => {
+          expect(playerOn).to.have.been.calledWith('complete', forwardJWEvent);
         });
 
         it('includes only the HLS & mp4 sources', () => {
