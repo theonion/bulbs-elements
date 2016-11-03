@@ -681,7 +681,6 @@ describe('<bulbs-video> <Revealed>', () => {
       player = {
         on: playerOn,
         setup: playerSetup,
-        on: sinon.spy(),
       };
       global.jwplayer = () => {
         return player;
