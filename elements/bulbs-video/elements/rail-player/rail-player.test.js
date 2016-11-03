@@ -6,6 +6,7 @@ import RailPlayerRoot from './components/root';
 
 import VideoField from '../../fields/video';
 import VideoRequestField from '../../fields/video-request';
+import ControllerField from '../../fields/controller';
 
 describe('<rail-player>', () => {
   let subject;
@@ -31,6 +32,10 @@ describe('<rail-player>', () => {
 
     it('has a videoRequest field', () => {
       expect(subject.videoRequest).to.eql(VideoRequestField);
+    });
+
+    it('has a controller field', () => {
+      expect(subject.controller).to.eql(ControllerField);
     });
   });
 
