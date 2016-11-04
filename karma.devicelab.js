@@ -67,7 +67,7 @@ karmaConfig.customLaunchers = {
   bs_safari_9: {
     base: 'BrowserStack',
     os: 'osx',
-    os_version: 'yosemite',
+    os_version: 'elcapitan',
     browser: 'safari',
     browser_version: '9.1',
   },
