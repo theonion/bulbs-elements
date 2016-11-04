@@ -272,14 +272,14 @@ export default class Revealed extends React.Component {
     this.player.on('complete', this.forwardJWEvent);
   }
 
+  forwardJWEvent (event) {
+    this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
+  }
+
   handleClick () {
     if (this.props.hideControls) {
       this.player.play();
     }
-  }
-
-  forwardJWEvent (event) {
-    this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
   }
 
   render () {

@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "5.35.3",
+  "version": "6.0.0",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -35,6 +35,7 @@
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-2": "^6.17.0",
     "bower": "^1.7.9",
+    "browser-url": "^1.2.9",
     "camelcase": "^2.0.1",
     "chai": "^3.4.1",
     "chai-enzyme": "^0.5.0",
