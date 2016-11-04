@@ -9,7 +9,7 @@ export default function Root (props) {
   if (!props.video) {
     return <div className={className}/>;
   }
-  else if (props.controller.revealed) {
+  else if (props.noCover || props.controller.revealed) {
     return (
       <div className={className}>
         <Revealed {...props}/>
@@ -36,6 +36,7 @@ Root.propTypes = {
   embedded: PropTypes.bool,
   enablePosterMeta: PropTypes.bool,
   muted: PropTypes.bool,
+  noCover: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
