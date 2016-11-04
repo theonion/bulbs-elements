@@ -22,6 +22,7 @@ export default class Revealed extends React.Component {
   constructor (props) {
     super(props);
     this.forwardJWEvent = this.forwardJWEvent.bind(this);
+    this.setPlaysInline = this.setPlaysInline.bind(this);
   }
 
   componentDidMount () {
@@ -261,24 +262,25 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
-    this.player.on('beforePlay', () => {
-      let videoEl = this.player.getContainer().querySelector('video');
-      if (videoEl && this.props.playsInline) {
-        videoEl.setAttribute('webkit-playsinline', true);
-        videoEl.setAttribute('playsinline', true);
-      }
-    });
-
+    this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('complete', this.forwardJWEvent);
+  }
+
+  handleClick () {
+    if (this.props.hideControls) {
+      this.player.play();
+    }
   }
 
   forwardJWEvent (event) {
     this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
   }
 
-  handleClick () {
-    if (this.props.hideControls) {
-      this.player.play();
+  setPlaysInline () {
+    let videoEl = this.player.getContainer().querySelector('video');
+    if (videoEl && this.props.playsInline) {
+      videoEl.setAttribute('webkit-playsinline', true);
+      videoEl.setAttribute('playsinline', true);
     }
   }
 
