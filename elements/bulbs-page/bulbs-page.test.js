@@ -19,9 +19,10 @@ describe('<bulbs-page>', () => {
     element.setAttribute('pushstate-url', '/example');
     sandbox.spy(InViewMonitor, 'add');
     sandbox.spy(InViewMonitor, 'remove');
-    sandbox.spy(history, 'replaceState');
+    sandbox.stub(history, 'replaceState');
     sandbox.spy(util.getAnalyticsManager(), 'trackPageView');
     sandbox.spy(LockScroll, 'lockToElement');
+    sandbox.spy(util, 'onReadyOrNow');
   });
 
   afterEach(() => {
@@ -33,6 +34,18 @@ describe('<bulbs-page>', () => {
     it('registers with InViewMonitor', () => {
       element.attachedCallback();
       expect(InViewMonitor.add).to.have.been.calledWith(element).once;
+    });
+
+    it('adds listener for pagestart', () => {
+      element.attachedCallback();
+      sandbox.spy(element, 'handlePageStart');
+      element.dispatchEvent(new CustomEvent('pagestart'));
+      expect(element.handlePageStart).to.have.been.called.once;
+    });
+
+    it('adds a document ready handler', () => {
+      element.attachedCallback();
+      expect(util.onReadyOrNow).to.have.been.called.once;
     });
   });
 
