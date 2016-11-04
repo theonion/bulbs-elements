@@ -681,6 +681,7 @@ describe('<bulbs-video> <Revealed>', () => {
       player = {
         on: playerOn,
         setup: playerSetup,
+        on: sinon.spy(),
       };
       global.jwplayer = () => {
         return player;
@@ -694,6 +695,13 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(Revealed.prototype.forwardJWEvent.bind).to.have.been.calledWith(revealed);
         sinon.restore();
       });
+
+      it('binds the setPlaysInline method', () => {
+        sinon.spy(Revealed.prototype.setPlaysInline, 'bind');
+        let revealed = new Revealed({});
+        expect(Revealed.prototype.setPlaysInline.bind).to.have.been.calledWith(revealed);
+        sinon.restore();
+      });
     });
 
     describe('player set up', () => {
@@ -702,6 +710,7 @@ describe('<bulbs-video> <Revealed>', () => {
       let vastUrlStub;
       let extractTrackCaptionsStub;
       let forwardJWEvent = sinon.spy();
+      let setPlaysInline = sinon.spy();
 
       context('regular setup', () => {
         beforeEach(() => {
@@ -732,8 +741,12 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(playerSetup.called).to.be.true;
         });
 
-        it('binds to player complete event', () => {
+        it('forwards player complete event', () => {
           expect(playerOn).to.have.been.calledWith('complete', forwardJWEvent);
+        });
+
+        it('sets playsInline property on beforePlay event', () => {
+          expect(playerOn).to.have.been.calledWith('beforePlay', setPlaysInline);
         });
 
         it('includes only the HLS & mp4 sources', () => {
