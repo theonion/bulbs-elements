@@ -95,18 +95,8 @@ describe('<bulbs-video>', () => {
       props.disableLazyLoading = false;
 
       container = document.createElement('div');
-
-      container.innerHTML = `
-        <div style="
-            position: absolute;
-            top: 200%;
-            left: 0px;
-            display: block;
-            width: 10px;
-            height: 10px;
-          ">
-        </div>
-      `;
+      container.style.position = 'fixed';
+      container.style.top = '200%';
       document.body.appendChild(container);
       setImmediate(() => done());
     });
@@ -120,7 +110,7 @@ describe('<bulbs-video>', () => {
       videoElement.setAttribute('src', src);
       container.appendChild(videoElement);
 
-      container.firstElementChild.style.top = '0';
+      container.style.top = '0';
       try {
         window.dispatchEvent(new Event('scroll'));
       }

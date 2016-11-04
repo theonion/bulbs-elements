@@ -8,7 +8,7 @@ describe('<bulbs-slideshow>', () => {
     sandbox = sinon.sandbox.create();
     window.picturefill = sandbox.spy();
     fixture.load('bulbs-slideshow.html');
-    subject = fixture.el.firstChild;
+    subject = fixture.el.querySelector('bulbs-slideshow');
     setImmediate(() => done());
   });
 
