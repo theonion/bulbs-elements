@@ -69,12 +69,16 @@ export default class BulbsVideo extends BulbsElement {
         {...this.state}
         actions={this.store.actions}
         autoplayNext={typeof this.props.twitterHandle === 'string'}
+        playsinline={typeof this.props.playsInline === 'string'}
         disableMetaLink={typeof this.props.disableMetaLink === 'string'}
+        disableSharing={typeof this.props.disableSharing === 'string'}
         embedded={typeof this.props.embedded === 'string'}
         enablePosterMeta={typeof this.props.enablePosterMeta === 'string'}
+        hideControls={typeof this.props.hideControls === 'string'}
         muted={typeof this.props.muted === 'string'}
+        noCover={typeof this.props.noCover === 'string'}
         noEndcard={typeof this.props.noEndcard === 'string'}
-        />
+      />
     );
   }
 }
@@ -90,10 +94,14 @@ Object.assign(BulbsVideo, {
     autoplay: PropTypes.string,
     autoplayNext: PropTypes.string,
     disableMetaLink: PropTypes.string,
+    disableSharing: PropTypes.string,
     embedded: PropTypes.string,
     enablePosterMeta: PropTypes.string,
+    hideControls: PropTypes.string,
     muted: PropTypes.string,
+    noCover: PropTypes.string,
     noEndcard: PropTypes.string,
+    playsInline: PropTypes.string,
     src: PropTypes.string.isRequired,
     targetCampaignId: PropTypes.string,
     targetCampaignNumber: PropTypes.string,
