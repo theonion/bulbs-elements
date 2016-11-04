@@ -25,9 +25,13 @@ export default class BulbsVideo extends BulbsElement {
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
-      this.store.actions.resetController();
-      this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
-      this.initialDispatch();
+      setImmediate(() => {
+        // We have to do this in the next execution context to work around timing
+        // issues with jwplayer and tearing down video players
+        this.store.actions.resetController();
+        this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
+        this.initialDispatch();
+      });
     }
   }
 

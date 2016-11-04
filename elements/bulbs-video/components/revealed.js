@@ -19,9 +19,9 @@ global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 let jwPlayerIdCounter = 0;
 
 export default class Revealed extends React.Component {
-
-  componentWillUnmount () {
-    this.player.stop();
+  constructor (props) {
+    super(props);
+    this.forwardJWEvent = this.forwardJWEvent.bind(this);
   }
 
   componentDidMount () {
@@ -106,6 +106,10 @@ export default class Revealed extends React.Component {
     videoMeta.player_options.embedded = this.props.embedded;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
+  }
+
+  componentWillUnmount () {
+    this.player.remove();
   }
 
   extractSources (sources) {
@@ -264,12 +268,18 @@ export default class Revealed extends React.Component {
         videoEl.setAttribute('playsinline', true);
       }
     });
+
+    this.player.on('complete', this.forwardJWEvent);
   }
 
   handleClick () {
     if (this.props.hideControls) {
       this.player.play();
     }
+  }
+
+  forwardJWEvent (event) {
+    this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
   }
 
   render () {
