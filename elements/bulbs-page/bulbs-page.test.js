@@ -27,7 +27,7 @@ describe('<bulbs-page>', () => {
 
   afterEach(() => {
     sandbox.restore();
-    delete window.BULBS_ELEMENTS_ANALYTICS_MANAGER;
+    delete window.onionan;
   });
 
   describe('attachedCallback', () => {
