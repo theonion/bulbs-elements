@@ -2,7 +2,6 @@ import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import './bulbs-header-masthead';
 import './bulbs-header-responsive-nav';
 import './bulbs-header.scss';
-import '../bulbs-flyover-menu/bulbs-flyover-menu';
 
 class BulbsHeader extends BulbsHTMLElement {
   createdCallback () {
@@ -11,16 +10,14 @@ class BulbsHeader extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    this.addEventListener(
+    this.masthead.addEventListener(
       'exitviewport',
-      this.delegateEnterViewport.bind(this),
-      true
-    );   
+      this.delegateExitViewport.bind(this)
+    );
 
-   this.addEventListener(
+    this.masthead.addEventListener(
       'enterviewport',
-      this.delegateExitViewport.bind(this),
-      true
+      this.delegateEnterViewport.bind(this)
     );
 
     if (this.responsiveNav && ! this.masthead) {
@@ -49,7 +46,7 @@ class BulbsHeader extends BulbsHTMLElement {
   }
 
   get responsiveNav () {
-    this.responsiveNavs[0];
+    return this.responsiveNavs[0];
   }
 }
 

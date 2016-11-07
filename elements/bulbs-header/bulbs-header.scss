@@ -5,8 +5,15 @@
 }
 
 .example {
-  height: 1200px;
+  height: 3000px;
 }
+.foo {
+  background: blue;
+  display: block;
+  height: 400px;
+  width: 100%;
+}
+
 
 // Global Styles
 
@@ -18,14 +25,22 @@ bulbs-header {
 }
 
 bulbs-header-masthead {
-  border: 1px solid red;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
   height: 100px;
   width: 100%;
 }
 
 bulbs-header-responsive-nav {
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid black;
+  display: flex;
   height: 50px;
   position: fixed;
+  top: 0;
   transition-timing-function: ease-in;
   transition: 0.2s;
   transform: translateY(-130%);
