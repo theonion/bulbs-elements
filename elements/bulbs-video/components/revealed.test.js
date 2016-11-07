@@ -681,7 +681,6 @@ describe('<bulbs-video> <Revealed>', () => {
       player = {
         on: playerOn,
         setup: playerSetup,
-        on: sinon.spy(),
       };
       global.jwplayer = () => {
         return player;
@@ -734,6 +733,7 @@ describe('<bulbs-video> <Revealed>', () => {
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             forwardJWEvent,
+            setPlaysInline,
           }, element, videoMeta);
         });
 
