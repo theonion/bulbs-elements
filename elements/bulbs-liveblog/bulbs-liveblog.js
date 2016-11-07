@@ -28,6 +28,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     `;
     let dismiss = document.createElement('span');
     dismiss.classList.add('liveblog-dismiss-new-entries');
+    dismiss.setAttribute('data-track-action', 'Alert: Show More');
+    dismiss.setAttribute('data-track-label', '#');
     dismiss.innerHTML = '&times;';
     dismiss.addEventListener('click', () => button.remove());
     button.appendChild(dismiss);
@@ -213,7 +215,9 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
   resetSelectedEntry () {
     let sharedEntry = document.querySelector('.liveblog-entry-shared');
-    sharedEntry.classList.remove('liveblog-entry-shared');
+    if (sharedEntry) {
+      sharedEntry.classList.remove('liveblog-entry-shared');
+    }
   }
 
   handleBlogUpdate (entryIds) {
