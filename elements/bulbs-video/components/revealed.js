@@ -22,6 +22,7 @@ export default class Revealed extends React.Component {
   constructor (props) {
     super(props);
     this.forwardJWEvent = this.forwardJWEvent.bind(this);
+    this.setPlaysInline = this.setPlaysInline.bind(this);
   }
 
   componentDidMount () {
@@ -226,12 +227,13 @@ export default class Revealed extends React.Component {
       image: videoMeta.player_options.poster,
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.7.3/jwplayer.flash.swf',
       aspectratio: '16:9',
-      autostart: true,
+      autostart: this.props.controller.revealed,
       hlshtml: true,
       mute: videoMeta.player_options.muted || false,
       preload: 'none',
       primary: 'html5',
       width: '100%',
+      controls: !this.props.hideControls,
     };
 
     if (!videoMeta.player_options.embedded) {
@@ -260,16 +262,35 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+    this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('complete', this.forwardJWEvent);
+  }
+
+  handleClick () {
+    if (this.props.hideControls) {
+      this.player.play();
+    }
   }
 
   forwardJWEvent (event) {
     this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
   }
 
+  setPlaysInline () {
+    let videoEl = this.player.getContainer().querySelector('video');
+    if (videoEl && this.props.playsInline) {
+      videoEl.setAttribute('webkit-playsinline', true);
+      videoEl.setAttribute('playsinline', true);
+    }
+  }
+
   render () {
     return (
-      <div className='bulbs-video-viewport' ref='videoViewport'>
+      <div
+        className='bulbs-video-viewport'
+        onClick={event => this.handleClick(event)}
+        onTouchTap={event => this.handleClick(event)}
+      >
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
       </div>
@@ -280,11 +301,14 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
+  hideControls: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
+  playsInline: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,

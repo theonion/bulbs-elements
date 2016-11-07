@@ -9,7 +9,12 @@ import video from '../fixtures/video.json';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
-    global.jwplayer = () => {};
+
+    global.jwplayer = () => {
+      return {
+        on: sinon.spy(),
+      };
+    };
     sinon.stub(GoogleAnalytics, 'init');
     sinon.stub(Comscore, 'init');
   });
@@ -687,6 +692,13 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(Revealed.prototype.forwardJWEvent.bind).to.have.been.calledWith(revealed);
         sinon.restore();
       });
+
+      it('binds the setPlaysInline method', () => {
+        sinon.spy(Revealed.prototype.setPlaysInline, 'bind');
+        let revealed = new Revealed({});
+        expect(Revealed.prototype.setPlaysInline.bind).to.have.been.calledWith(revealed);
+        sinon.restore();
+      });
     });
 
     describe('player set up', () => {
@@ -695,6 +707,7 @@ describe('<bulbs-video> <Revealed>', () => {
       let vastUrlStub;
       let extractTrackCaptionsStub;
       let forwardJWEvent = sinon.spy();
+      let setPlaysInline = sinon.spy();
 
       context('regular setup', () => {
         beforeEach(() => {
@@ -711,11 +724,14 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             forwardJWEvent,
+            setPlaysInline,
           }, element, videoMeta);
         });
 
@@ -723,8 +739,12 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(playerSetup.called).to.be.true;
         });
 
-        it('binds to player complete event', () => {
+        it('forwards player complete event', () => {
           expect(playerOn).to.have.been.calledWith('complete', forwardJWEvent);
+        });
+
+        it('sets playsInline property on beforePlay event', () => {
+          expect(playerOn).to.have.been.calledWith('beforePlay', setPlaysInline);
         });
 
         it('includes only the HLS & mp4 sources', () => {
@@ -789,7 +809,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractCaptionsStub = sinon.stub().returns(captioningTracks);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractCaptionsStub,
@@ -817,7 +839,10 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: { disableSharing: true },
+            props: {
+              disableSharing: true,
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
@@ -845,7 +870,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
           vastUrlStub = sinon.stub();
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             extractTrackCaptions: extractTrackCaptionsStub,
             vastUrl: vastUrlStub,

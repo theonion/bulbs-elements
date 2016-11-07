@@ -241,9 +241,10 @@ describe('<div is="bulbs-dfp">', () => {
     beforeEach((done) => {
       element.style.height = '100px';
       element.style.width = '100px';
-      element.style.position = 'absolute';
+      element.style.position = 'fixed';
       element.style.background = 'black';
-      element.style.left = '0px';
+      element.style.top = '0';
+      element.style.left = '0';
       document.body.appendChild(element);
       setImmediate(() => done());
     });
@@ -259,11 +260,13 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     it('is false when > 2/3s below bottom of viewport', () => {
-      element.style.bottom = '-34px';
+      element.style.top = '';
+      element.style.bottom = '-35px';
       expect(element.isViewable).to.be.false;
     });
 
     it('is true when < 2/3s below bottom of viewport', () => {
+      element.style.top = '';
       element.style.bottom = '-33px';
       expect(element.isViewable).to.be.true;
     });

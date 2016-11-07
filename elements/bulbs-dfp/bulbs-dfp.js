@@ -149,7 +149,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   get isViewable () {
-    return util.InViewMonitor.isElementInViewport(this, {
+    return util.InViewMonitor.isElementInViewport(this, null, {
       distanceFromTop: this.offsetHeight * 0.66,
       distanceFromBottom: -(this.offsetHeight * 0.66),
     });

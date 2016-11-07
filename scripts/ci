@@ -3,10 +3,10 @@ set -e
 
 # List of browsers to test
 BROWSERS=(
-    bs_chrome_50
-    bs_firefox_47
-    bs_safari_8
+    bs_safari_9
     bs_ie_11
+    bs_firefox_47
+    bs_chrome_50
 )
 
 for B in ${BROWSERS[@]}; do
