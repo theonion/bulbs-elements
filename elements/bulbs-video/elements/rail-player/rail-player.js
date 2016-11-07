@@ -18,6 +18,7 @@ export default class RailPlayer extends BulbsElement {
   componentDidMount () {
     detectAdBlock((isAdBlocked) => {
       this.isAdBlocked = isAdBlocked;
+      this.store.actions.revealPlayer();
       this.fetchVideo();
     });
   }
