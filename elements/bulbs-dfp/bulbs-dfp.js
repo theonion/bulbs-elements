@@ -35,10 +35,10 @@ export default class BulbsDfp extends BulbsHTMLElement {
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
     util.InViewMonitor.add(this, {
       get distanceFromTop () {
-        return window.innerHeight * threshold;
+        return -(window.innerHeight * threshold);
       },
       get distanceFromBottom () {
-        return -(window.innerHeight * threshold);
+        return window.innerHeight * threshold;
       },
     });
 
@@ -69,16 +69,8 @@ export default class BulbsDfp extends BulbsHTMLElement {
         eventAction: 'enterviewport',
         eventLabel: this.dataset.adUnit,
       });
+      this.adsManager.refreshSlot(this);
     }
-    /* We are taking our time rolling out this change.
-     *  1) we want to make sure the page-speed implications of putting
-     *      bulbs-elements in the critical path for ad loading isn't too heavy
-     *  2) we want to look at analytics to get some idea of how often this will
-     *      happen.
-     *
-     * The eventual strategy will be:
-    this.adsManager.loadAds(this)
-     */
   }
 
   handleExitViewport () {
@@ -144,6 +136,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
       if (browserVisibility === 'visible') {
         this.adsManager.reloadAds(this);
+        this.adsManager.refreshSlot(this);
       }
     }
   }
