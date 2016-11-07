@@ -1,0 +1,38 @@
+// For Test 
+
+.examples-index-pane {
+  overflow-y: scroll;
+}
+
+.example {
+  height: 1200px;
+}
+
+// Global Styles
+
+bulbs-header {
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+bulbs-header-masthead {
+  border: 1px solid red;
+  height: 100px;
+  width: 100%;
+}
+
+bulbs-header-responsive-nav {
+  height: 50px;
+  position: fixed;
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(-130%);
+  width: 100%;
+  &.responsive-nav-active {
+    transition-timing-function: ease-out;
+    transition: 0.25s;
+    transform: translateY(0);
+  }
+}
