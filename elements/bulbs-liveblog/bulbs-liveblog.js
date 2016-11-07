@@ -194,6 +194,10 @@ class BulbsLiveblog extends BulbsHTMLElement {
     if (event.target.matches('button.liveblog-entry-reset')) {
       this.resetSelectedEntry();
     }
+
+    if (event.target.matches('button.liveblog-entry-reset-message')) {
+      this.resetSelectedEntry();
+    }
   }
 
   showNewEntries () {
