@@ -1,6 +1,8 @@
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
 
+import { scrollingElement } from 'bulbs-elements/util';
+
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
   let subject;
@@ -102,7 +104,7 @@ describe('<bulbs-video>', () => {
     });
 
     afterEach(() => {
-      container.innerHTML = '';
+      container.remove();
     });
 
     it('should not load video until it is within viewing threshold', (done) => {
@@ -111,17 +113,10 @@ describe('<bulbs-video>', () => {
       container.appendChild(videoElement);
 
       container.style.top = '0';
-      try {
-        window.dispatchEvent(new Event('scroll'));
-      }
-      catch (error) {
-        const event = document.createEvent('Event');
-        event.initEvent('scroll', false, true);
-        window.dispatchEvent(event);
-      }
+      scrollingElement.scrollTop += 1;
 
       requestAnimationFrame(() => {
-        expect($(container).find('.bulbs-video-root').length).to.equal(1);
+        expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
         done();
       });
     });
