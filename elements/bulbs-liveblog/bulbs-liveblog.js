@@ -221,7 +221,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
   resetSelectedEntry () {
     let sharedEntry = document.querySelector('.liveblog-entry-shared');
     if (sharedEntry) {
-      sharedEntry.classList.remove('liveblog-entry-shared');
+      if (sharedEntry.hasAttribute('entry-delete-to-reset')) {
+        sharedEntry.remove();
+      }
+      else {
+        sharedEntry.classList.remove('liveblog-entry-shared');
+      }
     }
   }
 
