@@ -19,12 +19,13 @@ const LIVEBLOG_LATENCY = 5000;
 
 class BulbsLiveblog extends BulbsHTMLElement {
   makeNewEntriesButton () {
+    let { newEntries } = this;
     let button = document.createElement('button');
     button.classList.add('liveblog-new-entries');
     button.setAttribute('data-track-action', 'Alert: Show More');
     button.setAttribute('data-track-label', '#');
     button.innerHTML = `
-      Show ${this.newEntries.length} New Articles
+      Show ${newEntries.length} New Article${newEntries.length > 1 ? 's' : ''}
     `;
     let dismiss = document.createElement('span');
     dismiss.classList.add('liveblog-dismiss-new-entries');
