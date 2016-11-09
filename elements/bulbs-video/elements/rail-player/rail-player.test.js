@@ -55,7 +55,8 @@ describe('<rail-player>', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = false;
         subject.fetchVideo();
-        expect(subject.store.actions.fetchVideo).to.have.been.calledWith('http://example.org/a-src');
+        expect(subject.store.actions.fetchVideo).to.have.been.calledWith(
+          'http://example.org/a-src');
       });
     });
     context('with campaign', () => {
