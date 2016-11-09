@@ -409,10 +409,13 @@ describe('<bulbs-liveblog>', () => {
         setImmediate(() => done());
       });
 
-      it('removes the show new entries button', () => {
+      it('removes the show new entries button', (done) => {
         sandbox.spy(subject, 'removeNewEntriesButton');
         subject.showNewEntries([entry1]);
-        expect(subject.removeNewEntriesButton).to.have.been.called;
+        setImmediate(() => {
+          expect(subject.removeNewEntriesButton).to.have.been.called;
+          done();
+        });
       });
 
       it('places the entries in the entries container', () => {
@@ -522,13 +525,16 @@ describe('<bulbs-liveblog>', () => {
     });
 
     describe('removeNewEntriesButton', () => {
-      it('removes the show new entries button', () => {
+      it('removes the show new entries button', (done) => {
         let button = document.createElement('button');
         button.classList.add('liveblog-new-entries');
         subject.entriesContainer[0].appendChild(button);
         expect(subject.querySelector('button.liveblog-new-entries')).not.to.be.null;
         subject.removeNewEntriesButton();
-        expect(subject.querySelector('button.liveblog-new-entries')).to.be.null;
+        setImmediate(() => {
+          expect(subject.querySelector('button.liveblog-new-entries')).to.be.null;
+          done();
+        });
       });
     });
   });
