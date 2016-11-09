@@ -68,13 +68,12 @@ export default class BulbsDfp extends BulbsHTMLElement {
     let browserVisibility = document.visibilityState;
 
     if (this.isViewable) {
-      util.getAnalyticsManager().sendEvent({
-        eventCategory: 'bulbs-dfp-element Live Metrics',
-        eventAction: `30-second-refresh-triggered-${browserVisibility}`,
-        eventLabel: this.dataset.adUnit,
-      });
-
       if (browserVisibility === 'visible') {
+        util.getAnalyticsManager().sendEvent({
+          eventCategory: 'bulbs-dfp-element Live Metrics',
+          eventAction: '30-second-refresh-triggered-visible',
+          eventLabel: this.dataset.adUnit,
+        });
         this.adsManager.reloadAds(this);
         this.adsManager.refreshSlot(this);
       }
