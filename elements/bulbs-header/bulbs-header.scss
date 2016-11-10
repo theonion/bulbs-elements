@@ -7,19 +7,14 @@
 .example {
   height: 3000px;
 }
-.foo {
-  background: blue;
-  display: block;
-  height: 400px;
-  width: 100%;
-}
-
 
 // Global Styles
 
 bulbs-header {
   box-sizing: border-box;
   display: flex;
+  font-family: Helvetical Neue, Helvetica, sans-serif;
+  font-weight: 100;
   position: relative;
   width: 100%;
 }
@@ -30,6 +25,7 @@ bulbs-header-masthead {
   border: 1px solid black;
   justify-content: center;
   height: 100px;
+  position: relative;
   width: 100%;
 }
 
@@ -46,6 +42,7 @@ bulbs-header-responsive-nav {
   transform: translateY(-130%);
   width: 100%;
   &.responsive-nav-active {
+    position: fixed;
     transition-timing-function: ease-out;
     transition: 0.25s;
     transform: translateY(0);

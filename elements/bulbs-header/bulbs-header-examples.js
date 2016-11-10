@@ -4,10 +4,19 @@ let examples = {
     'Bulbs Header': {
       render: () => {
         return `
-        <div class="foo"></div>
           <bulbs-header>
             <bulbs-header-masthead>
-              <h1>Bulbs Header Masthead</h1>
+              <button
+                is="bulbs-flyover-open"
+                menu-name="example-menu"
+                style="
+                  padding: 1rem;
+                  display: block;
+                "
+              >
+                <i class="fa fa-bars" aria-hidden="true"></i>
+              </button>
+              <span>Bulbs Header Masthead</span>
             </bulbs-header-masthead>
             <bulbs-header-responsive-nav>
               <button
@@ -20,7 +29,7 @@ let examples = {
               >
                 <i class="fa fa-bars" aria-hidden="true"></i>
               </button>
-              <h2>Bulbs Header Responsive Nav</h2>
+              <span>Bulbs Header Responsive Nav</span>
             </bulbs-header-responsive-nav>
           </bulbs-header>
           <bulbs-flyover-menu menu-name="example-menu">
