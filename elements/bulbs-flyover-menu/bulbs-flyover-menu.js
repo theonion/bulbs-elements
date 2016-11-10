@@ -21,7 +21,7 @@ const flyoverRegistry = {
 
 class FlyoverMenu extends BulbsHTMLElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {
@@ -53,7 +53,7 @@ class FlyoverMenu extends BulbsHTMLElement {
 
 class FlyoverClose extends BulbsHTMLButtonElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {
@@ -70,7 +70,7 @@ FlyoverClose.extends = 'button';
 
 class FlyoverOpen extends BulbsHTMLButtonElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {
