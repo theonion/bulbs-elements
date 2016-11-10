@@ -1,5 +1,3 @@
-import { mount } from 'enzyme';
-import React from 'react';
 import BulbsPoll from './bulbs-poll';
 
 describe('<bulbs-poll> <BulbsPoll>', function () {
@@ -14,7 +12,7 @@ describe('<bulbs-poll> <BulbsPoll>', function () {
         actions: {
           setSrc () {},
           fetchPollData () {},
-          getCachedVoteData() {},
+          getCachedVoteData () {},
         },
       };
       sinon.spy(subject.store.actions, 'setSrc');
