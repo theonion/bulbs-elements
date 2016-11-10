@@ -8,6 +8,7 @@ describe('<div is="bulbs-dfp">', () => {
   let sandbox;
   let sendEventSpy;
   let reloadAdsSpy;
+  let refreshSlotSpy;
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
@@ -21,12 +22,14 @@ describe('<div is="bulbs-dfp">', () => {
     sandbox.stub(util.InViewMonitor, 'remove');
     sendEventSpy = sandbox.spy();
     reloadAdsSpy = sandbox.spy();
+    refreshSlotSpy = sandbox.spy();
     sandbox.stub(util, 'getAnalyticsManager', () => {
       return { sendEvent: sendEventSpy };
     });
 
     window.BULBS_ELEMENTS_ADS_MANAGER = {
       reloadAds: reloadAdsSpy,
+      refreshSlot: refreshSlotSpy,
       adUnits: {
         units: {},
       },
@@ -68,8 +71,8 @@ describe('<div is="bulbs-dfp">', () => {
     it('adds self to InViewMonitor', () => {
       element.attachedCallback();
       expect(util.InViewMonitor.add).to.have.been.calledWith(element, {
-        distanceFromTop: window.innerHeight,
-        distanceFromBottom: -window.innerHeight,
+        distanceFromTop: -window.innerHeight,
+        distanceFromBottom: window.innerHeight,
       });
     });
 
@@ -114,7 +117,10 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleEnterViewport', () => {
-    xit('will need tests after eventual strategy rolled out', () => {
+    it('refreshes the slot', () => {
+      element.handleEnterViewport();
+      element.handleEnterViewport();
+      expect(refreshSlotSpy).to.have.been.calledWith(element).once;
     });
   });
 
@@ -143,6 +149,11 @@ describe('<div is="bulbs-dfp">', () => {
       it('reloads ads', () => {
         element.handleInterval();
         expect(reloadAdsSpy).to.have.been.calledWith(element).once;
+      });
+
+      it('refreshes the slot', () => {
+        element.handleInterval();
+        expect(refreshSlotSpy).to.have.been.calledWith(element);
       });
     });
 

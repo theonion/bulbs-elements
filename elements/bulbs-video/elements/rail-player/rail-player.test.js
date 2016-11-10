@@ -48,8 +48,8 @@ describe('<rail-player>', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = true;
         subject.fetchVideo();
-        expect(subject.store.actions.fetchVideo).to.have.been.calledWith(
-          'http://example.org/a-src?ad_block_active=true');
+        expect(subject.store.actions.fetchVideo)
+          .to.have.been.calledWith('http://example.org/a-src?ad_block_active=true');
       });
       it('checks if ad block is disabled', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');

@@ -23,10 +23,10 @@ export default class BulbsDfp extends BulbsHTMLElement {
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
     util.InViewMonitor.add(this, {
       get distanceFromTop () {
-        return window.innerHeight * threshold;
+        return -(window.innerHeight * threshold);
       },
       get distanceFromBottom () {
-        return -(window.innerHeight * threshold);
+        return window.innerHeight * threshold;
       },
     });
 
@@ -52,8 +52,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   handleEnterViewport () {
     if(!this.trackedEnterViewport) {
       this.trackedEnterViewport = true;
-      // * The eventual strategy will be:
-      // this.adsManager.loadAds(this)
+      this.adsManager.refreshSlot(this);
     }
   }
 
@@ -69,14 +68,14 @@ export default class BulbsDfp extends BulbsHTMLElement {
     let browserVisibility = document.visibilityState;
 
     if (this.isViewable) {
-      util.getAnalyticsManager().sendEvent({
-        eventCategory: 'bulbs-dfp-element Live Metrics',
-        eventAction: `30-second-refresh-triggered-${browserVisibility}`,
-        eventLabel: this.dataset.adUnit,
-      });
-
       if (browserVisibility === 'visible') {
+        util.getAnalyticsManager().sendEvent({
+          eventCategory: 'bulbs-dfp-element Live Metrics',
+          eventAction: '30-second-refresh-triggered-visible',
+          eventLabel: this.dataset.adUnit,
+        });
         this.adsManager.reloadAds(this);
+        this.adsManager.refreshSlot(this);
       }
     }
   }
