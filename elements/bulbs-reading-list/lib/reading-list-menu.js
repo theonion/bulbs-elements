@@ -16,7 +16,6 @@ export default class ReadingListMenu {
     const itemElements = element.querySelectorAll('bulbs-reading-list-item');
     this.menuItems = this.createMenuItems(itemElements);
     this.firstItem().setAsCurrent();
-    this.setMenuPosition();
     this.registerEvents();
   }
 
