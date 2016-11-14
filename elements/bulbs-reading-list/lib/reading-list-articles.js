@@ -13,7 +13,7 @@ export default class ReadingListArticles {
     this.isFetchingItem = false;
     const itemElements = this.element.querySelectorAll('bulbs-reading-list-item');
     this.articles = this.createArticleItems(itemElements);
-    this.initializeFirstArticle();
+    if (this.readingListId < 1) { this.initializeFirstArticle(); }
     this.registerEvents();
   }
 
