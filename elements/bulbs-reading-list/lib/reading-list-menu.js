@@ -1,5 +1,6 @@
 import invariant from 'invariant';
 import { map, isUndefined } from 'lodash';
+import { InViewMonitor } from 'bulbs-elements/util';
 import ReadingListMenuItem from './reading-list-menu-item';
 
 export default class ReadingListMenu {
@@ -81,6 +82,7 @@ export default class ReadingListMenu {
   }
 
   handleScrollUp () {
+    if(!this.isCurrentMenuInViewport()) { return; }
     if (this.menuIsOffScreen() && this.articlesAreBelowMenu()) {
       this.pinMenuToArticlesBottom();
     }
@@ -106,6 +108,14 @@ export default class ReadingListMenu {
     const dimensions = this.getDimensions();
     return dimensions.menu.top < 0;
   }
+
+  isCurrentMenuInViewport () {
+    return InViewMonitor.isElementInViewport(
+      this.element,
+      this.element.getBoundingClientRect()
+    );
+  }
+
 
   articlesAreBelowMenu () {
     const dimensions = this.getDimensions();
