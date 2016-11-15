@@ -113,16 +113,19 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   pinToParentTop() {
     this.classList.remove('pinned-bottom');
     this.classList.add('pinned-top');
+    this.classList.add('pinned');
   }
 
   pinToParentBottom() {
     this.classList.remove('pinned-top');
     this.classList.add('pinned-bottom');
+    this.classList.add('pinned');
   }
 
   removePinnedClass() {
     this.classList.remove('pinned-top');
     this.classList.remove('pinned-bottom');
+    this.classList.add('pinned');
   }
 
   handleOutOfView (element, pinnedClass) {
