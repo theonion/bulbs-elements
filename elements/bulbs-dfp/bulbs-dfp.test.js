@@ -8,6 +8,7 @@ describe('<div is="bulbs-dfp">', () => {
   let sandbox;
   let sendEventSpy;
   let reloadAdsSpy;
+  let refreshSlotSpy;
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
@@ -21,12 +22,14 @@ describe('<div is="bulbs-dfp">', () => {
     sandbox.stub(util.InViewMonitor, 'remove');
     sendEventSpy = sandbox.spy();
     reloadAdsSpy = sandbox.spy();
+    refreshSlotSpy = sandbox.spy();
     sandbox.stub(util, 'getAnalyticsManager', () => {
       return { sendEvent: sendEventSpy };
     });
 
     window.BULBS_ELEMENTS_ADS_MANAGER = {
       reloadAds: reloadAdsSpy,
+      refreshSlot: refreshSlotSpy,
       adUnits: {
         units: {},
       },
@@ -55,15 +58,6 @@ describe('<div is="bulbs-dfp">', () => {
       );
     });
 
-    it('sends an attached bulbs-dfp-element Metric', () => {
-      element.attachedCallback();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'attached',
-        eventLabel: adUnitName,
-      });
-    });
-
     it('attaches enterviewport listener', () => {
       element.attachedCallback();
       expect(element.addEventListener).to.have.been.calledWith('enterviewport', element.handleEnterViewport);
@@ -77,8 +71,8 @@ describe('<div is="bulbs-dfp">', () => {
     it('adds self to InViewMonitor', () => {
       element.attachedCallback();
       expect(util.InViewMonitor.add).to.have.been.calledWith(element, {
-        distanceFromTop: window.innerHeight,
-        distanceFromBottom: -window.innerHeight,
+        distanceFromTop: -window.innerHeight,
+        distanceFromBottom: window.innerHeight,
       });
     });
 
@@ -107,22 +101,6 @@ describe('<div is="bulbs-dfp">', () => {
 
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, defaultRefreshInterval);
     });
-
-    it('attaches a dfpSlotRenderEnded event', () => {
-      element.attachedCallback();
-      expect(element.addEventListener).to.have.been.calledWith('dfpSlotRenderEnded', element.handleSlotRenderEnded);
-    });
-
-    it('attaches a dfpImpressionViewabl event', () => {
-      element.attachedCallback();
-      expect(element.addEventListener).to.have.been
-        .calledWith('dfpImpressionViewable', element.handleImpressionViewable);
-    });
-
-    it('attaches a dfpSlotOnload event', () => {
-      element.attachedCallback();
-      expect(element.addEventListener).to.have.been.calledWith('dfpSlotOnload', element.handleSlotOnload);
-    });
   });
 
   describe('detachedCallback', () => {
@@ -139,71 +117,20 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleEnterViewport', () => {
-    it('sends an enterviewport bulbs-dfp-element Metric', () => {
+    it('refreshes the slot', () => {
       element.handleEnterViewport();
       element.handleEnterViewport();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'enterviewport',
-        eventLabel: adUnitName,
-      }).once;
+      expect(refreshSlotSpy).to.have.been.calledWith(element).once;
     });
   });
 
   describe('handleExitViewport', () => {
-    it('sends an exitviewport bulbs-dfp-element Metric', () => {
-      element.handleExitViewport();
-      element.handleExitViewport();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'exitviewport',
-        eventLabel: adUnitName,
-      }).once;
-    });
-  });
+    xit('will need tests after eventual strategy rolled out', () => {
 
-  describe('handleSlotRenderEnded', () => {
-    it('sends a slotrendered event', () => {
-      element.handleSlotRenderEnded();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'slotrenderended',
-        eventLabel: adUnitName,
-      }).once;
-    });
-  });
-
-  describe('handleImpressionViewable', () => {
-    it('sends an impressionviewable event', () => {
-      element.handleImpressionViewable();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'impressionviewable',
-        eventLabel: adUnitName,
-      }).once;
-    });
-  });
-
-  describe('handleSlotOnload', () => {
-    it('sends a slotonload event', () => {
-      element.handleSlotOnload();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Metrics',
-        eventAction: 'slotonload',
-        eventLabel: adUnitName,
-      }).once;
     });
   });
 
   describe('handleInterval', () => {
-    it('sends a 30-second-refresh-candidate bulbs-dfp-element Metric', () => {
-      element.handleInterval();
-      expect(sendEventSpy).to.have.been.calledWith({
-        eventCategory: 'bulbs-dfp-element Live Metrics',
-        eventAction: `30-second-refresh-candidate-${document.visibilityState}`,
-        eventLabel: adUnitName,
-      });
-    });
 
     context('isViewable', () => {
       beforeEach(() => {
@@ -222,6 +149,11 @@ describe('<div is="bulbs-dfp">', () => {
       it('reloads ads', () => {
         element.handleInterval();
         expect(reloadAdsSpy).to.have.been.calledWith(element).once;
+      });
+
+      it('refreshes the slot', () => {
+        element.handleInterval();
+        expect(refreshSlotSpy).to.have.been.calledWith(element);
       });
     });
 

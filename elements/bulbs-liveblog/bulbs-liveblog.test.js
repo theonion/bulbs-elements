@@ -449,6 +449,13 @@ describe('<bulbs-liveblog>', () => {
         subject.resetSelectedEntry();
         expect(subject.querySelectorAll('.liveblog-entry-shared').length).to.eql(0);
       });
+
+      it('removes the entry if it has an entry-delete-to-reset', () => {
+        subject.querySelector('.liveblog-entry-shared').setAttribute('entry-delete-to-reset', '');
+        expect(subject.querySelectorAll('.liveblog-entry-shared').length).to.eql(1);
+        subject.resetSelectedEntry();
+        expect(subject.querySelectorAll('.liveblog-entry-shared').length).to.eql(0);
+      });
     });
 
     describe('handleBlogUpdate', () => {
