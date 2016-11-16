@@ -1,7 +1,7 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
 import { camelCase, isNumber, includes } from 'lodash';
-import { isNumericString, getScrollOffset } from 'bulbs-elements/util';
+import { isNumericString, getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
 import '../../node_modules/waypoints/lib/noframework.waypoints';
 import './bulbs-pinned-element.scss';
 
@@ -20,43 +20,22 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
     invariant(element, `<bulbs-pinned-element pinned-to=".selector">: no element with the selector "${selector}" is in the DOM`);
 
-    const offset = this.getOffset(this.getAttribute('offset'), element);
-
-    const pinnedClass = this.hasAttribute('pinned-class') ? this.getAttribute('pinned-class') : 'pinned';
-    this.outOfViewWaypoint = this.createOutOfViewWaypoint(element, offset, pinnedClass);
     window.addEventListener('scroll', this.handleScrollEvent.bind(this));
   }
 
-  createOutOfViewWaypoint (element, offset, pinnedClass) {
-    invariant(element, 'BulbsPinnendElement.createOutOfViewWaypoint(element, offset): element is undefined');
-    invariant(offset, 'BulbsPinnendElement.createOutOfViewWaypoint(element, offset): offset is undefined');
-
-    return new Waypoint({
-      element,
-      offset,
-      handler: this.handleOutOfView(element, pinnedClass).bind(this),
-    });
-  }
-
-  getOffset (offset, element) {
-    if (isNumber(offset) || isNumericString(offset)) {
-      return parseInt(offset, 10);
-    }
-
-    const method = camelCase(offset);
-
-    if (includes(OFFSET_METHODS, method)) {
-      return this[method](element);
-    }
-
-    return 0;
-  }
-
   handleScrollEvent () {
+    let elementPinnedTo;
+    if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
+
     const offset = getScrollOffset();
-    const elementPinnedTo = this.parentElement.querySelector(
-      this.getAttribute('pinned-to')
-    );
+    const pinnedTo = this.getAttribute('pinned-to');
+
+    if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
+      elementPinnedTo = this.parentElement;
+    } else {
+      elementPinnedTo = this.parentElement.querySelector(pinnedTo);
+    }
+
     if (offset.y > this.lastPosition) {
       this.handleScrollDown(elementPinnedTo);
     } else {
@@ -65,64 +44,60 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.lastPosition = offset.y;
   }
 
-  elementOutOfViewTop (element) {
-    return element.getBoundingClientRect().height * -1;
-  }
-
-  elementOutOfViewBottom (element) {
-    element.getBoundingClientRect().height;
-  }
-
   handleScrollDown (elementPinnedTo) {
     if (this.pinnedParentTopInViewport(elementPinnedTo)) {
-      // pin this to top of parent
       this.pinToParentTop();
     } else if (this.pinnedElementAtParentBottom(elementPinnedTo)) {
-      // is pinned element at the bottom of the parent
       this.pinToParentBottom();
     } else {
-      // pin that shit to the top of screen
-      this.removePinnedClass();
+      this.addPinnedClass();
     }
   }
 
   handleScrollUp (elementPinnedTo) {
-    // is this  element at the top of elementPinnedTo?
-    // y? pin to parent top
-    // n? is it at the bottom of element?
-    // y? do nothing
-    // is it in between? fix to top
+    if (this.pinnedElementAtParentTop(elementPinnedTo)){
+      this.pinToParentTop();
+    } else if (this.pinnedElementBelowTopOfViewport(elementPinnedTo)) {
+      this.addPinnedClass();
+    }
   }
 
   pinnedParentTopInViewport (el) {
-    if(!el) { return; } // delete me
     let elementTop = $(el).offset().top;
     let windowTop = window.pageYOffset;
     let windowBottom = windowTop + window.innerHeight;
-    console.log(elementTop > windowTop && elementTop < windowBottom);
     return elementTop > windowTop && elementTop < windowBottom;
   }
 
   pinnedElementAtParentBottom (el) {
-    if(!el) { return; } // delete me
     let elBottom = el.getBoundingClientRect().bottom;
     let pinnedBottom = this.getBoundingClientRect().bottom;
     return pinnedBottom >= elBottom;
   }
 
+  pinnedElementAtParentTop (el) {
+    let elTop = el.getBoundingClientRect().top;
+    let pinnedTop = this.getBoundingClientRect().top;
+    return pinnedTop <= elTop;
+  }
+
+  pinnedElementBelowTopOfViewport (el) {
+    return el.getBoundingClientRect().top < 0;
+  }
+
   pinToParentTop() {
     this.classList.remove('pinned-bottom');
+    this.classList.remove('pinned');
     this.classList.add('pinned-top');
-    this.classList.add('pinned');
   }
 
   pinToParentBottom() {
     this.classList.remove('pinned-top');
+    this.classList.remove('pinned');
     this.classList.add('pinned-bottom');
-    this.classList.add('pinned');
   }
 
-  removePinnedClass() {
+  addPinnedClass() {
     this.classList.remove('pinned-top');
     this.classList.remove('pinned-bottom');
     this.classList.add('pinned');
