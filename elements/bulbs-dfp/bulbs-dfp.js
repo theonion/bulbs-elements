@@ -52,7 +52,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   handleEnterViewport () {
     if(!this.trackedEnterViewport) {
       this.trackedEnterViewport = true;
-      this.adsManager.refreshSlot(this);
+      this.adsManager.asyncRefreshSlot(this);
     }
   }
 

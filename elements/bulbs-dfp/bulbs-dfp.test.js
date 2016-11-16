@@ -9,6 +9,7 @@ describe('<div is="bulbs-dfp">', () => {
   let sendEventSpy;
   let reloadAdsSpy;
   let refreshSlotSpy;
+  let asyncRefreshSlotSpy;
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
@@ -23,6 +24,7 @@ describe('<div is="bulbs-dfp">', () => {
     sendEventSpy = sandbox.spy();
     reloadAdsSpy = sandbox.spy();
     refreshSlotSpy = sandbox.spy();
+    asyncRefreshSlotSpy = sandbox.spy();
     sandbox.stub(util, 'getAnalyticsManager', () => {
       return { sendEvent: sendEventSpy };
     });
@@ -30,6 +32,7 @@ describe('<div is="bulbs-dfp">', () => {
     window.BULBS_ELEMENTS_ADS_MANAGER = {
       reloadAds: reloadAdsSpy,
       refreshSlot: refreshSlotSpy,
+      asyncRefreshSlot: asyncRefreshSlotSpy,
       adUnits: {
         units: {},
       },
@@ -120,7 +123,7 @@ describe('<div is="bulbs-dfp">', () => {
     it('refreshes the slot', () => {
       element.handleEnterViewport();
       element.handleEnterViewport();
-      expect(refreshSlotSpy).to.have.been.calledWith(element).once;
+      expect(asyncRefreshSlotSpy).to.have.been.calledWith(element).once;
     });
   });
 
