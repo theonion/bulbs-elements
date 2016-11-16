@@ -1,4 +1,5 @@
 // Expose jwplayer on the global context
+//
 // The jwplayer.js file calls window.jwplayer = /* HOT JWPLAYER JS */;
 require('../plugins/jwplayer');
 
@@ -288,6 +289,7 @@ export default class Revealed extends React.Component {
     return (
       <div
         className='bulbs-video-viewport'
+        ref="videoViewport"
         onClick={event => this.handleClick(event)}
         onTouchTap={event => this.handleClick(event)}
       >

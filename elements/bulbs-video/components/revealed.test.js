@@ -93,6 +93,12 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(videoContainer).to.have.length(1);
       expect(videoContainer).to.have.className('bulbs-video-video video-container');
     });
+
+    it('specifies refs', () => {
+      subject = (new Revealed(props)).render();
+      expect(subject.ref).to.eql('videoViewport');
+      expect(subject.props.children.ref).to.eql('videoContainer');
+    });
   });
 
   describe('componentDidMount globalsCheck', () => {

@@ -8,7 +8,7 @@ import BulbsPollRoot from './components/root';
 
 import './bulbs-poll.scss';
 
-class BulbsPoll extends BulbsElement {
+export default class BulbsPoll extends BulbsElement {
   initialDispatch () {
     this.store.actions.setSrc(this.props.src);
     this.store.actions.fetchPollData(this.props.src);

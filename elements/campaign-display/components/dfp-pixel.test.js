@@ -117,7 +117,7 @@ describe('<campaign-display> <DfpPixel>', () => {
 
     it('should require campaign id', () => {
       renderSubject({ campaignId: undefined }); // eslint-disable-line no-undefined
-      let errorMessagePattern = /Required prop `campaignId` was not specified/;
+      let errorMessagePattern = /prop `campaignId` is marked as required/;
       expect(console.error).to.have.been.calledWithMatch(errorMessagePattern);
     });
   });
