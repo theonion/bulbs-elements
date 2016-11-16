@@ -5,6 +5,7 @@ import {
   filterBadResponse,
   getResponseText,
   getWindowDimensions,
+  getAnalyticsManager,
 } from 'bulbs-elements/util';
 
 export default class ReadingListArticle {
@@ -120,6 +121,10 @@ export default class ReadingListArticle {
   pushStateIfStartedReading (oldProgress, newProgress) {
     if (this.startedReading(oldProgress, newProgress)) {
       this.pushToHistory();
+      getAnalyticsManager().trackPageView(
+        this.href,
+        this.title
+      );
     }
   }
 
@@ -128,7 +133,7 @@ export default class ReadingListArticle {
   }
 
   pushToHistory () {
-    window.history.pushState(null, this.title, this.href);
+    window.history.replaceState(null, this.title, this.href);
   }
 
   isNearlyInView () {
