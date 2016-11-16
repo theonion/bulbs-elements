@@ -33,16 +33,16 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
         if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
 
         let elementPinnedTo = this.getElementPinnedTo();
-
-        const boudingRects = this.getBoundingRects(elementPinnedTo);
+        const boundingRects = this.getBoundingRects(elementPinnedTo);
 
         if(this.isScrollingDown()) {
           this.handleScrollDown(elementPinnedTo, boundingRects);
         } else {
           this.handleScrollUp(boundingRects);
         }
-      }
+      });
     }
+  }
 
   getElementPinnedTo () {
     const pinnedTo = this.getAttribute('pinned-to');
