@@ -14,9 +14,11 @@ const OFFSET_METHODS = [
 export default class BulbsPinnedElement extends BulbsHTMLElement {
   attachedCallback () {
     invariant(this.hasAttribute('pinned-to'), '<bulbs-pinned-element pinned-to=".selector">: a pinned-to selector is required');
+
     const selector = this.getAttribute('pinned-to');
     const element = document.querySelector(selector);
     this.lastPosition = 0;
+    this.animationRequest = null;
 
     invariant(element, `<bulbs-pinned-element pinned-to=".selector">: no element with the selector "${selector}" is in the DOM`);
 
@@ -24,40 +26,62 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   handleScrollEvent () {
-    let elementPinnedTo;
-    if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
+    if(!this.animationRequest) {
+      this.animationRequest = requestAnimationFrame(() => {
+        this.animationRequest = null;
 
-    const offset = getScrollOffset();
-    const pinnedTo = this.getAttribute('pinned-to');
+        if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
 
-    if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
-      elementPinnedTo = this.parentElement;
-    } else {
-      elementPinnedTo = this.parentElement.querySelector(pinnedTo);
+        let elementPinnedTo = this.getElementPinnedTo();
+
+        const boudingRects = this.getBoundingRects(elementPinnedTo);
+
+        if(this.isScrollingDown()) {
+          this.handleScrollDown(elementPinnedTo, boundingRects);
+        } else {
+          this.handleScrollUp(boundingRects);
+        }
+      }
     }
 
-    if (offset.y > this.lastPosition) {
-      this.handleScrollDown(elementPinnedTo);
+  getElementPinnedTo () {
+    const pinnedTo = this.getAttribute('pinned-to');
+    if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
+      return this.parentElement;
     } else {
-      this.handleScrollUp(elementPinnedTo);
+      return this.parentElement.querySelector(pinnedTo);
+    }
+  }
+
+  isScrollingDown () {
+    const offset = getScrollOffset();
+    if (offset.y > this.lastPosition) {
+      return true;
     }
     this.lastPosition = offset.y;
   }
 
-  handleScrollDown (elementPinnedTo) {
+  getBoundingRects(elementPinnedTo) {
+    return {
+      'pinnedElement': this.getBoundingClientRect(),
+      'elementPinnedTo': elementPinnedTo.getBoundingClientRect(),
+    }
+  }
+
+  handleScrollDown (elementPinnedTo, boundingRects) {
     if (this.pinnedParentTopInViewport(elementPinnedTo)) {
       this.pinToParentTop();
-    } else if (this.pinnedElementAtParentBottom(elementPinnedTo)) {
+    } else if (this.pinnedElementAtParentBottom(boundingRects)) {
       this.pinToParentBottom();
     } else {
       this.addPinnedClass();
     }
   }
 
-  handleScrollUp (elementPinnedTo) {
-    if (this.pinnedElementAtParentTop(elementPinnedTo)){
+  handleScrollUp (boundingRects) {
+    if (this.pinnedElementAtParentTop(boundingRects)){
       this.pinToParentTop();
-    } else if (this.pinnedElementBelowTopOfViewport(elementPinnedTo)) {
+    } else if (this.pinnedElementBelowTopOfViewport(boundingRects)) {
       this.addPinnedClass();
     }
   }
@@ -69,20 +93,16 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return elementTop > windowTop && elementTop < windowBottom;
   }
 
-  pinnedElementAtParentBottom (el) {
-    let elBottom = el.getBoundingClientRect().bottom;
-    let pinnedBottom = this.getBoundingClientRect().bottom;
-    return pinnedBottom >= elBottom;
+  pinnedElementAtParentBottom (boundingRects) {
+    return boundingRects.pinnedElement.bottom >= boundingRects.elementPinnedTo.bottom;
   }
 
-  pinnedElementAtParentTop (el) {
-    let elTop = el.getBoundingClientRect().top;
-    let pinnedTop = this.getBoundingClientRect().top;
-    return pinnedTop <= elTop;
+  pinnedElementAtParentTop (boundingRects) {
+    return boundingRects.pinnedElement.bottom <= boundingRects.elementPinnedTo.bottom;
   }
 
-  pinnedElementBelowTopOfViewport (el) {
-    return el.getBoundingClientRect().top < 0;
+  pinnedElementBelowTopOfViewport (boundingRects) {
+    return boundingRects.elementPinnedTo.top < 0;
   }
 
   pinToParentTop() {
@@ -101,17 +121,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.classList.remove('pinned-top');
     this.classList.remove('pinned-bottom');
     this.classList.add('pinned');
-  }
-
-  handleOutOfView (element, pinnedClass) {
-    return (direction) => {
-      if (direction === 'down') {
-        this.classList.add(pinnedClass);
-      }
-      else {
-        this.classList.remove(pinnedClass);
-      }
-    };
   }
 }
 
