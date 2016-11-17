@@ -129,7 +129,7 @@ export default class ReadingListArticle {
   }
 
   startedReading (oldProgress, newProgress) {
-    return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100)
+    return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100);
   }
 
   pushToHistory () {

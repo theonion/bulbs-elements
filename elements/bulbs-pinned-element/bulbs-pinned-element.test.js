@@ -1,5 +1,3 @@
-import { BulbsPinnedElement } from './bulbs-pinned-element';
-
 describe('<bulbs-pinned-element>', () => {
   let element;
   let parentElement;
@@ -42,8 +40,8 @@ describe('<bulbs-pinned-element>', () => {
       offset = sinon.stub($.fn, 'offset')
         .returns({ 'top': window.pageYOffset - 10 });
       boundingRects = {
-        'pinnedElement': {'bottom': 10},
-        'elementPinnedTo': {'bottom': 0 }
+        'pinnedElement': { 'bottom': 10 },
+        'elementPinnedTo': { 'bottom': 0 },
       };
       subject.handleScrollDown(parentElement, boundingRects);
       expect(element.className).to.eql('pinned-bottom');
@@ -53,8 +51,8 @@ describe('<bulbs-pinned-element>', () => {
       offset = sinon.stub($.fn, 'offset')
         .returns({ 'top': window.pageYOffset - 10 });
       boundingRects = {
-        'pinnedElement': {'bottom': 0},
-        'elementPinnedTo': {'bottom': 10 }
+        'pinnedElement': { 'bottom': 0 },
+        'elementPinnedTo': { 'bottom': 10 },
       };
       subject.handleScrollDown(parentElement, boundingRects);
       expect(element.className).to.eql('pinned');
@@ -63,9 +61,9 @@ describe('<bulbs-pinned-element>', () => {
 
   context('#handleScrollUp', () => {
     let boundingRects = {
-        'pinnedElement': {'top': -10},
-        'elementPinnedTo': {'top': 0 }
-      };
+      'pinnedElement': { 'top': -10 },
+      'elementPinnedTo': { 'top': 0 },
+    };
 
     it('adds pinned-top class when element reaches parent top', () => {
       subject.handleScrollUp(boundingRects);
