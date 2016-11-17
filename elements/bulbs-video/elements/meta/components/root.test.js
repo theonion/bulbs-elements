@@ -29,6 +29,42 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
     });
   });
 
+  context('with relativeSeriesLinkPrefix', () => {
+    let _video;
+    beforeEach(() => {
+      props.relativeSeriesLinkPrefix = '/prefix';
+    });
+
+    context('video has series slug', () => {
+      beforeEach(() => {
+        _video = Object.assign({}, video);
+        _video.series_slug = 'cool-series';
+        subject = shallow(<VideoMetaRoot {...props} video={_video}/>);
+      });
+
+      it('constructs prefixed url', () => {
+        expect(subject.find('a').first()).to.have.attr(
+          'href', '/prefix/cool-series'
+        );
+      });
+    });
+
+    context('video has no series slug', () => {
+      beforeEach(() => {
+        _video = Object.assign({}, video);
+        _video.series_slug = null;
+        _video.series_url = '//example.org/video.json';
+        subject = shallow(<VideoMetaRoot {...props} video={_video}/>);
+      });
+
+      it('does not construct prefixed url', () => {
+        expect(subject.find('a').first()).to.have.attr(
+          'href', '//example.org/video.json'
+        );
+      });
+    });
+  });
+
   context('with a video', () => {
     beforeEach(() => {
       subject = shallow(<VideoMetaRoot {...props} video={video}/>);
