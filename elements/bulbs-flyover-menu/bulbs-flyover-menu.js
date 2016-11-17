@@ -30,10 +30,6 @@ class FlyoverMenu extends BulbsHTMLElement {
     this.flyoverState.menu = this;
   }
 
-  attachedCallback () {
-    this.addEventListener('click', this.closeFlyover.bind(this));
-  }
-
   openFlyover () {
     this.classList.add('bulbs-flyover-open');
     document.body.classList.add('noscroll-flyout-active');
