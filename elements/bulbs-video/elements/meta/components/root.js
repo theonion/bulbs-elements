@@ -8,16 +8,30 @@ export default function VideoMetaRoot (props) {
   }
 
   let seriesElement;
-  let seriesNameElement = <h2 className='bulbs-video-meta-series-name'>
-                    {props.video.series_name || props.video.channel_name}
-                  </h2>;
+  let seriesNameElement = (
+    <h2 className='bulbs-video-meta-series-name'>
+      {props.video.series_name || props.video.channel_name}
+    </h2>
+  );
+
+  let linkUrl;
+  if (props.relativeSeriesLinkPrefix && props.video.series_slug) {
+    linkUrl = `${props.relativeSeriesLinkPrefix}/${props.video.series_slug}`;
+  }
+  else {
+    linkUrl = props.video.series_url || props.video.channel_url;
+  }
 
   if (!props.disableLink) {
-    seriesElement = <a
-            href={props.video.series_url || props.video.channel_url}
-            data-track-action={props.titleTrackAction}
-            data-track-label={props.video.series_name || props.video.channel_name}
-          > {seriesNameElement} </a>;
+    seriesElement = (
+      <a
+        href={linkUrl}
+        data-track-action={props.titleTrackAction}
+        data-track-label={props.video.series_name || props.video.channel_name}
+      >
+       { seriesNameElement }
+      </a>
+    );
   }
   else {
     seriesElement = seriesNameElement;
@@ -52,6 +66,7 @@ VideoMetaRoot.propTypes = {
   campaignUrl: PropTypes.string,
   disableLink: PropTypes.bool,
   mobileTitle: PropTypes.string,
+  relativeSeriesLinkPrefix: PropTypes.string,
   titleTrackAction: PropTypes.string,
   video: PropTypes.object,
 };
