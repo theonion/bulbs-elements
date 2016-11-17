@@ -55,10 +55,12 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   isScrollingDown () {
     const offset = getScrollOffset();
+    let scrollDown = false;
     if (offset.y > this.lastPosition) {
-      return true;
+      scrollDown = true;
     }
-    this.lastPosition = offset.y;
+      this.lastPosition = offset.y;
+      return scrollDown;
   }
 
   getBoundingRects(elementPinnedTo) {
@@ -98,7 +100,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   pinnedElementAtParentTop (boundingRects) {
-    return boundingRects.pinnedElement.bottom <= boundingRects.elementPinnedTo.bottom;
+    return boundingRects.pinnedElement.top <= boundingRects.elementPinnedTo.top;
   }
 
   pinnedElementBelowTopOfViewport (boundingRects) {
