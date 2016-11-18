@@ -1,3 +1,5 @@
+import './bulbs-header-example.scss';
+
 let examples = {
   element: 'bulbs-header',
   examples: {
