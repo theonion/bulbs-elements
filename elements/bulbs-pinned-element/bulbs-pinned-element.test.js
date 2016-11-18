@@ -1,3 +1,5 @@
+import { BulbsPinnedElement } from './bulbs-pinned-element';  // eslint-disable-line no-unused-vars
+
 describe('<bulbs-pinned-element>', () => {
   let element;
   let parentElement;
