@@ -24,23 +24,17 @@ describe('<bulbs-header>', () => {
   });
 
   describe('delegateExitViewport', () => {
-    it('adds responsive-nav-active class to responsive-nav', (done) => {
+    it('adds responsive-nav-active class to responsive-nav', () => {
       header.delegateExitViewport({target: header.masthead});
-      setImmediate(() => {
-        expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.true;
-        done();
-      });
+      expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.true;
     });
   });
 
   describe('delegateEnterViewport', () => {
-    it('removes responsive-nav-active class from responsive-nav', (done) => {
+    it('removes responsive-nav-active class from responsive-nav', () => {
       responsiveNav.classList.add('responsive-nav-active');
       header.delegateEnterViewport({target: header.masthead});
-      setImmediate(() => {
-        expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.false;
-        done();
-      });
+      expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.false;
     });
   });
 

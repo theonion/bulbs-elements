@@ -6,12 +6,11 @@ import './bulbs-header.scss';
 import { InViewMonitor } from 'bulbs-elements/util';
 
 class BulbsHeader extends BulbsHTMLElement {
-  createdCallback () {
-    this.mastheads = this.getElementsByTagName('bulbs-header-masthead');
-    this.responsiveNavs = this.getElementsByTagName('bulbs-header-responsive-nav');
-  }
 
   attachedCallback () {
+
+    this.masthead = this.querySelector('bulbs-header-masthead');
+    this.responsiveNav = this.querySelector('bulbs-header-responsive-nav');
 
     if (this.masthead) {
 
@@ -51,13 +50,6 @@ class BulbsHeader extends BulbsHTMLElement {
     }
   }
 
-  get masthead () {
-    return this.mastheads[0];
-  }
-
-  get responsiveNav () {
-    return this.responsiveNavs[0];
-  }
 }
 
 registerElement('bulbs-header', BulbsHeader);
