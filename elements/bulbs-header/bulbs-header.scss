@@ -3,28 +3,18 @@
 bulbs-header {
   box-sizing: border-box;
   display: flex;
-  font-family: Helvetical Neue, Helvetica, sans-serif;
-  font-weight: 100;
   position: relative;
   width: 100%;
 }
 
 bulbs-header-masthead {
-  align-items: center;
   display: flex;
-  border: 1px solid black;
-  justify-content: center;
-  height: 100px;
   position: relative;
   width: 100%;
 }
 
 bulbs-header-responsive-nav {
-  align-items: center;
-  background: white;
-  border-bottom: 1px solid black;
   display: flex;
-  height: 50px;
   left: 0;
   position: fixed;
   top: 0;

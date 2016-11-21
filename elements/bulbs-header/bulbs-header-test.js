@@ -8,7 +8,7 @@ describe('<bulbs-header>', () => {
   beforeEach((done) => {
     header = document.createElement('bulbs-header');
     header.innerHTML = `
-      <bulbs-header-mastead></bulbs-header-mastead>
+      <bulbs-header-masthead></bulbs-header-masthead>
       <bulbs-header-responsive-nav></bulbs-header-responsive-nav>
     `;
 
