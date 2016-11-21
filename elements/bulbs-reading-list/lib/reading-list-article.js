@@ -6,6 +6,7 @@ import {
   getResponseText,
   getWindowDimensions,
   getAnalyticsManager,
+  prepGaEventTracker,
 } from 'bulbs-elements/util';
 
 export default class ReadingListArticle {
@@ -13,6 +14,9 @@ export default class ReadingListArticle {
     invariant(element, 'new ReadingListArticle(element, dispatcher, index): element is undefined');
     invariant(dispatcher, 'new ReadingListArticle(element, dispatcher, index): dispatcher is undefined');
     invariant(!isUndefined(index), 'new ReadingListArticle(element, dispatcher, index): index is undefined');
+    invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
+    invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
+    element.requireAttribute('data-content-analytics');
 
     this.element = element;
     this.dispatcher = dispatcher;
@@ -27,12 +31,41 @@ export default class ReadingListArticle {
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
+    this.dimensions = this.getGaDimensions();
+    this.gaTrackerWrapper= this.prepGaTracker();
     this.registerEvents();
   }
 
   registerEvents () {
     this.dispatcher.on('scroll-down', this.handleScrollDown.bind(this));
     this.dispatcher.on('scroll', this.handleScroll.bind(this));
+  }
+
+  getGaDimensions () {
+    let targeting = JSON.parse(
+      this.element.getAttribute('data-content-analytics')
+    );
+    return {
+      'dimension1': targeting.dfp_pagetype || 'None',
+      'dimension2': targeting.dfp_feature || 'None',
+      'dimension3': targeting.dfp_specialcoverage || 'None',
+      'dimension4': targeting.dfp_campaign_id || 'None',
+      'dimension5': targeting.platform || 'None',
+      'dimension6': targeting.dfp_section || 'None',
+      'dimension7': targeting.dfp_contentid || 'None',
+      'dimension8': targeting.dfp_publishdate || 'None',
+      'dimension9': targeting.dfp_evergreen || 'None',
+      'dimension10': targeting.dfp_title || 'None',
+      'dimension11': targeting.dfp_instant_article || 'None',
+    };
+  }
+
+  prepGaTracker () {
+    return prepGaEventTracker(
+      'clickholeArticle',
+      window.GA_ID,
+      this.dimensions,
+    );
   }
 
   scrollIntoView () {
@@ -125,13 +158,14 @@ export default class ReadingListArticle {
       this.pushToHistory();
       getAnalyticsManager().trackPageView(
         this.href,
-        this.title
+        this.title,
+        this.gaTrackerWrapper,
       );
     }
   }
 
   startedReading (oldProgress, newProgress) {
-    return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100)
+    return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100);
   }
 
   pushToHistory () {

@@ -116,7 +116,6 @@ export default class ReadingListMenu {
     );
   }
 
-
   articlesAreBelowMenu () {
     const dimensions = this.getDimensions();
     return dimensions.articles.bottom > dimensions.menu.bottom;

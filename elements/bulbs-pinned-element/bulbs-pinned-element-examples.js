@@ -2,7 +2,7 @@ let examples = {
   element: 'bulbs-pinned-element',
   examples: {
     'Basic Example': {
-      render: function () {
+      render: () => {
         return `
           <bulbs-pinned-element
             attribute="value"

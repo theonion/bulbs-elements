@@ -17,6 +17,7 @@ describe('ReadingListArticles', () => {
   let partialUrl;
   let title;
   let id;
+  let contentAnalytics;
 
   beforeEach(() => {
     readingListId = 1;
@@ -26,6 +27,7 @@ describe('ReadingListArticles', () => {
     title = 'Example Title';
     fixtures = appendFixtureContainer();
     dispatcher = new EventEmitter();
+    contentAnalytics = JSON.stringify({ 'dimension1': 'frogs' });
     articlesElement = createElement('bulbs-reading-list-articles', {
       'reading-list-id': readingListId,
     });
@@ -35,6 +37,7 @@ describe('ReadingListArticles', () => {
         href,
         partialUrl,
         title,
+        contentAnalytics,
       },
     });
     articlesElement.appendChild(itemElement);

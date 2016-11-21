@@ -1,15 +1,8 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
-import { camelCase, isNumber, includes } from 'lodash';
-import { isNumericString, getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
+import { getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
 import '../../node_modules/waypoints/lib/noframework.waypoints';
 import './bulbs-pinned-element.scss';
-
-const Waypoint = window.Waypoint;
-const OFFSET_METHODS = [
-  'elementOutOfViewTop',
-  'elementOutOfViewBottom',
-];
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {
   attachedCallback () {
@@ -37,7 +30,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
         if(this.isScrollingDown()) {
           this.handleScrollDown(elementPinnedTo, boundingRects);
-        } else {
+        }
+        else {
           this.handleScrollUp(boundingRects);
         }
       });
@@ -46,11 +40,14 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   getElementPinnedTo () {
     const pinnedTo = this.getAttribute('pinned-to');
+    let elementPinnedTo;
     if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
-      return this.parentElement;
-    } else {
-      return this.parentElement.querySelector(pinnedTo);
+      elementPinnedTo = this.parentElement;
     }
+    else {
+      elementPinnedTo = this.parentElement.querySelector(pinnedTo);
+    }
+    return elementPinnedTo;
   }
 
   isScrollingDown () {
@@ -59,31 +56,34 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     if (offset.y > this.lastPosition) {
       scrollDown = true;
     }
-      this.lastPosition = offset.y;
-      return scrollDown;
+    this.lastPosition = offset.y;
+    return scrollDown;
   }
 
-  getBoundingRects(elementPinnedTo) {
+  getBoundingRects (elementPinnedTo) {
     return {
       'pinnedElement': this.getBoundingClientRect(),
       'elementPinnedTo': elementPinnedTo.getBoundingClientRect(),
-    }
+    };
   }
 
   handleScrollDown (elementPinnedTo, boundingRects) {
     if (this.pinnedParentTopInViewport(elementPinnedTo)) {
       this.pinToParentTop();
-    } else if (this.pinnedElementAtParentBottom(boundingRects)) {
+    }
+    else if (this.pinnedElementAtParentBottom(boundingRects)) {
       this.pinToParentBottom();
-    } else {
+    }
+    else {
       this.addPinnedClass();
     }
   }
 
   handleScrollUp (boundingRects) {
-    if (this.pinnedElementAtParentTop(boundingRects)){
+    if (this.pinnedElementAtParentTop(boundingRects)) {
       this.pinToParentTop();
-    } else if (this.pinnedElementBelowTopOfViewport(boundingRects)) {
+    }
+    else if (this.pinnedElementBelowTopOfViewport(boundingRects)) {
       this.addPinnedClass();
     }
   }
@@ -107,19 +107,19 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return boundingRects.elementPinnedTo.top < 0;
   }
 
-  pinToParentTop() {
+  pinToParentTop () {
     this.classList.remove('pinned-bottom');
     this.classList.remove('pinned');
     this.classList.add('pinned-top');
   }
 
-  pinToParentBottom() {
+  pinToParentBottom () {
     this.classList.remove('pinned-top');
     this.classList.remove('pinned');
     this.classList.add('pinned-bottom');
   }
 
-  addPinnedClass() {
+  addPinnedClass () {
     this.classList.remove('pinned-top');
     this.classList.remove('pinned-bottom');
     this.classList.add('pinned');
