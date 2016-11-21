@@ -2,7 +2,6 @@ import './bulbs-header';
 
 describe('<bulbs-header>', () => {
   let header;
-  let masthead;
   let responsiveNav;
 
   beforeEach((done) => {
@@ -12,7 +11,6 @@ describe('<bulbs-header>', () => {
       <bulbs-header-responsive-nav></bulbs-header-responsive-nav>
     `;
 
-    masthead = header.querySelector('bulbs-header-masthead');
     responsiveNav = header.querySelector('bulbs-header-responsive-nav');
 
     document.body.appendChild(header);
@@ -25,7 +23,7 @@ describe('<bulbs-header>', () => {
 
   describe('delegateExitViewport', () => {
     it('adds responsive-nav-active class to responsive-nav', () => {
-      header.delegateExitViewport({target: header.masthead});
+      header.delegateExitViewport({ target: header.masthead });
       expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.true;
     });
   });
@@ -33,7 +31,7 @@ describe('<bulbs-header>', () => {
   describe('delegateEnterViewport', () => {
     it('removes responsive-nav-active class from responsive-nav', () => {
       responsiveNav.classList.add('responsive-nav-active');
-      header.delegateEnterViewport({target: header.masthead});
+      header.delegateEnterViewport({ target: header.masthead });
       expect(responsiveNav.classList.contains('responsive-nav-active')).to.be.false;
     });
   });
