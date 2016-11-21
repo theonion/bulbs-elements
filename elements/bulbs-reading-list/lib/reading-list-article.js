@@ -25,7 +25,7 @@ export default class ReadingListArticle {
     this.loadDistanceThreshold = 400;
     this.readDistanceOffset = 250;
     this.isLoaded = false;
-    this.loadingTemplate = '<p class="reading-list-article-loading">Loading...</p>';
+    this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.registerEvents();
   }
@@ -72,12 +72,14 @@ export default class ReadingListArticle {
 
   fillContent (content) {
     this.element.innerHTML = content;
+    this.element.dataset.loadStatus = "loading"
   }
 
   handleLoadContentComplete (content) {
     this.fillContent(content);
     this.isLoaded = true;
     this.fetchPending = false;
+    this.element.dataset.loadStatus = "loaded"
   }
 
   handleLoadContentError (response) {
