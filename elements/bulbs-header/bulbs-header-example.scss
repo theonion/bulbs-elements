@@ -1,0 +1,29 @@
+// Extend styles for example
+
+.examples-index-pane {
+  overflow-y: scroll!important;
+}
+
+.example {
+  height: 3000px!important;
+}
+
+bulbs-header {
+  font-family: Helvetical Neue, Helvetica, sans-serif;
+  font-weight: 100;
+}
+
+bulbs-header-masthead {
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  height: 100px;
+}
+
+bulbs-header-responsive-nav {
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid black;
+  height: 50px;
+}
