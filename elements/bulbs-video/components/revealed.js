@@ -225,6 +225,7 @@ export default class Revealed extends React.Component {
         name: 'onion',
       },
       sources: this.extractSources(videoMeta.sources),
+      title: videoMeta.title,
       image: videoMeta.player_options.poster,
       flashplayer: '//ssl.p.jwpcdn.com/player/v/7.7.3/jwplayer.flash.swf',
       aspectratio: '16:9',

@@ -760,6 +760,11 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(setupOptions.sources).to.eql(sources);
         });
 
+        it('includes the video title', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.title).to.equal('video_title');
+        });
+
         it('sets up the advertising VAST tag', () => {
           let setupOptions = playerSetup.args[0][0];
           expect(setupOptions.advertising.client).to.equal('vast');
