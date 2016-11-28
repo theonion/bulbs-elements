@@ -114,8 +114,34 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     this.state.currentItem.setAttribute('now-playing', '');
     this.state.currentItem.querySelector('bulbs-video-summary').setAttribute('now-playing', '');
 
+    // swaps out the current video
+    let activeVideo = this.querySelector('.video-carousel-player bulbs-video');
+    let activeVideoSummary = this.querySelector(`bulbs-video-summary[src='${activeVideo.getAttribute('src')}']`);
+    activeVideoSummary.append(activeVideo);
+    activeVideo.pause();
+
+    let nextVideo = this.querySelector(`bulbs-video[src='${this.state.videoUrl}']`);
+    this.querySelector('.video-carousel-player').append(nextVideo);
+    nextVideo.play();
+    // previously we were updating the src attribute of a single <bulbs-video>
+    // this didn't work on mobile because playing a <video> on ios must be directly
+    // executed by a user input event. Any indirection via setTimeout and similar
+    // async methods breaks out of being 'user intended'
+    //
+    // video = document.querySelector('video');
+    //
+    // This works >>>
+    // addEventListener('click', event => video.play());
+    //
+    // This would not work >>>
+    // video.addEventListener('click', (event) => {
+    //   setTimeout(() => {
+    //     video.play();
+    //   }, 100);
+    // });
+
     forEach.call(
-      this.querySelectorAll('bulbs-video-meta, bulbs-video'),
+      this.querySelectorAll('bulbs-video-meta'),
       (element) => element.setAttribute('src', this.state.videoUrl)
     );
 

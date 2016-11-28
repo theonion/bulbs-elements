@@ -3,6 +3,12 @@ bulbs-video-summary {
   position: relative;
 }
 
+bulbs-video-summary bulbs-video {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .bulbs-video-poster {
   position: relative;
 

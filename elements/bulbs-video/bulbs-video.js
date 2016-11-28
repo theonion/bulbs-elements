@@ -35,6 +35,9 @@ export default class BulbsVideo extends BulbsElement {
     }
   }
 
+  play () {
+    console.log('figure out how to play video');
+  }
 /*
   Here is a naive implementation of a cached store.
   This is planned to be implemented with the rail palyer MVP
@@ -62,7 +65,6 @@ export default class BulbsVideo extends BulbsElement {
   }
 */
   render () {
-
     return (
       <BulbsVideoRoot
         {...this.props}
@@ -111,7 +113,30 @@ Object.assign(BulbsVideo, {
   },
 });
 
-registerReactElement('bulbs-video', loadOnDemand(BulbsVideo));
+const LazyBulbsVideo = loadOnDemand(BulbsVideo);
+LazyBulbsVideo.extendDOM = {
+  play () {
+    try {
+      this.querySelector('.bulbs-video-viewport').dispatchEvent(
+        new CustomEvent('play-requested')
+      );
+    }
+    catch (error) {
+    }
+  },
+
+  pause () {
+    try {
+      this.querySelector('.bulbs-video-viewport').dispatchEvent(
+        new CustomEvent('pause-requested')
+      );
+    }
+    catch (error) {
+    }
+  },
+};
+
+registerReactElement('bulbs-video', LazyBulbsVideo);
 
 import './elements/meta';
 import './elements/summary';

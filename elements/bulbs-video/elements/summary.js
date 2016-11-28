@@ -23,6 +23,7 @@ export function VideoSummaryView (props) {
       </div>
     );
   }
+  console.log('VideoSummaryView');
 
   return (
     <div className='bulbs-video-summary'>
@@ -38,6 +39,10 @@ export function VideoSummaryView (props) {
       <bulbs-ellipsize class='bulbs-video-summary-title' line-count='3'>
         {video.title}
       </bulbs-ellipsize>
+      <bulbs-video
+        src={props.videoSrc}
+        no-cover
+      />
     </div>
   );
 }
@@ -47,6 +52,7 @@ VideoSummaryView.displayName = 'VideoSummaryView';
 VideoSummaryView.propTypes = {
   nowPlaying: PropTypes.bool.isRequired,
   video: PropTypes.object,
+  videoSrc: PropTypes.string,
 };
 
 export default class VideoSummary extends BulbsElement {
@@ -63,6 +69,7 @@ export default class VideoSummary extends BulbsElement {
   render () {
     return (
       <VideoSummaryView
+        videoSrc={this.props.src}
         video={this.state.video}
         nowPlaying={typeof this.props.nowPlaying === 'string'}
       />

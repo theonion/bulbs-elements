@@ -27,7 +27,6 @@ export default class Revealed extends React.Component {
   }
 
   componentDidMount () {
-
     invariant(
       global.jQuery,
       '`<bulbs-video>` requires `jQuery` to be in global scope.'
@@ -108,6 +107,14 @@ export default class Revealed extends React.Component {
     videoMeta.player_options.embedded = this.props.embedded;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
+
+    this.refs.videoViewport.addEventListener('play-requested', () => {
+      this.player.play();
+    });
+
+    this.refs.videoViewport.addEventListener('pause-requested', () => {
+      this.player.pause();
+    });
   }
 
   componentWillUnmount () {
