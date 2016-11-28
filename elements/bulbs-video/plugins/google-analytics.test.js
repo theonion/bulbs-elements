@@ -2,11 +2,12 @@ import GoogleAnalytics from './google-analytics';
 
 describe('Google Analytics', () => {
   global.ga = () => {};
+  let gaTrackerAction = () => {};
 
   describe('onPlay', () => {
     context('has played once', () => {
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         let googleAnalytics = GoogleAnalytics.init(
           {
@@ -19,21 +20,21 @@ describe('Google Analytics', () => {
             playedOnce: true,
             on: sinon.spy(),
           },
-          'videoplayer0'
+          gaTrackerAction
         );
 
         googleAnalytics.onPlay();
       });
 
       it('sends a "play" event', () => {
-        expect(global.ga).to.have.been.calledWith(
-          'videoplayer0.send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.have.been.calledWith(
+         'send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
         );
       });
 
       it('does not send a "start" event', () => {
-        expect(global.ga).to.not.have.been.calledWith(
-          'videoplayer0.send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.not.have.been.calledWith(
+         'send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
         );
       });
     });
@@ -42,7 +43,7 @@ describe('Google Analytics', () => {
       let player;
 
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         player = {
           videoMeta: {
@@ -57,7 +58,7 @@ describe('Google Analytics', () => {
 
         let googleAnalytics = GoogleAnalytics.init(
           player,
-          'videoplayer0'
+          gaTrackerAction
         );
 
         googleAnalytics.onPlay();
@@ -68,14 +69,14 @@ describe('Google Analytics', () => {
       });
 
       it('sends a "play" event', () => {
-        expect(global.ga).to.have.been.calledWith(
-          'videoplayer0.send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.have.been.calledWith(
+          'send', 'event', 'Video:The Onion', 'play', 'http://www.theonion.com/r/4053'
         );
       });
 
       it('sends a "start" event', () => {
-        expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'start', 'http://www.theonion.com/r/4053'
       );
       });
     });
@@ -83,7 +84,7 @@ describe('Google Analytics', () => {
 
   describe('onPause', () => {
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let googleAnalytics = GoogleAnalytics.init(
         {
@@ -95,26 +96,22 @@ describe('Google Analytics', () => {
           },
           on: sinon.spy(),
         },
-        'videoplayer0'
+        gaTrackerAction
       );
 
       googleAnalytics.onPause();
     });
 
     it('sends an "pause" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'pause',
-        'http://www.theonion.com/r/4053'
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'pause','http://www.theonion.com/r/4053'
       );
     });
   });
 
   describe('onFullScreen', () => {
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let eventStub = {
         fullscreen: true,
@@ -131,26 +128,22 @@ describe('Google Analytics', () => {
           },
           on: sinon.spy(),
         },
-        'videoplayer0'
+        gaTrackerAction
       );
 
       googleAnalytics.onFullScreen(eventStub);
     });
 
     it('sends an "fullscreen" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'fullscreen:true',
-        'http://www.theonion.com/r/4053'
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'fullscreen:true', 'http://www.theonion.com/r/4053'
       );
     });
   });
 
   describe('onResize', () => {
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let eventStub = {
         width: 1920,
@@ -167,26 +160,22 @@ describe('Google Analytics', () => {
           },
           on: sinon.spy(),
         },
-        'videoplayer0'
+        gaTrackerAction
       );
 
       googleAnalytics.onResize(eventStub);
     });
 
     it('sends an "resize" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'resize:1920x1080',
-        'http://www.theonion.com/r/4053'
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'resize:1920x1080', 'http://www.theonion.com/r/4053'
       );
     });
   });
 
   describe('onFirstFrame', () => {
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let eventStub = {
         loadTime: 300,
@@ -202,20 +191,15 @@ describe('Google Analytics', () => {
           },
           on: sinon.spy(),
         },
-        'videoplayer0'
+        gaTrackerAction
       );
 
       googleAnalytics.onFirstFrame(eventStub);
     });
 
     it('sends an "firstFrame" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'firstFrame',
-        'http://www.theonion.com/r/4053',
-        300
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'firstFrame', 'http://www.theonion.com/r/4053', 300
       );
     });
   });
@@ -224,7 +208,7 @@ describe('Google Analytics', () => {
     let player;
 
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       player = {
         videoMeta: {
@@ -237,18 +221,14 @@ describe('Google Analytics', () => {
         on: sinon.spy(),
       };
 
-      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      let googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
 
       googleAnalytics.onComplete();
     });
 
     it('sends an "end" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'end',
-        'http://www.theonion.com/r/4053'
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'end', 'http://www.theonion.com/r/4053'
       );
     });
 
@@ -259,7 +239,7 @@ describe('Google Analytics', () => {
 
   describe('onAdBlock', () => {
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let player = {
         videoMeta: {
@@ -271,18 +251,14 @@ describe('Google Analytics', () => {
         on: sinon.spy(),
       };
 
-      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      let googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
 
       googleAnalytics.onAdBlock();
     });
 
     it('sends an "adblock" event', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
-        'event',
-        'Video:The Onion',
-        'adblock:enabled',
-        'http://www.theonion.com/r/4053'
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send', 'event', 'Video:The Onion', 'adblock:enabled', 'http://www.theonion.com/r/4053'
       );
     });
   });
@@ -301,7 +277,7 @@ describe('Google Analytics', () => {
         on: sinon.spy(),
       };
 
-      googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
     });
 
     it('filters out any querystring key/value based on passed in key when first query param', () => {
@@ -324,7 +300,7 @@ describe('Google Analytics', () => {
     let eventStub;
 
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let player = {
         videoMeta: {
@@ -336,7 +312,7 @@ describe('Google Analytics', () => {
         on: sinon.spy(),
       };
 
-      let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      let googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
       eventStub = {
         tag:
           'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&tt=p&t=1125,the-onion,today-now,main,html5&s=main/the-onion/today-now?rt=vast_2.0&rnd=12345', // eslint-disable-line max-len
@@ -346,8 +322,8 @@ describe('Google Analytics', () => {
     });
 
     it('sends an "adskipped" event filtering out rnd value', () => {
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'adskipped',
@@ -361,7 +337,7 @@ describe('Google Analytics', () => {
     let googleAnalytics;
 
     beforeEach(() => {
-      global.ga = sinon.spy();
+      gaTrackerAction = sinon.spy();
 
       let player = {
         videoMeta: {
@@ -373,7 +349,7 @@ describe('Google Analytics', () => {
         on: sinon.spy(),
       };
 
-      googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+      googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
     });
 
     it('sends an "aderror" event without making any change if no rnd value', () => {
@@ -384,8 +360,8 @@ describe('Google Analytics', () => {
       };
 
       googleAnalytics.onAdError(eventStub);
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -401,8 +377,8 @@ describe('Google Analytics', () => {
       };
 
       googleAnalytics.onAdError(eventStub);
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -418,8 +394,8 @@ describe('Google Analytics', () => {
       };
 
       googleAnalytics.onAdError(eventStub);
-      expect(global.ga).to.have.been.calledWith(
-        'videoplayer0.send',
+      expect(gaTrackerAction).to.have.been.calledWith(
+        'send',
         'event',
         'Video:The Onion',
         'aderror: Ad Tag Empty',
@@ -488,7 +464,7 @@ describe('Google Analytics', () => {
 
     context('already sent "x seconds" event', function () {
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         let eventStub = {
           duration: 50,
@@ -511,7 +487,7 @@ describe('Google Analytics', () => {
       });
 
       it('does not call ga', () => {
-        expect(global.ga.called).to.be.false;
+        expect(gaTrackerAction.called).to.be.false;
       });
     });
 
@@ -521,7 +497,7 @@ describe('Google Analytics', () => {
           duration: 60,
           position: 1,
         };
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         player = {
           videoMeta: {
@@ -539,7 +515,7 @@ describe('Google Analytics', () => {
       });
 
       it('does not call ga', () => {
-        expect(global.ga.called).to.be.false;
+        expect(gaTrackerAction.called).to.be.false;
       });
     });
 
@@ -558,20 +534,16 @@ describe('Google Analytics', () => {
           },
           on: sinon.spy(),
         };
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
-        googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
 
         googleAnalytics.checkSecondsElapsed(3, eventStub);
       });
 
       it('sends "3 seconds" event', () => {
-        expect(global.ga).to.have.been.calledWith(
-          'videoplayer0.send',
-          'event',
-          'Video:The Onion',
-          '3 seconds',
-          'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.have.been.calledWith(
+          'send', 'event', 'Video:The Onion', '3 seconds', 'http://www.theonion.com/r/4053'
         );
       });
 
@@ -585,7 +557,7 @@ describe('Google Analytics', () => {
   describe('checkPercentage', () => {
     context('already sent "xx" percentage event', () => {
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         let player = {
           videoMeta: {
@@ -597,20 +569,20 @@ describe('Google Analytics', () => {
           on: sinon.spy(),
         };
 
-        let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        let googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
 
         googleAnalytics.player.gaEvents['25 percent'] = true;
         googleAnalytics.checkPercentage({}, 25);
       });
 
       it('does not call ga', function () {
-        expect(global.ga.called).to.be.false;
+        expect(gaTrackerAction.called).to.be.false;
       });
     });
 
     context('have not sent percent, under percent', () => {
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         let eventStub = {
           duration: 100,
@@ -632,7 +604,7 @@ describe('Google Analytics', () => {
       });
 
       it('does not send "xx percent" event', () => {
-        expect(global.ga.called).to.be.false;
+        expect(gaTrackerAction.called).to.be.false;
       });
     });
 
@@ -640,7 +612,7 @@ describe('Google Analytics', () => {
       let player;
 
       beforeEach(() => {
-        global.ga = sinon.spy();
+        gaTrackerAction = sinon.spy();
 
         let eventStub = {
           duration: 100,
@@ -657,17 +629,13 @@ describe('Google Analytics', () => {
           on: sinon.spy(),
         };
 
-        let googleAnalytics = GoogleAnalytics.init(player, 'videoplayer0');
+        let googleAnalytics = GoogleAnalytics.init(player, gaTrackerAction);
         googleAnalytics.checkPercentage(eventStub, 25);
       });
 
       it('sends "xx percent" event', () => {
-        expect(global.ga).to.have.been.calledWith(
-          'videoplayer0.send',
-          'event',
-          'Video:The Onion',
-          '25 percent',
-          'http://www.theonion.com/r/4053'
+        expect(gaTrackerAction).to.have.been.calledWith(
+          'send', 'event', 'Video:The Onion', '25 percent', 'http://www.theonion.com/r/4053'
         );
       });
 

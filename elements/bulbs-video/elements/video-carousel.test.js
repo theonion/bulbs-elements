@@ -72,7 +72,7 @@ describe('<bulbs-video-carousel>', () => {
     it('attaches playerEnded handler to videoPlayer', () => {
       subject.attachedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
-        'ended', subject.playerEnded, true
+        'jw-complete', subject.playerEnded, true
       );
     });
 
@@ -148,16 +148,15 @@ describe('<bulbs-video-carousel>', () => {
 
   describe('handleClick', () => {
     context('item has an anchor tag', () => {
-      it('does nothing', () => {
-        sinon.spy(subject, 'selectItem');
+      it('updates history', () => {
+        sinon.spy(window.history, 'pushState');
         let event = {
           target: anchoredItem,
           preventDefault: sinon.stub(),
         };
         subject.handleClick(event);
 
-        expect(event.preventDefault).not.have.been.called;
-        expect(subject.selectItem).not.to.have.been.called;
+        expect(history.pushState).to.have.been.called;
       });
     });
 

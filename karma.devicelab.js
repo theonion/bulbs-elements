@@ -5,6 +5,9 @@ const karmaConfig = require('./karma.base.js');
 karmaConfig.browserStack = {
   username: process.env.BROWSER_STACK_USERNAME,
   accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+  captureTimeout: 300,
+  timeout: 300,
+  retryLimit: 5,
 };
 
 karmaConfig.customLaunchers = {
@@ -64,12 +67,12 @@ karmaConfig.customLaunchers = {
     browser: 'ie',
     browser_version: '11.0',
   },
-  bs_safari_8: {
+  bs_safari_9: {
     base: 'BrowserStack',
     os: 'osx',
-    os_version: 'yosemite',
+    os_version: 'elcapitan',
     browser: 'safari',
-    browser_version: '8',
+    browser_version: '9.1',
   },
   bs_chrome_50: {
     base: 'BrowserStack',
@@ -86,6 +89,8 @@ karmaConfig.customLaunchers = {
     browser_version: '47',
   },
 };
+
+karmaConfig.browserNoActivityTimeout = 100000;
 
 karmaConfig.browsers = Object.keys(karmaConfig.customLaunchers);
 karmaConfig.browsers = [process.env.BROWSER || 'bs_chrome_47'];

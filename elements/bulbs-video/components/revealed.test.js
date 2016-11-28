@@ -11,7 +11,12 @@ import video from '../fixtures/video.json';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
-    global.jwplayer = () => {};
+
+    global.jwplayer = () => {
+      return {
+        on: sinon.spy(),
+      };
+    };
     sinon.stub(GoogleAnalytics, 'init');
     sinon.stub(Comscore, 'init');
   });
@@ -34,6 +39,10 @@ describe('<bulbs-video> <Revealed>', () => {
 
     it('accepts muted boolean', () => {
       expect(subject.muted).to.eql(PropTypes.bool);
+    });
+
+    it('accepts embedded boolean', () => {
+      expect(subject.embedded).to.eql(PropTypes.bool);
     });
 
     it('accepts noEndcard boolean', () => {
@@ -86,6 +95,12 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(videoContainer).to.have.length(1);
       expect(videoContainer).to.have.className('bulbs-video-video video-container');
     });
+
+    it('specifies refs', () => {
+      subject = (new Revealed(props)).render();
+      expect(subject.ref).to.eql('videoViewport');
+      expect(subject.props.children.ref).to.eql('videoContainer');
+    });
   });
 
   describe('componentDidMount globalsCheck', () => {
@@ -128,6 +143,7 @@ describe('<bulbs-video> <Revealed>', () => {
           twitterHandle: 'twitter',
           autoplay: true,
           autoplayNext: true,
+          embedded: true,
           muted: true,
           defaultCaptions: true,
           video: Object.assign({}, video, {
@@ -232,16 +248,21 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
 
+        it('passes through the embedded value', () => {
+          expect(makeVideoPlayerSpy.args[0][1].player_options.embedded).to.be.true;
+        });
+
         it('passes through the defaultCaptions value', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.defaultCaptions).to.be.true;
         });
 
         it('sets sharetools config', () => {
-          expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(window.location.href);
+          let expected = `${window.location.href}/v/3124`;
+          expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(expected);
         });
 
         it('sets ga config', () => {
-          expect(makeVideoPlayerSpy.args[0][1].gaPrefix).to.match(/^videoplayer\d+$/);
+          expect(makeVideoPlayerSpy.args[0][1].gaTrackerAction).to.be.a('function');
         });
       });
 
@@ -320,6 +341,15 @@ describe('<bulbs-video> <Revealed>', () => {
           );
         });
       });
+    });
+  });
+
+  describe('componentWillUnmount', () => {
+    it('stops the player', () => {
+      let revealed = new Revealed({});
+      revealed.player = { remove: sinon.spy() };
+      revealed.componentWillUnmount();
+      expect(revealed.player.remove).to.have.been.called;
     });
   });
 
@@ -580,12 +610,16 @@ describe('<bulbs-video> <Revealed>', () => {
 
   describe('makeVideoPlayer', () => {
     let playerSetup;
+    let playerOn;
     let element;
     let player;
     let videoMeta;
+    let gaTrackerAction;
 
     beforeEach(() => {
       element = {};
+      gaTrackerAction = () => {};
+
       videoMeta = Object.assign({}, video, {
         title: 'video_title',
         tags: 'tags',
@@ -646,9 +680,12 @@ describe('<bulbs-video> <Revealed>', () => {
           },
         ],
         gaPrefix: 'videoplayer0',
+        gaTrackerAction,
       });
       playerSetup = sinon.spy();
+      playerOn = sinon.spy();
       player = {
+        on: playerOn,
         setup: playerSetup,
       };
       global.jwplayer = () => {
@@ -656,11 +693,29 @@ describe('<bulbs-video> <Revealed>', () => {
       };
     });
 
+    describe('contstructor', () => {
+      it('binds the forwardJWEvent method', () => {
+        sinon.spy(Revealed.prototype.forwardJWEvent, 'bind');
+        let revealed = new Revealed({});
+        expect(Revealed.prototype.forwardJWEvent.bind).to.have.been.calledWith(revealed);
+        sinon.restore();
+      });
+
+      it('binds the setPlaysInline method', () => {
+        sinon.spy(Revealed.prototype.setPlaysInline, 'bind');
+        let revealed = new Revealed({});
+        expect(Revealed.prototype.setPlaysInline.bind).to.have.been.calledWith(revealed);
+        sinon.restore();
+      });
+    });
+
     describe('player set up', () => {
       let sources;
       let extractSourcesStub;
       let vastUrlStub;
       let extractTrackCaptionsStub;
+      let forwardJWEvent = sinon.spy();
+      let setPlaysInline = sinon.spy();
 
       context('regular setup', () => {
         beforeEach(() => {
@@ -677,15 +732,27 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
+            forwardJWEvent,
+            setPlaysInline,
           }, element, videoMeta);
         });
 
         it('sets up the player', () => {
           expect(playerSetup.called).to.be.true;
+        });
+
+        it('forwards player complete event', () => {
+          expect(playerOn).to.have.been.calledWith('complete', forwardJWEvent);
+        });
+
+        it('sets playsInline property on beforePlay event', () => {
+          expect(playerOn).to.have.been.calledWith('beforePlay', setPlaysInline);
         });
 
         it('includes only the HLS & mp4 sources', () => {
@@ -716,7 +783,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('initializes the GoogleAnalytics plugin', () => {
-          expect(GoogleAnalytics.init.calledWith(player, 'videoplayer0')).to.be.true;
+          expect(GoogleAnalytics.init.calledWith(player, gaTrackerAction)).to.be.true;
         });
 
         it('initializes the Comscore plugin', () => {
@@ -750,7 +817,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractCaptionsStub = sinon.stub().returns(captioningTracks);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: {},
+            props: {
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractCaptionsStub,
@@ -778,7 +847,10 @@ describe('<bulbs-video> <Revealed>', () => {
           extractTrackCaptionsStub = sinon.stub().returns([]);
 
           Revealed.prototype.makeVideoPlayer.call({
-            props: { disableSharing: true },
+            props: {
+              disableSharing: true,
+              controller: {},
+            },
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
@@ -788,6 +860,40 @@ describe('<bulbs-video> <Revealed>', () => {
         it('does not set sharing configuration', () => {
           let setupOptions = playerSetup.args[0][0];
           expect(setupOptions.sharing).to.be.undefined;
+        });
+      });
+
+      context('embedded setup', () => {
+        beforeEach(() => {
+          videoMeta.player_options.embedded = true;
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sinon.stub().returns(sources);
+          extractTrackCaptionsStub = sinon.stub().returns([]);
+          vastUrlStub = sinon.stub();
+          Revealed.prototype.makeVideoPlayer.call({
+            props: {
+              controller: {},
+            },
+            extractSources: extractSourcesStub,
+            extractTrackCaptions: extractTrackCaptionsStub,
+            vastUrl: vastUrlStub,
+          }, element, videoMeta);
+        });
+
+        it('does not call the vast url', () => {
+          expect(vastUrlStub.called).be.false;
+        });
+
+        it('does not pass in advertising option', () => {
+          let setupOptions = playerSetup.args[0][0];
+          expect(setupOptions.advertising).to.be.undefined;
         });
       });
     });

@@ -1,8 +1,11 @@
 // Expose jwplayer on the global context
-require('expose?jwplayer!../plugins/jwplayer');
+//
+// The jwplayer.js file calls window.jwplayer = /* HOT JWPLAYER JS */;
+require('../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
+import { prepGaEventTracker } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -14,13 +17,15 @@ import invariant from 'invariant';
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
-let prefixCount = 0;
-function makeGaPrefix () {
-  // ga demands tracker names be alphanumeric
-  return `videoplayer${prefixCount++}`;
-}
+let jwPlayerIdCounter = 0;
 
 export default class Revealed extends React.Component {
+  constructor (props) {
+    super(props);
+    this.forwardJWEvent = this.forwardJWEvent.bind(this);
+    this.setPlaysInline = this.setPlaysInline.bind(this);
+  }
+
   componentDidMount () {
 
     invariant(
@@ -40,31 +45,34 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
-    let gaPrefix = makeGaPrefix();
-    ga('create', BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID, 'auto', { name: gaPrefix });
-
     let targeting = this.props.video.targeting;
-    let prefixedSet = `${gaPrefix}.set`;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
 
-    ga(prefixedSet, 'dimension1', targeting.target_channel || 'None');
-    ga(prefixedSet, 'dimension2', targeting.target_series || 'None');
-    ga(prefixedSet, 'dimension3', targeting.target_season || 'None');
-    ga(prefixedSet, 'dimension4', targeting.target_video_id || 'None');
-    ga(prefixedSet, 'dimension5', hostChannel);
-    ga(prefixedSet, 'dimension6', specialCoverage);
-    ga(prefixedSet, 'dimension7', true); // `has_player` from old embed
-    ga(prefixedSet, 'dimension8', this.props.autoplay || 'None'); // autoplay
-    ga(prefixedSet, 'dimension9', this.props.targetCampaignId || 'None'); // Tunic Campaign Id
-    ga(prefixedSet, 'dimension10', 'None'); // Platform
+    let dimensions = {
+      'dimension1': targeting.target_channel || 'None',
+      'dimension2': targeting.target_series || 'None',
+      'dimension3': targeting.target_season || 'None',
+      'dimension4': targeting.target_video_id || 'None',
+      'dimension5': hostChannel,
+      'dimension6': specialCoverage,
+      'dimension7': true, // 'has_player' from old embed
+      'dimension8': this.props.autoplay || 'None', // autoplay
+      'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
+      'dimension10': 'None', // Platform
+    };
+    let gaTrackerAction = prepGaEventTracker(
+      'videoplayer',
+      BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
+      dimensions
+    );
 
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
-    videoMeta.gaPrefix = gaPrefix;
-    videoMeta.player_options.shareUrl = window.location.href;
+    videoMeta.gaTrackerAction = gaTrackerAction;
+    videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
 
@@ -97,7 +105,13 @@ export default class Revealed extends React.Component {
       videoMeta.player_options.defaultCaptions = true;
     }
 
+    videoMeta.player_options.embedded = this.props.embedded;
+
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
+  }
+
+  componentWillUnmount () {
+    this.player.remove();
   }
 
   extractSources (sources) {
@@ -200,10 +214,10 @@ export default class Revealed extends React.Component {
   }
 
   makeVideoPlayer (element, videoMeta) {
-    element.id = videoMeta.gaPrefix;
-    let player = global.jwplayer(element);
+    element.id = `jw-player-${jwPlayerIdCounter++}`;
+    this.player = global.jwplayer(element);
 
-    player.videoMeta = videoMeta;
+    this.player.videoMeta = videoMeta;
 
     let playerOptions = {
       key: 'qh5iU62Pyc0P3L4gpOdmw+k4sTpmhl2AURmXpA==',
@@ -212,21 +226,25 @@ export default class Revealed extends React.Component {
       },
       sources: this.extractSources(videoMeta.sources),
       image: videoMeta.player_options.poster,
-      advertising: {
-        client: 'vast',
-        tag: this.vastUrl(videoMeta),
-        skipoffset: 5,
-        vpaidmode: 'insecure',
-      },
-      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.4.3/jwplayer.flash.swf',
+      flashplayer: '//ssl.p.jwpcdn.com/player/v/7.7.3/jwplayer.flash.swf',
       aspectratio: '16:9',
-      autostart: true,
+      autostart: this.props.controller.revealed,
       hlshtml: true,
       mute: videoMeta.player_options.muted || false,
       preload: 'none',
       primary: 'html5',
       width: '100%',
+      controls: !this.props.hideControls,
     };
+
+    if (!videoMeta.player_options.embedded) {
+      playerOptions.advertising = {
+        client: 'vast',
+        tag: this.vastUrl(videoMeta),
+        skipoffset: 5,
+        vpaidmode: 'insecure',
+      };
+    }
 
     let tracks = this.extractTrackCaptions(videoMeta.sources, videoMeta.player_options.defaultCaptions);
     if (tracks.length > 0) {
@@ -240,16 +258,41 @@ export default class Revealed extends React.Component {
       };
     }
 
-    player.setup(playerOptions);
+    this.player.setup(playerOptions);
 
-    GoogleAnalytics.init(player, videoMeta.gaPrefix);
-    Comscore.init(player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+    GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
+    Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+    this.player.on('beforePlay', this.setPlaysInline);
+    this.player.on('complete', this.forwardJWEvent);
+  }
+
+  handleClick () {
+    if (this.props.hideControls) {
+      this.player.play();
+    }
+  }
+
+  forwardJWEvent (event) {
+    this.refs.videoViewport.dispatchEvent(new CustomEvent(`jw-${event.type}`));
+  }
+
+  setPlaysInline () {
+    let videoEl = this.player.getContainer().querySelector('video');
+    if (videoEl && this.props.playsInline) {
+      videoEl.setAttribute('webkit-playsinline', true);
+      videoEl.setAttribute('playsinline', true);
+    }
   }
 
   render () {
     return (
-      <div className='bulbs-video-viewport'>
+      <div
+        className='bulbs-video-viewport'
+        ref="videoViewport"
+        onClick={event => this.handleClick(event)}
+        onTouchTap={event => this.handleClick(event)}
+      >
         <div className='bulbs-video-video video-container' ref='videoContainer'>
         </div>
       </div>
@@ -260,10 +303,14 @@ export default class Revealed extends React.Component {
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayNext: PropTypes.bool,
+  controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableSharing: PropTypes.bool,
+  embedded: PropTypes.bool,
+  hideControls: PropTypes.bool,
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
+  playsInline: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,

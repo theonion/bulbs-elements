@@ -1,20 +1,27 @@
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
 
+import { scrollingElement } from 'bulbs-elements/util';
+
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
   let subject;
   let props = {
     src,
+    disableLazyLoading: true,
   };
 
   beforeEach(() => {
     BulbsVideo.prototype.setState = sinon.spy();
     fetchMock.mock(src, {});
-    subject = new BulbsVideo(props);
   });
 
   describe('#initialDispatch', () => {
+
+    beforeEach(() => {
+      subject = new BulbsVideo(props);
+    });
+
     it('fetches video data', () => {
       let spy = sinon.spy(subject.store.actions, 'fetchVideo');
       subject.initialDispatch();
@@ -35,6 +42,10 @@ describe('<bulbs-video>', () => {
     let fetchSpy;
     let resetSpy;
     let newSrc;
+
+    beforeEach(() => {
+      subject = new BulbsVideo(props);
+    });
 
     context('src did not change', () => {
       beforeEach(() => {
@@ -63,12 +74,50 @@ describe('<bulbs-video>', () => {
         subject.componentDidUpdate({ src });
       });
 
-      it('fetches video data', () => {
-        expect(fetchSpy).to.have.been.calledWith(newSrc);
+      it('fetches video data', (done) => {
+        setImmediate(() => {
+          expect(fetchSpy).to.have.been.calledWith(newSrc);
+          done();
+        });
       });
 
-      it('resets the controller', () => {
-        expect(resetSpy).to.have.been.called;
+      it('resets the controller', (done) => {
+        setImmediate(() => {
+          expect(resetSpy).to.have.been.called;
+          done();
+        });
+      });
+    });
+  });
+
+  describe('lazy loading', () => {
+    let container;
+
+    beforeEach((done) => {
+      props.disableLazyLoading = false;
+
+      container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '200%';
+      document.body.appendChild(container);
+      setImmediate(() => done());
+    });
+
+    afterEach(() => {
+      container.remove();
+    });
+
+    it('should not load video until it is within viewing threshold', (done) => {
+      let videoElement = document.createElement('bulbs-video');
+      videoElement.setAttribute('src', src);
+      container.appendChild(videoElement);
+
+      container.style.top = '0';
+      scrollingElement.scrollTop += 1;
+
+      requestAnimationFrame(() => {
+        expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
+        done();
       });
     });
   });

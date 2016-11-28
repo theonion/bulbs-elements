@@ -9,7 +9,7 @@ export default function Root (props) {
   if (!props.video) {
     return <div className={className}/>;
   }
-  else if (props.controller.revealed) {
+  else if (props.noCover || props.controller.revealed) {
     return (
       <div className={className}>
         <Revealed {...props}/>
@@ -19,7 +19,11 @@ export default function Root (props) {
 
   return (
     <div className={className}>
-      <Cover video={props.video} actions={props.actions}/>
+      <Cover
+        video={props.video}
+        actions={props.actions}
+        enablePosterMeta={props.enablePosterMeta}
+        disableMetaLink={props.disableMetaLink}/>
     </div>
   );
 }
@@ -28,7 +32,11 @@ Root.propTypes = {
   actions: PropTypes.object.isRequired,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
+  disableMetaLink: PropTypes.bool,
+  embedded: PropTypes.bool,
+  enablePosterMeta: PropTypes.bool,
   muted: PropTypes.bool,
+  noCover: PropTypes.bool,
   noEndcard: PropTypes.bool,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,

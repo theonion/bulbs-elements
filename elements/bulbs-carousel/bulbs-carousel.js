@@ -15,9 +15,17 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     this.handleClick = this.handleClick.bind(this);
     this.addEventListener('click', this.handleClick);
 
-    this.track = document.createElement('bulbs-carousel-track');
-    moveChildren(this.slider, this.track);
-    this.slider.appendChild(this.track);
+    // bugfix: if this element is recreated from markup, such as by resetting
+    //         its innerHTML, the track will already exist.
+    let track = this.querySelector('bulbs-carousel-track');
+    if (track) {
+      this.track = track;
+    }
+    else {
+      this.track = document.createElement('bulbs-carousel-track');
+      moveChildren(this.slider, this.track);
+      this.slider.appendChild(this.track);
+    }
 
     this.previousButtons = this.getElementsByTagName('bulbs-carousel-previous');
     this.nextButtons = this.getElementsByTagName('bulbs-carousel-next');

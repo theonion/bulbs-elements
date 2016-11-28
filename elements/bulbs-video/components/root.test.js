@@ -29,6 +29,8 @@ describe('<bulbs-video> <Root>', () => {
     let video = {};
     let controller = {};
     let twitterHandle = 'twitterHandle';
+    let enablePosterMeta = true;
+    let disableMetaLink = false;
 
     context('without video', () => {
       beforeEach(() => {
@@ -71,6 +73,8 @@ describe('<bulbs-video> <Root>', () => {
         props = {
           actions,
           video,
+          enablePosterMeta,
+          disableMetaLink,
           controller: { revealed: false },
         };
         subject = shallow(<Root {...props}/>);
@@ -82,7 +86,11 @@ describe('<bulbs-video> <Root>', () => {
 
       it('renders <Cover>', () => {
         expect(subject).to.contain(
-          <Cover video={video} actions={actions}/>
+          <Cover
+            video={video}
+            actions={actions}
+            enablePosterMeta={enablePosterMeta}
+            disableMetaLink={disableMetaLink}/>
         );
       });
     });

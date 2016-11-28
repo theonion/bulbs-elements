@@ -43,6 +43,7 @@ entries['dist/vendor'] = [
   'isomorphic-fetch',
   'dom4',
   'camelcase',
+  'browser-url',
   'object-map-to-array',
   './lib/bulbs-elements/register',
   './lib/bulbs-elements/store',
