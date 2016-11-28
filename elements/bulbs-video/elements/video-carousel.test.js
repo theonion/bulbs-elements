@@ -69,6 +69,15 @@ describe('<bulbs-video-carousel>', () => {
   });
 
   describe('attachedCallback', () => {
+    it('attaches firstPlay handler to videoPlayer', () => {
+      subject.attachedCallback();
+      expect(videoPlayer.addEventListener).to.have.been.calledWith(
+        'jw-beforePlay',
+        subject.firstPlay,
+        true
+      );
+    });
+
     it('attaches playerEnded handler to videoPlayer', () => {
       subject.attachedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
@@ -80,6 +89,30 @@ describe('<bulbs-video-carousel>', () => {
       subject.attachedCallback();
       expect(carousel.addEventListener).to.have.been.calledWith(
         'click', subject.handleClick
+      );
+    });
+  });
+
+  describe('firstPlay', () => {
+
+    it('selects the first item in the carousel', () => {
+      sinon.spy(subject, 'selectItem');
+      sinon.spy(subject, 'applyState');
+
+      subject.firstPlay();
+
+      expect(subject.selectItem).to.have.been.calledWith(firstItem);
+      expect(subject.applyState).to.have.been.calledOnce;
+    });
+
+    it('removes itself', () => {
+
+      subject.firstPlay();
+
+      expect(videoPlayer.removeEventListener).to.have.been.calledWith(
+        'jw-beforePlay',
+        subject.firstPlay,
+        true
       );
     });
   });

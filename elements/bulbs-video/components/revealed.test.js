@@ -747,6 +747,10 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(playerSetup.called).to.be.true;
         });
 
+        it('forwards player beforePlay event', () => {
+          expect(playerOn).to.have.been.calledWith('beforePlay', forwardJWEvent);
+        });
+
         it('forwards player complete event', () => {
           expect(playerOn).to.have.been.calledWith('complete', forwardJWEvent);
         });
