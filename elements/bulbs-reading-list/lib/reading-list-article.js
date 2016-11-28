@@ -32,7 +32,7 @@ export default class ReadingListArticle {
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.dimensions = this.getGaDimensions();
-    this.gaTrackerWrapper= this.prepGaTracker();
+    this.gaTrackerWrapper = this.prepGaTracker();
     this.registerEvents();
   }
 
@@ -105,14 +105,14 @@ export default class ReadingListArticle {
 
   fillContent (content) {
     this.element.innerHTML = content;
-    this.element.dataset.loadStatus = "loading"
+    this.element.dataset.loadStatus = 'loading';
   }
 
   handleLoadContentComplete (content) {
     this.fillContent(content);
     this.isLoaded = true;
     this.fetchPending = false;
-    this.element.dataset.loadStatus = "loaded"
+    this.element.dataset.loadStatus = 'loaded';
   }
 
   handleLoadContentError (response) {
