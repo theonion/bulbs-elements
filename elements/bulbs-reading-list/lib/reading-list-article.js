@@ -15,8 +15,8 @@ export default class ReadingListArticle {
     invariant(dispatcher, 'new ReadingListArticle(element, dispatcher, index): dispatcher is undefined');
     invariant(!isUndefined(index), 'new ReadingListArticle(element, dispatcher, index): index is undefined');
     invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
-    invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
-    element.requireAttribute('data-content-analytics');
+    element.requireAttribute('data-content-analytics-dimensions');
+    element.requireAttribute('ga-event-category');
 
     this.element = element;
     this.dispatcher = dispatcher;
@@ -33,6 +33,7 @@ export default class ReadingListArticle {
     this.fetchPending = false;
     this.dimensions = this.getGaDimensions();
     this.gaTrackerWrapper = this.prepGaTracker();
+    this.gaEventCategory = element.getAttribute('ga-event-category');
     this.registerEvents();
   }
 
@@ -43,26 +44,26 @@ export default class ReadingListArticle {
 
   getGaDimensions () {
     let targeting = JSON.parse(
-      this.element.getAttribute('data-content-analytics')
+      this.element.getAttribute('data-content-analytics-dimensions')
     );
     return {
-      'dimension1': targeting.dfp_pagetype || 'None',
-      'dimension2': targeting.dfp_feature || 'None',
-      'dimension3': targeting.dfp_specialcoverage || 'None',
-      'dimension4': targeting.dfp_campaign_id || 'None',
-      'dimension5': targeting.platform || 'None',
-      'dimension6': targeting.dfp_section || 'None',
-      'dimension7': targeting.dfp_contentid || 'None',
-      'dimension8': targeting.dfp_publishdate || 'None',
-      'dimension9': targeting.dfp_evergreen || 'None',
-      'dimension10': targeting.dfp_title || 'None',
-      'dimension11': targeting.dfp_instant_article || 'None',
+      'dimension1': targeting.dimension1 || 'None',
+      'dimension2': targeting.dimension2 || 'None',
+      'dimension3': targeting.dimension3 || 'None',
+      'dimension4': targeting.dimension4 || 'None',
+      'dimension5': targeting.dimension5 || 'None',
+      'dimension6': targeting.dimension6 || 'None',
+      'dimension7': targeting.dimension7 || 'None',
+      'dimension8': targeting.dimension8 || 'None',
+      'dimension9': targeting.dimension9 || 'None',
+      'dimension10': targeting.dimension10 || 'None',
+      'dimension11': targeting.dimension11 || 'None',
     };
   }
 
   prepGaTracker () {
     return prepGaEventTracker(
-      'clickholeArticle',
+      this.gaEventCategory,
       window.GA_ID,
       this.dimensions,
     );
