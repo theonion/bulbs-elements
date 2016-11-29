@@ -1,7 +1,6 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
 import { getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
-import '../../node_modules/waypoints/lib/noframework.waypoints';
 import './bulbs-pinned-element.scss';
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {

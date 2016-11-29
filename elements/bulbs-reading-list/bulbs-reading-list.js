@@ -1,5 +1,4 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
-import './bulbs-reading-list.scss';
 import './components/bulbs-reading-list-item';
 import './components/bulbs-reading-list-articles';
 import './components/bulbs-reading-list-menu';
