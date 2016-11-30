@@ -16,7 +16,6 @@ export default class ReadingListArticle {
     invariant(!isUndefined(index), 'new ReadingListArticle(element, dispatcher, index): index is undefined');
     invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
     element.requireAttribute('data-content-analytics-dimensions');
-    element.requireAttribute('ga-event-category');
 
     this.element = element;
     this.dispatcher = dispatcher;
@@ -33,7 +32,6 @@ export default class ReadingListArticle {
     this.fetchPending = false;
     this.dimensions = this.getGaDimensions();
     this.gaTrackerWrapper = this.prepGaTracker();
-    this.gaEventCategory = element.getAttribute('ga-event-category');
     this.registerEvents();
   }
 
@@ -63,7 +61,7 @@ export default class ReadingListArticle {
 
   prepGaTracker () {
     return prepGaEventTracker(
-      this.gaEventCategory,
+      'pageview',
       window.GA_ID,
       this.dimensions,
     );
