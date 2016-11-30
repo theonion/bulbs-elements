@@ -264,6 +264,7 @@ export default class Revealed extends React.Component {
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
     this.player.on('beforePlay', this.setPlaysInline);
+    this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
   }
 

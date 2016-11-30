@@ -19,7 +19,7 @@ class CampaignDisplayRoot extends Component {
   }
 
   pixelComponent () {
-    if (this.props.noPixel) {
+    if (this.props.noPixel || !this.props.campaign.active) {
       return '';
     }
 
