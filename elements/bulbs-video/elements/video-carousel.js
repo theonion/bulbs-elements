@@ -94,7 +94,6 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   selectItem (itemElement) {
     // Setting autoplay here causes the video to play immediately when it is selected
     // on the next line.
-    this.videoPlayer.setAttribute('autoplay', '');
     this.state.selectItem(itemElement);
     itemElement.classList.add('played');
   }
