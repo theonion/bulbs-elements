@@ -1,0 +1,22 @@
+bulbs-reading-list:after, bulbs-reading-list-item:after, bulbs-reading-list-articles:after, bulbs-reading-list-menu:after {
+  clear: both;
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  visibility: hidden; }
+
+bulbs-reading-list {
+  display: block; }
+
+bulbs-reading-list-item {
+  display: block; }
+
+bulbs-reading-list-articles {
+  display: block;
+  overflow: hidden; }
+
+bulbs-reading-list-menu.visible {
+  display: block; }
+
+/*# sourceMappingURL=bulbs-reading-list.css.map*/
