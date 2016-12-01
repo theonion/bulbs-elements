@@ -57,8 +57,8 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
-    this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
+    this.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
+    this.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
@@ -71,10 +71,10 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
     if (items.length > 0) {
       this.selectItem(items[0]);
-      this.applyState();
+      this.doApplyState();
     }
 
-    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
+    this.removeEventListener('jw-beforePlay', this.firstPlay, true);
   }
 
   playerEnded () {
@@ -113,22 +113,15 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   applyState () {
     if (this.state.currentItem) {
       this.doApplyState();
+      this.doSwapVideo();
     }
   }
 
-  doApplyState () {
-    forEach.call(
-      this.querySelectorAll('[now-playing]'),
-      (nowPlaying) => nowPlaying.removeAttribute('now-playing')
-    );
-
-    this.state.currentItem.setAttribute('now-playing', '');
-    this.state.currentItem.querySelector('bulbs-video-summary').setAttribute('now-playing', '');
-
+  doSwapVideo () {
     // swaps out the current video
     let activeVideo = this.querySelector('.video-carousel-player bulbs-video');
     let activeVideoSummary = this.querySelector(`bulbs-video-summary[src='${activeVideo.getAttribute('src')}']`);
-    activeVideoSummary.append(activeVideo);
+    activeVideoSummary.prepend(activeVideo);
     activeVideo.pause();
 
     let nextVideo = this.querySelector(`bulbs-video[src='${this.state.videoUrl}']`);
@@ -150,6 +143,16 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     //     video.play();
     //   }, 100);
     // });
+  }
+
+  doApplyState () {
+    forEach.call(
+      this.querySelectorAll('[now-playing]'),
+      (nowPlaying) => nowPlaying.removeAttribute('now-playing')
+    );
+
+    this.state.currentItem.setAttribute('now-playing', '');
+    this.state.currentItem.querySelector('bulbs-video-summary').setAttribute('now-playing', '');
 
     forEach.call(
       this.querySelectorAll('bulbs-video-meta'),

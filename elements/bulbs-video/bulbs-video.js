@@ -333,7 +333,11 @@ export default class BulbsVideo extends BulbsHTMLElement {
       };
     }
 
-    let tracks = this.extractTrackCaptions(videoMeta.sources, videoMeta.player_options.defaultCaptions);
+    let tracks = this.extractTrackCaptions(
+      videoMeta.sources,
+      videoMeta.player_options.defaultCaptions
+    );
+
     if (tracks.length > 0) {
       playerOptions.tracks = tracks;
     }
@@ -348,9 +352,14 @@ export default class BulbsVideo extends BulbsHTMLElement {
     this.player.setup(playerOptions);
 
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
-    Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
+    Comscore.init(
+      this.player,
+      global.BULBS_ELEMENTS_COMSCORE_ID,
+      videoMeta.player_options.comscore.metadata
+    );
 
     this.player.on('beforePlay', this.setPlaysInline);
+    this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
 
     this.refs.videoCover.addEventListener('click', () => this.play());
@@ -365,6 +374,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
   }
 
   handleFetchError () {
+
   }
 
   play () {
@@ -375,6 +385,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
 
   pause () {
     this.player.pause(true);
+    this.player.seek(0);
   }
 }
 

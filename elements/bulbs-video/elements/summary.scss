@@ -1,6 +1,12 @@
 bulbs-video-summary {
   display: block;
   position: relative;
+
+  &[now-playing] {
+    .bulbs-video-summary-playing {
+      display: inherit;
+    }
+  }
 }
 
 bulbs-video-summary bulbs-video {
@@ -42,6 +48,7 @@ bulbs-video-summary bulbs-video {
   color: white;
   font-size: .8em;
   font-family: sans-serif;
+  display: none;
 }
 
 .bulbs-video-series-name {
