@@ -102,7 +102,7 @@
     "ponyfill-array-find": "^1.0.0",
     "postcss-initial": "^1.4.1",
     "postcss-loader": "^0.8.0",
-    "react": "^15.0.0",
+    "react": "^15.4.0",
     "react-addons-create-fragment": "^15.0.2",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^15.4.0",
