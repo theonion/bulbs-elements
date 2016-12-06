@@ -30,6 +30,7 @@ export default class ReadingListArticle {
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
+    this.visitedInLooking = {};
     this.dimensions = this.getGaDimensions();
     this.gaTrackerWrapper = this.prepGaTracker();
     this.registerEvents();
@@ -152,6 +153,22 @@ export default class ReadingListArticle {
     return progress > 100 ? 100 : progress;
   }
 
+  sendAnalyticsEvent ($item) {
+    getAnalyticsManager().sendEvent({
+      eventCategory: 'reading_list',
+      eventAction: 'scroll_view',
+      eventLabel: this.href
+    });
+    if (!this.visitedInLooking[this.href]) {
+      getAnalyticsManager().sendEvent({
+        eventCategory: 'reading_list',
+        eventAction: 'scroll_view_unique',
+        eventLabel: this.href
+      });
+      this.visitedInLooking[this.href] = true;
+    }
+  }
+
   pushStateIfStartedReading (oldProgress, newProgress) {
     if (this.startedReading(oldProgress, newProgress)) {
       this.pushToHistory();
@@ -160,6 +177,7 @@ export default class ReadingListArticle {
         this.title,
         this.gaTrackerWrapper,
       );
+      this.sendAnalyticsEvent();
     }
   }
 
