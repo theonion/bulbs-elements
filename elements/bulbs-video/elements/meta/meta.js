@@ -16,16 +16,19 @@ export default class VideoMeta extends BulbsElement {
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
-      this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
+      this.store.actions.setVideoField(null);
       this.store.actions.fetchVideo(this.props.src);
     }
   }
 
   render () {
-    return <VideoMetaRoot
-              {...this.props}
-              disableLink={typeof this.props.disableMetaLink === 'string'}
-              video={this.state.video}/>;
+    return (
+      <VideoMetaRoot
+        {...this.props}
+        disableLink={typeof this.props.disableMetaLink === 'string'}
+        video={this.state.video}
+      />
+    );
   }
 }
 
@@ -41,6 +44,7 @@ Object.assign(VideoMeta, {
     campaignTrackAction: PropTypes.string,
     campaignUrl: PropTypes.string,
     disableMetaLink: PropTypes.string,
+    relativeSeriesLinkPrefix: PropTypes.string,
     titleTrackAction: PropTypes.string,
   },
 });
