@@ -31,6 +31,7 @@ export default class ReadingListArticle {
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.visitedInLooking = {};
+    this.currentHref = window.location.pathname;
     this.dimensions = this.getGaDimensions();
     this.gaTrackerWrapper = this.prepGaTracker();
     this.registerEvents();
@@ -43,7 +44,7 @@ export default class ReadingListArticle {
 
   getGaDimensions () {
     let targeting = JSON.parse(
-      this.element.getAttribute('data-content-analytics-dimensions')
+      this.element.dataset.contentAnalyticsDimensions
     );
     return {
       'dimension1': targeting.dimension1 || 'None',
@@ -153,12 +154,26 @@ export default class ReadingListArticle {
     return progress > 100 ? 100 : progress;
   }
 
-  sendAnalyticsEvent ($item) {
+  prepareAnalytics () {
+    var targeting = this.dimensions;
+    // need to update these to match correct implementation - scook
+    ga('set', 'dimension2', targeting.dfp_campaign_id);
+    ga('set', 'dimension4', targeting.dfp_feature);
+    ga('set', 'dimension5', targeting.dfp_tag);
+    ga('set', 'dimension6', targeting.dfp_pagetype)
+    ga('set', 'dimension7', targeting.dfp_contentid);
+    ga('set', 'dimension8', targeting.dfp_publishdate);
+    ga('set', 'dimension9', targeting.dfp_evergreen);
+    ga('set', 'dimension10', targeting.dfp_title);
+  }
+
+  sendAnalyticsEvent () {
     getAnalyticsManager().sendEvent({
       eventCategory: 'reading_list',
       eventAction: 'scroll_view',
       eventLabel: this.href
     });
+    this.prepareAnalytics();
     if (!this.visitedInLooking[this.href]) {
       getAnalyticsManager().sendEvent({
         eventCategory: 'reading_list',
@@ -171,13 +186,15 @@ export default class ReadingListArticle {
 
   pushStateIfStartedReading (oldProgress, newProgress) {
     if (this.startedReading(oldProgress, newProgress)) {
-      this.pushToHistory();
-      getAnalyticsManager().trackPageView(
-        this.href,
-        this.title,
-        this.gaTrackerWrapper,
-      );
-      this.sendAnalyticsEvent();
+      if (this.href !== this.currentHref) {
+        this.pushToHistory();
+        this.sendAnalyticsEvent();
+        getAnalyticsManager().trackPageView(
+          this.href,
+          this.title,
+          this.gaTrackerWrapper,
+        );
+      }
     }
   }
 
