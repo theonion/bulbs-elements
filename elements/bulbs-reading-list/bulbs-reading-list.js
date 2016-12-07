@@ -6,15 +6,21 @@ import ReadingListMenu from './lib/reading-list-menu';
 import ReadingListArticles from './lib/reading-list-articles';
 import invariant from 'invariant';
 import EventEmitter from 'events';
-import { getScrollOffset, getWindowDimensions } from 'bulbs-elements/util';
+import {
+  getScrollOffset,
+  getWindowDimensions,
+} from 'bulbs-elements/util';
 import map from 'lodash/map';
 
 class BulbsReadingList extends BulbsHTMLElement {
   attachedCallback () {
     this.lastPosition = 0;
+    this.visitedInLooking = {};
+    this.visitedInLooking[window.location.pathname] = true;
     this.dispatcher = new EventEmitter();
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
     window.addEventListener('resize', this.handleDocumentResized.bind(this));
+    this.dispatcher.on('reading-list-item-url-changed', this.handleDocumentUrlChanged.bind(this));
 
     const menus = this.querySelectorAll(`bulbs-reading-list-menu`);
     const articles = this.querySelectorAll(`bulbs-reading-list-articles`);
@@ -28,6 +34,18 @@ class BulbsReadingList extends BulbsHTMLElement {
 
   handleDocumentResized () {
     window.requestAnimationFrame(this.emitResizeEvent.bind(this));
+  }
+
+  handleDocumentUrlChanged (readingListArticle) {
+    if (!this.visitedInLooking[readingListArticle.href]) {
+      readingListArticle.gaTrackerWrapper(
+        'send', 'event',
+        'reading_list',
+        'scroll_view_unique',
+        readingListArticle.href,
+      );
+      this.visitedInLooking[readingListArticle.href] = true;
+    }
   }
 
   emitScrollEvent () {

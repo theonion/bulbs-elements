@@ -30,10 +30,7 @@ export default class ReadingListArticle {
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
-    this.visitedInLooking = {};
-    this.currentHref = window.location.pathname;
     this.dimensions = this.getGaDimensions();
-    this.gaTrackerWrapper = this.prepGaTracker();
     this.registerEvents();
   }
 
@@ -167,35 +164,33 @@ export default class ReadingListArticle {
     ga('set', 'dimension10', targeting.dfp_title);
   }
 
-  sendAnalyticsEvent () {
-    getAnalyticsManager().sendEvent({
-      eventCategory: 'reading_list',
-      eventAction: 'scroll_view',
-      eventLabel: this.href
-    });
-    this.prepareAnalytics();
-    if (!this.visitedInLooking[this.href]) {
-      getAnalyticsManager().sendEvent({
-        eventCategory: 'reading_list',
-        eventAction: 'scroll_view_unique',
-        eventLabel: this.href
-      });
-      this.visitedInLooking[this.href] = true;
-    }
-  }
-
   pushStateIfStartedReading (oldProgress, newProgress) {
     if (this.startedReading(oldProgress, newProgress)) {
-      if (this.href !== this.currentHref) {
+      if (this.href !== window.location.pathname) {
         this.pushToHistory();
-        this.sendAnalyticsEvent();
+
+        if (!this.gaTrackerWrapper) {
+          this.gaTrackerWrapper = this.prepGaTracker();
+        }
+
         getAnalyticsManager().trackPageView(
           this.href,
           this.title,
           this.gaTrackerWrapper,
         );
+        this.sendAnalyticsEvent();
+        this.dispatcher.emit('reading-list-item-url-changed', this);
       }
     }
+  }
+
+  sendAnalyticsEvent () {
+    this.gaTrackerWrapper(
+      'send', 'event',
+      'reading_list',
+      'scroll_view',
+      this.href,
+    );
   }
 
   startedReading (oldProgress, newProgress) {
