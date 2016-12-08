@@ -43,11 +43,9 @@ export default class ReadingListArticles {
     if (article.isLoaded) {
       article.scrollIntoView();
     }
-    else {
-      if (this.shouldLoadNextArticle(article)) {
-        this.loadArticle(article)
-          .then(this.handleLoadNextArticleComplete.bind(this));
-      }
+    else if (this.shouldLoadNextArticle(article)) {
+      this.loadArticle(article)
+        .then(this.handleLoadNextArticleComplete.bind(this));
     }
   }
 
