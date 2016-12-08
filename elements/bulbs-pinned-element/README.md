@@ -1,4 +1,4 @@
-# `<bulbs-pinned-elements>`
+# `<bulbs-pinned-element>`
 
 Attributes
   * `pinned-to` *(required)* selector of the element pinned to. This should be a parent of `<bulbs-pinned-element>`
