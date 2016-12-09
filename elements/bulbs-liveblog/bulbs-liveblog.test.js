@@ -209,6 +209,7 @@ describe('<bulbs-liveblog>', () => {
     });
 
     it('parses entry published dates', () => {
+      sandbox.stub(window, 'fetch').returns(new Promise (resolve => resolve));
       let snapshot = {
         one: {
           published: '2016-09-19T11:09:06.668617',
@@ -515,6 +516,7 @@ describe('<bulbs-liveblog>', () => {
 
     describe('handleBlogFetchError', () => {
       it('records that the liveblog is no longer fetching content', () => {
+        sandbox.stub(console, 'error');
         subject.fetching = true;
         subject.handleBlogFetchError();
         expect(subject.fetching).to.be.false;
