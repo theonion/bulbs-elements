@@ -12,6 +12,7 @@ describe('<bulbs-poll> <BulbsPoll>', function () {
     sinon.spy(subject.store.actions, 'setSrc');
     sinon.spy(subject.store.actions, 'fetchPollData');
     sinon.spy(subject.store.actions, 'getCachedVoteData');
+    sinon.stub(window, 'fetch').returns(new Promise(resolve => resolve));
   });
 
   describe('initialDispatch', () => {
