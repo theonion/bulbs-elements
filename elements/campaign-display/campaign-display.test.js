@@ -48,8 +48,10 @@ describe('<campaign-display>', () => {
   });
 
   describe('componentDidUpdate', () => {
+    let campaignUrl;
+
     beforeEach(() => {
-      let campaignUrl = 'http://example.com/campaign';
+      campaignUrl = 'http://example.com/campaign';
       fetchMock.mock(campaignUrl, campaign);
 
       let wrapper = shallow(
@@ -62,17 +64,17 @@ describe('<campaign-display>', () => {
       subject = wrapper.instance();
 
       sinon.spy(subject, 'initialDispatch');
-      subject.store.actions.handleFetchComplete({}, campaign);
+      subject.store.actions.handleFetchComplete(campaign);
     });
 
     context('src did not change', () => {
       it('does not reset campaign state', () => {
-        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        subject.componentDidUpdate({ src: campaignUrl });
         expect(subject.state.campaign).to.eql(campaign);
       });
 
       it('does not call initialDispatch', () => {
-        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        subject.componentDidUpdate({ src: campaignUrl });
         expect(subject.initialDispatch).not.to.have.been.called;
       });
     });
