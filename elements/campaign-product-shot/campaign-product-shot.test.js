@@ -19,7 +19,7 @@ describe('<campaign-product-shot>', function () {
       brand_messaging: 'Buy our shit',
     };
     fetchMock.mock(src, campaign);
-    fetchMock.mock(campaing.product_shot_url);
+    fetchMock.mock(campaign.product_shot_url);
 
     element = document.createElement('campaign-product-shot');
     element.setAttribute('src', src);
