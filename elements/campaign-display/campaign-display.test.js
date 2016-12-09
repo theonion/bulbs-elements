@@ -50,17 +50,17 @@ describe('<campaign-display>', () => {
   describe('componentDidUpdate', () => {
     beforeEach(() => {
       let campaignUrl = 'http://example.com/campaign';
-      fetchMock.mock(campaignUrl);
+      fetchMock.mock(campaignUrl, campaign);
 
       let wrapper = shallow(
         <CampaignDisplay
           placement='test-placement'
+          preambleText='foo'
           src={campaignUrl}
         />
       );
       subject = wrapper.instance();
 
-      campaign = {};
       sinon.spy(subject, 'initialDispatch');
       subject.store.actions.handleFetchComplete({}, campaign);
     });

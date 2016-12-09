@@ -111,7 +111,7 @@ CampaignDisplayRoot.propTypes = {
     id: PropTypes.number.isRequired,
     image_url: PropTypes.string,
     name: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   logoOnly: PropTypes.bool,
   nameOnly: PropTypes.bool,
   noLink: PropTypes.bool,

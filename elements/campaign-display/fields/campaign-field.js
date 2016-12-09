@@ -1,7 +1,7 @@
 const CampaignField = {
   actions: {
     handleFetchComplete (state, response) {
-      return response;
+      state.campaign = {...response};
     },
   },
 };
