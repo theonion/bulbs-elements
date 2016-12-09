@@ -5,14 +5,16 @@ import * as iphoneInlineVideo from 'iphone-inline-video';
 describe('<video is="bulbs-cinemagraph">', () => {
   let subject;
 
-  beforeEach(() => {
-    subject = document.createElement('video')
-    subject.setAttribute('is', 'bulbs-cinemagraph');
+  beforeEach((done) => {
+    subject = document.createElement('video', 'bulbs-cinemagraph');
+    subject.setAttribute('cinemagraph-duration', 0);
     document.body.appendChild(subject);
     sinon.spy(InViewMonitor, 'add');
     sinon.spy(InViewMonitor, 'remove');
     sinon.spy(subject, 'pause');
     sinon.spy(subject, 'play');
+
+    setImmediate(done);
   });
 
   afterEach(() => {
@@ -57,16 +59,22 @@ describe('<video is="bulbs-cinemagraph">', () => {
   });
 
   describe('enterviewport event', () => {
-    it('plays the video', () => {
+    it('plays the video', (done) => {
       subject.dispatchEvent(new CustomEvent('enterviewport'));
-      expect(subject.play).to.have.been.called.once;
+      setImmediate(() => {
+        expect(subject.play).to.have.been.called.once;
+        done();
+      });
     });
   });
 
   describe('exitviewport event', () => {
-    it('pauses the video', () => {
+    it('pauses the video', (done) => {
       subject.dispatchEvent(new CustomEvent('exitviewport'));
-      expect(subject.pause).to.have.been.called.once;
+      setImmediate(() => {
+        expect(subject.pause).to.have.been.called.once;
+        done();
+      });
     });
   });
 });

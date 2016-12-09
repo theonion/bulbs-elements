@@ -8,10 +8,8 @@ function BulbsHTMLVideoElement () {}
 BulbsHTMLVideoElement.prototype = HTMLVideoElement.prototype;
 
 class BulbsCinemagraph extends BulbsHTMLVideoElement {
+
   createdCallback () {
-    if (!this.hasAttribute('cinemagraph-duration')) {
-      console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
-    }
 
     // makeVideoPlayableInline is dumb and goes just a little bit too far in the
     // video, this results in a quick flash of a black frame in the loop. If we
@@ -22,15 +20,18 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
         return parseFloat(this.getAttribute('cinemagraph-duration')) || 0;
       },
     });
+  }
+
+  attachedCallback () {
+    if (!this.hasAttribute('cinemagraph-duration')) {
+      console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
+    }
 
     this.setAttribute('loop', true);
     this.setAttribute('webkit-playsinline', true);
 
     this.addEventListener('enterviewport', () => this.play());
     this.addEventListener('exitviewport', () => this.pause());
-  }
-
-  attachedCallback () {
     iphoneInlineVideo.default(this, /* hasAudio */ false);
     InViewMonitor.add(this);
   }
