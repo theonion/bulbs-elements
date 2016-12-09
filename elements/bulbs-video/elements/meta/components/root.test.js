@@ -52,6 +52,8 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
       beforeEach(() => {
         props.campaignUrl = '//example.org/campaign';
         props.campaignPlacement = 'foobar';
+        props.campaignPreamble = 'foobar';
+        props.campaignTrackAction = 'foobar';
         subject = shallow(<VideoMetaRoot {...props} video={video}/>);
         campaign = subject.find(VideoMetaCampaign);
       });

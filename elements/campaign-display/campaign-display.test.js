@@ -49,10 +49,13 @@ describe('<campaign-display>', () => {
 
   describe('componentDidUpdate', () => {
     beforeEach(() => {
+      let campaignUrl = 'http://example.com/campaign';
+      fetchMock.mock(campaignUrl);
+
       let wrapper = shallow(
         <CampaignDisplay
           placement='test-placement'
-          src='http://example.com/campaign'
+          src={campaignUrl}
         />
       );
       subject = wrapper.instance();

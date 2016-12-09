@@ -100,7 +100,7 @@ describe('<bulbs-video>', () => {
       container.style.position = 'fixed';
       container.style.top = '200%';
       document.body.appendChild(container);
-      setImmediate(() => done());
+      setImmediate(done);
     });
 
     afterEach(() => {
@@ -122,3 +122,4 @@ describe('<bulbs-video>', () => {
     });
   });
 });
+
