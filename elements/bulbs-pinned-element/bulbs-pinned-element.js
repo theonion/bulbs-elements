@@ -1,18 +1,29 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
-import { getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
+import { moveChildren, getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
 import './bulbs-pinned-element.scss';
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {
+
   attachedCallback () {
     invariant(this.hasAttribute('pinned-to'), '<bulbs-pinned-element pinned-to=".selector">: a pinned-to selector is required');
 
     const selector = this.getAttribute('pinned-to');
     const element = document.querySelector(selector);
+    this.topOffsetAdjustment = this.getAttribute('offset-top') || 0;
     this.lastPosition = 0;
     this.animationRequest = null;
 
     invariant(element, `<bulbs-pinned-element pinned-to=".selector">: no element with the selector "${selector}" is in the DOM`);
+
+    let car = this.querySelector('bulbs-pinned-element-car');
+    if (car) {
+      this.car = car;
+    } else {
+      this.car = document.createElement('bulbs-pinned-element-car');
+      moveChildren(this, this.car);
+      this.appendChild(this.car);
+    }
 
     window.addEventListener('scroll', this.handleScrollEvent.bind(this));
   }
@@ -22,7 +33,9 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
       this.animationRequest = requestAnimationFrame(() => {
         this.animationRequest = null;
 
-        if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
+        if(!InViewMonitor.isElementInViewport(this.car, this.car.getBoundingClientRect())) {
+          return;
+        }
 
         let elementPinnedTo = this.getElementPinnedTo();
         const boundingRects = this.getBoundingRects(elementPinnedTo);
@@ -38,15 +51,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   getElementPinnedTo () {
-    const pinnedTo = this.getAttribute('pinned-to');
-    let elementPinnedTo;
-    if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
-      elementPinnedTo = this.parentElement;
-    }
-    else {
-      elementPinnedTo = this.parentElement.querySelector(pinnedTo);
-    }
-    return elementPinnedTo;
+    return document.querySelector(this.getAttribute('pinned-to'));
   }
 
   isScrollingDown () {
@@ -61,7 +66,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   getBoundingRects (elementPinnedTo) {
     return {
-      'pinnedElement': this.getBoundingClientRect(),
+      'pinnedElement': this.car.getBoundingClientRect(),
       'elementPinnedTo': elementPinnedTo.getBoundingClientRect(),
     };
   }
@@ -107,22 +112,28 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   pinToParentTop () {
-    this.classList.remove('pinned-bottom');
-    this.classList.remove('pinned');
-    this.classList.add('pinned-top');
+    this.car.classList.remove('pinned-bottom');
+    this.car.classList.remove('pinned');
+    this.car.classList.add('pinned-top');
+    this.car.style.top = 0;
   }
 
   pinToParentBottom () {
-    this.classList.remove('pinned-top');
-    this.classList.remove('pinned');
-    this.classList.add('pinned-bottom');
+    this.car.classList.remove('pinned-top');
+    this.car.classList.remove('pinned');
+    this.car.classList.add('pinned-bottom');
+
+    this.car.style.top = 'initial';
+    this.car.style.bottom = 0;
   }
 
   addPinnedClass () {
-    this.classList.remove('pinned-top');
-    this.classList.remove('pinned-bottom');
-    this.classList.add('pinned');
+    this.car.classList.remove('pinned-top');
+    this.car.classList.remove('pinned-bottom');
+    this.car.classList.add('pinned');
+    this.car.style.top = this.topOffsetAdjustment;
   }
 }
 
 registerElement('bulbs-pinned-element', BulbsPinnedElement);
+
