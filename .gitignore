@@ -17,3 +17,4 @@ Procfile
 npm-debug.log*
 
 .s*
+*.swp
