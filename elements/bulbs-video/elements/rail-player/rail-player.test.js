@@ -42,7 +42,7 @@ describe('<rail-player>', () => {
   describe('fetchVideo', () => {
     context('without campaign', () => {
       beforeEach(() => {
-        subject = shallow(<RailPlayer src={'http://example.org/a-src'}/>).instance();
+        subject = shallow(<RailPlayer src='http://example.org/a-src'/>).instance();
       });
       it('checks if ad block is enabled', () => {
         sinon.spy(subject.store.actions, 'fetchVideo');
