@@ -1,6 +1,13 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
-import { moveChildren, getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
+
+import {
+  registerElement,
+  BulbsHTMLElement
+} from 'bulbs-elements/register';
+import {
+  moveChildren,
+  getScrollOffset
+} from 'bulbs-elements/util';
 import './bulbs-pinned-element.scss';
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {
@@ -20,17 +27,15 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
       this.appendChild(this.car);
     }
 
-    window.addEventListener('scroll', this.handleScrollEvent.bind(this));
+    window.addEventListener('scroll', this.positionCar.bind(this));
+
+    this.positionCar();
   }
 
-  handleScrollEvent () {
+  positionCar () {
     if(!this.animationRequest) {
       this.animationRequest = requestAnimationFrame(() => {
         this.animationRequest = null;
-
-        if(!InViewMonitor.isElementInViewport(this.car, this.car.getBoundingClientRect())) {
-          return;
-        }
 
         const boundingRects = this.getBoundingRects();
 
@@ -63,23 +68,23 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   handleScrollDown (boundingRects) {
 
-    if (boundingRects.rail.bottom - this.topOffsetAdjustment <= boundingRects.pinnedElement.height) {
-      this.pinToParentBottom();
+    if (boundingRects.rail.bottom <= boundingRects.pinnedElement.bottom) {
+      this.pinToRailBottom();
     } else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
-      this.addPinnedClass();
+      this.pinToWindow();
     }
   }
 
   handleScrollUp (boundingRects) {
 
     if (boundingRects.rail.top >= boundingRects.pinnedElement.top) {
-      this.pinToParentTop();
+      this.pinToRailTop();
     } else if (boundingRects.rail.bottom - boundingRects.pinnedElement.height - this.topOffsetAdjustment >= 0) {
-      this.addPinnedClass();
+      this.pinToWindow();
     }
   }
 
-  pinToParentTop () {
+  pinToRailTop () {
     this.car.classList.remove('pinned-bottom');
     this.car.classList.remove('pinned');
     this.car.classList.add('pinned-top');
@@ -88,7 +93,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.car.style.bottom = 'initial';
   }
 
-  pinToParentBottom () {
+  pinToRailBottom () {
     this.car.classList.remove('pinned-top');
     this.car.classList.remove('pinned');
     this.car.classList.add('pinned-bottom');
@@ -97,7 +102,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.car.style.bottom = 0;
   }
 
-  addPinnedClass () {
+  pinToWindow () {
     this.car.classList.remove('pinned-top');
     this.car.classList.remove('pinned-bottom');
     this.car.classList.add('pinned');
