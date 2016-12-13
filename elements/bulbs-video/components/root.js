@@ -38,6 +38,7 @@ Root.propTypes = {
   muted: PropTypes.bool,
   noCover: PropTypes.bool,
   noEndcard: PropTypes.bool,
+  shareUrl: PropTypes.string,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
