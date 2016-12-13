@@ -312,6 +312,7 @@ Revealed.propTypes = {
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   playsInline: PropTypes.bool,
+  shareUrl: PropTypes.string,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,
