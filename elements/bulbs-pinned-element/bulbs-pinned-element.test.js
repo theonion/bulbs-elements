@@ -1,81 +1,229 @@
 import { BulbsPinnedElement } from './bulbs-pinned-element';  // eslint-disable-line no-unused-vars
+import createMockRaf from 'mock-raf';
 
 describe('<bulbs-pinned-element>', () => {
-  let element;
+  let childElement;
+  let mockRaf = createMockRaf();
   let parentElement;
+  let sandbox;
   let subject;
 
-  beforeEach(() => {
-    element = document.createElement('bulbs-pinned-element');
+  function attachSubject () {
     parentElement = document.createElement('parent-element');
-    element.setAttribute('pinned-to', 'parent-element');
-    parentElement.appendChild(element);
-    document.body.append(parentElement);
+    parentElement.appendChild(subject);
 
-    subject = parentElement.querySelector('bulbs-pinned-element');
+    document.body.appendChild(parentElement);
+  };
+
+  beforeEach(done => {
+    sandbox = sinon.sandbox.create();
+
+    sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
+
+    childElement = document.createElement('div');
+
+    subject = document.createElement('bulbs-pinned-element');
+    subject.appendChild(childElement);
+
+    setImmediate(done);
   });
 
-  afterEach(() => {
+  afterEach(done => {
     parentElement.remove();
+
+    sandbox.restore();
+    setImmediate(done);
   });
 
-  it('renders an <bulbs-pinned-element>', () => {
-    expect(element.tagName.toLowerCase()).to.eql('bulbs-pinned-element');
+  context('#initialization', () => {
+
+    it('renders an <bulbs-pinned-element>', () => {
+
+      attachSubject();
+
+      expect(subject.tagName.toLowerCase()).to.eql('bulbs-pinned-element');
+    });
+
+    it('moves the content into a child component', () => {
+
+      attachSubject();
+
+      expect(Array.from(parentElement.querySelector('bulbs-pinned-element-car').children))
+        .to.contain(childElement);
+    });
+
+    it('attaches positioning function to window scroll event', done => {
+      let scrollEvent = new Event('scroll');
+      sandbox.stub(subject, 'positionCar');
+      attachSubject();
+
+      window.dispatchEvent(scrollEvent);
+
+      setImmediate(() => {
+        expect(subject.positionCar).to.have.been.calledTwice;
+
+        done();
+      });
+    });
+
+    it('calls positioning function to ensure sidebar position is correct on load', () => {
+      sandbox.stub(subject, 'positionCar');
+
+      attachSubject();
+
+      expect(subject.positionCar).to.have.been.calledOnce;
+    });
+
+    it('removes window scroll listener on unmount', () => {
+      sandbox.spy(window, 'removeEventListener');
+      attachSubject();
+
+      subject.detachedCallback();
+
+      expect(window.removeEventListener).to.have.been.calledWith('scroll', subject.boundPositionCar);
+    });
   });
 
-  context('#handleScrollDown', () => {
-    let offset;
-    let boundingRects;
+  context('initialized', () => {
 
-    afterEach(() => {
-      offset.restore();
+    beforeEach(() => {
+      attachSubject();
     });
 
-    it('adds pinned-top class while parent top is in viewport', () => {
-      offset = sinon.stub($.fn, 'offset')
-        .returns({ 'top': window.pageYOffset + 1 });
-      subject.handleScrollDown(parentElement, {});
-      expect(element.className).to.eql('pinned-top');
+    context('#positionCar', () => {
+
+      beforeEach(() => {
+        sandbox.stub(subject, 'handleScrollDown');
+        sandbox.stub(subject, 'handleScrollUp');
+
+        // make sure animation queue is empty
+        mockRaf.cancel();
+      });
+
+      it('should call scroll down handler when scrolling down', done => {
+        sandbox.stub(subject, 'isScrollingDown').returns(true);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.handleScrollDown).to.have.been.calledOnce;
+
+          done();
+        });
+      });
+
+      it('should call scroll up handler when scrolling up', done => {
+        sandbox.stub(subject, 'isScrollingDown').returns(false);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.handleScrollUp).to.have.been.calledOnce;
+
+          done();
+        });
+      });
+
+      it('should ensure rail is the size of the parent', done => {
+        let parentHeight = '100px';
+        let parentWidth = '200px';
+        parentElement.style.height = parentHeight;
+        parentElement.style.width = parentWidth;
+        parentElement.style.display = 'block';
+        sandbox.stub(subject, 'isScrollingDown').returns(false);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.style.height).to.equal(parentHeight);
+          expect(subject.style.width).to.equal(parentWidth);
+
+          done();
+        });
+      });
     });
 
-    it('adds pinned-bottom class when element is at bottom of parent', () => {
-      offset = sinon.stub($.fn, 'offset')
-        .returns({ 'top': window.pageYOffset - 10 });
-      boundingRects = {
-        'pinnedElement': { 'bottom': 10 },
-        'elementPinnedTo': { 'bottom': 0 },
-      };
-      subject.handleScrollDown(parentElement, boundingRects);
-      expect(element.className).to.eql('pinned-bottom');
+    context('#handleScrollDown', () => {
+
+      it('pins car to bottom when car is at the bottom of the rail and removes other pinning classes', () => {
+        let pos = 100;
+        subject.car.classList.add('pinned', 'pinned-top');
+
+        subject.handleScrollDown({
+          car: { bottom: pos },
+          rail: { bottom: pos }
+        });
+
+        let classes = Array.from(subject.car.classList);
+        expect(classes).to.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-top');
+        expect(subject.car.style.bottom).to.equal('0px');
+        expect(subject.car.style.top).to.equal('initial');
+      });
+
+      it('pins car to window when car is not at the bottom of the rail and in full view adjusted by an offset', () => {
+        let offset = 10;
+        subject.topOffsetAdjustment = offset;
+
+        subject.handleScrollDown({
+          car: { bottom: 10 },
+          rail: {
+            bottom: 100,
+            top: offset
+          }
+        });
+
+        let classes = Array.from(subject.car.classList);
+        expect(classes).to.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned-top');
+        expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
+        expect(subject.car.style.bottom).to.equal('initial');
+      });
     });
 
-    it('adds pinned class if parent top not in viewport and element not at bottom', () => {
-      offset = sinon.stub($.fn, 'offset')
-        .returns({ 'top': window.pageYOffset - 10 });
-      boundingRects = {
-        'pinnedElement': { 'bottom': 0 },
-        'elementPinnedTo': { 'bottom': 10 },
-      };
-      subject.handleScrollDown(parentElement, boundingRects);
-      expect(element.className).to.eql('pinned');
-    });
-  });
+    context('#handleScrollUp', () => {
 
-  context('#handleScrollUp', () => {
-    let boundingRects = {
-      'pinnedElement': { 'top': -10 },
-      'elementPinnedTo': { 'top': 0 },
-    };
+      it('pins car to top when car is at the top of the rail and removes other pinning classes', () => {
+        let pos = 10;
+        subject.car.classList.add('pinned', 'pinned-bottom');
 
-    it('adds pinned-top class when element reaches parent top', () => {
-      subject.handleScrollUp(boundingRects);
-      expect(element.className).to.eql('pinned-top');
-    });
+        subject.handleScrollUp({
+          car: { top: pos },
+          rail: { top: pos }
+        });
 
-    it('adds pinned class if element below top of viewport', () => {
-      boundingRects.elementPinnedTo.top = -12;
-      subject.handleScrollUp(boundingRects);
-      expect(element.className).to.eql('pinned');
+        let classes = Array.from(subject.car.classList);
+        expect(classes).to.contain('pinned-top');
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(subject.car.style.top).to.equal('initial');
+        expect(subject.car.style.bottom).to.equal('initial');
+      });
+
+      it('pins car to window when car is not at the top of the rail and in full view adjusted by an offset', () => {
+        subject.topOffsetAdjustment = 10;
+
+        subject.handleScrollUp({
+          car: {
+            bottom: 90,
+            height: 50,
+          },
+          rail: { bottom: 100 }
+        });
+
+        let classes = Array.from(subject.car.classList);
+        expect(classes).to.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned-top');
+        expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
+        expect(subject.car.style.bottom).to.equal('initial');
+      });
     });
   });
 });
+
