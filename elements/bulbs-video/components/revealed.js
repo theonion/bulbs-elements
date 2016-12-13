@@ -72,7 +72,7 @@ export default class Revealed extends React.Component {
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
-    videoMeta.player_options.shareUrl = this.props.shareUrl;
+    videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;;
 
     filteredTags.push(hostChannel);
 
