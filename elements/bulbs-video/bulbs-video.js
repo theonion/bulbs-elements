@@ -385,7 +385,6 @@ export default class BulbsVideo extends BulbsHTMLElement {
 
   pause () {
     this.player.pause(true);
-    this.player.seek(0);
   }
 }
 
