@@ -17,6 +17,7 @@ describe('<video is="bulbs-cinemagraph">', () => {
   afterEach(() => {
     InViewMonitor.add.restore();
     InViewMonitor.remove.restore();
+    document.body.removeChild(subject);
   });
 
   it('sets the loop attribute', () => {

@@ -1,0 +1,10 @@
+progress-bar {
+  display: block;
+  position: relative;
+
+  .progress-track {
+    position: absolute;
+    right: 0;
+    background: #fff;
+  }
+}
