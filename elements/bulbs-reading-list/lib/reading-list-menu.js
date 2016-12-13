@@ -49,12 +49,6 @@ export default class ReadingListMenu {
     return this.menuItems[0];
   }
 
-  setMenuPosition () {
-    const dimensions = this.getDimensions();
-    this.pinnedContainer.style.position = 'fixed';
-    this.pinnedContainer.style.top = `${dimensions.menuContainer.top}px`;
-  }
-
   getDimensions () {
     return {
       articles: this.articlesContainer.getBoundingClientRect(),
@@ -82,7 +76,6 @@ export default class ReadingListMenu {
   }
 
   handleScrollUp () {
-    if(!this.isCurrentMenuInViewport()) { return; }
     if (this.menuIsOffScreen() && this.articlesAreBelowMenu()) {
       this.pinMenuToArticlesBottom();
     }
