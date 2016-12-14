@@ -126,7 +126,10 @@ describe('<bulbs-pinned-element>', () => {
         });
       });
 
-      it('should ensure rail is the size of the parent', done => {
+      it('should ensure rail is the size of the parent less any start height offset', done => {
+
+        throw new Erorr('fix up this test');
+
         let parentHeight = '100px';
         let parentWidth = '200px';
         parentElement.style.height = parentHeight;
