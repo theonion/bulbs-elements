@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "8.3.2",
+  "version": "9.1.1",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
