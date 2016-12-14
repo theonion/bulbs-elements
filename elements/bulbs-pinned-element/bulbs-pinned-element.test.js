@@ -10,6 +10,7 @@ describe('<bulbs-pinned-element>', () => {
 
   function attachSubject () {
     parentElement = document.createElement('parent-element');
+
     parentElement.appendChild(subject);
 
     document.body.appendChild(parentElement);
@@ -20,9 +21,9 @@ describe('<bulbs-pinned-element>', () => {
 
     sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
 
-    childElement = document.createElement('div');
-
     subject = document.createElement('bulbs-pinned-element');
+
+    childElement = document.createElement('div');
     subject.appendChild(childElement);
 
     setImmediate(done);
@@ -102,6 +103,7 @@ describe('<bulbs-pinned-element>', () => {
 
       it('should call scroll down handler when scrolling down', done => {
         sandbox.stub(subject, 'isScrollingDown').returns(true);
+        sandbox.stub(subject, 'isInView').returns(true);
 
         subject.positionCar.call(subject);
         mockRaf.step();
@@ -113,8 +115,23 @@ describe('<bulbs-pinned-element>', () => {
         });
       });
 
+      it('should not call scroll down handler when rail is not in view', done => {
+        sandbox.stub(subject, 'isScrollingDown').returns(true);
+        sandbox.stub(subject, 'isInView').returns(false);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.handleScrollDown).to.not.have.been.called;
+
+          done();
+        });
+      });
+
       it('should call scroll up handler when scrolling up', done => {
         sandbox.stub(subject, 'isScrollingDown').returns(false);
+        sandbox.stub(subject, 'isInView').returns(true);
 
         subject.positionCar.call(subject);
         mockRaf.step();
@@ -126,10 +143,21 @@ describe('<bulbs-pinned-element>', () => {
         });
       });
 
+      it('should not call scroll up handler when rail is not in view', done => {
+        sandbox.stub(subject, 'isScrollingDown').returns(false);
+        sandbox.stub(subject, 'isInView').returns(false);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.handleScrollUp).to.not.have.been.called;
+
+          done();
+        });
+      });
+
       it('should ensure rail is the size of the parent less any start height offset', done => {
-
-        throw new Erorr('fix up this test');
-
         let parentHeight = '100px';
         let parentWidth = '200px';
         parentElement.style.height = parentHeight;
@@ -153,7 +181,7 @@ describe('<bulbs-pinned-element>', () => {
 
       it('pins car to bottom when car is at the bottom of the rail and removes other pinning classes', () => {
         let pos = 100;
-        subject.car.classList.add('pinned', 'pinned-top');
+        subject.car.classList.add('pinned');
 
         subject.handleScrollDown({
           car: { bottom: pos },
@@ -163,7 +191,6 @@ describe('<bulbs-pinned-element>', () => {
         let classes = Array.from(subject.car.classList);
         expect(classes).to.contain('pinned-bottom');
         expect(classes).to.not.contain('pinned');
-        expect(classes).to.not.contain('pinned-top');
         expect(subject.car.style.bottom).to.equal('0px');
         expect(subject.car.style.top).to.equal('initial');
       });
@@ -183,7 +210,6 @@ describe('<bulbs-pinned-element>', () => {
         let classes = Array.from(subject.car.classList);
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
-        expect(classes).to.not.contain('pinned-top');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
         expect(subject.car.style.bottom).to.equal('initial');
       });
@@ -201,10 +227,9 @@ describe('<bulbs-pinned-element>', () => {
         });
 
         let classes = Array.from(subject.car.classList);
-        expect(classes).to.contain('pinned-top');
         expect(classes).to.not.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
-        expect(subject.car.style.top).to.equal('initial');
+        expect(subject.car.style.top).to.equal('0px');
         expect(subject.car.style.bottom).to.equal('initial');
       });
 
@@ -222,7 +247,6 @@ describe('<bulbs-pinned-element>', () => {
         let classes = Array.from(subject.car.classList);
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
-        expect(classes).to.not.contain('pinned-top');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
         expect(subject.car.style.bottom).to.equal('initial');
       });

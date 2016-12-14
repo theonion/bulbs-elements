@@ -48,17 +48,21 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     };
   }
 
-  positionCar () {
-    const boundingRects = this.getBoundingRects();
+  isInView (boundingRects) {
+    return InViewMonitor.isElementInViewport(this, boundingRects.rail);
+  }
 
+  positionCar () {
     if(!this.animationRequest) {
       this.animationRequest = requestAnimationFrame(() => {
         this.animationRequest = null;
 
+        const boundingRects = this.getBoundingRects();
+
         this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
         this.style.width = `${boundingRects.parent.width}px`;
 
-        if (InViewMonitor.isElementInViewport(this, boundingRects.rail)) {
+        if (this.isInView(boundingRects)) {
 
           if(this.isScrollingDown()) {
             this.handleScrollDown(boundingRects);
@@ -109,7 +113,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   pinToRailBottom () {
-    this.car.classList.remove('pinned', 'pinned-top');
+    this.car.classList.remove('pinned');
     this.car.classList.add('pinned-bottom');
 
     this.car.style.bottom = 0;
@@ -117,7 +121,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   pinToWindow () {
-    this.car.classList.remove('pinned-bottom', 'pinned-top');
+    this.car.classList.remove('pinned-bottom');
     this.car.classList.add('pinned');
 
     this.car.style.bottom = 'initial';

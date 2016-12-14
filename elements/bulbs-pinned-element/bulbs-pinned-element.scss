@@ -6,9 +6,6 @@ bulbs-pinned-element {
   bulbs-pinned-element-car {
     display: block;
 
-    &.pinned-top {
-    }
-
     &.pinned {
       position: fixed;
       width: inherit;
