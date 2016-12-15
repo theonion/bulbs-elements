@@ -101,6 +101,20 @@ describe('<bulbs-pinned-element>', () => {
         mockRaf.cancel();
       });
 
+      it('should reset car styling when rail size changes', done => {
+        sandbox.stub(subject, 'resetCarPosition');
+        sandbox.stub(subject, 'hasNewRailHeight').returns(true);
+
+        subject.positionCar.call(subject);
+        mockRaf.step();
+
+        setImmediate(() => {
+          expect(subject.resetCarPosition).to.have.been.calledOnce;
+
+          done();
+        });
+      });
+
       it('should call scroll down handler when scrolling down', done => {
         sandbox.stub(subject, 'isScrollingDown').returns(true);
         sandbox.stub(subject, 'isInView').returns(true);
@@ -174,6 +188,29 @@ describe('<bulbs-pinned-element>', () => {
 
           done();
         });
+      });
+    });
+
+    context('#hasNewRailHeight', () => {
+
+      it('returns true when rail height has changed', () => {
+        subject.lastRailHeight = 100;
+
+        let hasNewRailHeight = subject.hasNewRailHeight({
+          rail: { height: subject.lastRailHeight + 100 }
+        });
+
+        expect(hasNewRailHeight).to.be.true;
+      });
+
+      it('returns false when rail height has not changed', () => {
+        subject.lastRailHeight = 100;
+
+        let hasNewRailHeight = subject.hasNewRailHeight({
+          rail: { height: subject.lastRailHeight }
+        });
+
+        expect(hasNewRailHeight).to.be.false;
       });
     });
 

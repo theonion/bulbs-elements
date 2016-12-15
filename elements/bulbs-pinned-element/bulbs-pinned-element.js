@@ -17,6 +17,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
     this.topOffsetAdjustment = parseInt(this.getAttribute('offset-top-px') || 0, 10);
     this.lastPosition = 0;
+    this.lastRailHeight = 0;
     this.animationRequest = null;
 
     let car = this.querySelector('bulbs-pinned-element-car');
@@ -62,6 +63,10 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
         this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
         this.style.width = `${boundingRects.parent.width}px`;
 
+        if (this.hasNewRailHeight(boundingRects)) {
+          this.resetCarPosition();
+        }
+
         if (this.isInView(boundingRects)) {
 
           if(this.isScrollingDown()) {
@@ -72,6 +77,17 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
         }
       });
     }
+  }
+
+  hasNewRailHeight (boundingRects) {
+    let newRailHeight = false;
+
+    if (boundingRects.rail.height !== this.lastRailHeight) {
+      newRailHeight = true;
+      this.lastRailHeight = boundingRects.rail.height;
+    }
+
+    return newRailHeight;
   }
 
   isScrollingDown () {
@@ -99,13 +115,13 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   handleScrollUp (boundingRects) {
 
     if (boundingRects.rail.top >= boundingRects.car.top) {
-      this.pinToRailTop();
+      this.resetCarPosition();
     } else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
       this.pinToWindow();
     }
   }
 
-  pinToRailTop () {
+  resetCarPosition () {
     this.car.classList.remove('pinned', 'pinned-bottom');
 
     this.car.style.bottom = 'initial';
