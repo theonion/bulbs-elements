@@ -1,14 +1,12 @@
-import invariant from 'invariant';
-
 import {
   registerElement,
-  BulbsHTMLElement
+  BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import {
   InViewMonitor,
   getRoundedBoundingClientRect,
   getScrollOffset,
-  moveChildren
+  moveChildren,
 } from 'bulbs-elements/util';
 import './bulbs-pinned-element.scss';
 
@@ -24,7 +22,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     let car = this.querySelector('bulbs-pinned-element-car');
     if (car) {
       this.car = car;
-    } else {
+    }
+    else {
       this.car = document.createElement('bulbs-pinned-element-car');
       moveChildren(this, this.car);
       this.appendChild(this.car);
@@ -72,7 +71,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
           if(this.isScrollingDown()) {
             this.handleScrollDown(boundingRects);
-          } else {
+          }
+          else {
             this.handleScrollUp(boundingRects);
           }
         }
@@ -108,7 +108,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
     if (boundingRects.rail.bottom <= boundingRects.car.bottom) {
       this.pinToRailBottom();
-    } else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
+    }
+    else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
       this.pinToWindow();
     }
   }
@@ -117,7 +118,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
     if (boundingRects.rail.top >= boundingRects.car.top) {
       this.resetCarPosition();
-    } else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
+    }
+    else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
       this.pinToWindow();
     }
   }

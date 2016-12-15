@@ -14,7 +14,7 @@ describe('<bulbs-pinned-element>', () => {
     parentElement.appendChild(subject);
 
     document.body.appendChild(parentElement);
-  };
+  }
 
   beforeEach(done => {
     sandbox = sinon.sandbox.create();
@@ -197,7 +197,7 @@ describe('<bulbs-pinned-element>', () => {
         subject.lastRailHeight = 100;
 
         let hasNewRailHeight = subject.hasNewRailHeight({
-          rail: { height: subject.lastRailHeight + 100 }
+          rail: { height: subject.lastRailHeight + 100 },
         });
 
         expect(hasNewRailHeight).to.be.true;
@@ -207,7 +207,7 @@ describe('<bulbs-pinned-element>', () => {
         subject.lastRailHeight = 100;
 
         let hasNewRailHeight = subject.hasNewRailHeight({
-          rail: { height: subject.lastRailHeight }
+          rail: { height: subject.lastRailHeight },
         });
 
         expect(hasNewRailHeight).to.be.false;
@@ -222,7 +222,7 @@ describe('<bulbs-pinned-element>', () => {
 
         subject.handleScrollDown({
           car: { bottom: pos },
-          rail: { bottom: pos }
+          rail: { bottom: pos },
         });
 
         let classes = Array.from(subject.car.classList);
@@ -240,8 +240,8 @@ describe('<bulbs-pinned-element>', () => {
           car: { bottom: 10 },
           rail: {
             bottom: 100,
-            top: offset
-          }
+            top: offset,
+          },
         });
 
         let classes = Array.from(subject.car.classList);
@@ -260,7 +260,7 @@ describe('<bulbs-pinned-element>', () => {
 
         subject.handleScrollUp({
           car: { top: pos },
-          rail: { top: pos }
+          rail: { top: pos },
         });
 
         let classes = Array.from(subject.car.classList);
@@ -278,7 +278,7 @@ describe('<bulbs-pinned-element>', () => {
             bottom: 90,
             height: 50,
           },
-          rail: { bottom: 100 }
+          rail: { bottom: 100 },
         });
 
         let classes = Array.from(subject.car.classList);

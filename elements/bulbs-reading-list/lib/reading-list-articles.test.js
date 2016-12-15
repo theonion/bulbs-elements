@@ -38,7 +38,7 @@ describe('ReadingListArticles', () => {
         href,
         partialUrl,
         title,
-        contentAnalyticsDimensions
+        contentAnalyticsDimensions,
       },
     });
     articlesElement.appendChild(itemElement);
@@ -113,3 +113,4 @@ describe('ReadingListArticles', () => {
     });
   });
 });
+

@@ -1,6 +1,5 @@
 import invariant from 'invariant';
 import { map, isUndefined } from 'lodash';
-import { InViewMonitor } from 'bulbs-elements/util';
 import ReadingListMenuItem from './reading-list-menu-item';
 
 export default class ReadingListMenu {
