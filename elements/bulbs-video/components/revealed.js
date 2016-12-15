@@ -5,7 +5,7 @@ require('../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
-import { prepGaEventTracker } from 'bulbs-elements/util';
+import { prepGaEventTracker, InViewMonitor } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -112,6 +112,7 @@ export default class Revealed extends React.Component {
 
   componentWillUnmount () {
     this.player.remove();
+    InViewMonitor.remove(this.refs.videoContainer);
   }
 
   extractSources (sources) {
@@ -263,6 +264,12 @@ export default class Revealed extends React.Component {
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
+    if (this.props.autoplayInview) {
+      InViewMonitor.add(this.refs.videoContainer);
+      this.refs.videoContainer.addEventListener('enterviewport', () => this.player.play());
+      this.refs.videoContainer.addEventListener('exitviewport', () => this.player.pause());
+    }
+    
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
