@@ -5,9 +5,10 @@ import {
   BulbsHTMLElement
 } from 'bulbs-elements/register';
 import {
-  moveChildren,
+  InViewMonitor,
+  getRoundedBoundingClientRect,
   getScrollOffset,
-  InViewMonitor
+  moveChildren
 } from 'bulbs-elements/util';
 import './bulbs-pinned-element.scss';
 
@@ -43,9 +44,9 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   getBoundingRects () {
 
     return {
-      car: this.car.getBoundingClientRect(),
-      parent: this.parentElement.getBoundingClientRect(),
-      rail: this.getBoundingClientRect(),
+      car: getRoundedBoundingClientRect(this.car),
+      parent: getRoundedBoundingClientRect(this.parentElement),
+      rail: getRoundedBoundingClientRect(this),
     };
   }
 
