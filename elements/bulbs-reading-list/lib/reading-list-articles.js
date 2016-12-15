@@ -43,14 +43,9 @@ export default class ReadingListArticles {
     if (article.isLoaded) {
       article.scrollIntoView();
     }
-    else if (this.isNextArticle(article)) {
-      if (this.shouldLoadNextArticle(article)) {
-        this.loadArticle(article)
-          .then(this.handleLoadNextArticleComplete.bind(this));
-      }
-    }
-    else if (this.isMoreThanOneAhead(article)) {
-      this.redirectToArticle(article);
+    else if (this.shouldLoadNextArticle(article)) {
+      this.loadArticle(article)
+        .then(this.handleLoadNextArticleComplete.bind(this));
     }
   }
 
@@ -102,10 +97,6 @@ export default class ReadingListArticles {
     this.isFetchingItem = false;
     article.scrollIntoView();
     this.currentArticle = article;
-  }
-
-  isMoreThanOneAhead (article) {
-    return (article.index - this.currentArticle.index) > 1;
   }
 
   redirectToArticle (article) {

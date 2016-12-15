@@ -30,7 +30,6 @@ class LoadMore extends BulbsHTMLButtonElement {
   }
 
   handleFetchError () {
-    console.log('error');
     this.outerHTML = '<span>There was an error fetching more content. Please reload page and try again.</span>';
   }
 }

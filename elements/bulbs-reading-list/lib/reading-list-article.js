@@ -152,12 +152,12 @@ export default class ReadingListArticle {
   }
 
   prepareAnalytics () {
-    var targeting = this.dimensions;
+    let targeting = this.dimensions;
     // need to update these to match correct implementation - scook
     ga('set', 'dimension2', targeting.dfp_campaign_id);
     ga('set', 'dimension4', targeting.dfp_feature);
     ga('set', 'dimension5', targeting.dfp_tag);
-    ga('set', 'dimension6', targeting.dfp_pagetype)
+    ga('set', 'dimension6', targeting.dfp_pagetype);
     ga('set', 'dimension7', targeting.dfp_contentid);
     ga('set', 'dimension8', targeting.dfp_publishdate);
     ga('set', 'dimension9', targeting.dfp_evergreen);

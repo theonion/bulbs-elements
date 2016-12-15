@@ -32,7 +32,7 @@ describe('ReadingListArticle', () => {
         href,
         partialUrl,
         title,
-        contentAnalyticsDimensions
+        contentAnalyticsDimensions,
       },
     });
     fixtures.appendChild(element);
