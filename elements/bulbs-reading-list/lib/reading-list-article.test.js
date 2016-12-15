@@ -14,7 +14,7 @@ describe('ReadingListArticle', () => {
   let fixtures;
   let element;
   let index;
-  let contentAnalytics;
+  let contentAnalyticsDimensions;
 
   beforeEach(() => {
     window.GA_ID = '7';
@@ -23,7 +23,7 @@ describe('ReadingListArticle', () => {
     href = 'http://example.com';
     partialUrl = 'http://example.com?partial=True';
     title = 'Example Title';
-    contentAnalytics = JSON.stringify({ 'dimension1': 'frogs' });
+    contentAnalyticsDimensions = JSON.stringify({ 'dimension1': 'frogs' });
     fixtures = appendFixtureContainer();
     dispatcher = new EventEmitter();
     element = createElement('bulbs-reading-list-item', {
@@ -32,7 +32,7 @@ describe('ReadingListArticle', () => {
         href,
         partialUrl,
         title,
-        contentAnalytics,
+        contentAnalyticsDimensions
       },
     });
     fixtures.appendChild(element);
