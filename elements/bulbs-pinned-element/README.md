@@ -1,10 +1,13 @@
 # `<bulbs-pinned-element>`
 
-Attributes
-  * `pinned-to` *(required)* selector of the element pinned to. This should be a parent of `<bulbs-pinned-element>`
+Wrapper that moves content inside a car in a vertical rail relative to the window. Rail takes the height and width of its parent container.
 
+## Attributes
 
-# Example
+* `offset-top-px` *(optional)* offset in pixels to adjust measurements by. For example, if you have a sticky header, use this to allow the car to stick in the window below the fixed header.
+
+## Example
+
 ```html
 <parent-element class="foobar">
   <bulbs-pinned-element pinned-to=".foobar">
