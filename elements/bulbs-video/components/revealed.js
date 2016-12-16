@@ -49,6 +49,7 @@ export default class Revealed extends React.Component {
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
+    let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
@@ -58,7 +59,7 @@ export default class Revealed extends React.Component {
       'dimension5': hostChannel,
       'dimension6': specialCoverage,
       'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || 'None', // autoplay
+      'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
     };
@@ -112,7 +113,7 @@ export default class Revealed extends React.Component {
 
   componentWillUnmount () {
     this.player.remove();
-    InViewMonitor.remove(this.refs.videoContainer);
+    InViewMonitor.remove(this.refs.videoViewport);
   }
 
   extractSources (sources) {
@@ -259,17 +260,21 @@ export default class Revealed extends React.Component {
       };
     }
 
+    if (typeof this.props.autoplayInView === 'string') {
+      let videoViewport = this.refs.videoViewport;
+      InViewMonitor.add(videoViewport);
+      videoViewport.addEventListener('enterviewport', () => this.player.play(true));
+      videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
+      if(!InViewMonitor.isElementInViewport(videoViewport)) {
+        playerOptions.autostart = false;
+      }
+    }
+
     this.player.setup(playerOptions);
 
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
-    if (this.props.autoplayInview) {
-      InViewMonitor.add(this.refs.videoContainer);
-      this.refs.videoContainer.addEventListener('enterviewport', () => this.player.play());
-      this.refs.videoContainer.addEventListener('exitviewport', () => this.player.pause());
-    }
-    
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
@@ -310,6 +315,7 @@ export default class Revealed extends React.Component {
 
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
+  autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
