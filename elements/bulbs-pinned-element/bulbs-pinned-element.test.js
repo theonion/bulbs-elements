@@ -201,7 +201,7 @@ describe('<bulbs-pinned-element>', () => {
           rail: { bottom: pos },
         });
 
-        let classes = [].slice.call(subject.car.classList);
+        let classes = [...subject.car.classList];
         expect(classes).to.contain('pinned-bottom');
         expect(classes).to.not.contain('pinned');
         expect(subject.car.style.bottom).to.equal('0px');
@@ -220,7 +220,7 @@ describe('<bulbs-pinned-element>', () => {
           },
         });
 
-        let classes = [].slice.call(subject.car.classList);
+        let classes = [...subject.car.classList];
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
@@ -239,7 +239,7 @@ describe('<bulbs-pinned-element>', () => {
           rail: { top: pos },
         });
 
-        let classes = [].slice.call(subject.car.classList);
+        let classes = [...subject.car.classList];
         expect(classes).to.not.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal('0px');
@@ -257,7 +257,7 @@ describe('<bulbs-pinned-element>', () => {
           rail: { bottom: 100 },
         });
 
-        let classes = [].slice.call(subject.car.classList);
+        let classes = [...subject.car.classList];
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
