@@ -13,10 +13,10 @@ describe('<bulbs-pinned-element>', () => {
 
     parentElement.appendChild(subject);
 
-    document.body.appendChild(parentElement);
+    subject.attachedCallback();
   }
 
-  beforeEach(done => {
+  beforeEach(() => {
     sandbox = sinon.sandbox.create();
 
     sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
@@ -25,15 +25,12 @@ describe('<bulbs-pinned-element>', () => {
 
     childElement = document.createElement('div');
     subject.appendChild(childElement);
-
-    setImmediate(done);
   });
 
-  afterEach(done => {
+  afterEach(() => {
     parentElement.remove();
 
     sandbox.restore();
-    setImmediate(done);
   });
 
   context('#initialization', () => {
@@ -53,18 +50,14 @@ describe('<bulbs-pinned-element>', () => {
         .to.contain(childElement);
     });
 
-    it('attaches positioning function to window scroll event', done => {
+    it('attaches positioning function to window scroll event', () => {
       let scrollEvent = new Event('scroll');
       sandbox.stub(subject, 'positionCar');
       attachSubject();
 
       window.dispatchEvent(scrollEvent);
 
-      setImmediate(() => {
-        expect(subject.positionCar).to.have.been.calledTwice;
-
-        done();
-      });
+      expect(subject.positionCar).to.have.been.calledTwice;
     });
 
     it('calls positioning function to ensure sidebar position is correct on load', () => {
@@ -101,93 +94,76 @@ describe('<bulbs-pinned-element>', () => {
         mockRaf.cancel();
       });
 
-      it('should reset car styling when rail size changes', done => {
+      it('should reset car styling when rail size changes', () => {
         sandbox.stub(subject, 'resetCarPosition');
         sandbox.stub(subject, 'hasNewRailHeight').returns(true);
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.resetCarPosition).to.have.been.calledOnce;
-
-          done();
-        });
+        expect(subject.resetCarPosition).to.have.been.calledOnce;
       });
 
-      it('should call scroll down handler when scrolling down', done => {
+      it('should call scroll down handler when scrolling down', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(true);
         sandbox.stub(subject, 'isInView').returns(true);
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.handleScrollDown).to.have.been.calledOnce;
-
-          done();
-        });
+        expect(subject.handleScrollDown).to.have.been.calledOnce;
       });
 
-      it('should not call scroll down handler when rail is not in view', done => {
+      it('should not call scroll down handler when rail is not in view', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(true);
         sandbox.stub(subject, 'isInView').returns(false);
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.handleScrollDown).to.not.have.been.called;
-
-          done();
-        });
+        expect(subject.handleScrollDown).to.not.have.been.called;
       });
 
-      it('should call scroll up handler when scrolling up', done => {
+      it('should call scroll up handler when scrolling up', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(false);
         sandbox.stub(subject, 'isInView').returns(true);
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.handleScrollUp).to.have.been.calledOnce;
-
-          done();
-        });
+        expect(subject.handleScrollUp).to.have.been.calledOnce;
       });
 
-      it('should not call scroll up handler when rail is not in view', done => {
+      it('should not call scroll up handler when rail is not in view', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(false);
         sandbox.stub(subject, 'isInView').returns(false);
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.handleScrollUp).to.not.have.been.called;
-
-          done();
-        });
+        expect(subject.handleScrollUp).to.not.have.been.called;
       });
 
-      it('should ensure rail is the size of the parent less any start height offset', done => {
-        let parentHeight = '100px';
-        let parentWidth = '200px';
-        parentElement.style.height = parentHeight;
-        parentElement.style.width = parentWidth;
-        parentElement.style.display = 'block';
+      it('should ensure rail is the size of the parent less any start height offset', () => {
+        let parentHeight = 100;
+        let parentWidth = 200;
         sandbox.stub(subject, 'isScrollingDown').returns(false);
+        sandbox.stub(subject, 'getBoundingRects').returns({
+          parent: {
+            height: parentHeight,
+            top: 0,
+            width: parentWidth,
+          },
+          rail: {
+            top: 0,
+          },
+        });
 
-        subject.positionCar.call(subject);
+        subject.positionCar();
         mockRaf.step();
 
-        setImmediate(() => {
-          expect(subject.style.height).to.equal(parentHeight);
-          expect(subject.style.width).to.equal(parentWidth);
-
-          done();
-        });
+        expect(subject.style.height).to.equal(`${parentHeight}px`);
+        expect(subject.style.width).to.equal(`${parentWidth}px`);
       });
     });
 
