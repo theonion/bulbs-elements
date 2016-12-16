@@ -2,18 +2,19 @@ import { times } from 'lodash';
 import {
   boostNewContender,
   createRandomStats,
+  createRandomStatsFromRange,
   getLosers,
   getRandomContenderWithout,
+  maxTotal,
+  minTotal,
   randomizeContenders,
   shuffleContenders,
   sortByTotal,
   swapRandomLeaders,
   swapStats,
   topFiveContenders,
-  minTotal,
-  maxTotal,
-  createRandomStatsFromRange,
 } from './randomizer';
+
 describe('randomizer', () => {
   let contenders;
   beforeEach(() => {

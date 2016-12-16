@@ -21,22 +21,23 @@ const flyoverRegistry = {
 
 class FlyoverMenu extends BulbsHTMLElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {
-    invariant(this.hasAttribute('menu-name'),
-      '<bulbs-flyover-menu> MUST have a `menu-name` attribute;');
     this.flyoverState.menu = this;
   }
 
   attachedCallback () {
-    this.addEventListener('click', this.closeFlyover.bind(this));
+    invariant(this.hasAttribute('menu-name'),
+      '<bulbs-flyover-menu> MUST have a `menu-name` attribute;');
   }
 
   openFlyover () {
     this.classList.add('bulbs-flyover-open');
-
+    if (this.hasAttribute('no-body-scroll')) {
+      document.body.classList.add('noscroll-flyout-active');
+    }
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'true');
     });
@@ -44,16 +45,19 @@ class FlyoverMenu extends BulbsHTMLElement {
 
   closeFlyover () {
     this.classList.remove('bulbs-flyover-open');
-
+    if (this.hasAttribute('no-body-scroll')) {
+      document.body.classList.remove('noscroll-flyout-active');
+    }
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'false');
+      button.classList.remove('bulbs-flyover-open');
     });
   }
 }
 
 class FlyoverClose extends BulbsHTMLButtonElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {
@@ -70,7 +74,7 @@ FlyoverClose.extends = 'button';
 
 class FlyoverOpen extends BulbsHTMLButtonElement {
   get flyoverState () {
-    return flyoverRegistry.get(this.menuName);
+    return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
   createdCallback () {

@@ -12,4 +12,8 @@ bower_components/
 stats.json
 .eslintcache
 coverage/*
+Procfile
 .DS_Store
+npm-debug.log*
+.s*
+*.swp

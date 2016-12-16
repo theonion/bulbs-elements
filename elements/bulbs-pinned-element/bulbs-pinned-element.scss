@@ -1,0 +1,19 @@
+
+bulbs-pinned-element {
+  display: block;
+  position: relative;
+
+  bulbs-pinned-element-car {
+    display: block;
+
+    &.pinned {
+      position: fixed;
+      width: inherit;
+    }
+
+    &.pinned-bottom {
+      position: absolute;
+    }
+  }
+}
+

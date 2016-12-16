@@ -1,4 +1,3 @@
-/* eslint max-len: 0 */
 import React, { Component, PropTypes } from 'react';
 
 export default class Medal extends Component {

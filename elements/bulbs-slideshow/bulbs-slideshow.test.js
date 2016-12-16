@@ -14,6 +14,7 @@ describe('<bulbs-slideshow>', () => {
 
   afterEach(() => {
     sandbox.restore();
+    fixture.cleanup();
   });
 
   it('renders an <bulbs-slideshow>', () => {
@@ -42,14 +43,15 @@ describe('<bulbs-slideshow>', () => {
 
   describe('displayCurrentSlideNumber', () => {
     it('renders the current slide and count', () => {
-      subject.displayCurrentSlideNumber();
+      sandbox.stub(subject, 'currentSlideNumber')
+        .onFirstCall().returns(1)
+        .onSecondCall().returns(2);
 
+      subject.displayCurrentSlideNumber();
       expect(subject.$slideCount.eq(0).text()).to.equal('1 of 3');
       expect(subject.$slideCount.eq(1).text()).to.equal('1 of 3');
 
-      sandbox.stub(subject, 'currentSlideNumber').returns(2);
       subject.displayCurrentSlideNumber();
-
       expect(subject.$slideCount.eq(0).text()).to.equal('2 of 3');
       expect(subject.$slideCount.eq(1).text()).to.equal('2 of 3');
     });

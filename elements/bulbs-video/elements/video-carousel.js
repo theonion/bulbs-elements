@@ -57,12 +57,24 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
+    this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
     this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
       currentItem: this.querySelector('bulbs-carousel-item'),
     });
+  }
+
+  firstPlay () {
+    let items = this.querySelectorAll('bulbs-carousel-item');
+
+    if (items.length > 0) {
+      this.selectItem(items[0]);
+      this.applyState();
+    }
+
+    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
   }
 
   playerEnded () {
@@ -125,7 +137,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     );
 
     forEach.call(
-      this.querySelectorAll('share-tools'),
+      this.querySelectorAll('share-tools, bulbs-video'),
       (element) => element.setAttribute('share-url', this.state.shareUrl)
     );
 

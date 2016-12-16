@@ -1,4 +1,3 @@
-/* eslint max-len: 0 */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DfpPixel from './dfp-pixel';

@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 import url from 'url';
@@ -135,6 +133,7 @@ describe('<bulbs-video> <Revealed>', () => {
     describe('makes a video player', () => {
       beforeEach(function () {
         props = {
+          shareUrl: 'http://www.onionstudios.com/v/4974',
           targetSpecialCoverage: 'sc-slug',
           targetCampaignId: '5678',
           targetCampaignNumber: '123456',
@@ -159,11 +158,11 @@ describe('<bulbs-video> <Revealed>', () => {
             player_options: {
               'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
               'advertising': {
-                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
+                'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
 
               },
-              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
-              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
+              'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
+              'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
               'comscore': {
                 'id': 6036328,
                 'metadata': {
@@ -257,7 +256,7 @@ describe('<bulbs-video> <Revealed>', () => {
         });
 
         it('sets sharetools config', () => {
-          let expected = `${window.location.href}/v/3124`;
+          let expected = 'http://www.onionstudios.com/v/4974';
           expect(makeVideoPlayerSpy.args[0][1].player_options.shareUrl).to.equal(expected);
         });
 
@@ -634,10 +633,10 @@ describe('<bulbs-video> <Revealed>', () => {
         player_options: {
           'poster': 'http://i.onionstatic.com/onionstudios/4974/16x9/800.jpg',
           'advertising': {
-            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602', // eslint-disable-line max-len
+            'tag': 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0&pf=html5&cv=h5_1.0.14.17.1&f=&t=4045%2Cclickhole%2Cmain%2Cshort_form%2Chtml5&s=main%2Fclickhole&cf=short_form&cd=96.757551&tt=p&st=0%3A0%2C3%2C4%2C10%2C20%3A1%2C91%2C100&rnd=9206206327905602',
           },
-          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053', // eslint-disable-line max-len
-          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>', // eslint-disable-line max-len
+          'shareUrl': 'http://www.onionstudios.com/videos/beautiful-watch-this-woman-use-a-raw-steak-to-bang-out-the-word-equality-in-morse-code-on-the-hood-of-her-car-4053',
+          'embedCode': '<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=4023\"></iframe>',
           'comscore': {
             'id': 6036328,
             'metadata': {
@@ -745,6 +744,10 @@ describe('<bulbs-video> <Revealed>', () => {
 
         it('sets up the player', () => {
           expect(playerSetup.called).to.be.true;
+        });
+
+        it('forwards player beforePlay event', () => {
+          expect(playerOn).to.have.been.calledWith('beforePlay', forwardJWEvent);
         });
 
         it('forwards player complete event', () => {

@@ -72,7 +72,7 @@ export default class Revealed extends React.Component {
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
-    videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
+    videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
 
@@ -264,6 +264,7 @@ export default class Revealed extends React.Component {
     Comscore.init(this.player, global.BULBS_ELEMENTS_COMSCORE_ID, videoMeta.player_options.comscore.metadata);
 
     this.player.on('beforePlay', this.setPlaysInline);
+    this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
   }
 
@@ -311,6 +312,7 @@ Revealed.propTypes = {
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   playsInline: PropTypes.bool,
+  shareUrl: PropTypes.string,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,

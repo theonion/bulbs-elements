@@ -1,3 +1,5 @@
+import './bulbs-flyover-menu-example.scss';
+
 export default {
   element: 'bulbs-flyover-menu',
   examples: {

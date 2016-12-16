@@ -1,21 +1,22 @@
 {
   "globals": {
-    "describe": false,
-    "it": false,
-    "xit": false,
-    "beforeEach": false,
-    "afterEach": false,
-    "context": false,
-    "chai": false,
-    "expect": false,
-    "assert": false,
-    "sinon": false,
-    "ga": false,
     "$": false,
-    "jQuery": false,
+    "afterEach": false,
+    "assert": false,
+    "beforeEach": false,
+    "chai": false,
     "Clickventure": false,
+    "context": false,
+    "describe": false,
+    "expect": false,
     "fixture": false,
-    "Promise": false
+    "ga": false,
+    "it": false,
+    "jQuery": false,
+    "Promise": false,
+    "sinon": false,
+    "xdescribe": false,
+    "xit": false
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
@@ -26,6 +27,8 @@
     "destructuring": true,
     "forOf": true,
     "generators": true,
+    "globalReturn": false,
+    "jsx": true,
     "modules": true,
     "objectLiteralComputedProperties": true,
     "objectLiteralDuplicateProperties": false,
@@ -38,14 +41,12 @@
     "spread": true,
     "superInFunctions": true,
     "templateStrings": true,
-    "unicodePointEscapes": true,
-    "globalReturn": false,
-    "jsx": true
+    "unicodePointEscapes": true
   },
   "env": {
     "browser": true,
-    "node": true,
-    "jquery": true
+    "jquery": true,
+    "node": true
   },
   "parser": "babel-eslint",
   "plugins": [
@@ -64,8 +65,8 @@
     "no-dupe-args": 1,
     "no-dupe-keys": 1,
     "no-duplicate-case": 0,
-    "no-empty-character-class": 1,
     "no-empty": 1,
+    "no-empty-character-class": 1,
     "no-ex-assign": 1,
     "no-extra-boolean-cast": 1,
     "no-extra-parens": 0,
@@ -92,8 +93,8 @@
     "consistent-return": 1,
     "curly": [1, "all"],
     "default-case": 0,
-    "dot-notation": [1, { "allowKeywords": true, "allowPattern": "" }],
     "dot-location": [1, "property"],
+    "dot-notation": [1, { "allowKeywords": true, "allowPattern": "" }],
     "eqeqeq": 1,
     "guard-for-in": 0,
     "no-alert": 1,
@@ -114,16 +115,16 @@
     "no-multi-spaces": 1,
     "no-multi-str": 1,
     "no-native-reassign": 1,
+    "no-new": 1,
     "no-new-func": 1,
     "no-new-wrappers": 1,
-    "no-new": 1,
-    "no-octal-escape": 1,
     "no-octal": 1,
+    "no-octal-escape": 1,
     "no-param-reassign": 0,
     "no-process-env": 0,
     "no-proto": 1,
     "no-redeclare": 1,
-    "no-return-assign": 1,
+    "no-return-assign": 0,
     "no-script-url": 1,
     "no-self-compare": 1,
     "no-sequences": 1,
@@ -144,10 +145,10 @@
     "no-catch-shadow": 0,
     "no-delete-var": 1,
     "no-label-var": 1,
-    "no-shadow-restricted-names": 1,
     "no-shadow": 1,
-    "no-undef-init": 1,
+    "no-shadow-restricted-names": 1,
     "no-undef": 1,
+    "no-undef-init": 1,
     "no-undefined": 1,
     "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
     "no-use-before-define": 0,
@@ -198,8 +199,8 @@
     "padded-blocks": [0, "never"],
     "quote-props": [0],
     "quotes": [1, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
-    "semi-spacing": [1, { "before": false, "after": true }],
     "semi": [1, "always"],
+    "semi-spacing": [1, { "before": false, "after": true }],
     "sort-vars": 0,
     "space-after-keywords": 0,
     "space-before-blocks": [1, "always"],
@@ -220,27 +221,23 @@
 
     /* Legacy */
     "max-depth": [0, 3],
-    "max-len": [1, 121, 2],
+    "max-len": 0,
     "max-params": 0,
     "max-statements": 0,
     "no-bitwise": 1,
     "no-plusplus": 0,
 
     /* Babel */
-    // "babel/block-scoped-var": 1,
     "babel/object-shorthand": [1, "always"],
-    // "babel/generator-star": 1, // deprecated
     "babel/generator-star-spacing": [1, "after"],
     "babel/new-cap": 1,
     "babel/object-curly-spacing": [1, "always"],
-    // "babel/space-in-brackets": 1, // deprecated
 
     /* React */
     "react/display-name": 0,
     "react/jsx-boolean-value": 0,
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-undef": 1,
-    "react/sort-prop-types": 1,
     "react/jsx-sort-props": 0,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
@@ -253,6 +250,7 @@
     "react/react-in-jsx-scope": 1,
     "react/self-closing-comp": 1,
     "react/sort-comp": 1,
+    "react/sort-prop-types": 1,
     "react/wrap-multilines": 0
   }
 }

@@ -1,0 +1,31 @@
+// Global Styles
+
+bulbs-header {
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+bulbs-header-masthead {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+bulbs-header-responsive-nav {
+  display: flex;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(-130%);
+  width: 100%;
+  &.responsive-nav-active {
+    position: fixed;
+    transition-timing-function: ease-out;
+    transition: 0.25s;
+    transform: translateY(0);
+  }
+}
