@@ -135,5 +135,9 @@
     "yo": "^1.6.0",
     "scroll-into-view": "^1.7.1",
     "waypoints": "^4.0.1"
+  },
+  "devDependencies": {
+    "chai-spies": "^0.7.1",
+    "mock-raf": "^0.1.0"
   }
 }
