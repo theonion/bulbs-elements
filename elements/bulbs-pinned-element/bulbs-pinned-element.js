@@ -127,7 +127,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   resetCarPosition () {
     this.car.classList.remove('pinned', 'pinned-bottom');
 
-    this.car.style.bottom = 'initial';
+    this.car.style.bottom = '';
     this.car.style.top = 0;
   }
 
@@ -136,14 +136,14 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.car.classList.add('pinned-bottom');
 
     this.car.style.bottom = 0;
-    this.car.style.top = 'initial';
+    this.car.style.top = '';
   }
 
   pinToWindow () {
     this.car.classList.remove('pinned-bottom');
     this.car.classList.add('pinned');
 
-    this.car.style.bottom = 'initial';
+    this.car.style.bottom = '';
     this.car.style.top = `${this.topOffsetAdjustment}px`;
   }
 }

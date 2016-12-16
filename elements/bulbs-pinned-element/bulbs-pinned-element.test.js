@@ -201,11 +201,11 @@ describe('<bulbs-pinned-element>', () => {
           rail: { bottom: pos },
         });
 
-        let classes = [...subject.car.classList];
+        let classes = [].slice.call(subject.car.classList);
         expect(classes).to.contain('pinned-bottom');
         expect(classes).to.not.contain('pinned');
         expect(subject.car.style.bottom).to.equal('0px');
-        expect(subject.car.style.top).to.equal('initial');
+        expect(subject.car.style.top).to.equal('');
       });
 
       it('pins car to window when car is not at the bottom of the rail and in full view adjusted by an offset', () => {
@@ -220,11 +220,11 @@ describe('<bulbs-pinned-element>', () => {
           },
         });
 
-        let classes = [...subject.car.classList];
+        let classes = [].slice.call(subject.car.classList);
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
-        expect(subject.car.style.bottom).to.equal('initial');
+        expect(subject.car.style.bottom).to.equal('');
       });
     });
 
@@ -239,11 +239,11 @@ describe('<bulbs-pinned-element>', () => {
           rail: { top: pos },
         });
 
-        let classes = [...subject.car.classList];
+        let classes = [].slice.call(subject.car.classList);
         expect(classes).to.not.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal('0px');
-        expect(subject.car.style.bottom).to.equal('initial');
+        expect(subject.car.style.bottom).to.equal('');
       });
 
       it('pins car to window when car is not at the top of the rail and in full view adjusted by an offset', () => {
@@ -257,11 +257,11 @@ describe('<bulbs-pinned-element>', () => {
           rail: { bottom: 100 },
         });
 
-        let classes = [...subject.car.classList];
+        let classes = [].slice.call(subject.car.classList);
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
-        expect(subject.car.style.bottom).to.equal('initial');
+        expect(subject.car.style.bottom).to.equal('');
       });
     });
   });
