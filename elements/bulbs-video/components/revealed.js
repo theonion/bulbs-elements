@@ -263,7 +263,8 @@ export default class Revealed extends React.Component {
     if (typeof this.props.autoplayInView === 'string') {
       let videoViewport = this.refs.videoViewport;
       InViewMonitor.add(videoViewport);
-      videoViewport.addEventListener('enterviewport', () => this.player.play(true));
+      this.enterviewportEvent = () => this.player.play(true);
+      videoViewport.addEventListener('enterviewport', this.enterviewportEvent);
       videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
       if(!InViewMonitor.isElementInViewport(videoViewport)) {
         playerOptions.autostart = false;
@@ -284,6 +285,7 @@ export default class Revealed extends React.Component {
     if (this.props.hideControls) {
       this.player.play();
     }
+    this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
   }
 
   forwardJWEvent (event) {

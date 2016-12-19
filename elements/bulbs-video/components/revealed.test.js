@@ -956,6 +956,13 @@ describe('<bulbs-video> <Revealed>', () => {
           Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
           expect(eventListener).to.have.been.calledWith('exitviewport');
         });
+
+        it('detaches play event if user pauses video', () => {
+          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleClick.call(params, element, videoMeta);
+          expect(eventListener).to.have.been.calledWith('enterviewport');
+        });
       });
 
       context('embedded setup', () => {
