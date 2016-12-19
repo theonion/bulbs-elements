@@ -24,6 +24,7 @@ export default class Revealed extends React.Component {
     super(props);
     this.forwardJWEvent = this.forwardJWEvent.bind(this);
     this.setPlaysInline = this.setPlaysInline.bind(this);
+    this.handlePauseEvent = this.handlePauseEvent.bind(this);
   }
 
   componentDidMount () {
@@ -263,7 +264,7 @@ export default class Revealed extends React.Component {
     if (typeof this.props.autoplayInView === 'string') {
       this.handleAutoPlayInView();
       // turn off autostart if player is not in viewport
-      playerOptions.autostart = this.playerInViewport();
+      playerOptions.autostart = this.playerInViewport(this.refs.videoViewport);
     }
 
     this.player.setup(playerOptions);
@@ -274,15 +275,13 @@ export default class Revealed extends React.Component {
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
-    if (this.refs) {
-      this.player.on('pause', this.handlePauseEvent(this.refs.videoViewport));
-    }
   }
 
   handleClick () {
     if (this.props.hideControls) {
       this.player.play();
     }
+    this.handlePauseEvent();
   }
 
   handleAutoPlayInView () {
@@ -303,8 +302,9 @@ export default class Revealed extends React.Component {
     return overrideAutoPlay;
   }
 
-  handlePauseEvent (videoViewport) {
-    videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
+  handlePauseEvent () {
+    this.player.pause(true);
+    this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
   }
 
   forwardJWEvent (event) {

@@ -969,10 +969,23 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(eventListener).to.have.been.calledWith('exitviewport');
         });
 
+        it('force pauses video on click', () => {
+          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
+          let pauseStub = sandbox.stub();
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          params.player.pause = pauseStub;
+          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
+          expect(pauseStub).to.have.been.calledWith(true);
+        });
+
         it('detaches play event if user pauses video', () => {
           let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
-          Revealed.prototype.handleAutoPlayInView.call(params, videoViewport, videoMeta);
-          Revealed.prototype.handlePauseEvent(videoViewport);
+          let pauseStub = sandbox.stub();
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          params.player.pause = pauseStub;
+          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
           expect(eventListener).to.have.been.calledWith('enterviewport');
         });
       });
