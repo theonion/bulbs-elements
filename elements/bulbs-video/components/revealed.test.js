@@ -886,7 +886,10 @@ describe('<bulbs-video> <Revealed>', () => {
       });
 
       context('autoplayInView', () => {
+        let handleAutoPlayInViewStub;
+        let handlePauseEventStub;
         let params;
+        let playerInViewportStub;
         let sandbox;
         let videoViewport;
 
@@ -904,6 +907,9 @@ describe('<bulbs-video> <Revealed>', () => {
           extractSourcesStub = sandbox.stub().returns(sources);
           vastUrlStub = sandbox.stub().returns('http://localhost:8080/vast.xml');
           extractTrackCaptionsStub = sandbox.stub().returns([]);
+          handleAutoPlayInViewStub = sandbox.stub()
+          handlePauseEventStub = sandbox.stub()
+          playerInViewportStub = sandbox.stub().returns(true);
           params = {
             props: {
               autoplayInView: '',
@@ -917,6 +923,9 @@ describe('<bulbs-video> <Revealed>', () => {
             extractSources: extractSourcesStub,
             vastUrl: vastUrlStub,
             extractTrackCaptions: extractTrackCaptionsStub,
+            handleAutoPlayInView: handleAutoPlayInViewStub,
+            handlePauseEvent: handlePauseEventStub,
+            playerInViewport: playerInViewportStub,
           };
 
         });
@@ -925,42 +934,45 @@ describe('<bulbs-video> <Revealed>', () => {
           sandbox.restore();
         });
 
+        it('calls handleAutoPlayInView', () => {
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          expect(handleAutoPlayInViewStub).to.be.called;
+        });
+
         it('initializes InViewMonitor', () => {
           let inViewMonitorAdd = sandbox.stub(util.InViewMonitor, 'add');
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
           expect(inViewMonitorAdd.called).to.be.true;
         });
 
         it('autoplays video on load if its in the viewport', () => {
           sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(true);
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
-          let setupOptions = playerSetup.args[0][0];
-          expect(setupOptions.autostart).to.be.true;
+          let expected = Revealed.prototype.playerInViewport.call(element);
+          expect(expected).to.be.true;
         });
 
         it('no autoplay on load if video is not in viewport', () => {
           sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(false);
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
-          let setupOptions = playerSetup.args[0][0];
-          expect(setupOptions.autostart).to.be.false;
+          let expected = Revealed.prototype.playerInViewport.call(element);
+          expect(expected).to.be.false;
         });
 
         it('attaches play to enterviewport event', () => {
           let eventListener = sandbox.spy(videoViewport, 'addEventListener');
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
           expect(eventListener).to.have.been.calledWith('enterviewport');
         });
 
         it('attaches play to enterviewport event', () => {
           let eventListener = sandbox.spy(videoViewport, 'addEventListener');
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
           expect(eventListener).to.have.been.calledWith('exitviewport');
         });
 
         it('detaches play event if user pauses video', () => {
           let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
-          Revealed.prototype.handleClick.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, videoViewport, videoMeta);
+          Revealed.prototype.handlePauseEvent(videoViewport);
           expect(eventListener).to.have.been.calledWith('enterviewport');
         });
       });
