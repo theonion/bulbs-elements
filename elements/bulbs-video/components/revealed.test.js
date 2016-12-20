@@ -907,8 +907,8 @@ describe('<bulbs-video> <Revealed>', () => {
           extractSourcesStub = sandbox.stub().returns(sources);
           vastUrlStub = sandbox.stub().returns('http://localhost:8080/vast.xml');
           extractTrackCaptionsStub = sandbox.stub().returns([]);
-          handleAutoPlayInViewStub = sandbox.stub()
-          handlePauseEventStub = sandbox.stub()
+          handleAutoPlayInViewStub = sandbox.stub();
+          handlePauseEventStub = sandbox.stub();
           playerInViewportStub = sandbox.stub().returns(true);
           params = {
             props: {
@@ -969,24 +969,26 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(eventListener).to.have.been.calledWith('exitviewport');
         });
 
-        it('force pauses video on click', () => {
+        it('detaches enterviewport play event when user pauses video', () => {
           let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
           let pauseStub = sandbox.stub();
           Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
           Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
           params.player.pause = pauseStub;
-          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
-          expect(pauseStub).to.have.been.calledWith(true);
-        });
-
-        it('detaches play event if user pauses video', () => {
-          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
-          let pauseStub = sandbox.stub();
-          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
-          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
-          params.player.pause = pauseStub;
+          element.pauseReason = 'interaction';
           Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
           expect(eventListener).to.have.been.calledWith('enterviewport');
+        });
+
+        it('does nothing if exitviewport event pauses video', () => {
+          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
+          let pauseStub = sandbox.stub();
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          params.player.pause = pauseStub;
+          element.pauseReason = 'external';
+          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
+          expect(eventListener.called).to.be.false;
         });
       });
 

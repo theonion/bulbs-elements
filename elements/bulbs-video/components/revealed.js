@@ -275,36 +275,42 @@ export default class Revealed extends React.Component {
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
+    this.player.on('pause', this.handlePauseEvent);
+    this.player.on('adPause', this.handlePauseEvent);
+  }
+
+  handleAutoPlayInView () {
+    let videoViewport = this.refs.videoViewport;
+    InViewMonitor.add(videoViewport);
+    videoViewport.addEventListener('enterviewport', () => this.player.play(true));
+    videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
+  }
+
+  playerInViewport (videoViewport) {
+    let overrideAutoPlay;
+    if(InViewMonitor.isElementInViewport(videoViewport)) {
+      overrideAutoPlay = true;
+    }
+    else {
+      overrideAutoPlay = false;
+    }
+    return overrideAutoPlay;
   }
 
   handleClick () {
     if (this.props.hideControls) {
       this.player.play();
     }
-    this.handlePauseEvent();
   }
 
-  handleAutoPlayInView () {
-    let videoViewport = this.refs.videoViewport;
-    InViewMonitor.add(videoViewport);
-    this.enterviewportEvent = () => this.player.play(true);
-    videoViewport.addEventListener('enterviewport', this.enterviewportEvent);
-    videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
-  }
-
-  playerInViewport(videoViewport) {
-    let overrideAutoPlay;
-    if(InViewMonitor.isElementInViewport(videoViewport)) {
-      overrideAutoPlay = true;
-    } else {
-      overrideAutoPlay = false;
+  handlePauseEvent (reason) {
+    if (reason.pauseReason === 'external') {
+      return;
     }
-    return overrideAutoPlay;
-  }
-
-  handlePauseEvent () {
-    this.player.pause(true);
-    this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
+    else if (reason.pauseReason === 'interaction') {
+      this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
+      this.player.pause(true);
+    }
   }
 
   forwardJWEvent (event) {
