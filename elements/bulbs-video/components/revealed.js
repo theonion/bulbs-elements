@@ -282,7 +282,8 @@ export default class Revealed extends React.Component {
   handleAutoPlayInView () {
     let videoViewport = this.refs.videoViewport;
     InViewMonitor.add(videoViewport);
-    videoViewport.addEventListener('enterviewport', () => this.player.play(true));
+    this.enterviewportEvent = () => this.player.play(true);
+    videoViewport.addEventListener('enterviewport', () => this.enterviewportEvent);
     videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
   }
 
