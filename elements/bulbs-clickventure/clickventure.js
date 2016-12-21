@@ -2,7 +2,7 @@
 import { defaults } from 'lodash';
 import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
-import { getAnalyticsManager } from 'bulbs-elements/util';
+import { getAnalyticsManager, InViewMonitor } from 'bulbs-elements/util';
 
 velocity
   .RegisterUI('transition.turnPageIn', {
@@ -132,10 +132,12 @@ export default class Clickventure {
   }
 
   alignWithTop () {
-    velocity(this.element, 'scroll', {
-      duration: this.options.alignmentDuration,
-      offset: this.options.alignmentOffset,
-    });
+    if(InViewMonitor.isElementInViewport(this.element[0])) {
+      velocity(this.element, 'scroll', {
+        duration: this.options.alignmentDuration,
+        offset: this.options.alignmentOffset,
+      });
+    }
   }
 
   getIdFromHash (hash) {
