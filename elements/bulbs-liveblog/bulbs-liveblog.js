@@ -1,9 +1,9 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import { filterBadResponse } from 'bulbs-elements/util';
-import invariant from 'invariant';
-import firebase from 'firebase/app';
-import 'firebase/database';
 import * as scrollToElement from 'scroll-to-element';
+import {
+  getFirebaseDB,
+} from './util';
 
 import './bulbs-liveblog-entry';
 
@@ -50,20 +50,11 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   attachedCallback () {
-    invariant(this.hasAttribute('firebase-path'),
-      '<bulbs-liveblog> element MUST specify a `firebase-path` attribute');
-
-    invariant(this.hasAttribute('firebase-url'),
-      '<bulbs-liveblog> element MUST specify a `firebase-url` attribute');
-
-    invariant(this.hasAttribute('firebase-api-key'),
-      '<bulbs-liveblog> element MUST specify a `firebase-api-key` attribute');
-
-    invariant(this.hasAttribute('liveblog-new-entries-url'),
-      '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute');
-
-    invariant(this.hasAttribute('liveblog-id'),
-      '<bulbs-liveblog> element MUST specify a `liveblog-id` attribute');
+    this.requireAttribute('firebase-path');
+    this.requireAttribute('firebase-url');
+    this.requireAttribute('firebase-api-key');
+    this.requireAttribute('liveblog-new-entries-url');
+    this.requireAttribute('liveblog-id');
 
     this.bindHandlers();
 
@@ -101,14 +92,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   setupFirebase () {
-    let firebaseAppConfig = {
+    this.firebaseDatabase = getFirebaseDB({
       apiKey: this.getAttribute('firebase-api-key'),
       databaseURL: this.getAttribute('firebase-url'),
-    };
-    let firebaseAppName = `liveblog-${this.getAttribute('liveblog-id')}`;
-
-    this.firebaseApp = firebase.initializeApp(firebaseAppConfig, firebaseAppName);
-    this.firebaseDatabase = this.firebaseApp.database();
+    },
+      `liveblog-${this.getAttribute('liveblog-id')}`
+    );
     this.firebaseRef = this.firebaseDatabase
                         .ref(this.getAttribute('firebase-path'))
                         .orderByChild('published')
@@ -259,9 +248,8 @@ class BulbsLiveblog extends BulbsHTMLElement {
     [].forEach.call(this.newEntriesButtons, (button) => button.remove());
   }
 
-  handleBlogFetchError (error) {
+  handleBlogFetchError () {
     this.fetching = false;
-    console.error(error);
   }
 }
 
