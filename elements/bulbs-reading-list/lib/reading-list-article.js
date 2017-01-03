@@ -106,10 +106,39 @@ export default class ReadingListArticle {
     this.element.dataset.loadStatus = 'loading';
   }
 
+  setupTaboola () {
+    window._taboola = window._taboola || [];
+    var taboolaContainer = document.createElement("div");
+    taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime()
+    this.element.appendChild(taboolaContainer);
+    _taboola.push({
+      mode:'organic-text-links-c', 
+      container: taboolaContainer.id,
+      placement: 'Below Article Text Links', 
+      target_type: 'mix'
+    });
+    var taboolaItem = {
+      url: this.element.dataset.absoluteUrl
+    };
+    if (this.element.dataset.isGraphic) {
+      taboolaItem.photo = 'auto';
+    } else if (this.element.dataset.isVideo) {
+      taboolaItem.video = 'auto';
+    } else {
+      taboolaItem.article = 'auto';
+    }
+    _taboola.push(taboolaItem);
+    _taboola.push({ 
+      flush:true 
+    });
+  }
+
   handleLoadContentComplete (content) {
     this.fillContent(content);
+    this.setupTaboola();
     this.isLoaded = true;
     this.fetchPending = false;
+    this.element.dataset.loadStatus = 'loaded';
     this.element.dataset.loadStatus = 'loaded';
   }
 
