@@ -107,12 +107,12 @@ export default class ReadingListArticle {
   }
 
   setupTaboola () {
-    let _taboola = window._taboola || [];
+    let taboola = window._taboola || [];
     let taboolaContainer = document.createElement('div');
     taboolaContainer.className = 'taboola-container';
     taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime();
     this.element.appendChild(taboolaContainer);
-    _taboola.push({
+    taboola.push({
       mode: 'organic-text-links-c',
       container: taboolaContainer.id,
       placement: 'Below Article Text Links',
@@ -130,8 +130,8 @@ export default class ReadingListArticle {
     else {
       taboolaItem.article = 'auto';
     }
-    _taboola.push(taboolaItem);
-    _taboola.push({
+    taboola.push(taboolaItem);
+    taboola.push({
       flush: true,
     });
   }
