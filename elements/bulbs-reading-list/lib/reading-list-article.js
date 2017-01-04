@@ -107,18 +107,18 @@ export default class ReadingListArticle {
   }
 
   setupTaboola () {
-    window._taboola = window._taboola || [];
-    var taboolaContainer = document.createElement("div");
-    taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime()
+    let _taboola = window._taboola || [];
+    let taboolaContainer = document.createElement('div');
+    taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime();
     this.element.appendChild(taboolaContainer);
     _taboola.push({
-      mode:'organic-text-links-c', 
+      mode: 'organic-text-links-c',
       container: taboolaContainer.id,
-      placement: 'Below Article Text Links', 
-      target_type: 'mix'
+      placement: 'Below Article Text Links',
+      target_type: 'mix',
     });
-    var taboolaItem = {
-      url: this.element.dataset.href
+    let taboolaItem = {
+      url: this.element.dataset.href,
     };
     if (this.element.dataset.isGraphic) {
       taboolaItem.photo = 'auto';
@@ -128,8 +128,8 @@ export default class ReadingListArticle {
       taboolaItem.article = 'auto';
     }
     _taboola.push(taboolaItem);
-    _taboola.push({ 
-      flush:true 
+    _taboola.push({
+      flush: true,
     });
   }
 
