@@ -114,7 +114,7 @@ export default class ReadingListArticle {
     this.element.appendChild(taboolaContainer);
     _taboola.push({
       mode: 'organic-text-links-c',
-      container: this.element.id,
+      container: taboolaContainer.id,
       placement: 'Below Article Text Links',
       target_type: 'mix',
     });
