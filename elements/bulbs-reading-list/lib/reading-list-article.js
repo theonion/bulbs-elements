@@ -127,7 +127,6 @@ export default class ReadingListArticle {
     } else {
       taboolaItem.article = 'auto';
     }
-    console.log(taboolaItem);
     _taboola.push(taboolaItem);
     _taboola.push({ 
       flush:true 
