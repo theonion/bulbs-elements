@@ -123,9 +123,11 @@ export default class ReadingListArticle {
     };
     if (this.element.dataset.isGraphic) {
       taboolaItem.photo = 'auto';
-    } else if (this.element.dataset.isVideo) {
+    } 
+    else if (this.element.dataset.isVideo) {
       taboolaItem.video = 'auto';
-    } else {
+    } 
+    else {
       taboolaItem.article = 'auto';
     }
     _taboola.push(taboolaItem);
