@@ -127,6 +127,7 @@ export default class ReadingListArticle {
     } else {
       taboolaItem.article = 'auto';
     }
+    console.log(taboolaItem);
     _taboola.push(taboolaItem);
     _taboola.push({ 
       flush:true 
@@ -197,7 +198,6 @@ export default class ReadingListArticle {
     if (this.startedReading(oldProgress, newProgress)) {
       if (this.href !== window.location.pathname) {
         this.pushToHistory();
-
         if (!this.gaTrackerWrapper) {
           this.gaTrackerWrapper = this.prepGaTracker();
         }
