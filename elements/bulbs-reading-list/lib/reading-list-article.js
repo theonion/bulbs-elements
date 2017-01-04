@@ -118,7 +118,7 @@ export default class ReadingListArticle {
       target_type: 'mix'
     });
     var taboolaItem = {
-      url: this.element.dataset.absoluteUrl
+      url: this.element.dataset.href
     };
     if (this.element.dataset.isGraphic) {
       taboolaItem.photo = 'auto';
@@ -138,7 +138,6 @@ export default class ReadingListArticle {
     this.setupTaboola();
     this.isLoaded = true;
     this.fetchPending = false;
-    this.element.dataset.loadStatus = 'loaded';
     this.element.dataset.loadStatus = 'loaded';
   }
 
