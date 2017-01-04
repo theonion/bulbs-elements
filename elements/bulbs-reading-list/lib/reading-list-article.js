@@ -107,6 +107,7 @@ export default class ReadingListArticle {
   }
 
   setupTaboola () {
+    let taboolaCounter = 0;
     let _taboola = window._taboola || [];
     let taboolaContainer = document.createElement('div');
     taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime();
@@ -114,7 +115,7 @@ export default class ReadingListArticle {
     _taboola.push({
       mode: 'organic-text-links-c',
       container: taboolaContainer.id,
-      placement: 'Below Article Text Links',
+      placement: 'Below Article Text Links ' + taboolaCounter++,
       target_type: 'mix',
     });
     let taboolaItem = {
