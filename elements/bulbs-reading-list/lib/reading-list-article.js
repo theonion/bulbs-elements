@@ -107,7 +107,8 @@ export default class ReadingListArticle {
   }
 
   setupTaboola () {
-    let taboola = window._taboola || [];
+    window._taboola = window._taboola || [];
+    let taboola = window._taboola;
     let taboolaContainer = document.createElement('div');
     taboolaContainer.className = 'taboola-container';
     taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime();
