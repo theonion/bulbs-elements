@@ -46,11 +46,20 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
     this.setupEvents();
 
     this.newResponsesButtons = this.getElementsByClassName('liveblog-new-responses');
-    this.responseStaging = document.createElement('div');
-    this.responseStaging.style.display = 'none';
-    this.append(this.responseStaging);
+
+    if (!this.responseStaging) {
+      this.responseStaging = document.createElement('div');
+      this.responseStaging.classList.add('response-staging');
+      this.responseStaging.style.display = 'none';
+      this.append(this.responseStaging);
+    }
 
     this.responsesData = {};
+  }
+
+  detachedCallback () {
+    this.removeEventListener('click', this.handleClick);
+    this.firebaseRef.off('value', this.handleFirebaseValue);
   }
 
   bindHandlers () {
@@ -134,6 +143,9 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
       this.append(this.responseStaging.firstElementChild);
     }
     window.picturefill();
+    if (twttr) {
+      twttr.widgets.load();
+    }
   }
 
   handleFetchSuccess (htmlText) {
