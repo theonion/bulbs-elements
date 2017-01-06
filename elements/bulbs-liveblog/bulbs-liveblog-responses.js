@@ -158,7 +158,7 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
     }
     this.removeNewResponsesButton();
     let newResponsesButton = this.makeNewResponsesButton();
-    this.prepend(newResponsesButton);
+    this.append(newResponsesButton);
   }
 
   removeNewResponsesButton () {
