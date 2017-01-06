@@ -6,6 +6,7 @@ import Revealed from './revealed';
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
 import video from '../fixtures/video.json';
+import util from 'bulbs-elements/util';
 
 describe('<bulbs-video> <Revealed>', () => {
   beforeEach(() => {
@@ -74,6 +75,7 @@ describe('<bulbs-video> <Revealed>', () => {
 
     beforeEach(() => {
       props = {
+        controller: {},
         video: {
           sources: [
             { url: 'url-1', content_type: 'type-1' },
@@ -344,11 +346,28 @@ describe('<bulbs-video> <Revealed>', () => {
   });
 
   describe('componentWillUnmount', () => {
-    it('stops the player', () => {
-      let revealed = new Revealed({});
-      revealed.player = { remove: sinon.spy() };
+    let revealed;
+    let remove;
+    let sandbox;
+
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      revealed = new Revealed({});
+      revealed.player = { remove: sandbox.spy() };
+      remove = sandbox.stub(util.InViewMonitor, 'remove');
       revealed.componentWillUnmount();
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it('stops the player', () => {
       expect(revealed.player.remove).to.have.been.called;
+    });
+
+    it('removes enter and exit viewport events', () => {
+      expect(remove.called).to.be.true;
     });
   });
 
@@ -863,6 +882,113 @@ describe('<bulbs-video> <Revealed>', () => {
         it('does not set sharing configuration', () => {
           let setupOptions = playerSetup.args[0][0];
           expect(setupOptions.sharing).to.be.undefined;
+        });
+      });
+
+      context('autoplayInView', () => {
+        let handleAutoPlayInViewStub;
+        let handlePauseEventStub;
+        let params;
+        let playerInViewportStub;
+        let sandbox;
+        let videoViewport;
+
+        beforeEach(() => {
+          sandbox = sinon.sandbox.create();
+          videoViewport = document.createElement('div');
+          sources = [
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
+            },
+            {
+              'file': 'http://v.theonion.com/onionstudios/video/4053/640.mp4',
+            },
+          ];
+          extractSourcesStub = sandbox.stub().returns(sources);
+          vastUrlStub = sandbox.stub().returns('http://localhost:8080/vast.xml');
+          extractTrackCaptionsStub = sandbox.stub().returns([]);
+          handleAutoPlayInViewStub = sandbox.stub();
+          handlePauseEventStub = sandbox.stub();
+          playerInViewportStub = sandbox.stub().returns(true);
+          params = {
+            props: {
+              autoplayInView: '',
+              controller: {
+                revealed: true,
+              },
+            },
+            refs: {
+              videoViewport,
+            },
+            extractSources: extractSourcesStub,
+            vastUrl: vastUrlStub,
+            extractTrackCaptions: extractTrackCaptionsStub,
+            handleAutoPlayInView: handleAutoPlayInViewStub,
+            handlePauseEvent: handlePauseEventStub,
+            playerInViewport: playerInViewportStub,
+          };
+
+        });
+
+        afterEach(() => {
+          sandbox.restore();
+        });
+
+        it('calls handleAutoPlayInView', () => {
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          expect(handleAutoPlayInViewStub).to.be.called;
+        });
+
+        it('initializes InViewMonitor', () => {
+          let inViewMonitorAdd = sandbox.stub(util.InViewMonitor, 'add');
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          expect(inViewMonitorAdd.called).to.be.true;
+        });
+
+        it('autoplays video on load if its in the viewport', () => {
+          sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(true);
+          let expected = Revealed.prototype.playerInViewport.call(element);
+          expect(expected).to.be.true;
+        });
+
+        it('no autoplay on load if video is not in viewport', () => {
+          sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(false);
+          let expected = Revealed.prototype.playerInViewport.call(element);
+          expect(expected).to.be.false;
+        });
+
+        it('attaches play to enterviewport event', () => {
+          let eventListener = sandbox.spy(videoViewport, 'addEventListener');
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          expect(eventListener).to.have.been.calledWith('enterviewport');
+        });
+
+        it('attaches play to enterviewport event', () => {
+          let eventListener = sandbox.spy(videoViewport, 'addEventListener');
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          expect(eventListener).to.have.been.calledWith('exitviewport');
+        });
+
+        it('detaches enterviewport play event when user pauses video', () => {
+          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
+          let pauseStub = sandbox.stub();
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          params.player.pause = pauseStub;
+          element.pauseReason = 'interaction';
+          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
+          expect(eventListener).to.have.been.calledWith('enterviewport');
+        });
+
+        it('does nothing if exitviewport event pauses video', () => {
+          let eventListener = sandbox.spy(videoViewport, 'removeEventListener');
+          let pauseStub = sandbox.stub();
+          Revealed.prototype.makeVideoPlayer.call(params, element, videoMeta);
+          Revealed.prototype.handleAutoPlayInView.call(params, element, videoMeta);
+          params.player.pause = pauseStub;
+          element.pauseReason = 'external';
+          Revealed.prototype.handlePauseEvent.call(params, element, videoMeta);
+          expect(eventListener.called).to.be.false;
         });
       });
 

@@ -18,7 +18,9 @@ import './endcard.scss';
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
     this.store.actions.fetchVideo(this.props.src);
-    if (typeof this.props.autoplay === 'string') {
+    let autoplay = typeof this.props.autoplay === 'string';
+    let autoplayInView = typeof this.props.autoplayInView === 'string';
+    if (autoplay || autoplayInView) {
       this.store.actions.revealPlayer();
     }
   }
@@ -68,7 +70,6 @@ export default class BulbsVideo extends BulbsElement {
         {...this.props}
         {...this.state}
         actions={this.store.actions}
-        autoplayNext={typeof this.props.twitterHandle === 'string'}
         playsinline={typeof this.props.playsInline === 'string'}
         disableMetaLink={typeof this.props.disableMetaLink === 'string'}
         disableSharing={typeof this.props.disableSharing === 'string'}
@@ -92,6 +93,7 @@ Object.assign(BulbsVideo, {
   },
   propTypes: {
     autoplay: PropTypes.string,
+    autoplayInView: PropTypes.string,
     autoplayNext: PropTypes.string,
     disableMetaLink: PropTypes.string,
     disableSharing: PropTypes.string,
