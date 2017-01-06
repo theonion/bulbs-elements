@@ -6,6 +6,7 @@ import {
 } from './util';
 
 import './bulbs-liveblog-entry';
+import './bulbs-liveblog-responses';
 
 function parseEntry (entry) {
   if ('published' in entry) {
@@ -92,12 +93,12 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   setupFirebase () {
-    this.firebaseDatabase = getFirebaseDB({
+    const dbConfig = {
       apiKey: this.getAttribute('firebase-api-key'),
       databaseURL: this.getAttribute('firebase-url'),
-    },
-      `liveblog-${this.getAttribute('liveblog-id')}`
-    );
+    };
+    const dbName = `liveblog-${this.getAttribute('liveblog-id')}`;
+    this.firebaseDatabase = getFirebaseDB(dbConfig, dbName);
     this.firebaseRef = this.firebaseDatabase
                         .ref(this.getAttribute('firebase-path'))
                         .orderByChild('published')
@@ -136,6 +137,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
     let entryIds = this.getEntryIdsToFetch();
     if (entryIds.length) {
+      console.log('handleBlogUpdate', entryIds);
       this.handleBlogUpdate(entryIds);
     }
   }

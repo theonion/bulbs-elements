@@ -5,36 +5,74 @@ import {
 } from './util';
 
 function parseResponse (response) {
-  if ('published' in response) {
-    response.published = new Date(Date.parse(response.published));
+  if ('last_modified' in response) {
+    response.last_modified = new Date(Date.parse(response.last_modified));
   }
 
   return response;
 }
 
 class BulbsLiveblogResponses extends BulbsHTMLElement {
+  currentResponseIds () {
+    return [].map.call(this.querySelectorAll('bulbs-liveblog-responses > .liveblog-response'), (response) => {
+      return response.getAttribute('liveblog-response-id');
+    });
+  }
+
+  makeNewResponsesButton () {
+    let button = document.createElement('button');
+    let newResponses = this.responseStaging.children;
+    let currentResponses = this.querySelectorAll('bulbs-liveblog-responses > .liveblog-response');
+    let newResponsesCount = newResponses.length - currentResponses.length;
+    button.classList.add('liveblog-new-responses');
+    button.setAttribute('data-track-action', 'Alert: New Responses');
+    button.setAttribute('data-track-label', '#');
+    button.innerHTML = `
+      Show ${newResponsesCount} New Response${newResponsesCount > 1 ? 's' : ''}
+    `;
+    return button;
+  }
+
   attachedCallback () {
     this.requireAttribute('firebase-path');
     this.requireAttribute('firebase-url');
     this.requireAttribute('firebase-api-key');
-    this.requireAttribute('liveblog-new-entries-url');
+    this.requireAttribute('liveblog-new-responses-url');
     this.requireAttribute('liveblog-id');
 
+    this.bindHandlers();
+
+    this.setupFirebase();
+    this.setupEvents();
+
+    this.newResponsesButtons = this.getElementsByClassName('liveblog-new-responses');
     this.responseStaging = document.createElement('div');
     this.responseStaging.style.display = 'none';
     this.append(this.responseStaging);
+
+    this.responsesData = {};
+  }
+
+  bindHandlers () {
+    this.handleClick = this.handleClick.bind(this);
+    this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
   }
 
   setupFirebase () {
-    this.firebaseDatabase = getFirebaseDB({
+    let dbConfig = {
       apiKey: this.getAttribute('firebase-api-key'),
       databaseURL: this.getAttribute('firebase-url'),
-    },
-      `liveblog-${this.getAttribute('liveblog-id')}`
-    );
+    };
+    let dbName = `liveblog-${this.getAttribute('liveblog-id')}`;
+    this.firebaseDatabase = getFirebaseDB(dbConfig, dbName);
     this.firebaseRef = this.firebaseDatabase
                         .ref(this.getAttribute('firebase-path'))
                         .orderByChild('published');
+  }
+
+  setupEvents () {
+    this.addEventListener('click', this.handleClick);
+    this.firebaseRef.on('value', this.handleFirebaseValue);
   }
 
   handleFirebaseValue (snapshot) {
@@ -50,14 +88,33 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
       return;
     }
 
-    let responseIds = this.getResponseIdsToFetch();
-    if (responseIds.length) {
-      this.handleResponsesUpdate(responseIds);
+    let nextResponseIds = this.getResponseIdsToFetch();
+    let currentResponseIds = this.currentResponseIds();
+    let newIds = nextResponseIds.sort().toString() !== currentResponseIds.sort().toString();
+    if (newIds && nextResponseIds.length > 0) {
+      this.handleResponsesUpdate(nextResponseIds);
+    }
+  }
+
+  getResponseIdsToFetch () {
+    let ids = [];
+    Object.keys(this.responsesData).forEach((responseId) => {
+      let response = this.responsesData[responseId];
+      if (response.published) {
+        ids.push(responseId);
+      }
+    });
+    return ids;
+  }
+
+  handleClick () {
+    if (event.target.matches('button.liveblog-new-responses')) {
+      this.showNewResponses();
     }
   }
 
   handleResponsesUpdate (responseIds) {
-    let url = `${this.getAttribute('responses-url')}?response_ids=${responseIds.join(',')}`;
+    let url = `${this.getAttribute('liveblog-new-responses-url')}?response_ids=${responseIds.join(',')}`;
     this.fetching = true;
     fetch(url, { credentials: 'include' })
       .then(filterBadResponse)
@@ -67,18 +124,33 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
     ;
   }
 
+  showNewResponses () {
+    this.removeNewResponsesButton();
+    [].forEach.call(
+      this.querySelectorAll('bulbs-liveblog-responses > .liveblog-response'),
+      (child) => { child.remove(); }
+    );
+    while (this.responseStaging.firstElementChild) {
+      this.append(this.responseStaging.firstElementChild);
+    }
+    window.picturefill();
+  }
+
   handleFetchSuccess (htmlText) {
     this.fetching = false;
     let parser = document.createElement('div');
     parser.innerHTML = htmlText;
+    this.responseStaging.innerHTML = '';
     while (parser.firstElementChild) {
       this.responseStaging.append(parser.firstElementChild);
     }
     this.removeNewResponsesButton();
-    if (this.newResponses.Length) {
-      let newResponsesButton = this.makeNewResponsesButton();
-      this.responsesContainer[0].prepend(newResponsesButton);
-    }
+    let newResponsesButton = this.makeNewResponsesButton();
+    this.prepend(newResponsesButton);
+  }
+
+  removeNewResponsesButton () {
+    [].forEach.call(this.newResponsesButtons, (button) => button.remove());
   }
 
   handleFetchError () {
