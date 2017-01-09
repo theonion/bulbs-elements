@@ -106,40 +106,8 @@ export default class ReadingListArticle {
     this.element.dataset.loadStatus = 'loading';
   }
 
-  setupTaboola () {
-    window._taboola = window._taboola || [];
-    let taboola = window._taboola;
-    let taboolaContainer = document.createElement('div');
-    taboolaContainer.className = 'taboola-container';
-    taboolaContainer.id = 'taboola-below-article-text-links-' + (new Date()).getTime();
-    this.element.appendChild(taboolaContainer);
-    taboola.push({
-      mode: 'organic-text-links-c',
-      container: taboolaContainer.id,
-      placement: 'Below Article Text Links',
-      target_type: 'mix',
-    });
-    let taboolaItem = {
-      url: this.element.dataset.href,
-    };
-    if (this.element.dataset.isGraphic) {
-      taboolaItem.photo = 'auto';
-    } 
-    else if (this.element.dataset.isVideo) {
-      taboolaItem.video = 'auto';
-    } 
-    else {
-      taboolaItem.article = 'auto';
-    }
-    taboola.push(taboolaItem);
-    taboola.push({
-      flush: true,
-    });
-  }
-
   handleLoadContentComplete (content) {
     this.fillContent(content);
-    this.setupTaboola();
     this.isLoaded = true;
     this.fetchPending = false;
     this.element.dataset.loadStatus = 'loaded';
