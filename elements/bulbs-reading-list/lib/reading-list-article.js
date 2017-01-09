@@ -108,7 +108,6 @@ export default class ReadingListArticle {
 
   setupTaboola () {
     window._taboola = window._taboola || [];
-    let counter = 0;
     let taboola = window._taboola;
     let taboolaContainer = document.createElement('div');
     taboolaContainer.className = 'taboola-container';
@@ -117,7 +116,7 @@ export default class ReadingListArticle {
     taboola.push({
       mode: 'organic-text-links-c',
       container: taboolaContainer.id,
-      placement: 'Below Article Text Links ' + counter++,
+      placement: 'Below Article Text Links',
       target_type: 'mix',
     });
     let taboolaItem = {
