@@ -17,7 +17,7 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
       this.liveblog.handleEntryAttached({ target: this });
     }
 
-    if (twttr) {
+    if (typeof twttr !== 'undefined') {
       twttr.widgets.load();
     }
   }
