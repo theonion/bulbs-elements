@@ -49,10 +49,10 @@ describe('<progress-bar>', () => {
 
   describe('udpated progress attribute', (done) => {
     it('updates the track width when the progress changes', () => {
+      let track = subject.children[0];
+      subject.setAttribute('progress', '50');
       // setImmediate because setting innerHTML is sort-of async
       setImmediate(() => {
-        let track = subject.children[0];
-        subject.setAttribute('progress', '50');
         expect(track.style.width).to.equal('50%');
         done();
       });

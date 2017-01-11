@@ -7,7 +7,7 @@ function invertProgress (progress) {
 
 class ProgressBar extends BulbsHTMLElement {
 
-  static get observedAttributes() {
+  static get observedAttributes () {
     return ['progress'];
   }
   connectedCallback () {
