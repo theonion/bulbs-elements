@@ -2,17 +2,6 @@ import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
 import { loadOnDemand } from 'bulbs-elements/util';
 
-function emitWindowEvent (eventName) {
-  try {
-    window.dispatchEvent(new Event(eventName));
-  }
-  catch (error) {
-    const event = document.createEvent('Event');
-    event.initEvent(eventName, false, true);
-    window.dispatchEvent(event);
-  }
-}
-
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
   let subject;
