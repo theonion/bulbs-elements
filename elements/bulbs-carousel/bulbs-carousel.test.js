@@ -130,7 +130,7 @@ describe('<bulbs-carousel>', () => {
 
     context('called twice', () => {
       it('does not create a second track', () => {
-        subject.constructor();
+        subject.connectedCallback();
         expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
       });
     });
