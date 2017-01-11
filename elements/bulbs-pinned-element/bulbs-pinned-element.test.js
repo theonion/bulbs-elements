@@ -51,13 +51,9 @@ describe('<bulbs-pinned-element>', () => {
     });
 
     it('attaches positioning function to window scroll event', () => {
-      let scrollEvent = new Event('scroll');
-      sandbox.stub(subject, 'positionCar');
+      sandbox.spy(window, 'addEventListener');
       attachSubject();
-
-      window.dispatchEvent(scrollEvent);
-
-      expect(subject.positionCar).to.have.been.calledTwice;
+      expect(window.addEventListener).to.have.been.calledWith('scroll', subject.boundPositionCar);
     });
 
     it('calls positioning function to ensure sidebar position is correct on load', () => {

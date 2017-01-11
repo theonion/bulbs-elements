@@ -5,13 +5,14 @@ import * as iphoneInlineVideo from 'iphone-inline-video';
 describe('<video is="bulbs-cinemagraph">', () => {
   let subject;
 
-  beforeEach(() => {
+  beforeEach((done) => {
     subject = document.createElement('video', 'bulbs-cinemagraph');
     document.body.appendChild(subject);
     sinon.spy(InViewMonitor, 'add');
     sinon.spy(InViewMonitor, 'remove');
     sinon.spy(subject, 'pause');
     sinon.spy(subject, 'play');
+    setImmediate(() => done());
   });
 
   afterEach(() => {

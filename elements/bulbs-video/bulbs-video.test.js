@@ -1,7 +1,17 @@
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
+import { loadOnDemand } from 'bulbs-elements/util';
 
-import { scrollingElement } from 'bulbs-elements/util';
+function emitWindowEvent (eventName) {
+  try {
+    window.dispatchEvent(new Event(eventName));
+  }
+  catch (error) {
+    const event = document.createEvent('Event');
+    event.initEvent(eventName, false, true);
+    window.dispatchEvent(event);
+  }
+}
 
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
@@ -122,12 +132,12 @@ describe('<bulbs-video>', () => {
       container.appendChild(videoElement);
 
       container.style.top = '0';
-      scrollingElement.scrollTop += 1;
+      loadOnDemand.maybeLoadComponents();
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
         done();
-      }, 2000);
+      });
     });
   });
 });
