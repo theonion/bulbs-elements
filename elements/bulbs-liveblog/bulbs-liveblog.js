@@ -135,7 +135,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
     let entryIds = this.getEntryIdsToFetch();
     if (entryIds.length) {
-      console.log('handleBlogUpdate', entryIds);
       this.handleBlogUpdate(entryIds);
     }
   }
