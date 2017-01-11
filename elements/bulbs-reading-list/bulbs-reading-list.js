@@ -13,7 +13,7 @@ import {
 import map from 'lodash/map';
 
 class BulbsReadingList extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     this.lastPosition = 0;
     this.visitedInLooking = {};
     this.visitedInLooking[window.location.pathname] = true;

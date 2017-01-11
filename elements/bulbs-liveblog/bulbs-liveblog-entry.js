@@ -2,7 +2,7 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import invariant from 'invariant';
 
 class BulbsLiveblogEntry extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.closest('bulbs-liveblog'),
       '<bulbs-liveblog-entry> element MUST be placed within a <bulbs-liveblog>');
 
@@ -22,7 +22,7 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     }
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     // doing bad parent access because event emitters weren't working
     if (this.liveblog && this.liveblog.handleEntryDetached) {
       this.liveblog.handleEntryDetached({ target: this });

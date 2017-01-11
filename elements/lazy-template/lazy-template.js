@@ -11,7 +11,7 @@ class LazyTemplate extends BulbsHTMLScriptElement {
     return this.getAttribute('load-on');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('load-on'),
       '<script is="lazy-template"> MUST specify a "load-on" attribute (either "page-load" or "in-view").');
 
@@ -29,7 +29,7 @@ class LazyTemplate extends BulbsHTMLScriptElement {
     this.handleEnterViewport = this.handleEnterViewport.bind(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     if (this.loadOn === 'in-view') {
       this.tearDownLoadOnInView();
     }

@@ -24,11 +24,11 @@ class FlyoverMenu extends BulbsHTMLElement {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
+  constructor () {
     this.flyoverState.menu = this;
   }
 
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('menu-name'),
       '<bulbs-flyover-menu> MUST have a `menu-name` attribute;');
   }
@@ -60,12 +60,12 @@ class FlyoverClose extends BulbsHTMLButtonElement {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
+  constructor () {
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-close"> MUST have a `menu-name` attribute;');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.addEventListener('click', () => this.flyoverState.menu.closeFlyover());
   }
 }
@@ -77,12 +77,12 @@ class FlyoverOpen extends BulbsHTMLButtonElement {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
+  constructor () {
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-open"> MUST have a `menu-name` attribute;');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.flyoverState.openButtons.push(this);
     this.setAttribute('aria-haspopup', 'true');
     this.setAttribute('aria-expanded', 'false');

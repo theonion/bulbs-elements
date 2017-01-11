@@ -38,7 +38,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     return button;
   }
 
-  createdCallback () {
+  constructor () {
     this.entriesStore = {
       all: {},
     };
@@ -50,7 +50,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     return this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.requireAttribute('firebase-path');
     this.requireAttribute('firebase-url');
     this.requireAttribute('firebase-api-key');
@@ -87,7 +87,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     this.teardownFirebase();
     this.teardownInterval();
   }

@@ -10,7 +10,7 @@ function getInitialSlideIndex (hash) {
 }
 
 class BulbsSlideshow extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     this.slidesClicked = 0;
     let $element = $(this);
     this.$slideshow = $element.find('.slideshow');

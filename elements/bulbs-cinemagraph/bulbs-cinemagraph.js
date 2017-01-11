@@ -8,7 +8,7 @@ function BulbsHTMLVideoElement () {}
 BulbsHTMLVideoElement.prototype = HTMLVideoElement.prototype;
 
 class BulbsCinemagraph extends BulbsHTMLVideoElement {
-  createdCallback () {
+  constructor () {
     if (!this.hasAttribute('cinemagraph-duration')) {
       console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
     }
@@ -30,12 +30,12 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
     this.addEventListener('exitviewport', () => this.pause());
   }
 
-  attachedCallback () {
+  connectedCallback () {
     iphoneInlineVideo.default(this, /* hasAudio */ false);
     InViewMonitor.add(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     InViewMonitor.remove(this);
   }
 }

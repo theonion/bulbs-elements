@@ -17,7 +17,7 @@ function getQuizType (quizTypeClass) {
 const QUIZ_TYPES = ['tally', 'test', 'multiple', 'cosmo'];
 
 class BulbsQuiz extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.attributes['content-id'], 'bulb-quiz: content-id is undefined, add a content-id attribute');
 
     let $element = $(this);

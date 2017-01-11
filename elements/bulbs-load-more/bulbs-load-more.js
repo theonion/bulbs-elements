@@ -7,12 +7,12 @@ function BulbsHTMLButtonElement () {}
 BulbsHTMLButtonElement.prototype = HTMLButtonElement.prototype;
 
 class LoadMore extends BulbsHTMLButtonElement {
-  createdCallback () {
+  constructor () {
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-load-more"> MUST have a `src` attribute;');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.addEventListener('click', this.handleClick.bind(this));
   }
 

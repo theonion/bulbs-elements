@@ -31,21 +31,21 @@ describe('<script is="lazy-template">', () => {
   it('requires a load-on attribute', () => {
     subject.removeAttribute('load-on');
     expect(() => {
-      subject.attachedCallback();
+      subject.connectedCallback();
     }).to.throw('<script is="lazy-template"> MUST specify a "load-on" attribute (either "page-load" or "in-view").');
   });
 
   it('requires a type set to "text/html"', () => {
     subject.setAttribute('type', 'text/whatever');
     expect(() => {
-      subject.attachedCallback();
+      subject.connectedCallback();
     }).to.throw('<script is="lazy-template"> MUST set the attribute type="text/html".');
   });
 
   it('requires a type attribute', () => {
     subject.removeAttribute('type');
     expect(() => {
-      subject.attachedCallback();
+      subject.connectedCallback();
     }).to.throw('<script is="lazy-template"> MUST set the attribute type="text/html".');
   });
 

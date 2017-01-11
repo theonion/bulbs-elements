@@ -69,7 +69,7 @@ describe('<bulbs-carousel>', () => {
     document.body.removeChild(container);
   });
 
-  describe('createdCallback', () => {
+  describe('constructor', () => {
     it('wraps slider content in a <bulbs-carousel-track>', () => {
       expect(slider.childNodes).to.have.length(1);
       expect(
@@ -91,7 +91,7 @@ describe('<bulbs-carousel>', () => {
       beforeEach(() => slider.remove());
 
       it('throws an execption', () => {
-        expect(() => subject.createdCallback()).to.throw(
+        expect(() => subject.constructor()).to.throw(
           /MUST contain a <bulbs-carousel-slider>/
         );
       });
@@ -99,13 +99,13 @@ describe('<bulbs-carousel>', () => {
 
     context('called twice', () => {
       it('does not create a second track', () => {
-        subject.createdCallback();
+        subject.constructor();
         expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
       });
     });
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     context('there is an active carousel item', () => {
       beforeEach(() => {
         secondItem.setAttribute(
@@ -114,7 +114,7 @@ describe('<bulbs-carousel>', () => {
       });
 
       it('pages to the active item in the carousel', () => {
-        subject.attachedCallback();
+        subject.connectedCallback();
         expect(subject.state.pageToCarouselItem).to.have.been.calledWith(
           secondItem
         );
@@ -122,7 +122,7 @@ describe('<bulbs-carousel>', () => {
     });
 
     it('applies state', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.applyState).to.have.been.called;
     });
   });

@@ -13,7 +13,7 @@ describe('<bulbs-pinned-element>', () => {
 
     parentElement.appendChild(subject);
 
-    subject.attachedCallback();
+    subject.connectedCallback();
   }
 
   beforeEach(() => {
@@ -72,7 +72,7 @@ describe('<bulbs-pinned-element>', () => {
       sandbox.spy(window, 'removeEventListener');
       attachSubject();
 
-      subject.detachedCallback();
+      subject.disconnectedCallback();
 
       expect(window.removeEventListener).to.have.been.calledWith('scroll', subject.boundPositionCar);
     });

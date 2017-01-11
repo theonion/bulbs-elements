@@ -11,14 +11,14 @@ import {
 import './bulbs-page.scss';
 
 export default class BulbsPage extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     this.requireAttribute('pushstate-url');
     InViewMonitor.add(this);
     onReadyOrNow(() => this.handleDocumentReady());
     this.addEventListener('pagestart', () => this.handlePageStart());
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     InViewMonitor.remove(this);
   }
 

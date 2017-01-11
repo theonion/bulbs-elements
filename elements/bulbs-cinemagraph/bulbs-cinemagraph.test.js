@@ -33,24 +33,24 @@ describe('<video is="bulbs-cinemagraph">', () => {
     expect(subject.duration).to.eql(4.55);
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     // Can't actually spy on the export like this.
     // Any testing ideas welcome.
     xit('calls makeVideoPlayableInline', () => {
       let spy = sinon.spy(iphoneInlineVideo, 'default');
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(spy).to.have.been.called;
     });
 
     it('registers with the InViewMonitor', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(InViewMonitor.add).to.have.been.called.once;
     });
   });
 
-  describe('detachedCallback', () => {
+  describe('disconnectedCallback', () => {
     it('removes selve  from InViewMonitor', () => {
-      subject.detachedCallback();
+      subject.disconnectedCallback();
       expect(InViewMonitor.remove).to.have.been.called.once;
     });
   });

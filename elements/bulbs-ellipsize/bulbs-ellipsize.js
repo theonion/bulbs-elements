@@ -3,7 +3,7 @@ import invariant from 'invariant';
 import truncate from 'truncate.js'; // eslint-disable-line no-unused-vars
 
 class BulbsEllipsize extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.getAttribute('line-count'),
       'BulbsEllipsize: Expects a line-count attribute');
     if (!this.textContent) { return; }

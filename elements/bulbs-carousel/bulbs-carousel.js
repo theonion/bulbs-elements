@@ -6,7 +6,7 @@ import BulbsCarouselState from './bulbs-carousel-state';
 import './bulbs-carousel.scss';
 
 export default class BulbsCarousel extends BulbsHTMLElement {
-  createdCallback () {
+  constructor () {
     invariant(
       this.slider = this.querySelector('bulbs-carousel-slider'),
       '<bulbs-carousel> MUST contain a <bulbs-carousel-slider> element.'
@@ -37,7 +37,7 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     });
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.state.pageToCarouselItem(this.state.getActiveCarouselItem());
     this.applyState();
   }

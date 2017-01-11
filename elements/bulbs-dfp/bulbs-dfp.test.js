@@ -48,12 +48,12 @@ describe('<div is="bulbs-dfp">', () => {
     delete window.BULBS_ELEMENTS_ADS_MANAGER;
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
 
     it('requires a `viewport-threshold` attribute', () => {
       element.removeAttribute('viewport-threshold');
       expect(() => {
-        element.attachedCallback();
+        element.connectedCallback();
       }).to.throw(
         '<div is="bulbs-dfp"> MUST specify a `viewport-threshold` property. ' +
         'This value defines how many screens away from the viewport the slot ' +
@@ -62,17 +62,17 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     it('attaches enterviewport listener', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       expect(element.addEventListener).to.have.been.calledWith('enterviewport', element.handleEnterViewport);
     });
 
     it('attaches exitviewport listener', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       expect(element.addEventListener).to.have.been.calledWith('exitviewport', element.handleExitViewport);
     });
 
     it('adds self to InViewMonitor', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       expect(util.InViewMonitor.add).to.have.been.calledWith(element, {
         distanceFromTop: -window.innerHeight,
         distanceFromBottom: window.innerHeight,
@@ -83,7 +83,7 @@ describe('<div is="bulbs-dfp">', () => {
       let refreshInterval = 30000;
 
       window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = refreshInterval;
-      element.attachedCallback();
+      element.connectedCallback();
 
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
     });
@@ -92,7 +92,7 @@ describe('<div is="bulbs-dfp">', () => {
 
       window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = 666;
       window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshDisabled = true;
-      element.attachedCallback();
+      element.connectedCallback();
 
       expect(window.setInterval.called).to.be.false;
     });
@@ -100,21 +100,21 @@ describe('<div is="bulbs-dfp">', () => {
     it('uses a default refresh interval of 30 seconds if not set in ads manager', () => {
       let defaultRefreshInterval = 30000;
 
-      element.attachedCallback();
+      element.connectedCallback();
 
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, defaultRefreshInterval);
     });
   });
 
-  describe('detachedCallback', () => {
+  describe('disconnectedCallback', () => {
     it('clears the refresh interval', () => {
       element.refreshInterval = 111;
-      element.detachedCallback();
+      element.disconnectedCallback();
       expect(window.clearInterval).to.have.been.calledWith(111);
     });
 
     it('removes self from InViewMonitor', () => {
-      element.detachedCallback();
+      element.disconnectedCallback();
       expect(util.InViewMonitor.remove).to.have.been.calledWith(element);
     });
   });
