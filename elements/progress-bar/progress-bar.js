@@ -6,6 +6,10 @@ function invertProgress (progress) {
 }
 
 class ProgressBar extends BulbsHTMLElement {
+
+  static get observedAttributes() {
+    return ['progress'];
+  }
   connectedCallback () {
     let progress = parseInt(this.getAttribute('progress'), 10) || 0;
     this.innerHTML = `<div class="progress-track" style="width: ${invertProgress(progress)}%"></div>`;
