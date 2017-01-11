@@ -25,6 +25,7 @@ class FlyoverMenu extends BulbsHTMLElement {
   }
 
   constructor () {
+    super();
     this.flyoverState.menu = this;
   }
 
@@ -61,6 +62,7 @@ class FlyoverClose extends BulbsHTMLButtonElement {
   }
 
   constructor () {
+    super();
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-close"> MUST have a `menu-name` attribute;');
   }
@@ -78,6 +80,7 @@ class FlyoverOpen extends BulbsHTMLButtonElement {
   }
 
   constructor () {
+    super();
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-open"> MUST have a `menu-name` attribute;');
   }

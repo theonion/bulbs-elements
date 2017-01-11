@@ -39,6 +39,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   constructor () {
+    super();
     this.entriesStore = {
       all: {},
     };

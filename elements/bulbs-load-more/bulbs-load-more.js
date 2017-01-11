@@ -8,6 +8,7 @@ BulbsHTMLButtonElement.prototype = HTMLButtonElement.prototype;
 
 class LoadMore extends BulbsHTMLButtonElement {
   constructor () {
+    super();
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-load-more"> MUST have a `src` attribute;');
   }

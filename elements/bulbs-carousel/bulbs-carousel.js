@@ -7,6 +7,7 @@ import './bulbs-carousel.scss';
 
 export default class BulbsCarousel extends BulbsHTMLElement {
   constructor () {
+    super();
     invariant(
       this.slider = this.querySelector('bulbs-carousel-slider'),
       '<bulbs-carousel> MUST contain a <bulbs-carousel-slider> element.'

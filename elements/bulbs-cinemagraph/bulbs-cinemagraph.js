@@ -9,6 +9,7 @@ BulbsHTMLVideoElement.prototype = HTMLVideoElement.prototype;
 
 class BulbsCinemagraph extends BulbsHTMLVideoElement {
   constructor () {
+    super();
     if (!this.hasAttribute('cinemagraph-duration')) {
       console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
     }

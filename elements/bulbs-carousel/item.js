@@ -3,6 +3,7 @@ import { moveChildren, copyAttribute } from 'bulbs-elements/util';
 
 export default class CarouselItem extends BulbsHTMLElement {
   constructor () {
+    super();
     if (this.getAttribute('href')) {
       let anchor = document.createElement('a');
 

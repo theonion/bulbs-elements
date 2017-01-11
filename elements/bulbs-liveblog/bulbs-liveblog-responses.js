@@ -143,8 +143,8 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
       this.append(this.responseStaging.firstElementChild);
     }
     window.picturefill();
-    if (twttr) {
-      twttr.widgets.load();
+    if (typeof window.twttr !== 'undefined') {
+      window.twttr.widgets.load();
     }
   }
 
