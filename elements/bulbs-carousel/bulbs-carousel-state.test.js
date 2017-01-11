@@ -39,7 +39,7 @@ describe('<bulbs-carousel> BulbsCarouselState', () => {
     firstItem.style.transition = 'none'; // Kill animations for test
 
     document.body.appendChild(container);
-    // document.registerElement polyfill runs on next microtask in some browsers
+    // customElements.define polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
       subject = carousel.state;
