@@ -1,16 +1,13 @@
 import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 
 export class NextButton extends BulbsHTMLElement {
-  constructor () {
-    super();
-    debugger
+  connectedCallback () {
     this.innerHTML = '<i class="fa fa-angle-right"></i>';
   }
 }
 
 export class PreviousButton extends BulbsHTMLElement {
-  constructor () {
-    super();
+  connectedCallback () {
     this.innerHTML = '<i class="fa fa-angle-left"></i>';
   }
 }

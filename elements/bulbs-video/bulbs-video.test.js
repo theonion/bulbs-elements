@@ -124,10 +124,10 @@ describe('<bulbs-video>', () => {
       container.style.top = '0';
       scrollingElement.scrollTop += 1;
 
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
         done();
-      });
+      }, 2000);
     });
   });
 });

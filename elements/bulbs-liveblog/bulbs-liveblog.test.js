@@ -209,6 +209,7 @@ describe('<bulbs-liveblog>', () => {
     });
 
     it('parses entry published dates', () => {
+      subject.connectedCallback();
       let snapshot = {
         one: {
           published: '2016-09-19T11:09:06.668617',

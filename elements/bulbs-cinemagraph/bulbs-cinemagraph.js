@@ -8,30 +8,21 @@ function BulbsHTMLVideoElement () {}
 BulbsHTMLVideoElement.prototype = HTMLVideoElement.prototype;
 
 class BulbsCinemagraph extends BulbsHTMLVideoElement {
-  constructor () {
-    super();
+  get duration () {
+    return parseFloat(this.getAttribute('cinemagraph-duration') || 0);
+  }
+
+  connectedCallback () {
     if (!this.hasAttribute('cinemagraph-duration')) {
       console.warn('is="bulbs-cinemagraph" elements should have a [cinemagraph-duration] attribute set');
     }
-
-    // makeVideoPlayableInline is dumb and goes just a little bit too far in the
-    // video, this results in a quick flash of a black frame in the loop. If we
-    // override the duration we can get the loop to loop properly.
-    // For now, this must be determined by hand.
-    Object.defineProperty(this, 'duration', {
-      get () {
-        return parseFloat(this.getAttribute('cinemagraph-duration')) || 0;
-      },
-    });
 
     this.setAttribute('loop', true);
     this.setAttribute('webkit-playsinline', true);
 
     this.addEventListener('enterviewport', () => this.play());
     this.addEventListener('exitviewport', () => this.pause());
-  }
 
-  connectedCallback () {
     iphoneInlineVideo.default(this, /* hasAudio */ false);
     InViewMonitor.add(this);
   }
@@ -41,6 +32,4 @@ class BulbsCinemagraph extends BulbsHTMLVideoElement {
   }
 }
 
-BulbsCinemagraph.extends = 'video';
-
-registerElement('bulbs-cinemagraph', BulbsCinemagraph);
+registerElement('bulbs-cinemagraph', BulbsCinemagraph, { extends: 'video' });

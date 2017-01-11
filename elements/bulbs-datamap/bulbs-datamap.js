@@ -10,8 +10,7 @@ import {
 import './bulbs-datamap.scss';
 
 class BulbsDatamap extends BulbsHTMLElement {
-  constructor () {
-    super();
+  connectedCallback () {
     this.innerHTML = '<div class="bulbs-datamap"></div>';
     let mapContainer = this.firstChild;
     let that = this;

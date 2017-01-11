@@ -6,8 +6,7 @@ import BulbsCarouselState from './bulbs-carousel-state';
 import './bulbs-carousel.scss';
 
 export default class BulbsCarousel extends BulbsHTMLElement {
-  constructor () {
-    super();
+  connectedCallback () {
     invariant(
       this.slider = this.querySelector('bulbs-carousel-slider'),
       '<bulbs-carousel> MUST contain a <bulbs-carousel-slider> element.'
@@ -31,14 +30,13 @@ export default class BulbsCarousel extends BulbsHTMLElement {
     this.previousButtons = this.getElementsByTagName('bulbs-carousel-previous');
     this.nextButtons = this.getElementsByTagName('bulbs-carousel-next');
 
-    this.state = new BulbsCarouselState({
-      carousel: this,
-      carouselItems: this.track.children,
-      currentIndex: 0,
-    });
-  }
-
-  connectedCallback () {
+    if (!this.state) {
+      this.state = new BulbsCarouselState({
+        carousel: this,
+        carouselItems: this.track.children,
+        currentIndex: 0,
+      });
+    }
     this.state.pageToCarouselItem(this.state.getActiveCarouselItem());
     this.applyState();
   }

@@ -38,13 +38,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
     return button;
   }
 
-  constructor () {
-    super();
-    this.entriesStore = {
-      all: {},
-    };
-  }
-
   get newEntries () {
     // IE11 did not like us caching this element collection.
     //  So we rebuild it whenever we need it.
@@ -52,6 +45,10 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   connectedCallback () {
+    this.entriesStore = {
+      all: {},
+    };
+
     this.requireAttribute('firebase-path');
     this.requireAttribute('firebase-url');
     this.requireAttribute('firebase-api-key');

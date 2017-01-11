@@ -3,10 +3,7 @@ import { InViewMonitor } from 'bulbs-elements/util';
 import invariant from 'invariant';
 import './lazy-template.scss';
 
-function BulbsHTMLScriptElement () {}
-BulbsHTMLScriptElement.prototype = HTMLScriptElement.prototype;
-
-class LazyTemplate extends BulbsHTMLScriptElement {
+class LazyTemplate extends HTMLScriptElement {
   get loadOn () {
     return this.getAttribute('load-on');
   }
@@ -63,6 +60,4 @@ class LazyTemplate extends BulbsHTMLScriptElement {
   }
 }
 
-LazyTemplate.extends = 'script';
-
-registerElement('lazy-template', LazyTemplate);
+registerElement('lazy-template', LazyTemplate, { extends: 'script' });

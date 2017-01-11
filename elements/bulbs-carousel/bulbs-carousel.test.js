@@ -69,40 +69,7 @@ describe('<bulbs-carousel>', () => {
     document.body.removeChild(container);
   });
 
-  describe('constructor', () => {
-    it('wraps slider content in a <bulbs-carousel-track>', () => {
-      expect(slider.childNodes).to.have.length(1);
-      expect(
-        slider.firstChild.querySelectorAll('bulbs-carousel-item')
-      ).to.have.length(10);
-    });
-
-    it('tracks previousButtons', () => {
-      expect(subject.previousButtons).to.be.instanceOf(NodeListConstructor);
-      expect(subject.previousButtons.item(0)).to.eq(previousButton);
-    });
-
-    it('tracks nextButtons', () => {
-      expect(subject.nextButtons).to.be.instanceOf(NodeListConstructor);
-      expect(subject.nextButtons.item(0)).to.eq(nextButton);
-    });
-
-    context('without a <bulbs-carousel-slider> present', () => {
-      beforeEach(() => slider.remove());
-
-      it('throws an execption', () => {
-        expect(() => subject.constructor()).to.throw(
-          /MUST contain a <bulbs-carousel-slider>/
-        );
-      });
-    });
-
-    context('called twice', () => {
-      it('does not create a second track', () => {
-        subject.constructor();
-        expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
-      });
-    });
+  describe('conn', () => {
   });
 
   describe('connectedCallback', () => {
@@ -132,6 +99,40 @@ describe('<bulbs-carousel>', () => {
       sinon.spy(subject.state,'slideToPrevious');
       sinon.spy(subject.state,'slideToNext');
       sinon.spy(subject, 'stateChanged');
+    });
+
+    it('wraps slider content in a <bulbs-carousel-track>', () => {
+      expect(slider.childNodes).to.have.length(1);
+      expect(
+        slider.firstChild.querySelectorAll('bulbs-carousel-item')
+      ).to.have.length(10);
+    });
+
+    it('tracks previousButtons', () => {
+      expect(subject.previousButtons).to.be.instanceOf(NodeListConstructor);
+      expect(subject.previousButtons.item(0)).to.eq(previousButton);
+    });
+
+    it('tracks nextButtons', () => {
+      expect(subject.nextButtons).to.be.instanceOf(NodeListConstructor);
+      expect(subject.nextButtons.item(0)).to.eq(nextButton);
+    });
+
+    context('without a <bulbs-carousel-slider> present', () => {
+      beforeEach(() => slider.remove());
+
+      it('throws an execption', () => {
+        expect(() => subject.connectedCallback()).to.throw(
+          /MUST contain a <bulbs-carousel-slider>/
+        );
+      });
+    });
+
+    context('called twice', () => {
+      it('does not create a second track', () => {
+        subject.constructor();
+        expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
+      });
     });
 
     context('click on previous button', () => {

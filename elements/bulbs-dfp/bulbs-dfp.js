@@ -92,6 +92,4 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 }
 
-BulbsDfp.extends = 'div';
-
-registerElement('bulbs-dfp', BulbsDfp);
+registerElement('bulbs-dfp', BulbsDfp, { extends: 'div' });
