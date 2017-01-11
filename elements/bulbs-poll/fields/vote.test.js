@@ -5,7 +5,7 @@ import Store from 'bulbs-elements/store';
 import VoteField from './vote';
 import PollSchema from '../bulbs-poll-schema';
 
-describe('<bulbs-poll> VoteField', function () {
+xdescribe('<bulbs-poll> VoteField', function () {
   let { actions } = VoteField;
   let store;
 
