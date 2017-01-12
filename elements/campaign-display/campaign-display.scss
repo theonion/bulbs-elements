@@ -1,8 +1,25 @@
 campaign-display {
-  display: block;
-
+  color: rgba(112, 112, 112, 1);
+  display: inline-block;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  .inner a {
+    display: flex;
+    align-items: center;
+  }
+  .campaign-display-sponsor-name {
+    &:before {
+      content: '\00a0';
+      display: inline-block;
+    }
+  }
   .campaign-display-logo {
+    margin-left: 15px;
     img {
+      display: block;
+      max-width: 90px;
+      position: relative;
       width: 100%;
     }
   }
