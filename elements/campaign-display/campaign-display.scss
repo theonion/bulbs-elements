@@ -5,8 +5,8 @@ campaign-display {
   font-size: 10px;
   text-transform: uppercase;
   .inner a {
-    display: flex;
     align-items: center;
+    display: flex;
   }
   .campaign-display-sponsor-name {
     &:before {
