@@ -81,19 +81,25 @@ describe('<bulbs-page>', () => {
   describe('handlePageStart', () => {
     it('calls replaceState api', () => {
       element.handlePageStart();
-      expect(history.replaceState).to.have.been.calledWith(
-        {},
-        'Pushstate Title',
-        '/example',
-      ).once;
+      element.handlePageStart();
+      requestAnimationFrame(() => {
+        expect(history.replaceState).to.have.been.calledWith(
+          {},
+          'Pushstate Title',
+          '/example',
+        ).once;
+      });
     });
 
     it('tracks a pageview', () => {
       element.handlePageStart();
-      expect(util.getAnalyticsManager().trackPageView).to.have.been.calledWith(
-        '/example',
-        'Pushstate Title',
-      ).once;
+      element.handlePageStart();
+      requestAnimationFrame(() => {
+        expect(util.getAnalyticsManager().trackPageView).to.have.been.calledWith(
+          '/example',
+          'Pushstate Title',
+        ).once;
+      });
     });
   });
 });
