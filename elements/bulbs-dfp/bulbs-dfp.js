@@ -32,7 +32,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
     let defaultRefreshInterval = 30000;
     this.adUnitData = this.adsManager.adUnits.units[this.dataset.adUnit];
-    if (!this.adUnitData.refreshDisabled) {
+    if (!this.adUnitData.refreshDisabled && !this.hasAttribute('no-refresh')) {
 
       this.refreshInterval = window.setInterval(
         this.handleInterval,
