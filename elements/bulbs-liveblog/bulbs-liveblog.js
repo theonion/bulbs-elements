@@ -247,7 +247,9 @@ class BulbsLiveblog extends BulbsHTMLElement {
   }
 
   removeNewEntriesButton () {
-    [].forEach.call(this.newEntriesButtons, (button) => button.remove());
+    setImmediate(() => {
+      [].forEach.call(this.newEntriesButtons, (button) => button.remove());
+    });
   }
 
   handleBlogFetchError () {
