@@ -5,6 +5,8 @@ import {
 import {
   loadOnDemand,
   cachedFetch,
+  InViewMonitor,
+  prepGaEventTracker,
 } from 'bulbs-elements/util';
 import invariant from 'invariant';
 
@@ -15,7 +17,6 @@ require('./plugins/jwplayer');
 
 import GoogleAnalytics from './plugins/google-analytics';
 import Comscore from './plugins/comscore';
-import { prepGaEventTracker } from 'bulbs-elements/util';
 
 import './bulbs-video.scss';
 import './bulbs-video-play-button.scss';
@@ -34,6 +35,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
   get props () {
     return {
       autoplayNext: typeof this.getAttribute('twitter-handle') === 'string',
+      autoplayInView: typeof this.getAttribute('autoplay-in-view') === 'string',
       disableMetaLink: typeof this.getAttribute('disable-meta-link') === 'string',
       disableSharing: typeof this.getAttribute('disable-sharing') === 'string',
       embedded: typeof this.getAttribute('embedded') === 'string',
@@ -48,6 +50,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
       targetHostChannel: this.getAttribute('target-host-channel'),
       targetSpecialCoverage: this.getAttribute('target-special-coverage'),
       twitterHandle: this.getAttribute('twitter-handle'),
+      shareUrl: this.getAttribute('share-url'),
       src: this.getAttribute('src'),
     };
   }
@@ -55,6 +58,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
   createdCallback () {
     this.forwardJWEvent = this.forwardJWEvent.bind(this);
     this.setPlaysInline = this.setPlaysInline.bind(this);
+    this.handlePauseEvent = this.handlePauseEvent.bind(this);
 
     invariant(
       global.jQuery,
@@ -137,7 +141,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
       'dimension5': hostChannel,
       'dimension6': specialCoverage,
       'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || 'None', // autoplay
+      'dimension8': this.props.autoplay || this.props.autoplayInView || 'None', // autoplay
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
     };
@@ -151,7 +155,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
     let videoMeta = Object.assign({}, video);
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
-    videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
+    videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
 
@@ -187,6 +191,16 @@ export default class BulbsVideo extends BulbsHTMLElement {
     videoMeta.player_options.embedded = this.props.embedded;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
+  }
+
+  handlePauseEvent (reason) {
+    if (reason.pauseReason === 'external') {
+      return;
+    }
+    else if (reason.pauseReason === 'interaction') {
+      this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
+      this.player.pause(true);
+    }
   }
 
   forwardJWEvent (event) {
@@ -349,6 +363,12 @@ export default class BulbsVideo extends BulbsHTMLElement {
       };
     }
 
+    if (this.props.autoplayInView) {
+      this.handleAutoPlayInView();
+      // turn off autostart if player is not in viewport
+      playerOptions.autostart = this.playerInViewport(this.refs.videoViewport);
+    }
+
     this.player.setup(playerOptions);
 
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
@@ -361,14 +381,36 @@ export default class BulbsVideo extends BulbsHTMLElement {
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
+    this.player.on('pause', this.handlePauseEvent);
+    this.player.on('adPause', this.handlePauseEvent)
 
     this.refs.videoCover.addEventListener('click', () => this.play());
+  }
+
+  handleAutoPlayInView () {
+    let videoViewport = this.refs.videoViewport;
+    InViewMonitor.add(videoViewport);
+    this.enterviewportEvent = () => this.player.play(true);
+    videoViewport.addEventListener('enterviewport', this.enterviewportEvent);
+    videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
+  }
+
+  playerInViewport (videoViewport) {
+    let overrideAutoPlay;
+    if(InViewMonitor.isElementInViewport(videoViewport)) {
+      overrideAutoPlay = true;
+    }
+    else {
+      overrideAutoPlay = false;
+    }
+    return overrideAutoPlay;
   }
 
   detachedCallback () {
     setImmediate(() => {
       if (!document.contains(this)) {
         this.player.remove();
+        InViewMonitor.remove(this.refs.videoViewport);
       }
     });
   }
