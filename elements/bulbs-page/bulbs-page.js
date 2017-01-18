@@ -10,6 +10,11 @@ import {
 } from 'bulbs-elements/register';
 import './bulbs-page.scss';
 
+// if we scroll past multiple pages at once they will all trigger a
+// 'pagestart' event. We only want to fire one. We use this governer
+// plate to skip all but the last 'pagestart' handler
+let pageStartGoverner;
+
 export default class BulbsPage extends BulbsHTMLElement {
   attachedCallback () {
     this.requireAttribute('pushstate-url');
@@ -32,16 +37,25 @@ export default class BulbsPage extends BulbsHTMLElement {
   }
 
   handlePageStart () {
-    history.replaceState(
-      {},
-      this.getAttribute('pushstate-title'),
-      this.getAttribute('pushstate-url')
-    );
+    // using request animation frame enforces only one
+    // handlePagStart call will have an effect per frame.
+    if (pageStartGoverner) {
+      window.cancelAnimationFrame(pageStartGoverner);
+    }
 
-    getAnalyticsManager().trackPageView(
-      this.getAttribute('pushstate-url'),
-      this.getAttribute('pushstate-title')
-    );
+    pageStartGoverner = window.requestAnimationFrame(() => {
+      history.replaceState(
+        {},
+        this.getAttribute('pushstate-title'),
+        this.getAttribute('pushstate-url')
+      );
+
+      getAnalyticsManager().trackPageView(
+        this.getAttribute('pushstate-url'),
+        this.getAttribute('pushstate-title')
+      );
+      pageStartGoverner = null;
+    });
   }
 }
 

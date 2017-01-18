@@ -33,11 +33,7 @@ describe('ReadingListMenu', () => {
       },
     });
     menuContainer = createElement('div', { id: 'menu-container' });
-    menuElement = createElement('bulb-reading-list-menu', {
-      'fixed-menu-min-width': 768,
-      'pinned-container-selector': '#menu-container',
-      'reading-list-id': readingListId,
-    });
+    menuElement = createElement('bulb-reading-list-menu');
     fixtures.appendChild(articlesElement);
     fixtures.appendChild(menuContainer);
     menuElement.appendChild(itemElement);
@@ -57,42 +53,8 @@ describe('ReadingListMenu', () => {
     }).to.throw('new ReadingListMenu(element, dispatcher): dispatcher is undefined');
   });
 
-  it('saves a reference to the element', () => {
-    expect(subject.element).to.equal(menuElement);
-  });
-
   it('saves a reference to the dispatcher', () => {
     expect(subject.dispatcher).to.equal(dispatcher);
-  });
-
-  it('saves a reference to the reading list id', () => {
-    expect(subject.readingListId).to.equal(readingListId);
-  });
-
-  it('saves a reference to the pinned container element', () => {
-    expect(subject.pinnedContainer).to.equal(menuContainer);
-  });
-
-  it('saves a reference to the articles container element with a matching readingListId', () => {
-    expect(subject.articlesContainer).to.equal(articlesElement);
-  });
-
-  describe('findPinnedContainer', () => {
-    it('requires a selector', () => {
-      expect(() => {
-        subject.findPinnedContainer();
-      }).to.throw('ReadingListMenu.findPinnedContainer(selector): selector is undefined');
-    });
-
-    it('requires the pinned-container to exist in the DOM', () => {
-      expect(() => {
-        subject.findPinnedContainer('.non-existent');
-      }).to.throw('ReadingListMenu.findPinnedContainer(selector): there is no DOM element found with selector .non-existent');
-    });
-
-    it('returns the found element', () => {
-      expect(subject.findPinnedContainer('#menu-container')).to.equal(menuContainer);
-    });
   });
 
   describe('createMenuItems', () => {

@@ -88,6 +88,12 @@ describe('<div is="bulbs-dfp">', () => {
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
     });
 
+    it('ignores refresh interval if component attribute disables it', () => {
+      element.setAttribute('no-refresh', '');
+      element.attachedCallback();
+      expect(window.setInterval.called).to.be.false;
+    });
+
     it('ignores refresh interval if ads manager also has refreshDisabled set to true for the slot', () => {
 
       window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = 666;

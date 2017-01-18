@@ -5,7 +5,7 @@ require('../plugins/jwplayer');
 
 import GoogleAnalytics from '../plugins/google-analytics';
 import Comscore from '../plugins/comscore';
-import { prepGaEventTracker } from 'bulbs-elements/util';
+import { prepGaEventTracker, InViewMonitor } from 'bulbs-elements/util';
 
 /* global jQuery, ga, AnalyticsManager, BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID */
 
@@ -24,6 +24,7 @@ export default class Revealed extends React.Component {
     super(props);
     this.forwardJWEvent = this.forwardJWEvent.bind(this);
     this.setPlaysInline = this.setPlaysInline.bind(this);
+    this.handlePauseEvent = this.handlePauseEvent.bind(this);
   }
 
   componentDidMount () {
@@ -49,6 +50,7 @@ export default class Revealed extends React.Component {
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
+    let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
@@ -58,7 +60,7 @@ export default class Revealed extends React.Component {
       'dimension5': hostChannel,
       'dimension6': specialCoverage,
       'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || 'None', // autoplay
+      'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
     };
@@ -72,7 +74,7 @@ export default class Revealed extends React.Component {
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
-    videoMeta.player_options.shareUrl = `${window.location.href}/v/${videoMeta.id}`;
+    videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
 
     filteredTags.push(hostChannel);
 
@@ -112,6 +114,7 @@ export default class Revealed extends React.Component {
 
   componentWillUnmount () {
     this.player.remove();
+    InViewMonitor.remove(this.refs.videoViewport);
   }
 
   extractSources (sources) {
@@ -258,6 +261,12 @@ export default class Revealed extends React.Component {
       };
     }
 
+    if (typeof this.props.autoplayInView === 'string') {
+      this.handleAutoPlayInView();
+      // turn off autostart if player is not in viewport
+      playerOptions.autostart = this.playerInViewport(this.refs.videoViewport);
+    }
+
     this.player.setup(playerOptions);
 
     GoogleAnalytics.init(this.player, videoMeta.gaTrackerAction);
@@ -266,11 +275,42 @@ export default class Revealed extends React.Component {
     this.player.on('beforePlay', this.setPlaysInline);
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
+    this.player.on('pause', this.handlePauseEvent);
+    this.player.on('adPause', this.handlePauseEvent);
+  }
+
+  handleAutoPlayInView () {
+    let videoViewport = this.refs.videoViewport;
+    InViewMonitor.add(videoViewport);
+    this.enterviewportEvent = () => this.player.play(true);
+    videoViewport.addEventListener('enterviewport', this.enterviewportEvent);
+    videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
+  }
+
+  playerInViewport (videoViewport) {
+    let overrideAutoPlay;
+    if(InViewMonitor.isElementInViewport(videoViewport)) {
+      overrideAutoPlay = true;
+    }
+    else {
+      overrideAutoPlay = false;
+    }
+    return overrideAutoPlay;
   }
 
   handleClick () {
     if (this.props.hideControls) {
       this.player.play();
+    }
+  }
+
+  handlePauseEvent (reason) {
+    if (reason.pauseReason === 'external') {
+      return;
+    }
+    else if (reason.pauseReason === 'interaction') {
+      this.refs.videoViewport.removeEventListener('enterviewport', this.enterviewportEvent);
+      this.player.pause(true);
     }
   }
 
@@ -303,6 +343,7 @@ export default class Revealed extends React.Component {
 
 Revealed.propTypes = {
   autoplay: PropTypes.bool,
+  autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
@@ -312,6 +353,7 @@ Revealed.propTypes = {
   muted: PropTypes.bool,
   noEndcard: PropTypes.bool,
   playsInline: PropTypes.bool,
+  shareUrl: PropTypes.string,
   targetCampaignId: PropTypes.string,
   targetCampaignNumber: PropTypes.string,
   targetHostChannel: PropTypes.string,

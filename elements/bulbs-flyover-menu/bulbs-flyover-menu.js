@@ -31,7 +31,6 @@ class FlyoverMenu extends BulbsHTMLElement {
   attachedCallback () {
     invariant(this.hasAttribute('menu-name'),
       '<bulbs-flyover-menu> MUST have a `menu-name` attribute;');
-    this.addEventListener('click', this.closeFlyover.bind(this));
   }
 
   openFlyover () {
