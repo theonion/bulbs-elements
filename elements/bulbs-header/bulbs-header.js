@@ -7,7 +7,7 @@ import { InViewMonitor } from 'bulbs-elements/util';
 
 class BulbsHeader extends BulbsHTMLElement {
 
-  attachedCallback () {
+  connectedCallback () {
 
     this.masthead = this.querySelector('bulbs-header-masthead');
     this.responsiveNav = this.querySelector('bulbs-header-responsive-nav');

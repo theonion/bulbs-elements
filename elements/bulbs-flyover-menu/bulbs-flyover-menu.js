@@ -2,10 +2,6 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import './bulbs-flyover-menu.scss';
 import invariant from 'invariant';
 
-// We have to do this little dance to properly subclass elements in Safari
-function BulbsHTMLButtonElement () {}
-BulbsHTMLButtonElement.prototype = HTMLButtonElement.prototype;
-
 const flyoverRegistry = {
   menus: {},
   get: (menuName) => {
@@ -24,13 +20,10 @@ class FlyoverMenu extends BulbsHTMLElement {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
-    this.flyoverState.menu = this;
-  }
-
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('menu-name'),
       '<bulbs-flyover-menu> MUST have a `menu-name` attribute;');
+    this.flyoverState.menu = this;
   }
 
   openFlyover () {
@@ -55,34 +48,26 @@ class FlyoverMenu extends BulbsHTMLElement {
   }
 }
 
-class FlyoverClose extends BulbsHTMLButtonElement {
+class FlyoverClose extends HTMLButtonElement {
   get flyoverState () {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-close"> MUST have a `menu-name` attribute;');
-  }
-
-  attachedCallback () {
     this.addEventListener('click', () => this.flyoverState.menu.closeFlyover());
   }
 }
 
-FlyoverClose.extends = 'button';
-
-class FlyoverOpen extends BulbsHTMLButtonElement {
+class FlyoverOpen extends HTMLButtonElement {
   get flyoverState () {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
   }
 
-  createdCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('menu-name'),
       '<button is="bulbs-flyover-open"> MUST have a `menu-name` attribute;');
-  }
-
-  attachedCallback () {
     this.flyoverState.openButtons.push(this);
     this.setAttribute('aria-haspopup', 'true');
     this.setAttribute('aria-expanded', 'false');
@@ -90,8 +75,6 @@ class FlyoverOpen extends BulbsHTMLButtonElement {
   }
 }
 
-FlyoverOpen.extends = 'button';
-
 registerElement('bulbs-flyover-menu', FlyoverMenu);
-registerElement('bulbs-flyover-open', FlyoverOpen);
-registerElement('bulbs-flyover-close', FlyoverClose);
+registerElement('bulbs-flyover-open', FlyoverOpen, { extends: 'button' });
+registerElement('bulbs-flyover-close', FlyoverClose, { extends: 'button' });

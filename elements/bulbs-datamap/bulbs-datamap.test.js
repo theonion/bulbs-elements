@@ -6,7 +6,12 @@ describe('<bulbs-datamap>', function () {
 
   beforeEach(function (done) {
     element = document.createElement('bulbs-datamap');
+    document.body.appendChild(element);
     setImmediate(done);
+  });
+
+  afterEach(() => {
+    element.remove();
   });
 
   it('renders an <bulbs-datamap>', function () {

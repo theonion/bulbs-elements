@@ -12,7 +12,7 @@ import './bulbs-pinned-element.scss';
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {
 
-  attachedCallback () {
+  connectedCallback () {
 
     this.topOffsetAdjustment = parseInt(this.getAttribute('offset-top-px') || 0, 10);
     this.lastPosition = 0;
@@ -36,7 +36,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.boundPositionCar();
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     window.removeEventListener('scroll', this.boundPositionCar);
   }
 

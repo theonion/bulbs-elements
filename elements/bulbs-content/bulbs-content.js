@@ -2,7 +2,7 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import './bulbs-content.scss';
 
 class BulbsContent extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     if (!this.hasDispatchedReadyEvent) {
       let event = new CustomEvent('bulbs-content-ready');
       this.dispatchEvent(event);

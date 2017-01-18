@@ -2,7 +2,7 @@ import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
 import { moveChildren, copyAttribute } from 'bulbs-elements/util';
 
 export default class CarouselItem extends BulbsHTMLElement {
-  createdCallback () {
+  connectedCallback () {
     if (this.getAttribute('href')) {
       let anchor = document.createElement('a');
 

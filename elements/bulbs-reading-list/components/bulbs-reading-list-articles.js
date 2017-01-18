@@ -5,7 +5,7 @@ import {
 import invariant from 'invariant';
 
 class ReadingListArticles extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.getAttribute('reading-list-id'), '<bulbs-reading-list-articles> requires a "reading-list-id" attribute');
   }
 }

@@ -5,7 +5,7 @@ describe('<bulbs-content>', () => {
     let spy = sinon.spy();
     let subject = document.createElement('bulbs-content');
     subject.addEventListener('bulbs-content-ready', spy);
-    subject.attachedCallback();
+    subject.connectedCallback();
 
     expect(spy).to.have.been.called.once;
   });
@@ -14,8 +14,8 @@ describe('<bulbs-content>', () => {
     let spy = sinon.spy();
     let subject = document.createElement('bulbs-content');
     subject.addEventListener('bulbs-content-ready', spy);
-    subject.attachedCallback();
-    subject.attachedCallback();
+    subject.connectedCallback();
+    subject.connectedCallback();
 
     expect(spy).to.have.been.called.once;
   });

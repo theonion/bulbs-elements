@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import './bulbs-splitpic.scss';
 
 class BulbsSplitpic extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.attributes.orientation.value, 'BulbsSplitpic: orientation attribute is required');
     this.orientation = this.attributes.orientation.value;
 

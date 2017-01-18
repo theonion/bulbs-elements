@@ -2,11 +2,11 @@ import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import { InViewMonitor } from 'bulbs-elements/util';
 
 class BulbsHeaderMasthead extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     InViewMonitor.add(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     InViewMonitor.remove(this);
   }
 }

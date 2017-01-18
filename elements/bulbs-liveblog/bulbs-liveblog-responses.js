@@ -33,7 +33,7 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
     return button;
   }
 
-  attachedCallback () {
+  connectedCallback () {
     this.requireAttribute('firebase-path');
     this.requireAttribute('firebase-url');
     this.requireAttribute('firebase-api-key');
@@ -57,7 +57,7 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
     this.responsesData = {};
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     this.removeEventListener('click', this.handleClick);
     this.firebaseRef.off('value', this.handleFirebaseValue);
   }
@@ -143,8 +143,8 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
       this.append(this.responseStaging.firstElementChild);
     }
     window.picturefill();
-    if (twttr) {
-      twttr.widgets.load();
+    if (typeof window.twttr !== 'undefined') {
+      window.twttr.widgets.load();
     }
   }
 

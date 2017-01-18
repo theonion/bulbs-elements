@@ -18,16 +18,16 @@ describe('<bulbs-header>', () => {
       sandbox.restore();
     });
 
-    describe('attachedCallback', () => {
+    describe('connectedCallback', () => {
       it('registers with InViewMonitor', () => {
-        masthead.attachedCallback();
+        masthead.connectedCallback();
         expect(InViewMonitor.add).to.have.been.calledWith(masthead).once;
       });
     });
 
-    describe('detachedCallback', () => {
+    describe('disconnectedCallback', () => {
       it('removes from InViewMonitor', () => {
-        masthead.detachedCallback();
+        masthead.disconnectedCallback();
         expect(InViewMonitor.remove).to.have.been.calledWith(masthead).once;
       });
     });

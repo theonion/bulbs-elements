@@ -29,12 +29,12 @@ describe('<bulbs-liveblog-entry>', () => {
     container.remove();
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     it('it requires an `entry-id` attribute', () => {
       subject.removeAttribute('entry-id');
 
       expect(() => {
-        subject.attachedCallback();
+        subject.connectedCallback();
       }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-id` attribute');
     });
 
@@ -42,13 +42,13 @@ describe('<bulbs-liveblog-entry>', () => {
       subject.removeAttribute('entry-published');
 
       expect(() => {
-        subject.attachedCallback();
+        subject.connectedCallback();
       }).to.throw('<bulbs-liveblog-entry> element MUST specify an `entry-published` attribute');
     });
 
     it('requires a parent `bulbs-liveblog` element', () => {
       expect(() => {
-        document.createElement('bulbs-liveblog-entry').attachedCallback();
+        document.createElement('bulbs-liveblog-entry').connectedCallback();
       }).to.throw('<bulbs-liveblog-entry> element MUST be placed within a <bulbs-liveblog>');
     });
 

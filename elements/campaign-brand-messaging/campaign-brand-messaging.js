@@ -21,7 +21,7 @@ export default class CampaignProductShot extends BulbsHTMLElement {
     console.log(error);
   }
 
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('src'), 'campaign-brand-messaging component requires a src');
     fetch(this.getAttribute('src'))
       .then(filterBadResponse)
@@ -33,7 +33,7 @@ export default class CampaignProductShot extends BulbsHTMLElement {
   attributeChangedCallback (name, previousValue, value) {
     if (document.body.contains(this)) {
       if (name === 'src' && previousValue !== value) {
-        this.attachedCallback();
+        this.connectedCallback();
       }
     }
   }

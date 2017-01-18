@@ -43,7 +43,7 @@ describe('<bulbs-liveblog>', () => {
     sandbox.restore();
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     beforeEach(() => {
       sandbox.stub(subject, 'setupFirebase');
       sandbox.stub(subject, 'setupInterval');
@@ -52,74 +52,74 @@ describe('<bulbs-liveblog>', () => {
 
     it('requires a `firebase-path` attribute', () => {
       subject.removeAttribute('firebase-path');
-      expect(() => subject.attachedCallback()).to.throw(
+      expect(() => subject.connectedCallback()).to.throw(
         '<bulbs-liveblog> MUST have a \'firebase-path\' attribute.'
       );
     });
 
     it('requires a `firebase-url` attribute', () => {
       subject.removeAttribute('firebase-url');
-      expect(() => subject.attachedCallback()).to.throw(
+      expect(() => subject.connectedCallback()).to.throw(
         '<bulbs-liveblog> MUST have a \'firebase-url\' attribute'
       );
     });
 
     it('requires a `firebase-api-key` attribute', () => {
       subject.removeAttribute('firebase-api-key');
-      expect(() => subject.attachedCallback()).to.throw(
+      expect(() => subject.connectedCallback()).to.throw(
         '<bulbs-liveblog> MUST have a \'firebase-api-key\' attribute'
       );
     });
 
     it('requires a `liveblog-new-entries-url` attribute', () => {
       subject.removeAttribute('liveblog-new-entries-url');
-      expect(() => subject.attachedCallback()).to.throw(
+      expect(() => subject.connectedCallback()).to.throw(
         '<bulbs-liveblog> MUST have a \'liveblog-new-entries-url\' attribute'
       );
     });
 
     it('sets up firebase', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.setupFirebase).to.have.been.called.once;
     });
 
     it('starts a lookup interval', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.setupInterval).to.have.been.called.once;
     });
 
     it('registers event handlers', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.setupEvents).to.have.been.called.once;
     });
 
     it('tracks newEntriesButtons', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.newEntriesButtons).to.be.an.instanceof(HTMLCollectionClass);
     });
 
     it('creates a staging pad for new entries', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.entryStaging.matches('div')).to.be.true;
     });
 
     it('hides the staging pad for new entries', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.entryStaging.style.display).to.eql('none');
     });
 
     it('initializes entriesData', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.entriesData).to.eql({});
     });
 
     it('tracks the liveblog entries container', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.entriesContainer).to.be.an.instanceof(HTMLCollectionClass);
     });
 
     it('tracks the liveblog-entries', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(subject.entriesElements).to.be.an.instanceof(HTMLCollectionClass);
     });
   });
@@ -164,19 +164,19 @@ describe('<bulbs-liveblog>', () => {
     });
   });
 
-  describe('detachedCallback', () => {
+  describe('disconnectedCallback', () => {
     beforeEach(() => {
       sandbox.stub(subject, 'teardownFirebase');
       sandbox.spy(subject, 'teardownInterval');
     });
 
     it('tears down firebase', () => {
-      subject.detachedCallback();
+      subject.disconnectedCallback();
       expect(subject.teardownFirebase).to.have.been.called;
     });
 
     it('tears down the interval', () => {
-      subject.detachedCallback();
+      subject.disconnectedCallback();
       expect(subject.teardownInterval).to.have.been.called;
     });
   });
@@ -209,6 +209,7 @@ describe('<bulbs-liveblog>', () => {
     });
 
     it('parses entry published dates', () => {
+      subject.connectedCallback();
       let snapshot = {
         one: {
           published: '2016-09-19T11:09:06.668617',

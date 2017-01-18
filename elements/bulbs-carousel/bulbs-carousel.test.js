@@ -52,7 +52,7 @@ describe('<bulbs-carousel>', () => {
     firstItem.style.transition = 'none'; // Kill animations for test
 
     document.body.appendChild(container);
-    // document.registerElement polyfill runs on next microtask in some browsers
+    // customElements.define polyfill runs on next microtask in some browsers
     // MUST wait until end of queue for elements to be constructed
     setImmediate(() => {
       track = carousel.track;
@@ -69,7 +69,38 @@ describe('<bulbs-carousel>', () => {
     document.body.removeChild(container);
   });
 
-  describe('createdCallback', () => {
+  describe('conn', () => {
+  });
+
+  describe('connectedCallback', () => {
+    context('there is an active carousel item', () => {
+      beforeEach(() => {
+        secondItem.setAttribute(
+          'href', window.location.pathname
+        );
+      });
+
+      it('pages to the active item in the carousel', () => {
+        subject.connectedCallback();
+        expect(subject.state.pageToCarouselItem).to.have.been.calledWith(
+          secondItem
+        );
+      });
+    });
+
+    it('applies state', () => {
+      subject.connectedCallback();
+      expect(subject.applyState).to.have.been.called;
+    });
+  });
+
+  describe('onClick', () => {
+    beforeEach(() => {
+      sinon.spy(subject.state,'slideToPrevious');
+      sinon.spy(subject.state,'slideToNext');
+      sinon.spy(subject, 'stateChanged');
+    });
+
     it('wraps slider content in a <bulbs-carousel-track>', () => {
       expect(slider.childNodes).to.have.length(1);
       expect(
@@ -91,7 +122,7 @@ describe('<bulbs-carousel>', () => {
       beforeEach(() => slider.remove());
 
       it('throws an execption', () => {
-        expect(() => subject.createdCallback()).to.throw(
+        expect(() => subject.connectedCallback()).to.throw(
           /MUST contain a <bulbs-carousel-slider>/
         );
       });
@@ -99,39 +130,9 @@ describe('<bulbs-carousel>', () => {
 
     context('called twice', () => {
       it('does not create a second track', () => {
-        subject.createdCallback();
+        subject.connectedCallback();
         expect(subject.querySelector('bulbs-carousel-track bulbs-carousel-track')).to.be.null;
       });
-    });
-  });
-
-  describe('attachedCallback', () => {
-    context('there is an active carousel item', () => {
-      beforeEach(() => {
-        secondItem.setAttribute(
-          'href', window.location.pathname
-        );
-      });
-
-      it('pages to the active item in the carousel', () => {
-        subject.attachedCallback();
-        expect(subject.state.pageToCarouselItem).to.have.been.calledWith(
-          secondItem
-        );
-      });
-    });
-
-    it('applies state', () => {
-      subject.attachedCallback();
-      expect(subject.applyState).to.have.been.called;
-    });
-  });
-
-  describe('onClick', () => {
-    beforeEach(() => {
-      sinon.spy(subject.state,'slideToPrevious');
-      sinon.spy(subject.state,'slideToNext');
-      sinon.spy(subject, 'stateChanged');
     });
 
     context('click on previous button', () => {

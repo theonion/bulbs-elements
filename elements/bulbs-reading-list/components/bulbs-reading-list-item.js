@@ -5,7 +5,7 @@ import {
 import invariant from 'invariant';
 
 class BulbsReadingListItem extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.dataset.id, '<bulbs-reading-list-menu> requires a "data-id" attribute');
     invariant(this.dataset.href, '<bulbs-reading-list-menu> requires a "data-href" attribute');
     invariant(this.dataset.partialUrl, '<bulbs-reading-list-menu> requires a "data-partial-url" attribute');

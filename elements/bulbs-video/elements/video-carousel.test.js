@@ -68,9 +68,9 @@ describe('<bulbs-video-carousel>', () => {
     window.location.hash = '';
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     it('attaches firstPlay handler to videoPlayer', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
         'jw-beforePlay',
         subject.firstPlay,
@@ -79,14 +79,14 @@ describe('<bulbs-video-carousel>', () => {
     });
 
     it('attaches playerEnded handler to videoPlayer', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
         'jw-complete', subject.playerEnded, true
       );
     });
 
     it('attaches click handler to the carousel', () => {
-      subject.attachedCallback();
+      subject.connectedCallback();
       expect(carousel.addEventListener).to.have.been.calledWith(
         'click', subject.handleClick
       );

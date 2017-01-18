@@ -33,7 +33,7 @@ describe('<campaign-brand-messaging>', function () {
   });
 
   it('tries to make a request based on the source', function () {
-    element.attachedCallback();
+    element.connectedCallback();
     expect(fetchMock.called('http://example.com/campaign.json')).to.be.true;
   });
 

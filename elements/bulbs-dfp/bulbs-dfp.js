@@ -6,7 +6,7 @@ import {
 } from 'bulbs-elements/register';
 
 export default class BulbsDfp extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
 
     invariant(this.hasAttribute('viewport-threshold'),
         '<div is="bulbs-dfp"> MUST specify a `viewport-threshold` property. ' +
@@ -41,7 +41,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
     }
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     util.InViewMonitor.remove(this);
 
     if (this.refreshInterval) {
@@ -92,6 +92,4 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 }
 
-BulbsDfp.extends = 'div';
-
-registerElement('bulbs-dfp', BulbsDfp);
+registerElement('bulbs-dfp', BulbsDfp, { extends: 'div' });

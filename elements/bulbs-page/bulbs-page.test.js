@@ -30,28 +30,28 @@ describe('<bulbs-page>', () => {
     delete window.onionan;
   });
 
-  describe('attachedCallback', () => {
+  describe('connectedCallback', () => {
     it('registers with InViewMonitor', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       expect(InViewMonitor.add).to.have.been.calledWith(element).once;
     });
 
     it('adds listener for pagestart', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       sandbox.spy(element, 'handlePageStart');
       element.dispatchEvent(new CustomEvent('pagestart'));
       expect(element.handlePageStart).to.have.been.called.once;
     });
 
     it('adds a document ready handler', () => {
-      element.attachedCallback();
+      element.connectedCallback();
       expect(util.onReadyOrNow).to.have.been.called.once;
     });
   });
 
-  describe('detachedCallback', () => {
+  describe('disconnectedCallback', () => {
     it('removes from InViewMonitor', () => {
-      element.detachedCallback();
+      element.disconnectedCallback();
       expect(InViewMonitor.remove).to.have.been.calledWith(element).once;
     });
   });

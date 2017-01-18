@@ -38,19 +38,17 @@ class BulbsLiveblog extends BulbsHTMLElement {
     return button;
   }
 
-  createdCallback () {
-    this.entriesStore = {
-      all: {},
-    };
-  }
-
   get newEntries () {
     // IE11 did not like us caching this element collection.
     //  So we rebuild it whenever we need it.
     return this.entryStaging.getElementsByTagName('bulbs-liveblog-entry');
   }
 
-  attachedCallback () {
+  connectedCallback () {
+    this.entriesStore = {
+      all: {},
+    };
+
     this.requireAttribute('firebase-path');
     this.requireAttribute('firebase-url');
     this.requireAttribute('firebase-api-key');
@@ -87,7 +85,7 @@ class BulbsLiveblog extends BulbsHTMLElement {
     this.handleFirebaseValue = this.handleFirebaseValue.bind(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     this.teardownFirebase();
     this.teardownInterval();
   }
@@ -137,7 +135,6 @@ class BulbsLiveblog extends BulbsHTMLElement {
 
     let entryIds = this.getEntryIdsToFetch();
     if (entryIds.length) {
-      console.log('handleBlogUpdate', entryIds);
       this.handleBlogUpdate(entryIds);
     }
   }

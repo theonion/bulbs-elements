@@ -16,7 +16,8 @@
     "Promise": false,
     "sinon": false,
     "xdescribe": false,
-    "xit": false
+    "xit": false,
+    "customElements": false
   },
   "ecmaFeatures": {
     "arrowFunctions": true,

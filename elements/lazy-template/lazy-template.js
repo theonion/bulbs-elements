@@ -3,15 +3,12 @@ import { InViewMonitor } from 'bulbs-elements/util';
 import invariant from 'invariant';
 import './lazy-template.scss';
 
-function BulbsHTMLScriptElement () {}
-BulbsHTMLScriptElement.prototype = HTMLScriptElement.prototype;
-
-class LazyTemplate extends BulbsHTMLScriptElement {
+class LazyTemplate extends HTMLScriptElement {
   get loadOn () {
     return this.getAttribute('load-on');
   }
 
-  attachedCallback () {
+  connectedCallback () {
     invariant(this.hasAttribute('load-on'),
       '<script is="lazy-template"> MUST specify a "load-on" attribute (either "page-load" or "in-view").');
 
@@ -29,7 +26,7 @@ class LazyTemplate extends BulbsHTMLScriptElement {
     this.handleEnterViewport = this.handleEnterViewport.bind(this);
   }
 
-  detachedCallback () {
+  disconnectedCallback () {
     if (this.loadOn === 'in-view') {
       this.tearDownLoadOnInView();
     }
@@ -63,6 +60,4 @@ class LazyTemplate extends BulbsHTMLScriptElement {
   }
 }
 
-LazyTemplate.extends = 'script';
-
-registerElement('lazy-template', LazyTemplate);
+registerElement('lazy-template', LazyTemplate, { extends: 'script' });

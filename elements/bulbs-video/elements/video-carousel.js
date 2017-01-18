@@ -46,7 +46,7 @@ export class VideoCarouselState {
 }
 
 class BulbsVideoCarousel extends BulbsHTMLElement {
-  attachedCallback () {
+  connectedCallback () {
     invariant(
       this.videoPlayer = this.querySelector('bulbs-video'),
       '<bulbs-video-carousel> MUST contain a <bulbs-video>'

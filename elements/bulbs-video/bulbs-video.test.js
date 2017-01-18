@@ -1,7 +1,6 @@
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
-
-import { scrollingElement } from 'bulbs-elements/util';
+import { loadOnDemand } from 'bulbs-elements/util';
 
 describe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
@@ -122,7 +121,7 @@ describe('<bulbs-video>', () => {
       container.appendChild(videoElement);
 
       container.style.top = '0';
-      scrollingElement.scrollTop += 1;
+      loadOnDemand.maybeLoadComponents();
 
       requestAnimationFrame(() => {
         expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
