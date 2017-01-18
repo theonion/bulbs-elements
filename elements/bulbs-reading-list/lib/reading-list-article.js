@@ -168,7 +168,6 @@ export default class ReadingListArticle {
     if (this.startedReading(oldProgress, newProgress)) {
       if (this.href !== window.location.pathname) {
         this.pushToHistory();
-
         if (!this.gaTrackerWrapper) {
           this.gaTrackerWrapper = this.prepGaTracker();
         }

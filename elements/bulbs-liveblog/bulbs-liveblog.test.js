@@ -53,28 +53,28 @@ describe('<bulbs-liveblog>', () => {
     it('requires a `firebase-path` attribute', () => {
       subject.removeAttribute('firebase-path');
       expect(() => subject.attachedCallback()).to.throw(
-        '<bulbs-liveblog> element MUST specify a `firebase-path` attribute'
+        '<bulbs-liveblog> MUST have a \'firebase-path\' attribute.'
       );
     });
 
     it('requires a `firebase-url` attribute', () => {
       subject.removeAttribute('firebase-url');
       expect(() => subject.attachedCallback()).to.throw(
-        '<bulbs-liveblog> element MUST specify a `firebase-url` attribute'
+        '<bulbs-liveblog> MUST have a \'firebase-url\' attribute'
       );
     });
 
     it('requires a `firebase-api-key` attribute', () => {
       subject.removeAttribute('firebase-api-key');
       expect(() => subject.attachedCallback()).to.throw(
-        '<bulbs-liveblog> element MUST specify a `firebase-api-key` attribute'
+        '<bulbs-liveblog> MUST have a \'firebase-api-key\' attribute'
       );
     });
 
     it('requires a `liveblog-new-entries-url` attribute', () => {
       subject.removeAttribute('liveblog-new-entries-url');
       expect(() => subject.attachedCallback()).to.throw(
-        '<bulbs-liveblog> element MUST specify a `liveblog-new-entries-url` attribute'
+        '<bulbs-liveblog> MUST have a \'liveblog-new-entries-url\' attribute'
       );
     });
 

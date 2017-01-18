@@ -1,128 +1,152 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
-import invariant from 'invariant';
-import { getScrollOffset, InViewMonitor } from 'bulbs-elements/util';
+import {
+  registerElement,
+  BulbsHTMLElement,
+} from 'bulbs-elements/register';
+import {
+  InViewMonitor,
+  getRoundedBoundingClientRect,
+  getScrollOffset,
+  moveChildren,
+} from 'bulbs-elements/util';
 import './bulbs-pinned-element.scss';
 
 export default class BulbsPinnedElement extends BulbsHTMLElement {
-  attachedCallback () {
-    invariant(this.hasAttribute('pinned-to'), '<bulbs-pinned-element pinned-to=".selector">: a pinned-to selector is required');
 
-    const selector = this.getAttribute('pinned-to');
-    const element = document.querySelector(selector);
+  attachedCallback () {
+
+    this.topOffsetAdjustment = parseInt(this.getAttribute('offset-top-px') || 0, 10);
     this.lastPosition = 0;
+    this.lastRailHeight = 0;
     this.animationRequest = null;
 
-    invariant(element, `<bulbs-pinned-element pinned-to=".selector">: no element with the selector "${selector}" is in the DOM`);
+    let car = this.querySelector('bulbs-pinned-element-car');
+    if (car) {
+      this.car = car;
+    }
+    else {
+      this.car = document.createElement('bulbs-pinned-element-car');
+      moveChildren(this, this.car);
+      this.appendChild(this.car);
+    }
 
-    window.addEventListener('scroll', this.handleScrollEvent.bind(this));
+    this.boundPositionCar = this.positionCar.bind(this);
+
+    window.addEventListener('scroll', this.boundPositionCar);
+
+    this.boundPositionCar();
   }
 
-  handleScrollEvent () {
+  detachedCallback () {
+    window.removeEventListener('scroll', this.boundPositionCar);
+  }
+
+  getBoundingRects () {
+
+    return {
+      car: getRoundedBoundingClientRect(this.car),
+      parent: getRoundedBoundingClientRect(this.parentElement),
+      rail: getRoundedBoundingClientRect(this),
+    };
+  }
+
+  isInView (boundingRects) {
+    return InViewMonitor.isElementInViewport(this, boundingRects.rail);
+  }
+
+  positionCar () {
     if(!this.animationRequest) {
       this.animationRequest = requestAnimationFrame(() => {
         this.animationRequest = null;
 
-        if(!InViewMonitor.isElementInViewport(this, this.getBoundingClientRect())) { return; }
+        const boundingRects = this.getBoundingRects();
 
-        let elementPinnedTo = this.getElementPinnedTo();
-        const boundingRects = this.getBoundingRects(elementPinnedTo);
+        this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
+        this.style.width = `${boundingRects.parent.width}px`;
 
-        if(this.isScrollingDown()) {
-          this.handleScrollDown(elementPinnedTo, boundingRects);
+        if (this.hasNewRailHeight(boundingRects)) {
+          this.resetCarPosition();
         }
-        else {
-          this.handleScrollUp(boundingRects);
+
+        if (this.isInView(boundingRects)) {
+
+          if(this.isScrollingDown()) {
+            this.handleScrollDown(boundingRects);
+          }
+          else {
+            this.handleScrollUp(boundingRects);
+          }
         }
       });
     }
   }
 
-  getElementPinnedTo () {
-    const pinnedTo = this.getAttribute('pinned-to');
-    let elementPinnedTo;
-    if(this.parentElement.tagName.toUpperCase() === pinnedTo.toUpperCase()) {
-      elementPinnedTo = this.parentElement;
+  hasNewRailHeight (boundingRects) {
+    let newRailHeight = false;
+
+    if (boundingRects.rail.height !== this.lastRailHeight) {
+      newRailHeight = true;
+      this.lastRailHeight = boundingRects.rail.height;
     }
-    else {
-      elementPinnedTo = this.parentElement.querySelector(pinnedTo);
-    }
-    return elementPinnedTo;
+
+    return newRailHeight;
   }
 
   isScrollingDown () {
     const offset = getScrollOffset();
+
     let scrollDown = false;
     if (offset.y > this.lastPosition) {
       scrollDown = true;
     }
+
     this.lastPosition = offset.y;
+
     return scrollDown;
   }
 
-  getBoundingRects (elementPinnedTo) {
-    return {
-      'pinnedElement': this.getBoundingClientRect(),
-      'elementPinnedTo': elementPinnedTo.getBoundingClientRect(),
-    };
-  }
+  handleScrollDown (boundingRects) {
 
-  handleScrollDown (elementPinnedTo, boundingRects) {
-    if (this.pinnedParentTopInViewport(elementPinnedTo)) {
-      this.pinToParentTop();
+    if (boundingRects.rail.bottom <= boundingRects.car.bottom) {
+      this.pinToRailBottom();
     }
-    else if (this.pinnedElementAtParentBottom(boundingRects)) {
-      this.pinToParentBottom();
-    }
-    else {
-      this.addPinnedClass();
+    else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
+      this.pinToWindow();
     }
   }
 
   handleScrollUp (boundingRects) {
-    if (this.pinnedElementAtParentTop(boundingRects)) {
-      this.pinToParentTop();
+
+    if (boundingRects.rail.top >= boundingRects.car.top) {
+      this.resetCarPosition();
     }
-    else if (this.pinnedElementBelowTopOfViewport(boundingRects)) {
-      this.addPinnedClass();
+    else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
+      this.pinToWindow();
     }
   }
 
-  pinnedParentTopInViewport (el) {
-    let elementTop = $(el).offset().top;
-    let windowTop = window.pageYOffset;
-    let windowBottom = windowTop + window.innerHeight;
-    return elementTop > windowTop && elementTop < windowBottom;
+  resetCarPosition () {
+    this.car.classList.remove('pinned', 'pinned-bottom');
+
+    this.car.style.bottom = '';
+    this.car.style.top = 0;
   }
 
-  pinnedElementAtParentBottom (boundingRects) {
-    return boundingRects.pinnedElement.bottom >= boundingRects.elementPinnedTo.bottom;
+  pinToRailBottom () {
+    this.car.classList.remove('pinned');
+    this.car.classList.add('pinned-bottom');
+
+    this.car.style.bottom = 0;
+    this.car.style.top = '';
   }
 
-  pinnedElementAtParentTop (boundingRects) {
-    return boundingRects.pinnedElement.top <= boundingRects.elementPinnedTo.top;
-  }
+  pinToWindow () {
+    this.car.classList.remove('pinned-bottom');
+    this.car.classList.add('pinned');
 
-  pinnedElementBelowTopOfViewport (boundingRects) {
-    return boundingRects.elementPinnedTo.top < 0;
-  }
-
-  pinToParentTop () {
-    this.classList.remove('pinned-bottom');
-    this.classList.remove('pinned');
-    this.classList.add('pinned-top');
-  }
-
-  pinToParentBottom () {
-    this.classList.remove('pinned-top');
-    this.classList.remove('pinned');
-    this.classList.add('pinned-bottom');
-  }
-
-  addPinnedClass () {
-    this.classList.remove('pinned-top');
-    this.classList.remove('pinned-bottom');
-    this.classList.add('pinned');
+    this.car.style.bottom = '';
+    this.car.style.top = `${this.topOffsetAdjustment}px`;
   }
 }
 
 registerElement('bulbs-pinned-element', BulbsPinnedElement);
+
