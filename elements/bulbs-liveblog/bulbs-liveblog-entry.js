@@ -18,7 +18,7 @@ class BulbsLiveblogEntry extends BulbsHTMLElement {
     }
 
     if (typeof twttr !== 'undefined') {
-      twttr.widgets.load();
+      twttr.widgets.load();             // eslint-disable-line no-undef
     }
   }
 

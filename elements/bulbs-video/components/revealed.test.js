@@ -82,7 +82,6 @@ describe('<bulbs-video> <Revealed>', () => {
             { url: 'url-2', content_type: 'type-2' },
           ],
         },
-        controller: {},
       };
       subject = shallow(<Revealed {...props}/>);
     });

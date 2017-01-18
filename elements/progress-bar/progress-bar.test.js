@@ -9,14 +9,14 @@ describe('<progress-bar>', () => {
   let sandbox;
   let fixtureContainer;
 
-  function appendSubject() {
+  function appendSubject () {
     return (new Promise(resolve => {
       fixtureContainer = appendFixtureContainer();
       fixtureContainer.appendChild(subject);
 
       setImmediate(resolve);
     }));
-  };
+  }
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -65,7 +65,7 @@ describe('<progress-bar>', () => {
 
       appendSubject()
         .then(() => {
-          track = subject.children[0]
+          track = subject.children[0];
           subject.setAttribute('progress', '50');
         })
         .then(() => {

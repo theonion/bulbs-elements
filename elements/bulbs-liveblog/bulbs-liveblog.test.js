@@ -209,7 +209,7 @@ describe('<bulbs-liveblog>', () => {
     });
 
     it('parses entry published dates', () => {
-      sandbox.stub(window, 'fetch').returns(new Promise (resolve => resolve));
+      sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
       let snapshot = {
         one: {
           published: '2016-09-19T11:09:06.668617',
