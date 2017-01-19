@@ -1,4 +1,5 @@
 import './bulbs-page';
+import createStub from 'raf-stub';
 
 import util, {
   InViewMonitor,
@@ -8,12 +9,15 @@ import util, {
 describe('<bulbs-page>', () => {
   let element;
   let sandbox;
+  let rafStub;
 
   beforeEach(() => {
+    rafStub = createStub();
     sandbox = sinon.sandbox.create();
     window.onionan = {
       trackPageView () {},
     };
+    sandbox.stub(global, 'requestAnimationFrame', rafStub.add);
     element = document.createElement('bulbs-page');
     element.setAttribute('pushstate-title', 'Pushstate Title');
     element.setAttribute('pushstate-url', '/example');
@@ -23,6 +27,7 @@ describe('<bulbs-page>', () => {
     sandbox.spy(util.getAnalyticsManager(), 'trackPageView');
     sandbox.spy(LockScroll, 'lockToElement');
     sandbox.spy(util, 'onReadyOrNow');
+
   });
 
   afterEach(() => {
@@ -81,18 +86,15 @@ describe('<bulbs-page>', () => {
   describe('handlePageStart', () => {
     it('calls replaceState api', () => {
       element.handlePageStart();
-      element.handlePageStart();
-      requestAnimationFrame(() => {
-        expect(history.replaceState).to.have.been.calledWith(
-          {},
-          'Pushstate Title',
-          '/example',
-        ).once;
-      });
+      rafStub.step();
+      expect(history.replaceState).to.have.been.calledWith(
+        {},
+        'Pushstate Title',
+        '/example',
+      ).once;
     });
 
     it('tracks a pageview', () => {
-      element.handlePageStart();
       element.handlePageStart();
       requestAnimationFrame(() => {
         expect(util.getAnalyticsManager().trackPageView).to.have.been.calledWith(
