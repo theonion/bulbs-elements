@@ -138,6 +138,7 @@
   },
   "devDependencies": {
     "chai-spies": "^0.7.1",
-    "mock-raf": "^0.1.0"
+    "mock-raf": "^0.1.0",
+    "raf-stub": "^2.0.0"
   }
 }
