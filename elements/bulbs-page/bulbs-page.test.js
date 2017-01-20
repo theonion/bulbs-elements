@@ -1,5 +1,5 @@
 import './bulbs-page';
-import createStub from 'raf-stub';
+import createMockRaf from 'mock-raf';
 
 import util, {
   InViewMonitor,
@@ -9,15 +9,14 @@ import util, {
 describe('<bulbs-page>', () => {
   let element;
   let sandbox;
-  let rafStub;
+  let mockRaf = createMockRaf();
 
   beforeEach(() => {
-    rafStub = createStub();
     sandbox = sinon.sandbox.create();
     window.onionan = {
       trackPageView () {},
     };
-    sandbox.stub(global, 'requestAnimationFrame', rafStub.add);
+    sandbox.stub(global, 'requestAnimationFrame', mockRaf.add);
     element = document.createElement('bulbs-page');
     element.setAttribute('pushstate-title', 'Pushstate Title');
     element.setAttribute('pushstate-url', '/example');
@@ -84,14 +83,17 @@ describe('<bulbs-page>', () => {
   });
 
   describe('handlePageStart', () => {
-    it('calls replaceState api', () => {
+    it('calls replaceState api', (done) => {
       element.handlePageStart();
-      rafStub.step();
-      expect(history.replaceState).to.have.been.calledWith(
-        {},
-        'Pushstate Title',
-        '/example',
-      ).once;
+      mockRaf.step();
+      setImmediate(() => {
+        expect(history.replaceState).to.have.been.calledWith(
+          {},
+          'Pushstate Title',
+          '/example',
+        ).once;
+        done();
+      });
     });
 
     it('tracks a pageview', () => {
