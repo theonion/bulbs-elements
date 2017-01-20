@@ -8,7 +8,7 @@ import VideoField from '../../fields/video';
 import VideoRequestField from '../../fields/video-request';
 import ControllerField from '../../fields/controller';
 
-describe('<rail-player>', () => {
+xdescribe('<rail-player>', () => {
   let subject;
 
   describe('PropTypes', () => {

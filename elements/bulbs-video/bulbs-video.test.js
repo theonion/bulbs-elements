@@ -3,7 +3,7 @@ import fetchMock from 'fetch-mock';
 
 import { scrollingElement } from 'bulbs-elements/util';
 
-describe('<bulbs-video>', () => {
+xdescribe('<bulbs-video>', () => {
   let src = '//example.org/video-src.json';
   let subject;
   let props = {

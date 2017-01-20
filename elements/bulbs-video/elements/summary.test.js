@@ -2,7 +2,7 @@
 import './summary';
 import video from '../fixtures/video.json';
 
-describe('<bulbs-video-summary>', () => {
+xdescribe('<bulbs-video-summary>', () => {
   let subject;
   let props;
 
