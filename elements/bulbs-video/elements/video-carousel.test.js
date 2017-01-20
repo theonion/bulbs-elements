@@ -46,7 +46,6 @@ describe('<bulbs-video-carousel>', () => {
       </bulbs-video-carousel>
     `;
 
-    sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
     document.body.appendChild(container);
 
     // polyfill is asynchronous in some browser environments.
@@ -62,6 +61,7 @@ describe('<bulbs-video-carousel>', () => {
       sinon.spy(carousel, 'addEventListener');
       sinon.spy(videoPlayer, 'addEventListener');
       sinon.spy(videoPlayer, 'removeEventListener');
+      sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
       done();
     });
   });
