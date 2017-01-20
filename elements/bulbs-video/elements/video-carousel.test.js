@@ -235,6 +235,7 @@ describe('<bulbs-video-carousel>', () => {
     context('secondItem selected', () => {
       beforeEach(() => {
         subject.state.selectItem(secondItem);
+        sinon.stub(window, 'fetch').returns(new Promise(resolve => resolve));
         subject.doApplyState();
       });
 
