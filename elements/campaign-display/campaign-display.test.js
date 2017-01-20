@@ -1,7 +1,6 @@
 import React from 'react';
 import CampaignDisplay from './campaign-display';
 import { shallow } from 'enzyme';
-import fetchMock from 'fetch-mock';
 
 describe('<campaign-display>', () => {
   let subject;
@@ -9,6 +8,7 @@ describe('<campaign-display>', () => {
   let props;
   let src;
   let campaign;
+
   beforeEach(() => {
     placement = 'top';
     src = 'http://example.com';
@@ -26,8 +26,6 @@ describe('<campaign-display>', () => {
       preambleText: 'Presented by',
       src,
     };
-
-    fetchMock.mock(src, campaign);
   });
 
   it('should require a placement', function () {
@@ -54,7 +52,6 @@ describe('<campaign-display>', () => {
     beforeEach(() => {
       campaignUrl = 'http://example.com/campaign';
       sandbox = sinon.sandbox.create()
-      fetchMock.mock(campaignUrl, campaign);
 
       let wrapper = shallow(
         <CampaignDisplay
