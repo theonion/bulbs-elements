@@ -9,14 +9,15 @@ import util, {
 describe('<bulbs-page>', () => {
   let element;
   let sandbox;
-  let mockRaf = createMockRaf();
+  let mockRaf;
 
   beforeEach(() => {
+    mockRaf = createMockRaf();
     sandbox = sinon.sandbox.create();
     window.onionan = {
       trackPageView () {},
     };
-    sandbox.stub(global, 'requestAnimationFrame', mockRaf.add);
+    sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
     element = document.createElement('bulbs-page');
     element.setAttribute('pushstate-title', 'Pushstate Title');
     element.setAttribute('pushstate-url', '/example');
@@ -83,17 +84,15 @@ describe('<bulbs-page>', () => {
   });
 
   describe('handlePageStart', () => {
-    it('calls replaceState api', (done) => {
+    it('calls replaceState api', () => {
+      mockRaf.cancel();
       element.handlePageStart();
       mockRaf.step();
-      setImmediate(() => {
-        expect(history.replaceState).to.have.been.calledWith(
-          {},
-          'Pushstate Title',
-          '/example',
-        ).once;
-        done();
-      });
+      expect(history.replaceState).to.have.been.calledWith(
+        {},
+        'Pushstate Title',
+        '/example',
+      ).once;
     });
 
     it('tracks a pageview', () => {
