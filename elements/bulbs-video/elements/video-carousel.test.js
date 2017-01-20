@@ -15,7 +15,7 @@ describe('<bulbs-video-carousel>', () => {
 
     container.innerHTML = `
       <bulbs-video-carousel>
-        <bulbs-video></bulbs-video>
+        <bulbs-video src="foobar.com"></bulbs-video>
         <bulbs-video-meta></bulbs-video-meta>
 
         <bulbs-carousel>
@@ -44,6 +44,7 @@ describe('<bulbs-video-carousel>', () => {
       </bulbs-video-carousel>
     `;
 
+    sinon.stub(window, 'fetch').returns(new Promise(resolve => resolve));
     document.body.appendChild(container);
 
     // polyfill is asynchronous in some browser environments.
@@ -235,7 +236,6 @@ describe('<bulbs-video-carousel>', () => {
     context('secondItem selected', () => {
       beforeEach(() => {
         subject.state.selectItem(secondItem);
-        sinon.stub(window, 'fetch').returns(new Promise(resolve => resolve));
         subject.doApplyState();
       });
 
