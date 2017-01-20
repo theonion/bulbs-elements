@@ -49,9 +49,11 @@ describe('<campaign-display>', () => {
 
   describe('componentDidUpdate', () => {
     let campaignUrl;
+    let sandbox;
 
     beforeEach(() => {
       campaignUrl = 'http://example.com/campaign';
+      sandbox = sinon.sandbox.create()
       fetchMock.mock(campaignUrl, campaign);
 
       let wrapper = shallow(
@@ -64,6 +66,7 @@ describe('<campaign-display>', () => {
       subject = wrapper.instance();
 
       sinon.spy(subject, 'initialDispatch');
+      sandbox.stub(subject.store.actions, 'fetchCampaign').returns(new Promise(resolve => resolve));
       subject.store.actions.handleFetchComplete(campaign);
     });
 
