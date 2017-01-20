@@ -11,8 +11,8 @@ describe('<video is="bulbs-cinemagraph">', () => {
     document.body.appendChild(subject);
     sinon.spy(InViewMonitor, 'add');
     sinon.spy(InViewMonitor, 'remove');
-    sinon.spy(subject, 'pause');
-    sinon.spy(subject, 'play');
+    sinon.stub(subject, 'pause');
+    sinon.stub(subject, 'play');
 
     setImmediate(done);
   });
@@ -45,16 +45,22 @@ describe('<video is="bulbs-cinemagraph">', () => {
       expect(spy).to.have.been.called;
     });
 
-    it('registers with the InViewMonitor', () => {
+    it('registers with the InViewMonitor', (done) => {
       subject.attachedCallback();
-      expect(InViewMonitor.add).to.have.been.called.once;
+      setImmediate(() => {
+        expect(InViewMonitor.add).to.have.been.called.once;
+        done();
+      });
     });
   });
 
   describe('detachedCallback', () => {
-    it('removes selve  from InViewMonitor', () => {
+    it('removes selve  from InViewMonitor', (done) => {
       subject.detachedCallback();
-      expect(InViewMonitor.remove).to.have.been.called.once;
+      setImmediate(() => {
+        expect(InViewMonitor.remove).to.have.been.called.once;
+        done();
+      });
     });
   });
 
