@@ -9,9 +9,11 @@ describe('<bulbs-video-carousel>', () => {
   let firstItem;
   let secondItem;
   let anchoredItem;
+  let sandbox;
 
   beforeEach((done) => {
     container = document.createElement('div');
+    sandbox = sinon.sandbox.create();
 
     container.innerHTML = `
       <bulbs-video-carousel>
@@ -44,7 +46,7 @@ describe('<bulbs-video-carousel>', () => {
       </bulbs-video-carousel>
     `;
 
-    sinon.stub(window, 'fetch').returns(new Promise(resolve => resolve));
+    sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
     document.body.appendChild(container);
 
     // polyfill is asynchronous in some browser environments.
@@ -67,6 +69,7 @@ describe('<bulbs-video-carousel>', () => {
   afterEach(() => {
     container.remove();
     window.location.hash = '';
+    sandbox.restore();
   });
 
   describe('attachedCallback', () => {
