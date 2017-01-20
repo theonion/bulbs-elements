@@ -222,6 +222,7 @@ describe('<bulbs-liveblog>', () => {
       let { published } = subject.entriesData.one;
 
       expect(published.getDate()).to.eql(19);
+      sandbox.restore();
     });
   });
 
