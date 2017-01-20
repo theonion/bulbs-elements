@@ -51,7 +51,7 @@ describe('<campaign-display>', () => {
 
     beforeEach(() => {
       campaignUrl = 'http://example.com/campaign';
-      sandbox = sinon.sandbox.create()
+      sandbox = sinon.sandbox.create();
 
       let wrapper = shallow(
         <CampaignDisplay

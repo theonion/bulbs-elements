@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import REactDOM from 'react-dom';
 
 import video from '../../fixtures/video.json';
 
@@ -55,7 +54,7 @@ describe('<bulbs-video-meta>', () => {
     });
 
     context('src changes', () => {
-     it('invokes fetchVideo action', () => {
+      it('invokes fetchVideo action', () => {
         subject.componentDidUpdate({ src: '//example.com/video-2.json' });
         expect(subject.store.actions.fetchVideo).to.have.been.called;
       });
