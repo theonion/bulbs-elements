@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Revealed from '../../../components/revealed';
-
 import RailPlayerHeader from './header';
 import RailPlayerCampaign from './campaign';
 

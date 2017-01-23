@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import { shallow } from 'enzyme';
 import RailPlayer from './rail-player';
-import RailPlayerRoot from './components/root';
 
 import VideoField from '../../fields/video';
 import VideoRequestField from '../../fields/video-request';

@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Revealed from '../../../components/revealed';
-
 import RailPlayerRoot from './root';
 import RailPlayerHeader from './header';
 import RailPlayerCampaign from './campaign';

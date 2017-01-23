@@ -2,10 +2,9 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
-import {
+import util, {
   loadOnDemand,
   cachedFetch,
-  InViewMonitor,
   prepGaEventTracker,
 } from 'bulbs-elements/util';
 import invariant from 'invariant';
@@ -34,10 +33,10 @@ let jwPlayerIdCounter = 0;
 export default class BulbsVideo extends BulbsHTMLElement {
   get props () {
     return {
-      autoplayNext: typeof this.getAttribute('twitter-handle') === 'string',
       autoplayInView: typeof this.getAttribute('autoplay-in-view') === 'string',
       disableMetaLink: typeof this.getAttribute('disable-meta-link') === 'string',
       disableSharing: typeof this.getAttribute('disable-sharing') === 'string',
+      defaultCaptions: typeof this.getAttribute('default-captions') === 'string',
       embedded: typeof this.getAttribute('embedded') === 'string',
       enablePosterMeta: typeof this.getAttribute('enable-poster-meta') === 'string',
       hideControls: typeof this.getAttribute('hide-controls') === 'string',
@@ -120,11 +119,15 @@ export default class BulbsVideo extends BulbsHTMLElement {
         videoCover: this.querySelector('.bulbs-video-cover'),
       };
 
-      cachedFetch(this.props.src, { redirect: 'follow' })
-        .then(video => this.handleFetchSuccess(video))
-        .catch(error => this.handleFetchError(error))
-      ;
+      this.fetchVideoData();
     }
+  }
+
+  fetchVideoData () {
+    cachedFetch(this.props.src, { redirect: 'follow' })
+      .then(video => this.handleFetchSuccess(video))
+      .catch(error => this.handleFetchError(error))
+    ;
   }
 
   handleFetchSuccess (video) {
@@ -382,14 +385,14 @@ export default class BulbsVideo extends BulbsHTMLElement {
     this.player.on('beforePlay', this.forwardJWEvent);
     this.player.on('complete', this.forwardJWEvent);
     this.player.on('pause', this.handlePauseEvent);
-    this.player.on('adPause', this.handlePauseEvent)
+    this.player.on('adPause', this.handlePauseEvent);
 
     this.refs.videoCover.addEventListener('click', () => this.play());
   }
 
   handleAutoPlayInView () {
     let videoViewport = this.refs.videoViewport;
-    InViewMonitor.add(videoViewport);
+    util.InViewMonitor.add(videoViewport);
     this.enterviewportEvent = () => this.player.play(true);
     videoViewport.addEventListener('enterviewport', this.enterviewportEvent);
     videoViewport.addEventListener('exitviewport', () => this.player.pause(true));
@@ -397,7 +400,7 @@ export default class BulbsVideo extends BulbsHTMLElement {
 
   playerInViewport (videoViewport) {
     let overrideAutoPlay;
-    if(InViewMonitor.isElementInViewport(videoViewport)) {
+    if(util.InViewMonitor.isElementInViewport(videoViewport)) {
       overrideAutoPlay = true;
     }
     else {
@@ -409,10 +412,18 @@ export default class BulbsVideo extends BulbsHTMLElement {
   detachedCallback () {
     setImmediate(() => {
       if (!document.contains(this)) {
-        this.player.remove();
-        InViewMonitor.remove(this.refs.videoViewport);
+        if (this.player) {
+          this.player.remove();
+        }
+        util.InViewMonitor.remove(this.refs.videoViewport);
       }
     });
+  }
+
+  attributeChangedCallback (name, newValue, oldValue) {
+    if (name === 'src' && newValue !== oldValue) {
+      this.fetchVideoData();
+    }
   }
 
   handleFetchError () {
@@ -434,5 +445,5 @@ registerElement('bulbs-video', loadOnDemand(BulbsVideo));
 
 import './elements/meta';
 import './elements/summary';
-import './elements/rail-player';
+//import './elements/rail-player';
 import './elements/video-carousel';
