@@ -88,6 +88,12 @@ describe('<div is="bulbs-dfp">', () => {
       expect(window.setInterval).to.have.been.calledWith(element.handleInterval, refreshInterval);
     });
 
+    it('ignores refresh interval if component attribute disables it', () => {
+      element.setAttribute('no-refresh', '');
+      element.attachedCallback();
+      expect(window.setInterval.called).to.be.false;
+    });
+
     it('ignores refresh interval if ads manager also has refreshDisabled set to true for the slot', () => {
 
       window.BULBS_ELEMENTS_ADS_MANAGER.adUnits.units[adUnitName].refreshInterval = 666;
@@ -140,12 +146,15 @@ describe('<div is="bulbs-dfp">', () => {
         Object.defineProperty(element, 'isViewable', { get: () => { return true; } });
       });
 
-      it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', () => {
+      it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', (done) => {
         element.handleInterval();
-        expect(sendEventSpy).to.have.been.calledWith({
-          eventCategory: 'bulbs-dfp-element Live Metrics',
-          eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
-          eventLabel: adUnitName,
+        setImmediate(() => {
+          expect(sendEventSpy).to.have.been.calledWith({
+            eventCategory: 'bulbs-dfp-element Live Metrics',
+            eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
+            eventLabel: adUnitName,
+          });
+          done();
         });
       });
 

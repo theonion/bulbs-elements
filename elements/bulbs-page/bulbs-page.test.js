@@ -1,4 +1,5 @@
 import './bulbs-page';
+import createMockRaf from 'mock-raf';
 
 import util, {
   InViewMonitor,
@@ -8,12 +9,15 @@ import util, {
 describe('<bulbs-page>', () => {
   let element;
   let sandbox;
+  let mockRaf;
 
   beforeEach(() => {
+    mockRaf = createMockRaf();
     sandbox = sinon.sandbox.create();
     window.onionan = {
       trackPageView () {},
     };
+    sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
     element = document.createElement('bulbs-page');
     element.setAttribute('pushstate-title', 'Pushstate Title');
     element.setAttribute('pushstate-url', '/example');
@@ -23,6 +27,7 @@ describe('<bulbs-page>', () => {
     sandbox.spy(util.getAnalyticsManager(), 'trackPageView');
     sandbox.spy(LockScroll, 'lockToElement');
     sandbox.spy(util, 'onReadyOrNow');
+
   });
 
   afterEach(() => {
@@ -80,7 +85,9 @@ describe('<bulbs-page>', () => {
 
   describe('handlePageStart', () => {
     it('calls replaceState api', () => {
+      mockRaf.cancel();
       element.handlePageStart();
+      mockRaf.step();
       expect(history.replaceState).to.have.been.calledWith(
         {},
         'Pushstate Title',
@@ -90,10 +97,12 @@ describe('<bulbs-page>', () => {
 
     it('tracks a pageview', () => {
       element.handlePageStart();
-      expect(util.getAnalyticsManager().trackPageView).to.have.been.calledWith(
-        '/example',
-        'Pushstate Title',
-      ).once;
+      requestAnimationFrame(() => {
+        expect(util.getAnalyticsManager().trackPageView).to.have.been.calledWith(
+          '/example',
+          'Pushstate Title',
+        ).once;
+      });
     });
   });
 });

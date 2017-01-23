@@ -15,17 +15,17 @@ describe('<campaign-product-shot>', function () {
       clickthrough_url: 'http://example.com/clickthrough',
       image_url: 'http://example.com/campaign-img.jpg',
       name: 'Test Campaign',
-      product_shot_url: 'http://example.com/prodcut-shot.jpg',
+      // using a data uri here prevents a network call
+      product_shot_url: 'data:,hello',
       brand_messaging: 'Buy our shit',
     };
     fetchMock.mock(src, campaign);
+    fetchMock.mock(campaign.product_shot_url, {});
 
     element = document.createElement('campaign-product-shot');
     element.setAttribute('src', src);
 
-    setImmediate(function () {
-      done();
-    });
+    setImmediate(done);
   });
 
   it('renders an <campaign-product-shot>', function () {
@@ -34,12 +34,12 @@ describe('<campaign-product-shot>', function () {
 
   it('tries to make a request based on the source', function () {
     element.attachedCallback();
-    expect(fetchMock.called('http://example.com/campaign.json')).to.be.true;
+    expect(fetchMock.called(src)).to.be.true;
   });
 
   it('sets the image source appropriately', function () {
     element.handleRequestSuccess(campaign);
-    expect(element.innerHTML).to.contain('http://example.com/prodcut-shot.jpg');
+    expect(element.innerHTML).to.contain(campaign.product_shot_url);
   });
 
   it('renders a link with given clickthrough url', function () {
