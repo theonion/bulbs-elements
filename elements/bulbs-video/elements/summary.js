@@ -45,7 +45,7 @@ export function VideoSummaryView (props) {
 VideoSummaryView.displayName = 'VideoSummaryView';
 
 VideoSummaryView.propTypes = {
-  nowPlaying: PropTypes.bool.isRequired,
+  nowPlaying: PropTypes.bool,
   video: PropTypes.object,
 };
 

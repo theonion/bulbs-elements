@@ -1,7 +1,6 @@
 import React from 'react';
 import CampaignDisplay from './campaign-display';
 import { shallow } from 'enzyme';
-import fetchMock from 'fetch-mock';
 
 describe('<campaign-display>', () => {
   let subject;
@@ -9,6 +8,7 @@ describe('<campaign-display>', () => {
   let props;
   let src;
   let campaign;
+
   beforeEach(() => {
     placement = 'top';
     src = 'http://example.com';
@@ -26,8 +26,6 @@ describe('<campaign-display>', () => {
       preambleText: 'Presented by',
       src,
     };
-
-    fetchMock.mock(src, campaign);
   });
 
   it('should require a placement', function () {
@@ -48,28 +46,35 @@ describe('<campaign-display>', () => {
   });
 
   describe('componentDidUpdate', () => {
+    let campaignUrl;
+    let sandbox;
+
     beforeEach(() => {
+      campaignUrl = 'http://example.com/campaign';
+      sandbox = sinon.sandbox.create();
+
       let wrapper = shallow(
         <CampaignDisplay
           placement='test-placement'
-          src='http://example.com/campaign'
+          preambleText='foo'
+          src={campaignUrl}
         />
       );
       subject = wrapper.instance();
 
-      campaign = {};
       sinon.spy(subject, 'initialDispatch');
-      subject.store.actions.handleFetchComplete({}, campaign);
+      sandbox.stub(subject.store.actions, 'fetchCampaign').returns(new Promise(resolve => resolve));
+      subject.store.actions.handleFetchComplete(campaign);
     });
 
     context('src did not change', () => {
       it('does not reset campaign state', () => {
-        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        subject.componentDidUpdate({ src: campaignUrl });
         expect(subject.state.campaign).to.eql(campaign);
       });
 
       it('does not call initialDispatch', () => {
-        subject.componentDidUpdate({ src: 'http://example.com/campaign' });
+        subject.componentDidUpdate({ src: campaignUrl });
         expect(subject.initialDispatch).not.to.have.been.called;
       });
     });

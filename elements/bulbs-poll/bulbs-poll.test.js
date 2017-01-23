@@ -1,4 +1,7 @@
+import React from 'react';
 import BulbsPoll from './bulbs-poll';
+import { shallow } from 'enzyme';
+import fetchMock from 'fetch-mock';
 
 describe('<bulbs-poll> <BulbsPoll>', function () {
   let subject;
@@ -6,7 +9,9 @@ describe('<bulbs-poll> <BulbsPoll>', function () {
 
   beforeEach(() => {
     pollEndpoint = 'http://example.tld/api/polls/1';
-    subject = new BulbsPoll({ src: pollEndpoint });
+    fetchMock.mock(pollEndpoint, {});
+
+    subject = shallow(<BulbsPoll src = { pollEndpoint } />).instance();
     sinon.spy(subject.store.actions, 'setSrc');
     sinon.spy(subject.store.actions, 'fetchPollData');
     sinon.spy(subject.store.actions, 'getCachedVoteData');
