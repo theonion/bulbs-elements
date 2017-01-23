@@ -26,16 +26,15 @@ describe('<progress-bar>', () => {
     expect(subject.tagName.toLowerCase()).to.equal('progress-bar');
   });
 
-  it('sets the width of the track based on the progress', (done) => {
+  it('sets the width of the track based on the progress', () => {
     // setImmediate because setting innerHTML is sort-of async
     setImmediate(() => {
       let track = subject.children[0];
       expect(track.style.width).to.equal('65%');
-      done();
     });
   });
 
-  it('has a default progress of 0', (done) => {
+  it('has a default progress of 0', () => {
     fixtureContainer.removeChild(subject);
     subject = document.createElement('progress-bar');
     fixtureContainer.appendChild(subject);
@@ -43,18 +42,16 @@ describe('<progress-bar>', () => {
     setImmediate(() => {
       let track = subject.children[0];
       expect(track.style.width).to.equal('100%');
-      done();
     });
   });
 
   describe('udpated progress attribute', () => {
-    it('updates the track width when the progress changes', (done) => {
+    it('updates the track width when the progress changes', () => {
       // setImmediate because setting innerHTML is sort-of async
       setImmediate(() => {
         let track = subject.children[0];
         subject.setAttribute('progress', '50');
         expect(track.style.width).to.equal('50%');
-        done();
       });
     });
   });

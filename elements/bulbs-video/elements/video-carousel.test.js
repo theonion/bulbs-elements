@@ -9,13 +9,15 @@ xdescribe('<bulbs-video-carousel>', () => {
   let firstItem;
   let secondItem;
   let anchoredItem;
+  let sandbox;
 
   beforeEach((done) => {
     container = document.createElement('div');
+    sandbox = sinon.sandbox.create();
 
     container.innerHTML = `
       <bulbs-video-carousel>
-        <bulbs-video></bulbs-video>
+        <bulbs-video src="foobar.com"></bulbs-video>
         <bulbs-video-meta></bulbs-video-meta>
 
         <bulbs-carousel>
@@ -59,6 +61,7 @@ xdescribe('<bulbs-video-carousel>', () => {
       sinon.spy(carousel, 'addEventListener');
       sinon.spy(videoPlayer, 'addEventListener');
       sinon.spy(videoPlayer, 'removeEventListener');
+      sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
       done();
     });
   });
@@ -66,6 +69,7 @@ xdescribe('<bulbs-video-carousel>', () => {
   afterEach(() => {
     container.remove();
     window.location.hash = '';
+    sandbox.restore();
   });
 
   describe('attachedCallback', () => {

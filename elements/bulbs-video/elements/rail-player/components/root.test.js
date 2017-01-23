@@ -11,7 +11,7 @@ describe('<rail-player> <RailPlayerRoot>', () => {
   describe('render', () => {
     context('no video prop', () => {
       beforeEach(() => {
-        subject = shallow(<RailPlayerRoot/>);
+        subject = shallow(<RailPlayerRoot recircUrl="foobar.com"/>);
       });
 
       it('renders an empty div', () => {
@@ -24,6 +24,7 @@ describe('<rail-player> <RailPlayerRoot>', () => {
       beforeEach(() => {
         props = {
           recircUrl: 'http://example.org/recirc',
+          controller: {},
           video: {
             title: 'Video Title',
           },

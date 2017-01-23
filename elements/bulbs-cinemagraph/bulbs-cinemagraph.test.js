@@ -5,13 +5,16 @@ import * as iphoneInlineVideo from 'iphone-inline-video';
 describe('<video is="bulbs-cinemagraph">', () => {
   let subject;
 
-  beforeEach(() => {
+  beforeEach((done) => {
     subject = document.createElement('video', 'bulbs-cinemagraph');
+    subject.setAttribute('cinemagraph-duration', 0);
     document.body.appendChild(subject);
     sinon.spy(InViewMonitor, 'add');
     sinon.spy(InViewMonitor, 'remove');
-    sinon.spy(subject, 'pause');
-    sinon.spy(subject, 'play');
+    sinon.stub(subject, 'pause');
+    sinon.stub(subject, 'play');
+
+    setImmediate(done);
   });
 
   afterEach(() => {
@@ -42,30 +45,42 @@ describe('<video is="bulbs-cinemagraph">', () => {
       expect(spy).to.have.been.called;
     });
 
-    it('registers with the InViewMonitor', () => {
+    it('registers with the InViewMonitor', (done) => {
       subject.attachedCallback();
-      expect(InViewMonitor.add).to.have.been.called.once;
+      setImmediate(() => {
+        expect(InViewMonitor.add).to.have.been.called.once;
+        done();
+      });
     });
   });
 
   describe('detachedCallback', () => {
-    it('removes selve  from InViewMonitor', () => {
+    it('removes selve  from InViewMonitor', (done) => {
       subject.detachedCallback();
-      expect(InViewMonitor.remove).to.have.been.called.once;
+      setImmediate(() => {
+        expect(InViewMonitor.remove).to.have.been.called.once;
+        done();
+      });
     });
   });
 
   describe('enterviewport event', () => {
-    it('plays the video', () => {
+    it('plays the video', (done) => {
       subject.dispatchEvent(new CustomEvent('enterviewport'));
-      expect(subject.play).to.have.been.called.once;
+      setImmediate(() => {
+        expect(subject.play).to.have.been.called.once;
+        done();
+      });
     });
   });
 
   describe('exitviewport event', () => {
-    it('pauses the video', () => {
+    it('pauses the video', (done) => {
       subject.dispatchEvent(new CustomEvent('exitviewport'));
-      expect(subject.pause).to.have.been.called.once;
+      setImmediate(() => {
+        expect(subject.pause).to.have.been.called.once;
+        done();
+      });
     });
   });
 });
