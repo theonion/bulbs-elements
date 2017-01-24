@@ -18,14 +18,18 @@ describe('<bulbs-video>', () => {
     subject = document.createElement('bulbs-video');
     subject.setAttribute('src', src);
     subject.setAttribute('disable-lazy-loading', true);
+    document.body.appendChild(subject);
     sandbox.stub(GoogleAnalytics, 'init');
     sandbox.stub(Comscore, 'init');
   });
 
   afterEach(() => {
     sandbox.restore();
-    if (document.body.contains(subject)) {
-      document.body.removeChild(subject);
+    try {
+      subject.remove();
+    }
+    catch (error) {
+      console.info('was not able to remove <bulbs-video> at end of test', error);
     }
   });
 
@@ -45,8 +49,8 @@ describe('<bulbs-video>', () => {
       subject.setAttribute('target-campaign-number', 'campaign-number');
       subject.setAttribute('target-special-coverage', 'special-coverage');
       subject.setAttribute('twitter-handle', 'twitter-handle');
-      subject.setAttribute('share-url', '//share-url');
-      subject.setAttribute('src', '//src');
+      subject.setAttribute('share-url', '//example.org/share-url');
+      subject.setAttribute('src', '//example.org/video.json');
     });
 
     it('casts autoplayInView to boolean', () => {
@@ -179,20 +183,27 @@ describe('<bulbs-video>', () => {
 
   describe('lazy loading', () => {
     let container;
+    let lazy;
 
     beforeEach((done) => {
       document.body.style.minHeight = (window.innerHeight * 2) + 'px';
 
-      subject.removeAttribute('disable-lazy-loading');
+      lazy = document.createElement('bulbs-video');
+      lazy.setAttribute('src', '//example.org/video.json');
       container = document.createElement('div');
       container.style.position = 'fixed';
-      container.style.top = '200%';
+      container.style.top = '-200%';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.background = 'black';
       document.body.appendChild(container);
-      container.appendChild(subject);
+      container.appendChild(lazy);
       setImmediate(() => done());
     });
 
     afterEach(() => {
+      lazy.remove();
       container.remove();
     });
 
@@ -445,12 +456,20 @@ describe('<bulbs-video>', () => {
       });
     });
 
-    it('stops the player', () => {
-      expect(subject.player.remove).to.have.been.called;
+    it('stops the player', (done) => {
+      subject.remove();
+      setImmediate(() => {
+        expect(subject.player.remove).to.have.been.called;
+        done();
+      });
     });
 
-    it('removes enter and exit viewport events', () => {
-      expect(util.InViewMonitor.remove.called).to.be.true;
+    it('removes enter and exit viewport events', (done) => {
+      subject.remove();
+      setImmediate(() => {
+        expect(util.InViewMonitor.remove.called).to.be.true;
+        done();
+      });
     });
   });
 
@@ -703,6 +722,7 @@ describe('<bulbs-video>', () => {
   describe('makeVideoPlayer', () => {
     let playerSetup;
     let playerOn;
+    let playerRemove;
     let player;
     let videoMeta;
     let gaTrackerAction;
@@ -774,9 +794,11 @@ describe('<bulbs-video>', () => {
       });
       playerSetup = sandbox.spy();
       playerOn = sandbox.spy();
+      playerRemove = sandbox.spy();
       player = {
         on: playerOn,
         setup: playerSetup,
+        remove: playerRemove,
       };
       global.jwplayer = () => {
         return player;
@@ -1051,4 +1073,3 @@ describe('<bulbs-video>', () => {
     });
   });
 });
-

@@ -410,6 +410,8 @@ export default class BulbsVideo extends BulbsHTMLElement {
   }
 
   detachedCallback () {
+    // wait for the next tick in case element was immediately
+    // re-inserted into the document
     setImmediate(() => {
       if (!document.contains(this)) {
         if (this.player) {
