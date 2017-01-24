@@ -196,7 +196,6 @@ describe('<bulbs-video>', () => {
       container.style.left = '0';
       container.style.width = '100%';
       container.style.height = '100%';
-      container.style.background = 'black';
       document.body.appendChild(container);
       container.appendChild(lazy);
       setImmediate(() => done());
