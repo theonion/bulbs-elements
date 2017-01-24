@@ -10,6 +10,7 @@ export default {
       if (url) {
         state.requestInFlight = true;
         util.makeRequest(url, {
+          credentials: 'include',
           success (response) {
             store.actions.fetchVideoSuccess(response);
             store.actions.setVideoField(response);
