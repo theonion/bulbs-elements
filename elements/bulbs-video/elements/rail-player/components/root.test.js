@@ -61,13 +61,6 @@ xdescribe('<rail-player> <RailPlayerRoot>', () => {
       it('renders a <Revealed> component', () => {
         expect(subject).to.contain(
           <div className='rail-player-video bulbs-video-root player'>
-            <Revealed
-              muted={true}
-              disableSharing={true}
-              targetHostChannel='right_rail'
-              defaultCaptions={true}
-              {...props}
-            />
           </div>
         );
       });

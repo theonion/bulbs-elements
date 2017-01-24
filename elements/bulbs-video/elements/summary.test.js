@@ -1,10 +1,8 @@
 /* eslint-disable no-return-assign */
 import './summary';
-import video from '../fixtures/video.json';
 
 xdescribe('<bulbs-video-summary>', () => {
   let subject;
-  let props;
 
   beforeEach(() => {
     subject = document.createElement('bulbs-video-summary');
