@@ -172,29 +172,39 @@ export default class Revealed extends React.Component {
   }
 
   vastUrl (videoMeta) {
-    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+    let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
     let vastTestId = this.vastTest(window.location.search);
 
-    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
-    baseUrl += '&tt=p';
-    videoMeta.tags.push('html5'); // Force HTML 5
-    // Tags
-    baseUrl += '&t=' + videoMeta.tags;
-    //Category
-    let hostChannel = videoMeta.hostChannel;
-    let channel = videoMeta.channel_slug;
-    let series = videoMeta.series_slug;
-    let category = `${hostChannel}/${channel}`;
-    if (series) {
-      category += `/${series}`;
-    }
-    baseUrl += '&s=' + category;
-    baseUrl += '&rnd=' + this.cacheBuster();
+    // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
+    baseUrl += '?sz=400x300';
+    baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
+    baseUrl += '&impl=s';
+    baseUrl += '&gdfp_req=1';
+    baseUrl += '&env=vp';
+    baseUrl += '&output=xml_vast2';
+    baseUrl += '&unviewed_position_start=1';
+    baseUrl += `&url=${window.document.referrer}`;
+    baseUrl += '&description_url=';
+    baseUrl += `&correlator=${new Date().getTime()}`;
 
-    if (vastTestId) {
-      baseUrl += '&xgid=' + vastTestId;
-    }
+    // dfp_pagetype=home&dfp_site=onion&kuid=qxw4bky4u
+
+    let customParamValues = '';
+
+    customParamValues += `video_site=${videoMeta.channel_slug}`;
+
+    // dfp_specialcoverage
+    // dfp_campaign_id
+    // video_id
+    // video_site
+    // video_series
+    baseUrl += 'cust_params=' + encodeURIComponent(customParamValues);
+
+    // if (vastTestId) {
+    // TODO: forcedAdZone
+    //   baseUrl += '&xgid=' + vastTestId;
+    // }
 
     return baseUrl;
   }

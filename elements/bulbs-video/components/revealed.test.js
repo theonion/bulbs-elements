@@ -582,6 +582,15 @@ describe('<bulbs-video> <Revealed>', () => {
           channel_slug: 'channel_slug',
           hostChannel: 'host_channel',
         };
+        window.Bulbs = {
+          settings: {
+            DFP_SITE_CODE: 'fmg.onion',
+          },
+        }
+      });
+
+      afterEach(() => {
+        delete window.Bulbs
       });
 
       it('returns the vast url', function () {
@@ -590,16 +599,26 @@ describe('<bulbs-video> <Revealed>', () => {
           vastTest: vastTestStub,
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
-        expect(parsed.protocol).to.eql('http:');
-        expect(parsed.host).to.eql('us-theonion.videoplaza.tv');
-        expect(parsed.pathname).to.eql('/proxy/distributor/v2');
-        expect(Object.keys(parsed.query)).to.eql(['rt', 'tt', 't', 's', 'rnd']);
-        expect(parsed.query.rt).to.eql('vast_2.0');
-        expect(parsed.query.tt).to.eql('p');
-        expect(parsed.query.t).to.eql('clickhole,main,12345,html5');
-        expect(parsed.query.s).to.eql('host_channel/channel_slug');
-        expect(parsed.query.rnd).to.eql('456');
+        expect(parsed.protocol).to.eql('https:');
+        expect(parsed.host).to.eql('pubads.g.doubleclick.net');
+        expect(parsed.pathname).to.eql('/gampad/ads');
+        expect(Object.keys(parsed.query)).to.eql(['sz', 'iu', 'impl', 'gdfp_req', 'env', 'output', 'unviewed_position_start', 'url', 'description_url', 'correlator', 'cust_params']);
+        expect(parsed.query.sz).to.eql('400x300');
+        expect(parsed.query.iu).to.eql('/4246/fmg.onion');
+        expect(parsed.query.impl).to.eql('s');
+        expect(parsed.query.gdfp_req).to.eql('1');
+        expect(parsed.query.env).to.eql('vp');
+        expect(parsed.query.output).to.eql('xml_vast2');
+        expect(parsed.query.unviewed_position_start).to.eql('1');
+        expect(parsed.query.url).to.eql(window.document.referrer);
+        expect(parsed.query.description_url).to.eql('');
+        // expect(parsed.query.correlator).to.eql(''); to match a number
       });
+    });
+
+    context('when a test link is provided', () => {
+      // TODO use forcedAdZone
+        // expect(parsed.query.forcedAdZone).to.eql('false');
     });
 
     context('when series_slug is given', () => {
@@ -615,7 +634,7 @@ describe('<bulbs-video> <Revealed>', () => {
         };
       });
 
-      it('returns the vast url', function () {
+      xit('returns the vast url', function () {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
