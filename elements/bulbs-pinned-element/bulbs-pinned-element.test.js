@@ -89,6 +89,7 @@ describe('<bulbs-pinned-element>', () => {
       beforeEach(() => {
         sandbox.stub(subject, 'handleScrollDown');
         sandbox.stub(subject, 'handleScrollUp');
+        sandbox.stub(subject, 'handleFullPageJump');
 
         // make sure animation queue is empty
         mockRaf.cancel();
@@ -104,9 +105,20 @@ describe('<bulbs-pinned-element>', () => {
         expect(subject.resetCarPosition).to.have.been.calledOnce;
       });
 
+      it('calls full page jump handler when scrollY > window height', () => {
+        sandbox.stub(subject, 'isInView').returns(true);
+        sandbox.stub(subject, 'isJumpingPageHeight').returns(true);
+
+        subject.positionCar();
+        mockRaf.step();
+
+        expect(subject.handleFullPageJump).to.have.been.calledOnce;
+      });
+
       it('should call scroll down handler when scrolling down', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(true);
         sandbox.stub(subject, 'isInView').returns(true);
+        sandbox.stub(subject, 'isJumpingPageHeight').returns(false);
 
         subject.positionCar();
         mockRaf.step();
@@ -127,6 +139,7 @@ describe('<bulbs-pinned-element>', () => {
       it('should call scroll up handler when scrolling up', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(false);
         sandbox.stub(subject, 'isInView').returns(true);
+        sandbox.stub(subject, 'isJumpingPageHeight').returns(false);
 
         subject.positionCar();
         mockRaf.step();
@@ -247,24 +260,6 @@ describe('<bulbs-pinned-element>', () => {
         expect(subject.car.style.bottom).to.equal('');
       });
 
-      it('pins car to top when the top of car is above bottom of parent', () => {
-        // edge case that appears when the rail is very short due to ad block
-        let pos = 10;
-        subject.car.classList.add('pinned', 'pinned-bottom');
-
-        subject.handleScrollUp({
-          car: { top: pos, bottom: 0, height: pos },
-          rail: { top: pos - 1, bottom: 0 },
-          parent: { bottom: pos + 1 },
-        });
-
-        let classes = [].slice.call(subject.car.classList);
-        expect(classes).to.not.contain('pinned');
-        expect(classes).to.not.contain('pinned-bottom');
-        expect(subject.car.style.top).to.equal('0px');
-        expect(subject.car.style.bottom).to.equal('');
-      });
-
       it('pins car to window when car is not at the top of the rail and in full view adjusted by an offset', () => {
         subject.topOffsetAdjustment = 10;
 
@@ -279,6 +274,33 @@ describe('<bulbs-pinned-element>', () => {
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
         expect(subject.car.style.bottom).to.equal('');
+      });
+    });
+
+    context('#handleFullPageJump', () => {
+
+      it('pins car to rail top when jumping to the top of page', () => {
+        subject.car.classList.add('pinned', 'pinned-bottom');
+
+        subject.handleFullPageJump({ y: 0 });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(subject.car.style.top).to.equal('0px');
+        expect(subject.car.style.bottom).to.equal('');
+      });
+
+      it('pins car to rail bottom when jumping to bottom of page', () => {
+        subject.car.classList.add('pinned');
+
+        subject.handleFullPageJump({ y: 100000 });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned');
+        expect(subject.car.style.bottom).to.equal('0px');
+        expect(subject.car.style.top).to.equal('');
       });
     });
   });

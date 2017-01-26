@@ -59,6 +59,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
         this.animationRequest = null;
 
         const boundingRects = this.getBoundingRects();
+        const offset = getScrollOffset();
 
         this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
         this.style.width = `${boundingRects.parent.width}px`;
@@ -69,7 +70,10 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
         if (this.isInView(boundingRects)) {
 
-          if(this.isScrollingDown()) {
+          if (this.isJumpingPageHeight(offset)) {
+            this.handleFullPageJump(offset);
+          }
+          else if(this.isScrollingDown(offset)) {
             this.handleScrollDown(boundingRects);
           }
           else {
@@ -91,10 +95,20 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return newRailHeight;
   }
 
-  isScrollingDown () {
-    const offset = getScrollOffset();
+  isJumpingPageHeight (offset) {
+    let pageJump = false;
 
+    if (offset.y > this.lastPosition + window.innerHeight || offset.y === 0) {
+      pageJump = true;
+      this.lastPosition = offset.y;
+    }
+
+    return pageJump;
+  }
+
+  isScrollingDown (offset) {
     let scrollDown = false;
+
     if (offset.y > this.lastPosition) {
       scrollDown = true;
     }
@@ -105,7 +119,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   handleScrollDown (boundingRects) {
-
     if (boundingRects.rail.bottom <= boundingRects.car.bottom) {
       this.pinToRailBottom();
     }
@@ -114,18 +127,24 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     }
   }
 
-  handleScrollUp (boundingRects) {
-
-    let railTop = boundingRects.rail.top;
-    let railBottom = boundingRects.rail.bottom;
-    let carTop = boundingRects.car.top;
-    let carHeight = boundingRects.car.height;
-    let parentBottom = boundingRects.parent.bottom;
-
-    if (railTop >= carTop || parentBottom > carTop) {
+  handleFullPageJump (offset) {
+    if (offset.y === 0) {
       this.resetCarPosition();
     }
-    else if (railBottom - carHeight - this.topOffsetAdjustment >= 0) {
+    else {
+      this.pinToRailBottom();
+    }
+  }
+
+  handleScrollUp (boundingRects) {
+    const rail = boundingRects.rail;
+    const car = boundingRects.car;
+    const parent = boundingRects.parent;
+
+    if (rail.top >= car.top) {
+      this.resetCarPosition();
+    }
+    else if (rail.bottom - car.height - this.topOffsetAdjustment >= 0) {
       this.pinToWindow();
     }
   }
