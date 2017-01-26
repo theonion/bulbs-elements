@@ -139,7 +139,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   handleScrollUp (boundingRects) {
     const rail = boundingRects.rail;
     const car = boundingRects.car;
-    const parent = boundingRects.parent;
 
     if (rail.top >= car.top) {
       this.resetCarPosition();
