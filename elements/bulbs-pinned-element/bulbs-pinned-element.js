@@ -73,7 +73,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
             this.handleScrollDown(boundingRects);
           }
           else {
-              this.handleScrollUp(boundingRects);
+            this.handleScrollUp(boundingRects);
           }
         }
       });
@@ -106,7 +106,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   handleScrollDown (boundingRects) {
 
-    if (boundingRects.rail.bottom <= boundingRects.car.bottom || boundingRects.rail.bottom < boundingRects.car.bottom) {
+    if (boundingRects.rail.bottom <= boundingRects.car.bottom) {
       this.pinToRailBottom();
     }
     else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
@@ -116,10 +116,16 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
   handleScrollUp (boundingRects) {
 
-    if (boundingRects.rail.top >= boundingRects.car.top || boundingRects.parent.bottom > boundingRects.car.top) {
+    let railTop = boundingRects.rail.top;
+    let railBottom = boundingRects.rail.bottom;
+    let carTop = boundingRects.car.top;
+    let carHeight = boundingRects.car.height;
+    let parentBottom = boundingRects.parent.bottom;
+
+    if (railTop >= carTop || parentBottom > carTop) {
       this.resetCarPosition();
     }
-    else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
+    else if (railBottom - carHeight - this.topOffsetAdjustment >= 0) {
       this.pinToWindow();
     }
   }

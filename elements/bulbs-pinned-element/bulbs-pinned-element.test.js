@@ -235,8 +235,27 @@ describe('<bulbs-pinned-element>', () => {
         subject.car.classList.add('pinned', 'pinned-bottom');
 
         subject.handleScrollUp({
-          car: { top: pos },
-          rail: { top: pos },
+          car: { top: pos, bottom: 0, height: pos },
+          rail: { top: pos, bottom: 0 },
+          parent: { bottom: pos - 1 },
+        });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(subject.car.style.top).to.equal('0px');
+        expect(subject.car.style.bottom).to.equal('');
+      });
+
+      it('pins car to top when the top of car is above bottom of parent', () => {
+        // edge case that appears when the rail is very short due to ad block
+        let pos = 10;
+        subject.car.classList.add('pinned', 'pinned-bottom');
+
+        subject.handleScrollUp({
+          car: { top: pos, bottom: 0, height: pos },
+          rail: { top: pos - 1, bottom: 0 },
+          parent: { bottom: pos + 1 },
         });
 
         let classes = [].slice.call(subject.car.classList);
@@ -250,11 +269,9 @@ describe('<bulbs-pinned-element>', () => {
         subject.topOffsetAdjustment = 10;
 
         subject.handleScrollUp({
-          car: {
-            bottom: 90,
-            height: 50,
-          },
-          rail: { bottom: 100 },
+          car: { bottom: 90, height: 50, top: 40 },
+          rail: { bottom: 100, top: 30 },
+          parent: { bottom: 30 },
         });
 
         let classes = [].slice.call(subject.car.classList);
