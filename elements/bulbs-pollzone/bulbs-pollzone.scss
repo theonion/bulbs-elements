@@ -1,0 +1,44 @@
+// shared poll zone styling for cms and public
+
+.pollzone {
+
+  ul.legend {
+    list-style: none;
+  }
+
+  .map {
+
+    .hoverinfo {
+      border: 1px solid black;
+      font-family: "Playfair Display", "Georgia", Times New Roman, serif;
+      padding: 10px;
+      width: 200px;
+
+      .state-name {
+        text-transform: uppercase;
+      }
+
+      .results {
+        list-style-type: none;
+        padding: 0;
+
+        .result {
+          margin: 5px;
+
+          .bar {
+            height: 20px;
+            margin-right: 10px;
+            float: left;
+          }
+        }
+
+      }
+    }
+  }
+
+  .legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+  }
+}
