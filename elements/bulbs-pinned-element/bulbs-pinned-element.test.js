@@ -248,9 +248,8 @@ describe('<bulbs-pinned-element>', () => {
         subject.car.classList.add('pinned', 'pinned-bottom');
 
         subject.handleScrollUp({
-          car: { top: pos, bottom: 0, height: pos },
-          rail: { top: pos, bottom: 0 },
-          parent: { bottom: pos - 1 },
+          car: { top: pos },
+          rail: { top: pos },
         });
 
         let classes = [].slice.call(subject.car.classList);
@@ -264,9 +263,8 @@ describe('<bulbs-pinned-element>', () => {
         subject.topOffsetAdjustment = 10;
 
         subject.handleScrollUp({
-          car: { bottom: 90, height: 50, top: 40 },
-          rail: { bottom: 100, top: 30 },
-          parent: { bottom: 30 },
+          car: { bottom: 90, height: 50 },
+          rail: { bottom: 100 },
         });
 
         let classes = [].slice.call(subject.car.classList);
