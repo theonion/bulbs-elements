@@ -73,10 +73,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
         if (this.isInView(boundingRects)) {
 
-          if (this.isJumpingPageHeight(offset)) {
-            this.handleFullPageJump(offset);
-          }
-          else if(this.isScrollingDown(offset)) {
+          if(this.isScrollingDown(offset)) {
             this.handleScrollDown(boundingRects);
           }
           else {
