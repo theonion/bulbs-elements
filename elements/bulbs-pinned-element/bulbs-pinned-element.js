@@ -32,6 +32,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.boundPositionCar = this.positionCar.bind(this);
 
     window.addEventListener('scroll', this.boundPositionCar);
+    window.addEventListener('click', this.scrollTop);
 
     this.boundPositionCar();
   }
@@ -54,7 +55,9 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   positionCar () {
-    if(!this.animationRequest) {
+    if(this.animationRequest) {
+      window.cancelAnimationFrame(this.animationRequest)
+    }
       this.animationRequest = requestAnimationFrame(() => {
         this.animationRequest = null;
 
@@ -81,7 +84,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
           }
         }
       });
-    }
   }
 
   hasNewRailHeight (boundingRects) {
