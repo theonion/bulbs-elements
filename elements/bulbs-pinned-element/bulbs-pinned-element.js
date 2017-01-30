@@ -76,8 +76,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
           }
           else {
             setTimeout(() => {
-              this.handleScrollUp(boundingRects)
-              }, 250);
+              this.handleScrollUp(boundingRects);
+            }, 250);
           }
         }
       });
@@ -140,15 +140,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     }
   }
 
-  handleFullPageJump (offset) {
-    if (offset.y === 0) {
-      this.resetCarPosition();
-    }
-    else {
-      this.pinToRailBottom();
-    }
-  }
-
   handleScrollUp (boundingRects) {
     const rail = boundingRects.rail;
     const car = boundingRects.car;
@@ -156,7 +147,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     if (rail.top >= car.top) {
       this.resetCarPosition();
     }
-    else if ($(window).scrollTop() === 0 ) {
+    else if ($(window).scrollTop() === 0) {
       this.resetCarPosition();
     }
     else if (rail.bottom - car.height - this.topOffsetAdjustment >= 0) {
