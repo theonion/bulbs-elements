@@ -22,13 +22,17 @@ import './bulbs-video-play-button.scss';
 import './player-skin-seven.scss';
 import './player-skin-overrides.scss';
 import './endcard.scss';
-//
+
 // FIXME: where should this be defined? Per-app?
 //  Or in some better sort of settings file here?
 global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'UA-223393-14';
 global.BULBS_ELEMENTS_COMSCORE_ID = '6036328';
 
 let jwPlayerIdCounter = 0;
+
+window.addEventListener('error', (error) => {
+  console.error('ERROR', error);
+});
 
 export default class BulbsVideo extends BulbsHTMLElement {
   get props () {
@@ -318,6 +322,9 @@ export default class BulbsVideo extends BulbsHTMLElement {
   }
 
   makeVideoPlayer (element, videoMeta) {
+    if (!document.contains(element)) {
+    }
+
     element.id = `jw-player-${jwPlayerIdCounter++}`;
     this.player = global.jwplayer(element);
 
@@ -417,7 +424,9 @@ export default class BulbsVideo extends BulbsHTMLElement {
         if (this.player) {
           this.player.remove();
         }
-        util.InViewMonitor.remove(this.refs.videoViewport);
+        if (this.refs && this.refs.videoViewport) {
+          util.InViewMonitor.remove(this.refs.videoViewport);
+        }
       }
     });
   }

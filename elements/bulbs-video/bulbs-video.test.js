@@ -13,44 +13,60 @@ describe('<bulbs-video>', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    sandbox.spy(util, 'cachedFetch');
-    fetchMock.mock(src, {});
-    subject = document.createElement('bulbs-video');
-    subject.setAttribute('src', src);
-    subject.setAttribute('disable-lazy-loading', true);
-    document.body.appendChild(subject);
-    sandbox.stub(GoogleAnalytics, 'init');
-    sandbox.stub(Comscore, 'init');
+    fetchMock.mock(/http:\/\/v.theonion.com\/onionstudios\//, {});
   });
 
   afterEach(() => {
     sandbox.restore();
-    try {
-      subject.remove();
-    }
-    catch (error) {
-      console.info('was not able to remove <bulbs-video> at end of test', error);
-    }
+    [...document.querySelectorAll('bulbs-video')].forEach((videoElement) => {
+      videoElement.remove();
+    });
   });
+
+  let defaultTestProps = {
+    'autoplay-in-view': '',
+    'disable-meta-link': '',
+    'embedded': '',
+    'enable-poster-meta': '',
+    'hide-controls': '',
+    'muted': '',
+    'disable-lazy-loading': '',
+    'no-cover': '',
+    'no-endcard': '',
+    'playsinline': '',
+    'target-campaign-id': 'campaign-id',
+    'target-campaign-number': 'campaign-number',
+    'target-special-coverage': 'special-coverage',
+    'twitter-handle': 'twitter-handle',
+    'share-url': '//example.org/share-url',
+    src,
+  };
+
+  function makePlayer (props = {}) {
+    let player = document.createElement('bulbs-video');
+    Object.keys(defaultTestProps).forEach((name) => {
+      player.setAttribute(name, defaultTestProps[name]);
+    });
+
+    Object.keys(props).forEach((name) => {
+      player.setAttribute(name, props[name]);
+    });
+
+    player.createdCallback();
+
+    return player;
+  }
+
+  function insertPlayer (props = {}) {
+    let player = makePlayer(props);
+    document.body.appendChild(player);
+    return player;
+  }
 
   describe('props', () => {
     beforeEach(() => {
-      subject.setAttribute('autoplay-in-view', '');
-      subject.setAttribute('disable-meta-link', '');
-      subject.setAttribute('disable-sharing', '');
-      subject.setAttribute('embedded', '');
-      subject.setAttribute('enable-poster-meta', '');
-      subject.setAttribute('hide-controls', '');
-      subject.setAttribute('muted', '');
-      subject.setAttribute('no-cover', '');
-      subject.setAttribute('no-endcard', '');
-      subject.setAttribute('playsinline', '');
-      subject.setAttribute('target-campaign-id', 'campaign-id');
-      subject.setAttribute('target-campaign-number', 'campaign-number');
-      subject.setAttribute('target-special-coverage', 'special-coverage');
-      subject.setAttribute('twitter-handle', 'twitter-handle');
-      subject.setAttribute('share-url', '//example.org/share-url');
-      subject.setAttribute('src', '//example.org/video.json');
+      fetchMock.mock(src, video);
+      subject = makePlayer();
     });
 
     it('casts autoplayInView to boolean', () => {
@@ -62,6 +78,7 @@ describe('<bulbs-video>', () => {
     });
 
     it('casts disableSharing to boolean', () => {
+      subject.setAttribute('disable-sharing', '');
       expect(subject.props.disableSharing).to.be.true;
     });
 
@@ -117,6 +134,11 @@ describe('<bulbs-video>', () => {
   });
 
   describe('#attachedCallback', () => {
+    beforeEach(() => {
+      fetchMock.mock(src, video);
+      subject = makePlayer();
+    });
+
     it('sets refs to inner elements', () => {
       subject.attachedCallback();
       let { videoContainer, videoViewport, videoCover } = subject.refs;
@@ -147,6 +169,7 @@ describe('<bulbs-video>', () => {
     });
 
     it('fetches video data', () => {
+      sandbox.spy(util, 'cachedFetch');
       subject.attachedCallback();
       expect(util.cachedFetch).to.have.been.calledWith(
         src, { redirect: 'follow' }
@@ -159,7 +182,6 @@ describe('<bulbs-video>', () => {
 
     context('src did not change', () => {
       it('does not fetch data', () => {
-        util.cachedFetch.restore();
         sandbox.spy(util, 'cachedFetch');
         subject.setAttribute('src', subject.getAttribute('src'));
         expect(util.cachedFetch).not.to.have.been.called;
@@ -167,16 +189,16 @@ describe('<bulbs-video>', () => {
     });
 
     context('src did change', () => {
-      beforeEach(() => {
+      it('fetches video data', (done) => {
         fetchMock.mock(newSrc, {});
-        subject.state.load = true;
-      });
-
-      it('fetches video data', () => {
+        sandbox.spy(util, 'cachedFetch');
         subject.setAttribute('src', newSrc);
-        expect(util.cachedFetch).to.have.been.calledWith(
-          newSrc, { redirect: 'follow' }
-        ).once;
+        setImmediate(() => {
+          expect(util.cachedFetch).to.have.been.calledWith(
+            newSrc, { redirect: 'follow' }
+          ).once;
+          done();
+        });
       });
     });
   });
@@ -188,14 +210,15 @@ describe('<bulbs-video>', () => {
     beforeEach((done) => {
       document.body.style.minHeight = (window.innerHeight * 2) + 'px';
 
-      lazy = document.createElement('bulbs-video');
-      lazy.setAttribute('src', '//example.org/video.json');
+      lazy = makePlayer();
+      lazy.removeAttribute('disable-lazy-loading');
       container = document.createElement('div');
       container.style.position = 'fixed';
       container.style.top = '-200%';
       container.style.left = '0';
       container.style.width = '100%';
       container.style.height = '100%';
+      container.style.background = 'blue';
       document.body.appendChild(container);
       container.appendChild(lazy);
       setImmediate(() => done());
@@ -225,25 +248,26 @@ describe('<bulbs-video>', () => {
     });
   });
 
+  let props = {
+    'share-url': 'http://www.onionstudios.com/v/4974',
+    'target-special-coverage': 'sc-slug',
+    'target-campaign-id': '5678',
+    'target-campaign-number': '123456',
+    'target-host-channel': 'host_channel',
+    'twitter-handle': 'twitter',
+    'disable-lazy-loading': '',
+    'autoplay': '',
+    'autoplay-in-view': '',
+    'embedded': '',
+    'muted': '',
+    'default-captions': '',
+  };
+
   describe('makes a video player', () => {
     let trackerRegex = /^videoplayer\d+.set$/;
-    let attrs;
     let videoMeta;
 
     beforeEach(() => {
-      attrs = {
-        'share-url': 'http://www.onionstudios.com/v/4974',
-        'target-special-coverage': 'sc-slug',
-        'target-campaign-id': '5678',
-        'target-campaign-number': '123456',
-        'target-host-channel': 'host_channel',
-        'twitter-handle': 'twitter',
-        'autoplay': '',
-        'autoplay-in-view': '',
-        'embedded': '',
-        'muted': '',
-        'default-captions': '',
-      };
       videoMeta = Object.assign({}, video, {
         title: 'video_title',
         tags: ['main', 'tag'],
@@ -304,20 +328,28 @@ describe('<bulbs-video>', () => {
           },
         ],
       });
+
+      videoMeta.sources.forEach((source) => {
+        fetchMock.mock(source.url, {});
+      });
+
       global.BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID = 'a-ga-id';
       global.ga = sandbox.spy();
     });
 
     context('handleFetchSuccess', () => {
-      beforeEach(() => {
-        Object.keys(attrs).forEach((attr) => {
-          subject.setAttribute(attr, attrs[attr]);
-        });
-        subject.state.load = true;
-        subject.createdCallback();
-        subject.attachedCallback();
+      beforeEach((done) => {
+        subject = insertPlayer(props);
         sandbox.spy(subject, 'makeVideoPlayer');
-        subject.handleFetchSuccess(videoMeta);
+        sandbox.stub(window, 'jwplayer').returns({
+          setup: sandbox.spy(),
+          on: sandbox.spy(),
+          remove: sandbox.spy(),
+        });
+        setImmediate(() => {
+          subject.handleFetchSuccess(videoMeta);
+          done();
+        });
       });
 
       it('overrides `main` in the tags to use attribute host channel', () => {
@@ -364,15 +396,18 @@ describe('<bulbs-video>', () => {
     });
 
     context('analytics', () => {
-      beforeEach(() => {
-        Object.keys(attrs).forEach((attr) => {
-          subject.setAttribute(attr, attrs[attr]);
-        });
-        subject.state.load = true;
-        subject.createdCallback();
-        subject.attachedCallback();
+      beforeEach((done) => {
+        subject = insertPlayer(props);
         sandbox.spy(subject, 'makeVideoPlayer');
-        subject.handleFetchSuccess(videoMeta);
+        sandbox.stub(window, 'jwplayer').returns({
+          setup: sandbox.spy(),
+          on: sandbox.spy(),
+          remove: sandbox.spy(),
+        });
+        setImmediate(() => {
+          subject.handleFetchSuccess(videoMeta);
+          done();
+        });
       });
 
       it('creates a prefixed ga tracker', () => {
@@ -444,12 +479,12 @@ describe('<bulbs-video>', () => {
 
   describe('detachedCallback', () => {
     beforeEach((done) => {
-      subject.state.load = true;
-      subject.createdCallback();
-      subject.attachedCallback();
+      subject = insertPlayer(props);
       subject.player = { remove: sandbox.spy() };
+      subject.refs = {
+        videoViewport: document.createElement('div'),
+      };
       sandbox.stub(util.InViewMonitor, 'remove');
-      subject.detachedCallback();
       setImmediate(() => {
         done();
       });
@@ -458,16 +493,21 @@ describe('<bulbs-video>', () => {
     it('stops the player', (done) => {
       subject.remove();
       setImmediate(() => {
-        expect(subject.player.remove).to.have.been.called;
-        done();
+        setImmediate(() => {
+          expect(subject.player.remove).to.have.been.called;
+          done();
+        });
       });
     });
 
     it('removes enter and exit viewport events', (done) => {
       subject.remove();
+      console.log(subject);
       setImmediate(() => {
-        expect(util.InViewMonitor.remove.called).to.be.true;
-        done();
+        setImmediate(() => {
+          expect(util.InViewMonitor.remove.called).to.be.true;
+          done();
+        });
       });
     });
   });
@@ -805,16 +845,18 @@ describe('<bulbs-video>', () => {
     });
 
     describe('contstructor', () => {
+      beforeEach(() => {
+        subject = makePlayer();
+      });
+
       it('binds the forwardJWEvent method', () => {
         let spyBind = sandbox.spy(subject.forwardJWEvent, 'bind');
-        subject.state.load = true;
         subject.createdCallback();
         expect(spyBind).to.have.been.calledWith(subject);
       });
 
       it('binds the setPlaysInline method', () => {
         let spyBind = sandbox.spy(subject.setPlaysInline, 'bind');
-        subject.state.load = true;
         subject.createdCallback();
         expect(spyBind).to.have.been.calledWith(subject);
         sandbox.restore();
@@ -827,6 +869,9 @@ describe('<bulbs-video>', () => {
 
       context('regular setup', () => {
         beforeEach(() => {
+          sandbox.spy(GoogleAnalytics, 'init');
+          sandbox.spy(Comscore, 'init');
+
           sources = [
             {
               'file': 'http://v.theonion.com/onionstudios/video/4053/hls_playlist.m3u8',
