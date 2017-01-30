@@ -93,7 +93,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return newRailHeight;
   }
 
-  isScrollingDown (offset) {
+  isScrollingDown () {
     const offset = getScrollOffset();
     let scrollDown = false;
 
