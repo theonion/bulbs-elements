@@ -32,7 +32,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     this.boundPositionCar = this.positionCar.bind(this);
 
     window.addEventListener('scroll', this.boundPositionCar);
-    window.addEventListener('click', this.scrollTop);
 
     this.boundPositionCar();
   }
@@ -60,7 +59,6 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
         this.animationRequest = null;
 
         const boundingRects = this.getBoundingRects();
-        const offset = getScrollOffset();
 
         this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
         this.style.width = `${boundingRects.parent.width}px`;
@@ -71,7 +69,7 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
 
         if (this.isInView(boundingRects)) {
 
-          if(this.isScrollingDown(offset)) {
+          if(this.isScrollingDown()) {
             this.handleScrollDown(boundingRects);
           }
           else {
@@ -95,18 +93,8 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return newRailHeight;
   }
 
-  isJumpingPageHeight (offset) {
-    let pageJump = false;
-
-    if (offset.y > this.lastPosition + window.innerHeight || offset.y === 0) {
-      pageJump = true;
-      this.lastPosition = offset.y;
-    }
-
-    return pageJump;
-  }
-
   isScrollingDown (offset) {
+    const offset = getScrollOffset();
     let scrollDown = false;
 
     if (offset.y > this.lastPosition) {
