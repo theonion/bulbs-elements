@@ -29,8 +29,7 @@ describe('<progress-bar>', () => {
   it('sets the width of the track based on the progress', (done) => {
     // setImmediate because setting innerHTML is sort-of async
     setImmediate(() => {
-      let track = subject.children[0];
-      expect(track.style.width).to.equal('65%');
+      expect(subject.children[0].style.width).to.equal('65%');
       done();
     });
   });
@@ -41,19 +40,17 @@ describe('<progress-bar>', () => {
     fixtureContainer.appendChild(subject);
     // setImmediate because setting innerHTML is sort-of async
     setImmediate(() => {
-      let track = subject.children[0];
-      expect(track.style.width).to.equal('100%');
+      expect(subject.children[0].style.width).to.equal('100%');
       done();
     });
   });
 
   describe('udpated progress attribute', () => {
     it('updates the track width when the progress changes', (done) => {
+      subject.setAttribute('progress', '50');
       // setImmediate because setting innerHTML is sort-of async
       setImmediate(() => {
-        let track = subject.children[0];
-        subject.setAttribute('progress', '50');
-        expect(track.style.width).to.equal('50%');
+        expect(subject.children[0].style.width).to.equal('50%');
         done();
       });
     });
