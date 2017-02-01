@@ -1,7 +1,7 @@
 describe('Charter', function () {
-  let Charter,
-      subject,
-      data = {
+  let Charter;
+  let subject;
+  let data = {
     totalAnswers: 150,
     values: [
       { answer: 'First answer', value: 25 },
@@ -16,8 +16,8 @@ describe('Charter', function () {
 
   describe('new one', function () {
     beforeEach(function () {
-      let charterSpy = sinon.stub(Charter.prototype, 'calculatePercentages');
-      subject = new charterSpy('.chart-selector', data);
+      let CharterSpy = sinon.stub(Charter.prototype, 'calculatePercentages');
+      subject = new CharterSpy('.chart-selector', data);
     });
 
     it('has the selector', function () {
