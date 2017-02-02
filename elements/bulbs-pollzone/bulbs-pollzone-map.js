@@ -12,7 +12,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     this.initMap();
   }
 
-  setFills = function () {
+  setFills () {
     this.fills = {
       defaultFill: '#006B3A',
     };
@@ -34,7 +34,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     }).bind(this));
   }
 
-  fillKey = function (i, value) {
+  fillKey (i, value) {
     let key = 'result' + i;
     if (value) {
       this.fills[key] = value;
@@ -42,7 +42,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     return this.fills[key];
   }
 
-  initMap = function () {
+  initMap () {
     this.showTooltip = this.showTooltip.bind(this);
 
     let map = this.map = new Datamap({
@@ -64,7 +64,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     });
   }
 
-  colorLegend = function () {
+  colorLegend () {
     // color legend, assumes legend has been ordered by sequence
     let legendItems = this.legendContainer.querySelectorAll('.legend-color');
     for (let i = 0; i < legendItems.length; i++) {
@@ -72,7 +72,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     }
   }
 
-  showTooltip = function (geo, stateResults) {
+  showTooltip (geo, stateResults) {
     let html = '<div class="hoverinfo"><div class="state-name">' +
       geo.properties.name + '</div>';
 
