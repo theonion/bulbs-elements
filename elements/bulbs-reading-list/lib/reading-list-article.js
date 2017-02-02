@@ -179,6 +179,9 @@ export default class ReadingListArticle {
         );
         this.sendAnalyticsEvent();
         this.dispatcher.emit('reading-list-item-url-changed', this);
+
+        let changeEvent = new CustomEvent('reading-list-item-url-changed');
+        this.element.dispatchEvent(changeEvent);
       }
     }
   }
