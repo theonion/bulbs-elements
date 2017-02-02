@@ -34,7 +34,11 @@ export default class ReadingListArticles {
   }
 
   registerEvents () {
-    this.dispatcher.on('reading-list-item-clicked', this.handleListItemClicked.bind(this));
+    this.handleListItemClicked = this.handleListItemClicked.bind(this)
+    this.setCurrentArticle = this.setCurrentArticle.bind(this)
+
+    this.dispatcher.on('reading-list-item-clicked', this.handleListItemClicked);
+    this.dispatcher.on('reading-list-item-url-changed', this.setCurrentArticle);
   }
 
   handleListItemClicked (menuItem) {
@@ -93,10 +97,14 @@ export default class ReadingListArticles {
     this.isFetchingItem = false;
   }
 
+  setCurrentArticle (article) {
+    this.currentArticle = article;
+  }
+
   handleLoadNextArticleComplete (article) {
     this.isFetchingItem = false;
     article.scrollIntoView();
-    this.currentArticle = article;
+    this.setCurrentArticle(article);
   }
 
   redirectToArticle (article) {
