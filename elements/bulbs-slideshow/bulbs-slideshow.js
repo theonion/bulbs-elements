@@ -1,5 +1,7 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
-import './bulbs-slideshow.scss';
+// import './bulbs-slideshow.scss';
+
+console.log('ok');
 
 function getInitialSlideIndex (hash) {
   let index = 0;

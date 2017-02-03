@@ -4,13 +4,7 @@ import {
 } from 'bulbs-elements/register';
 import './bulbs-slick-slideshow.scss';
 
-function getInitialSlideIndex (hash) {
-  let index = 0;
-  if (hash.length > 1) {
-    index = parseInt(hash.match(/(\d+)/)[1], 10) - 1;
-  }
-  return index;
-}
+console.log('hi!');
 
 /// Things this should do:
 /// 1. Initialize Slick slider for .slider elements.
@@ -22,7 +16,9 @@ function getInitialSlideIndex (hash) {
 /// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
-    this.slideshow = $element;
+    this.slideshow = this.querySelector('.slider');
+
+    console.log(this.slideshow);
 
     // set variables
     this.initialSlide = 0;
@@ -59,10 +55,9 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   customPaging (slideshow, initialSlide) {
-    pagerHtml = '<div class="paging">\
-                  ' + (initialSlide + 1) + ' of ' + slideshow.slideCount + '\
-                </div>';
-    return pagerHtml;
+    return `<div class="paging">
+      ${initialSlide + 1} of ${slideshow.slideCount}
+    </div>`;
   }
 
   enableDisableNav (slides, currentSlide) {
