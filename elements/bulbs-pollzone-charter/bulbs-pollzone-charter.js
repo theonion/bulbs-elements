@@ -1,3 +1,7 @@
+import {
+  BulbsHTMLElement,
+  registerElement,
+} from 'bulbs-elements/register';
 import * as d3 from 'd3';
 
 class BulbsPollzoneCharter extends BulbsHTMLElement {

@@ -1,24 +1,24 @@
-import { 
-  BulbsHTMLElement, 
-  registerElement 
+import {
+  BulbsHTMLElement,
+  registerElement,
 } from 'bulbs-elements/register';
 
 import _ from 'lodash';
-
 import * as d3 from 'd3';
-import topojson from 'topojson';
 import Datamap from 'datamaps';
 
 import './bulbs-pollzone-map.scss';
 
 class BulbsPollzoneMap extends BulbsHTMLElement {
   attachedCallback () {
-    let $this = $(this).find('.map');
-    let $data = $this.data('map-data');
+    let map = this.querySelector('.map');
+    let mapData = JSON.parse(map.getAttribute('data-map-data'));
 
-    this.legendContainer = $(this).find('.legend')[0];
-    this.statesData = $data.votes;
-    this.questionsData = $data.questions;
+    this.mapElement = map;
+    this.legendContainer = this.querySelector('.legend');
+    this.statesData = mapData.votes;
+    this.questionsData = mapData.questions;
+
     this.setFills();
     this.initMap();
   }
@@ -57,7 +57,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     this.showTooltip = this.showTooltip.bind(this);
 
     const map = this.map = new Datamap({
-      element: $(this).find('.map')[0],
+      element: this.mapElement,
       scope: 'usa',
       fills: this.fills,
       data: this.statesData,
@@ -77,18 +77,20 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
 
   colorLegend () {
     // color legend, assumes legend has been ordered by sequence
-    let legendItems = $(this.legendContainer).find('.legend-color');
+    let legendItems = this.querySelectorAll('.legend-color');
+    console.log(legendItems);
     for (let i = 0; i < legendItems.length; i++) {
       legendItems[i].style.backgroundColor = this.fillKey(i + 1);
     }
   }
 
   showTooltip (geo, stateResults) {
-    let html = '<div class="hoverinfo"><div class="state-name">' +
-      geo.properties.name + '</div>';
+    let html = `<div class="hoverinfo"><div class="state-name">
+        ${geo.properties.name}
+      </div>`;
 
     if (_.isEmpty(this.questionsData)) {
-      html += 'No votes</div>';
+      html += 'No votes';
     }
     else {
       html += '<ul class="results">';
@@ -104,17 +106,17 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
           let percent = Math.round(votes / stateResults.totalVotes * 100);
 
           let i = this.questionsData[question[0]].sequence;
-          html += '<li class="result">' +
-            '<div class="bar" style="background-color:' + this.fillKey(i) + ';width: ' +
-            percent + '%;">' + '</div><div class="percent">' +
-            percent + '%</div></li>';
+          html += `<li class="result">
+            <div class="bar" style="background-color: ${this.fillKey(i)}; width: ${percent}%;"></div>
+            <div class="percent">${percent}</div>
+          </li>`;
         }).bind(this))
         .value();
 
       html += '</ul>';
     }
 
-    return html;
+    return html + '</div>';
   }
 }
 
