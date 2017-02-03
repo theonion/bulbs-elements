@@ -13,7 +13,7 @@
     "start": "scripts/webpack-dev-server"
   },
   "author": "Onion Product Team <webtech@theonion.com>",
-  "license": "NOT YET LICENSED",
+  "license": "LICENSED",
   "dependencies": {
     "all": "0.0.0",
     "array-flatten": "^2.0.0",
