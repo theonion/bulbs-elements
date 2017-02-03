@@ -40,6 +40,7 @@ class CampaignDisplay extends BulbsElement {
       noPixel: typeof this.props.noPixel === 'string',
       noLink: typeof this.props.noLink === 'string',
     });
+
     return (<CampaignDisplayRoot {...options} />);
   }
 }

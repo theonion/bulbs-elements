@@ -127,11 +127,12 @@ describe('<bulbs-pinned-element>', () => {
       it('should call scroll up handler when scrolling up', () => {
         sandbox.stub(subject, 'isScrollingDown').returns(false);
         sandbox.stub(subject, 'isInView').returns(true);
+        sandbox.stub(window, 'setTimeout').returns(true);
 
         subject.positionCar();
         mockRaf.step();
 
-        expect(subject.handleScrollUp).to.have.been.calledOnce;
+        expect(window.setTimeout).to.have.been.calledOnce;
       });
 
       it('should not call scroll up handler when rail is not in view', () => {
@@ -226,6 +227,23 @@ describe('<bulbs-pinned-element>', () => {
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
         expect(subject.car.style.bottom).to.equal('');
       });
+
+      it('pins car to rail bottom when jumping to bottom of page', () => {
+        subject.car.classList.add('pinned');
+        sandbox.stub($.fn, 'scrollTop').returns(99999999999);
+        subject.topOffsetAdjustment = 10;
+
+        subject.handleScrollDown({
+          rail: { bottom: 100, top: 15 },
+          car: { bottom: 99 },
+        });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned');
+        expect(subject.car.style.bottom).to.equal('0px');
+        expect(subject.car.style.top).to.equal('');
+      });
     });
 
     context('#handleScrollUp', () => {
@@ -248,12 +266,10 @@ describe('<bulbs-pinned-element>', () => {
 
       it('pins car to window when car is not at the top of the rail and in full view adjusted by an offset', () => {
         subject.topOffsetAdjustment = 10;
+        sandbox.stub($.fn, 'scrollTop').returns(10);
 
         subject.handleScrollUp({
-          car: {
-            bottom: 90,
-            height: 50,
-          },
+          car: { bottom: 90, height: 50 },
           rail: { bottom: 100 },
         });
 
@@ -261,6 +277,22 @@ describe('<bulbs-pinned-element>', () => {
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
+        expect(subject.car.style.bottom).to.equal('');
+      });
+
+      it('pins car to rail top when jumping to the top of page', () => {
+        subject.car.classList.add('pinned', 'pinned-bottom');
+        sandbox.stub($.fn, 'scrollTop').returns(0);
+
+        subject.handleScrollUp({
+          car: { top: 0 },
+          rail: { top: -60 },
+        });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(subject.car.style.top).to.equal('0px');
         expect(subject.car.style.bottom).to.equal('');
       });
     });
