@@ -1,7 +1,7 @@
 /* global Datamap */
-import * as d3 from 'd3';
-import topojson from 'topojson'
-import Datamap from 'datamaps'
+require('!imports?this=>window!d3/d3.js');
+require('expose?topojson!topojson/topojson.js');
+require('expose?Datamap!datamaps/dist/datamaps.usa.js');
 
 import {
   registerElement,
@@ -29,16 +29,16 @@ class BulbsDatamap extends BulbsHTMLElement {
 
     window.addEventListener('resize', this.resizeMap.bind(this));
 
-    d3.select(mapContainer).selectAll('svg .datamaps-subunit').on('click', function (stateObj) {
+    window.d3.select(mapContainer).selectAll('svg .datamaps-subunit').on('click', function (stateObj) {
       that.stateClicked(this, stateObj, mapContainer);
     });
   }
 
   stateClicked (path, stateObj, mapContainer) {
-    d3.select(mapContainer)
+    window.d3.select(mapContainer)
       .selectAll('svg .datamaps-subunit')
       .classed('selected', false);
-    d3.select(path).classed('selected', true);
+    window.d3.select(path).classed('selected', true);
 
     let event = new CustomEvent('bulbs-datamap:selected', { 'detail': stateObj });
     mapContainer.dispatchEvent(event);
