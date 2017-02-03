@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Revealed from '../../../components/revealed';
-
 import RailPlayerHeader from './header';
 import RailPlayerCampaign from './campaign';
 
@@ -29,13 +27,13 @@ export default class Root extends React.Component {
         </div>
 
         <div className='rail-player-video bulbs-video-root player'>
-          <Revealed
+          /*<Revealed
             disableSharing={true}
             muted={true}
             targetHostChannel='right_rail'
             defaultCaptions={true}
             {...this.props}
-          />
+          />*/
         </div>
 
         <div className='rail-player-footer'>

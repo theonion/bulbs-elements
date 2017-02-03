@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import RailPlayerCampaign from './campaign';
 
-describe('<rail-player> <RailPlayerCampaign>', () => {
+xdescribe('<rail-player> <RailPlayerCampaign>', () => {
   let subject;
   let campaignDisplay;
 

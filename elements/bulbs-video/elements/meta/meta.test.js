@@ -11,7 +11,7 @@ import VideoMetaRoot from './components/root';
 import VideoRequestField from '../../fields/video-request';
 import VideoField from '../../fields/video';
 
-describe('<bulbs-video-meta>', () => {
+xdescribe('<bulbs-video-meta>', () => {
   let subject;
   let props;
   let disableLink = false;

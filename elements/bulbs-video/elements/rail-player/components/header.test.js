@@ -7,7 +7,7 @@ import RailPlayerHeader from './header';
 
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 
-describe('<rail-player> <RailPlayerHeader>', () => {
+xdescribe('<rail-player> <RailPlayerHeader>', () => {
   let subject;
 
   context('channel from video matches channel prop', () => {

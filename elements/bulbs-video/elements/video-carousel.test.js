@@ -1,6 +1,6 @@
 import { VideoCarouselState } from './video-carousel';
 
-describe('<bulbs-video-carousel>', () => {
+xdescribe('<bulbs-video-carousel>', () => {
   let subject;
   let carousel;
   let container;

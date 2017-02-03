@@ -57,8 +57,8 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
-    this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
+    this.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
+    this.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
@@ -71,10 +71,10 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
     if (items.length > 0) {
       this.selectItem(items[0]);
-      this.applyState();
+      this.doApplyState();
     }
 
-    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
+    this.removeEventListener('jw-beforePlay', this.firstPlay, true);
   }
 
   playerEnded () {
@@ -106,7 +106,6 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   selectItem (itemElement) {
     // Setting autoplay here causes the video to play immediately when it is selected
     // on the next line.
-    this.videoPlayer.setAttribute('autoplay', '');
     this.state.selectItem(itemElement);
     itemElement.classList.add('played');
   }
@@ -114,7 +113,36 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   applyState () {
     if (this.state.currentItem) {
       this.doApplyState();
+      this.doSwapVideo();
     }
+  }
+
+  doSwapVideo () {
+    // swaps out the current video
+    let activeVideo = this.querySelector('.video-carousel-player bulbs-video');
+    let activeVideoSummary = this.querySelector(`bulbs-video-summary[src='${activeVideo.getAttribute('src')}']`);
+    activeVideoSummary.prepend(activeVideo);
+    activeVideo.pause();
+
+    let nextVideo = this.querySelector(`bulbs-video[src='${this.state.videoUrl}']`);
+    this.querySelector('.video-carousel-player').append(nextVideo);
+    nextVideo.play();
+    // previously we were updating the src attribute of a single <bulbs-video>
+    // this didn't work on mobile because playing a <video> on ios must be directly
+    // executed by a user input event. Any indirection via setTimeout and similar
+    // async methods breaks out of being 'user intended'
+    //
+    // video = document.querySelector('video');
+    //
+    // This works >>>
+    // addEventListener('click', event => video.play());
+    //
+    // This would not work >>>
+    // video.addEventListener('click', (event) => {
+    //   setTimeout(() => {
+    //     video.play();
+    //   }, 100);
+    // });
   }
 
   doApplyState () {
@@ -127,7 +155,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     this.state.currentItem.querySelector('bulbs-video-summary').setAttribute('now-playing', '');
 
     forEach.call(
-      this.querySelectorAll('bulbs-video-meta, bulbs-video'),
+      this.querySelectorAll('bulbs-video-meta'),
       (element) => element.setAttribute('src', this.state.videoUrl)
     );
 

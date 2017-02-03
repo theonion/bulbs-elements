@@ -9,18 +9,12 @@ describe('<progress-bar>', () => {
   let sandbox;
   let fixtureContainer;
 
-  function appendSubject () {
-    return (new Promise(resolve => {
-      fixtureContainer = appendFixtureContainer();
-      fixtureContainer.appendChild(subject);
-
-      setImmediate(resolve);
-    }));
-  }
-
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     subject = document.createElement('progress-bar');
+    subject.setAttribute('progress', '35');
+    fixtureContainer = appendFixtureContainer();
+    fixtureContainer.appendChild(subject);
   });
 
   afterEach(() => {
@@ -28,52 +22,37 @@ describe('<progress-bar>', () => {
     removeFixtures();
   });
 
-  it('renders a <progress-bar>', (done) => {
-    appendSubject()
-      .then(() => {
-        expect(subject.tagName.toLowerCase()).to.equal('progress-bar');
-        done();
-      });
+  it('renders a <progress-bar>', () => {
+    expect(subject.tagName.toLowerCase()).to.equal('progress-bar');
   });
 
   it('sets the width of the track based on the progress', (done) => {
     // setImmediate because setting innerHTML is sort-of async
-    subject.setAttribute('progress', 35);
-
-    appendSubject()
-      .then(() => {
-        let track = subject.children[0];
-        expect(track.style.width).to.equal('65%');
-        done();
-      });
+    setImmediate(() => {
+      expect(subject.children[0].style.width).to.equal('65%');
+      done();
+    });
   });
 
   it('has a default progress of 0', (done) => {
+    fixtureContainer.removeChild(subject);
+    subject = document.createElement('progress-bar');
+    fixtureContainer.appendChild(subject);
     // setImmediate because setting innerHTML is sort-of async
-    appendSubject()
-      .then(() => {
-        let track = subject.children[0];
-        expect(track.style.width).to.equal('100%');
-        done();
-      });
+    setImmediate(() => {
+      expect(subject.children[0].style.width).to.equal('100%');
+      done();
+    });
   });
 
   describe('udpated progress attribute', () => {
     it('updates the track width when the progress changes', (done) => {
+      subject.setAttribute('progress', '50');
       // setImmediate because setting innerHTML is sort-of async
-      let track;
-
-      appendSubject()
-        .then(() => {
-          track = subject.children[0];
-          subject.setAttribute('progress', '50');
-        })
-        .then(() => {
-          setImmediate(() => {
-            expect(track.style.width).to.equal('50%');
-            done();
-          });
-        });
+      setImmediate(() => {
+        expect(subject.children[0].style.width).to.equal('50%');
+        done();
+      });
     });
   });
 });

@@ -1,6 +1,18 @@
 bulbs-video-summary {
   display: block;
   position: relative;
+
+  &[now-playing] {
+    .bulbs-video-summary-playing {
+      display: inherit;
+    }
+  }
+}
+
+bulbs-video-summary bulbs-video {
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 .bulbs-video-poster {
@@ -36,6 +48,7 @@ bulbs-video-summary {
   color: white;
   font-size: .8em;
   font-family: sans-serif;
+  display: none;
 }
 
 .bulbs-video-series-name {
