@@ -3,7 +3,6 @@ import {
   registerElement,
 } from 'bulbs-elements/register';
 
-import _ from 'lodash';
 import * as d3 from 'd3';
 import Datamap from 'datamaps';
 
@@ -29,7 +28,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
     };
 
     // add colors to keyed fills list
-    _.forEach([
+    [
       '#37273a',
       '#942026',
       '#46778a',
@@ -40,9 +39,9 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
       '#654c75',
       '#738e54',
       '#686868',
-    ], (function (color, i) {
+    ].forEach(function (color, i) {
       this.fillKey(i + 1, color);
-    }).bind(this));
+    }, this);
   }
 
   fillKey (i, value) {
@@ -78,45 +77,44 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
   colorLegend () {
     // color legend, assumes legend has been ordered by sequence
     let legendItems = this.querySelectorAll('.legend-color');
-    console.log(legendItems);
     for (let i = 0; i < legendItems.length; i++) {
       legendItems[i].style.backgroundColor = this.fillKey(i + 1);
     }
   }
 
   showTooltip (geo, stateResults) {
-    let html = `<div class="hoverinfo"><div class="state-name">
+    let { totalVotes, votes } = stateResults;
+    let html = `<div class='hoverinfo'><div class='state-name'>
         ${geo.properties.name}
       </div>`;
 
-    if (_.isEmpty(this.questionsData)) {
+    if (typeof this.questionsData === 'undefined' || Object.keys(votes).length < 1) {
       html += 'No votes';
     }
     else {
-      html += '<ul class="results">';
+      html += `<ul class='results'>`;
 
       // order by winner then print out html
-      _.chain(stateResults.votes)
-        .toPairs()
-        .sortBy(function (question) {
-          return -question[1];
+      html += Object.keys(votes).map(function(key) {
+          return { 'id': key, 'numVotes': votes[key] }
         })
-        .each((function (question) {
-          let votes = question[1];
-          let percent = Math.round(votes / stateResults.totalVotes * 100);
+        .sort(function (q1, q2) {
+          return q1['numVotes'] < q2['numVotes'];
+        })
+        .map(function (question) {
+          let votes = question['numVotes'];
+          let percent = Math.round(votes / totalVotes * 100);
 
-          let i = this.questionsData[question[0]].sequence;
-          html += `<li class="result">
-            <div class="bar" style="background-color: ${this.fillKey(i)}; width: ${percent}%;"></div>
-            <div class="percent">${percent}</div>
+          return `<li class='result'>
+            <div class='bar' style='background-color: ${this.fillKey(question['id'])}; width: ${percent}%;'></div>
+            <div class='percent'>${percent}</div>
           </li>`;
-        }).bind(this))
-        .value();
+        }, this).join('');
 
-      html += '</ul>';
+      html += `</ul>`;
     }
 
-    return html + '</div>';
+    return html + `</div>`;
   }
 }
 
