@@ -199,7 +199,7 @@ export default class Revealed extends React.Component {
     // video_id
     // video_site
     // video_series
-    baseUrl += 'cust_params=' + encodeURIComponent(customParamValues);
+    baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
     // if (vastTestId) {
     // TODO: forcedAdZone
