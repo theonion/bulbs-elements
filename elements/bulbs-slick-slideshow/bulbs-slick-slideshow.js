@@ -1,10 +1,11 @@
-import { 
-  registerElement, 
-  BulbsHTMLElement 
+import {
+  registerElement,
+  BulbsHTMLElement,
 } from 'bulbs-elements/register';
-import './bulbs-slick-slideshow.scss';
+import $ from 'jquery';
+import * as slick from 'slick-carousel';
 
-console.log('hi!');
+import './bulbs-slick-slideshow.scss';
 
 /// Things this should do:
 /// 1. Initialize Slick slider for .slider elements.
@@ -16,9 +17,7 @@ console.log('hi!');
 /// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
-    this.slideshow = this.querySelector('.slider');
-
-    console.log(this.slideshow);
+    this.slideshow = $('.slider');
 
     // set variables
     this.initialSlide = 0;
@@ -44,7 +43,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
       dots: true,
       initialSlide: this.initialSlide,
       appendDots: this.navLinks,
-      customPaging: this.customPaging
+      customPaging: this.customPaging,
     });
 
     // cant get this until slick is initiated
@@ -64,7 +63,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     // remove all disabled states
     this.navLinks.find('a').removeClass('disabled');
     // if last slide, disable last
-    if (currentSlide === slides.length){
+    if (currentSlide === slides.length) {
       this.navNext.addClass('disabled');
     }
     // if first slide, disable first
@@ -89,10 +88,10 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   bodyKeyDown (event) {
-    if(event.keyCode == 37) { // left
+    if(event.keyCode === 37) { // left
       this.slideshow.slick('slickPrev');
     }
-    else if(event.keyCode == 39) { // right
+    else if(event.keyCode === 39) { // right
       this.slideshow.slick('slickNext');
     }
   }

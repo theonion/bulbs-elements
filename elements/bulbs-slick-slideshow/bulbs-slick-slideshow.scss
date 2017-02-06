@@ -1,9 +1,10 @@
-// TODO: pick through and keep vars in 
-// omni but layout stuff here
+// slick defaults
+@import "slick";
 
 // slideshow
 .article-slideshow {
   $slider-bg: #F4F5F6;
+  display: block;
   margin-bottom: 1em;
 
   .slick-track { 
@@ -69,6 +70,9 @@
     }
 
     .slick-dots {
+      background: $slider-bg;
+      justify-content: center;
+      align-items: center;
       display: flex;
 
       li { 
