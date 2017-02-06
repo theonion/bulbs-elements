@@ -95,21 +95,21 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
       html += `<ul class='results'>`;
 
       // order by winner then print out html
-      html += Object.keys(votes).map(function(key) {
-          return { 'id': key, 'numVotes': votes[key] }
-        })
-        .sort(function (q1, q2) {
-          return q1['numVotes'] < q2['numVotes'];
-        })
-        .map(function (question) {
-          let votes = question['numVotes'];
-          let percent = Math.round(votes / totalVotes * 100);
+      html += Object.keys(votes).map(function (key) {
+        return { 'id': key, 'numVotes': votes[key] };
+      })
+      .sort(function (q1, q2) {
+        return q1.numVotes < q2.numVotes;
+      })
+      .map(function (question) {
+        let { numVotes } = question;
+        let percent = Math.round(numVotes / totalVotes * 100);
 
-          return `<li class='result'>
-            <div class='bar' style='background-color: ${this.fillKey(question['id'])}; width: ${percent}%;'></div>
-            <div class='percent'>${percent}</div>
-          </li>`;
-        }, this).join('');
+        return `<li class='result'>
+          <div class='bar' style='background-color: ${this.fillKey(question['id'])}; width: ${percent}%;'></div>
+          <div class='percent'>${percent}</div>
+        </li>`;
+      }, this).join('');
 
       html += `</ul>`;
     }
