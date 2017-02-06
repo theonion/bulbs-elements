@@ -29,7 +29,7 @@ export default class BulbsVideo extends BulbsElement {
     if (this.props.src !== prevProps.src) {
       this.store.actions.resetController();
       this.store.actions.setVideoField(null); // eslint-disable-line no-undefined
-      setImmediate(() => {
+      requestAnimationFrame(() => {
         // We have to do this in the next execution context to work around timing
         // issues with jwplayer and tearing down video players
         this.initialDispatch();
