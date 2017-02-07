@@ -125,14 +125,13 @@ describe('<bulbs-pinned-element>', () => {
       });
 
       it('should call scroll up handler when scrolling up', () => {
-        sandbox.stub(subject, 'isScrollingDown').returns(false);
+        sandbox.stub(subject, 'isScrollingUp').returns(false);
         sandbox.stub(subject, 'isInView').returns(true);
-        sandbox.stub(window, 'setTimeout').returns(true);
 
         subject.positionCar();
         mockRaf.step();
 
-        expect(window.setTimeout).to.have.been.calledOnce;
+        expect(window.requestAnimationFrame).to.have.been.calledOnce;
       });
 
       it('should not call scroll up handler when rail is not in view', () => {
@@ -143,6 +142,28 @@ describe('<bulbs-pinned-element>', () => {
         mockRaf.step();
 
         expect(subject.handleScrollUp).to.not.have.been.called;
+      });
+
+      it('should call pinToRailBottom if rail not in view && parent is above viewport', () => {
+        sandbox.stub(subject, 'isInView').returns(false);
+
+        subject.parent.position = 'fixed';
+        subject.parent.style.top = '-200%';
+        subject.positionCar();
+        mockRaf.step();
+
+        expect(subject.pinToRailBottom).to.have.been.called;
+      });
+
+      it('should call resetCarPosition if rail not in view && parent is below viewport', () => {
+        sandbox.stub(subject, 'isInView').returns(false);
+
+        subject.parent.position = 'fixed';
+        subject.parent.style.top = '200%';
+        subject.positionCar();
+        mockRaf.step();
+
+        expect(subject.resetCarPosition).to.have.been.called;
       });
 
       it('should ensure rail is the size of the parent less any start height offset', () => {
