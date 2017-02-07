@@ -110,6 +110,8 @@ export default class Revealed extends React.Component {
 
     videoMeta.player_options.embedded = this.props.embedded;
 
+    videoMeta.player_options.disable_ads = this.props.disableAds;
+
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
 
@@ -259,7 +261,7 @@ export default class Revealed extends React.Component {
       controls: !this.props.hideControls,
     };
 
-    if (!videoMeta.player_options.embedded) {
+    if (!videoMeta.player_options.embedded && !videoMeta.player_options.disable_ads) {
       playerOptions.advertising = {
         client: 'vast',
         tag: this.vastUrl(videoMeta),
@@ -366,6 +368,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
+  disableAds: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
   hideControls: PropTypes.bool,

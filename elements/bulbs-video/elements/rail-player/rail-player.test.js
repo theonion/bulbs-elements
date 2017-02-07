@@ -10,9 +10,24 @@ import ControllerField from '../../fields/controller';
 
 describe('<rail-player>', () => {
   let subject;
+  let sandbox;
+  let props;
 
   describe('PropTypes', () => {
-    beforeEach(() => subject = RailPlayer.propTypes);
+    beforeEach(() => {
+      subject = RailPlayer.propTypes;
+      sandbox = sinon.sandbox.create();
+      sandbox.stub(window, 'fetch').returns(new Promise(resolve => resolve));
+      props = {
+        channel: 'channel',
+        recircUrl: 'http://example.org/recirc',
+        targetCampaignId: '12345',
+      };
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
 
     it('requires a channel', () => {
       expect(subject.channel).to.eql(PropTypes.string.isRequired);
@@ -42,17 +57,17 @@ describe('<rail-player>', () => {
   describe('fetchVideo', () => {
     context('without campaign', () => {
       beforeEach(() => {
-        subject = new RailPlayer({ src: 'http://example.org/a-src' });
+        subject = shallow(<RailPlayer src='http://example.org/a-src' {...props}/>).instance();
       });
       it('checks if ad block is enabled', () => {
-        sinon.spy(subject.store.actions, 'fetchVideo');
+        sinon.stub(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = true;
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo)
           .to.have.been.calledWith('http://example.org/a-src?ad_block_active=true');
       });
       it('checks if ad block is disabled', () => {
-        sinon.spy(subject.store.actions, 'fetchVideo');
+        sinon.stub(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = false;
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo).to.have.been.calledWith(
@@ -64,14 +79,14 @@ describe('<rail-player>', () => {
         subject = new RailPlayer({ src: 'http://example.org/a-src?campaign_id=534' });
       });
       it('checks if ad block is enabled and a query param already exists', () => {
-        sinon.spy(subject.store.actions, 'fetchVideo');
+        sinon.stub(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = true;
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo).to.have.been.calledWith(
           'http://example.org/a-src?campaign_id=534&ad_block_active=true');
       });
       it('checks if ad block is disabled', () => {
-        sinon.spy(subject.store.actions, 'fetchVideo');
+        sinon.stub(subject.store.actions, 'fetchVideo');
         subject.isAdBlocked = false;
         subject.fetchVideo();
         expect(subject.store.actions.fetchVideo).to.have.been.calledWith('http://example.org/a-src?campaign_id=534');
@@ -85,7 +100,7 @@ describe('<rail-player>', () => {
     });
 
     it('calls fetchVideo', () => {
-      sinon.spy(subject, 'fetchVideo');
+      sinon.stub(subject, 'fetchVideo');
       subject.componentDidUpdate({ src: 'http://example.org/new-src' });
       expect(subject.fetchVideo).to.have.been.called;
     });
@@ -98,7 +113,7 @@ describe('<rail-player>', () => {
       });
 
       it('calls fetchVideo', () => {
-        sinon.spy(subject, 'fetchVideo');
+        sinon.stub(subject, 'fetchVideo');
         subject.componentDidUpdate({ src: 'http://example.org/new-src' });
         expect(subject.fetchVideo).to.have.been.called;
       });
@@ -119,17 +134,12 @@ describe('<rail-player>', () => {
 
   describe('render', () => {
     it('renders a RailPlayerRoot', () => {
-      expect(shallow(<RailPlayer/>)).to.have.descendants(RailPlayerRoot);
+      expect(shallow(<RailPlayer src="foobar.com" {...props}/>)).to.have.descendants(RailPlayerRoot);
     });
 
     describe('RailPlayerRoot.props', () => {
       let railPlayer;
       beforeEach(() => {
-        let props = {
-          channel: 'channel',
-          recircUrl: 'http://example.org/recirc',
-          targetCampaignId: '12345',
-        };
         railPlayer = new RailPlayer(props);
         subject = railPlayer.render().props;
       });
