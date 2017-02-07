@@ -575,7 +575,6 @@ describe('<bulbs-video> <Revealed>', () => {
 
   describe('vastUrl', () => {
     let cacheBusterStub;
-    let targeting;
     let vastTestStub;
     let videoMeta;
 
@@ -596,11 +595,11 @@ describe('<bulbs-video> <Revealed>', () => {
           settings: {
             DFP_SITE_CODE: 'fmg.onion',
           },
-        }
+        };
       });
 
       afterEach(() => {
-        delete window.Bulbs
+        delete window.Bulbs;
       });
 
       it('returns the vast url', function () {
@@ -631,7 +630,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.eql('undercover');
         expect(cust_params.pos).to.eql('host_channel');
-                expect(Object.keys(cust_params)).to.eql(['video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos']);
+        expect(Object.keys(cust_params)).to.eql(['video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos']);
 
         videoMeta.specialCoverage = 'special';
         vastUrl = Revealed.prototype.vastUrl.call({
@@ -641,7 +640,7 @@ describe('<bulbs-video> <Revealed>', () => {
         parsed = url.parse(vastUrl, true);
         cust_params = querystring.parse(parsed.query.cust_params, '&');
         expect(Object.keys(cust_params)).to.eql([
-          'video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos', 'dfp_specialcoverage', 'type'
+          'video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos', 'dfp_specialcoverage', 'type',
         ]);
         expect(cust_params.video_site).to.eql('channel_slug');
         expect(cust_params.dfp_specialcoverage).to.eql('special');

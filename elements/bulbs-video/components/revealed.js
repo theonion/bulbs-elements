@@ -177,7 +177,7 @@ export default class Revealed extends React.Component {
   vastUrl (videoMeta) {
     let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
-    let vastTestId = this.vastTest(window.location.search);
+    // let vastTestId = this.vastTest(window.location.search);
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
     baseUrl += '?sz=400x300';
@@ -195,14 +195,14 @@ export default class Revealed extends React.Component {
 
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
-    customParamValues += `&dfp_campaign_id=${videoMeta.targetCampaignId}`
-    customParamValues += `&video_id=${videoMeta.id}`
-    customParamValues += `&video_channel=${videoMeta.channel_slug}`
-    customParamValues += `&video_series=${videoMeta.series_slug}`
-    customParamValues += `&pos=${videoMeta.hostChannel}`
+    customParamValues += `&dfp_campaign_id=${videoMeta.targetCampaignId}`;
+    customParamValues += `&video_id=${videoMeta.id}`;
+    customParamValues += `&video_channel=${videoMeta.channel_slug}`;
+    customParamValues += `&video_series=${videoMeta.series_slug}`;
+    customParamValues += `&pos=${videoMeta.hostChannel}`;
     if (videoMeta.specialCoverage) {
-      customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`
-      customParamValues += `&type=special_coverage`
+      customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`;
+      customParamValues += `&type=special_coverage`;
     }
 
     // dfp_specialcoverage
@@ -213,7 +213,7 @@ export default class Revealed extends React.Component {
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
     // if (vastTestId) {
-    // TODO: forcedAdZone
+    // todo: forcedAdZone
     //   baseUrl += '&xgid=' + vastTestId;
     // }
 
