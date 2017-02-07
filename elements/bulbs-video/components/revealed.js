@@ -198,7 +198,7 @@ export default class Revealed extends React.Component {
     customParamValues += `&dfp_specialcoverage=${videoMeta.targeting.dfp_specialcoverage}`
     customParamValues += `&dfp_campaign_id=${videoMeta.targeting.dfp_campaign_id}`
     customParamValues += `&video_id=${videoMeta.targeting.target_video_id}`
-    customParamValues += `&video_channel=${videoMeta.channel_slug}`
+    customParamValues += `&video_channel=${videoMeta.targeting.target_channel}`
     customParamValues += `&video_series=${videoMeta.targeting.target_series}`
     customParamValues += `&pos=${videoMeta.hostChannel}`
     if (videoMeta.targeting.dfp_specialcoverage) {
