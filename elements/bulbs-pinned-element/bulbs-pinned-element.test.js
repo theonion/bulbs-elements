@@ -146,6 +146,7 @@ describe('<bulbs-pinned-element>', () => {
 
       it('should call pinToRailBottom if rail not in view && parent is above viewport', () => {
         sandbox.stub(subject, 'isInView').returns(false);
+        sandbox.spy(subject, 'pinToRailBottom');
 
         subject.parentElement.style.position = 'fixed';
         subject.parentElement.style.top = '-200%';
@@ -157,6 +158,7 @@ describe('<bulbs-pinned-element>', () => {
 
       it('should call resetCarPosition if rail not in view && parent is below viewport', () => {
         sandbox.stub(subject, 'isInView').returns(false);
+        sandbox.spy(subject, 'resetCarPosition');
 
         subject.parentElement.style.position = 'fixed';
         subject.parentElement.style.top = '200%';
