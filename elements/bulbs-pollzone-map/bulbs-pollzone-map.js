@@ -106,7 +106,7 @@ class BulbsPollzoneMap extends BulbsHTMLElement {
         let percent = Math.round(numVotes / totalVotes * 100);
 
         return `<li class='result'>
-          <div class='bar' style='background-color: ${this.fillKey(question['id'])}; width: ${percent}%;'></div>
+          <div class='bar' style='background-color: ${this.fillKey(question.id)}; width: ${percent}%;'></div>
           <div class='percent'>${percent}</div>
         </li>`;
       }, this).join('');
