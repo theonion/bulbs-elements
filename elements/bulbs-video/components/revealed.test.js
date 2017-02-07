@@ -582,18 +582,15 @@ describe('<bulbs-video> <Revealed>', () => {
     context('default', () => {
       beforeEach(() => {
         cacheBusterStub = sinon.stub().returns('456');
-        targeting = {
-          dfp_campaign_id: 1,
-          target_video_id: 2,
-          target_series: 'undercover',
-        }
         vastTestStub = sinon.stub().returns(null);
         videoMeta = {
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
+          id: 2,
           hostChannel: 'host_channel',
+          series_slug: 'undercover',
+          targetCampaignId: 1,
           tags: ['clickhole', 'main', '12345'],
-          targeting: targeting,
         };
         window.Bulbs = {
           settings: {
@@ -628,32 +625,31 @@ describe('<bulbs-video> <Revealed>', () => {
         // expect(parsed.query.correlator).to.eql(''); to match a number
 
         let cust_params = querystring.parse(parsed.query.cust_params, '&');
-        expect(Object.keys(cust_params)).to.eql(['video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos']);
         expect(cust_params.video_site).to.eql('channel_slug');
-        expect(cust_params.dfp_campaign_id).to.eql(1);
-        expect(cust_params.video_id).to.eql(2);
+        expect(cust_params.dfp_campaign_id).to.eql('1');
+        expect(cust_params.video_id).to.eql('2');
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.eql('undercover');
         expect(cust_params.pos).to.eql('host_channel');
+                expect(Object.keys(cust_params)).to.eql(['video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos']);
 
-        videoMeta.targeting.dfp_specialcoverage = 'special';
-        let vastUrl = Revealed.prototype.vastUrl.call({
+        videoMeta.specialCoverage = 'special';
+        vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
         }, videoMeta);
-        let parsed = url.parse(vastUrl, true);
-        let cust_params = querystring.parse(parsed.query.cust_params, '&');
+        parsed = url.parse(vastUrl, true);
+        cust_params = querystring.parse(parsed.query.cust_params, '&');
         expect(Object.keys(cust_params)).to.eql([
-          'video_site', 'dfp_specialcoverage', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'type',
-            'pos'
+          'video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos', 'dfp_specialcoverage', 'type'
         ]);
         expect(cust_params.video_site).to.eql('channel_slug');
         expect(cust_params.dfp_specialcoverage).to.eql('special');
-        expect(cust_params.dfp_campaign_id).to.eql(1);
-        expect(cust_params.video_id).to.eql(2);
+        expect(cust_params.dfp_campaign_id).to.eql('1');
+        expect(cust_params.video_id).to.eql('2');
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.eql('undercover');
-        expect(cust_params.type).to.eql('specialcoverage');
+        expect(cust_params.type).to.eql('special_coverage');
         expect(cust_params.pos).to.eql('host_channel');
       });
     });

@@ -46,7 +46,7 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
-    let targeting = this.props.video.targeting || {};
+    let targeting = this.props.video.targeting;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
@@ -75,11 +75,10 @@ export default class Revealed extends React.Component {
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
     videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
-    videoMeta.targeting = targeting;
-
     filteredTags.push(hostChannel);
 
     if (specialCoverage !== 'None') {
+      videoMeta.specialCoverage = specialCoverage;
       filteredTags.push(specialCoverage);
     }
 
@@ -88,6 +87,7 @@ export default class Revealed extends React.Component {
     }
 
     if (this.props.targetCampaignId) {
+      videoMeta.targetCampaignId = this.props.targetCampaignId;
       filteredTags.push(`campaign-${this.props.targetCampaignId}`);
     }
 
@@ -195,13 +195,13 @@ export default class Revealed extends React.Component {
 
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
-    customParamValues += `&dfp_specialcoverage=${videoMeta.targeting.dfp_specialcoverage}`
-    customParamValues += `&dfp_campaign_id=${videoMeta.targeting.dfp_campaign_id}`
-    customParamValues += `&video_id=${videoMeta.targeting.target_video_id}`
-    customParamValues += `&video_channel=${videoMeta.targeting.target_channel}`
-    customParamValues += `&video_series=${videoMeta.targeting.target_series}`
+    customParamValues += `&dfp_campaign_id=${videoMeta.targetCampaignId}`
+    customParamValues += `&video_id=${videoMeta.id}`
+    customParamValues += `&video_channel=${videoMeta.channel_slug}`
+    customParamValues += `&video_series=${videoMeta.series_slug}`
     customParamValues += `&pos=${videoMeta.hostChannel}`
-    if (videoMeta.targeting.dfp_specialcoverage) {
+    if (videoMeta.specialCoverage) {
+      customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`
       customParamValues += `&type=special_coverage`
     }
 
