@@ -46,7 +46,7 @@ export default class Revealed extends React.Component {
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
 
-    let targeting = this.props.video.targeting;
+    let targeting = this.props.video.targeting || {};
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let filteredTags = [];
@@ -75,6 +75,7 @@ export default class Revealed extends React.Component {
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
     videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
+    videoMeta.targeting = targeting;
 
     filteredTags.push(hostChannel);
 
@@ -191,8 +192,16 @@ export default class Revealed extends React.Component {
     // dfp_pagetype=home&dfp_site=onion&kuid=qxw4bky4u
 
     let customParamValues = '';
-
     customParamValues += `video_site=${videoMeta.channel_slug}`;
+    customParamValues += `&dfp_specialcoverage=${videoMeta.targeting.dfp_specialcoverage}`
+    customParamValues += `&dfp_campaign_id=${videoMeta.targeting.dfp_campaign_id}`
+    customParamValues += `&video_id=${videoMeta.targeting.target_video_id}`
+    customParamValues += `&video_channel=${videoMeta.channel_slug}`
+    customParamValues += `&video_series=${videoMeta.targeting.target_series}`
+    customParamValues += `&pos=${videoMeta.hostChannel}`
+    if (videoMeta.targeting.dfp_specialcoverage) {
+      customParamValues += `&type=special_coverage`
+    }
 
     // dfp_specialcoverage
     // dfp_campaign_id
