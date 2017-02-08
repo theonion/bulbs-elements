@@ -1,7 +1,7 @@
 import { BulbsSlickSlideshow } from './bulbs-slick-slideshow';  // eslint-disable-line no-unused-vars
 import $ from 'jQuery';
 
-describe('<bulbs-slick-slideshow>', function () {
+describe('<bulbs-slick-slideshow>', () => {
   let parentElement;
   let subject;
 
@@ -20,17 +20,17 @@ describe('<bulbs-slick-slideshow>', function () {
     parentElement.remove();
   });
 
-  it('renders a <bulbs-slick-slideshow>', function () {
+  it('renders a <bulbs-slick-slideshow>', () => {
     attachSubject();
 
     expect(subject.tagName.toLowerCase()).to.eql('bulbs-slick-slideshow');
   });
 
-  describe('#init', function () {
+  describe('#init', () => {
     let navLinks;
     let slider;
 
-    beforeEach(function () {
+    beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
 
       slider = document.createElement('div');
@@ -49,7 +49,7 @@ describe('<bulbs-slick-slideshow>', function () {
       subject.init();
     });
 
-    it('inits the jQuery slick carousel with the correct stuff', function () {
+    it('inits the jQuery slick carousel with the correct stuff', () => {
       expect(subject.slideshow.slick).to.have.been.calledWith({
         infinite: false,
         arrows: false,
@@ -60,38 +60,38 @@ describe('<bulbs-slick-slideshow>', function () {
       });
     });
 
-    it('has initial slide of 0', function () {
+    it('has initial slide of 0', () => {
       expect(subject.initialSlide).to.equal(0);
     });
   });
 
-  describe('#bodyKeyDown', function () {
+  describe('#bodyKeyDown', () => {
     let e = $.Event('keydown'); // eslint-disable-line
 
-    beforeEach(function () {
+    beforeEach(() => {
       attachSubject();
 
       sinon.stub(subject.slideshow, 'slick');
     });
 
-    describe('press left arrow', function () {
-      beforeEach(function () {
+    describe('press left arrow', () => {
+      beforeEach(() => {
         e.which = 37;
         $(subject).trigger(e);
       });
 
-      it('tells slick to go to previous slide', function () {
+      it('tells slick to go to previous slide', () => {
         expect(subject.slideshow.slick.calledWith('slickPrev'));
       });
     });
 
-    describe('press right arrow', function () {
-      beforeEach(function () {
+    describe('press right arrow', () => {
+      beforeEach(() => {
         e.which = 39;
         $(subject).trigger(e);
       });
 
-      it('tells slick to go to next slide', function () {
+      it('tells slick to go to next slide', () => {
         expect(subject.slideshow.slick.calledWith('slickNext'));
       });
     });
