@@ -27,7 +27,8 @@ describe('<bulbs-slick-slideshow>', function () {
   });
 
   describe('#init', function () {
-    let navLinks, slider;
+    let navLinks;
+    let slider;
 
     beforeEach(function () {
       subject = document.createElement('bulbs-slick-slideshow');
@@ -65,7 +66,7 @@ describe('<bulbs-slick-slideshow>', function () {
   });
 
   describe('#bodyKeyDown', function () {
-    let e = $.Event('keydown');
+    let e = $.Event('keydown'); // eslint-disable-line
 
     beforeEach(function () {
       attachSubject();

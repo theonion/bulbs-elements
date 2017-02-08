@@ -3,7 +3,7 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import * as slick from 'slick-carousel';
+import * as slick from 'slick-carousel'; // eslint-disable-line
 
 import './bulbs-slick-slideshow.scss';
 
@@ -33,7 +33,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   init () {
     // if url has existing hash, get & set it
     if (this.windowHash) {
-      this.initialSlide = parseInt(/\d+/.exec(this.windowHash)[0]);
+      this.initialSlide = parseInt(/\d+/.exec(this.windowHash)[0], 10);
     }
 
     // initializes the slider
@@ -96,11 +96,11 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     }
   }
 
-  slideshowInit (event) {
+  slideshowInit () {
     this.enableDisableNav(this.slides, this.currentSlide);
   }
 
-  slideshowChanged (event, slick, currentSlide) {
+  slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
     window.onionan.trackPageView(true);
     this.enableDisableNav(this.slides, currentSlide);
