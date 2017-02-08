@@ -33,8 +33,6 @@ describe('<bulbs-slick-slideshow>', () => {
     beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
 
-      bufferElement = document.createElement('div');
-
       slider = document.createElement('div');
       slider.setAttribute('class', 'slider');
 
@@ -42,8 +40,7 @@ describe('<bulbs-slick-slideshow>', () => {
       navLinks.setAttribute('class', 'slider-nav');
 
       slider.appendChild(navLinks);
-      bufferElement.appendChild(slider);
-      subject.appendChild(bufferElement);
+      subject.appendChild(slider);
 
       attachSubject();
 
