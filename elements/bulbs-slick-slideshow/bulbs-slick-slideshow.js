@@ -3,7 +3,8 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import * as slick from 'slick-carousel'; // eslint-disable-line
+import * as slick from 'slick-carousel';
+import { InViewMonitor } from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
 
@@ -17,7 +18,7 @@ import './bulbs-slick-slideshow.scss';
 /// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
-    this.slideshow = $('.slider');
+    this.slideshow = $(this).find('.slider');
 
     // set variables
     this.initialSlide = 0;
@@ -87,11 +88,17 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.slideshow.slick('slickGoTo', 0);
   }
 
+  isInViewport () {
+    return InViewMonitor.isElementInViewport(this.slideshow[0]);
+  }
+
   bodyKeyDown (event) {
-    if(event.keyCode === 37) { // left
+    const isVisible = this.isInViewport();
+
+    if(event.keyCode === 37 && isVisible) { // left
       this.slideshow.slick('slickPrev');
     }
-    else if(event.keyCode === 39) { // right
+    else if(event.keyCode === 39 && isVisible) { // right
       this.slideshow.slick('slickNext');
     }
   }
