@@ -117,6 +117,7 @@
     "scroll-to-element": "^2.0.0",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
+    "slick-carousel": "^1.6.0",
     "style-loader": "^0.13.0",
     "stylelint": "^4.0.0",
     "stylelint-config-standard": "^3.0.0",
