@@ -26,13 +26,14 @@ describe('<bulbs-slick-slideshow>', () => {
   });
 
   describe('#init', () => {
+    let bufferElement;
     let navLinks;
     let slider;
 
     beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
 
-      bufferElement = = document.createElement('div');
+      bufferElement = document.createElement('div');
 
       slider = document.createElement('div');
       slider.setAttribute('class', 'slider');
@@ -78,7 +79,7 @@ describe('<bulbs-slick-slideshow>', () => {
 
     describe('in viewport', () => {
       beforeEach(() => {
-        sinon.stub(subject, 'isInViewport').returns(false);
+        sinon.stub(subject, 'isInViewport').returns(true);
       });
 
       describe('press left arrow', () => {
