@@ -230,27 +230,6 @@ describe('<bulbs-video> <Revealed>', () => {
           });
         });
 
-        it('overrides `main` in the tags to use attribute host channel', () => {
-          let tags = makeVideoPlayerSpy.args[0][1].tags;
-          expect(tags).to.include('host_channel');
-          expect(tags).not.to.include('main');
-        });
-
-        it('includes special coverage in the tags for targeting', () => {
-          let tags = makeVideoPlayerSpy.args[0][1].tags;
-          expect(tags).to.include('sc-slug');
-        });
-
-        it('includes the campaign number in the tags for targeting', () => {
-          let tags = makeVideoPlayerSpy.args[0][1].tags;
-          expect(tags).to.include('123456');
-        });
-
-        it('includes the campaign id in the tags for targeting', () => {
-          let tags = makeVideoPlayerSpy.args[0][1].tags;
-          expect(tags).to.include('campaign-5678');
-        });
-
         it('passes through the muted value', () => {
           expect(makeVideoPlayerSpy.args[0][1].player_options.muted).to.be.true;
         });
@@ -544,7 +523,7 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(vastId).to.be.false;
     });
 
-    it('returns false if no xgid query string key', () => {
+    it('returns false if no `adzone` query string key', () => {
       let vastId = Revealed.prototype.vastTest.call({
         parseParam: sinon.stub().returns(false),
       }, '?utm_source=facebook');
@@ -554,7 +533,7 @@ describe('<bulbs-video> <Revealed>', () => {
     it('returns the vastUrl value if query string key present', () => {
       let vastId = Revealed.prototype.vastTest.call({
         parseParam: sinon.stub().returns('12345'),
-      }, '?xgid=12345');
+      }, '?adzone=12345');
       expect(vastId).to.equal('12345');
     });
   });
@@ -621,7 +600,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(parsed.query.unviewed_position_start).to.eql('1');
         expect(parsed.query.url).to.eql(window.document.referrer);
         expect(parsed.query.description_url).to.eql('');
-        // expect(parsed.query.correlator).to.eql(''); to match a number
+        expect(parsed.query.correlator).to.match(/^\d+$/);
 
         let cust_params = querystring.parse(parsed.query.cust_params, '&');
         expect(cust_params.video_site).to.eql('channel_slug');
@@ -631,39 +610,36 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(cust_params.video_series).to.eql('undercover');
         expect(cust_params.pos).to.eql('host_channel');
         expect(Object.keys(cust_params)).to.eql(['video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos']);
+      });
 
-        videoMeta.specialCoverage = 'special';
-        vastUrl = Revealed.prototype.vastUrl.call({
-          cacheBuster: cacheBusterStub,
-          vastTest: vastTestStub,
-        }, videoMeta);
-        parsed = url.parse(vastUrl, true);
-        cust_params = querystring.parse(parsed.query.cust_params, '&');
-        expect(Object.keys(cust_params)).to.eql([
-          'video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos', 'dfp_specialcoverage', 'type',
-        ]);
-        expect(cust_params.video_site).to.eql('channel_slug');
-        expect(cust_params.dfp_specialcoverage).to.eql('special');
-        expect(cust_params.dfp_campaign_id).to.eql('1');
-        expect(cust_params.video_id).to.eql('2');
-        expect(cust_params.video_channel).to.eql('channel_slug');
-        expect(cust_params.video_series).to.eql('undercover');
-        expect(cust_params.type).to.eql('special_coverage');
-        expect(cust_params.pos).to.eql('host_channel');
+      context('special coverage', () => {
+        it('populates the special coverage targeting key', () => {
+          videoMeta.specialCoverage = 'special';
+          let vastUrl = Revealed.prototype.vastUrl.call({
+            cacheBuster: cacheBusterStub,
+            vastTest: vastTestStub,
+          }, videoMeta);
+          let parsed = url.parse(vastUrl, true);
+          let cust_params = querystring.parse(parsed.query.cust_params, '&');
+          expect(Object.keys(cust_params)).to.eql([
+            'video_site', 'dfp_campaign_id', 'video_id', 'video_channel', 'video_series', 'pos', 'dfp_specialcoverage', 'type',
+          ]);
+          expect(cust_params.dfp_specialcoverage).to.eql('special')
+          expect(cust_params.type).to.eql('special_coverage');
+        });
       });
     });
 
     context('when a test link is provided', () => {
-      // TODO use forcedAdZone
-        // expect(parsed.query.forcedAdZone).to.eql('false');
-    });
-
-    context('when series_slug is given', () => {
       beforeEach(() => {
+        window.Bulbs = {
+          settings: {
+            DFP_SITE_CODE: 'fmg.onion',
+          },
+        };
         cacheBusterStub = sinon.stub().returns('456');
-        vastTestStub = sinon.stub().returns(null);
+        vastTestStub = sinon.stub().returns('12345');
         videoMeta = {
-          tags: ['clickhole', 'main', '12345'],
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
           series_slug: 'series_slug',
@@ -671,13 +647,17 @@ describe('<bulbs-video> <Revealed>', () => {
         };
       });
 
-      xit('returns the vast url', function () {
+      afterEach(() => {
+        delete window.Bulbs;
+      });
+
+      it('populates test param as `forcedAdZone`', () => {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
-        expect(parsed.query.s).to.eql('host_channel/channel_slug/series_slug');
+        expect(parsed.query.forcedAdZone).to.eql('12345');
       });
     });
   });
