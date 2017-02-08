@@ -1,34 +1,27 @@
 import { BulbsSlickSlideshow } from './bulbs-slick-slideshow';  // eslint-disable-line no-unused-vars
 
 describe('<bulbs-slick-slideshow>', () => {
-  let parentElement;
   let subject;
-
-  function attachSubject () {
-    parentElement = document.createElement('parent-element');
-    parentElement.appendChild(subject);
-
-    subject.attachedCallback();
-  }
 
   beforeEach(() => {
     subject = document.createElement('bulbs-slick-slideshow');
   });
 
   afterEach(() => {
-    parentElement.remove();
+    subject.remove();
   });
 
   it('renders a <bulbs-slick-slideshow>', () => {
-    attachSubject();
+    subject.attachedCallback();
 
     expect(subject.tagName.toLowerCase()).to.eql('bulbs-slick-slideshow');
   });
 
   describe('#init', () => {
-    let bufferElement;
-    let navLinks;
     let slider;
+    let slideOne;
+    let slideTwo;
+    let sliderNav;
 
     beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
@@ -36,15 +29,23 @@ describe('<bulbs-slick-slideshow>', () => {
       slider = document.createElement('div');
       slider.setAttribute('class', 'slider');
 
-      navLinks = document.createElement('div');
-      navLinks.setAttribute('class', 'slider-nav');
+      slideOne = document.createElement('div');
+      slideOne.setAttribute('class', 'slide');
+      slideTwo = document.createElement('div');
+      slideTwo.setAttribute('class', 'slide');
 
-      slider.appendChild(navLinks);
+      sliderNav = document.createElement('div');
+      sliderNav.setAttribute('class', 'slider-nav');
+
+      subject.appendChild(slideOne);
+      subject.appendChild(slideTwo);
       subject.appendChild(slider);
+      subject.appendChild(sliderNav);
 
-      attachSubject();
+      subject.attachedCallback();
 
       sinon.spy(subject.slideshow, 'slick');
+
 
       subject.init();
     });
@@ -55,7 +56,7 @@ describe('<bulbs-slick-slideshow>', () => {
         arrows: false,
         dots: true,
         initialSlide: 0,
-        appendDots: subject.navLinks,
+        appendDots: subject.sliderNav,
         customPaging: subject.customPaging,
       });
     });
@@ -69,7 +70,7 @@ describe('<bulbs-slick-slideshow>', () => {
     let e = $.Event('keydown');
 
     beforeEach(() => {
-      attachSubject();
+      subject.attachedCallback();
 
       sinon.stub(subject.slideshow, 'slick');
     });
