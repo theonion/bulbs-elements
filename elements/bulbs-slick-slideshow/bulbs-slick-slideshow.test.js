@@ -38,7 +38,6 @@ describe('<bulbs-slick-slideshow>', () => {
       navLinks = document.createElement('div');
       navLinks.setAttribute('class', 'slider-nav');
       slider.appendChild(navLinks);
-
       subject.appendChild(slider);
 
       attachSubject();
@@ -65,7 +64,7 @@ describe('<bulbs-slick-slideshow>', () => {
   });
 
   describe('#bodyKeyDown', () => {
-    let e = $.Event('keydown'); // eslint-disable-line
+    let e = $.Event('keydown');
 
     beforeEach(() => {
       attachSubject();
@@ -73,25 +72,59 @@ describe('<bulbs-slick-slideshow>', () => {
       sinon.stub(subject.slideshow, 'slick');
     });
 
-    describe('press left arrow', () => {
+    describe('in viewport', () => {
       beforeEach(() => {
-        e.which = 37;
-        $(subject).trigger(e);
+        sinon.stub(subject, 'isInViewport').returns(false);
       });
 
-      it('tells slick to go to previous slide', () => {
-        expect(subject.slideshow.slick.calledWith('slickPrev'));
+      describe('press left arrow', () => {
+        beforeEach(() => {
+          e.which = 37;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to previous slide', () => {
+          expect(subject.slideshow.slick.calledWith('slickPrev'));
+        });
+      });
+
+      describe('press right arrow', () => {
+        beforeEach(() => {
+          e.which = 39;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to next slide', () => {
+          expect(subject.slideshow.slick.calledWith('slickNext'));
+        });
       });
     });
 
-    describe('press right arrow', () => {
+    describe('not in viewport', () => {
       beforeEach(() => {
-        e.which = 39;
-        $(subject).trigger(e);
+        sinon.stub(subject, 'isInViewport').returns(false);
       });
 
-      it('tells slick to go to next slide', () => {
-        expect(subject.slideshow.slick.calledWith('slickNext'));
+      describe('press left arrow', () => {
+        beforeEach(() => {
+          e.which = 37;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to previous slide', () => {
+          expect(subject.slideshow.slick).to.not.have.been.calledWith('slickPrev');
+        });
+      });
+
+      describe('press right arrow', () => {
+        beforeEach(() => {
+          e.which = 39;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to next slide', () => {
+          expect(subject.slideshow.slick).to.not.have.been.calledWith('slickNext');
+        });
       });
     });
   });
