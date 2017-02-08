@@ -27,30 +27,34 @@ describe('<bulbs-slick-slideshow>', function () {
   });
 
   describe('#init', function () {
-    let navElement;
+    let navLinks, slider;
 
     beforeEach(function () {
       subject = document.createElement('bulbs-slick-slideshow');
 
-      navElement = document.createElement('div');
-      navElement.setAttribute('class', 'slider-nav');
+      slider = document.createElement('div');
+      slider.setAttribute('class', 'slider');
 
-      subject.appendChild(navElement);
+      navLinks = document.createElement('div');
+      navLinks.setAttribute('class', 'slider-nav');
+      slider.appendChild(navLinks);
+
+      subject.appendChild(slider);
 
       attachSubject();
-      
+
       sinon.spy(subject.slideshow, 'slick');
+
+      subject.init();
     });
 
     it('inits the jQuery slick carousel with the correct stuff', function () {
-      let { initialSlide } = subject;
-
       expect(subject.slideshow.slick).to.have.been.calledWith({
         infinite: false,
         arrows: false,
         dots: true,
-        initialSlide: initialSlide,
-        appendDots: navElement,
+        initialSlide: 0,
+        appendDots: subject.navLinks,
         customPaging: subject.customPaging,
       });
     });
