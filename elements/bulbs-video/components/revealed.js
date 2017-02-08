@@ -49,7 +49,6 @@ export default class Revealed extends React.Component {
     let targeting = this.props.video.targeting;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
-    let filteredTags = [];
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
     let dimensions = {
@@ -75,30 +74,10 @@ export default class Revealed extends React.Component {
     videoMeta.hostChannel = hostChannel;
     videoMeta.gaTrackerAction = gaTrackerAction;
     videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
-    filteredTags.push(hostChannel);
 
     if (specialCoverage !== 'None') {
       videoMeta.specialCoverage = specialCoverage;
-      filteredTags.push(specialCoverage);
     }
-
-    if (this.props.targetCampaignNumber) {
-      filteredTags.push(this.props.targetCampaignNumber);
-    }
-
-    if (this.props.targetCampaignId) {
-      videoMeta.targetCampaignId = this.props.targetCampaignId;
-      filteredTags.push(`campaign-${this.props.targetCampaignId}`);
-    }
-
-    this.props.video.tags.forEach(function (tag) {
-      // Temporary until videojs_options completely removed from Onion Studios
-      if (tag !== 'main') {
-        filteredTags.push(tag);
-      }
-    });
-
-    videoMeta.tags = filteredTags;
 
     if (this.props.muted) {
       videoMeta.player_options.muted = true;
@@ -177,7 +156,7 @@ export default class Revealed extends React.Component {
   vastUrl (videoMeta) {
     let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
-    // let vastTestId = this.vastTest(window.location.search);
+    let vastTestId = this.vastTest(window.location.search);
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
     baseUrl += '?sz=400x300';
@@ -191,8 +170,6 @@ export default class Revealed extends React.Component {
     baseUrl += '&description_url=';
     baseUrl += `&correlator=${new Date().getTime()}`;
 
-    // dfp_pagetype=home&dfp_site=onion&kuid=qxw4bky4u
-
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
     customParamValues += `&dfp_campaign_id=${videoMeta.targetCampaignId}`;
@@ -205,17 +182,11 @@ export default class Revealed extends React.Component {
       customParamValues += `&type=special_coverage`;
     }
 
-    // dfp_specialcoverage
-    // dfp_campaign_id
-    // video_id
-    // video_site
-    // video_series
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
-    // if (vastTestId) {
-    // todo: forcedAdZone
-    //   baseUrl += '&xgid=' + vastTestId;
-    // }
+    if (vastTestId) {
+      baseUrl += '&forcedAdZone=' + vastTestId;
+    }
 
     return baseUrl;
   }
