@@ -1,5 +1,4 @@
 import { BulbsSlickSlideshow } from './bulbs-slick-slideshow';  // eslint-disable-line no-unused-vars
-import $ from 'jQuery';
 
 describe('<bulbs-slick-slideshow>', () => {
   let parentElement;
