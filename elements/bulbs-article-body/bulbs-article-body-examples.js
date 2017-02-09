@@ -5,6 +5,19 @@ let examples = {
       render () {
         return `
           <style>
+            .explainer {
+              font-family: monospace;
+              font-weight: bold;
+              padding: 20px;
+            }
+
+            .explainer::after {
+              border-bottom: 2px solid #ccc;
+              content: ' ';
+              display: block;
+              margin-top: 10px;
+            }
+
             .bulbs-article-body-example {
               max-width: 600px;
               margin: auto;
@@ -25,9 +38,14 @@ let examples = {
             }
           </style>
 
+          <div class="explainer">
+            <h2>Article Body Dingbat</h2>
+            <p>A span with the css class .site-dingbat is added to the end of bulbs-article-body. In this example .site-dingbat is a red box, but it can be styled in any way.</p>
+          </div>
+
           <div class="bulbs-article-body-example">
-            <h2>So My Readers Wish Me Dead</h2>
-            <i>T. Herman Zweibel</i>
+            <h3>So My Readers Wish Me Dead</h3>
+            <h4><i>T. Herman Zweibel</i></h4>
             <div
                 is="bulbs-article-body">
               <p>I am informed by The Onion Editorial Board that the mountain of mail calling for my death is increasing once again. This is nothing new, as it becomes fashionable to lust for the death of T. Herman Zweibel when-ever the Swiss economy is running smoothly. It does not pay to anger the Gnomes of Zurich!</p>
