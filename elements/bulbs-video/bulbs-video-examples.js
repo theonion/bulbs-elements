@@ -21,17 +21,6 @@ let examples = {
         `;
       },
     },
-    'videohub.local example': {
-      render () {
-        return `
-          <bulbs-video
-            twitter-handle="avclub"
-            src="//videohub.local/video/3916.json"
-          >
-          </bulbs-video>
-        `;
-      },
-    },
     'Special Coverage Main': {
       render () {
         return `
