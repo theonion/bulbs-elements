@@ -45,6 +45,10 @@ export default class Revealed extends React.Component {
       global.jwplayer,
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
+    invariant(
+      global.Bulbs && global.Bulbs.settings && global.Bulbs.settings.DFP_SITE_CODE,
+      '`<bulbs-video>` requires Bulbs.settings.DFP_SITE_CODE to be in global scope'
+    );
 
     let targeting = this.props.video.targeting;
     let hostChannel = this.props.targetHostChannel || 'main';
