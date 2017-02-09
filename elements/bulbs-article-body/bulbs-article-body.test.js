@@ -25,6 +25,7 @@ describe('<bulbs-article-body>', () => {
 
       setImmediate(() => {
         expect(p1.querySelector('span.site-dingbat')).not.to.be.null;
+
         done();
       });
     });
@@ -115,6 +116,8 @@ describe('<bulbs-article-body>', () => {
 
       setImmediate(() => {
         expect(p.querySelector('span.site-dingbat')).not.to.be.null;
+
+        done();
       });
     });
   });
