@@ -3,10 +3,11 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import * as slick from 'slick-carousel';
 import { InViewMonitor } from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
+
+require('slick-carousel');
 
 /// Things this should do:
 /// 1. Initialize Slick slider for .slider elements.
