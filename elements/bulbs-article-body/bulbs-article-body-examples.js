@@ -64,7 +64,7 @@ let examples = {
             </div>
           </div>
         `;
-      }
+      },
     },
   },
 };

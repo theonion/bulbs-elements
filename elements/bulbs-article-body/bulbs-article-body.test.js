@@ -1,5 +1,4 @@
-import React from 'react';
-import BulbsArticleBody from './bulbs-article-body';
+import BulbsArticleBody from './bulbs-article-body'; // eslint-disable-line no-unused-vars
 
 describe('<bulbs-article-body>', () => {
   let subject;
@@ -10,7 +9,7 @@ describe('<bulbs-article-body>', () => {
 
   afterEach(() => {
     document.body.removeChild(subject);
-  })
+  });
 
   describe('addDingbat', () => {
 
@@ -94,7 +93,6 @@ describe('<bulbs-article-body>', () => {
       let p = subject.querySelector('p');
 
       document.body.appendChild(subject);
-
 
       setImmediate(() => {
         expect(p.children[0].tagName).to.equal('SPAN');
