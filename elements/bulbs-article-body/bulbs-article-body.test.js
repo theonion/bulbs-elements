@@ -14,7 +14,7 @@ describe('<bulbs-article-body>', () => {
 
   describe('addDingbat', () => {
 
-    it('should append a dingbat to the last element with text', () => {
+    it('should append a dingbat to the last element with text', (done) => {
       subject.innerHTML = `
         <p>this is some text</p>
         <p></p>
@@ -23,10 +23,13 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(p1.querySelector('span.site-dingbat')).not.to.be.null;
+      setImmediate(() => {
+        expect(p1.querySelector('span.site-dingbat')).not.to.be.null;
+        done();
+      });
     });
 
-    it('should append a dingbat to the last li of a ul', () => {
+    it('should append a dingbat to the last li of a ul', (done) => {
       subject.innerHTML = `
         <ul>
           <li>item one</li>
@@ -37,10 +40,14 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(li2.querySelector('span.site-dingbat')).not.to.be.null;
+      setImmediate(() => {
+        expect(li2.querySelector('span.site-dingbat')).not.to.be.null;
+
+        done();
+      });
     });
 
-    it('should append a dingbat to the last p tag in a div', () => {
+    it('should append a dingbat to the last p tag in a div', (done) => {
       subject.innerHTML = `
         <div>
           <p>paragraph one</p>
@@ -51,10 +58,14 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(p2.querySelector('span.site-dingbat')).not.to.be.null;
+      setImmediate(() => {
+        expect(p2.querySelector('span.site-dingbat')).not.to.be.null;
+
+        done();
+      });
     });
 
-    it('should append a dingbat to the last tag in a div if the last element is not a p tag', () => {
+    it('should append a dingbat to the last tag in a div if the last element is not a p tag', (done) => {
       subject.innerHTML = `
         <div>
           <p>paragraph one</p>
@@ -65,10 +76,14 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(footer.querySelector('span.site-dingbat')).not.to.be.null;
+      setImmediate(() => {
+        expect(footer.querySelector('span.site-dingbat')).not.to.be.null;
+
+        done();
+      });
     });
 
-    it('should append a dingbat to end of a p tag before br tags', () => {
+    it('should append a dingbat to end of a p tag before br tags', (done) => {
       subject.innerHTML = `
         <p>
           paragraph one
@@ -79,12 +94,17 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(p.children[0].tagName).to.equal('SPAN');
-      expect(Array.prototype.slice.call(p.children[0].classList)).to.contain('site-dingbat');
-      expect(p.children[1].tagName).to.equal('BR');
+
+      setImmediate(() => {
+        expect(p.children[0].tagName).to.equal('SPAN');
+        expect(Array.prototype.slice.call(p.children[0].classList)).to.contain('site-dingbat');
+        expect(p.children[1].tagName).to.equal('BR');
+
+        done();
+      });
     });
 
-    it('should append a dingbat to the end of a p tag if it is the last tag', () => {
+    it('should append a dingbat to the end of a p tag if it is the last tag', (done) => {
       subject.innerHTML = `
         <p>one</p>
         <p>two</p>
@@ -93,7 +113,9 @@ describe('<bulbs-article-body>', () => {
 
       document.body.appendChild(subject);
 
-      expect(p.querySelector('span.site-dingbat')).not.to.be.null;
+      setImmediate(() => {
+        expect(p.querySelector('span.site-dingbat')).not.to.be.null;
+      });
     });
   });
 });
