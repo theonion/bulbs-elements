@@ -1,64 +1,72 @@
 import { BulbsSlickSlideshow } from './bulbs-slick-slideshow';  // eslint-disable-line no-unused-vars
 
 describe('<bulbs-slick-slideshow>', () => {
+  let otherSubject;
+  let parentElement;
   let subject;
+
+  function attachSubject () {
+    parentElement = document.createElement('parent-element');
+    parentElement.appendChild(subject);
+    document.body.appendChild(parentElement);
+  }
 
   beforeEach(() => {
     subject = document.createElement('bulbs-slick-slideshow');
   });
 
   afterEach(() => {
-    subject.remove();
+    parentElement.remove();
   });
 
   it('renders a <bulbs-slick-slideshow>', () => {
-    subject.attachedCallback();
+    attachSubject();
 
     expect(subject.tagName.toLowerCase()).to.eql('bulbs-slick-slideshow');
   });
 
   describe('#init', () => {
     let slider;
-    let slideOne;
-    let slideTwo;
+    let slide;
     let sliderNav;
+    let otherSlider;
 
     beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
-
       slider = document.createElement('div');
-      slider.setAttribute('class', 'slider');
-
-      slideOne = document.createElement('div');
-      slideOne.setAttribute('class', 'slide');
-      slideTwo = document.createElement('div');
-      slideTwo.setAttribute('class', 'slide');
-
+      slide = document.createElement('div');
       sliderNav = document.createElement('div');
+      slider.setAttribute('class', 'slider');
       sliderNav.setAttribute('class', 'slider-nav');
 
-      subject.appendChild(slideOne);
-      subject.appendChild(slideTwo);
+      slider.appendChild(slide);
       subject.appendChild(slider);
       subject.appendChild(sliderNav);
 
-      subject.attachedCallback();
+      otherSubject = document.createElement('bulbs-slick-slideshow');
+      otherSlider = slider.cloneNode(true);
+      otherSubject.appendChild(otherSlider);
 
-      sinon.spy(subject.slideshow, 'slick');
-
-
-      subject.init();
+      attachSubject();
     });
 
-    it('inits the jQuery slick carousel with the correct stuff', () => {
+    it('initializes the carousel with appropriate options', () => {
+      sinon.spy(subject.slideshow, 'slick');
+
+      subject.init();
+
       expect(subject.slideshow.slick).to.have.been.calledWith({
         infinite: false,
         arrows: false,
         dots: true,
         initialSlide: 0,
-        appendDots: subject.sliderNav,
+        appendDots: $('slider-nav'),
         customPaging: subject.customPaging,
       });
+    });
+
+    it('does not init other carousels on page', () => {
+      expect(otherSubject.slideshow).to.be.undefined;
     });
 
     it('has initial slide of 0', () => {
@@ -70,7 +78,7 @@ describe('<bulbs-slick-slideshow>', () => {
     let e = $.Event('keydown');
 
     beforeEach(() => {
-      subject.attachedCallback();
+      attachSubject();
 
       sinon.stub(subject.slideshow, 'slick');
     });
