@@ -1,14 +1,14 @@
 import { BulbsSlickSlideshow } from './bulbs-slick-slideshow';  // eslint-disable-line no-unused-vars
 
 describe('<bulbs-slick-slideshow>', () => {
+  let otherSubject;
   let parentElement;
   let subject;
 
   function attachSubject () {
     parentElement = document.createElement('parent-element');
     parentElement.appendChild(subject);
-
-    subject.attachedCallback();
+    document.body.appendChild(parentElement);
   }
 
   beforeEach(() => {
@@ -26,37 +26,47 @@ describe('<bulbs-slick-slideshow>', () => {
   });
 
   describe('#init', () => {
-    let navLinks;
     let slider;
+    let slide;
+    let sliderNav;
+    let otherSlider;
 
     beforeEach(() => {
       subject = document.createElement('bulbs-slick-slideshow');
-
       slider = document.createElement('div');
+      slide = document.createElement('div');
+      sliderNav = document.createElement('div');
       slider.setAttribute('class', 'slider');
+      sliderNav.setAttribute('class', 'slider-nav');
 
-      navLinks = document.createElement('div');
-      navLinks.setAttribute('class', 'slider-nav');
-      slider.appendChild(navLinks);
-
+      slider.appendChild(slide);
       subject.appendChild(slider);
+      subject.appendChild(sliderNav);
+
+      otherSubject = document.createElement('bulbs-slick-slideshow');
+      otherSlider = slider.cloneNode(true);
+      otherSubject.appendChild(otherSlider);
 
       attachSubject();
+    });
 
+    it('initializes the carousel with appropriate options', () => {
       sinon.spy(subject.slideshow, 'slick');
 
       subject.init();
-    });
 
-    it('inits the jQuery slick carousel with the correct stuff', () => {
       expect(subject.slideshow.slick).to.have.been.calledWith({
         infinite: false,
         arrows: false,
         dots: true,
         initialSlide: 0,
-        appendDots: subject.navLinks,
+        appendDots: $('slider-nav'),
         customPaging: subject.customPaging,
       });
+    });
+
+    it('does not init other carousels on page', () => {
+      expect(otherSubject.slideshow).to.be.undefined;
     });
 
     it('has initial slide of 0', () => {
@@ -65,7 +75,7 @@ describe('<bulbs-slick-slideshow>', () => {
   });
 
   describe('#bodyKeyDown', () => {
-    let e = $.Event('keydown'); // eslint-disable-line
+    let e = $.Event('keydown');
 
     beforeEach(() => {
       attachSubject();
@@ -73,25 +83,59 @@ describe('<bulbs-slick-slideshow>', () => {
       sinon.stub(subject.slideshow, 'slick');
     });
 
-    describe('press left arrow', () => {
+    describe('in viewport', () => {
       beforeEach(() => {
-        e.which = 37;
-        $(subject).trigger(e);
+        sinon.stub(subject, 'isInViewport').returns(true);
       });
 
-      it('tells slick to go to previous slide', () => {
-        expect(subject.slideshow.slick.calledWith('slickPrev'));
+      describe('press left arrow', () => {
+        beforeEach(() => {
+          e.which = 37;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to previous slide', () => {
+          expect(subject.slideshow.slick.calledWith('slickPrev'));
+        });
+      });
+
+      describe('press right arrow', () => {
+        beforeEach(() => {
+          e.which = 39;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to next slide', () => {
+          expect(subject.slideshow.slick.calledWith('slickNext'));
+        });
       });
     });
 
-    describe('press right arrow', () => {
+    describe('not in viewport', () => {
       beforeEach(() => {
-        e.which = 39;
-        $(subject).trigger(e);
+        sinon.stub(subject, 'isInViewport').returns(false);
       });
 
-      it('tells slick to go to next slide', () => {
-        expect(subject.slideshow.slick.calledWith('slickNext'));
+      describe('press left arrow', () => {
+        beforeEach(() => {
+          e.which = 37;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to previous slide', () => {
+          expect(subject.slideshow.slick).to.not.have.been.calledWith('slickPrev');
+        });
+      });
+
+      describe('press right arrow', () => {
+        beforeEach(() => {
+          e.which = 39;
+          $(subject).trigger(e);
+        });
+
+        it('tells slick to go to next slide', () => {
+          expect(subject.slideshow.slick).to.not.have.been.calledWith('slickNext');
+        });
       });
     });
   });
