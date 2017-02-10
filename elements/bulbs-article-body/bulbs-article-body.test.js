@@ -119,16 +119,4 @@ describe('<bulbs-article-body>', () => {
       });
     });
   });
-
-  describe('resizeIframes', () => {
-    it('calls iFrameResize with onionstudios-playlist iframes', (done) => {
-      window.iFrameResize = sinon.stub();
-      subject.innerHTML = '<iframe class="onionstudios-playlist"></iframe<iframe></iframe>';
-      document.body.appendChild(subject);
-      setImmediate(() => {
-        expect(window.iFrameResize.args[0][0][0]).to.eql(subject.querySelector('.onionstudios-playlist'));
-        done();
-      });
-    });
-  });
 });
