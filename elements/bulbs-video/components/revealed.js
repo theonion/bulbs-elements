@@ -147,7 +147,7 @@ export default class Revealed extends React.Component {
 
   vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
-      let vastId = this.parseParam('xgid', searchString);
+      let vastId = this.parseParam('adzone', searchString);
 
       if (vastId) {
         return vastId;
@@ -176,21 +176,28 @@ export default class Revealed extends React.Component {
 
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
-    customParamValues += `&dfp_campaign_id=${videoMeta.targetCampaignId}`;
     customParamValues += `&video_id=${videoMeta.id}`;
     customParamValues += `&video_channel=${videoMeta.channel_slug}`;
-    customParamValues += `&video_series=${videoMeta.series_slug}`;
     customParamValues += `&pos=${videoMeta.hostChannel}`;
+
+    if (this.props.targetCampaignId) {
+      customParamValues += `&dfp_campaign_id=${this.props.targetCampaignId}`;
+    }
+
+    if (videoMeta.series_slug) {
+      customParamValues += `&video_series=${videoMeta.series_slug}`;
+    }
+
     if (videoMeta.specialCoverage) {
       customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`;
       customParamValues += `&type=special_coverage`;
     }
 
-    baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
-
     if (vastTestId) {
-      baseUrl += '&forcedAdZone=' + vastTestId;
+      customParamValues += '&forcedAdZone=' + vastTestId;
     }
+
+    baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
     return baseUrl;
   }
@@ -238,7 +245,7 @@ export default class Revealed extends React.Component {
 
     if (!videoMeta.player_options.embedded && !videoMeta.player_options.disable_ads) {
       playerOptions.advertising = {
-        client: 'vast',
+        client: 'googima',
         tag: this.vastUrl(videoMeta),
         skipoffset: 5,
         vpaidmode: 'insecure',

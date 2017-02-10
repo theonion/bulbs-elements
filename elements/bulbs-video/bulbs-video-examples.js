@@ -1,7 +1,7 @@
 let examples = {
   element: 'bulbs-video',
   examples: {
-    'Clickhole Example': {
+    'Clickhole without series': {
       render: () => {
         return `
           <bulbs-video
@@ -11,17 +11,17 @@ let examples = {
         `;
       },
     },
-    'VAST HTML5 Example': {
+    'Clickhole with series': {
       render: () => {
         return `
           <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole-series.json"
           >
           </bulbs-video>
         `;
       },
     },
-    'Special Coverage Main': {
+    'Sponsored Special Coverage': {
       render () {
         return `
           <bulbs-video
@@ -47,20 +47,6 @@ let examples = {
         `;
       },
     },
-    'Rail player (LEGACY, pre-rMVP)': {
-      render () {
-        return `
-          <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
-            target-host-channel="right_rail"
-            target-campaign-number="campaign_605759"
-            autoplay
-            muted
-          >
-          </bulbs-video>
-        `;
-      },
-    },
     'VTT Captioning Example': {
       render () {
         return `
@@ -79,8 +65,19 @@ let examples = {
       render () {
         return `
           <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
             embedded
+          >
+          </bulbs-video>
+        `;
+      },
+    },
+    '`disable-ads` Example': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+            disable-ads
           >
           </bulbs-video>
         `;
