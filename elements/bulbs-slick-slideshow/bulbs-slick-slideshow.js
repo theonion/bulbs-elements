@@ -19,11 +19,7 @@ require('slick-carousel');
 /// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
-    this.slideshow = $('.slider');
-
-    if ($('.slider').length > 1) {
-      this.slideshow = $(this).find('.slider');
-    }
+    this.slideshow = $('.slider').last();
 
     // set variables
     this.initialSlide = 0;

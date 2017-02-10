@@ -74,7 +74,7 @@ describe('<bulbs-slick-slideshow>', () => {
   });
 
   describe('#bodyKeyDown', () => {
-    let e = $.Event('keydown');
+    let e = $.Event('keydown');  // eslint-disable-line babel/new-cap
 
     beforeEach(() => {
       attachSubject();
