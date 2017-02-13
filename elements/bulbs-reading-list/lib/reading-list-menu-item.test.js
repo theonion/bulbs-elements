@@ -80,11 +80,23 @@ describe('ReadingListMenuItem', () => {
   });
 
   describe('handleClick', () => {
+
     it('triggers an item click event', () => {
       let evnt = { preventDefault: sandbox.spy() };
       sandbox.stub(subject.dispatcher, 'emit');
       subject.handleClick(evnt);
       expect(subject.dispatcher.emit).to.have.been.calledWith('reading-list-item-clicked', subject, evnt);
+    });
+
+    it('should check for the presence of a bulbs-reading-list-menu-item-cickable-area to attach click event to', () => {
+      const clickableArea = $('<bulbs-reading-list-menu-item-clickable-area>');
+      element.appendChild(clickableArea[0]);
+      subject.registerEvents();
+      sandbox.stub(subject.dispatcher, 'emit');
+
+      clickableArea.trigger('click');
+
+      expect(subject.dispatcher.emit).to.have.been.calledWith('reading-list-item-clicked', subject);
     });
   });
 });
