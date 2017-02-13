@@ -15,7 +15,7 @@ describe('<bulbs-article-body>', () => {
     it('should not append multiple dingbats', (done) => {
       subject.innerHTML = `
         <p>this is some text</p>
-        <p>and so is this <span class="site-dingbat"></span>
+        <p>and so is this <span class="site-dingbat"></span></p>
       `;
 
       document.body.appendChild(subject);
