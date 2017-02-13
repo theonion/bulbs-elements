@@ -12,6 +12,19 @@ describe('<bulbs-article-body>', () => {
   });
 
   describe('addDingbat', () => {
+    it('should not append multiple dingbats', (done) => {
+      subject.innerHTML = `
+        <p>this is some text</p>
+        <p>and so is this <span class="site-dingbat"></span></p>
+      `;
+
+      document.body.appendChild(subject);
+
+      setImmediate(() => {
+        expect(subject.querySelectorAll('.site-dingbat').length).to.eql(1);
+        done();
+      });
+    });
 
     it('should append a dingbat to the last element with text', (done) => {
       subject.innerHTML = `

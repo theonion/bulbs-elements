@@ -6,6 +6,10 @@ import {
 class BulbsArticleBody extends BulbsHTMLElement {
 
   addDingbat () {
+    if (this.querySelector('.site-dingbat')) {
+      return;
+    }
+
     let $lastElement = $(this).find('> :last-child');
     let dingbat = '<span class="site-dingbat"></span>';
 
