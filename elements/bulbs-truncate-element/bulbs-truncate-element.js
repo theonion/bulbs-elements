@@ -17,7 +17,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
   addButton () {
     this.readMoreButton = document.createElement('button');
     this.readMoreButton.setAttribute('class', 'bulbs-truncate-element-button');
-    this.readMoreButton.innerHTML = 'Read More';
+    this.readMoreButton.innerHTML = 'Continue Reading';
     this.appendChild(this.readMoreButton);
   }
 
