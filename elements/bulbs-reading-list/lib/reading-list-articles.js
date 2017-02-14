@@ -34,8 +34,8 @@ export default class ReadingListArticles {
   }
 
   registerEvents () {
-    this.handleListItemClicked = this.handleListItemClicked.bind(this)
-    this.setCurrentArticle = this.setCurrentArticle.bind(this)
+    this.handleListItemClicked = this.handleListItemClicked.bind(this);
+    this.setCurrentArticle = this.setCurrentArticle.bind(this);
 
     this.dispatcher.on('reading-list-item-clicked', this.handleListItemClicked);
     this.dispatcher.on('reading-list-item-url-changed', this.setCurrentArticle);

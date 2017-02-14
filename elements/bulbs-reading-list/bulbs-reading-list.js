@@ -2,6 +2,7 @@ import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import './components/bulbs-reading-list-item';
 import './components/bulbs-reading-list-articles';
 import './components/bulbs-reading-list-menu';
+import './components/bulbs-reading-list-menu-item-clickable-area';
 import ReadingListMenu from './lib/reading-list-menu';
 import ReadingListArticles from './lib/reading-list-articles';
 import invariant from 'invariant';

@@ -1,0 +1,167 @@
+// slick defaults
+@import "slick";
+
+// slideshow
+.article-slideshow {
+  $slider-bg: #F4F5F6;
+  display: block;
+  margin-bottom: 1em;
+
+  .slick-track { 
+    background: $slider-bg; 
+  }
+
+  .slide .image {
+    float: none;
+    clear: both;
+    margin: 0;
+  }
+
+  .slide-body { 
+    padding: 1em;
+
+    h2 { 
+      margin-bottom: 0; 
+    }
+
+    h2, .slide-title {
+      font-weight: bold;
+      line-height: 1.3;
+      margin: 0 0 0.25em;
+    }
+  }
+
+  .slider-nav {
+    a, ul {
+      text-align: center;
+    }
+
+    a, .slick-active { 
+      padding: 5px; 
+    }
+
+    ul {
+      order: 2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .paging {
+      font-weight: bold;
+    }
+
+    a {
+      background: #DDD;
+      font-size: 30px;
+      line-height: 20px;
+      height: 40px;
+
+      &.disabled {
+        cursor: default;
+      }
+
+      &.slider-prev { 
+        order: 1; 
+      }
+
+      &.slider-next { 
+        order: 3;
+      }
+    }
+
+    .slick-dots {
+      background: $slider-bg;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+
+      li { 
+        display: none;
+
+        &.slick-active { 
+          display: block; 
+        }
+      }
+    }
+  }
+
+  .is-content { 
+    position: relative;
+
+    .slide-body {
+      bottom: 1em;
+      right: 0;
+      left: 0;
+      top: auto;
+      padding: 1em;
+    }
+
+    figure a:hover { 
+      opacity: 1; 
+    }
+
+    .read {
+      text-transform: uppercase;
+      margin: 1em 0 0;
+      position: relative;
+    }
+  }
+
+  .endcard {
+    margin-top:3.5em;
+
+    > div { 
+      padding: 1em; 
+    }
+
+    .large-thing a {
+      max-width: 85%;
+      margin: 0 auto 1em;
+      width: 100%;
+    }
+
+    .share-tools {
+      display: block;
+      justify-content: center;
+
+      a { 
+        border-width: 1px;
+
+        .fa {
+          width: 100%;
+          font-size: 2em;
+
+          &:after {
+            margin-left: 0.5em;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .dfp-slot-sidebar-secondary {
+      display: block;
+      margin: 0 auto;
+
+      iframe {
+        display: inherit;
+        margin: 0 auto;
+      }
+    }
+
+    @media all and (max-width: 600px) {
+      .small-thing {
+        display: none;
+      }
+    }
+
+    .restart {
+      color: inherit;
+      display: block;
+      font-weight: bold;
+      margin-top: 1em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}

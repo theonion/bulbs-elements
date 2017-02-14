@@ -3,7 +3,7 @@
 
 # Bulbs Elements
 
-<img src="http://webcomponents.org/img/logo.svg"  width="40" /> <img src="http://assets.onionstatic.com/onion/static/images/onion_logo.png" width="200" />
+<img src="https://web-components-resources.appspot.com/static/logo.svg" width="40" /> <img src="http://assets2.onionstatic.com/onion/static/images/onion_logo.png" width="200" />
 
 > Sharpen the knife.
 
