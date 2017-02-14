@@ -65,7 +65,8 @@ export default class Revealed extends React.Component {
       'dimension7': true, // 'has_player' from old embed
       'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
-      'dimension10': 'None', // Platform
+      'dimension10': 'None', // Platform,
+      'dimension11': this.props.disableAds || 'None' // Video Ad Config
     };
     let gaTrackerAction = prepGaEventTracker(
       'videoplayer',
