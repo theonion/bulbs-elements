@@ -1,0 +1,17 @@
+.bulbs-truncate-element-parent-active {
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    background-image: linear-gradient(to bottom, rgba(247, 247, 247, 0), rgba(247, 247, 247, 1));
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 150px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: auto;
+  }
+}
