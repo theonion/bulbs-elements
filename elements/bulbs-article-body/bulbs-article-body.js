@@ -46,7 +46,10 @@ class BulbsArticleBody extends BulbsHTMLElement {
 
   resizeIframes () {
     if (window.iFrameResize) {
-      window.iFrameResize(this.querySelectorAll('iframe.onionstudios-playlist'));
+      window.iFrameResize(
+        { checkOrigin: false },
+        this.querySelectorAll('iframe.onionstudios-playlist')
+      );
     }
   }
 
