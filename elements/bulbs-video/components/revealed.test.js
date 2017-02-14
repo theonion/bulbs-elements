@@ -524,27 +524,21 @@ describe('<bulbs-video> <Revealed>', () => {
 
     it('returns false if query string empty', () => {
       parseParam.returns(false);
-      let vastId = Revealed.prototype.vastTest.call({
-        parseParam: parseParam,
-      }, '');
+      let vastId = Revealed.prototype.vastTest.call({ parseParam }, '');
       expect(parseParam.called).to.be.false;
       expect(vastId).to.be.false;
     });
 
     it('returns false if no `adzone` query string key', () => {
       parseParam.returns(false);
-      let vastId = Revealed.prototype.vastTest.call({
-        parseParam: parseParam,
-      }, '?utm_source=facebook');
+      let vastId = Revealed.prototype.vastTest.call({ parseParam }, '?utm_source=facebook');
       expect(parseParam.calledWith('adzone', '?utm_source=facebook')).to.be.true;
       expect(vastId).to.be.false;
     });
 
     it('returns the vastUrl value if query string key present', () => {
       parseParam.returns('12345');
-      let vastId = Revealed.prototype.vastTest.call({
-        parseParam: parseParam,
-      }, '?adzone=12345');
+      let vastId = Revealed.prototype.vastTest.call({ parseParam }, '?adzone=12345');
       expect(parseParam.calledWith('adzone', '?adzone=12345')).to.be.true;
       expect(vastId).to.equal('12345');
     });
@@ -663,7 +657,7 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(Object.keys(cust_params)).to.eql([
             'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type',
           ]);
-          expect(cust_params.dfp_specialcoverage).to.eql('special')
+          expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');
         });
       });
