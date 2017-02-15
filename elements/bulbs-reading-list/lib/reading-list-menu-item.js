@@ -19,7 +19,12 @@ export default class ReadingListMenuItem {
   }
 
   registerEvents () {
-    this.element.addEventListener('click', this.handleClick.bind(this));
+    let clickableArea = this.element.querySelector('bulbs-reading-list-menu-item-clickable-area');
+    if (!clickableArea) {
+      clickableArea = this.element;
+    }
+
+    clickableArea.addEventListener('click', this.handleClick.bind(this));
     this.dispatcher.on('reading-list-item-progress-update', this.updateProgress.bind(this));
   }
 
