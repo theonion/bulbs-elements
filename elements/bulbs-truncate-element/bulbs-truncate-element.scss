@@ -1,0 +1,28 @@
+.bulbs-truncate-element-parent-active {
+  max-height: 1000px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 80%);
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 300px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: auto;
+  }
+}
+
+.bulbs-truncate-element-button {
+  display: table;
+  margin: -15px auto 3em auto;
+  max-width: 250px;
+  outline: none;
+  padding: 8px 10px;
+  position: relative;
+  white-space: nowrap;
+  width: 100%;
+}
