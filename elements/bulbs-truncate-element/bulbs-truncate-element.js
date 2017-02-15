@@ -13,7 +13,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
     this.openElement = this.openElement.bind(this);
     this.addButton();
     this.addEventListener('click', this.openElement);
-    previousEl.classList = 'bulbs-truncate-element-parent-active';
+    previousEl.classList.add('bulbs-truncate-element-parent-active');
   }
 
   addButton () {
@@ -25,7 +25,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
 
   openElement () {
     let previousEl = this.previousElementSibling;
-    previousEl.classList = 'bulbs-truncate-element-parent-inactive';
+    previousEl.classList.remove('bulbs-truncate-element-parent-active');
     util.getAnalyticsManager().sendEvent({
       eventCategory: 'Content',
       eventAction: 'Continue Reading',
