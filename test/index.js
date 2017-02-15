@@ -21,17 +21,5 @@ beforeEach(() => {
   fixtureContainer.style.display = 'none';
 });
 
-beforeEach(() => {
-  window.Bulbs = {
-    settings: {
-      DFP_SITE_CODE: 'fmg.onion',
-    },
-  };
-});
-
-afterEach(() => {
-  delete window.Bulbs;
-});
-
 libContext.keys().forEach(libContext);
 elementsContext.keys().forEach(elementsContext);

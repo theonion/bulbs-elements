@@ -1,7 +1,7 @@
 let examples = {
   element: 'bulbs-video',
   examples: {
-    'Clickhole without series': {
+    'Clickhole Example': {
       render: () => {
         return `
           <bulbs-video
@@ -11,17 +11,28 @@ let examples = {
         `;
       },
     },
-    'Clickhole with series': {
+    'VAST HTML5 Example': {
       render: () => {
         return `
           <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/clickhole-series.json"
+            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
           >
           </bulbs-video>
         `;
       },
     },
-    'Sponsored Special Coverage': {
+    'videohub.local example': {
+      render () {
+        return `
+          <bulbs-video
+            twitter-handle="avclub"
+            src="//videohub.local/video/3916.json"
+          >
+          </bulbs-video>
+        `;
+      },
+    },
+    'Special Coverage Main': {
       render () {
         return `
           <bulbs-video
@@ -47,6 +58,20 @@ let examples = {
         `;
       },
     },
+    'Rail player (LEGACY, pre-rMVP)': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+            target-host-channel="right_rail"
+            target-campaign-number="campaign_605759"
+            autoplay
+            muted
+          >
+          </bulbs-video>
+        `;
+      },
+    },
     'VTT Captioning Example': {
       render () {
         return `
@@ -65,19 +90,8 @@ let examples = {
       render () {
         return `
           <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
+            src="http://localhost:8080/fixtures/bulbs-video/vast-html5.json"
             embedded
-          >
-          </bulbs-video>
-        `;
-      },
-    },
-    '`disable-ads` Example': {
-      render () {
-        return `
-          <bulbs-video
-            src="http://localhost:8080/fixtures/bulbs-video/clickhole.json"
-            disable-ads
           >
           </bulbs-video>
         `;
