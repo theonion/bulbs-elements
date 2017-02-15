@@ -1,5 +1,5 @@
 .bulbs-truncate-element-parent-active {
-  height: 1000px;
+  max-height: 1000px;
   overflow: hidden;
   position: relative;
 
@@ -20,6 +20,7 @@
   display: table;
   margin: -15px auto 3em auto;
   max-width: 250px;
+  outline: none;
   padding: 8px 10px;
   position: relative;
   white-space: nowrap;

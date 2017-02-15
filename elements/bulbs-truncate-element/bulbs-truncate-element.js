@@ -8,11 +8,12 @@ import './bulbs-truncate-element.scss';
 class BulbsTruncateElement extends BulbsHTMLElement {
 
   attachedCallback () {
+    let previousEl = this.previousElementSibling;
     this.addButton = this.addButton.bind(this);
     this.openElement = this.openElement.bind(this);
     this.addButton();
     this.addEventListener('click', this.openElement);
-    $(this).prev().addClass('bulbs-truncate-element-parent-active');
+    previousEl.classList = 'bulbs-truncate-element-parent-active';
   }
 
   addButton () {
@@ -23,7 +24,8 @@ class BulbsTruncateElement extends BulbsHTMLElement {
   }
 
   openElement () {
-    $(this).prev().removeClass('bulbs-truncate-element-parent-active');
+    let previousEl = this.previousElementSibling;
+    previousEl.classList = 'bulbs-truncate-element-parent-inactive';
     util.getAnalyticsManager().sendEvent({
       eventCategory: 'Content',
       eventAction: 'Continue Reading',
