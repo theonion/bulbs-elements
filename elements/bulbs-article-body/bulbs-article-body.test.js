@@ -140,7 +140,7 @@ describe('<bulbs-article-body>', () => {
       document.body.appendChild(subject);
       setImmediate(() => {
         expect(window.iFrameResize.args[0][0]).to.eql({ checkOrigin: false });
-        expect(window.iFrameResize.args[0][1][0]).to.eql(subject.querySelector('.onionstudios-playlist'));
+        expect(window.iFrameResize.args[0][1]).to.eql(subject.querySelector('.onionstudios-playlist'));
         done();
       });
     });
