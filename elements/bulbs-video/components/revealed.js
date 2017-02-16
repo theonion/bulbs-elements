@@ -52,6 +52,11 @@ export default class Revealed extends React.Component {
     let filteredTags = [];
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
+    let videoAdConfig = 'None';
+    if (this.props.disableAds) {
+      videoAdConfig = 'disable-ads';
+    }
+
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
       'dimension2': targeting.target_series || 'None',
@@ -63,6 +68,7 @@ export default class Revealed extends React.Component {
       'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
+      'dimension11': videoAdConfig, // Video Ad Config
     };
     let gaTrackerAction = prepGaEventTracker(
       'videoplayer',
@@ -108,6 +114,8 @@ export default class Revealed extends React.Component {
     }
 
     videoMeta.player_options.embedded = this.props.embedded;
+
+    videoMeta.player_options.disable_ads = this.props.disableAds;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
@@ -240,7 +248,7 @@ export default class Revealed extends React.Component {
       controls: !this.props.hideControls,
     };
 
-    if (!videoMeta.player_options.embedded) {
+    if (!videoMeta.player_options.embedded && !videoMeta.player_options.disable_ads) {
       playerOptions.advertising = {
         client: 'vast',
         tag: this.vastUrl(videoMeta),
@@ -347,6 +355,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
+  disableAds: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
   hideControls: PropTypes.bool,

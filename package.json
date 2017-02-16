@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "11.1.0",
+  "version": "12.0.0",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -113,9 +113,11 @@
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",
     "sass-loader": "^3.1.2",
+    "scroll-into-view": "^1.7.1",
     "scroll-to-element": "^2.0.0",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
+    "slick-carousel": "^1.6.0",
     "style-loader": "^0.13.0",
     "stylelint": "^4.0.0",
     "stylelint-config-standard": "^3.0.0",
@@ -126,15 +128,14 @@
     "velocity-animate": "^1.2.3",
     "walk": "^2.3.9",
     "watch": "^0.17.1",
+    "waypoints": "^4.0.1",
     "webpack": "^1.12.11",
     "webpack-dev-server": "^1.14.1",
     "whatwg-fetch": "^1.0.0",
     "write-file-webpack-plugin": "^3.1.4",
     "yaml-loader": "^0.1.0",
     "yeoman-generator": "^0.22.5",
-    "yo": "^1.6.0",
-    "scroll-into-view": "^1.7.1",
-    "waypoints": "^4.0.1"
+    "yo": "^1.6.0"
   },
   "devDependencies": {
     "chai-spies": "^0.7.1",

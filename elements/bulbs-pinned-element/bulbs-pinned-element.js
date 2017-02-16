@@ -54,30 +54,58 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
   }
 
   positionCar () {
-    if(!this.animationRequest) {
-      this.animationRequest = requestAnimationFrame(() => {
-        this.animationRequest = null;
-
-        const boundingRects = this.getBoundingRects();
-
-        this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
-        this.style.width = `${boundingRects.parent.width}px`;
-
-        if (this.hasNewRailHeight(boundingRects)) {
-          this.resetCarPosition();
-        }
-
-        if (this.isInView(boundingRects)) {
-
-          if(this.isScrollingDown()) {
-            this.handleScrollDown(boundingRects);
-          }
-          else {
-            this.handleScrollUp(boundingRects);
-          }
-        }
-      });
+    if(this.animationRequest) {
+      cancelAnimationFrame(this.animationRequest);
     }
+    this.animationRequest = requestAnimationFrame(() => {
+      this.animationRequest = null;
+
+      const boundingRects = this.getBoundingRects();
+
+      this.style.height = `${boundingRects.parent.height - Math.abs(boundingRects.parent.top - boundingRects.rail.top)}px`;
+      this.style.width = `${boundingRects.parent.width}px`;
+
+      if (this.hasNewRailHeight(boundingRects)) {
+        this.resetCarPosition();
+      }
+
+      const offset = getScrollOffset();
+
+      if (offset.y > this.lastPosition) {
+        this.scrollDirection = 'down';
+      }
+      else if (offset.y < this.lastPosition) {
+        this.scrollDirection = 'up';
+      }
+      else {
+        this.scrollDirection = null;
+      }
+
+      this.lastPosition = offset.y;
+
+      if (this.isInView(boundingRects)) {
+        if(this.isScrollingDown()) {
+          this.handleScrollDown(boundingRects);
+        }
+        else if (this.isScrollingUp()) {
+          this.handleScrollUp(boundingRects);
+        }
+      }
+      else if (boundingRects.parent.bottom <= 0) {
+        this.pinToRailBottom();
+      }
+      else if (boundingRects.parent.top >= window.innerHeight) {
+        this.resetCarPosition();
+      }
+    });
+  }
+
+  isScrollingUp () {
+    return this.scrollDirection === 'up';
+  }
+
+  isScrollingDown () {
+    return this.scrollDirection === 'down';
   }
 
   hasNewRailHeight (boundingRects) {
@@ -91,20 +119,16 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     return newRailHeight;
   }
 
-  isScrollingDown () {
-    const offset = getScrollOffset();
-
-    let scrollDown = false;
-    if (offset.y > this.lastPosition) {
-      scrollDown = true;
-    }
-
-    this.lastPosition = offset.y;
-
-    return scrollDown;
-  }
-
   handleScrollDown (boundingRects) {
+    const body = document.body;
+    const html = document.documentElement;
+    const documentHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight,
+    );
 
     if (boundingRects.rail.bottom <= boundingRects.car.bottom) {
       this.pinToRailBottom();
@@ -112,14 +136,22 @@ export default class BulbsPinnedElement extends BulbsHTMLElement {
     else if (boundingRects.rail.top - this.topOffsetAdjustment <= 0) {
       this.pinToWindow();
     }
+    else if ($(window).scrollTop() >= documentHeight - window.innerHeight) {
+      this.pinToRailBottom();
+    }
   }
 
   handleScrollUp (boundingRects) {
+    const rail = boundingRects.rail;
+    const car = boundingRects.car;
 
-    if (boundingRects.rail.top >= boundingRects.car.top) {
+    if (rail.top >= car.top) {
       this.resetCarPosition();
     }
-    else if (boundingRects.rail.bottom - boundingRects.car.height - this.topOffsetAdjustment >= 0) {
+    else if ($(window).scrollTop() === 0) {
+      this.resetCarPosition();
+    }
+    else if (rail.bottom - car.height - this.topOffsetAdjustment >= 0) {
       this.pinToWindow();
     }
   }

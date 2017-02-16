@@ -14,7 +14,7 @@ export default class ReadingListArticle {
     invariant(element, 'new ReadingListArticle(element, dispatcher, index): element is undefined');
     invariant(dispatcher, 'new ReadingListArticle(element, dispatcher, index): dispatcher is undefined');
     invariant(!isUndefined(index), 'new ReadingListArticle(element, dispatcher, index): index is undefined');
-    invariant(!isUndefined(window.GA_ID), 'new ReadingListArticle, GA_ID must be set on window');
+    invariant(!isUndefined(window.GOOGLE_ANALYTICS_ID), 'new ReadingListArticle, GOOGLE_ANALYTICS_ID must be set on window');
     element.requireAttribute('data-content-analytics-dimensions');
 
     this.element = element;
@@ -61,7 +61,7 @@ export default class ReadingListArticle {
   prepGaTracker () {
     return prepGaEventTracker(
       'pageview',
-      window.GA_ID,
+      window.GOOGLE_ANALYTICS_ID,
       this.dimensions,
     );
   }
