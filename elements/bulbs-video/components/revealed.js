@@ -55,6 +55,11 @@ export default class Revealed extends React.Component {
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
+    let videoAdConfig = 'None';
+    if (this.props.disableAds) {
+      videoAdConfig = 'disable-ads';
+    }
+
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
       'dimension2': targeting.target_series || 'None',
@@ -65,7 +70,8 @@ export default class Revealed extends React.Component {
       'dimension7': true, // 'has_player' from old embed
       'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
-      'dimension10': 'None', // Platform,
+      'dimension10': 'None', // Platform
+      'dimension11': videoAdConfig, // Video Ad Config
     };
     let gaTrackerAction = prepGaEventTracker(
       'videoplayer',
