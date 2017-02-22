@@ -63,6 +63,7 @@ Object.assign(RailPlayer, {
     recircUrl: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     targetCampaignId: PropTypes.string,
+    targetSpecialCoverage: PropTypes.string,
   },
 });
 
