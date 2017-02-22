@@ -17,7 +17,7 @@ describe('ReadingListArticle', () => {
   let contentAnalyticsDimensions;
 
   beforeEach(() => {
-    window.GA_ID = '7';
+    window.GOOGLE_ANALYTICS_ID = '7';
     id = 1;
     index = 0;
     href = 'http://example.com';
