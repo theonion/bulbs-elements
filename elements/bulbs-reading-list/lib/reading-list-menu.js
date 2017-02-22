@@ -10,7 +10,9 @@ export default class ReadingListMenu {
     this.dispatcher = dispatcher;
     const itemElements = element.querySelectorAll('bulbs-reading-list-item');
     this.menuItems = this.createMenuItems(itemElements);
-    this.firstItem().setAsCurrent();
+    if (this.firstItem()) {
+      this.firstItem().setAsCurrent();
+    }
     this.registerEvents();
   }
 
