@@ -3,11 +3,11 @@ import './bulbs-tabs.scss';
 
 class BulbsTabs extends BulbsHTMLElement {
   attachedCallback () {
-		// at the time of this function call, the tab-items have not been initialized
-		// so we have to wait until the next tick to select
-		setImmediate(() => {
-			this.querySelector('bulbs-tab-item').select();
-		});
+    // at the time of this function call, the tab-items have not been initialized
+    // so we have to wait until the next tick to select
+    setImmediate(() => {
+      this.querySelector('bulbs-tab-item').select();
+    });
   }
 }
 
@@ -33,9 +33,9 @@ class BulbsTabItem extends BulbsHTMLElement {
 
   get otherTabs () {
     return [].filter.call(
-			this.closest('bulbs-tabs').querySelectorAll('bulbs-tab-item'),
-			child => child !== this
-		);
+      this.closest('bulbs-tabs').querySelectorAll('bulbs-tab-item'),
+      child => child !== this
+    );
   }
 
   get tabContent () {
