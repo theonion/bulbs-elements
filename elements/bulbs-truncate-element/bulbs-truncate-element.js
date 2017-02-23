@@ -18,7 +18,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
 
   addButton () {
     this.readMoreButton = document.createElement('button');
-    this.readMoreButton.setAttribute('class', 'bulbs-truncate-element-button');
+    this.readMoreButton.classList.add('bulbs-truncate-element-button');
     this.readMoreButton.innerHTML = 'Continue Reading';
     this.appendChild(this.readMoreButton);
   }
@@ -31,7 +31,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
       eventAction: 'Continue Reading',
       eventLabel: '#',
     });
-    this.remove();
+    this.classList.add('bulbs-truncate-element-inactive');
   }
 }
 

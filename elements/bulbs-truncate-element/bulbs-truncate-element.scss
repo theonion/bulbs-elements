@@ -8,7 +8,7 @@
     bottom: 0;
     content: "";
     display: block;
-    height: 300px;
+    height: 200px;
     left: 0;
     position: absolute;
     right: 0;
@@ -25,4 +25,9 @@
   position: relative;
   white-space: nowrap;
   width: 100%;
+}
+
+.bulbs-truncate-element-inactive {
+  visibility: hidden;
+  pointer-events: none;
 }
