@@ -1,7 +1,18 @@
 bulbs-nav-toggle {
+  cursor: pointer;
   display: block;
+  padding: 20px 22px;
+
+  &.bulbs-nav-toggle-active {
+    background-color: #e4e4e4;
+  }
 }
 
 bulbs-nav-panel {
   display: none;
+  box-shadow: inset 1px 4px 9px -6px;
+
+  &.bulbs-nav-panel-active {
+    display: block;
+  }
 }

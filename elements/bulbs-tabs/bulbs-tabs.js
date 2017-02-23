@@ -3,7 +3,11 @@ import './bulbs-tabs.scss';
 
 class BulbsTabs extends BulbsHTMLElement {
   attachedCallback () {
-    this.querySelector('bulbs-tab-item').select();
+		// at the time of this function call, the tab-items have not been initialized
+		// so we have to wait until the next tick to select
+		setImmediate(() => {
+			this.querySelector('bulbs-tab-item').select();
+		});
   }
 }
 
@@ -17,7 +21,7 @@ class BulbsTabItem extends BulbsHTMLElement {
   }
 
   select () {
-    [].forEach.call(this.tabsInGroup, otherTab => otherTab.deselect());
+    [].forEach.call(this.otherTabs, otherTab => otherTab.deselect());
     this.classList.add('bulbs-tab-item-active');
     this.tabContent.classList.add('bulbs-tab-content-active');
   }
@@ -27,8 +31,11 @@ class BulbsTabItem extends BulbsHTMLElement {
     this.tabContent.classList.remove('bulbs-tab-content-active');
   }
 
-  get tabsInGroup () {
-    return this.closest('bulbs-tabs').querySelectorAll('bulbs-tab-item');
+  get otherTabs () {
+    return [].filter.call(
+			this.closest('bulbs-tabs').querySelectorAll('bulbs-tab-item'),
+			child => child !== this
+		);
   }
 
   get tabContent () {

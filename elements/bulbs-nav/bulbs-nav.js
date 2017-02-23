@@ -35,13 +35,13 @@ class BulbsNavPanel extends BulbsHTMLElement {
 
   open () {
     [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
-    this.style.display = 'block';
-    this.navToggle.classList.add('bulbs-nav-toggle-open');
+    this.classList.add('bulbs-nav-panel-active');
+    this.navToggle.classList.add('bulbs-nav-toggle-active');
   }
 
   close () {
-    this.style.display = '';
-    this.navToggle.classList.remove('bulbs-nav-toggle-open');
+    this.classList.remove('bulbs-nav-panel-active');
+    this.navToggle.classList.remove('bulbs-nav-toggle-active');
   }
 }
 

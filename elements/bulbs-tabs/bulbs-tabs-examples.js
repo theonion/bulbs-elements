@@ -4,6 +4,15 @@ export default {
     'Normal Tabs': {
       render () {
         return `
+					<style>
+						body {
+							background-color: #fafafa;
+						}
+						bulbs-tab-content {
+							background: white;
+							min-height: 300px;
+						}
+					</style>
           <bulbs-tabs>
             <bulbs-tab-strip>
               <bulbs-tab-item tab-name="newswire">
