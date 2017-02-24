@@ -5,27 +5,21 @@ import {
 
 class BulbsLightBox extends BulbsHTMLElement {
 
-  attachedCallback () {
-
-    if (this) {
-
-      var overlay = this.querySelector('.bulbs-lightbox-overlay');
-      
-      function toggleOverlay() {
-        if(this.classList.contains('active')) {
-          this.classList.remove('active');
-        }
-        else if(!this.classList.contains('active')){
-          this.classList.add('active');
-          if (window.picturefill) {
-            window.picturefill();
-          }
-        }
-      }
-
-      this.addEventListener('click', toggleOverlay);
-
+  toggleOverlay() {
+    if(this.classList.contains('active')) {
+      this.classList.remove('active');
     }
+    else if(!this.classList.contains('active')){
+      this.classList.add('active');
+      if (window.picturefill) {
+        window.picturefill();
+      }
+    }
+  }
+
+  attachedCallback () {
+    var overlay = this.querySelector('.bulbs-lightbox-overlay');
+    this.addEventListener('click', this.toggleOverlay.bind(this));
   }
 }
 
