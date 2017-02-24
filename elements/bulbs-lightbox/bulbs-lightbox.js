@@ -20,11 +20,6 @@ class BulbsLightBox extends BulbsHTMLElement {
         }
       }
 
-      // Close overlay with Esc key
-      $(document).keyup(function(e) {
-        if (e.keyCode == 27) overlay.classList.remove('active');
-      });
-
       this.addEventListener('click', toggleOverlay);
 
     }
