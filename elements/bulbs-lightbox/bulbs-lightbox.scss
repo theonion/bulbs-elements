@@ -1,5 +1,7 @@
 bulbs-lightbox {
   cursor: zoom-in;
+  display: block;
+  position: relative;
   .bulbs-lightbox-overlay {
     align-items: center;
     background: rgba(0, 0, 0, 0.9);
@@ -22,10 +24,34 @@ bulbs-lightbox {
       margin: auto;
       max-width: 1200px;
       width: 90%;
+      z-index: 10000;
+    }
+  }
+  &:after {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    content: '\f065';
+    display: none;
+    font-family: FontAwesome;
+    font-size: 1.143em;
+    height: 50px;
+    line-height: 3;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 50px;
+  }
+  &:hover {
+    &:after {
+      display: block;
     }
   }
   &.active {
     cursor: zoom-out;
+    &:after {
+      display: none;
+    }
     .bulbs-lightbox-overlay {
       opacity: 1;
       transform: scale(1);
