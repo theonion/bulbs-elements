@@ -1,4 +1,3 @@
-import './bulbs-lightbox.scss';
 import './bulbs-lightbox-test.scss';
 
 let examples = {

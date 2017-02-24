@@ -3,6 +3,8 @@ import {
   registerElement,
 } from 'bulbs-elements/register';
 
+import './bulbs-lightbox.scss';
+
 class BulbsLightBox extends BulbsHTMLElement {
 
   toggleOverlay () {
