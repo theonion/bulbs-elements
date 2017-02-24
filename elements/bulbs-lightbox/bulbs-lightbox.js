@@ -17,6 +17,9 @@ class BulbsLightBox extends BulbsHTMLElement {
         }
         else if(!this.classList.contains('active')){
           this.classList.add('active');
+          if (window.picturefill) {
+            window.picturefill();
+          }
         }
       }
 

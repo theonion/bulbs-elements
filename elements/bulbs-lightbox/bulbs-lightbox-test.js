@@ -6,10 +6,12 @@ describe('<bulbs-lightbox>', () => {
   beforeEach((done) => {
     lightbox = document.createElement('bulbs-lightbox');
     document.body.appendChild(lightbox);
+    window.picturefill = sinon.spy();
     setImmediate(() => done());
   });
 
   afterEach(() => {
+    delete window.picturefill;
     lightbox.remove();
   });
 
@@ -22,6 +24,10 @@ describe('<bulbs-lightbox>', () => {
       lightbox.classList.add('active');
       lightbox.click();
       expect(lightbox.classList.contains('active')).to.be.false;
+    });
+    it('calls picturefill when active class is added', () => {
+      lightbox.click();
+      expect(window.picturefill).to.have.been.called;
     });
   });
 
