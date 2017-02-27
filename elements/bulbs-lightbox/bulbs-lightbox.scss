@@ -1,0 +1,65 @@
+bulbs-lightbox {
+  cursor: zoom-in;
+  display: block;
+  position: relative;
+  .bulbs-lightbox-overlay {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    overflow-y: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 0.2s;
+    width: 100%;
+    .bulbs-lightbox-overlay-inner {
+      color: white;
+      margin: auto;
+      max-width: 1200px;
+      width: 90%;
+      z-index: 10000;
+    }
+  }
+  &:after {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    content: '\f065';
+    display: none;
+    font-family: FontAwesome;
+    font-size: 1.143em;
+    height: 50px;
+    line-height: 3;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 50px;
+  }
+  &:hover {
+    &:after {
+      display: block;
+    }
+  }
+  &.active {
+    cursor: zoom-out;
+    &:after {
+      display: none;
+    }
+    .bulbs-lightbox-overlay {
+      animation: fadeIn .3s;
+      display: flex;
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
