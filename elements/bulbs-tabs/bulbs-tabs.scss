@@ -6,6 +6,7 @@ bulbs-tab-strip {
   align-items: baseline;
   border-bottom: 1px solid #e3e3e3;
   display: flex;
+  margin-bottom: 15px;
 }
 
 bulbs-tab-item {
@@ -18,7 +19,8 @@ bulbs-tab-item {
   letter-spacing: .5px;
   line-height: 1.46;
   margin-right: 35px;
-  padding: 9px 0;
+  padding: 15px 0;
+  padding-bottom: 30px;
 
   &.bulbs-tab-item-active {
     border-bottom: 5px solid transparent;

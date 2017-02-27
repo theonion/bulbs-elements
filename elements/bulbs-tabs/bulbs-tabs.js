@@ -24,6 +24,9 @@ class BulbsTabItem extends BulbsHTMLElement {
     [].forEach.call(this.otherTabs, otherTab => otherTab.deselect());
     this.classList.add('bulbs-tab-item-active');
     this.tabContent.classList.add('bulbs-tab-content-active');
+    if (window.picturefill) {
+      window.picturefill();
+    }
   }
 
   deselect () {

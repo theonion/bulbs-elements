@@ -18,7 +18,7 @@ class BulbsNavToggle extends BulbsHTMLElement {
 
 class BulbsNavPanel extends BulbsHTMLElement {
   createdCallback () {
-    this.addEventListener('mouseout', () => this.close());
+    this.addEventListener('mouseleave', () => this.close());
   }
 
   get navToggle () {
@@ -37,6 +37,9 @@ class BulbsNavPanel extends BulbsHTMLElement {
     [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
     this.classList.add('bulbs-nav-panel-active');
     this.navToggle.classList.add('bulbs-nav-toggle-active');
+    if (window.picturefill) {
+      window.picturefill();
+    }
   }
 
   close () {

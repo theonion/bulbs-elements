@@ -55,11 +55,11 @@ describe('bulbs-nav', () => {
   });
 
   describe('<bulbs-nav-panel>', () => {
-    it('closes on mouseout', () => {
+    it('closes on mouseleave', () => {
       toggleB.classList.add('bulbs-nav-panel-active');
       panelB.classList.add('bulbs-nav-panel-active');
 
-      panelB.dispatchEvent(new CustomEvent('mouseout'));
+      panelB.dispatchEvent(new CustomEvent('mouseleave'));
 
       expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
       expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
