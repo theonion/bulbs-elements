@@ -1,4 +1,3 @@
-import util from 'bulbs-elements/util';
 import {
   registerElement,
   BulbsHTMLElement,
@@ -26,11 +25,6 @@ class BulbsTruncateElement extends BulbsHTMLElement {
   openElement () {
     let previousEl = this.previousElementSibling;
     previousEl.classList.remove('bulbs-truncate-element-parent-active');
-    util.getAnalyticsManager().sendEvent({
-      eventCategory: 'Content',
-      eventAction: 'Continue Reading',
-      eventLabel: '#',
-    });
     this.classList.add('bulbs-truncate-element-inactive');
   }
 }

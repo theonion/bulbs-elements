@@ -57,7 +57,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    // Removing for now, causing issue with videos autoplaying in background 
+    // Removing for now, causing issue with videos autoplaying in background
     //  - bryce, 2/22/17
     // this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
 
