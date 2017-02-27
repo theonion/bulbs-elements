@@ -1,4 +1,3 @@
-import util from 'bulbs-elements/util';
 import {
   registerElement,
   BulbsHTMLElement,
