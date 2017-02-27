@@ -6,8 +6,12 @@ class BulbsTabs extends BulbsHTMLElement {
     // at the time of this function call, the tab-items have not been initialized
     // so we have to wait until the next tick to select
     setImmediate(() => {
-      this.querySelector('bulbs-tab-item').select();
+      this.resetSelection();
     });
+  }
+
+  resetSelection () {
+    this.querySelector('bulbs-tab-item').select();
   }
 }
 

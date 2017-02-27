@@ -21,6 +21,10 @@ class BulbsNavPanel extends BulbsHTMLElement {
     this.addEventListener('mouseleave', () => this.close());
   }
 
+  get tabGroup () {
+    return this.querySelector('bulbs-tabs');
+  }
+
   get navToggle () {
     const navName = this.getAttribute('nav-name');
     return document.querySelector(`bulbs-nav-toggle[nav-name='${navName}']`);
@@ -37,6 +41,9 @@ class BulbsNavPanel extends BulbsHTMLElement {
     [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
     this.classList.add('bulbs-nav-panel-active');
     this.navToggle.classList.add('bulbs-nav-toggle-active');
+    if (this.tabGroup) {
+      this.tabGroup.resetSelection();
+    }
     if (window.picturefill) {
       window.picturefill();
     }
