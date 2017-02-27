@@ -1,9 +1,31 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import './bulbs-nav.scss';
 
+const NavStateManager = {
+  state: {},
+
+  requestClose (element) {
+    this.state[element.getAttribute('nav-name')] = {
+      element,
+      frameRequest: requestAnimationFrame(() => {
+        delete this.state[element.getAttribute('nav-name')];
+        element.close();
+      }),
+    };
+  },
+
+  cancelClose (element) {
+    const stateInfo = this.state[element.getAttribute('nav-name')];
+    if (stateInfo) {
+      cancelAnimationFrame(stateInfo.frameRequest);
+      delete this.state[element.getAttribute('nav-name')];
+    }
+  },
+};
+
 class BulbsNavToggle extends BulbsHTMLElement {
   createdCallback () {
-    this.addEventListener('mouseover', () => this.openNavPanel());
+    this.addEventListener('mouseenter', () => this.openNavPanel());
   }
 
   get navPanel () {
@@ -12,13 +34,16 @@ class BulbsNavToggle extends BulbsHTMLElement {
   }
 
   openNavPanel () {
+    NavStateManager.cancelClose(this.navPanel);
     this.navPanel.open();
   }
 }
 
 class BulbsNavPanel extends BulbsHTMLElement {
   createdCallback () {
-    this.addEventListener('mouseleave', () => this.close());
+    this.addEventListener('mouseleave', () => {
+      NavStateManager.requestClose(this);
+    });
   }
 
   get tabGroup () {
@@ -38,14 +63,16 @@ class BulbsNavPanel extends BulbsHTMLElement {
   }
 
   open () {
-    [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
-    this.classList.add('bulbs-nav-panel-active');
-    this.navToggle.classList.add('bulbs-nav-toggle-active');
-    if (this.tabGroup) {
-      this.tabGroup.resetSelection();
-    }
-    if (window.picturefill) {
-      window.picturefill();
+    if (!this.classList.contains('bulbs-nav-panel-active')) {
+      [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
+      this.classList.add('bulbs-nav-panel-active');
+      this.navToggle.classList.add('bulbs-nav-toggle-active');
+      if (this.tabGroup) {
+        this.tabGroup.resetSelection();
+      }
+      if (window.picturefill) {
+        window.picturefill();
+      }
     }
   }
 
