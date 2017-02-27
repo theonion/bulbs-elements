@@ -8,7 +8,7 @@ bulbs-lightbox {
     bottom: 0;
     display: none;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     justify-content: center;
     left: 0;
     opacity: 0;
@@ -20,6 +20,7 @@ bulbs-lightbox {
     width: 100%;
     .bulbs-lightbox-overlay-inner {
       color: white;
+      height: 100%;
       margin: auto;
       max-width: 1200px;
       width: 90%;
