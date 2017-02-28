@@ -10,7 +10,8 @@ notification-container {
     width: 100%;
     padding: 1em 2em;
 
-    a {
+    a,
+    .notification-cta {
       margin-left: 5px;
     }
 

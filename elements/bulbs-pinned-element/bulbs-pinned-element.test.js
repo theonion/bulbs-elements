@@ -10,6 +10,7 @@ describe('<bulbs-pinned-element>', () => {
 
   function attachSubject () {
     parentElement = document.createElement('parent-element');
+    parentElement.style.display = 'block';
 
     parentElement.appendChild(subject);
 
@@ -125,7 +126,7 @@ describe('<bulbs-pinned-element>', () => {
       });
 
       it('should call scroll up handler when scrolling up', () => {
-        sandbox.stub(subject, 'isScrollingDown').returns(false);
+        sandbox.stub(subject, 'isScrollingUp').returns(true);
         sandbox.stub(subject, 'isInView').returns(true);
 
         subject.positionCar();
@@ -142,6 +143,32 @@ describe('<bulbs-pinned-element>', () => {
         mockRaf.step();
 
         expect(subject.handleScrollUp).to.not.have.been.called;
+      });
+
+      it('should call pinToRailBottom if rail not in view && parent is above viewport', () => {
+        sandbox.stub(subject, 'isInView').returns(false);
+        sandbox.stub(subject, 'pinToRailBottom');
+
+        subject.parentElement.style.position = 'fixed';
+        subject.parentElement.style.top = '-200%';
+        subject.positionCar();
+        mockRaf.step();
+
+        expect(subject.pinToRailBottom).to.have.been.called;
+      });
+
+      it('should call resetCarPosition if rail not in view && parent is below viewport', () => {
+        document.body.appendChild(parentElement);
+
+        sandbox.stub(subject, 'isInView').returns(false);
+        sandbox.stub(subject, 'resetCarPosition');
+
+        subject.parentElement.style.position = 'fixed';
+        subject.parentElement.style.top = '10000%';
+        subject.positionCar();
+        mockRaf.step();
+
+        expect(subject.resetCarPosition).to.have.been.called;
       });
 
       it('should ensure rail is the size of the parent less any start height offset', () => {
@@ -226,6 +253,23 @@ describe('<bulbs-pinned-element>', () => {
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
         expect(subject.car.style.bottom).to.equal('');
       });
+
+      it('pins car to rail bottom when jumping to bottom of page', () => {
+        subject.car.classList.add('pinned');
+        sandbox.stub($.fn, 'scrollTop').returns(99999999999);
+        subject.topOffsetAdjustment = 10;
+
+        subject.handleScrollDown({
+          rail: { bottom: 100, top: 15 },
+          car: { bottom: 99 },
+        });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.contain('pinned-bottom');
+        expect(classes).to.not.contain('pinned');
+        expect(subject.car.style.bottom).to.equal('0px');
+        expect(subject.car.style.top).to.equal('');
+      });
     });
 
     context('#handleScrollUp', () => {
@@ -248,12 +292,10 @@ describe('<bulbs-pinned-element>', () => {
 
       it('pins car to window when car is not at the top of the rail and in full view adjusted by an offset', () => {
         subject.topOffsetAdjustment = 10;
+        sandbox.stub($.fn, 'scrollTop').returns(10);
 
         subject.handleScrollUp({
-          car: {
-            bottom: 90,
-            height: 50,
-          },
+          car: { bottom: 90, height: 50 },
           rail: { bottom: 100 },
         });
 
@@ -261,6 +303,22 @@ describe('<bulbs-pinned-element>', () => {
         expect(classes).to.contain('pinned');
         expect(classes).to.not.contain('pinned-bottom');
         expect(subject.car.style.top).to.equal(`${subject.topOffsetAdjustment}px`);
+        expect(subject.car.style.bottom).to.equal('');
+      });
+
+      it('pins car to rail top when jumping to the top of page', () => {
+        subject.car.classList.add('pinned', 'pinned-bottom');
+        sandbox.stub($.fn, 'scrollTop').returns(0);
+
+        subject.handleScrollUp({
+          car: { top: 0 },
+          rail: { top: -60 },
+        });
+
+        let classes = [].slice.call(subject.car.classList);
+        expect(classes).to.not.contain('pinned');
+        expect(classes).to.not.contain('pinned-bottom');
+        expect(subject.car.style.top).to.equal('0px');
         expect(subject.car.style.bottom).to.equal('');
       });
     });

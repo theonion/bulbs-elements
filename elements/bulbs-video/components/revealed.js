@@ -45,12 +45,20 @@ export default class Revealed extends React.Component {
       global.jwplayer,
       '`<bulbs-video>` requires `jwplayer` to be in global scope.'
     );
+    invariant(
+      global.Bulbs && global.Bulbs.settings && global.Bulbs.settings.DFP_SITE_CODE,
+      '`<bulbs-video>` requires Bulbs.settings.DFP_SITE_CODE to be in global scope'
+    );
 
     let targeting = this.props.video.targeting;
     let hostChannel = this.props.targetHostChannel || 'main';
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
-    let filteredTags = [];
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
+
+    let videoAdConfig = 'None';
+    if (this.props.disableAds) {
+      videoAdConfig = 'disable-ads';
+    }
 
     let dimensions = {
       'dimension1': targeting.target_channel || 'None',
@@ -63,6 +71,7 @@ export default class Revealed extends React.Component {
       'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
+      'dimension11': videoAdConfig, // Video Ad Config
     };
     let gaTrackerAction = prepGaEventTracker(
       'videoplayer',
@@ -76,28 +85,9 @@ export default class Revealed extends React.Component {
     videoMeta.gaTrackerAction = gaTrackerAction;
     videoMeta.player_options.shareUrl = this.props.shareUrl || `${window.location.href}/v/${videoMeta.id}`;
 
-    filteredTags.push(hostChannel);
-
     if (specialCoverage !== 'None') {
-      filteredTags.push(specialCoverage);
+      videoMeta.specialCoverage = specialCoverage;
     }
-
-    if (this.props.targetCampaignNumber) {
-      filteredTags.push(this.props.targetCampaignNumber);
-    }
-
-    if (this.props.targetCampaignId) {
-      filteredTags.push(`campaign-${this.props.targetCampaignId}`);
-    }
-
-    this.props.video.tags.forEach(function (tag) {
-      // Temporary until videojs_options completely removed from Onion Studios
-      if (tag !== 'main') {
-        filteredTags.push(tag);
-      }
-    });
-
-    videoMeta.tags = filteredTags;
 
     if (this.props.muted) {
       videoMeta.player_options.muted = true;
@@ -108,6 +98,8 @@ export default class Revealed extends React.Component {
     }
 
     videoMeta.player_options.embedded = this.props.embedded;
+
+    videoMeta.player_options.disable_ads = this.props.disableAds;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }
@@ -161,7 +153,7 @@ export default class Revealed extends React.Component {
 
   vastTest (searchString) { // eslint-disable-line consistent-return
     if (searchString !== '') {
-      let vastId = this.parseParam('xgid', searchString);
+      let vastId = this.parseParam('adzone', searchString);
 
       if (vastId) {
         return vastId;
@@ -172,29 +164,46 @@ export default class Revealed extends React.Component {
   }
 
   vastUrl (videoMeta) {
-    let baseUrl = 'http://us-theonion.videoplaza.tv/proxy/distributor/v2?rt=vast_2.0';
+    let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
     let vastTestId = this.vastTest(window.location.search);
 
-    // AD_TYPE: one of p (preroll), m (midroll), po (postroll), o (overlay)
-    baseUrl += '&tt=p';
-    videoMeta.tags.push('html5'); // Force HTML 5
-    // Tags
-    baseUrl += '&t=' + videoMeta.tags;
-    //Category
-    let hostChannel = videoMeta.hostChannel;
-    let channel = videoMeta.channel_slug;
-    let series = videoMeta.series_slug;
-    let category = `${hostChannel}/${channel}`;
-    if (series) {
-      category += `/${series}`;
+    // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
+    baseUrl += '?sz=400x300';
+    baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
+    baseUrl += '&impl=s';
+    baseUrl += '&gdfp_req=1';
+    baseUrl += '&env=vp';
+    baseUrl += '&output=xml_vast2';
+    baseUrl += '&unviewed_position_start=1';
+    baseUrl += `&url=${window.document.referrer}`;
+    baseUrl += '&description_url=';
+    baseUrl += `&correlator=${new Date().getTime()}`;
+
+    let customParamValues = '';
+    customParamValues += `video_site=${videoMeta.channel_slug}`;
+    customParamValues += `&video_id=${videoMeta.id}`;
+    customParamValues += `&video_channel=${videoMeta.channel_slug}`;
+    customParamValues += `&pos=${videoMeta.hostChannel}`;
+
+    if (this.props.targetCampaignId) {
+      customParamValues += `&dfp_campaign_id=${this.props.targetCampaignId}`;
     }
-    baseUrl += '&s=' + category;
-    baseUrl += '&rnd=' + this.cacheBuster();
+
+    if (videoMeta.series_slug) {
+      customParamValues += `&video_series=${videoMeta.series_slug}`;
+    }
+
+    if (videoMeta.specialCoverage) {
+      customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`;
+      customParamValues += `&type=special_coverage`;
+    }
 
     if (vastTestId) {
-      baseUrl += '&xgid=' + vastTestId;
+      customParamValues += '&forcedAdZone=' + vastTestId;
     }
+
+    baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
     return baseUrl;
   }
@@ -240,9 +249,9 @@ export default class Revealed extends React.Component {
       controls: !this.props.hideControls,
     };
 
-    if (!videoMeta.player_options.embedded) {
+    if (!videoMeta.player_options.embedded && !videoMeta.player_options.disable_ads) {
       playerOptions.advertising = {
-        client: 'vast',
+        client: 'googima',
         tag: this.vastUrl(videoMeta),
         skipoffset: 5,
         vpaidmode: 'insecure',
@@ -347,6 +356,7 @@ Revealed.propTypes = {
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
+  disableAds: PropTypes.bool,
   disableSharing: PropTypes.bool,
   embedded: PropTypes.bool,
   hideControls: PropTypes.bool,
