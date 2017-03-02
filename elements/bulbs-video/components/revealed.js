@@ -169,7 +169,7 @@ export default class Revealed extends React.Component {
     let vastTestId = this.vastTest(window.location.search);
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
-    baseUrl += '?sz=400x300';
+    baseUrl += '?sz=640x480';
     baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
     baseUrl += '&impl=s';
     baseUrl += '&gdfp_req=1';
