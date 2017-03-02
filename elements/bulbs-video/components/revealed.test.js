@@ -596,7 +596,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(parsed.host).to.eql('pubads.g.doubleclick.net');
         expect(parsed.pathname).to.eql('/gampad/ads');
         expect(Object.keys(parsed.query)).to.eql(['sz', 'iu', 'impl', 'gdfp_req', 'env', 'output', 'unviewed_position_start', 'url', 'description_url', 'correlator', 'cust_params']);
-        expect(parsed.query.sz).to.eql('400x300');
+        expect(parsed.query.sz).to.eql('640x480');
         expect(parsed.query.iu).to.eql('/4246/fmg.onion');
         expect(parsed.query.impl).to.eql('s');
         expect(parsed.query.gdfp_req).to.eql('1');
