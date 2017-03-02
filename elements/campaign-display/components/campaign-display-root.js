@@ -89,7 +89,7 @@ class CampaignDisplayRoot extends Component {
     if (!this.hasValidCampaign()) { return <div className='inactive-campaign'></div>; }
     return (
       <div className='campaign-display' data-track-label={this.props.campaign.clickthrough_url}>
-        <div className='inner'>
+        <div className='campaign-display-inner'>
           {this.childComponents()}
         </div>
       </div>
