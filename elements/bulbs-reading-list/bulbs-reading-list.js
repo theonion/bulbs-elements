@@ -19,6 +19,7 @@ class BulbsReadingList extends BulbsHTMLElement {
     this.visitedInLooking = {};
     this.visitedInLooking[window.location.pathname] = true;
     this.dispatcher = new EventEmitter();
+    this.dispatcher.setMaxListeners(20);
     window.addEventListener('scroll', this.handleDocumentScrolled.bind(this));
     window.addEventListener('resize', this.handleDocumentResized.bind(this));
     this.dispatcher.on('reading-list-item-url-changed', this.handleDocumentUrlChanged.bind(this));
