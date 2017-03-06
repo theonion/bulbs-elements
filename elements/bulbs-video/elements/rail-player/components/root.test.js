@@ -27,6 +27,8 @@ describe('<rail-player> <RailPlayerRoot>', () => {
         props = {
           recircUrl: 'http://example.org/recirc',
           controller: {},
+          targetCampaignId: '12345',
+          targetSpecialCoverage: 'fun-special-coverage',
           video: {
             title: 'Video Title',
           },
@@ -67,6 +69,8 @@ describe('<rail-player> <RailPlayerRoot>', () => {
               muted={true}
               disableSharing={true}
               targetHostChannel='right_rail'
+              targetCampaignId='12345'
+              targetSpecialCoverage='fun-special-coverage'
               defaultCaptions={true}
               {...props}
             />

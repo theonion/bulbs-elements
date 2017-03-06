@@ -1,0 +1,12 @@
+.example-canvas {
+  max-width: 800px;
+  width: 100%; 
+}
+
+bulbs-lightbox {
+  .bulbs-lightbox-overlay-inner img {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+}
