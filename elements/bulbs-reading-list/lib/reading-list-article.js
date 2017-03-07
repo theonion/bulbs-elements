@@ -132,7 +132,6 @@ export default class ReadingListArticle {
 
   handleScroll (offset) {
     const newProgress = this.calculateProgress(offset);
-    // this.pushStateIfStartedReading(this.progress, newProgress);
     this.progress = newProgress;
     this.dispatcher.emit('reading-list-item-progress-update', this);
   }
