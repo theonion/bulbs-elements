@@ -641,6 +641,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let parsed = url.parse(vastUrl, true);
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(cust_params.dfp_campaign_id).to.equal('1');
+          expect(cust_params.type).to.equal('sponsored');
         });
       });
 

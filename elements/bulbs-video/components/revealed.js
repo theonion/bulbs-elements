@@ -167,6 +167,7 @@ export default class Revealed extends React.Component {
     let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
     let vastTestId = this.vastTest(window.location.search);
+    let type;
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
     baseUrl += '?sz=640x480';
@@ -188,6 +189,7 @@ export default class Revealed extends React.Component {
 
     if (this.props.targetCampaignId) {
       customParamValues += `&dfp_campaign_id=${this.props.targetCampaignId}`;
+      type = 'sponsored';
     }
 
     if (videoMeta.series_slug) {
@@ -196,7 +198,11 @@ export default class Revealed extends React.Component {
 
     if (videoMeta.specialCoverage) {
       customParamValues += `&dfp_specialcoverage=${videoMeta.specialCoverage}`;
-      customParamValues += `&type=special_coverage`;
+      type = 'special_coverage';
+    }
+
+    if (type) {
+      customParamValues += `&type=${type}`;
     }
 
     if (vastTestId) {
