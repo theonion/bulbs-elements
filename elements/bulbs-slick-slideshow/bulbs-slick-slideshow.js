@@ -3,9 +3,9 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import { 
-  getAnalyticsManager 
-  InViewMonitor
+import {
+  getAnalyticsManager,
+  InViewMonitor,
 } from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
