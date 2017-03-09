@@ -56,6 +56,7 @@ export default class ReadingListArticle {
       'dimension10': targeting.dimension10 || 'None',
       'dimension11': targeting.dimension11 || 'None',
       'dimension40': targeting.dimension40 || 'None',
+      'dimension41': targeting.dimension41 || 'None',
     };
   }
 
@@ -150,19 +151,6 @@ export default class ReadingListArticle {
     const progress = Math.abs(Math.floor(percentage));
 
     return progress > 100 ? 100 : progress;
-  }
-
-  prepareAnalytics () {
-    let targeting = this.dimensions;
-    // need to update these to match correct implementation - scook
-    ga('set', 'dimension2', targeting.dfp_campaign_id);
-    ga('set', 'dimension4', targeting.dfp_feature);
-    ga('set', 'dimension5', targeting.dfp_tag);
-    ga('set', 'dimension6', targeting.dfp_pagetype);
-    ga('set', 'dimension7', targeting.dfp_contentid);
-    ga('set', 'dimension8', targeting.dfp_publishdate);
-    ga('set', 'dimension9', targeting.dfp_evergreen);
-    ga('set', 'dimension10', targeting.dfp_title);
   }
 
   pushStateIfStartedReading (oldProgress, newProgress) {
