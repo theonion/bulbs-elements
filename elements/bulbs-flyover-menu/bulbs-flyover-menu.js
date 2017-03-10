@@ -89,11 +89,6 @@ class FlyoverMenu extends BulbsHTMLElement {
     const down = !up;
     this.lastY = event.pageY;
 
-    console.log('touchmove', 'up:', up);
-    console.log('touchmove', 'down:', down);
-    console.log('touchmove', 'allowUp', this.allowUp);
-    console.log('touchmove', 'allowDown', this.allowDown);
-
     if ((up && this.allowUp) || (down && this.allowDown)) {
       event.stopPropagation();
     }
