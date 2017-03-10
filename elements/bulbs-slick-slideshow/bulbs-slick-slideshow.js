@@ -117,9 +117,9 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.enableDisableNav(this.slides, currentSlide);
   }
 
-  // Set page type params here for "slideshow"
   trackPageView () {
-    this.analyticsManager.trackPageView(true);
+    this.analyticsManager.setDimension('navigation_method','slideshow');
+    this.analyticsManager.trackPageView(false);
   }
 
   bindContext () {

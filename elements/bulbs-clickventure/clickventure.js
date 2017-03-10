@@ -112,6 +112,7 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
+        this.analyticsManager.setDimension('navigation_method','clickventure');
         clickventure.analyticsManager.trackPageView(false, transitionName);
       });
     });
