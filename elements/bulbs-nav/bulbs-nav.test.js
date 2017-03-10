@@ -34,20 +34,20 @@ describe('bulbs-nav', () => {
   });
 
   describe('<bulbs-nav-toggle>', () => {
-    it('opens the corresponding panel on mouseover', () => {
+    it('opens the corresponding panel on mouseenter', () => {
       sandbox.spy(panelA, 'open');
 
-      toggleA.dispatchEvent(new CustomEvent('mouseover'));
+      toggleA.dispatchEvent(new CustomEvent('mouseenter'));
 
       expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.true;
       expect(toggleA.classList.contains('bulbs-nav-toggle-active')).to.be.true;
     });
 
-    it('closes the other panels on mouseover', () => {
+    it('closes the other panels on mouseenter', () => {
       toggleB.classList.add('bulbs-nav-panel-active');
       panelB.classList.add('bulbs-nav-panel-active');
 
-      toggleA.dispatchEvent(new CustomEvent('mouseover'));
+      toggleA.dispatchEvent(new CustomEvent('mouseenter'));
 
       expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
       expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;

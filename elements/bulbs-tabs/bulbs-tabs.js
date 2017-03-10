@@ -27,7 +27,9 @@ class BulbsTabItem extends BulbsHTMLElement {
   select () {
     [].forEach.call(this.otherTabs, otherTab => otherTab.deselect());
     this.classList.add('bulbs-tab-item-active');
-    this.tabContent.classList.add('bulbs-tab-content-active');
+    [].forEach.call(this.tabContents, (tabContent) => {
+      tabContent.classList.add('bulbs-tab-content-active');
+    });
     if (window.picturefill) {
       window.picturefill();
     }
@@ -35,7 +37,9 @@ class BulbsTabItem extends BulbsHTMLElement {
 
   deselect () {
     this.classList.remove('bulbs-tab-item-active');
-    this.tabContent.classList.remove('bulbs-tab-content-active');
+    [].forEach.call(this.tabContents, (tabContent) => {
+      tabContent.classList.remove('bulbs-tab-content-active');
+    });
   }
 
   get otherTabs () {
@@ -45,8 +49,8 @@ class BulbsTabItem extends BulbsHTMLElement {
     );
   }
 
-  get tabContent () {
-    return this.closest('bulbs-tabs').querySelector(`bulbs-tab-content[tab-name='${this.tabName}']`);
+  get tabContents () {
+    return this.closest('bulbs-tabs').querySelectorAll(`bulbs-tab-content[tab-name*='${this.tabName}']`);
   }
 
   get tabName () {

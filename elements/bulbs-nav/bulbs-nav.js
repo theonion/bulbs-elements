@@ -1,7 +1,7 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import './bulbs-nav.scss';
 
-const CLICK_TOGGLE = location.search === '?nav-toggle=click';
+const SCROLL_DISTANCE_TO_CLOSE = -150;
 
 const NavStateManager = {
   state: {},
@@ -27,12 +27,8 @@ const NavStateManager = {
 
 class BulbsNavToggle extends BulbsHTMLElement {
   createdCallback () {
-    if (CLICK_TOGGLE) {
-      this.addEventListener('click', () => this.toggleNavPanel());
-    }
-    else {
-      this.addEventListener('mouseenter', () => this.openNavPanel());
-    }
+    this.addEventListener('mouseenter', () => this.openNavPanel());
+    this.addEventListener('mouseleave', () => this.navPanel.requestClose());
   }
 
   get navPanel () {
@@ -52,14 +48,8 @@ class BulbsNavToggle extends BulbsHTMLElement {
 
 class BulbsNavPanel extends BulbsHTMLElement {
   createdCallback () {
-    if (CLICK_TOGGLE) {
-      // no-op
-    }
-    else {
-      this.addEventListener('mouseleave', () => {
-        NavStateManager.requestClose(this);
-      });
-    }
+    this.addEventListener('mouseleave', () => this.requestClose());
+    this.addEventListener('mouseenter', () => this.open());
     this.scrollHandler = this.scrollHandler.bind(this);
   }
 
@@ -80,12 +70,17 @@ class BulbsNavPanel extends BulbsHTMLElement {
   }
 
   scrollHandler () {
-    if (this.getBoundingClientRect().top < -100) {
+    if (this.getBoundingClientRect().top < SCROLL_DISTANCE_TO_CLOSE) {
       this.close();
     }
   }
 
+  requestClose () {
+    NavStateManager.requestClose(this);
+  }
+
   open () {
+    NavStateManager.cancelClose(this);
     if (!this.classList.contains('bulbs-nav-panel-active')) {
       [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
       this.classList.add('bulbs-nav-panel-active');
