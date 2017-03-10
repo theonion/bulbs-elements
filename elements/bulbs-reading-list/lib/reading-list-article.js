@@ -107,7 +107,7 @@ export default class ReadingListArticle {
     return !(this.isLoaded || this.fetchPending);
   }
 
-  fillContent (content) {
+  fillContent (content) {    
     this.element.innerHTML = content;
     this.element.dataset.loadStatus = 'loading';
   }
@@ -117,6 +117,12 @@ export default class ReadingListArticle {
     this.isLoaded = true;
     this.fetchPending = false;
     this.element.dataset.loadStatus = 'loaded';
+
+    if (!this.gaTrackerWrapper) {
+      this.gaTrackerWrapper = this.prepGaTracker();
+    }
+
+    // create event for passing gaTracker down
   }
 
   handleLoadContentError (response) {
@@ -163,11 +169,15 @@ export default class ReadingListArticle {
         this.gaTrackerWrapper = this.prepGaTracker();
       }
 
+      // send GA tracker to children
+      this.dispatchEvent('ga-event-tracker-initialized', this.gaTrackerWrapper);
+
       getAnalyticsManager().trackPageView(
         this.href,
         this.title,
         this.gaTrackerWrapper,
       );
+
       this.sendAnalyticsEvent();
       this.dispatcher.emit('reading-list-item-url-changed', this);
     });

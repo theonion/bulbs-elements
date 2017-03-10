@@ -2,7 +2,7 @@
 import { defaults } from 'lodash';
 import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
-import { getAnalyticsManager, InViewMonitor } from 'bulbs-elements/util';
+import { InViewMonitor } from 'bulbs-elements/util';
 
 velocity
   .RegisterUI('transition.turnPageIn', {
@@ -94,8 +94,10 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
+    // listen for GA
+    this.addEventListener('ga-analytics-manager-initialized', this.setAnalyticsManager.bind(this));
+
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
-    this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
     this.nodeClickCount = 1;
@@ -112,7 +114,7 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        this.analyticsManager.setDimension('navigation_method','clickventure');
+        clickventure.analyticsManager.setDimension('navigation_method','clickventure');
         clickventure.analyticsManager.trackPageView(false, transitionName);
       });
     });
@@ -229,5 +231,9 @@ export default class Clickventure {
     if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
       this.adsManager.reloadAds(this.sideAd);
     }
+  }
+
+  setAnalyticsManager (tracker) {
+    this.analyticsManager = tracker;
   }
 }
