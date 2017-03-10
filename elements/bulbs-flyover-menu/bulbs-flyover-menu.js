@@ -19,6 +19,10 @@ const flyoverRegistry = {
   },
 };
 
+function cancelTouchmove (event) {
+  event.preventDefault();
+}
+
 class FlyoverMenu extends BulbsHTMLElement {
   get flyoverState () {
     return flyoverRegistry.get(this.getAttribute('menu-name'));
@@ -41,7 +45,8 @@ class FlyoverMenu extends BulbsHTMLElement {
     this.classList.add('bulbs-flyover-open');
     if (this.hasAttribute('no-body-scroll')) {
       document.body.classList.add('noscroll-flyout-active');
-      this.addEventListener('touchmove', this.handleTouchmove);
+      document.body.addEventListener('touchmove', this.handleTouchmove);
+      document.addEventListener('touchmove', cancelTouchmove);
     }
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'true');
@@ -52,7 +57,8 @@ class FlyoverMenu extends BulbsHTMLElement {
     this.classList.remove('bulbs-flyover-open');
     if (this.hasAttribute('no-body-scroll')) {
       document.body.classList.remove('noscroll-flyout-active');
-      this.removeEventListener('touchmove', this.handleTouchmove);
+      document.body.removeEventListener('touchmove', this.handleTouchmove);
+      document.body.removeEventListener('touchmove', cancelTouchmove);
     }
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'false');
@@ -91,7 +97,7 @@ class FlyoverMenu extends BulbsHTMLElement {
     if ((up && this.allowUp) || (down && this.allowDown)) {
       event.stopPropagation();
     }
-    else {
+    else if (event.target.contains(this)) {
       event.preventDefault();
     }
   }
