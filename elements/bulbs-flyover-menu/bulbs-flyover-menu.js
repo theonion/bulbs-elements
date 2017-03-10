@@ -58,7 +58,7 @@ class FlyoverMenu extends BulbsHTMLElement {
     if (this.hasAttribute('no-body-scroll')) {
       document.body.classList.remove('noscroll-flyout-active');
       document.body.removeEventListener('touchmove', this.handleTouchmove);
-      document.body.removeEventListener('touchmove', cancelTouchmove);
+      document.removeEventListener('touchmove', cancelTouchmove);
     }
     this.flyoverState.openButtons.forEach((button) => {
       button.setAttribute('aria-expanded', 'false');
