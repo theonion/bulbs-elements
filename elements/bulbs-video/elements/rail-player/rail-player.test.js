@@ -22,6 +22,7 @@ describe('<rail-player>', () => {
         channel: 'channel',
         recircUrl: 'http://example.org/recirc',
         targetCampaignId: '12345',
+        targetSpecialCoverage: 'fun-special-coverage',
       };
     });
 
@@ -158,6 +159,10 @@ describe('<rail-player>', () => {
 
       it('passes targetCampaignId through', () => {
         expect(subject.targetCampaignId).to.eql('12345');
+      });
+
+      it('passes targetSpecialCoverage through', () => {
+        expect(subject.targetSpecialCoverage).to.eql('fun-special-coverage');
       });
 
       it('merges video from state', () => {

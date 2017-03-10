@@ -1,4 +1,3 @@
-import util from 'bulbs-elements/util';
 import {
   registerElement,
   BulbsHTMLElement,
@@ -18,7 +17,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
 
   addButton () {
     this.readMoreButton = document.createElement('button');
-    this.readMoreButton.setAttribute('class', 'bulbs-truncate-element-button');
+    this.readMoreButton.classList.add('bulbs-truncate-element-button');
     this.readMoreButton.innerHTML = 'Continue Reading';
     this.appendChild(this.readMoreButton);
   }
@@ -26,12 +25,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
   openElement () {
     let previousEl = this.previousElementSibling;
     previousEl.classList.remove('bulbs-truncate-element-parent-active');
-    util.getAnalyticsManager().sendEvent({
-      eventCategory: 'Content',
-      eventAction: 'Continue Reading',
-      eventLabel: '#',
-    });
-    this.remove();
+    this.classList.add('bulbs-truncate-element-inactive');
   }
 }
 

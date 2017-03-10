@@ -57,7 +57,10 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
+    // Removing for now, causing issue with videos autoplaying in background
+    //  - bryce, 2/22/17
+    // this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
+
     this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
@@ -68,8 +71,9 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
 
   firstPlay () {
     let items = this.querySelectorAll('bulbs-carousel-item');
+    let nowPlayingItems = this.querySelectorAll('[now-playing]');
 
-    if (items.length > 0) {
+    if (nowPlayingItems.length > 0 && items.length > 0) {
       this.selectItem(items[0]);
       this.applyState();
     }

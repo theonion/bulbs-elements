@@ -107,7 +107,7 @@ describe('<campaign-display> <CampaignDisplayRoot>', () => {
     it('wraps the components in a link to the clickthrough_url', function () {
       expect(subject.equals(
         <div className='campaign-display' data-track-label={campaign.clickthrough_url}>
-          <div className='inner'>
+          <div className='campaign-display-inner'>
             <a href={campaign.clickthrough_url}>
               <DfpPixel campaignId={campaign.id} placement={props.placement} />
               <Logo {...campaign} />

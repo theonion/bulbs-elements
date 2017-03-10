@@ -3,6 +3,7 @@ import {
   LockScroll,
   onReadyOrNow,
   getAnalyticsManager,
+  debouncePerFrame,
 } from 'bulbs-elements/util';
 import {
   registerElement,
@@ -11,9 +12,9 @@ import {
 import './bulbs-page.scss';
 
 // if we scroll past multiple pages at once they will all trigger a
-// 'pagestart' event. We only want to fire one. We use this governer
-// plate to skip all but the last 'pagestart' handler
-let pageStartGoverner;
+// 'pagestart' event. We only want to fire one. We use this debouncer
+// to skip all but the last 'pagestart' handler
+let pageStartDebouncer = debouncePerFrame();
 
 export default class BulbsPage extends BulbsHTMLElement {
   attachedCallback () {
@@ -37,13 +38,7 @@ export default class BulbsPage extends BulbsHTMLElement {
   }
 
   handlePageStart () {
-    // using request animation frame enforces only one
-    // handlePagStart call will have an effect per frame.
-    if (pageStartGoverner) {
-      window.cancelAnimationFrame(pageStartGoverner);
-    }
-
-    pageStartGoverner = window.requestAnimationFrame(() => {
+    pageStartDebouncer(() => {
       history.replaceState(
         {},
         this.getAttribute('pushstate-title'),
@@ -54,7 +49,6 @@ export default class BulbsPage extends BulbsHTMLElement {
         this.getAttribute('pushstate-url'),
         this.getAttribute('pushstate-title')
       );
-      pageStartGoverner = null;
     });
   }
 }
