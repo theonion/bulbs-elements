@@ -109,7 +109,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    window.onionan.trackPageView(true);
+    window.analyticsManager.trackPageView(true);
     this.enableDisableNav(this.slides, currentSlide);
   }
 
