@@ -37,6 +37,8 @@ export default class ReadingListArticle {
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.dimensions = this.getGaDimensions();
+    this.gaTrackerWrapper = this.prepGaTracker.bind(this).call();
+    this.element.gaTracker = this.gaTrackerWrapper;
     this.registerEvents();
   }
 
@@ -117,13 +119,6 @@ export default class ReadingListArticle {
     this.isLoaded = true;
     this.fetchPending = false;
     this.element.dataset.loadStatus = 'loaded';
-
-    if (!this.gaTrackerWrapper) {
-      this.gaTrackerWrapper = this.prepGaTracker();
-    }
-
-    // allow children to use same analytics manager
-    this.dispatchEvent(new CustomEvent('ga-analytics-manager-initialized', this.gaTrackerWrapper));
   }
 
   handleLoadContentError (response) {
@@ -166,12 +161,6 @@ export default class ReadingListArticle {
   handlePageStart () {
     pageStartDebouncer(() => {
       window.history.replaceState(null, this.title, this.href);
-      if (!this.gaTrackerWrapper) {
-        this.gaTrackerWrapper = this.prepGaTracker();
-      }
-
-      // send GA tracker to children
-      this.dispatchEvent('ga-event-tracker-initialized', this.gaTrackerWrapper);
 
       getAnalyticsManager().trackPageView(
         this.href,

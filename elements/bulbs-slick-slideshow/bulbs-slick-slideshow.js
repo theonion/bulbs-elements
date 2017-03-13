@@ -3,7 +3,10 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import { InViewMonitor } from 'bulbs-elements/util';
+import {
+  getAnalyticsManager,
+  InViewMonitor
+} from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
 
@@ -28,9 +31,6 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navNext = this.navLinks.find('.slider-next');
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
-
-    // listen for GA
-    this.addEventListener('ga-analytics-manager-initialized', this.setAnalyticsManager.bind(this));
 
     this.init();
   }
@@ -117,6 +117,10 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   trackPageView () {
+    if (!this.analyticsManager) {
+      this.analyticsManager = this.getAnalyticsManager();
+    }
+
     this.analyticsManager.setDimension('navigation_method','slideshow');
     this.analyticsManager.trackPageView(false);
   }
@@ -128,11 +132,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
     this.restartShow = this.restartShow.bind(this);
-  }
-
-  setAnalyticsManager (tracker) {
-    console.log('DOING THE THING');
-    this.analyticsManager = tracker;
+    this.getAnalyticsManager = getAnalyticsManager.bind(this);
   }
 
   setupEventHandlers () {
