@@ -81,6 +81,38 @@ describe('bulbs-flyover-menu', () => {
     });
   });
 
+  describe('[noscroll-flyout-active]', () => {
+    beforeEach(() => subject.setAttribute('no-body-scroll', ''));
+
+    describe('openFlyover', () => {
+      it('adds noscroll-flyout-active to body', () => {
+        document.body.classList.remove('noscroll-flyout-active');
+        subject.openFlyover();
+        expect(document.body.classList.contains('noscroll-flyout-active')).to.be.true;
+      });
+
+      it('adds noscroll-flyout-active to document element', () => {
+        document.documentElement.classList.remove('noscroll-flyout-active');
+        subject.openFlyover();
+        expect(document.documentElement.classList.contains('noscroll-flyout-active')).to.be.true;
+      });
+    });
+
+    describe('closeFlyover', () => {
+      it('removes noscroll-flyout-active from body', () => {
+        document.body.classList.add('noscroll-flyout-active');
+        subject.closeFlyover();
+        expect(document.body.classList.contains('noscroll-flyout-active')).to.be.false;
+      });
+
+      it('removes noscroll-flyout-active from document element', () => {
+        document.documentElement.classList.add('noscroll-flyout-active');
+        subject.closeFlyover();
+        expect(document.documentElement.classList.contains('noscroll-flyout-active')).to.be.false;
+      });
+    });
+  });
+
   describe('<button is="bulbs-flyover-open">', () => {
     it('sets default aria metadatat', () => {
       expect(openButton.getAttribute('aria-haspopup')).to.eql('true');

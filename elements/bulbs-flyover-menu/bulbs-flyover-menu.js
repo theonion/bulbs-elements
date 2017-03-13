@@ -44,6 +44,7 @@ class FlyoverMenu extends BulbsHTMLElement {
   openFlyover () {
     this.classList.add('bulbs-flyover-open');
     if (this.hasAttribute('no-body-scroll')) {
+      document.documentElement.classList.add('noscroll-flyout-active');
       document.body.classList.add('noscroll-flyout-active');
       document.body.addEventListener('touchmove', this.handleTouchmove);
       document.addEventListener('touchmove', cancelTouchmove);
@@ -56,6 +57,7 @@ class FlyoverMenu extends BulbsHTMLElement {
   closeFlyover () {
     this.classList.remove('bulbs-flyover-open');
     if (this.hasAttribute('no-body-scroll')) {
+      document.documentElement.classList.remove('noscroll-flyout-active');
       document.body.classList.remove('noscroll-flyout-active');
       document.body.removeEventListener('touchmove', this.handleTouchmove);
       document.removeEventListener('touchmove', cancelTouchmove);

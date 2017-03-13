@@ -1,5 +1,8 @@
-.noscroll-flyout-active {
-  overflow: hidden;
+html.noscroll-flyout-active,
+body.noscroll-flyout-active {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 bulbs-flyover-menu {
