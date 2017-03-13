@@ -4,6 +4,7 @@ import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
 import {
   getAnalyticsManager,
+  getAnalyticsWrapper,
   InViewMonitor,
 } from 'bulbs-elements/util';
 
@@ -98,7 +99,8 @@ export default class Clickventure {
     let hash = window.location.hash;
 
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
-    this.analyticsManager = getAnalyticsManager.bind(this).call();
+    this.analyticsManager = getAnalyticsManager();
+    this.analyticsWrapper = getAnalyticsWrapper.bind(this).call();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
     this.nodeClickCount = 1;
@@ -115,8 +117,8 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.analyticsManager.setDimension('navigation_method','clickventure');
-        clickventure.analyticsManager.trackPageView(false, transitionName);
+        clickventure.analyticsWrapper.analyticsWrapper('set','navigation_method','slideshow');
+        clickventure.analyticsManager.trackPageView(false, transitionName, clickventure.analyticsWrapper);
       });
     });
 

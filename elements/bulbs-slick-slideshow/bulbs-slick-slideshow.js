@@ -5,7 +5,8 @@ import {
 import $ from 'jquery';
 import {
   getAnalyticsManager,
-  InViewMonitor
+  getAnalyticsWrapper,
+  InViewMonitor,
 } from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
@@ -31,6 +32,11 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navNext = this.navLinks.find('.slider-next');
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
+
+    this.analyticsManager = getAnalyticsManager();
+    this.parent = this.slideshow.closest('bulbs-reading-list-item')[0];
+    this.href = this.parent.dataset.href;
+    this.title = this.parent.dataset.title;
 
     this.init();
   }
@@ -117,12 +123,17 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   trackPageView () {
-    if (!this.analyticsManager) {
-      this.analyticsManager = this.getAnalyticsManager();
+    if (!this.analyticsWrapper) {
+      this.analyticsWrapper = this.getAnalyticsWrapper();
     }
 
-    this.analyticsManager.setDimension('navigation_method','slideshow');
-    this.analyticsManager.trackPageView(false);
+    analyticsManager.trackPageView(
+      this.href,
+      this.title,
+      this.analyticsWrapper,
+    );
+
+    this.analyticsWrapper('set','navigation_method','slideshow');
   }
 
   bindContext () {
@@ -132,7 +143,9 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
     this.restartShow = this.restartShow.bind(this);
-    this.getAnalyticsManager = getAnalyticsManager.bind(this);
+
+    this.getAnalyticsWrapper = getAnalyticsWrapper.bind(this);
+    this.trackPageView = this.trackPageView.bind(this);
   }
 
   setupEventHandlers () {
