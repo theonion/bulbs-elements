@@ -7,7 +7,11 @@ import {
   getWindowDimensions,
   getAnalyticsManager,
   prepGaEventTracker,
+  InViewMonitor,
+  debouncePerFrame,
 } from 'bulbs-elements/util';
+
+let pageStartDebouncer = debouncePerFrame();
 
 export default class ReadingListArticle {
   constructor (element, dispatcher, index) {
@@ -18,6 +22,8 @@ export default class ReadingListArticle {
     element.requireAttribute('data-content-analytics-dimensions');
 
     this.element = element;
+    InViewMonitor.add(this.element);
+    this.element.addEventListener('pagestart', () => this.handlePageStart());
     this.dispatcher = dispatcher;
     this.index = index;
     this.progress = 0;
@@ -128,7 +134,6 @@ export default class ReadingListArticle {
 
   handleScroll (offset) {
     const newProgress = this.calculateProgress(offset);
-    this.pushStateIfStartedReading(this.progress, newProgress);
     this.progress = newProgress;
     this.dispatcher.emit('reading-list-item-progress-update', this);
   }
@@ -153,23 +158,21 @@ export default class ReadingListArticle {
     return progress > 100 ? 100 : progress;
   }
 
-  pushStateIfStartedReading (oldProgress, newProgress) {
-    if (this.startedReading(oldProgress, newProgress)) {
-      if (this.href !== window.location.pathname) {
-        this.pushToHistory();
-        if (!this.gaTrackerWrapper) {
-          this.gaTrackerWrapper = this.prepGaTracker();
-        }
-
-        getAnalyticsManager().trackPageView(
-          this.href,
-          this.title,
-          this.gaTrackerWrapper,
-        );
-        this.sendAnalyticsEvent();
-        this.dispatcher.emit('reading-list-item-url-changed', this);
+  handlePageStart () {
+    pageStartDebouncer(() => {
+      window.history.replaceState(null, this.title, this.href);
+      if (!this.gaTrackerWrapper) {
+        this.gaTrackerWrapper = this.prepGaTracker();
       }
-    }
+
+      getAnalyticsManager().trackPageView(
+        this.href,
+        this.title,
+        this.gaTrackerWrapper,
+      );
+      this.sendAnalyticsEvent();
+      this.dispatcher.emit('reading-list-item-url-changed', this);
+    });
   }
 
   sendAnalyticsEvent () {
