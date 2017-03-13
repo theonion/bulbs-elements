@@ -8,7 +8,6 @@ import {
   filterBadResponse,
   getResponseText,
   InViewMonitor,
-  loadOnDemand,
 } from 'bulbs-elements/util';
 
 let pageStartDebouncer = debouncePerFrame();
@@ -106,4 +105,4 @@ class BulbsReadingListItem extends BulbsHTMLElement {
 
 registerElement('bulbs-reading-list-item', BulbsReadingListItem);
 
-export default loadOnDemand(BulbsReadingListItem);
+export default BulbsReadingListItem;
