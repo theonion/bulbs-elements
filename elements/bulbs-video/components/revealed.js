@@ -72,6 +72,8 @@ export default class Revealed extends React.Component {
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
       'dimension11': videoAdConfig, // Video Ad Config
+      'dimension12': targeting.dimension12 || 'None',
+      'dimension13': targeting.dimension13 || 'None',
     };
     let gaTrackerAction = prepGaEventTracker(
       'videoplayer',
