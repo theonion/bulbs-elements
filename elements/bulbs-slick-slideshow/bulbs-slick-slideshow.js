@@ -131,6 +131,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   setAnalyticsManager (tracker) {
+    console.log('DOING THE THING');
     this.analyticsManager = tracker;
   }
 

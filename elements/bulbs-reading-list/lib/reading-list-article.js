@@ -122,7 +122,8 @@ export default class ReadingListArticle {
       this.gaTrackerWrapper = this.prepGaTracker();
     }
 
-    // create event for passing gaTracker down
+    // allow children to use same analytics manager
+    this.dispatchEvent(new CustomEvent('ga-analytics-manager-initialized', this.gaTrackerWrapper));
   }
 
   handleLoadContentError (response) {
