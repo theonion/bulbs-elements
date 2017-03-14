@@ -129,7 +129,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
       this.analyticsWrapper = this.getAnalyticsWrapper();
     }
 
-    analyticsManager.trackPageView(
+    this.analyticsManager.trackPageView(
       this.href,
       this.title,
       this.analyticsWrapper,

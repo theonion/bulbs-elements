@@ -109,7 +109,7 @@ export default class ReadingListArticle {
     return !(this.isLoaded || this.fetchPending);
   }
 
-  fillContent (content) {    
+  fillContent (content) {
     this.element.innerHTML = content;
     this.element.dataset.loadStatus = 'loading';
   }
