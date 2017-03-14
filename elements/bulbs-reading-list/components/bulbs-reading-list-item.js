@@ -20,9 +20,9 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     invariant(this.dataset.id, markdownText + 'data-id');
     invariant(this.dataset.href, markdownText + 'data-href');
     invariant(this.dataset.partialUrl, markdownText + 'data-partial-url');
-    invariant(this.dataset.title, markdownText  + 'data-title');
+    invariant(this.dataset.title, markdownText + 'data-title');
     invariant(this.dataset.contentAnalyticsDimensions,
-      markdownText  + 'data-content-analytics-dimensions');
+      markdownText + 'data-content-analytics-dimensions');
 
     InViewMonitor.add(this);
     this.id = parseInt(this.dataset.id, 10);
