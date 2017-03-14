@@ -197,7 +197,7 @@ export default class Clickventure {
           stagger: 100,
         });
         window.picturefill(newNode);
-      }).bind(this),
+      }),
     });
     this.adRefresh();
   }
