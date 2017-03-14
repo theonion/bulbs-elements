@@ -197,7 +197,6 @@ export default class Clickventure {
           stagger: 100,
         });
         window.picturefill(newNode);
-        this.element.trigger('clickventure-page-change-complete', [this]);
       }).bind(this),
     });
     this.adRefresh();
