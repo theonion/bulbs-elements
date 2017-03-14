@@ -7,7 +7,9 @@ import {
   debouncePerFrame,
   filterBadResponse,
   getResponseText,
+  getAnalyticsManager,
   InViewMonitor,
+  prepGaEventTracker,
 } from 'bulbs-elements/util';
 
 let pageStartDebouncer = debouncePerFrame();
@@ -38,6 +40,7 @@ class BulbsReadingListItem extends BulbsHTMLElement {
 
   registerEvents () {
     this.addEventListener('approachingviewport', this.loadContent.bind(this));
+    this.addEventListener('pagestart', this.handlePageStart.bind(this));
   }
 
   getGaDimensions () {
@@ -57,6 +60,23 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       'dimension10': targeting.dimension10 || 'None',
       'dimension11': targeting.dimension11 || 'None',
     };
+  }
+
+  prepGaTracker () {
+    return prepGaEventTracker(
+      'pageview',
+      window.GOOGLE_ANALYTICS_ID,
+      this.dimensions,
+    );
+  }
+
+  sendAnalyticsEvent () {
+    this.gaTrackerWrapper(
+      'send', 'event',
+      'reading_list',
+      'scroll_view',
+      this.href,
+    );
   }
 
   loadContent () {
@@ -101,6 +121,28 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.fetchPending = false;
     return new Promise((resolve, reject) => reject(`ReadingListArticle.loadContent(): fetch failed "${response.status} ${response.statusText}"`));
   }
+
+  handlePageStart () {
+    pageStartDebouncer(() => {
+      if(!this.gaTrackerWrapper) {
+        this.gaTrackerWrapper = this.prepGaTracker();
+      }
+
+      history.replaceState(
+        {},
+        this.title,
+        this.href,
+      );
+
+      getAnalyticsManager().trackPageView(
+        this.href,
+        this.title,
+        this.gaTrackerWrapper,
+      );
+      this.sendAnalyticsEvent();
+    });
+  }
+
 }
 
 registerElement('bulbs-reading-list-item', BulbsReadingListItem);
