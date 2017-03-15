@@ -150,13 +150,20 @@ class BulbsLiveblogResponses extends BulbsHTMLElement {
 
   handleFetchSuccess (htmlText) {
     this.fetching = false;
+
+    this.removeNewResponsesButton();
+
+    if (!htmlText.trim()) {
+      // there's nothing in the response, do no work
+      return;
+    }
+
     let parser = document.createElement('div');
     parser.innerHTML = htmlText;
     this.responseStaging.innerHTML = '';
     while (parser.firstElementChild) {
       this.responseStaging.append(parser.firstElementChild);
     }
-    this.removeNewResponsesButton();
     let newResponsesButton = this.makeNewResponsesButton();
     this.append(newResponsesButton);
   }
