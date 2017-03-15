@@ -34,6 +34,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.restart = this.slideshow.find('a.restart');
 
     this.analyticsManager = getAnalyticsManager();
+    this.analyticsWrapper = getAnalyticsWrapper.bind(this).call();
     this.parent = this.slideshow.closest('bulbs-reading-list-item')[0];
     this.href = this.parent.dataset.href;
     this.title = this.parent.dataset.title;
@@ -123,17 +124,13 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
   }
 
   trackPageView () {
-    if (!this.analyticsWrapper) {
-      this.analyticsWrapper = this.getAnalyticsWrapper();
-    }
+    this.analyticsWrapper('set','navigation_method','slideshow');
 
-    analyticsManager.trackPageView(
+    this.analyticsManager.trackPageView(
       this.href,
       this.title,
       this.analyticsWrapper,
     );
-
-    this.analyticsWrapper('set','navigation_method','slideshow');
   }
 
   bindContext () {
@@ -143,8 +140,6 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
     this.restartShow = this.restartShow.bind(this);
-
-    this.getAnalyticsWrapper = getAnalyticsWrapper.bind(this);
     this.trackPageView = this.trackPageView.bind(this);
   }
 
