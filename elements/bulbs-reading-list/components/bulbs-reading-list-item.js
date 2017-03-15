@@ -23,6 +23,8 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     invariant(this.dataset.title, markdownText + 'data-title');
     invariant(this.dataset.contentAnalyticsDimensions,
       markdownText + 'data-content-analytics-dimensions');
+    invariant(window.GOOGLE_ANALYTICS_ID,
+      '<bulbs-reading-list-item> requires GOOGLE_ANALYTICS_ID set on the window');
 
     InViewMonitor.add(this);
     this.id = parseInt(this.dataset.id, 10);
@@ -119,7 +121,8 @@ class BulbsReadingListItem extends BulbsHTMLElement {
 
   handleLoadContentError (response) {
     this.fetchPending = false;
-    return new Promise((resolve, reject) => reject(`ReadingListArticle.loadContent(): fetch failed "${response.status} ${response.statusText}"`));
+    return new Promise((resolve, reject) =>
+      reject(`<bulbs-reading-list-item> loadContent(): fetch failed "${response.status} ${response.statusText}"`));
   }
 
   handlePageStart () {
@@ -142,7 +145,6 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       this.sendAnalyticsEvent();
     });
   }
-
 }
 
 registerElement('bulbs-reading-list-item', BulbsReadingListItem);
