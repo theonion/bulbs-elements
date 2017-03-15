@@ -61,6 +61,8 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       'dimension9': targeting.dimension9 || 'None',
       'dimension10': targeting.dimension10 || 'None',
       'dimension11': targeting.dimension11 || 'None',
+      'dimension12': targeting.dimension12 || 'None',
+      'dimension13': targeting.dimension13 || 'None',
     };
   }
 
