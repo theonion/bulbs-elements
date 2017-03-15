@@ -36,8 +36,10 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.analyticsManager = getAnalyticsManager();
     this.analyticsWrapper = getAnalyticsWrapper.bind(this).call();
     this.parent = this.slideshow.closest('bulbs-reading-list-item')[0];
-    this.href = this.parent.dataset.href;
-    this.title = this.parent.dataset.title;
+    if (this.parent) {
+      this.href = this.parent.dataset.href;
+      this.title = this.parent.dataset.title;
+    }
 
     this.init();
   }

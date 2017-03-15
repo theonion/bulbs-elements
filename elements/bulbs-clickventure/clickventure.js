@@ -117,7 +117,7 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.analyticsWrapper.analyticsWrapper('set','navigation_method','slideshow');
+        clickventure.analyticsWrapper('set','navigation_method','slideshow');
         clickventure.analyticsManager.trackPageView(false, transitionName, clickventure.analyticsWrapper);
       });
     });
