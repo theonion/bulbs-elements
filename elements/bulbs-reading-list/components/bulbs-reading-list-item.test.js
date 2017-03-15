@@ -17,7 +17,7 @@ describe('BulbsReadingListItem', () => {
     subject.setAttribute('data-content-analytics-dimensions',
       '{ "dimension1": "dimension1", "dimension2": "dimension2"}'
     );
-    window.GOOGLE_ANALYTICS_ID = '1234'
+    window.GOOGLE_ANALYTICS_ID = '1234';
     markdownText = '<bulbs-reading-list-item> requires attribute: ';
 
     sandbox = sinon.sandbox.create();
@@ -30,31 +30,31 @@ describe('BulbsReadingListItem', () => {
   });
 
   context('requires attribute: ', () => {
-    it('data-id', ()  => {
+    it('data-id', () => {
       subject.removeAttribute('data-id');
       expect(() => {
         subject.attachedCallback();
       }).to.throw(markdownText + 'data-id');
     });
-    it('data-href', ()  => {
+    it('data-href', () => {
       subject.removeAttribute('data-href');
       expect(() => {
         subject.attachedCallback();
       }).to.throw(markdownText + 'data-href');
     });
-    it('data-partial-url', ()  => {
+    it('data-partial-url', () => {
       subject.removeAttribute('data-partial-url');
       expect(() => {
         subject.attachedCallback();
       }).to.throw(markdownText + 'data-partial-url');
     });
-    it('data-title', ()  => {
+    it('data-title', () => {
       subject.removeAttribute('data-title');
       expect(() => {
         subject.attachedCallback();
       }).to.throw(markdownText + 'data-title');
     });
-    it('data-content-analytics-dimensions', ()  => {
+    it('data-content-analytics-dimensions', () => {
       subject.removeAttribute('data-content-analytics-dimensions');
       expect(() => {
         subject.attachedCallback();
@@ -63,7 +63,7 @@ describe('BulbsReadingListItem', () => {
   });
 
   it('requires GOOGLE_ANALYTICS_ID set on the window', () => {
-    window.GOOGLE_ANALYTICS_ID = undefined;
+    window.GOOGLE_ANALYTICS_ID = undefined; // eslint-disable-line no-undefined
     expect(() => {
       subject.attachedCallback();
     }).to.throw('<bulbs-reading-list-item> requires GOOGLE_ANALYTICS_ID set on the window');
@@ -82,9 +82,9 @@ describe('BulbsReadingListItem', () => {
         'dimension7': 'None',
         'dimension8': 'None',
         'dimension9': 'None',
-        'dimension10':'None',
-        'dimension11':'None',
-      }
+        'dimension10': 'None',
+        'dimension11': 'None',
+      };
       expect(response).to.eql(expected);
     });
   });
