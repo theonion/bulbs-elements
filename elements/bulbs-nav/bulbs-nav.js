@@ -64,7 +64,7 @@ class BulbsNavPanel extends BulbsHTMLElement {
 
   get otherPanels () {
     return [].filter.call(
-      this.parentNode.querySelectorAll('bulbs-nav-panel'),
+      document.querySelectorAll('bulbs-nav-panel'),
       child => child !== this
     );
   }
