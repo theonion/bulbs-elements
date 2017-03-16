@@ -33,7 +33,7 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.title = this.dataset.title;
     this.gaDimensions = this.getGaDimensions();
 
-    this.isLoaded = false;
+    this.isLoaded = false || this.dataset.isStatic === 'true';
     this.fetchPending = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
 
