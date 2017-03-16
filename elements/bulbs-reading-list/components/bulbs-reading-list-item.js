@@ -32,8 +32,7 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.partialUrl = this.dataset.partialUrl;
     this.title = this.dataset.title;
     this.gaDimensions = this.getGaDimensions();
-
-    this.isLoaded = false || this.dataset.isStatic === 'true';
+    this.isLoaded = false;
     this.fetchPending = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
 
