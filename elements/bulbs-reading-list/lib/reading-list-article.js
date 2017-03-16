@@ -37,6 +37,7 @@ export default class ReadingListArticle {
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.dimensions = this.getGaDimensions();
+    this.analyticsManager = getAnalyticsManager();
     this.gaTrackerWrapper = this.prepGaTracker.bind(this).call();
     this.element.gaTracker = this.gaTrackerWrapper;
     this.registerEvents();
@@ -162,7 +163,7 @@ export default class ReadingListArticle {
     pageStartDebouncer(() => {
       window.history.replaceState(null, this.title, this.href);
 
-      getAnalyticsManager().trackPageView(
+      this.analyticsManager.trackPageView(
         this.href,
         this.title,
         this.gaTrackerWrapper,
