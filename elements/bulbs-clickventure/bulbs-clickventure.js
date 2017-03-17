@@ -13,17 +13,11 @@ function fireAnalytics () {
   }
 }
 
-function collapseResponsiveMenu () {
-  $('.collapsynav').respMenuCollapse();
-}
-
 class BulbsClickventure extends BulbsHTMLElement {
   attachedCallback () {
     let $element = $(this);
     $element.data('clickventurePlugin', new Clickventure($element));
     $element.on('clickventure-page-change', fireAnalytics);
-    $element.on('clickventure-page-change-complete', collapseResponsiveMenu);
-    // new ClickventureManager('.clickventure-container');
   }
 }
 
