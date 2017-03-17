@@ -215,7 +215,7 @@ export default class Clickventure {
         complete: (() => {
           activeNode.removeClass('clickventure-node-active');
           this.showNewNode(nodeId, transition);
-        }).bind(this),
+        }),
       });
     }
     else {
