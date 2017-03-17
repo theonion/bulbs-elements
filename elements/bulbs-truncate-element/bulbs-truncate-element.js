@@ -2,11 +2,13 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
+import invariant from 'invariant';
 import './bulbs-truncate-element.scss';
 
 class BulbsTruncateElement extends BulbsHTMLElement {
 
   attachedCallback () {
+    invariant(this.dataset.label, '<bulbs-truncate-element> requires a "data-label" attribute');
     let previousEl = this.previousElementSibling;
     this.addButton = this.addButton.bind(this);
     this.openElement = this.openElement.bind(this);
@@ -18,7 +20,7 @@ class BulbsTruncateElement extends BulbsHTMLElement {
   addButton () {
     this.readMoreButton = document.createElement('button');
     this.readMoreButton.classList.add('bulbs-truncate-element-button');
-    this.readMoreButton.innerHTML = 'Continue Reading';
+    this.readMoreButton.innerHTML = this.dataset.label;
     this.appendChild(this.readMoreButton);
   }
 
