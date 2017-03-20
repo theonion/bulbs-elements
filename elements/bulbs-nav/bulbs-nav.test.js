@@ -43,26 +43,32 @@ describe('bulbs-nav', () => {
       expect(toggleA.classList.contains('bulbs-nav-toggle-active')).to.be.true;
     });
 
-    it('closes the other panels on mouseenter', () => {
+    it('closes the other panels on mouseenter', (done) => {
       toggleB.classList.add('bulbs-nav-panel-active');
       panelB.classList.add('bulbs-nav-panel-active');
 
       toggleA.dispatchEvent(new CustomEvent('mouseenter'));
 
-      expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
-      expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
+      requestAnimationFrame(() => {
+        expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
+        expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
+        done();
+      });
     });
   });
 
   describe('<bulbs-nav-panel>', () => {
-    it('closes on mouseleave', () => {
+    it('closes on mouseleave', (done) => {
       toggleB.classList.add('bulbs-nav-panel-active');
       panelB.classList.add('bulbs-nav-panel-active');
 
       panelB.dispatchEvent(new CustomEvent('mouseleave'));
 
-      expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
-      expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
+      requestAnimationFrame(() => {
+        expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
+        expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
+        done();
+      });
     });
   });
 });
