@@ -91,7 +91,7 @@ export default class BulbsPage extends BulbsHTMLElement {
   sendAnalyticsEvent () {
     this.gaTrackerWrapper(
       'send', 'event',
-      'multi_entry',
+      'reading_list',
       'scroll_view',
       this.getAttribute('pushstate-url')
     )
