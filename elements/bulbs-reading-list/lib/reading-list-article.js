@@ -22,7 +22,11 @@ export default class ReadingListArticle {
     element.requireAttribute('data-content-analytics-dimensions');
 
     this.element = element;
-    InViewMonitor.add(this.element);
+    InViewMonitor.add(this.element, {
+      get distanceFromTop () {
+        return 200;
+      },
+    });
     this.element.addEventListener('pagestart', () => this.handlePageStart());
     this.dispatcher = dispatcher;
     this.index = index;
