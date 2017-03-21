@@ -94,7 +94,7 @@ export default class BulbsPage extends BulbsHTMLElement {
       'reading_list',
       'scroll_view',
       this.getAttribute('pushstate-url')
-    )
+    );
   }
 
 }
