@@ -33,8 +33,10 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.restart = this.slideshow.find('a.restart');
 
     let parent = this.slideshow.closest('bulbs-reading-list-item')[0];
-    let parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
-    this.analyticsWrapper = prepGaWrapper(parentAnalyticsDimensions, { 'dimension12': 'slideshow' });
+    if (parent) {
+      this.parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
+    }
+    this.analyticsWrapper = prepGaWrapper(this.parentAnalyticsDimensions, { 'dimension12': 'slideshow' });
 
     this.init();
   }
@@ -116,7 +118,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    this.analyticsWrapper.trackPageView(false);
+    this.analyticsWrapper.trackPageView('send', 'event', 'reading_list', 'slideshow');
     this.enableDisableNav(this.slides, currentSlide);
   }
 
