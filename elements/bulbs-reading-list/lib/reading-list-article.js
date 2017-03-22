@@ -160,8 +160,8 @@ export default class ReadingListArticle {
   }
 
   isArticleBoundaryInView (event) {
-    var articleTopNearViewportTop = event.detail.boundingRect.top <= this.pageStartThreshold && event.detail.boundingRect.top > 0;
-    var articleBottomNearViewportTop = event.detail.boundingRect.bottom >= this.pageStartThreshold && event.detail.boundingRect.top < 0;
+    let articleTopNearViewportTop = event.detail.boundingRect.top <= this.pageStartThreshold && event.detail.boundingRect.top > 0;
+    let articleBottomNearViewportTop = event.detail.boundingRect.bottom >= this.pageStartThreshold && event.detail.boundingRect.top < 0;
 
     return articleTopNearViewportTop || articleBottomNearViewportTop;
   }
