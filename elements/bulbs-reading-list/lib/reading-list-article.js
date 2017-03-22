@@ -22,12 +22,8 @@ export default class ReadingListArticle {
     element.requireAttribute('data-content-analytics-dimensions');
 
     this.element = element;
-    InViewMonitor.add(this.element, {
-      get distanceFromTop () {
-        return 200;
-      },
-    });
-    this.element.addEventListener('pagestart', () => this.handlePageStart());
+    InViewMonitor.add(this.element);
+    this.element.addEventListener('inviewrect', this.handlePageStart.bind(this));
     this.dispatcher = dispatcher;
     this.index = index;
     this.progress = 0;
@@ -36,6 +32,7 @@ export default class ReadingListArticle {
     this.partialUrl = element.dataset.partialUrl;
     this.title = element.dataset.title;
     this.loadDistanceThreshold = 400;
+    this.pageStartThreshold = 200; // Pixels from top of viewport before considered to be on different adjacent page
     this.readDistanceOffset = 250;
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
@@ -162,21 +159,30 @@ export default class ReadingListArticle {
     return progress > 100 ? 100 : progress;
   }
 
-  handlePageStart () {
-    pageStartDebouncer(() => {
-      window.history.replaceState(null, this.title, this.href);
-      if (!this.gaTrackerWrapper) {
-        this.gaTrackerWrapper = this.prepGaTracker();
-      }
+  isArticleBoundaryInView (event) {
+    var articleTopNearViewportTop = event.detail.boundingRect.top <= this.pageStartThreshold && event.detail.boundingRect.top > 0;
+    var articleBottomNearViewportTop = event.detail.boundingRect.bottom >= this.pageStartThreshold && event.detail.boundingRect.top < 0;
 
-      getAnalyticsManager().trackPageView(
-        this.href,
-        this.title,
-        this.gaTrackerWrapper,
-      );
-      this.sendAnalyticsEvent();
-      this.dispatcher.emit('reading-list-item-url-changed', this);
-    });
+    return articleTopNearViewportTop || articleBottomNearViewportTop;
+  }
+
+  handlePageStart (event) {
+    if ((window.location.pathname === this.href) || !this.isArticleBoundaryInView(event)) {
+      return;
+    }
+
+    window.history.replaceState(null, this.title, this.href);
+    if (!this.gaTrackerWrapper) {
+      this.gaTrackerWrapper = this.prepGaTracker();
+    }
+
+    getAnalyticsManager().trackPageView(
+      this.href,
+      this.title,
+      this.gaTrackerWrapper,
+    );
+    this.sendAnalyticsEvent();
+    this.dispatcher.emit('reading-list-item-url-changed', this);
   }
 
   sendAnalyticsEvent () {
@@ -190,10 +196,6 @@ export default class ReadingListArticle {
 
   startedReading (oldProgress, newProgress) {
     return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100);
-  }
-
-  pushToHistory () {
-    window.history.replaceState(null, this.title, this.href);
   }
 
   isNearlyInView () {
