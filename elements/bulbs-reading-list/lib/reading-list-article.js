@@ -23,7 +23,7 @@ export default class ReadingListArticle {
 
     this.element = element;
     InViewMonitor.add(this.element);
-    this.element.addEventListener('pagestart', () => this.handlePageStart());
+    this.element.addEventListener('inviewrect', this.handlePageStart.bind(this));
     this.dispatcher = dispatcher;
     this.index = index;
     this.progress = 0;
@@ -32,6 +32,7 @@ export default class ReadingListArticle {
     this.partialUrl = element.dataset.partialUrl;
     this.title = element.dataset.title;
     this.loadDistanceThreshold = 400;
+    this.pageStartThreshold = 200; // Pixels from top of viewport before considered to be on different adjacent page
     this.readDistanceOffset = 250;
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
@@ -161,7 +162,18 @@ export default class ReadingListArticle {
     return progress > 100 ? 100 : progress;
   }
 
-  handlePageStart () {
+  isArticleBoundaryInView (event) {
+    let articleTopNearViewportTop = event.detail.boundingRect.top <= this.pageStartThreshold && event.detail.boundingRect.top > 0;
+    let articleBottomNearViewportTop = event.detail.boundingRect.bottom >= this.pageStartThreshold && event.detail.boundingRect.top < 0;
+
+    return articleTopNearViewportTop || articleBottomNearViewportTop;
+  }
+
+  handlePageStart (event) {
+    if ((window.location.pathname === this.href) || !this.isArticleBoundaryInView(event)) {
+      return;
+    }
+
     pageStartDebouncer(() => {
       window.history.replaceState(null, this.title, this.href);
 
@@ -187,10 +199,6 @@ export default class ReadingListArticle {
 
   startedReading (oldProgress, newProgress) {
     return (oldProgress === 0 && newProgress > 0) || (oldProgress === 100 && newProgress < 100);
-  }
-
-  pushToHistory () {
-    window.history.replaceState(null, this.title, this.href);
   }
 
   isNearlyInView () {

@@ -195,7 +195,7 @@ export default class Clickventure {
     let newNode = this.element.find('#clickventure-node-' + nodeId);
     velocity(newNode[0], transition.show.fx, {
       duration: 200,
-      complete: (function () {
+      complete: (() => {
         newNode.addClass('clickventure-node-active');
         let newNodeLink = newNode.find('.clickventure-node-link');
         velocity(newNodeLink[0], 'transition.slideDownIn', {
@@ -203,8 +203,7 @@ export default class Clickventure {
           stagger: 100,
         });
         window.picturefill(newNode);
-        this.element.trigger('clickventure-page-change-complete', [this]);
-      }).bind(this),
+      }),
     });
     this.adRefresh();
   }
@@ -219,10 +218,10 @@ export default class Clickventure {
     if (activeNode.length > 0) {
       velocity(activeNode[0], transition.hide.fx, {
         duration: 200,
-        complete: (function () {
+        complete: (() => {
           activeNode.removeClass('clickventure-node-active');
           this.showNewNode(nodeId, transition);
-        }).bind(this),
+        }),
       });
     }
     else {
