@@ -36,12 +36,6 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     let parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
     this.analyticsWrapper = prepGaWrapper(parentAnalyticsDimensions, { 'dimension12': 'slideshow' });
 
-    this.parent = this.slideshow.closest('bulbs-reading-list-item')[0];
-    if (this.parent) {
-      this.href = this.parent.dataset.href;
-      this.title = this.parent.dataset.title;
-    }
-
     this.init();
   }
 
