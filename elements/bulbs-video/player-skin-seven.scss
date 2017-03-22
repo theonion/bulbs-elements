@@ -155,9 +155,20 @@
   .jw-text-duration {
     color: #666f82;
   }
+  .jw-controlbar-center-group {
+    padding: 0 .5em !important;
+    position: relative !important;
+  }
   .jw-controlbar-right-group {
     .jw-icon-tooltip:before {
       border-left: 1px solid #666;
+    }
+    .jw-icon-volume {
+      max-width: 1.75em;
+
+      :first-child {
+        bottom: 32px;
+      }
     }
     .jw-icon-inline {
       &:before {
@@ -180,9 +191,6 @@
   .jw-icon-tooltip .jw-active-option {
     background-color: #ff0046;
     color: #fff;
-  }
-  .jw-icon-volume {
-    min-width: 2.6em;
   }
   .jw-time-tip, .jw-menu, .jw-volume-tip, .jw-skip {
     border: 1px solid #333;

@@ -35,13 +35,14 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.isLoaded = false;
     this.fetchPending = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
+    this.pageStartThreshold = 200; // Pixels from top of viewport before considered to be on different adjacent page
 
     this.registerEvents();
   }
 
   registerEvents () {
     this.addEventListener('approachingviewport', this.loadContent.bind(this));
-    this.addEventListener('pagestart', this.handlePageStart.bind(this));
+    this.addEventListener('inviewrect', this.handlePageStart.bind(this));
   }
 
   getGaDimensions () {
@@ -126,7 +127,18 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       reject(`<bulbs-reading-list-item> loadContent(): fetch failed "${response.status} ${response.statusText}"`));
   }
 
+  isArticleBoundaryInView (event) {
+    let articleTopNearViewportTop = event.detail.boundingRect.top <= this.pageStartThreshold && event.detail.boundingRect.top > 0;
+    let articleBottomNearViewportTop = event.detail.boundingRect.bottom >= this.pageStartThreshold && event.detail.boundingRect.top < 0;
+
+    return articleTopNearViewportTop || articleBottomNearViewportTop;
+  }
+
   handlePageStart () {
+    if ((window.location.pathname === this.href) || !this.isArticleBoundaryInView(event)) {
+      return;
+    }
+
     pageStartDebouncer(() => {
       if(!this.gaTrackerWrapper) {
         this.gaTrackerWrapper = this.prepGaTracker();
