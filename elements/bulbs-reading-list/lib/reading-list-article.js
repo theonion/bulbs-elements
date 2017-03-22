@@ -171,18 +171,20 @@ export default class ReadingListArticle {
       return;
     }
 
-    window.history.replaceState(null, this.title, this.href);
-    if (!this.gaTrackerWrapper) {
-      this.gaTrackerWrapper = this.prepGaTracker();
-    }
+    pageStartDebouncer(() => {
+      window.history.replaceState(null, this.title, this.href);
+      if (!this.gaTrackerWrapper) {
+        this.gaTrackerWrapper = this.prepGaTracker();
+      }
 
-    getAnalyticsManager().trackPageView(
-      this.href,
-      this.title,
-      this.gaTrackerWrapper,
-    );
-    this.sendAnalyticsEvent();
-    this.dispatcher.emit('reading-list-item-url-changed', this);
+      getAnalyticsManager().trackPageView(
+        this.href,
+        this.title,
+        this.gaTrackerWrapper,
+      );
+      this.sendAnalyticsEvent();
+      this.dispatcher.emit('reading-list-item-url-changed', this);
+    });
   }
 
   sendAnalyticsEvent () {
