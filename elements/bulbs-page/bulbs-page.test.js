@@ -1,3 +1,4 @@
+import { createElement } from 'bulbs-elements/test/fixtures';
 import './bulbs-page';
 import createMockRaf from 'mock-raf';
 
@@ -10,6 +11,7 @@ describe('<bulbs-page>', () => {
   let element;
   let sandbox;
   let mockRaf;
+  let contentAnalyticsDimensions;
 
   beforeEach(() => {
     mockRaf = createMockRaf();
@@ -18,7 +20,12 @@ describe('<bulbs-page>', () => {
       trackPageView () {},
     };
     sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
-    element = document.createElement('bulbs-page');
+    contentAnalyticsDimensions = JSON.stringify({ 'dimension1': 'frogs' });
+    element = createElement('bulbs-page', {
+      data: {
+        contentAnalyticsDimensions,
+      },
+    });
     element.setAttribute('pushstate-title', 'Pushstate Title');
     element.setAttribute('pushstate-url', '/example');
     sandbox.spy(InViewMonitor, 'add');
@@ -27,7 +34,6 @@ describe('<bulbs-page>', () => {
     sandbox.spy(util.getAnalyticsManager(), 'trackPageView');
     sandbox.spy(LockScroll, 'lockToElement');
     sandbox.spy(util, 'onReadyOrNow');
-
   });
 
   afterEach(() => {
