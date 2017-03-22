@@ -70,7 +70,7 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     return prepGaEventTracker(
       'pageview',
       window.GOOGLE_ANALYTICS_ID,
-      this.dimensions,
+      this.gaDimensions,
     );
   }
 
