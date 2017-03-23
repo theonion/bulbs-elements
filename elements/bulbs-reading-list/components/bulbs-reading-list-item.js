@@ -32,12 +32,19 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.partialUrl = this.dataset.partialUrl;
     this.title = this.dataset.title;
     this.gaDimensions = this.getGaDimensions();
-    this.isLoaded = false;
+    this.isLoaded = this.hasAttribute('data-is-loaded');
     this.fetchPending = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.pageStartThreshold = 200; // Pixels from top of viewport before considered to be on different adjacent page
+    this.isElementInViewport();
 
     this.registerEvents();
+  }
+
+  isElementInViewport () {
+    if(!this.isLoaded && InViewMonitor.isElementInViewport(this)) {
+      this.loadContent();
+    }
   }
 
   registerEvents () {
