@@ -1,7 +1,8 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
 import './bulbs-nav.scss';
+import { getScrollOffset } from 'bulbs-elements/util';
 
-const SCROLL_DISTANCE_TO_CLOSE = -150;
+const SCROLL_DISTANCE_TO_CLOSE = 150;
 
 const NavStateManager = {
   state: {},
@@ -70,7 +71,8 @@ class BulbsNavPanel extends BulbsHTMLElement {
   }
 
   scrollHandler () {
-    if (this.getBoundingClientRect().top < SCROLL_DISTANCE_TO_CLOSE) {
+    const currentScrollOffset = getScrollOffset().y;
+    if (Math.abs(currentScrollOffset - this.openingScrollOffset) > SCROLL_DISTANCE_TO_CLOSE) {
       this.close();
     }
   }
@@ -91,6 +93,7 @@ class BulbsNavPanel extends BulbsHTMLElement {
       if (window.picturefill) {
         window.picturefill();
       }
+      this.openingScrollOffset = getScrollOffset().y;
       window.addEventListener('scroll', this.scrollHandler);
     }
   }
