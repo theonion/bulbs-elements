@@ -38,9 +38,9 @@ export default class ReadingListArticle {
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
     this.analyticsManager = getAnalyticsManager();
-    
+
     let dimensions = this.getGaDimensions();
-    this.gaTrackerWrapper = this.prepGaTracker(this.dimensions);
+    this.gaTrackerWrapper = this.prepGaTracker(dimensions);
     this.registerEvents();
   }
 
@@ -182,6 +182,7 @@ export default class ReadingListArticle {
         this.title,
         this.gaTrackerWrapper,
       );
+
       this.sendAnalyticsEvent();
       this.dispatcher.emit('reading-list-item-url-changed', this);
     });

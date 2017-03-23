@@ -5,7 +5,7 @@ import {
 import $ from 'jquery';
 import {
   InViewMonitor,
-  prepGaWrapper,
+  prepReadingListAnalytics,
 } from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
@@ -24,11 +24,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
 
-    let parent = this.slideshow.closest('bulbs-reading-list-item')[0];
-    if (parent) {
-      this.parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
-    }
-    this.analyticsWrapper = prepGaWrapper(this.parentAnalyticsDimensions, { 'dimension12': 'slideshow' });
+    prepReadingListAnalytics.apply(this, [this.slideshow, 'slideshow']);
 
     this.init();
   }
@@ -110,17 +106,26 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    this.analyticsWrapper('send', 'event', 'reading_list', 'slideshow');
+    this.sendPageView();
     this.enableDisableNav(this.slides, currentSlide);
   }
 
+  sendPageView () {
+    this.analyticsManager.trackPageView(
+      this.href,
+      this.title,
+      this.analyticsWrapper
+    );
+  }
+
   bindContext () {
+    this.bodyKeyDown = this.bodyKeyDown.bind(this);
     this.navNextClicked = this.navNextClicked.bind(this);
     this.navPrevClicked = this.navPrevClicked.bind(this);
-    this.bodyKeyDown = this.bodyKeyDown.bind(this);
+    this.restartShow = this.restartShow.bind(this);
+    this.sendPageView = this.sendPageView.bind(this);
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
-    this.restartShow = this.restartShow.bind(this);
   }
 
   setupEventHandlers () {

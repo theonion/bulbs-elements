@@ -4,7 +4,7 @@ import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
 import {
   InViewMonitor,
-  prepGaWrapper,
+  prepReadingListAnalytics,
 } from 'bulbs-elements/util';
 
 velocity
@@ -96,9 +96,8 @@ export default class Clickventure {
   constructor (element, options) {
     let clickventure = this;
     let hash = window.location.hash;
-    let parent = $(element).closest('bulbs-reading-list-item')[0];
-    let parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
-    this.analyticsWrapper = prepGaWrapper(parentAnalyticsDimensions, { 'dimension12': 'clickventure' });
+
+    prepReadingListAnalytics.apply(this, [$(element), 'clickventure']);
 
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     this.element = element;
@@ -117,7 +116,7 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.analyticsWrapper('send', 'event', 'reading_list', 'clickventure');
+        clickventure.sendPageView();
       });
     });
 
@@ -232,5 +231,13 @@ export default class Clickventure {
     if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
       this.adsManager.reloadAds(this.sideAd);
     }
+  }
+
+  sendPageView () {
+    this.analyticsManager.trackPageView(
+      this.href,
+      this.title,
+      this.analyticsWrapper
+    );
   }
 }
