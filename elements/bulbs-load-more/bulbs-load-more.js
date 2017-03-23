@@ -17,12 +17,18 @@ class LoadMore extends BulbsHTMLButtonElement {
   }
 
   handleClick () {
+    this.fillLoadingNotification();
     fetch(this.getAttribute('src'), { credentials: 'include' })
       .then(filterBadResponse)
       .then((response) => response.text())
       .then(this.handleFetchSuccess.bind(this))
       .catch(this.handleFetchError.bind(this))
     ;
+  }
+
+  fillLoadingNotification () {
+    const html = '<i class="fa fa-spinner fa-spin"></i> Loading...';
+    this.innerHTML = html;
   }
 
   handleFetchSuccess (htmlText) {
