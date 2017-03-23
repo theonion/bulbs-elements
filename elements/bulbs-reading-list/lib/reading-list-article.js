@@ -37,10 +37,10 @@ export default class ReadingListArticle {
     this.isLoaded = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.fetchPending = false;
-    this.dimensions = this.getGaDimensions();
     this.analyticsManager = getAnalyticsManager();
-    this.gaTrackerWrapper = this.prepGaTracker.bind(this).call();
-    this.element.gaTracker = this.gaTrackerWrapper;
+    
+    let dimensions = this.getGaDimensions();
+    this.gaTrackerWrapper = this.prepGaTracker(this.dimensions);
     this.registerEvents();
   }
 
@@ -70,11 +70,11 @@ export default class ReadingListArticle {
     };
   }
 
-  prepGaTracker () {
+  prepGaTracker (dimensions) {
     return prepGaEventTracker(
       'pageview',
       window.GOOGLE_ANALYTICS_ID,
-      this.dimensions,
+      dimensions,
     );
   }
 
@@ -182,7 +182,6 @@ export default class ReadingListArticle {
         this.title,
         this.gaTrackerWrapper,
       );
-
       this.sendAnalyticsEvent();
       this.dispatcher.emit('reading-list-item-url-changed', this);
     });

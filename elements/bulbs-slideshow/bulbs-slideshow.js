@@ -1,4 +1,8 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { 
+  registerElement, 
+  BulbsHTMLElement 
+} from 'bulbs-elements/register';
+import { prepGaWrapper } from 'bulbs-elements/util';
 import './bulbs-slideshow.scss';
 
 function getInitialSlideIndex (hash) {
@@ -36,6 +40,12 @@ class BulbsSlideshow extends BulbsHTMLElement {
       after: this.afterSlideTransition.bind(this),
     });
     this.flexSlider = this.$slideshow.data('flexslider');
+
+    let parent = $element.closest('bulbs-reading-list-item')[0];
+    if (parent) {
+      this.parentAnalyticsDimensions = parent.dataset.contentAnalyticsDimensions;
+    }
+    this.analyticsWrapper = prepGaWrapper(this.parentAnalyticsDimensions, { 'dimension12': 'slideshow' });
   }
 
   createNavigationLinkClickHandler (direction) {
@@ -103,6 +113,7 @@ class BulbsSlideshow extends BulbsHTMLElement {
 
   afterSlideTransition () {
     this.render();
+    this.analyticsWrapper('send', 'event', 'reading_list', 'slideshow');
     this.navigateToNextSlide();
   }
 

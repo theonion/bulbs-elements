@@ -12,14 +12,6 @@ import './bulbs-slick-slideshow.scss';
 
 require('slick-carousel');
 
-/// Things this should do:
-/// 1. Initialize Slick slider for .slider elements.
-/// 2. Attach custom navs top and bottom to each slider.
-/// 3. Set starting slide based window hash, if any.
-/// 4. On click, prev/next elements should trigger slidechange.
-/// 5. On click, set disabled state on prev/next items if on first/last slides.
-/// 6. On click, update window hash to refer active slide.
-/// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
     this.slideshow = $('.slider').last();
@@ -118,7 +110,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    this.analyticsWrapper.trackPageView('send', 'event', 'reading_list', 'slideshow');
+    this.analyticsWrapper('send', 'event', 'reading_list', 'slideshow');
     this.enableDisableNav(this.slides, currentSlide);
   }
 
