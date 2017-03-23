@@ -36,12 +36,12 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.fetchPending = false;
     this.loadingTemplate = '<p><i class="fa fa-spinner fa-spin"></i> Loading...</p>';
     this.pageStartThreshold = 200; // Pixels from top of viewport before considered to be on different adjacent page
-    this.isElementInViewport();
+    this.loadOnInitialization();
 
     this.registerEvents();
   }
 
-  isElementInViewport () {
+  loadOnInitialization () {
     if(!this.isLoaded && InViewMonitor.isElementInViewport(this)) {
       this.loadContent();
     }

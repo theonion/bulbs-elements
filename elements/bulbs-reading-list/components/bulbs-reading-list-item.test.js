@@ -70,7 +70,7 @@ describe('BulbsReadingListItem', () => {
     }).to.throw('<bulbs-reading-list-item> requires GOOGLE_ANALYTICS_ID set on the window');
   });
 
-  describe('#isElementInViewport', () => {
+  describe('#loadOnInitialization', () => {
     it('calls load content if isLoaded attribute not set', () => {
       sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(true);
       sandbox.stub(subject, 'loadContent');
