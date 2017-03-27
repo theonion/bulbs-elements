@@ -41,7 +41,11 @@ class BulbsSlideshow extends BulbsHTMLElement {
     });
     this.flexSlider = this.$slideshow.data('flexslider');
 
-    prepReadingListAnalytics.apply(this, [$element, 'slideshow']);
+    const readingListProps = prepReadingListAnalytics($element, {dimension12: 'slideshow'})
+    this.analyticsManager = readingListProps.analyticsManager;
+    this.analyticsWrapper = readingListProps.analyticsWrapper;
+    this.href = readingListProps.href;
+    this.title = readingListProps.title;
   }
 
   createNavigationLinkClickHandler (direction) {
@@ -109,7 +113,7 @@ class BulbsSlideshow extends BulbsHTMLElement {
 
   afterSlideTransition () {
     this.render();
-    this.sendPageView.bind(this).call();
+    this.sendPageView();
     this.navigateToNextSlide();
   }
 

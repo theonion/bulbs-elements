@@ -97,7 +97,11 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
-    prepReadingListAnalytics.apply(this, [$(element), 'clickventure']);
+    const readingListProps = prepReadingListAnalytics(element, {dimension12: 'clickventure'})
+    this.analyticsManager = readingListProps.analyticsManager;
+    this.analyticsWrapper = readingListProps.analyticsWrapper;
+    this.href = readingListProps.href;
+    this.title = readingListProps.title;
 
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     this.element = element;
