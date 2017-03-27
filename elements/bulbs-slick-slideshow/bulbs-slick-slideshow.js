@@ -24,7 +24,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
 
-    const readingListProps = prepReadingListAnalytics(this.slideshow, {dimension12: 'slideshow'})
+    const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
     this.analyticsManager = readingListProps.analyticsManager;
     this.analyticsWrapper = readingListProps.analyticsWrapper;
     this.href = readingListProps.href;

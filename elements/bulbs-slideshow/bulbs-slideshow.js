@@ -41,7 +41,7 @@ class BulbsSlideshow extends BulbsHTMLElement {
     });
     this.flexSlider = this.$slideshow.data('flexslider');
 
-    const readingListProps = prepReadingListAnalytics($element, {dimension12: 'slideshow'})
+    const readingListProps = prepReadingListAnalytics($element, { dimension12: 'slideshow' });
     this.analyticsManager = readingListProps.analyticsManager;
     this.analyticsWrapper = readingListProps.analyticsWrapper;
     this.href = readingListProps.href;

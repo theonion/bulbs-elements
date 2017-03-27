@@ -97,7 +97,7 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
-    const readingListProps = prepReadingListAnalytics(element, {dimension12: 'clickventure'})
+    const readingListProps = prepReadingListAnalytics(element, { dimension12: 'clickventure' });
     this.analyticsManager = readingListProps.analyticsManager;
     this.analyticsWrapper = readingListProps.analyticsWrapper;
     this.href = readingListProps.href;
