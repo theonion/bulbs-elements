@@ -113,13 +113,12 @@ class BulbsSlideshow extends BulbsHTMLElement {
 
   setupGA () {
     const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
-    
+
     this.analyticsManager = readingListProps.analyticsManager;
     this.analyticsWrapper = readingListProps.analyticsWrapper;
     this.href = readingListProps.href;
     this.title = readingListProps.title;
   }
-
 
   sendPageView () {
     if (!this.analyticsManager) {

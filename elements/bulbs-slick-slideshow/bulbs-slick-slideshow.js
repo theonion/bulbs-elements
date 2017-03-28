@@ -110,7 +110,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   setupGA () {
     const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
-    
+
     this.analyticsManager = readingListProps.analyticsManager;
     this.analyticsWrapper = readingListProps.analyticsWrapper;
     this.href = readingListProps.href;
