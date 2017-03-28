@@ -127,6 +127,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navNextClicked = this.navNextClicked.bind(this);
     this.navPrevClicked = this.navPrevClicked.bind(this);
     this.restartShow = this.restartShow.bind(this);
+    this.sendPageView = this.sendPageView.bind(this);
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
   }
