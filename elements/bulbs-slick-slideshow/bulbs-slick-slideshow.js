@@ -110,7 +110,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    this.sendPageView();
+    this.sendPageView.bind(this).call();
     this.enableDisableNav(this.slides, currentSlide);
   }
 
