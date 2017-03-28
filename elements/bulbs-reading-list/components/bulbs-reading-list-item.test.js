@@ -1,5 +1,6 @@
 import './bulbs-reading-list-item';
 import fetchMock from 'fetch-mock';
+import util from 'bulbs-elements/util';
 
 describe('BulbsReadingListItem', () => {
   let expected;
@@ -67,6 +68,23 @@ describe('BulbsReadingListItem', () => {
     expect(() => {
       subject.attachedCallback();
     }).to.throw('<bulbs-reading-list-item> requires GOOGLE_ANALYTICS_ID set on the window');
+  });
+
+  describe('#loadOnInitialization', () => {
+    it('calls load content if isLoaded attribute not set', () => {
+      sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(true);
+      sandbox.stub(subject, 'loadContent');
+      subject.attachedCallback();
+      expect(subject.loadContent).to.be.called.once;
+    });
+
+    it('does nothing if isLoaded attribute set', () => {
+      subject.setAttribute('data-is-loaded', '');
+      sandbox.stub(util.InViewMonitor, 'isElementInViewport').returns(true);
+      sandbox.stub(subject, 'loadContent');
+      subject.attachedCallback();
+      expect(subject.loadContent.called).to.be.false;
+    });
   });
 
   describe('#getGaDimensions', () => {
