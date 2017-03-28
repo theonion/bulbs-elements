@@ -10,6 +10,8 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
+import invariant from 'invariant';
+
 import './bulbs-page.scss';
 
 // if we scroll past multiple pages at once they will all trigger a

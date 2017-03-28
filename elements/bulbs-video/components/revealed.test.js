@@ -340,7 +340,7 @@ describe('<bulbs-video> <Revealed>', () => {
       revealed = new Revealed({});
       revealed.player = {
         setMute: sandbox.spy(),
-        remove: sandbox.spy()
+        remove: sandbox.spy(),
       };
       remove = sandbox.stub(util.InViewMonitor, 'remove');
       revealed.componentWillUnmount();
