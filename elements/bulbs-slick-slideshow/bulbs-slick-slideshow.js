@@ -24,12 +24,6 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
 
-    const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
-    this.analyticsManager = readingListProps.analyticsManager;
-    this.analyticsWrapper = readingListProps.analyticsWrapper;
-    this.href = readingListProps.href;
-    this.title = readingListProps.title;
-
     this.init();
   }
 
@@ -114,7 +108,20 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.enableDisableNav(this.slides, currentSlide);
   }
 
+  setupGA () {
+    const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
+    
+    this.analyticsManager = readingListProps.analyticsManager;
+    this.analyticsWrapper = readingListProps.analyticsWrapper;
+    this.href = readingListProps.href;
+    this.title = readingListProps.title;
+  }
+
   sendPageView () {
+    if (!this.analyticsManager) {
+      this.setupGA();
+    }
+
     this.analyticsManager.trackPageView(
       this.href,
       this.title,
