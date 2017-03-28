@@ -24,6 +24,19 @@ export function VideoSummaryView (props) {
     );
   }
 
+  let campaign;
+  if (video.tunic_campaign_url) {
+    campaign = (
+      <campaign-display
+        data-track-action={props.campaignTrackAction}
+        placement={props.campaignPlacement}
+        preamble-text={props.campaignPreamble}
+        src={video.tunic_campaign_url}
+        name-only
+      />
+    );
+  }
+
   return (
     <div className='bulbs-video-summary'>
       <div className='bulbs-video-poster'>
@@ -35,6 +48,9 @@ export function VideoSummaryView (props) {
       <h2 className='bulbs-video-series-name'>
         {video.series_name || video.channel_name}
       </h2>
+
+      {campaign}
+
       <bulbs-ellipsize class='bulbs-video-summary-title' line-count='3'>
         {video.title}
       </bulbs-ellipsize>
@@ -64,6 +80,9 @@ export default class VideoSummary extends BulbsElement {
     return (
       <VideoSummaryView
         video={this.state.video}
+        campaignPlacement={this.props.campaignPlacement}
+        campaignPreamble={this.props.campaignPreamble}
+        campaignTrackAction={this.props.campaignTrackAction}
         nowPlaying={typeof this.props.nowPlaying === 'string'}
       />
     );
@@ -77,6 +96,9 @@ Object.assign(VideoSummary, {
     videoRequest: VideoRequest,
   },
   propTypes: {
+    campaignPlacement: PropTypes.string,
+    campaignPreamble: PropTypes.string,
+    campaignTrackAction: PropTypes.string,
     nowPlaying: PropTypes.string,
   },
 });
