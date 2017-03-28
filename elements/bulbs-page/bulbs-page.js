@@ -10,6 +10,8 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
+import invariant from 'invariant';
+
 import './bulbs-page.scss';
 
 // if we scroll past multiple pages at once they will all trigger a
@@ -19,6 +21,13 @@ let pageStartDebouncer = debouncePerFrame();
 
 export default class BulbsPage extends BulbsHTMLElement {
   attachedCallback () {
+    const markdownText = '<bulbs-page> requires attribute: ';
+
+    invariant(
+      this.dataset.contentAnalyticsDimensions,
+      markdownText + 'data-content-analytics-dimensions'
+    );
+
     this.requireAttribute('pushstate-url');
     InViewMonitor.add(this);
     onReadyOrNow(() => this.handleDocumentReady());
@@ -31,8 +40,9 @@ export default class BulbsPage extends BulbsHTMLElement {
 
   get dimensions () {
     let targeting = JSON.parse(
-      this.dataset.contentAnalyticsDimensions
+      this.dataset.contentAnalyticsDimensions || '{}'
     );
+
     return {
       'dimension1': targeting.dimension1 || 'None',
       'dimension2': targeting.dimension2 || 'None',
