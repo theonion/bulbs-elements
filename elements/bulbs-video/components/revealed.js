@@ -105,6 +105,7 @@ export default class Revealed extends React.Component {
   }
 
   componentWillUnmount () {
+    this.player.setMute(true);
     this.player.remove();
     InViewMonitor.remove(this.refs.videoViewport);
   }
