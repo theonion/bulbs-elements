@@ -31,8 +31,9 @@ export default class BulbsPage extends BulbsHTMLElement {
 
   get dimensions () {
     let targeting = JSON.parse(
-      this.dataset.contentAnalyticsDimensions
+      this.dataset.contentAnalyticsDimensions || {}
     );
+
     return {
       'dimension1': targeting.dimension1 || 'None',
       'dimension2': targeting.dimension2 || 'None',
