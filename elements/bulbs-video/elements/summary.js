@@ -28,11 +28,12 @@ export function VideoSummaryView (props) {
   if (video.tunic_campaign_url) {
     campaign = (
       <campaign-display
-        data-track-action={props.campaignTrackAction}
-        placement={props.campaignPlacement}
-        preamble-text={props.campaignPreamble}
-        src={video.tunic_campaign_url}
-        name-only
+          data-something={'whatever'}
+          data-track-action={props.campaignTrackAction}
+          placement={props.campaignPlacement}
+          preamble-text={props.campaignPreamble}
+          src={video.tunic_campaign_url}
+          name-only
       />
     );
   }
