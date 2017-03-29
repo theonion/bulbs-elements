@@ -77,6 +77,24 @@ describe('<bulbs-page>', () => {
         expect(LockScroll.lockToElement).to.have.been.calledWith(element).once;
       });
 
+      it('locks to element if is current page and hash matches', () => {
+        location.hash = '#test-hash-123';
+        element.setAttribute('pushstate-url', location.pathname + location.hash);
+
+        element.handleDocumentReady();
+
+        expect(LockScroll.lockToElement).to.have.been.calledWith(element).once;
+      });
+
+      it('is no-op if current page but hash does not match', () => {
+        location.hash = '#test-hash-123';
+        element.setAttribute('pushstate-url', location.pathname + '#a-different-hash');
+
+        element.handleDocumentReady();
+
+        expect(LockScroll.lockToElement).to.not.have.been.called;
+      });
+
       it('is no-op if not current page', () => {
         expect(LockScroll.lockToElement).to.not.have.been.called;
       });

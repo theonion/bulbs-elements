@@ -70,7 +70,8 @@ export default class BulbsPage extends BulbsHTMLElement {
 
   handleDocumentReady () {
     let lockScrollOnLoad = this.hasAttribute('lock-scroll-on-load');
-    let isCurrentPage = this.getAttribute('pushstate-url') === location.pathname;
+    let isCurrentPage =
+      this.getAttribute('pushstate-url') === location.pathname + location.hash;
 
     if (lockScrollOnLoad && isCurrentPage) {
       LockScroll.lockToElement(this);
