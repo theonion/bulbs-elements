@@ -11,6 +11,10 @@ import CampaignRequest from './fields/campaign-request-field';
 import CampaignDisplayRoot from './components/campaign-display-root';
 
 class CampaignDisplay extends BulbsElement {
+  constructor (props) {
+    invariant(!!props.placement, 'campaign-display component requires a placement');
+    super(props);
+  }
 
   initialDispatch () {
     if (this.props.src) {
