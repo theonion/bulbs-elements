@@ -4,7 +4,6 @@ import './bulbs-nav.scss';
 class BulbsNavToggle extends BulbsHTMLElement {
   createdCallback () {
     this.addEventListener('click', this.toggleNavPanel.bind(this));
-    this.addEventListener('mouseleave', () => this.navPanel.requestClose());
   }
 
   get navPanel () {
