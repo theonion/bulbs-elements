@@ -6,13 +6,13 @@ class BulbsNavToggle extends BulbsHTMLElement {
     this.addEventListener('click', this.toggleNavPanel.bind(this));
   }
 
-  get navPanel () {
+  get navPanels () {
     const navName = this.getAttribute('nav-name');
-    return document.querySelector(`bulbs-nav-panel[nav-name='${navName}']`);
+    return document.querySelectorAll(`bulbs-nav-panel[nav-name='${navName}']`);
   }
 
   toggleNavPanel () {
-    this.navPanel.toggle();
+    [].forEach.call(this.navPanels, navPanel => navPanel.toggle());
   }
 }
 
@@ -21,9 +21,9 @@ class BulbsNavPanel extends BulbsHTMLElement {
     return this.querySelector('bulbs-tabs');
   }
 
-  get navToggle () {
+  get navToggles () {
     const navName = this.getAttribute('nav-name');
-    return document.querySelector(`bulbs-nav-toggle[nav-name='${navName}']`);
+    return document.querySelectorAll(`bulbs-nav-toggle[nav-name='${navName}']`);
   }
 
   get otherPanels () {
@@ -37,7 +37,8 @@ class BulbsNavPanel extends BulbsHTMLElement {
     if (!this.classList.contains('bulbs-nav-panel-active')) {
       [].forEach.call(this.otherPanels, otherPanel => otherPanel.close());
       this.classList.add('bulbs-nav-panel-active');
-      this.navToggle.classList.add('bulbs-nav-toggle-active');
+
+      [].forEach.call(this.navToggles, navToggle => navToggle.classList.add('bulbs-nav-toggle-active'));
       if (this.tabGroup) {
         this.tabGroup.resetSelection();
       }
@@ -49,7 +50,7 @@ class BulbsNavPanel extends BulbsHTMLElement {
 
   close () {
     this.classList.remove('bulbs-nav-panel-active');
-    this.navToggle.classList.remove('bulbs-nav-toggle-active');
+    [].forEach.call(this.navToggles, navToggle => navToggle.classList.remove('bulbs-nav-toggle-active'));
   }
 
   toggle () {
