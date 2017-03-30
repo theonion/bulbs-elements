@@ -17,6 +17,10 @@ class BulbsNavToggle extends BulbsHTMLElement {
 }
 
 class BulbsNavPanel extends BulbsHTMLElement {
+  createdCallback () {
+    this.documentClickHandler = this.documentClickHandler.bind(this);
+  }
+
   get tabGroup () {
     return this.querySelector('bulbs-tabs');
   }
@@ -45,12 +49,15 @@ class BulbsNavPanel extends BulbsHTMLElement {
       if (window.picturefill) {
         window.picturefill();
       }
+
+      document.body.addEventListener('click', this.documentClickHandler);
     }
   }
 
   close () {
     this.classList.remove('bulbs-nav-panel-active');
     [].forEach.call(this.navToggles, navToggle => navToggle.classList.remove('bulbs-nav-toggle-active'));
+    document.body.removeEventListener('click', this.documentClickHandler);
   }
 
   toggle () {
@@ -59,6 +66,12 @@ class BulbsNavPanel extends BulbsHTMLElement {
     }
     else {
       this.open();
+    }
+  }
+
+  documentClickHandler (event) {
+    if (!this.contains(event.target)) {
+      this.close();
     }
   }
 }

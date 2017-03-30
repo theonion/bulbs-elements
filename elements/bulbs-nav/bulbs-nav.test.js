@@ -56,4 +56,22 @@ describe('bulbs-nav', () => {
       });
     });
   });
+
+  describe('<bulbs-nav-panel>', () => {
+    context('open', () => {
+      it('closes on clicks outside the panel', () => {
+        panelA.open();
+        expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.true;
+        document.body.click();
+        expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.false;
+      });
+
+      it('does nothing on clicks inside the panel', () => {
+        panelA.open();
+        expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.true;
+        panelA.click();
+        expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.true;
+      });
+    });
+  });
 });
