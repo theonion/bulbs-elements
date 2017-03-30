@@ -34,35 +34,20 @@ describe('bulbs-nav', () => {
   });
 
   describe('<bulbs-nav-toggle>', () => {
-    it('opens the corresponding panel on mouseenter', () => {
+    it('opens the corresponding panel on click', () => {
       sandbox.spy(panelA, 'open');
 
-      toggleA.dispatchEvent(new CustomEvent('mouseenter'));
+      toggleA.dispatchEvent(new CustomEvent('click'));
 
       expect(panelA.classList.contains('bulbs-nav-panel-active')).to.be.true;
       expect(toggleA.classList.contains('bulbs-nav-toggle-active')).to.be.true;
     });
 
-    it('closes the other panels on mouseenter', (done) => {
+    it('closes the other panels on click', (done) => {
       toggleB.classList.add('bulbs-nav-panel-active');
       panelB.classList.add('bulbs-nav-panel-active');
 
-      toggleA.dispatchEvent(new CustomEvent('mouseenter'));
-
-      requestAnimationFrame(() => {
-        expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
-        expect(panelB.classList.contains('bulbs-nav-panel-active')).to.be.false;
-        done();
-      });
-    });
-  });
-
-  describe('<bulbs-nav-panel>', () => {
-    it('closes on mouseleave', (done) => {
-      toggleB.classList.add('bulbs-nav-panel-active');
-      panelB.classList.add('bulbs-nav-panel-active');
-
-      panelB.dispatchEvent(new CustomEvent('mouseleave'));
+      toggleA.dispatchEvent(new CustomEvent('click'));
 
       requestAnimationFrame(() => {
         expect(toggleB.classList.contains('bulbs-nav-toggle-active')).to.be.false;
