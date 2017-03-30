@@ -68,12 +68,17 @@ export default class BulbsPage extends BulbsHTMLElement {
     );
   }
 
+  isCurrentPage () {
+    // NOTE : this needs to be a function so that it can be mocked in tests,
+    //    otherwise changing pathname and hash for testing will interfere
+    //    with other test suites.
+    return this.getAttribute('pushstate-url') === location.pathname + location.hash;
+  }
+
   handleDocumentReady () {
     let lockScrollOnLoad = this.hasAttribute('lock-scroll-on-load');
-    let isCurrentPage =
-      this.getAttribute('pushstate-url') === location.pathname + location.hash;
 
-    if (lockScrollOnLoad && isCurrentPage) {
+    if (lockScrollOnLoad && this.isCurrentPage()) {
       LockScroll.lockToElement(this);
     }
   }

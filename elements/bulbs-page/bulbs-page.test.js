@@ -78,8 +78,7 @@ describe('<bulbs-page>', () => {
       });
 
       it('locks to element if is current page and hash matches', () => {
-        location.hash = '#test-hash-123';
-        element.setAttribute('pushstate-url', location.pathname + location.hash);
+        sinon.stub(element, 'isCurrentPage').returns(true);
 
         element.handleDocumentReady();
 
@@ -87,8 +86,7 @@ describe('<bulbs-page>', () => {
       });
 
       it('is no-op if current page but hash does not match', () => {
-        location.hash = '#test-hash-123';
-        element.setAttribute('pushstate-url', location.pathname + '#a-different-hash');
+        sinon.stub(element, 'isCurrentPage').returns(false);
 
         element.handleDocumentReady();
 
