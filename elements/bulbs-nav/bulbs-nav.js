@@ -11,7 +11,8 @@ class BulbsNavToggle extends BulbsHTMLElement {
     return document.querySelectorAll(`bulbs-nav-panel[nav-name='${navName}']`);
   }
 
-  toggleNavPanel () {
+  toggleNavPanel (event) {
+    event.stopPropagation();
     [].forEach.call(this.navPanels, navPanel => navPanel.toggle());
   }
 }
@@ -70,6 +71,10 @@ class BulbsNavPanel extends BulbsHTMLElement {
   }
 
   documentClickHandler (event) {
+    if (event.target.matches('bulbs-nav-toggle, bulbs-nav-toggle *')) {
+      return;
+    }
+
     if (!this.contains(event.target)) {
       this.close();
     }
