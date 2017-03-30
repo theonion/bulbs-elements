@@ -71,8 +71,14 @@ describe('<bulbs-video-summary>', () => {
     it('renders <VideoSummaryView>', () => {
       subject = shallow(<BulbsVideoSummary nowPlaying=''/>);
       subject.setState({ video });
+
       expect(subject.equals(
-        <VideoSummaryView video={video} nowPlaying={true}/>
+        <VideoSummaryView
+            campaignPlacement={undefined}
+            campaignPreamble={undefined}
+            campaignTrackAction={undefined}
+            nowPlaying={true}
+            video={video}/>
       )).to.be.true;
     });
   });
