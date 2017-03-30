@@ -120,7 +120,7 @@ describe('<bulbs-video>', () => {
     });
 
     it('should not load video until it is within viewing threshold', (done) => {
-      let videoElement = mount(
+      mount(
         <BulbsVideo src={src} />,
         { attachTo: container }
       );

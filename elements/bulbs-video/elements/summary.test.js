@@ -74,9 +74,9 @@ describe('<bulbs-video-summary>', () => {
 
       expect(subject.equals(
         <VideoSummaryView
-            campaignPlacement={undefined}
-            campaignPreamble={undefined}
-            campaignTrackAction={undefined}
+            campaignPlacement={undefined}     // eslint-disable-line no-undefined
+            campaignPreamble={undefined}      // eslint-disable-line no-undefined
+            campaignTrackAction={undefined}   // eslint-disable-line no-undefined
             nowPlaying={true}
             video={video}/>
       )).to.be.true;

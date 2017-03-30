@@ -29,9 +29,9 @@ export function VideoSummaryView (props) {
     campaign = (
       <campaign-display
           data-something={'whatever'}
-          data-track-action={props.campaignTrackAction}
-          placement={props.campaignPlacement}
-          preamble-text={props.campaignPreamble}
+          data-track-action={props.campaignTrackAction}   // eslint-disable-line react/prop-types
+          placement={props.campaignPlacement}             // eslint-disable-line react/prop-types
+          preamble-text={props.campaignPreamble}          // eslint-disable-line react/prop-types
           src={video.tunic_campaign_url}
           name-only
       />
