@@ -22,7 +22,7 @@ function drainInViewQueue () {
   //  up the most screen realestate.
   const pageInFocus = inViewQueue.reduce((currentPage, page) => {
     if (!currentPage ||
-        page.elementRatioOfWindow() > currentPage.elementRatioOfWindow()) {
+        page.getElementRatioOfWindow() > currentPage.getElementRatioOfWindow()) {
       return page;
     }
 
@@ -100,9 +100,9 @@ export default class BulbsPage extends BulbsHTMLElement {
     }
   }
 
-  elementRatioOfWindow () {
+  getElementRatioOfWindow () {
     if (!this.cachedViewRect) {
-      return;
+      return {};
     }
 
     const windowHeight =
@@ -112,7 +112,8 @@ export default class BulbsPage extends BulbsHTMLElement {
 
     if (isOverTop) {
       return this.cachedViewRect.bottom / windowHeight;
-    } else if (isUnderBottom) {
+    }
+    else if (isUnderBottom) {
       return (windowHeight - this.cachedViewRect.top) / windowHeight;
     }
 
