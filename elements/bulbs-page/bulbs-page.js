@@ -14,10 +14,27 @@ import invariant from 'invariant';
 
 import './bulbs-page.scss';
 
-// if we scroll past multiple pages at once they will all trigger a
-// 'pagestart' event. We only want to fire one. We use this debouncer
-// to skip all but the last 'pagestart' handler
-let pageStartDebouncer = debouncePerFrame();
+let inViewRectDebouncer = debouncePerFrame();
+let inViewQueue = [];
+
+function drainInViewQueue () {
+  // If there are multiple pages in view, this will choose the one that takes
+  //  up the most screen realestate.
+  const pageInFocus = inViewQueue.reduce((currentPage, page) => {
+    if (!currentPage ||
+        page.elementRatioOfWindow() > currentPage.elementRatioOfWindow()) {
+      return page;
+    }
+
+    return currentPage;
+  });
+
+  if (pageInFocus) {
+    pageInFocus.handleInViewAndInFocus();
+  }
+
+  inViewQueue = [];
+}
 
 export default class BulbsPage extends BulbsHTMLElement {
   attachedCallback () {
@@ -31,7 +48,7 @@ export default class BulbsPage extends BulbsHTMLElement {
     this.requireAttribute('pushstate-url');
     InViewMonitor.add(this);
     onReadyOrNow(() => this.handleDocumentReady());
-    this.addEventListener('pagestart', () => this.handlePageStart());
+    this.addEventListener('inviewrect', this.handleInView.bind(this));
   }
 
   detachedCallback () {
@@ -83,25 +100,48 @@ export default class BulbsPage extends BulbsHTMLElement {
     }
   }
 
-  handlePageStart () {
-    pageStartDebouncer(() => {
-      if (!this.gaTrackerWrapper) {
-        this.gaTrackerWrapper = this.prepGaTracker();
-      }
+  elementRatioOfWindow () {
+    if (!this.cachedViewRect) {
+      return;
+    }
 
-      history.replaceState(
-        {},
-        this.getAttribute('pushstate-title'),
-        this.getAttribute('pushstate-url')
-      );
+    const windowHeight =
+      window.innerHeight || document.documentElement.clientHeight;
+    const isOverTop = this.cachedViewRect.top < 0;
+    const isUnderBottom = this.cachedViewRect.bottom > windowHeight;
 
-      getAnalyticsManager().trackPageView(
-        this.getAttribute('pushstate-url'),
-        this.getAttribute('pushstate-title'),
-        this.gaTrackerWrapper
-      );
-      this.sendAnalyticsEvent();
-    });
+    if (isOverTop) {
+      return this.cachedViewRect.bottom / windowHeight;
+    } else if (isUnderBottom) {
+      return (windowHeight - this.cachedViewRect.top) / windowHeight;
+    }
+
+    return this.cachedViewRect.height / windowHeight;
+  }
+
+  handleInView (event) {
+    this.cachedViewRect = event.detail.boundingRect;
+    inViewQueue.push(this);
+    inViewRectDebouncer(drainInViewQueue);
+  }
+
+  handleInViewAndInFocus () {
+    if (!this.gaTrackerWrapper) {
+      this.gaTrackerWrapper = this.prepGaTracker();
+    }
+
+    history.replaceState(
+      {},
+      this.getAttribute('pushstate-title'),
+      this.getAttribute('pushstate-url')
+    );
+
+    getAnalyticsManager().trackPageView(
+      this.getAttribute('pushstate-url'),
+      this.getAttribute('pushstate-title'),
+      this.gaTrackerWrapper
+    );
+    this.sendAnalyticsEvent();
   }
 
   sendAnalyticsEvent () {
