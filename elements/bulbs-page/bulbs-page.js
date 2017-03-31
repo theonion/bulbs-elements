@@ -27,7 +27,7 @@ function drainInViewQueue () {
     }
 
     return currentPage;
-  });
+  }, null);
 
   if (pageInFocus) {
     pageInFocus.handleInViewAndInFocus();
@@ -48,7 +48,7 @@ export default class BulbsPage extends BulbsHTMLElement {
     this.requireAttribute('pushstate-url');
     InViewMonitor.add(this);
     onReadyOrNow(() => this.handleDocumentReady());
-    this.addEventListener('inviewrect', this.handleInView.bind(this));
+    this.addEventListener('inviewrect', event => this.handleInView(event));
   }
 
   detachedCallback () {
