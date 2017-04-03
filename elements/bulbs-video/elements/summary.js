@@ -28,9 +28,9 @@ export function VideoSummaryView (props) {
   if (video.tunic_campaign_url) {
     campaign = (
       <campaign-display
-          data-track-action={props.campaignTrackAction}   // eslint-disable-line react/prop-types
-          placement={props.campaignPlacement}             // eslint-disable-line react/prop-types
-          preamble-text={props.campaignPreamble}          // eslint-disable-line react/prop-types
+          data-track-action={props.campaignTrackAction}
+          placement={props.campaignPlacement}
+          preamble-text={props.campaignPreamble}
           src={video.tunic_campaign_url}
           name-only
       />
@@ -61,6 +61,9 @@ export function VideoSummaryView (props) {
 VideoSummaryView.displayName = 'VideoSummaryView';
 
 VideoSummaryView.propTypes = {
+  campaignPlacement: PropTypes.string,
+  campaignPreamble: PropTypes.string,
+  campaignTrackAction: PropTypes.string,
   nowPlaying: PropTypes.bool,
   video: PropTypes.object,
 };
