@@ -16,7 +16,7 @@ describe('<bulbs-page>', () => {
   beforeEach(() => {
     mockRaf = createMockRaf();
     sandbox = sinon.sandbox.create();
-    window.onionan = {
+    window.analyticsManager = {
       trackPageView () {},
     };
     sandbox.stub(window, 'requestAnimationFrame', mockRaf.raf);
@@ -38,7 +38,7 @@ describe('<bulbs-page>', () => {
 
   afterEach(() => {
     sandbox.restore();
-    delete window.onionan;
+    delete window.analyticsManager;
   });
 
   describe('attachedCallback', () => {
