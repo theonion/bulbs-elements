@@ -145,9 +145,7 @@ describe('<bulbs-page>', () => {
       expect(ratio).to.equal(rectHeight / windowHeight);
     });
 
-
     it('calculates ratio of window element takes up when element takes up the entire window or more', () => {
-      const rectHeight = windowHeight - 10;
       element.cachedViewRect = {
         bottom: windowHeight + 5,
         top: -5,
