@@ -71,11 +71,8 @@ describe('<bulbs-video-summary>', () => {
     it('renders <VideoSummaryView>', () => {
       subject = shallow(<BulbsVideoSummary nowPlaying=''/>);
       subject.setState({ video });
-
       expect(subject.equals(
-        <VideoSummaryView
-            nowPlaying={true}
-            video={video}/>
+        <VideoSummaryView video={video} nowPlaying={true}/>
       )).to.be.true;
     });
   });
