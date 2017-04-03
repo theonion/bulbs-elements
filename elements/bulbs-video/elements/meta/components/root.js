@@ -74,7 +74,6 @@ VideoMetaRoot.propTypes = {
   campaignPlacement: PropTypes.string,
   campaignPreamble: PropTypes.string,
   campaignTrackAction: PropTypes.string,
-  campaignUrl: PropTypes.string,
   disableLink: PropTypes.bool,
   mobileTitle: PropTypes.string,
   relativeSeriesLinkPrefix: PropTypes.string,
