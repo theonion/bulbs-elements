@@ -37,13 +37,24 @@ export default function VideoMetaRoot (props) {
     seriesElement = seriesNameElement;
   }
 
+  let campaign;
+  if (props.video.tunic_campaign_url) {
+    campaign = (
+      <VideoMetaCampaign
+          campaignPlacement={props.campaignPlacement}
+          campaignPreamble={props.campaignPreamble}
+          campaignTrackAction={props.campaignTrackAction}
+          campaignUrl={props.video.tunic_campaign_url} />
+    );
+  }
+
   return (
     <div className='bulbs-video-meta'>
       <div className='bulbs-video-meta-copy'>
 
         { seriesElement }
 
-        { props.campaignUrl ? <VideoMetaCampaign {...props}/> : null }
+        {campaign}
 
         <bulbs-ellipsize class='bulbs-video-meta-title' line-count="3">
           {props.video.title}
