@@ -179,6 +179,17 @@ describe('<bulbs-page>', () => {
         ).once;
       });
     });
+
+    it('should not do in view tasks if the url is already pointing to the current page', () => {
+      mockRaf.cancel();
+      sinon.stub(element, 'isCurrentPage').returns(true);
+
+      element.handleInViewAndInFocus();
+      mockRaf.step();
+
+      expect(history.replaceState).to.not.have.been.called;
+      expect(util.getAnalyticsManager().trackPageView).to.not.have.been.called;
+    });
   });
 
   describe('handleInView', () => {

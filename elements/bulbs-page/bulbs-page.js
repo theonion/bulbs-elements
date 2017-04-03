@@ -131,6 +131,10 @@ export default class BulbsPage extends BulbsHTMLElement {
       this.gaTrackerWrapper = this.prepGaTracker();
     }
 
+    if (this.isCurrentPage()) {
+      return;
+    }
+
     history.replaceState(
       {},
       this.getAttribute('pushstate-title'),
