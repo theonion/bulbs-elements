@@ -77,15 +77,24 @@ export default class VideoSummary extends BulbsElement {
   }
 
   render () {
-    return (
-      <VideoSummaryView
-        video={this.state.video}
-        campaignPlacement={this.props.campaignPlacement}
-        campaignPreamble={this.props.campaignPreamble}
-        campaignTrackAction={this.props.campaignTrackAction}
-        nowPlaying={typeof this.props.nowPlaying === 'string'}
-      />
-    );
+    const subProps = {
+      nowPlaying: typeof this.props.nowPlaying === 'string',
+      video: this.state.video,
+    };
+
+    if (this.props.campaignPlacement) {
+      subProps.campaignPlacement = this.props.campaignPlacement;
+    }
+
+    if (this.props.campaignPreamble) {
+      subProps.campaignPreamble = this.props.campaignPreamble;
+    }
+
+    if (this.props.campaignTrackAction) {
+      subProps.campaignTrackAction = this.props.campaignTrackAction;
+    }
+
+    return <VideoSummaryView { ...subProps } />;
   }
 }
 
