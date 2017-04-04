@@ -98,10 +98,11 @@ export default class Clickventure {
     let hash = window.location.hash;
 
     const readingListProps = prepReadingListAnalytics(element, { dimension12: 'clickventure' });
-    this.analyticsManager = readingListProps.analyticsManager;
-    this.analyticsWrapper = readingListProps.analyticsWrapper;
-    this.href = readingListProps.href;
-    this.title = readingListProps.title;
+    const { analyticsManager, analyticsWrapper, title } = readingListProps;
+
+    this.analyticsManager = analyticsManager;
+    this.analyticsWrapper = analyticsWrapper;
+    this.title = title;
 
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
     this.element = element;
@@ -239,7 +240,7 @@ export default class Clickventure {
 
   sendPageView () {
     this.analyticsManager.trackPageView(
-      this.href,
+      false,
       this.title,
       this.analyticsWrapper
     );

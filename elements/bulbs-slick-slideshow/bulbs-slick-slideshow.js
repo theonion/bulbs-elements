@@ -110,11 +110,11 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   setupGA () {
     const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
+    const { analyticsManager, analyticsWrapper, title } = readingListProps;
 
-    this.analyticsManager = readingListProps.analyticsManager;
-    this.analyticsWrapper = readingListProps.analyticsWrapper;
-    this.href = readingListProps.href;
-    this.title = readingListProps.title;
+    this.analyticsManager = analyticsManager;
+    this.analyticsWrapper = analyticsWrapper;
+    this.title = title;
   }
 
   sendPageView () {
@@ -123,7 +123,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     }
 
     this.analyticsManager.trackPageView(
-      this.href,
+      false,
       this.title,
       this.analyticsWrapper
     );
