@@ -1,3 +1,6 @@
+import { mount } from 'enzyme';
+import React from 'react';
+
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
 
@@ -117,14 +120,15 @@ describe('<bulbs-video>', () => {
     });
 
     it('should not load video until it is within viewing threshold', (done) => {
-      let videoElement = document.createElement('bulbs-video');
-      videoElement.setAttribute('src', src);
-      container.appendChild(videoElement);
+      mount(
+        <BulbsVideo src={src} />,
+        { attachTo: container }
+      );
 
       container.style.top = '0';
       scrollingElement.scrollTop += 1;
 
-      requestAnimationFrame(() => {
+      setImmediate(() => {
         expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
         done();
       });

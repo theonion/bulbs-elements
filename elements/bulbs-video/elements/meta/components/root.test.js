@@ -82,11 +82,11 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
       );
     });
 
-    context('with a campaignUrl property', () => {
+    context('with a sponsored video', () => {
       let campaign;
 
       beforeEach(() => {
-        props.campaignUrl = '//example.org/campaign';
+        video.tunic_campaign_url = '//example.org/campaign';
         props.campaignPlacement = 'foobar';
         props.campaignPreamble = 'foobar';
         props.campaignTrackAction = 'foobar';
@@ -95,13 +95,13 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
       });
 
       it('renders a <VideoMetaCampaign> element', () => {
-        expect(campaign).to.have.length(1);
-      });
+        const campaignProps = campaign.props();
 
-      it('passes all props through', () => {
-        Object.keys(props).forEach((key) => {
-          expect(campaign).to.have.prop(key, props[key]);
-        });
+        expect(campaign).to.have.length(1);
+        expect(campaignProps.campaignPlacement).to.equal(props.campaignPlacement);
+        expect(campaignProps.campaignPreamble).to.equal(props.campaignPreamble);
+        expect(campaignProps.campaignTrackAction).to.equal(props.campaignTrackAction);
+        expect(campaignProps.campaignUrl).to.equal(video.tunic_campaign_url);
       });
     });
   });
