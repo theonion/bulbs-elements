@@ -24,6 +24,19 @@ export function VideoSummaryView (props) {
     );
   }
 
+  let campaign;
+  if (video.tunic_campaign_url) {
+    campaign = (
+      <campaign-display
+          data-track-action={props.campaignTrackAction}
+          placement={props.campaignPlacement}
+          preamble-text={props.campaignPreamble}
+          src={video.tunic_campaign_url}
+          name-only
+      />
+    );
+  }
+
   return (
     <div className='bulbs-video-summary'>
       <div className='bulbs-video-poster'>
@@ -35,6 +48,9 @@ export function VideoSummaryView (props) {
       <h2 className='bulbs-video-series-name'>
         {video.series_name || video.channel_name}
       </h2>
+
+      {campaign}
+
       <bulbs-ellipsize class='bulbs-video-summary-title' line-count='3'>
         {video.title}
       </bulbs-ellipsize>
@@ -45,6 +61,9 @@ export function VideoSummaryView (props) {
 VideoSummaryView.displayName = 'VideoSummaryView';
 
 VideoSummaryView.propTypes = {
+  campaignPlacement: PropTypes.string,
+  campaignPreamble: PropTypes.string,
+  campaignTrackAction: PropTypes.string,
   nowPlaying: PropTypes.bool,
   video: PropTypes.object,
 };
@@ -61,12 +80,24 @@ export default class VideoSummary extends BulbsElement {
   }
 
   render () {
-    return (
-      <VideoSummaryView
-        video={this.state.video}
-        nowPlaying={typeof this.props.nowPlaying === 'string'}
-      />
-    );
+    const subProps = {
+      nowPlaying: typeof this.props.nowPlaying === 'string',
+      video: this.state.video,
+    };
+
+    if (this.props.campaignPlacement) {
+      subProps.campaignPlacement = this.props.campaignPlacement;
+    }
+
+    if (this.props.campaignPreamble) {
+      subProps.campaignPreamble = this.props.campaignPreamble;
+    }
+
+    if (this.props.campaignTrackAction) {
+      subProps.campaignTrackAction = this.props.campaignTrackAction;
+    }
+
+    return <VideoSummaryView { ...subProps } />;
   }
 }
 
@@ -77,6 +108,9 @@ Object.assign(VideoSummary, {
     videoRequest: VideoRequest,
   },
   propTypes: {
+    campaignPlacement: PropTypes.string,
+    campaignPreamble: PropTypes.string,
+    campaignTrackAction: PropTypes.string,
     nowPlaying: PropTypes.string,
   },
 });
