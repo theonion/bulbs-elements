@@ -74,7 +74,7 @@ describe('<bulbs-video-carousel>', () => {
 
   describe('attachedCallback', () => {
     // Skipping for now - see notes in method
-    xit('attaches firstPlay handler to videoPlayer', () => {
+    it('attaches firstPlay handler to videoPlayer', () => {
       subject.attachedCallback();
       expect(videoPlayer.addEventListener).to.have.been.calledWith(
         'jw-beforePlay',

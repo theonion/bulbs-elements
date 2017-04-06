@@ -57,10 +57,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
       '<bulbs-video-carousel> MUST contain a <bulbs-carousel>'
     );
 
-    // Removing for now, causing issue with videos autoplaying in background
-    //  - bryce, 2/22/17
-    // this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
-
+    this.videoPlayer.addEventListener('jw-beforePlay', this.firstPlay = this.firstPlay.bind(this), true);
     this.videoPlayer.addEventListener('jw-complete', this.playerEnded = this.playerEnded.bind(this), true);
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
@@ -70,15 +67,14 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   }
 
   firstPlay () {
-    let items = this.querySelectorAll('bulbs-carousel-item');
-    let nowPlayingItems = this.querySelectorAll('[now-playing]');
+    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
 
-    if (nowPlayingItems.length > 0 && items.length > 0) {
+    let items = this.querySelectorAll('bulbs-carousel-item');
+
+    if (items.length > 0) {
       this.selectItem(items[0]);
       this.applyState();
     }
-
-    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
   }
 
   playerEnded () {
@@ -93,6 +89,8 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
   }
 
   handleClick (event) {
+    this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
+
     let item = event.target.closest('bulbs-carousel-item');
     if (item) {
       let anchor = item.querySelector('a');
