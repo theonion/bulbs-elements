@@ -1,12 +1,17 @@
+import { mount } from 'enzyme';
+import React from 'react';
+
 import BulbsVideo from './bulbs-video';
 import fetchMock from 'fetch-mock';
 
 import { scrollingElement } from 'bulbs-elements/util';
 
 describe('<bulbs-video>', () => {
+  let autoplay = '';
   let src = '//example.org/video-src.json';
   let subject;
   let props = {
+    autoplay,
     src,
     disableLazyLoading: true,
   };
@@ -51,16 +56,17 @@ describe('<bulbs-video>', () => {
     let fetchSpy;
     let resetSpy;
     let newSrc;
+    let newAutoplay;
 
     beforeEach(() => {
       subject = new BulbsVideo(props);
     });
 
-    context('src did not change', () => {
+    context('src and autoplay did not change', () => {
       beforeEach(() => {
         fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
         resetSpy = sinon.spy(subject.store.actions, 'resetController');
-        subject.componentDidUpdate({ src });
+        subject.componentDidUpdate({ autoplay, src });
         newSrc = src;
       });
 
@@ -97,6 +103,31 @@ describe('<bulbs-video>', () => {
         });
       });
     });
+
+    context('autoplay did change', () => {
+      beforeEach(() => {
+        fetchSpy = sinon.spy(subject.store.actions, 'fetchVideo');
+        resetSpy = sinon.spy(subject.store.actions, 'resetController');
+        newAutoplay = false;
+        fetchMock.mock(src, {});
+        subject.props.autoplay = newAutoplay;
+        subject.componentDidUpdate({ autoplay, src });
+      });
+
+      it('fetches video data', (done) => {
+        setImmediate(() => {
+          expect(fetchSpy).to.have.been.calledWith(newSrc);
+          done();
+        });
+      });
+
+      it('resets the controller', (done) => {
+        setImmediate(() => {
+          expect(resetSpy).to.have.been.called;
+          done();
+        });
+      });
+    });
   });
 
   describe('lazy loading', () => {
@@ -117,14 +148,15 @@ describe('<bulbs-video>', () => {
     });
 
     it('should not load video until it is within viewing threshold', (done) => {
-      let videoElement = document.createElement('bulbs-video');
-      videoElement.setAttribute('src', src);
-      container.appendChild(videoElement);
+      mount(
+        <BulbsVideo src={src} />,
+        { attachTo: container }
+      );
 
       container.style.top = '0';
       scrollingElement.scrollTop += 1;
 
-      requestAnimationFrame(() => {
+      setImmediate(() => {
         expect(container.querySelector('.bulbs-video-root')).not.to.be.null;
         done();
       });
