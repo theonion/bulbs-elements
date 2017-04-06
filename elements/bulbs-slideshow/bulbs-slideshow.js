@@ -1,4 +1,8 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import {
+  registerElement,
+  BulbsHTMLElement,
+} from 'bulbs-elements/register';
+import { prepReadingListAnalytics } from 'bulbs-elements/util';
 import './bulbs-slideshow.scss';
 
 function getInitialSlideIndex (hash) {
@@ -104,6 +108,28 @@ class BulbsSlideshow extends BulbsHTMLElement {
   afterSlideTransition () {
     this.render();
     this.navigateToNextSlide();
+    this.sendPageView();
+  }
+
+  setupGA () {
+    const readingListProps = prepReadingListAnalytics(this.$slideshow, { dimension12: 'slideshow' });
+    const { analyticsManager, analyticsWrapper, title } = readingListProps;
+
+    this.analyticsManager = analyticsManager;
+    this.analyticsWrapper = analyticsWrapper;
+    this.title = title;
+  }
+
+  sendPageView () {
+    if (!this.analyticsManager) {
+      this.setupGA();
+    }
+
+    this.analyticsManager.trackPageView(
+      false,
+      this.title,
+      this.analyticsWrapper
+    );
   }
 
   navigateToNextSlide () {
