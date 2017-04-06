@@ -107,8 +107,8 @@ class BulbsSlideshow extends BulbsHTMLElement {
 
   afterSlideTransition () {
     this.render();
-    this.sendPageView();
     this.navigateToNextSlide();
+    this.sendPageView();
   }
 
   setupGA () {
