@@ -11,10 +11,7 @@ class BulbsTabs extends BulbsHTMLElement {
   }
 
   resetSelection () {
-    let bulbsTabItem = this.querySelector('bulbs-tab-item');
-    if (bulbsTabItem) {
-      bulbsTabItem.select();
-    }
+    this.querySelector('bulbs-tab-item').select();
   }
 }
 
