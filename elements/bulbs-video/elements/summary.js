@@ -70,12 +70,12 @@ VideoSummaryView.propTypes = {
 
 export default class VideoSummary extends BulbsElement {
   initialDispatch () {
-    this.store.actions.fetchVideo(this.props.src);
+    this.store.actions.fetchVideo({ url: this.props.src });
   }
 
   componentDidUpdate (props) {
     if (this.props.src !== props.src) {
-      this.store.actions.fetchVideo(props.src);
+      this.store.actions.fetchVideo({ url: props.src });
     }
   }
 

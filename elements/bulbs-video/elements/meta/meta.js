@@ -11,13 +11,13 @@ import './meta.scss';
 
 export default class VideoMeta extends BulbsElement {
   initialDispatch () {
-    this.store.actions.fetchVideo(this.props.src);
+    this.store.actions.fetchVideo({ url: this.props.src });
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.src !== prevProps.src) {
       this.store.actions.setVideoField(null);
-      this.store.actions.fetchVideo(this.props.src);
+      this.store.actions.fetchVideo({ url: this.props.src });
     }
   }
 
