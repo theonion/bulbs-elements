@@ -32,9 +32,10 @@ class BulbsNavPanel extends BulbsHTMLElement {
   }
 
   get otherPanels () {
+    const navName = this.getAttribute('nav-name');
     return [].filter.call(
       document.querySelectorAll('bulbs-nav-panel'),
-      child => child !== this
+      child => child.getAttribute('nav-name') !== navName
     );
   }
 
