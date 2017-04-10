@@ -1,4 +1,5 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import util from 'bulbs-elements/util';
 import './bulbs-nav.scss';
 
 class BulbsNavToggle extends BulbsHTMLElement {
@@ -13,6 +14,11 @@ class BulbsNavToggle extends BulbsHTMLElement {
 
   toggleNavPanel (event) {
     event.stopPropagation();
+    util.getAnalyticsManager().sendEvent({
+      eventCategory: 'Nav',
+      eventAction: event.target.dataset.trackAction,
+      eventLabel: event.target.dataset.trackLabel,
+    });
     [].forEach.call(this.navPanels, navPanel => navPanel.toggle());
   }
 }
