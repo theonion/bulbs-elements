@@ -1,3 +1,4 @@
+import util from 'bulbs-elements/util';
 import './bulbs-nav';
 
 describe('bulbs-nav', () => {
@@ -24,12 +25,15 @@ describe('bulbs-nav', () => {
 
     toggleA = container.querySelector('bulbs-nav-toggle[nav-name="panel-a"]');
     toggleB = container.querySelector('bulbs-nav-toggle[nav-name="panel-b"]');
+    sandbox.stub(util, 'getAnalyticsManager', () => {
+      return { sendEvent: sandbox.stub() };
+    });
 
     setTimeout(() => done());
   });
 
   afterEach(() => {
-    sandbox.reset();
+    sandbox.restore();
     container.remove();
   });
 
