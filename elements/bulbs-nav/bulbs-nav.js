@@ -68,12 +68,22 @@ class BulbsNavPanel extends BulbsHTMLElement {
     document.body.removeEventListener('click', this.documentClickHandler);
   }
 
+  pinTabToTop (el) {
+    requestAnimationFrame(() => {
+      let navMenu = el.closest('#header-drawer');
+      if (navMenu) {
+        navMenu.scrollTop += el.getBoundingClientRect().top;
+      }
+    });
+  }
+
   toggle () {
     if (this.classList.contains('bulbs-nav-panel-active')) {
       this.close();
     }
     else {
       this.open();
+      this.pinTabToTop(this.parentElement);
     }
   }
 
