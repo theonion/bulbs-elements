@@ -139,6 +139,9 @@
   },
   "devDependencies": {
     "chai-spies": "^0.7.1",
-    "mock-raf": "^0.1.0"
+    "enzyme": "^2.8.1",
+    "mock-raf": "^0.1.0",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4"
   }
 }
