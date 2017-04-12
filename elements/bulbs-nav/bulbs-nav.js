@@ -70,7 +70,7 @@ class BulbsNavPanel extends BulbsHTMLElement {
 
   pinTabToTop (el) {
     requestAnimationFrame(() => {
-      let navMenu = el.closest('#header-drawer');
+      let navMenu = el.closest('.modern.bulbs-flyover-open');
       if (navMenu) {
         navMenu.scrollTop += el.getBoundingClientRect().top;
       }
