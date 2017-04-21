@@ -3,7 +3,7 @@ import {
   registerElement,
 } from 'bulbs-elements/register';
 
-import invariant from 'invariant';
+import invariant from 'invariant'
 
 import PDFObject from 'pdfobject/pdfobject';
 
