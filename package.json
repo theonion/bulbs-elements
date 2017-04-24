@@ -97,7 +97,7 @@
     "node-sass": "^3.4.2",
     "object-map-to-array": "^1.0.0",
     "onionsay": "github:theonion/onionsay",
-    "pdfobject": "pipwerks/pdfobject#d37c492c026dc8abeac636d1d5d6eeebdb409e8b",
+    "pdfobject": "^2.0.201604172",
     "phantomjs": "^1.9.20",
     "phantomjs-prebuilt": "^2.1.7",
     "ponyfill-array-find": "^1.0.0",
