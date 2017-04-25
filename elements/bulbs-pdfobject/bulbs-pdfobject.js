@@ -3,6 +3,8 @@ import {
   registerElement,
 } from 'bulbs-elements/register';
 
+import { loadOnDemand } from 'bulbs-elements/util';
+
 import invariant from 'invariant';
 
 import PDFObject from 'pdfobject/pdfobject';
@@ -19,5 +21,5 @@ class BulbsPDFObject extends BulbsHTMLElement {
   }
 }
 
-registerElement('bulbs-pdfobject', BulbsPDFObject);
+registerElement('bulbs-pdfobject', loadOnDemand(BulbsPDFObject));
 

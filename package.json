@@ -28,6 +28,7 @@
     "babel-loader": "^6.2.1",
     "babel-plugin-object-assign": "^1.2.1",
     "babel-plugin-react-transform": "^2.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-classes": "^6.6.5",
     "babel-plugin-transform-object-assign": "^6.5.0",
     "babel-plugin-transform-proto-to-assign": "^6.6.5",
