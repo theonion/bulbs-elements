@@ -3,10 +3,6 @@ import {
   EmbeddedCMSElement,
 } from 'bulbs-elements/register';
 
-import invariant from 'invariant';
-
-import PDFObject from 'pdfobject/pdfobject';
-
 class BulbsPDFObject extends EmbeddedCMSElement {
   get embedContentPreview () {
     return `
