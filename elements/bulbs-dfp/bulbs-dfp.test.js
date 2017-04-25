@@ -194,7 +194,7 @@ describe('<div is="bulbs-dfp">', () => {
     });
 
     it('is false when > 2/3s above top of viewport', () => {
-      element.style.top = '-34px';
+      element.style.top = '-35px';
       expect(element.isViewable).to.be.false;
     });
 
