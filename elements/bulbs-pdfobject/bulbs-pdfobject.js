@@ -3,20 +3,34 @@ import {
   registerElement,
 } from 'bulbs-elements/register';
 
+import { InViewMonitor } from 'bulbs-elements/util';
+
 import invariant from 'invariant';
 
 import PDFObject from 'pdfobject/pdfobject';
 
 class BulbsPDFObject extends BulbsHTMLElement {
-  createdCallback () {
+
+  attachedCallback () {
+    invariant(this.hasAttribute('poster'), '<bulbs-pdfobject> MUST have a \'poster\' attribute');
+    invariant(this.hasAttribute('src'), '<bulbs-pdfobject> MUST have a \'src\' attribute');
+    this.addEventListener('enterviewport', this.embedPDF.bind(this));
+    InViewMonitor.add(this);
+  }
+
+  embedPDF () {
     let poster = this.getAttribute('poster');
     let options = {
       fallbackLink: `<a href='[url]'><img src="${poster}"></a>`,
     };
-    invariant(this.hasAttribute('poster'), '<bulbs-pdfobject> MUST have a \'poster\' attribute');
-    invariant(this.hasAttribute('src'), '<bulbs-pdfobject> MUST have a \'src\' attribute');
     PDFObject.embed(this.getAttribute('src'), this, options);
+    InViewMonitor.remove(this);
   }
+
+  detachedCallback () {
+    InViewMonitor.remove(this);
+  }
+
 }
 
 registerElement('bulbs-pdfobject', BulbsPDFObject);

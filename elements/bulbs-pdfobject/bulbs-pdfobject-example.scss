@@ -1,4 +1,13 @@
+// Hack to get around edge case of being first item in dom in our 
+// examples env. Needs some height to trigger InViewMonitor
+// Not needed in production
+
+bulbs-pdfobject {
+  display: block;
+  position: relative;
+  top: 1px;
+}
+
 .pdfobject {
-  height: 500px!important;
-  width: 350px!important;
+  height: 770px!important;
 }
