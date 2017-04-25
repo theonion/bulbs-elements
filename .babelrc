@@ -3,7 +3,6 @@
   "plugins": [
     "transform-object-assign",
     "transform-proto-to-assign",
-    "transform-class-properties",
     ['transform-es2015-classes', {loose: true}]
   ],
   "env": {
