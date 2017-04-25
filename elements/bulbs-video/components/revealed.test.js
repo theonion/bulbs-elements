@@ -338,13 +338,20 @@ describe('<bulbs-video> <Revealed>', () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       revealed = new Revealed({});
-      revealed.player = { remove: sandbox.spy() };
+      revealed.player = {
+        setMute: sandbox.spy(),
+        remove: sandbox.spy(),
+      };
       remove = sandbox.stub(util.InViewMonitor, 'remove');
       revealed.componentWillUnmount();
     });
 
     afterEach(() => {
       sandbox.restore();
+    });
+
+    it('mutes the player', () => {
+      expect(revealed.player.setMute).to.have.been.calledWith(true);
     });
 
     it('stops the player', () => {

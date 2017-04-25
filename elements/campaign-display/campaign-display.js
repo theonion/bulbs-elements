@@ -3,6 +3,7 @@ import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import { registerReactElement } from 'bulbs-elements/register';
+import { loadOnDemand } from 'bulbs-elements/util';
 
 import './campaign-display.scss';
 
@@ -62,7 +63,7 @@ Object.assign(CampaignDisplay, {
   },
 });
 
-registerReactElement('campaign-display', CampaignDisplay);
+registerReactElement('campaign-display', loadOnDemand(CampaignDisplay));
 
 export default CampaignDisplay;
 export const displayPropType = CampaignDisplay.propTypes.display;

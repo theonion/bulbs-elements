@@ -1,0 +1,41 @@
+bulbs-tabs {
+  display: block;
+}
+
+bulbs-tab-strip {
+  align-items: baseline;
+  border-bottom: 1px solid #e3e3e3;
+  display: flex;
+  margin-bottom: 15px;
+}
+
+bulbs-tab-item {
+  cursor: pointer;
+  display: block;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  height: 19px;
+  letter-spacing: .5px;
+  line-height: 1.46;
+  margin-right: 35px;
+  padding: 15px 0;
+  padding-bottom: 30px;
+
+  &.bulbs-tab-item-active {
+    border-bottom: 5px solid transparent;
+    border-color: #000;
+  }
+
+  &:last-of-type {
+    margin-right: auto;
+  }
+}
+
+bulbs-tab-content {
+  display: none;
+
+  &.bulbs-tab-content-active {
+    display: block;
+  }
+}

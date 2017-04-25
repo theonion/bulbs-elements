@@ -54,8 +54,9 @@
     border: 0;
   }
   .jw-volume-tip {
+    bottom: -1.2em;
     left: -63%;
-    padding-bottom: 0em;
+    padding: .6667em 1em 0 1em;
   }
   .jw-menu {
     bottom: 0;
@@ -64,6 +65,13 @@
     border-radius:5px;
     .jw-option {
       margin-bottom: .1em;
+    }
+  }
+  .jw-icon-volume {
+    max-width: 1.75em;
+
+    :first-child {
+      bottom: .2em !important;
     }
   }
   .jw-icon-tooltip .jw-active-option {
@@ -136,7 +144,13 @@
       left: -40px;
     }
   }
-
+  .jw-controlbar {
+    padding: 22px 0.2em 0;
+    
+    .jw-controlbar-center-group {
+      position: relative
+    }
+  }
   .jw-display-icon-container {
     background-color: #333;
   }

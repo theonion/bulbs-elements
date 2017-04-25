@@ -3,20 +3,15 @@ import {
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
 import $ from 'jquery';
-import { InViewMonitor } from 'bulbs-elements/util';
+import {
+  InViewMonitor,
+  prepReadingListAnalytics,
+} from 'bulbs-elements/util';
 
 import './bulbs-slick-slideshow.scss';
 
 require('slick-carousel');
 
-/// Things this should do:
-/// 1. Initialize Slick slider for .slider elements.
-/// 2. Attach custom navs top and bottom to each slider.
-/// 3. Set starting slide based window hash, if any.
-/// 4. On click, prev/next elements should trigger slidechange.
-/// 5. On click, set disabled state on prev/next items if on first/last slides.
-/// 6. On click, update window hash to refer active slide.
-/// 7. On l/r keydown, trigger slidechange.
 class BulbsSlickSlideshow extends BulbsHTMLElement {
   attachedCallback () {
     this.slideshow = $('.slider').last();
@@ -109,17 +104,39 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
   slideshowChanged (event, slickObject, currentSlide) {
     window.location.hash = currentSlide;
-    window.onionan.trackPageView(true);
+    this.sendPageView.bind(this).call();
     this.enableDisableNav(this.slides, currentSlide);
   }
 
+  setupGA () {
+    const readingListProps = prepReadingListAnalytics(this.slideshow, { dimension12: 'slideshow' });
+    const { analyticsManager, analyticsWrapper, title } = readingListProps;
+
+    this.analyticsManager = analyticsManager;
+    this.analyticsWrapper = analyticsWrapper;
+    this.title = title;
+  }
+
+  sendPageView () {
+    if (!this.analyticsManager) {
+      this.setupGA();
+    }
+
+    this.analyticsManager.trackPageView(
+      false,
+      this.title,
+      this.analyticsWrapper
+    );
+  }
+
   bindContext () {
+    this.bodyKeyDown = this.bodyKeyDown.bind(this);
     this.navNextClicked = this.navNextClicked.bind(this);
     this.navPrevClicked = this.navPrevClicked.bind(this);
-    this.bodyKeyDown = this.bodyKeyDown.bind(this);
+    this.restartShow = this.restartShow.bind(this);
+    this.sendPageView = this.sendPageView.bind(this);
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
-    this.restartShow = this.restartShow.bind(this);
   }
 
   setupEventHandlers () {

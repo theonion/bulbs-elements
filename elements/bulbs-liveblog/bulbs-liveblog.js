@@ -146,11 +146,13 @@ class BulbsLiveblog extends BulbsHTMLElement {
     let thisEntry = {
       element: event.target,
       published: event.target.published,
+      pinned: event.target.hasAttribute('entry-is-pinned'),
     };
 
     this.entriesStore.all[event.target.getAttribute('entry-id')] = thisEntry;
 
-    if (!this.entriesStore.oldestEntryDate || thisEntry.published < this.entriesStore.oldestEntryDate) {
+    // NOTE: consider the case where the oldest is in the initial list and is pinned
+    if (!thisEntry.pinned && (!this.entriesStore.oldestEntryDate || thisEntry.published < this.entriesStore.oldestEntryDate)) {
       this.entriesStore.oldestEntryDate = thisEntry.published;
     }
   }

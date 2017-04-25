@@ -15,7 +15,10 @@ class BulbsHeader extends BulbsHTMLElement {
     if (this.masthead) {
 
       if (!InViewMonitor.isElementInViewport(this.masthead)) {
-        this.responsiveNav.classList.add('responsive-nav-active');
+        this.signifyResponsiveNavActive();
+      }
+      else {
+        this.signifyMastheadActive();
       }
 
       this.masthead.addEventListener(
@@ -30,26 +33,37 @@ class BulbsHeader extends BulbsHTMLElement {
     }
 
     if (this.responsiveNav && ! this.masthead) {
-      this.responsiveNav.classList.add('responsive-nav-active');
+      this.signifyResponsiveNavActive();
     }
   }
 
   delegateEnterViewport (event) {
     if (event.target === this.masthead) {
-      if (this.responsiveNav) {
-        this.responsiveNav.classList.remove('responsive-nav-active');
-      }
+      this.signifyMastheadActive();
     }
   }
 
   delegateExitViewport (event) {
     if (event.target === this.masthead) {
-      if (this.responsiveNav) {
-        this.responsiveNav.classList.add('responsive-nav-active');
-      }
+      this.signifyResponsiveNavActive();
     }
   }
 
+  signifyResponsiveNavActive () {
+    if (this.responsiveNav) {
+      this.responsiveNav.classList.add('responsive-nav-active');
+    }
+    this.classList.add('responsive-nav-active');
+    this.classList.remove('masthead-active');
+  }
+
+  signifyMastheadActive () {
+    if (this.responsiveNav) {
+      this.responsiveNav.classList.remove('responsive-nav-active');
+    }
+    this.classList.remove('responsive-nav-active');
+    this.classList.add('masthead-active');
+  }
 }
 
 registerElement('bulbs-header', BulbsHeader);

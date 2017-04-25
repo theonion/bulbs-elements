@@ -2,7 +2,10 @@
 import { defaults } from 'lodash';
 import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
-import { getAnalyticsManager, InViewMonitor } from 'bulbs-elements/util';
+import {
+  InViewMonitor,
+  prepReadingListAnalytics,
+} from 'bulbs-elements/util';
 
 velocity
   .RegisterUI('transition.turnPageIn', {
@@ -94,8 +97,14 @@ export default class Clickventure {
     let clickventure = this;
     let hash = window.location.hash;
 
+    const readingListProps = prepReadingListAnalytics(element, { dimension12: 'clickventure' });
+    const { analyticsManager, analyticsWrapper, title } = readingListProps;
+
+    this.analyticsManager = analyticsManager;
+    this.analyticsWrapper = analyticsWrapper;
+    this.title = title;
+
     this.adsManager = window.BULBS_ELEMENTS_ADS_MANAGER;
-    this.analyticsManager = getAnalyticsManager();
     this.element = element;
     this.options = defaults(options, DEFAULTS);
     this.nodeClickCount = 1;
@@ -112,7 +121,7 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.analyticsManager.trackPageView(false, transitionName);
+        clickventure.sendPageView();
       });
     });
 
@@ -189,7 +198,7 @@ export default class Clickventure {
     let newNode = this.element.find('#clickventure-node-' + nodeId);
     velocity(newNode[0], transition.show.fx, {
       duration: 200,
-      complete: (function () {
+      complete: (() => {
         newNode.addClass('clickventure-node-active');
         let newNodeLink = newNode.find('.clickventure-node-link');
         velocity(newNodeLink[0], 'transition.slideDownIn', {
@@ -197,8 +206,7 @@ export default class Clickventure {
           stagger: 100,
         });
         window.picturefill(newNode);
-        this.element.trigger('clickventure-page-change-complete', [this]);
-      }).bind(this),
+      }),
     });
     this.adRefresh();
   }
@@ -213,10 +221,10 @@ export default class Clickventure {
     if (activeNode.length > 0) {
       velocity(activeNode[0], transition.hide.fx, {
         duration: 200,
-        complete: (function () {
+        complete: (() => {
           activeNode.removeClass('clickventure-node-active');
           this.showNewNode(nodeId, transition);
-        }).bind(this),
+        }),
       });
     }
     else {
@@ -228,5 +236,13 @@ export default class Clickventure {
     if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
       this.adsManager.reloadAds(this.sideAd);
     }
+  }
+
+  sendPageView () {
+    this.analyticsManager.trackPageView(
+      false,
+      this.title,
+      this.analyticsWrapper
+    );
   }
 }
