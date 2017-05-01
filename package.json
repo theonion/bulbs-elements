@@ -1,6 +1,6 @@
 {
   "name": "bulbs-elements",
-  "version": "17.2.0",
+  "version": "17.3.0",
   "description": "Some registerable components for bulbs content types.",
   "main": "lib/bulbs-elements/bulbs-elements.js",
   "repository": "git@github.com:theonion/bulbs-elements.git",
@@ -97,6 +97,7 @@
     "node-sass": "^3.4.2",
     "object-map-to-array": "^1.0.0",
     "onionsay": "github:theonion/onionsay",
+    "pdfobject": "^2.0.201604172",
     "phantomjs": "^1.9.20",
     "phantomjs-prebuilt": "^2.1.7",
     "ponyfill-array-find": "^1.0.0",
