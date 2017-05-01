@@ -140,7 +140,6 @@ describe('<div is="bulbs-dfp">', () => {
   });
 
   describe('handleInterval', () => {
-
     context('isViewable', () => {
       beforeEach(() => {
         Object.defineProperty(element, 'isViewable', { get: () => { return true; } });
