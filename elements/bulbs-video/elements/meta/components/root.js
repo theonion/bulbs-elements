@@ -48,6 +48,7 @@ export default function VideoMetaRoot (props) {
     );
   }
 
+  let lineCount = props.lineCount || '3';
   return (
     <div className='bulbs-video-meta'>
       <div className='bulbs-video-meta-copy'>
@@ -56,11 +57,11 @@ export default function VideoMetaRoot (props) {
 
         {campaign}
 
-        <bulbs-ellipsize class='bulbs-video-meta-title' line-count="3">
+        <bulbs-ellipsize class='bulbs-video-meta-title' line-count={lineCount}>
           {props.video.title}
         </bulbs-ellipsize>
 
-        <bulbs-ellipsize class='bulbs-video-mobile-title' line-count="3">
+        <bulbs-ellipsize class='bulbs-video-mobile-title' line-count={lineCount}>
           {props.mobileTitle}
         </bulbs-ellipsize>
       </div>
@@ -75,6 +76,7 @@ VideoMetaRoot.propTypes = {
   campaignPreamble: PropTypes.string,
   campaignTrackAction: PropTypes.string,
   disableLink: PropTypes.bool,
+  lineCount: PropTypes.string,
   mobileTitle: PropTypes.string,
   relativeSeriesLinkPrefix: PropTypes.string,
   titleTrackAction: PropTypes.string,

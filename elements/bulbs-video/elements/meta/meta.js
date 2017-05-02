@@ -44,6 +44,7 @@ Object.assign(VideoMeta, {
     campaignTrackAction: PropTypes.string,
     campaignUrl: PropTypes.string,
     disableMetaLink: PropTypes.string,
+    lineCount: PropTypes.string,
     relativeSeriesLinkPrefix: PropTypes.string,
     titleTrackAction: PropTypes.string,
   },
