@@ -21,7 +21,7 @@ class BulbsPDFObject extends BulbsHTMLElement {
   embedPDF () {
     let poster = this.getAttribute('poster');
     let options = {
-      fallbackLink: `<a href='[url]'><div class="mobile-btn">Tap to explore document</div><img src="${poster}"></a>`,
+      fallbackLink: `<a href='[url]'><div class="fallback-btn">Tap to explore document</div><img src="${poster}"></a>`,
     };
     PDFObject.embed(this.getAttribute('src'), this, options);
     InViewMonitor.remove(this);
