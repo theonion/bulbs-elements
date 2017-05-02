@@ -65,6 +65,27 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
     });
   });
 
+  context('with line-count set', () => {
+    beforeEach(() => {
+      props.lineCount = '4';
+      subject = shallow(<VideoMetaRoot {...props} video={video}/>);
+    });
+
+    it('renders a title', () => {
+      expect(subject).to.contain(
+        <bulbs-ellipsize class='bulbs-video-meta-title' line-count='4'>
+          {video.title}
+        </bulbs-ellipsize>
+      );
+
+      expect(subject).to.contain(
+        <bulbs-ellipsize class='bulbs-video-mobile-title' line-count='4'>
+          {props.mobileTitle}
+        </bulbs-ellipsize>
+      );
+    });
+  })
+
   context('with a video', () => {
     beforeEach(() => {
       subject = shallow(<VideoMetaRoot {...props} video={video}/>);
