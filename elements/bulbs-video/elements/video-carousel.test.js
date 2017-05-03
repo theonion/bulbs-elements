@@ -99,7 +99,6 @@ describe('<bulbs-video-carousel>', () => {
   });
 
   describe('firstPlay', () => {
-
     it('selects the first item in the carousel', () => {
       sinon.spy(subject, 'selectItem');
       sinon.spy(subject, 'applyState');
@@ -119,6 +118,20 @@ describe('<bulbs-video-carousel>', () => {
         subject.firstPlay,
         true
       );
+    });
+
+  });
+
+  context('routed firstPlay', () => {
+    it('selects the item matching the route', () => {
+      secondItem.setAttribute('href', location.pathname);
+      sinon.spy(subject, 'selectItem');
+      sinon.spy(subject, 'applyState');
+
+      subject.firstPlay();
+
+      expect(subject.selectItem).to.have.been.calledWith(secondItem);
+      expect(subject.applyState).to.have.been.calledOnce;
     });
   });
 
@@ -257,6 +270,13 @@ describe('<bulbs-video-carousel>', () => {
 
       it('updates the src of the <bulbs-video-meta>', () => {
         expect(videoMeta.getAttribute('src')).to.eql('//example.org/video.json');
+      });
+    });
+
+    describe('itemMatchingUrl', () => {
+      it('returns the item matching the location pathname', () => {
+        firstItem.setAttribute('href', location.pathname);
+        expect(subject.itemMatchingUrl).to.eql(firstItem);
       });
     });
   });

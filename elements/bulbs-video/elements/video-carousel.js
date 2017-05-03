@@ -46,6 +46,10 @@ export class VideoCarouselState {
 }
 
 class BulbsVideoCarousel extends BulbsHTMLElement {
+  get itemMatchingUrl () {
+    return document.querySelector(`bulbs-carousel-item[href="${location.pathname}"]`);
+  }
+
   attachedCallback () {
     invariant(
       this.videoPlayer = this.querySelector('bulbs-video'),
@@ -62,18 +66,24 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     this.carousel.addEventListener('click', this.handleClick = this.handleClick.bind(this));
 
     this.state = new VideoCarouselState({
-      currentItem: this.querySelector('bulbs-carousel-item'),
+      currentItem: this.itemMatchingUrl || document.querySelector('bulbs-carousel-item'),
     });
   }
 
   firstPlay () {
     this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
 
-    let items = this.querySelectorAll('bulbs-carousel-item');
-
-    if (items.length > 0) {
-      this.selectItem(items[0]);
+    if (this.itemMatchingUrl) {
+      this.selectItem(this.itemMatchingUrl);
       this.applyState();
+    }
+    else {
+      let items = this.querySelectorAll('bulbs-carousel-item');
+
+      if (items.length > 0) {
+        this.selectItem(items[0]);
+        this.applyState();
+      }
     }
   }
 
