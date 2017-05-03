@@ -74,7 +74,7 @@ class BulbsVideoCarousel extends BulbsHTMLElement {
     this.videoPlayer.removeEventListener('jw-beforePlay', this.firstPlay, true);
 
     if (this.itemMatchingUrl) {
-      this.selectItem(itemMatchingUrl);
+      this.selectItem(this.itemMatchingUrl);
       this.applyState();
     }
     else {
