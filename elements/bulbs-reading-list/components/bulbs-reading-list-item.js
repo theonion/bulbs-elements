@@ -126,6 +126,9 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.isLoaded = true;
     this.fetchPending = false;
     this.dataset.loadStatus = 'loaded';
+    if ($('blockquote.twitter-tweet')) {
+      twttr.widgets.load();
+    }
   }
 
   handleLoadContentError (response) {
