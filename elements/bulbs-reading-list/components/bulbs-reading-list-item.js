@@ -126,9 +126,10 @@ class BulbsReadingListItem extends BulbsHTMLElement {
     this.isLoaded = true;
     this.fetchPending = false;
     this.dataset.loadStatus = 'loaded';
+
     if (window.twttr) {
-      twttr.widgets.load();
-    };
+      window.twttr.widgets.load();
+    }
   }
 
   handleLoadContentError (response) {
