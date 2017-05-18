@@ -142,8 +142,8 @@ describe('BulbsReadingListItem', () => {
     beforeEach(() => {
       window.twttr = {
         widgets: {
-          load: function() {}
-        }
+          load: () => {},
+        },
       };
       sandbox.stub(subject, 'fillContent');
       sandbox.stub(window.twttr.widgets, 'load');
@@ -165,9 +165,10 @@ describe('BulbsReadingListItem', () => {
       expect(subject.fetchPending).to.be.false;
     });
 
-    it('tries to load any twitter widgets', function() {
+    it('tries to load any twitter widgets', () => {
       expect(window.twttr.widgets.load.called).to.be.true;
     });
+
     it('sets load status', () => {
       expect(subject.dataset.loadStatus).to.eql('loaded');
     });
