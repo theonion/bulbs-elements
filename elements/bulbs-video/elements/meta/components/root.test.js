@@ -84,7 +84,7 @@ describe('<bulbs-video-meta> <VideoMetaRoot>', () => {
         </bulbs-ellipsize>
       );
     });
-  })
+  });
 
   context('with a video', () => {
     beforeEach(() => {

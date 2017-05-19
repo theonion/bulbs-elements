@@ -140,21 +140,35 @@ describe('BulbsReadingListItem', () => {
 
   describe('#handleLoadContentComplete', () => {
     beforeEach(() => {
+      window.twttr = {
+        widgets: {
+          load: () => {},
+        },
+      };
       sandbox.stub(subject, 'fillContent');
+      sandbox.stub(window.twttr.widgets, 'load');
       subject.handleLoadContentComplete();
     });
     afterEach(() => {
       sandbox.restore();
     });
+
     it('calls fillContent', () => {
       expect(subject.fillContent).to.be.called.once;
     });
+
     it('sets subject.isLoaded', () => {
       expect(subject.isLoaded).to.be.true;
     });
+
     it('sets subject.fetchPending', () => {
       expect(subject.fetchPending).to.be.false;
     });
+
+    it('tries to load any twitter widgets', () => {
+      expect(window.twttr.widgets.load.called).to.be.true;
+    });
+
     it('sets load status', () => {
       expect(subject.dataset.loadStatus).to.eql('loaded');
     });
