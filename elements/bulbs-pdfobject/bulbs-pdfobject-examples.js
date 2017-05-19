@@ -7,8 +7,8 @@ let examples = {
       render: () => {
         return `
           <bulbs-pdfobject 
-            src="https://s3.amazonaws.com/onionstatic/onion/custom/trump-docs/TD-Day1-TrumpAirForceOne.pdf" 
-            poster="https://s3.amazonaws.com/onionstatic/onion/custom/trump-docs/af1.png">
+            src="https://assets2.onionstatic.com/onion/custom/trump-docs/scans/01-Donald-Trump/1-Trump_Encrypted_Emails_SCAN.pdf" 
+            poster="https://assets2.onionstatic.com/onion/custom/trump-docs/poster/01-Donald-Trump/1-Trump_Encrypted_Emails_POSTER.png">
           </bulbs-pdfobject>
         `;
       },
