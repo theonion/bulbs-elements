@@ -252,6 +252,23 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
 
+      context('disable-ads in video metadata response', () => {
+        beforeEach(() => {
+          props.disableAds = false;
+          props.video.disable_ads = true;
+          Revealed.prototype.componentDidMount.call({
+            props,
+            state,
+            refs: { videoContainer: videoRef },
+            makeVideoPlayer: makeVideoPlayerSpy,
+          });
+        });
+
+        it('passes through disable_ads if part of video metadata response', () => {
+          expect(makeVideoPlayerSpy.args[0][1].player_options.disable_ads).to.be.true;
+        });
+      });
+
       context('analytics', () => {
         beforeEach(() => {
           Revealed.prototype.componentDidMount.call({

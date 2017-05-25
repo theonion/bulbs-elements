@@ -126,6 +126,16 @@ let examples = {
         `;
       },
     },
+    'Disable Preroll Example': {
+      render () {
+        return `
+          <bulbs-video
+            src="http://localhost:8080/fixtures/bulbs-video/preroll-disable.json"
+          >
+          </bulbs-video>
+        `;
+      },
+    },
   },
 };
 
