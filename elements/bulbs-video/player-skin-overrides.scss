@@ -69,9 +69,13 @@
   }
   .jw-icon-volume {
     max-width: 1.75em;
+		right: .8em;
 
+		.jw-overlay {
+			left: 2em;
+		}
     :first-child {
-      bottom: .2em !important;
+      bottom: .6em !important;
     }
   }
   .jw-icon-tooltip .jw-active-option {
@@ -146,7 +150,7 @@
   }
   .jw-controlbar {
     padding: 22px 0.2em 0;
-    
+
     .jw-controlbar-center-group {
       position: relative
     }
