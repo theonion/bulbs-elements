@@ -56,7 +56,7 @@ export default class Revealed extends React.Component {
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
     let videoAdConfig = 'None';
-    if (this.props.disableAds) {
+    if (this.props.disableAds || this.props.video.disable_ads) {
       videoAdConfig = 'disable-ads';
     }
 
@@ -99,7 +99,7 @@ export default class Revealed extends React.Component {
 
     videoMeta.player_options.embedded = this.props.embedded;
 
-    videoMeta.player_options.disable_ads = this.props.disableAds;
+    videoMeta.player_options.disable_ads = this.props.disableAds || this.props.video.disable_ads;
 
     this.makeVideoPlayer(this.refs.videoContainer, videoMeta);
   }

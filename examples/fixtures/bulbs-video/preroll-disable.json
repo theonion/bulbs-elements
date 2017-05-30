@@ -1,0 +1,124 @@
+{
+  "id": 5765,
+  "title": "Pet Symmetry rockets \"Come A Little Bit Closer\" into space",
+  "channel_slug": "the-av-club",
+  "channel_name": "The A.V. Club",
+  "channel_logo_url": "https://images2.onionstatic.com/onionstudios/3662/original/600.png",
+  "description": "Pet Symmetry is one of our favorite Chicago bands, and not just because the group’s drummer, Marcus Nuccio, works here at Onion, Inc. They’re fun, spunky, and full of brassy attitude, making them the perfect candidates to tackle “Come A Little Bit Closer.”",
+  "disable_ads": true,
+  "series_name": "A.V. Undercover",
+  "season": null,
+  "series_slug": "av-undercover",
+  "series_logo_url": "https://images2.onionstatic.com/onionstudios/3221/original/600.jpg",
+  "sponsor_id": null,
+  "duration": 0,
+  "poster_url": "https://images2.onionstatic.com/onionstudios/6957/original/600.jpg",
+  "targeting": {
+    "target_host_channel": "main",
+    "target_video_id": 5765,
+    "target_series": "av-undercover",
+    "target_channel": "the-av-club"
+  },
+  "tags": [
+    "main",
+    "5765",
+    "av-undercover",
+    "the-av-club"
+  ],
+  "category": "main/the-av-club/av-undercover",
+  "videojs_options": {
+    "techOrder": [
+      "html5",
+      "flash"
+    ],
+    "isDiscoverable": true,
+    "pluginConfig": {
+      "videometrix": {
+        "id": 6036328,
+        "metadata": {
+          "ns_st_ci": "onionstudios.5765",
+          "c3": "onionstudios",
+          "c4": "AVCLUB"
+        }
+      },
+      "videoanalytics": {
+        "id": 6036328
+      },
+      "endcard": {
+        "URL": "http://www.onionstudios.com/end-cards/5765/"
+      }
+    },
+    "videoId": 5765,
+    "poster": "https://images2.onionstatic.com/onionstudios/6957/16x9/800.jpg",
+    "shareUrl": "http://www.onionstudios.com/videos/pet-symmetry-rockets-come-a-little-bit-closer-into-space-5765"
+  },
+  "player_options": {
+    "poster": "https://images2.onionstatic.com/onionstudios/6957/16x9/800.jpg",
+    "comscore": {
+      "id": 6036328,
+      "metadata": {
+        "ns_st_ci": "onionstudios.5765",
+        "c3": "onionstudios",
+        "c4": "AVCLUB"
+      }
+    },
+    "embedCode": "<iframe name=\"embedded\" allowfullscreen webkitallowfullscreen mozallowfullscreen frameborder=\"no\" width=\"480\" height=\"270\" scrolling=\"no\" src=\"http://www.onionstudios.com/embed?id=5765\"></iframe>\n",
+    "shareUrl": "http://www.onionstudios.com/videos/pet-symmetry-rockets-come-a-little-bit-closer-into-space-5765"
+  },
+  "sources": [
+    {
+      "id": 43255,
+      "url": "https://v.theonion.com/onionstudios/video/5765/640.mp4",
+      "content_type": "video/mp4",
+      "width": 640,
+      "bitrate": 1319,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 5765
+    },
+    {
+      "id": 43254,
+      "url": "https://v.theonion.com/onionstudios/video/5765/640.webm",
+      "content_type": "video/webm",
+      "width": 640,
+      "bitrate": 1398,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 5765
+    },
+    {
+      "id": 43257,
+      "url": "https://v.theonion.com/onionstudios/video/5765/720.mp4",
+      "content_type": "720/video/mp4",
+      "width": 1280,
+      "bitrate": 3492,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 5765
+    },
+    {
+      "id": 43256,
+      "url": "https://v.theonion.com/onionstudios/video/5765/1080.mp4",
+      "content_type": "1080/video/mp4",
+      "width": 1920,
+      "bitrate": 7987,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 5765
+    },
+    {
+      "id": 43253,
+      "url": "https://v.theonion.com/onionstudios/video/5765/hls_playlist.m3u8",
+      "content_type": "application/x-mpegURL",
+      "width": null,
+      "bitrate": null,
+      "enabled": true,
+      "is_legacy_source": false,
+      "video": 5765
+    }
+  ],
+  "tunic_campaign_url": "http://tunic.theonion.com/api/v1/campaign/661/public",
+  "tunic_campaign_id": 661,
+  "series_url": "http://www.onionstudios.com/series/av-undercover",
+  "channel_url": "http://www.onionstudios.com/channels/the-av-club"
+}
