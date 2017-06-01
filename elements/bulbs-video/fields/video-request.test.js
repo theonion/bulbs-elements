@@ -23,7 +23,7 @@ describe('<bulbs-video> VideoReuestField', () => {
 
     context('url is defined', () => {
       it('makes a request to that url', () => {
-        actions.fetchVideo({}, '//example.org', new Store({ schema: {} }));
+        actions.fetchVideo({}, { url: '//example.org' }, new Store({ schema: {} }));
         expect(util.makeRequest).to.have.been.calledWith('//example.org');
       });
     });

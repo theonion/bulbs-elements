@@ -27,10 +27,10 @@ export default class RailPlayer extends BulbsElement {
     if (this.isAdBlocked) {
       let parsedURL = new Url(this.props.src);
       parsedURL.addQuery('ad_block_active', 'true');
-      this.store.actions.fetchVideo(parsedURL.toString());
+      this.store.actions.fetchVideo({ url: parsedURL.toString() });
     }
     else {
-      this.store.actions.fetchVideo(this.props.src);
+      this.store.actions.fetchVideo({ url: this.props.src });
     }
   }
 

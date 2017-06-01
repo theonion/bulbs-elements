@@ -17,7 +17,16 @@ import './endcard.scss';
 
 export default class BulbsVideo extends BulbsElement {
   initialDispatch () {
-    this.store.actions.fetchVideo(this.props.src);
+    const requestOptions = {};
+    if (this.props.useFetchCredentials) {
+      requestOptions.credentials = 'include';
+    }
+
+    this.store.actions.fetchVideo({
+      url: this.props.src,
+      requestOptions,
+    });
+
     let autoplay = typeof this.props.autoplay === 'string';
     let autoplayInView = typeof this.props.autoplayInView === 'string';
     if (autoplay || autoplayInView) {
@@ -112,6 +121,7 @@ Object.assign(BulbsVideo, {
     targetHostChannel: PropTypes.string,
     targetSpecialCoverage: PropTypes.string,
     twitterHandle: PropTypes.string,
+    useFetchCredentials: PropTypes.bool,
   },
 });
 
