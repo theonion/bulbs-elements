@@ -55,6 +55,9 @@ export default class Revealed extends React.Component {
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
+    // Allowing creativeSize to be passed in in root.js
+    let creativeSize = this.props.creativeSize;
+
     let videoAdConfig = 'None';
     if (this.props.disableAds || this.props.video.disable_ads) {
       videoAdConfig = 'disable-ads';
@@ -78,6 +81,8 @@ export default class Revealed extends React.Component {
       BULBS_ELEMENTS_ONIONSTUDIOS_GA_ID,
       dimensions
     );
+
+
 
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
@@ -171,7 +176,7 @@ export default class Revealed extends React.Component {
     let type;
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
-    baseUrl += '?sz=640x480';
+    baseUrl += `?sz=${this.props.creativeSize}`;
     baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
     baseUrl += '&impl=s';
     baseUrl += '&gdfp_req=1';
@@ -361,6 +366,7 @@ Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
+  creativeSize: PropTypes.object.string,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableAds: PropTypes.bool,

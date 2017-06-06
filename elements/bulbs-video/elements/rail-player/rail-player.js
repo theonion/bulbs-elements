@@ -60,6 +60,7 @@ Object.assign(RailPlayer, {
   },
   propTypes: {
     channel: PropTypes.string.isRequired,
+    creativeSize: PropTypes.string,
     recircUrl: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     targetCampaignId: PropTypes.string,
