@@ -366,6 +366,7 @@ Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
+  creativeSize: PropTypes.string,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableAds: PropTypes.bool,

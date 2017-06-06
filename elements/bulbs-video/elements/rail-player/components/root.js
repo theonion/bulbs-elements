@@ -32,7 +32,7 @@ export default class Root extends React.Component {
           <Revealed
             disableSharing={true}
             muted={true}
-            creativeSize='640x480'
+            creativeSize='400x300'
             targetHostChannel='right_rail'
             defaultCaptions={true}
             {...this.props}
@@ -56,7 +56,6 @@ Root.displayName = 'RailPlayerRoot';
 
 Root.propTypes = {
   channel: PropTypes.string,
-  creativeSize: PropTypes.string,
   recircUrl: PropTypes.string.isRequired,
   targetCampaignId: PropTypes.string,
   targetSpecialCoverage: PropTypes.string,
