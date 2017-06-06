@@ -32,7 +32,7 @@ export default class Root extends React.Component {
           <Revealed
             disableSharing={true}
             muted={true}
-            creativeSize='400x300'
+            creativeSize='640x480'
             targetHostChannel='right_rail'
             defaultCaptions={true}
             {...this.props}
