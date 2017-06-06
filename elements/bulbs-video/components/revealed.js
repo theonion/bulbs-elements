@@ -55,9 +55,6 @@ export default class Revealed extends React.Component {
     let specialCoverage = this.props.targetSpecialCoverage || 'None';
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
-    // Allowing creativeSize to be passed in in root.js
-    let creativeSize = this.props.creativeSize || '640x480';
-
     let videoAdConfig = 'None';
     if (this.props.disableAds || this.props.video.disable_ads) {
       videoAdConfig = 'disable-ads';
@@ -174,9 +171,11 @@ export default class Revealed extends React.Component {
 
     let vastTestId = this.vastTest(window.location.search);
     let type;
+    // Allowing creativeSize to be passed in in root.js
+    let creativeSize = this.props.creativeSize || '640x480';
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
-    baseUrl += `?sz=${this.props.creativeSize}`;
+    baseUrl += `?sz=${creativeSize}`;
     baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
     baseUrl += '&impl=s';
     baseUrl += '&gdfp_req=1';
