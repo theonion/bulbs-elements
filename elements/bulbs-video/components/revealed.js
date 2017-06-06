@@ -56,7 +56,7 @@ export default class Revealed extends React.Component {
     let autoplayInViewBool = typeof this.props.autoplayInView === 'string';
 
     // Allowing creativeSize to be passed in in root.js
-    let creativeSize = this.props.creativeSize;
+    let creativeSize = this.props.creativeSize || '640x480';
 
     let videoAdConfig = 'None';
     if (this.props.disableAds || this.props.video.disable_ads) {
@@ -366,7 +366,6 @@ Revealed.propTypes = {
   autoplay: PropTypes.bool,
   autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
-  creativeSize: PropTypes.object.string,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableAds: PropTypes.bool,
