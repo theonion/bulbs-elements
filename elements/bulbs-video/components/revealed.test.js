@@ -623,10 +623,6 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(parsed.query.sz).to.eql('640x480');
       });
 
-      it('allows creativeSize to be overridden', () => {
-        // ???
-      });
-
       it('returns the vast url', function () {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
@@ -703,6 +699,20 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');
         });
+      });
+    });
+
+    context('overrides', () => {
+      it('allows creativeSize to be overridden', () => {
+        let vastUrl = Revealed.prototype.vastUrl.call({
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+          props: {
+            creativeSize: '400x300',
+          },
+        }, videoMeta);
+        let parsed = url.parse(vastUrl, true);
+        expect(parsed.query.sz).to.eql('400x300');
       });
     });
 
