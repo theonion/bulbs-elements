@@ -50,7 +50,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   handleEnterViewport () {
-    if(!this.trackedEnterViewport && this.adsManager && this.isViewable) {
+    if(!this.trackedEnterViewport && this.adsManager) {
       this.trackedEnterViewport = true;
       this.adsManager.asyncRefreshSlot(this);
     }

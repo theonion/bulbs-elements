@@ -20,6 +20,8 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.initialSlide = 0;
     this.windowHash = window.location.hash;
     this.navLinks = this.slideshow.siblings('.slider-nav');
+    this.slideshowAdContainer = this.slideshow.siblings('.slide-ad');
+    this.slideshowAd = this.slideshowAdContainer.find('.dfp');
     this.navNext = this.navLinks.find('.slider-next');
     this.navPrev = this.navLinks.find('.slider-prev');
     this.restart = this.slideshow.find('a.restart');
@@ -106,6 +108,20 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     window.location.hash = currentSlide;
     this.sendPageView.bind(this).call();
     this.enableDisableNav(this.slides, currentSlide);
+    this.currentSlide = currentSlide;
+    this.maybeShowAd();
+  }
+
+  maybeShowAd () {
+    if (window.ads && (this.currentSlide > 1) && (this.currentSlide % 4 === 0)) {
+      this.slideshowAdContainer.addClass('active');
+      window.ads.reloadAds(this);
+      window.ads.refreshSlot(this.slideshowAd[0]);
+    }
+  }
+
+  closeAd () {
+    this.slideshowAdContainer.removeClass('active');
   }
 
   setupGA () {
@@ -137,6 +153,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
     this.sendPageView = this.sendPageView.bind(this);
     this.slideshowInit = this.slideshowInit.bind(this);
     this.slideshowChanged = this.slideshowChanged.bind(this);
+    this.closeAd = this.closeAd.bind(this);
   }
 
   setupEventHandlers () {
@@ -157,6 +174,7 @@ class BulbsSlickSlideshow extends BulbsHTMLElement {
 
     // can only get currentSlide on before/afterChange
     this.slideshow.on('afterChange', this.slideshowChanged);
+    this.slideshowAdContainer.find('.fa-close').on('click', this.closeAd);
   }
 }
 
