@@ -164,10 +164,27 @@ export default class Revealed extends React.Component {
     return false;
   }
 
+  utmTest (searchString, utmKeys) {
+    const utmParams = new Hash();
+
+    if (searchString !== '') {
+      utmKeys.forEach(function(utmKey) {
+        utmVal = this.parseParam(utmKey, searchString);
+        utmParams.set(utmKey, utmVal);
+      });
+    }
+
+    return utmParams;
+  }
+
   vastUrl (videoMeta) {
     let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
-    let vastTestId = this.vastTest(window.location.search);
+    const searchString = window.location.search;
+    let vastTestId = this.vastTest(searchString);
+
+    let utmKeys = ['utm_source', 'utm_campaign'];
+    let utmParams = this.utmTest(searchString, utmKeys);
     let type;
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
@@ -181,6 +198,15 @@ export default class Revealed extends React.Component {
     baseUrl += `&url=${window.document.referrer}`;
     baseUrl += '&description_url=';
     baseUrl += `&correlator=${new Date().getTime()}`;
+
+    let utmVal;
+    Object.keys(utmParams).forEach(function (utmKey) {
+      utmVal = utmParams[utmKey];
+
+      if (utmVal !== '') {
+        baseUrl += `${utmKey}=${utmVal}`;
+      }
+    }
 
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
