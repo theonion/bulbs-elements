@@ -190,17 +190,6 @@ export default class Revealed extends React.Component {
     baseUrl += '&description_url=';
     baseUrl += `&correlator=${new Date().getTime()}`;
 
-    const utmParams = this.utmTest(searchString);
-    const { utmSource } = utmParams;
-    if (utmSource) {
-      baseUrl += `&utm_source=${utmSource}`;
-    }
-
-    const { utmCampaign } = utmParams;
-    if (utmCampaign) {
-      baseUrl += `&utm_campaign=${utmCampaign}`;
-    }
-
     let customParamValues = '';
     customParamValues += `video_site=${videoMeta.channel_slug}`;
     customParamValues += `&video_id=${videoMeta.id}`;
@@ -227,6 +216,17 @@ export default class Revealed extends React.Component {
 
     if (vastTestId) {
       customParamValues += '&forcedAdZone=' + vastTestId;
+    }
+
+    const utmParams = this.utmTest(searchString);
+    const { utmSource } = utmParams;
+    if (utmSource) {
+      customParamValues += `&utm_source=${utmSource}`;
+    }
+
+    const { utmCampaign } = utmParams;
+    if (utmCampaign) {
+      customParamValues += `&utm_campaign=${utmCampaign}`;
     }
 
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
