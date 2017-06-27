@@ -164,17 +164,11 @@ export default class Revealed extends React.Component {
     return false;
   }
 
-  utmTest (searchString, utmKeys) {
-    const utmParams = new Hash();
-
-    if (searchString !== '') {
-      utmKeys.forEach(function(utmKey) {
-        utmVal = this.parseParam(utmKey, searchString);
-        utmParams.set(utmKey, utmVal);
-      });
-    }
-
-    return utmParams;
+  utmTest (searchString) {
+    return {
+      utmSource: this.parseParam('utm_source', searchString),
+      utmCampaign: this.parseParam('utm_campaign', searchString),
+    };
   }
 
   vastUrl (videoMeta) {
@@ -182,9 +176,6 @@ export default class Revealed extends React.Component {
 
     const searchString = window.location.search;
     let vastTestId = this.vastTest(searchString);
-
-    let utmKeys = ['utm_source', 'utm_campaign'];
-    let utmParams = this.utmTest(searchString, utmKeys);
     let type;
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
@@ -199,13 +190,15 @@ export default class Revealed extends React.Component {
     baseUrl += '&description_url=';
     baseUrl += `&correlator=${new Date().getTime()}`;
 
-    let utmVal;
-    Object.keys(utmParams).forEach(function (utmKey) {
-      utmVal = utmParams[utmKey];
+    const utmParams = this.utmTest(searchString);
+    const { utmSource } = utmParams;
+    if (utmSource) {
+      baseUrl += `&utm_source=${utmSource}`;
+    }
 
-      if (utmVal !== '') {
-        baseUrl += `${utmKey}=${utmVal}`;
-      }
+    const { utmCampaign } = utmParams;
+    if (utmCampaign) {
+      baseUrl += `&utm_campaign=${utmCampaign}`;
     }
 
     let customParamValues = '';
