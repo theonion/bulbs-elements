@@ -627,7 +627,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(parsed.protocol).to.eql('https:');
         expect(parsed.host).to.eql('pubads.g.doubleclick.net');
         expect(parsed.pathname).to.eql('/gampad/ads');
-        expect(Object.keys(parsed.query)).to.eql(['sz', 'iu', 'impl', 'gdfp_req', 'env', 'output', 'unviewed_position_start', 'url', 'description_url', 'correlator', 'utm_source', 'utm_campaign', 'cust_params']);
+        expect(Object.keys(parsed.query)).to.eql(['sz', 'iu', 'impl', 'gdfp_req', 'env', 'output', 'unviewed_position_start', 'url', 'description_url', 'correlator', 'cust_params']);
         expect(parsed.query.sz).to.eql('640x480');
         expect(parsed.query.iu).to.eql('/4246/fmg.onion');
         expect(parsed.query.impl).to.eql('s');
@@ -646,7 +646,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.be.undefined;
         expect(cust_params.pos).to.eql('host_channel');
-        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos']);
+        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos', 'utm_source', 'utm_campaign']);
       });
 
       context('with series', () => {
@@ -673,9 +673,9 @@ describe('<bulbs-video> <Revealed>', () => {
             props: {},
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
-
-          expect(parsed.query.utm_source).to.equal(utmTestData.utmSource);
-          expect(parsed.query.utm_campaign).to.equal(utmTestData.utmCampaign);
+          let cust_params = querystring.parse(parsed.query.cust_params, '&');
+          expect(cust_params.utm_source).to.equal(utmTestData.utmSource);
+          expect(cust_params.utm_campaign).to.equal(utmTestData.utmCampaign);
         });
       });
 
