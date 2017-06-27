@@ -586,15 +586,15 @@ describe('<bulbs-video> <Revealed>', () => {
     let cacheBusterStub;
     let vastTestStub;
     let videoMeta;
-    let utmTestData
-    let utmTestStub
+    let utmTestData;
+    let utmTestStub;
 
     context('default', () => {
       beforeEach(() => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
         utmTestData = {
-          utmSource: 'test source', 
+          utmSource: 'test source',
           utmCampaign: 'test campaign',
         };
         utmTestStub = sinon.stub().returns(utmTestData);
