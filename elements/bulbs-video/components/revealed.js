@@ -164,10 +164,18 @@ export default class Revealed extends React.Component {
     return false;
   }
 
+  utmTest (searchString) {
+    return {
+      utmSource: this.parseParam('utm_source', searchString),
+      utmCampaign: this.parseParam('utm_campaign', searchString),
+    };
+  }
+
   vastUrl (videoMeta) {
     let baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads';
 
-    let vastTestId = this.vastTest(window.location.search);
+    const searchString = window.location.search;
+    let vastTestId = this.vastTest(searchString);
     let type;
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
@@ -208,6 +216,17 @@ export default class Revealed extends React.Component {
 
     if (vastTestId) {
       customParamValues += '&forcedAdZone=' + vastTestId;
+    }
+
+    const utmParams = this.utmTest(searchString);
+    const { utmSource } = utmParams;
+    if (utmSource) {
+      customParamValues += `&utm_source=${utmSource}`;
+    }
+
+    const { utmCampaign } = utmParams;
+    if (utmCampaign) {
+      customParamValues += `&utm_campaign=${utmCampaign}`;
     }
 
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);

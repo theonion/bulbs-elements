@@ -586,11 +586,18 @@ describe('<bulbs-video> <Revealed>', () => {
     let cacheBusterStub;
     let vastTestStub;
     let videoMeta;
+    let utmTestData;
+    let utmTestStub;
 
     context('default', () => {
       beforeEach(() => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns(null);
+        utmTestData = {
+          utmSource: 'test source',
+          utmCampaign: 'test campaign',
+        };
+        utmTestStub = sinon.stub().returns(utmTestData);
         videoMeta = {
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
@@ -613,6 +620,7 @@ describe('<bulbs-video> <Revealed>', () => {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
+          utmTest: utmTestStub,
           props: {},
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
@@ -638,7 +646,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.be.undefined;
         expect(cust_params.pos).to.eql('host_channel');
-        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos']);
+        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos', 'utm_source', 'utm_campaign']);
       });
 
       context('with series', () => {
@@ -647,6 +655,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let vastUrl = Revealed.prototype.vastUrl.call({
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
+            utmTest: utmTestStub,
             props: {},
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -655,11 +664,27 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
 
+      context('with utm params', () => {
+        it('populates the url with utm params', () => {
+          let vastUrl = Revealed.prototype.vastUrl.call({
+            cacheBuster: cacheBusterStub,
+            vastTest: vastTestStub,
+            utmTest: utmTestStub,
+            props: {},
+          }, videoMeta);
+          let parsed = url.parse(vastUrl, true);
+          let cust_params = querystring.parse(parsed.query.cust_params, '&');
+          expect(cust_params.utm_source).to.equal(utmTestData.utmSource);
+          expect(cust_params.utm_campaign).to.equal(utmTestData.utmCampaign);
+        });
+      });
+
       context('sponsored', () => {
         it('populates the campaign key', () => {
           let vastUrl = Revealed.prototype.vastUrl.call({
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
+            utmTest: utmTestStub,
             props: { targetCampaignId: 1 },
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -675,12 +700,13 @@ describe('<bulbs-video> <Revealed>', () => {
           let vastUrl = Revealed.prototype.vastUrl.call({
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
+            utmTest: utmTestStub,
             props: { },
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(Object.keys(cust_params)).to.eql([
-            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type',
+            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type', 'utm_source', 'utm_campaign'
           ]);
           expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');
@@ -697,6 +723,7 @@ describe('<bulbs-video> <Revealed>', () => {
         };
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns('12345');
+        utmTestStub = sinon.stub().returns({});
         videoMeta = {
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
@@ -713,6 +740,7 @@ describe('<bulbs-video> <Revealed>', () => {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
+          utmTest: utmTestStub,
           props: { },
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
