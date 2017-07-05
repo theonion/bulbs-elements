@@ -1,4 +1,4 @@
-import util from 'bulbs-elements/util';
+import InViewMonitor from 'bulbs-elements/util/in-view-monitor';
 import invariant from 'invariant';
 import {
   registerElement,
@@ -21,7 +21,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
     this.addEventListener('exitviewport', this.handleExitViewport);
 
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
-    util.InViewMonitor.add(this, {
+	InViewMonitor.add(this, {
       get distanceFromTop () {
         return -(window.innerHeight * threshold);
       },
@@ -42,7 +42,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   detachedCallback () {
-    util.InViewMonitor.remove(this);
+    InViewMonitor.remove(this);
 
     if (this.refreshInterval) {
       window.clearInterval(this.refreshInterval);
@@ -69,11 +69,6 @@ export default class BulbsDfp extends BulbsHTMLElement {
 
     if (this.isViewable) {
       if (browserVisibility === 'visible') {
-        util.getAnalyticsManager().sendEvent({
-          eventCategory: 'bulbs-dfp-element Live Metrics',
-          eventAction: '30-second-refresh-triggered-visible',
-          eventLabel: this.dataset.adUnit,
-        });
         this.adsManager.reloadAds(this);
         this.adsManager.refreshSlot(this);
       }
@@ -81,7 +76,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
   }
 
   get isViewable () {
-    return util.InViewMonitor.isElementInViewport(this, null, {
+    return InViewMonitor.isElementInViewport(this, null, {
       distanceFromTop: this.offsetHeight * 0.66,
       distanceFromBottom: -(this.offsetHeight * 0.66),
     });
