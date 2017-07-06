@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import './<%= elementPathName %>.scss';
 
 import <%= elementClassName %>Schema from './<%= elementPathName %>-schema';

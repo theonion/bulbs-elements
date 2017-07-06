@@ -1,7 +1,7 @@
 import {
   registerElement,
   EmbeddedCMSElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 
 class Embedded<%= elementClassName %> extends EmbeddedCMSElement {
   get embedContentPreview () {

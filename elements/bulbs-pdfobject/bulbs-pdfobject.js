@@ -1,7 +1,7 @@
 import {
   BulbsHTMLElement,
   registerElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 
 import { InViewMonitor } from 'bulbs-elements/util';
 

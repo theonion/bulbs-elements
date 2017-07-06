@@ -1,7 +1,7 @@
 import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 import './<%= elementPathName %>.scss';
 
 export default class <%= elementClassName %> extends BulbsHTMLElement {

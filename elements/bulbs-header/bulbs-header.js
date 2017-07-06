@@ -1,4 +1,4 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register-element';
 import './bulbs-header-masthead';
 import './bulbs-header-responsive-nav';
 import './bulbs-header.scss';

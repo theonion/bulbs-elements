@@ -3,7 +3,7 @@ import invariant from 'invariant';
 import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 
 export default class BulbsDfp extends BulbsHTMLElement {
   attachedCallback () {

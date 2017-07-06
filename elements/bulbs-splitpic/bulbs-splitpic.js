@@ -1,4 +1,4 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register-element';
 import { SplitPic, SplitPicVertical } from './splitpic';
 import invariant from 'invariant';
 import './bulbs-splitpic.scss';

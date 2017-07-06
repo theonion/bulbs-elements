@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'; // eslint-disable-line
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 import VideoPlayButton from 'bulbs-elements/components/video-play-button';
 

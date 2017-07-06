@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 
 let { forEach } = Array.prototype;
 

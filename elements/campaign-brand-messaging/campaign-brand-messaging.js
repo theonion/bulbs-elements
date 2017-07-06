@@ -1,7 +1,7 @@
 import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 import { filterBadResponse, getResponseJSON } from 'bulbs-elements/util';
 import invariant from 'invariant';
 

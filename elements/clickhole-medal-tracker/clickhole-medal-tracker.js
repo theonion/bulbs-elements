@@ -4,7 +4,7 @@ import invariant from 'invariant';
 import { isString } from 'lodash';
 import React, { PropTypes } from 'react';
 import { filterBadResponse, getResponseJSON } from 'bulbs-elements/util';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import { sortedRandomizedContenders } from './randomizer';
 import './clickhole-medal-tracker.scss';
 

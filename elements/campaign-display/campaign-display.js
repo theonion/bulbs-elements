@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import { loadOnDemand } from 'bulbs-elements/util';
 
 import './campaign-display.scss';

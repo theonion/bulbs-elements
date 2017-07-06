@@ -1,5 +1,5 @@
 import { filterBadResponse } from 'bulbs-elements/util';
-import { registerElement } from 'bulbs-elements/register';
+import { registerElement } from 'bulbs-elements/register-element';
 import invariant from 'invariant';
 
 // We have to do this little dance to properly subclass elements in Safari

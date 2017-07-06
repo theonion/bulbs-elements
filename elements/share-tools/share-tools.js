@@ -2,7 +2,7 @@ import {
   registerReactElement,
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-react';
 
 import './share-tools.scss';
 

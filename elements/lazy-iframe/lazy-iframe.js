@@ -1,5 +1,5 @@
 import React from 'react';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import { loadOnDemand } from 'bulbs-elements/util';
 
 registerReactElement(

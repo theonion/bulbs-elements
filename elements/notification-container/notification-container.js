@@ -3,7 +3,7 @@ import NotificationDisplay from './notification-display';
 import { NotificationSession } from './notification-session.js';
 import invariant from 'invariant';
 import React, { PropTypes } from 'react';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 
 import './notification-container.scss';
 

@@ -1,7 +1,7 @@
 import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 import $ from 'jquery';
 import {
   InViewMonitor,

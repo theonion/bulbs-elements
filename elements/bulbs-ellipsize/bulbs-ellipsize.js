@@ -1,4 +1,4 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import invariant from 'invariant';
 import truncate from 'truncate.js'; // eslint-disable-line no-unused-vars
 

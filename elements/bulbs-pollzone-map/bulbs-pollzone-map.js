@@ -1,7 +1,7 @@
 import {
   BulbsHTMLElement,
   registerElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 
 import * as d3 from 'd3';
 import Datamap from 'datamaps';
