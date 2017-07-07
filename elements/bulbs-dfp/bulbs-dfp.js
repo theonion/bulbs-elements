@@ -21,7 +21,7 @@ export default class BulbsDfp extends BulbsHTMLElement {
     this.addEventListener('exitviewport', this.handleExitViewport);
 
     let threshold = parseFloat(this.getAttribute('viewport-threshold'), 10);
-	InViewMonitor.add(this, {
+    InViewMonitor.add(this, {
       get distanceFromTop () {
         return -(window.innerHeight * threshold);
       },
