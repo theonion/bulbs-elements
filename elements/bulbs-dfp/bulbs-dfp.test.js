@@ -145,7 +145,8 @@ describe('<div is="bulbs-dfp">', () => {
         Object.defineProperty(element, 'isViewable', { get: () => { return true; } });
       });
 
-      it('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', (done) => {
+    // Disabled, as it is no longer used in bulbs-dfp. Maybe the test could be moved elsewhere?
+     xit('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', (done) => {
         element.handleInterval();
         setImmediate(() => {
           expect(sendEventSpy).to.have.been.calledWith({
