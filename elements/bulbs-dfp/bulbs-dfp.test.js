@@ -145,19 +145,6 @@ describe('<div is="bulbs-dfp">', () => {
         Object.defineProperty(element, 'isViewable', { get: () => { return true; } });
       });
 
-    // Disabled, as it is no longer used in bulbs-dfp. Maybe the test could be moved elsewhere?
-     xit('sends a 30-second-refresh-triggered bulbs-dfp-element Metric', (done) => {
-        element.handleInterval();
-        setImmediate(() => {
-          expect(sendEventSpy).to.have.been.calledWith({
-            eventCategory: 'bulbs-dfp-element Live Metrics',
-            eventAction: `30-second-refresh-triggered-${document.visibilityState}`,
-            eventLabel: adUnitName,
-          });
-          done();
-        });
-      });
-
       it('reloads ads', () => {
         element.handleInterval();
         expect(reloadAdsSpy).to.have.been.calledWith(element).once;
