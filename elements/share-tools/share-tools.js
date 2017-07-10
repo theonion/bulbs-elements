@@ -1,8 +1,11 @@
 import {
   registerReactElement,
+} from 'bulbs-elements/register-react';
+
+import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register-react';
+} from 'bulbs-elements/register-element';
 
 import './share-tools.scss';
 
