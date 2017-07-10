@@ -1,4 +1,4 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import { moveChildren, copyAttribute } from 'bulbs-elements/util';
 
 export default class CarouselItem extends BulbsHTMLElement {

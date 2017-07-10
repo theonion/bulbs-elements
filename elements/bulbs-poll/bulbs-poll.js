@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { registerReactElement } from 'bulbs-elements/register';
+import { registerReactElement } from 'bulbs-elements/register-react';
 import BulbsElement from 'bulbs-elements/bulbs-element';
 
 import PollSchema from './bulbs-poll-schema';

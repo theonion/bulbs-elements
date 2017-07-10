@@ -6,7 +6,7 @@ require('expose?Datamap!datamaps/dist/datamaps.usa.js');
 import {
   registerElement,
   BulbsHTMLElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 import './bulbs-datamap.scss';
 
 class BulbsDatamap extends BulbsHTMLElement {

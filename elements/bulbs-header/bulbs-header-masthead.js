@@ -1,4 +1,4 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register-element';
 import { InViewMonitor } from 'bulbs-elements/util';
 
 class BulbsHeaderMasthead extends BulbsHTMLElement {

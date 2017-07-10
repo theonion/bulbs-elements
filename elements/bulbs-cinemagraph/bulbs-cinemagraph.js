@@ -1,4 +1,4 @@
-import { registerElement } from 'bulbs-elements/register';
+import { registerElement } from 'bulbs-elements/register-element';
 import { InViewMonitor } from 'bulbs-elements/util';
 import * as iphoneInlineVideo from 'iphone-inline-video';
 import './bulbs-cinemagraph.scss';

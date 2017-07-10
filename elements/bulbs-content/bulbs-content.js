@@ -1,4 +1,4 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import './bulbs-content.scss';
 
 class BulbsContent extends BulbsHTMLElement {

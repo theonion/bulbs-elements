@@ -706,7 +706,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let parsed = url.parse(vastUrl, true);
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(Object.keys(cust_params)).to.eql([
-            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type', 'utm_source', 'utm_campaign'
+            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type', 'utm_source', 'utm_campaign',
           ]);
           expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');

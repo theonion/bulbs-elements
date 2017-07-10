@@ -1,4 +1,4 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register-element';
 import './components/bulbs-reading-list-item';
 import './components/bulbs-reading-list-articles';
 

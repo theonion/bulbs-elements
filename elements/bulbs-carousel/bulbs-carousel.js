@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import { moveChildren, supportsCalcInTransform } from 'bulbs-elements/util';
 import BulbsCarouselState from './bulbs-carousel-state';
 

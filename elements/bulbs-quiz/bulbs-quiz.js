@@ -1,4 +1,4 @@
-import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register-element';
 import invariant from 'invariant';
 import { contains } from 'lodash';
 import CosmodeQuiz from './cosmode-quiz';

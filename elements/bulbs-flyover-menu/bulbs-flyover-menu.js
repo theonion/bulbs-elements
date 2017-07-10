@@ -1,4 +1,4 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import './bulbs-flyover-menu.scss';
 import invariant from 'invariant';
 

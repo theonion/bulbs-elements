@@ -1,7 +1,7 @@
 import {
   registerElement,
   EmbededCMSElement,
-} from 'bulbs-elements/register';
+} from 'bulbs-elements/register-element';
 
 class EmbeddedBulbsClickventure extends EmbededCMSElement {
   get embedContentPreview () {

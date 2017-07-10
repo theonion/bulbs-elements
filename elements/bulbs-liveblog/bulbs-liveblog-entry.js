@@ -1,4 +1,4 @@
-import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register';
+import { BulbsHTMLElement, registerElement } from 'bulbs-elements/register-element';
 import invariant from 'invariant';
 
 class BulbsLiveblogEntry extends BulbsHTMLElement {
