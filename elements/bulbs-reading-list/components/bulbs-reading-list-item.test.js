@@ -104,6 +104,7 @@ describe('BulbsReadingListItem', () => {
         'dimension11': 'None',
         'dimension12': 'None',
         'dimension13': 'None',
+        'dimension108': 'None',
       };
       expect(response).to.eql(expected);
     });

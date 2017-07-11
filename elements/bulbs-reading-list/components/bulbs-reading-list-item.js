@@ -10,6 +10,7 @@ import {
   getAnalyticsManager,
   InViewMonitor,
   prepGaEventTracker,
+  adBlockerOn,
 } from 'bulbs-elements/util';
 
 let pageStartDebouncer = debouncePerFrame();
@@ -57,10 +58,6 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       this.dataset.contentAnalyticsDimensions
     );
 
-    if (typeof window.isBlockerOn === 'function') {
-      targeting.dimension108 = window.isBlockerOn();
-    }
-
     return {
       'dimension1': targeting.dimension1 || 'None',
       'dimension2': targeting.dimension2 || 'None',
@@ -75,7 +72,7 @@ class BulbsReadingListItem extends BulbsHTMLElement {
       'dimension11': targeting.dimension11 || 'None',
       'dimension12': targeting.dimension12 || 'None',
       'dimension13': targeting.dimension13 || 'None',
-      'dimension108': targeting.dimension108 || 'None',
+      'dimension108': adBlockerOn(),
     };
   }
 

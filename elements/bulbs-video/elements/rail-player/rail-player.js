@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { registerReactElement } from 'bulbs-elements/register';
 import BulbsElement from 'bulbs-elements/bulbs-element';
-import detectAdBlock from 'bulbs-elements/util/detect-ad-block';
+import { detectAdBlock } from 'bulbs-elements/util/detect-ad-block';
 
 import VideoField from '../../fields/video';
 import VideoRequest from '../../fields/video-request';
