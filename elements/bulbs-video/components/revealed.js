@@ -168,6 +168,7 @@ export default class Revealed extends React.Component {
     return {
       utmSource: this.parseParam('utm_source', searchString),
       utmCampaign: this.parseParam('utm_campaign', searchString),
+      utmMedium: this.parseParam('utm_medium', searchString),
     };
   }
 
@@ -227,6 +228,11 @@ export default class Revealed extends React.Component {
     const { utmCampaign } = utmParams;
     if (utmCampaign) {
       customParamValues += `&utm_campaign=${utmCampaign}`;
+    }
+
+    const { utmMedium } = utmParams;
+    if (utmMedium) {
+      customParamValues += `&utm_medium=${utmMedium}`;
     }
 
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);

@@ -596,6 +596,7 @@ describe('<bulbs-video> <Revealed>', () => {
         utmTestData = {
           utmSource: 'test source',
           utmCampaign: 'test campaign',
+          utmMedium: 'test medium',
         };
         utmTestStub = sinon.stub().returns(utmTestData);
         videoMeta = {
@@ -676,6 +677,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(cust_params.utm_source).to.equal(utmTestData.utmSource);
           expect(cust_params.utm_campaign).to.equal(utmTestData.utmCampaign);
+          expect(cust_params.utm_medium).to.equal(utmTestData.utmMedium);
         });
       });
 
