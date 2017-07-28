@@ -596,6 +596,7 @@ describe('<bulbs-video> <Revealed>', () => {
         utmTestData = {
           utmSource: 'test source',
           utmCampaign: 'test campaign',
+          utmMedium: 'test medium',
         };
         utmTestStub = sinon.stub().returns(utmTestData);
         videoMeta = {
@@ -646,7 +647,7 @@ describe('<bulbs-video> <Revealed>', () => {
         expect(cust_params.video_channel).to.eql('channel_slug');
         expect(cust_params.video_series).to.be.undefined;
         expect(cust_params.pos).to.eql('host_channel');
-        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos', 'utm_source', 'utm_campaign']);
+        expect(Object.keys(cust_params)).to.eql(['video_site', 'video_id', 'video_channel', 'pos', 'utm_source', 'utm_campaign', 'utm_medium']);
       });
 
       context('with series', () => {
@@ -676,6 +677,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(cust_params.utm_source).to.equal(utmTestData.utmSource);
           expect(cust_params.utm_campaign).to.equal(utmTestData.utmCampaign);
+          expect(cust_params.utm_medium).to.equal(utmTestData.utmMedium);
         });
       });
 
@@ -706,7 +708,7 @@ describe('<bulbs-video> <Revealed>', () => {
           let parsed = url.parse(vastUrl, true);
           let cust_params = querystring.parse(parsed.query.cust_params, '&');
           expect(Object.keys(cust_params)).to.eql([
-            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type', 'utm_source', 'utm_campaign',
+            'video_site', 'video_id', 'video_channel', 'pos', 'dfp_specialcoverage', 'type', 'utm_source', 'utm_campaign', 'utm_medium',
           ]);
           expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');
