@@ -68,7 +68,7 @@ export default class Revealed extends React.Component {
       'dimension5': hostChannel,
       'dimension6': specialCoverage,
       'dimension7': true, // 'has_player' from old embed
-      'dimension8': this.props.autoplay || autoplayInViewBool || 'None',
+      'dimension8': this.props.hasOwnProperty('autoplay') || autoplayInViewBool || 'None',
       'dimension9': this.props.targetCampaignId || 'None', // Tunic Campaign
       'dimension10': 'None', // Platform
       'dimension11': videoAdConfig, // Video Ad Config
@@ -383,7 +383,7 @@ export default class Revealed extends React.Component {
 }
 
 Revealed.propTypes = {
-  autoplay: PropTypes.bool,
+  autoplay: PropTypes.string,
   autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
   controller: PropTypes.object.isRequired,
