@@ -29,8 +29,8 @@ describe('<bulbs-video> <Revealed>', () => {
   describe('propTypes', () => {
     let subject = Revealed.propTypes;
 
-    it('accepts autoplay boolean', () => {
-      expect(subject.autoplay).to.eql(PropTypes.bool);
+    it('accepts autoplay string', () => {
+      expect(subject.autoplay).to.eql(PropTypes.string);
     });
 
     it('accepts autoplayNext boolean', () => {
@@ -147,7 +147,7 @@ describe('<bulbs-video> <Revealed>', () => {
           targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
-          autoplay: true,
+          autoplay: "",
           autoplayNext: true,
           disableAds: true,
           embedded: true,
