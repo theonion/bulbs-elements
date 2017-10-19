@@ -235,6 +235,11 @@ export default class Revealed extends React.Component {
       customParamValues += `&utm_medium=${utmMedium}`;
     }
 
+    const experimentVariation = this.parseParam("exp_variation");
+    if (experimentVariation) {
+      customParamValues += `&exp_variation=${experimentVariation}`;
+    }
+
     baseUrl += '&cust_params=' + encodeURIComponent(customParamValues);
 
     return baseUrl;
