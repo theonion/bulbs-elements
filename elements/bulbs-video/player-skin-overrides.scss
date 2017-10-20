@@ -53,12 +53,13 @@
       max-width: 1.75em;
       right: .8em;
   
+      :first-child {
+        bottom: 0;
+      }
+      
       .jw-overlay {
         left: 2em;
         bottom: 32px;
-      }
-      :first-child {
-        bottom: 0;
       }
     }
   }
