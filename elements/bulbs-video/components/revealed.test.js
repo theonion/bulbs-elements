@@ -588,6 +588,7 @@ describe('<bulbs-video> <Revealed>', () => {
     let videoMeta;
     let utmTestData;
     let utmTestStub;
+    let parseParamStub;
 
     context('default', () => {
       beforeEach(() => {
@@ -599,6 +600,7 @@ describe('<bulbs-video> <Revealed>', () => {
           utmMedium: 'test medium',
         };
         utmTestStub = sinon.stub().returns(utmTestData);
+        parseParamStub = sinon.stub().returns('');
         videoMeta = {
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
@@ -622,6 +624,7 @@ describe('<bulbs-video> <Revealed>', () => {
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
           utmTest: utmTestStub,
+          parseParam: parseParamStub,
           props: {},
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
@@ -657,6 +660,7 @@ describe('<bulbs-video> <Revealed>', () => {
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
             utmTest: utmTestStub,
+            parseParam: parseParamStub,
             props: {},
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -671,6 +675,7 @@ describe('<bulbs-video> <Revealed>', () => {
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
             utmTest: utmTestStub,
+            parseParam: parseParamStub,
             props: {},
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -681,12 +686,29 @@ describe('<bulbs-video> <Revealed>', () => {
         });
       });
 
+      context('with exp variation', () => {
+        it('populates the url with exp_variation', () => {
+          parseParamStub.returns('expVar12345');
+          let vastUrl = Revealed.prototype.vastUrl.call({
+            cacheBuster: cacheBusterStub,
+            vastTest: vastTestStub,
+            utmTest: utmTestStub,
+            parseParam: parseParamStub,
+            props: {},
+          }, videoMeta);
+          let parsed = url.parse(vastUrl, true);
+          let cust_params = querystring.parse(parsed.query.cust_params, '&');
+          expect(cust_params.exp_variation).to.equal('expVar12345');
+        });
+      });
+
       context('sponsored', () => {
         it('populates the campaign key', () => {
           let vastUrl = Revealed.prototype.vastUrl.call({
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
             utmTest: utmTestStub,
+            parseParam: parseParamStub,
             props: { targetCampaignId: 1 },
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -703,6 +725,7 @@ describe('<bulbs-video> <Revealed>', () => {
             cacheBuster: cacheBusterStub,
             vastTest: vastTestStub,
             utmTest: utmTestStub,
+            parseParam: parseParamStub,
             props: { },
           }, videoMeta);
           let parsed = url.parse(vastUrl, true);
@@ -726,6 +749,7 @@ describe('<bulbs-video> <Revealed>', () => {
         cacheBusterStub = sinon.stub().returns('456');
         vastTestStub = sinon.stub().returns('12345');
         utmTestStub = sinon.stub().returns({});
+        parseParamStub = sinon.stub().returns('');
         videoMeta = {
           category: 'main/clickhole',
           channel_slug: 'channel_slug',
@@ -743,6 +767,7 @@ describe('<bulbs-video> <Revealed>', () => {
           cacheBuster: cacheBusterStub,
           vastTest: vastTestStub,
           utmTest: utmTestStub,
+          parseParam: parseParamStub,
           props: { },
         }, videoMeta);
         let parsed = url.parse(vastUrl, true);
