@@ -49,6 +49,19 @@
         border-left: 0;
       }
     }
+    .jw-icon-volume {
+      max-width: 1.75em;
+      right: .8em;
+  
+      :first-child {
+        bottom: 0;
+      }
+      
+      .jw-overlay {
+        left: 2em;
+        bottom: 32px;
+      }
+    }
   }
   .jw-time-tip, .jw-menu, .jw-volume-tip, .jw-skip {
     border: 0;
@@ -65,17 +78,6 @@
     border-radius:5px;
     .jw-option {
       margin-bottom: .1em;
-    }
-  }
-  .jw-icon-volume {
-    max-width: 1.75em;
-		right: .8em;
-
-		.jw-overlay {
-			left: 2em;
-		}
-    :first-child {
-      bottom: .6em !important;
     }
   }
   .jw-icon-tooltip .jw-active-option {
