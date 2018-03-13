@@ -1,4 +1,5 @@
 import { registerElement, BulbsHTMLElement } from 'bulbs-elements/register';
+import { resizeParentFrame } from 'bulbs-elements/util';
 import invariant from 'invariant';
 import { contains } from 'lodash';
 import CosmodeQuiz from './cosmode-quiz';
@@ -53,6 +54,9 @@ class BulbsQuiz extends BulbsHTMLElement {
     }
 
     this.quiz.setup();
+
+    // Embedded quizzes can resize their parent frame
+    resizeParentFrame(document.body.clientHeight);
   }
 }
 

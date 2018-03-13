@@ -2,6 +2,7 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
+import { resizeParentFrame } from 'bulbs-elements/util';
 import Clickventure from './clickventure';
 import './bulbs-clickventure.scss';
 
@@ -18,6 +19,9 @@ class BulbsClickventure extends BulbsHTMLElement {
     let $element = $(this);
     $element.data('clickventurePlugin', new Clickventure($element));
     $element.on('clickventure-page-change', fireAnalytics);
+
+    // Embedded CVs can resize their parent frame
+    resizeParentFrame(document.body.clientHeight);
   }
 }
 
