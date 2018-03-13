@@ -21,7 +21,7 @@ class BulbsClickventure extends BulbsHTMLElement {
     $element.on('clickventure-page-change', fireAnalytics);
 
     // Embedded CVs can resize their parent frame
-    resizeParentFrame(document.body.clientHeight);
+    resizeParentFrame()
   }
 }
 

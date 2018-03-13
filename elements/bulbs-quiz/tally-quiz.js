@@ -1,3 +1,4 @@
+import { resizeParentFrame } from 'bulbs-elements/util';
 import {
   sendResultAnalytics,
   OUTCOME_REVEAL_DURATION,
@@ -56,6 +57,9 @@ export default class TallyQuiz {
       if (this.options.sendAnalytics) {
         sendResultAnalytics(bestOutcome);
       }
+
+      // Resize parent frame (if embed)
+      resizeParentFrame();
     }
   }
 }
