@@ -44,9 +44,11 @@ export default class TallyQuiz {
 
     if (bestOutcome) {
       $('.outcomes', this.element).show();
+      resizeParentFrame();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         window.picturefill();
         quiz.element.addClass('completed');
+        resizeParentFrame();
       });
 
       $(window).scrollTo(bestOutcome, {
@@ -57,9 +59,6 @@ export default class TallyQuiz {
       if (this.options.sendAnalytics) {
         sendResultAnalytics(bestOutcome);
       }
-
-      // Resize parent frame (if embed)
-      resizeParentFrame();
     }
   }
 }

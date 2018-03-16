@@ -80,9 +80,11 @@ export default class TestQuiz {
     }
     if (bestOutcome) {
       $('.outcomes', this.element).show();
+      resizeParentFrame();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         window.picturefill();
         quiz.element.addClass('completed');
+        resizeParentFrame();
       });
       $(window).scrollTo(bestOutcome, {
         duration: OUTCOME_REVEAL_DURATION,
@@ -93,9 +95,6 @@ export default class TestQuiz {
       if (this.options.sendAnalytics) {
         sendResultAnalytics(bestOutcome);
       }
-
-      // Resize parent frame (if embed)
-      resizeParentFrame();
     }
   }
 }

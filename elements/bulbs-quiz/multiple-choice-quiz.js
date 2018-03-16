@@ -100,21 +100,14 @@ export default class MultipleChoiceQuiz {
 
     // If there's an outcome, show it.
     if (outcomeId) {
-      console.log('Found Output ID', outcomeId);
       $('.outcomes', this.element).show();
-
-      console.log('call resizeParentFrame() 1', outcomeId);
       resizeParentFrame();
-
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         if (!window.parent) {
-          console.log('Trigger picturefill (not an embed)');
           window.picturefill();
         }
         quiz.element.addClass('completed');
 
-        // Resize parent frame (if embed)
-        console.log('call resizeParentFrame() 2', outcomeId);
         resizeParentFrame();
       });
 
