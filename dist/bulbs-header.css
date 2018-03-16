@@ -1,0 +1,2 @@
+bulbs-header{box-sizing:border-box}bulbs-header,bulbs-header-masthead{display:-ms-flexbox;display:flex;position:relative;width:100%}bulbs-header-responsive-nav{display:-ms-flexbox;display:flex;left:0;position:fixed;top:0;transition-timing-function:ease-in;transition:.2s;transform:translateY(-130%);width:100%}bulbs-header-responsive-nav.responsive-nav-active{position:fixed;transition-timing-function:ease-out;transition:.25s;transform:translateY(0)}
+/*# sourceMappingURL=bulbs-header.css.map*/
