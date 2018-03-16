@@ -100,10 +100,17 @@ export default class MultipleChoiceQuiz {
 
     // If there's an outcome, show it.
     if (outcomeId) {
+      console.log('Found Output ID', outcomeId);
       $('.outcomes', this.element).show();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
-        window.picturefill();
+        if (!window.parent) {
+          console.log('Trigger picturefill (not an embed)');
+          window.picturefill();
+        }
         quiz.element.addClass('completed');
+
+        // Resize parent frame (if embed)
+        resizeParentFrame();
       });
 
       $(window).scrollTo(bestOutcome, {
@@ -116,9 +123,6 @@ export default class MultipleChoiceQuiz {
       if (this.options.sendAnalytics) {
         sendResultAnalytics(bestOutcome);
       }
-
-      // Resize parent frame (if embed)
-      resizeParentFrame();
     }
   }
 }
