@@ -1,5 +1,5 @@
 /* global Datamap */
-require('!imports?this=>window!d3/d3.js');
+require('!imports?this=>window!d3/build/d3.js');
 require('expose?topojson!topojson/topojson.js');
 require('expose?Datamap!datamaps/dist/datamaps.usa.js');
 
