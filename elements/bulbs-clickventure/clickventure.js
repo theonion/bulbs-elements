@@ -5,6 +5,7 @@ import '!imports?this=>window!velocity-animate/velocity.ui';
 import {
   InViewMonitor,
   prepReadingListAnalytics,
+  resizeParentFrame,
 } from 'bulbs-elements/util';
 
 velocity
@@ -205,7 +206,12 @@ export default class Clickventure {
           duration: 300,
           stagger: 100,
         });
-        window.picturefill(newNode);
+        if (window.parent) {
+          // We're embedded, update parent frame size
+          resizeParentFrame();
+        } else {
+          window.picturefill(newNode);
+        }
       }),
     });
     this.adRefresh();

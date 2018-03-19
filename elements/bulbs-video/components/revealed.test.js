@@ -147,7 +147,7 @@ describe('<bulbs-video> <Revealed>', () => {
           targetHostChannel: 'host_channel',
           videojs_options: {},
           twitterHandle: 'twitter',
-          autoplay: "",
+          autoplay: '',
           autoplayNext: true,
           disableAds: true,
           embedded: true,

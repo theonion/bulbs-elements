@@ -1,3 +1,4 @@
+import { resizeParentFrame } from 'bulbs-elements/util';
 import {
   sendResultAnalytics,
   OUTCOME_REVEAL_DURATION,
@@ -100,9 +101,14 @@ export default class MultipleChoiceQuiz {
     // If there's an outcome, show it.
     if (outcomeId) {
       $('.outcomes', this.element).show();
+      resizeParentFrame();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
-        window.picturefill();
+        if (!window.parent) {
+          window.picturefill();
+        }
         quiz.element.addClass('completed');
+
+        resizeParentFrame();
       });
 
       $(window).scrollTo(bestOutcome, {

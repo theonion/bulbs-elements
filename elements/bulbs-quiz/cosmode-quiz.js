@@ -1,3 +1,4 @@
+import { resizeParentFrame } from 'bulbs-elements/util';
 import {
   sendResultAnalytics,
   OUTCOME_REVEAL_DURATION,
@@ -71,9 +72,11 @@ export default class CosmodeQuiz {
 
     if (bestOutcome) {
       $('.outcomes', this.element).show();
+      resizeParentFrame();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         window.picturefill();
         quiz.element.addClass('completed');
+        resizeParentFrame();
       });
 
       $(window).scrollTo(bestOutcome, {
