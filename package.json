@@ -47,7 +47,7 @@
     "clone": "^1.0.2",
     "console-shim": "^1.0.3",
     "css-loader": "^0.23.1",
-    "d3": "3.3.13",
+    "d3": "4.13.0",
     "datamaps": "0.4.0",
     "diff": "^2.2.1",
     "document-register-element": "^0.5.4",
