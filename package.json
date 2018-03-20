@@ -143,5 +143,8 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-test-renderer": "^15.6.2"
+  },
+  "engines": {
+    "node": ">=9.0.0"
   }
 }
