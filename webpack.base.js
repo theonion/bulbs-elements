@@ -179,10 +179,10 @@ exports.loaders = {
 
 exports.config = {
   entry: entries,
-  externals: [
-    'child_process',
-    'fs'
-  ],
+  node: {
+    'child_process': 'empty',
+    'fs': 'empty'
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
