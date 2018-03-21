@@ -103,9 +103,7 @@ export default class MultipleChoiceQuiz {
       $('.outcomes', this.element).show();
       resizeParentFrame();
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
-        if (!window.parent) {
-          window.picturefill();
-        }
+        window.picturefill();
         quiz.element.addClass('completed');
 
         resizeParentFrame();
