@@ -206,12 +206,8 @@ export default class Clickventure {
           duration: 300,
           stagger: 100,
         });
-        if (window.parent) {
-          // We're embedded, update parent frame size
-          resizeParentFrame();
-        } else {
-          window.picturefill(newNode);
-        }
+        window.picturefill(newNode);
+        resizeParentFrame();
       }),
     });
     this.adRefresh();
