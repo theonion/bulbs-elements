@@ -23,6 +23,7 @@ export default class MultipleChoiceQuiz {
           $elQuestion.attr('data-unanswered', 'false');
           $('.post-answer-body', $elQuestion).show(100, function () {
             window.picturefill();
+            resizeParentFrame();
           });
         });
       });
@@ -105,7 +106,6 @@ export default class MultipleChoiceQuiz {
       bestOutcome.show(OUTCOME_REVEAL_DURATION, () => {
         window.picturefill();
         quiz.element.addClass('completed');
-
         resizeParentFrame();
       });
 
