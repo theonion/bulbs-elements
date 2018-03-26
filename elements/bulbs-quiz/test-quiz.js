@@ -28,6 +28,7 @@ export default class TestQuiz {
           // reveal explanation for the the selected answer only
           $('.answer-explanation', elAnswer).show(100, () => {
             window.picturefill();
+            resizeParentFrame();
           });
           let revealClass = quiz.revealAllAnswers ? 'reveal-all-answers' : 'reveal-answer';
           $($elQuestion).addClass(revealClass);
@@ -35,6 +36,7 @@ export default class TestQuiz {
           // reveal post-answer content
           $('.post-answer-body', $elQuestion).show(100, () => {
             window.picturefill();
+            resizeParentFrame();
           });
         });
       });

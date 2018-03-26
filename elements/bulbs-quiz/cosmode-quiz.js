@@ -23,6 +23,7 @@ export default class CosmodeQuiz {
           $elQuestion.attr('data-unanswered', 'false');
           $('.post-answer-body', $elQuestion).show(100, function () {
             window.picturefill();
+            resizeParentFrame();
           });
         });
       });
