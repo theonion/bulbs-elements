@@ -122,7 +122,9 @@ export default class Clickventure {
 
         clickventure.nodeClickCount++;
         clickventure.gotoNodeId(targetNode, transitionName);
-        clickventure.sendPageView();
+        if (!inIframe()) {
+          clickventure.sendPageView();
+        }
       });
     });
 
@@ -206,6 +208,9 @@ export default class Clickventure {
           duration: 300,
           stagger: 100,
         });
+        if (newNode.hasClass("clickventure-node-finish")) {
+          this.sendReachEndEvent();
+        }
         window.picturefill(newNode);
         resizeParentFrame();
       }),
@@ -238,6 +243,15 @@ export default class Clickventure {
     if ((this.sideAd.length > 0) && (this.nodeClickCount % 5 === 0)) {
       this.adsManager.reloadAds(this.sideAd);
     }
+  }
+
+  sendReachEndEvent () {
+    this.analyticsManager.sendEvent({
+      // TODO
+      eventCategory: 'Nav',
+      eventAction: event.target.dataset.trackAction,
+      eventLabel: event.target.dataset.trackLabel,
+    });
   }
 
   sendPageView () {

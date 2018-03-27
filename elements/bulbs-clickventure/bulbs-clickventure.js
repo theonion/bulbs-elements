@@ -6,6 +6,13 @@ import { resizeParentFrame } from 'bulbs-elements/util';
 import Clickventure from './clickventure';
 import './bulbs-clickventure.scss';
 
+function sendPageLoadEvent () {
+  if (ga) {
+    // TODO 
+    ga('send', 'event', { /* TODO */ });
+  }
+}
+
 function fireAnalytics () {
   if (ga) {
     let url = location.origin + location.pathname + location.search + location.hash;
@@ -18,7 +25,12 @@ class BulbsClickventure extends BulbsHTMLElement {
   attachedCallback () {
     let $element = $(this);
     $element.data('clickventurePlugin', new Clickventure($element));
-    $element.on('clickventure-page-change', fireAnalytics);
+
+    if (inIframe()) {
+      sendPageLoadEvent();
+    } else {
+      $element.on('clickventure-page-change', fireAnalytics);
+    }
 
     // Embedded CVs can resize their parent frame
     resizeParentFrame();
