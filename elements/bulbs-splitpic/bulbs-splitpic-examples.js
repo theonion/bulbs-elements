@@ -128,7 +128,7 @@ let examples = {
         </bulbs-splitpic>
         `;
       },
-    }
+    },
   },
 };
 
