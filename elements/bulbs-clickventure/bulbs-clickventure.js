@@ -20,7 +20,6 @@ function fireAnalytics () {
   if (ga) {
     let url = location.origin + location.pathname + location.search + location.hash;
     ga('send', 'pageview', { 'location': url });
-    ga('adTracker.send', 'pageview', { 'location': url });
   }
 }
 
