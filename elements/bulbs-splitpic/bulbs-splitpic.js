@@ -52,6 +52,8 @@ class BulbsSplitpic extends BulbsHTMLElement {
     let imgNode = $element.find(`.splitpic-${direction}-image img`)[0];
 
     imgNode.src = imageUrl;
+    imgNode.dataSrc = imageUrl;
+    imgNode.class = "cld-responsive";
   }
 }
 

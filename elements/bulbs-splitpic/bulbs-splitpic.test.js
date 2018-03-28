@@ -9,5 +9,6 @@ describe('<bulbs-splitpic>', function () {
 
   it('renders an <bulbs-splitpic>', function () {
     assert.equal(element.tagName.toLowerCase(), 'bulbs-splitpic');
+    debugger;
   });
 });

@@ -7,10 +7,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal">
             <div class="splitpic-images size-big" data-start-percent="0">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="https://images2.onionstatic.com/clickhole/3165/1/original/600.jpg">
+                    <img class="cld-responsive" data-src="src="https://images2.onionstatic.com/clickhole/3165/1/original/600.jpg" src="https://images2.onionstatic.com/clickhole/3165/1/original/600.jpg">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="https://images2.onionstatic.com/clickhole/3165/0/original/600.jpg">
+                    <img class="cld-responsive" data-src="https://images2.onionstatic.com/clickhole/3165/0/original/600.jpg" src="https://images2.onionstatic.com/clickhole/3165/0/original/600.jpg">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
@@ -30,10 +30,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal" bs-image-size="big" bs-start-percent="0" bs-right-image="https://images2.onionstatic.com/clickhole/3165/3/original/600.jpg" bs-left-image="https://images2.onionstatic.com/clickhole/3165/2/original/600.jpg">
             <div class="splitpic-images">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
@@ -51,10 +51,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal" bs-image-size="medium" bs-start-percent="0" bs-right-image="https://images2.onionstatic.com/clickhole/3165/3/original/600.jpg" bs-left-image="https://images2.onionstatic.com/clickhole/3165/2/original/600.jpg">
             <div class="splitpic-images">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
@@ -72,10 +72,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal" bs-image-size="small" bs-start-percent="0" bs-right-image="https://images2.onionstatic.com/clickhole/3165/3/original/600.jpg" bs-left-image="https://images2.onionstatic.com/clickhole/3165/2/original/600.jpg">
             <div class="splitpic-images">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
@@ -93,10 +93,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal" bs-image-size="tiny" bs-start-percent="0" bs-right-image="https://images2.onionstatic.com/clickhole/3165/3/original/600.jpg" bs-left-image="https://images2.onionstatic.com/clickhole/3165/2/original/600.jpg">
             <div class="splitpic-images">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
@@ -114,10 +114,10 @@ let examples = {
           <bulbs-splitpic class="splitpic splitpic-horizontal" orientation="horizontal" bs-image-size="big" bs-start-percent="50" bs-right-image="https://images2.onionstatic.com/clickhole/3165/3/original/600.jpg" bs-left-image="https://images2.onionstatic.com/clickhole/3165/2/original/600.jpg">
             <div class="splitpic-images">
                 <div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original">
-                    <img src="">
+                    <img class="cld-responsive" data-src="" src="">
                 </div>
                 <div class="splitpic-bar"></div>
                 <div class="splitpic-info">
