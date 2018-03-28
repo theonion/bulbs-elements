@@ -2,14 +2,17 @@ import {
   registerElement,
   BulbsHTMLElement,
 } from 'bulbs-elements/register';
-import { resizeParentFrame } from 'bulbs-elements/util';
+import { inIframe, resizeParentFrame } from 'bulbs-elements/util';
 import Clickventure from './clickventure';
 import './bulbs-clickventure.scss';
 
 function sendPageLoadEvent () {
   if (ga) {
-    // TODO 
-    ga('send', 'event', { /* TODO */ });
+    ga('send', 'event', {
+      eventCategory: 'Article: Clickventure',
+      eventAction: 'Page Load',
+      eventLabel: '#',
+    });
   }
 }
 
@@ -28,7 +31,8 @@ class BulbsClickventure extends BulbsHTMLElement {
 
     if (inIframe()) {
       sendPageLoadEvent();
-    } else {
+    }
+    else {
       $element.on('clickventure-page-change', fireAnalytics);
     }
 

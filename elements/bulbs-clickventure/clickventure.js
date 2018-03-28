@@ -4,6 +4,7 @@ import velocity from '!imports?this=>window!velocity-animate';
 import '!imports?this=>window!velocity-animate/velocity.ui';
 import {
   InViewMonitor,
+  inIframe,
   prepReadingListAnalytics,
   resizeParentFrame,
 } from 'bulbs-elements/util';
@@ -208,7 +209,7 @@ export default class Clickventure {
           duration: 300,
           stagger: 100,
         });
-        if (newNode.hasClass("clickventure-node-finish")) {
+        if (newNode.hasClass('clickventure-node-finish')) {
           this.sendReachEndEvent();
         }
         window.picturefill(newNode);
@@ -247,10 +248,9 @@ export default class Clickventure {
 
   sendReachEndEvent () {
     this.analyticsManager.sendEvent({
-      // TODO
-      eventCategory: 'Nav',
-      eventAction: event.target.dataset.trackAction,
-      eventLabel: event.target.dataset.trackLabel,
+      eventCategory: 'Article: Clickventure',
+      eventAction: 'Reach End',
+      eventLabel: '#',
     });
   }
 
