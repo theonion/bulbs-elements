@@ -57,6 +57,8 @@ class BulbsQuiz extends BulbsHTMLElement {
 
     // Embedded quizzes can resize their parent frame
     resizeParentFrame();
+    // Reize parent when iframe is resized
+    $(window).on('resize', resizeParentFrame)
   }
 }
 
