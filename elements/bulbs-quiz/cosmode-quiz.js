@@ -21,6 +21,7 @@ export default class CosmodeQuiz {
         $('input', elAnswer).change(() => {
           // reveal post-answer content
           $elQuestion.attr('data-unanswered', 'false');
+          resizeParentFrame();
           $('.post-answer-body', $elQuestion).show(100, function () {
             window.picturefill();
             resizeParentFrame();
@@ -45,6 +46,7 @@ export default class CosmodeQuiz {
     // Make sure they answered all the questions
     if (formData.length !== numQuestions) {
       $('.check-outcome', this.element).show();
+      resizeParentFrame();
       let firstUnanswered = $('.question[data-unanswered="true"]', this.element)[0];
       $(window).scrollTo(firstUnanswered, { duration: 250 });
       return false;

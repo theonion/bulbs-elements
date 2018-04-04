@@ -13,6 +13,16 @@ export default class TallyQuiz {
   }
 
   setup () {
+
+    $('.question', this.element).each(function (i, elQuestion) {
+      let $elQuestion = $(elQuestion);
+      $('.answer', $elQuestion).each((n, elAnswer) => {
+        $('input', elAnswer).change(() => {
+          resizeParentFrame();
+        });
+      });
+    });
+
     $('form', this.element).submit((event) => {
       event.preventDefault();
       $('.check-outcome', this.element).hide();

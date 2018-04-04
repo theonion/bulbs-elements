@@ -32,6 +32,7 @@ export default class TestQuiz {
           });
           let revealClass = quiz.revealAllAnswers ? 'reveal-all-answers' : 'reveal-answer';
           $($elQuestion).addClass(revealClass);
+          resizeParentFrame();
 
           // reveal post-answer content
           $('.post-answer-body', $elQuestion).show(100, () => {
@@ -57,6 +58,7 @@ export default class TestQuiz {
     // Make sure they answered all the questions
     if (numAnswered !== numQuestions) {
       $('.check-outcome', this.element).show();
+      resizeParentFrame();
       let firstUnanswered = $('.question[data-unanswered="true"]', this.element)[0];
       $(window).scrollTo(firstUnanswered, { duration: 250 });
       return false;
