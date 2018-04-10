@@ -18,7 +18,7 @@ class BulbsClickventure extends BulbsHTMLElement {
     let $element = $(this);
     $element.data('clickventurePlugin', new Clickventure($element));
 
-    if ( ! inIframe()) {
+    if (!inIframe()) {
       $element.on('clickventure-page-change', fireAnalytics);
     }
 
