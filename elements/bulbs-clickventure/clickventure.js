@@ -248,7 +248,7 @@ export default class Clickventure {
 
   sendReachEndEvent () {
     this.analyticsManager.sendEvent({
-      eventCategory: 'Article: Clickventure',
+      eventCategory: 'Clickventure - Legacy',
       eventAction: 'Reach End',
       eventLabel: '#',
     });
