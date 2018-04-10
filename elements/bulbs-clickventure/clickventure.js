@@ -210,7 +210,7 @@ export default class Clickventure {
           stagger: 100,
         });
         if (newNode.hasClass('clickventure-node-finish')) {
-          this.sendReachEndEvent();
+          this.sendReachEndEvent(newNode.data('nodeId'));
         }
         window.picturefill(newNode);
         resizeParentFrame();
@@ -246,11 +246,11 @@ export default class Clickventure {
     }
   }
 
-  sendReachEndEvent () {
+  sendReachEndEvent (nodeId) {
     this.analyticsManager.sendEvent({
       eventCategory: 'Clickventure - Legacy',
       eventAction: 'Reach End',
-      eventLabel: '#',
+      eventLabel: nodeId,
     });
   }
 
