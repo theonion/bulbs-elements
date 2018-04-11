@@ -129,6 +129,13 @@ let examples = {
         `;
       },
     },
+    'vertical slider': {
+      render () {
+        return `
+          <bulbs-splitpic bs-start-percent="0" bs-left-image="https://i.kinja-img.com/gawker-media/image/upload/szgkv27bpxqaglfnjupp" bs-right-image="https://i.kinja-img.com/gawker-media/image/upload/y32ehkc9tyoo4pywuhdl" bs-image-size="big" class="splitpic splitpic-vertical" orientation="vertical"><div class="splitpic-images size-big"><div class="splitpic-image inline splitpic-right-image image crop-original" data-crop="original"><img src="https://i.kinja-img.com/gawker-media/image/upload/y32ehkc9tyoo4pywuhdl"></div><div class="splitpic-image inline splitpic-left-image image crop-original" data-crop="original"><img src="https://i.kinja-img.com/gawker-media/image/upload/szgkv27bpxqaglfnjupp"></div><div class="splitpic-bar"></div><div class="splitpic-info"><span class="fa fa-arrow-left"></span> Slide<span class="fa fa-arrow-right"></span></div></div><p class="figcaption"></p></bulbs-splitpic>
+        `;
+      },
+    },
   },
 };
 
