@@ -213,7 +213,7 @@ export default class Clickventure {
           this.sendReachEndEvent(newNode.data('nodeId'));
         }
         window.picturefill(newNode);
-        resizeParentFrame();
+        resizeParentFrame(true);
       }),
     });
     this.adRefresh();
