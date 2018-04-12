@@ -213,7 +213,7 @@ export default class Clickventure {
           this.sendReachEndEvent(newNode.data('nodeId'));
         }
         window.picturefill(newNode);
-        resizeParentFrame(true);
+        resizeParentFrame();
       }),
     });
     this.adRefresh();
@@ -232,6 +232,7 @@ export default class Clickventure {
         complete: (() => {
           activeNode.removeClass('clickventure-node-active');
           this.showNewNode(nodeId, transition);
+          resizeParentFrame(true);
         }),
       });
     }
