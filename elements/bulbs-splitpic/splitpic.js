@@ -127,7 +127,7 @@ export function SplitPicVertical (element) {
     setInitialPosition();
   }
   else {
-    $( document ).ready(setInitialPosition.bind(this));
+    $(document).ready(setInitialPosition.bind(this));
   }
 
   el.on('touchmove touchstart', function (event) {
