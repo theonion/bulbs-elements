@@ -232,6 +232,7 @@ export default class Clickventure {
         complete: (() => {
           activeNode.removeClass('clickventure-node-active');
           this.showNewNode(nodeId, transition);
+          // Since this is a node change, trigger resize that also scrolls to start of node
           resizeParentFrame(true);
         }),
       });
