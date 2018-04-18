@@ -25,7 +25,7 @@ class BulbsClickventure extends BulbsHTMLElement {
     // Embedded CVs can resize their parent frame
     resizeParentFrame();
     // Resize parent when iframe is resized
-    $(window).on('resize', resizeParentFrame);
+    $(window).on('resize', resizeParentFrame.bind(null, false));
   }
 }
 
