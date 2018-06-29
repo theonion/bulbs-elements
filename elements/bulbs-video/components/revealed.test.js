@@ -41,6 +41,10 @@ describe('<bulbs-video> <Revealed>', () => {
       expect(subject.muted).to.eql(PropTypes.bool);
     });
 
+    it('accepts creativeSize string', () => {
+      expect(subject.creativeSize).to.eql(PropTypes.string);
+    });
+
     it('accepts disableAds boolean', () => {
       expect(subject.disableAds).to.eql(PropTypes.bool);
     });
@@ -619,6 +623,16 @@ describe('<bulbs-video> <Revealed>', () => {
         delete window.Bulbs;
       });
 
+      it('defaults to 640x480 if creativeSize is not overridden', () => {
+        let vastUrl = Revealed.prototype.vastUrl.call({
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+          props: {},
+        }, videoMeta);
+        let parsed = url.parse(vastUrl, true);
+        expect(parsed.query.sz).to.eql('640x480');
+      });
+
       it('returns the vast url', function () {
         let vastUrl = Revealed.prototype.vastUrl.call({
           cacheBuster: cacheBusterStub,
@@ -736,6 +750,20 @@ describe('<bulbs-video> <Revealed>', () => {
           expect(cust_params.dfp_specialcoverage).to.eql('special');
           expect(cust_params.type).to.eql('special_coverage');
         });
+      });
+    });
+
+    context('overrides', () => {
+      it('allows creativeSize to be overridden', () => {
+        let vastUrl = Revealed.prototype.vastUrl.call({
+          cacheBuster: cacheBusterStub,
+          vastTest: vastTestStub,
+          props: {
+            creativeSize: '400x300',
+          },
+        }, videoMeta);
+        let parsed = url.parse(vastUrl, true);
+        expect(parsed.query.sz).to.eql('400x300');
       });
     });
 

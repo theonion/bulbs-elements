@@ -79,6 +79,8 @@ export default class Revealed extends React.Component {
       dimensions
     );
 
+
+
     // Making assignment copies here so we can mutate object structure.
     let videoMeta = Object.assign({}, this.props.video);
     videoMeta.hostChannel = hostChannel;
@@ -178,9 +180,11 @@ export default class Revealed extends React.Component {
     const searchString = window.location.search;
     let vastTestId = this.vastTest(searchString);
     let type;
+    // Allowing creativeSize to be passed in in root.js
+    let creativeSize = this.props.creativeSize || '640x480';
 
     // See docs (https://support.google.com/dfp_premium/answer/1068325?hl=en) for param info
-    baseUrl += '?sz=640x480';
+    baseUrl += `?sz=${creativeSize}`;
     baseUrl += `&iu=/4246/${window.Bulbs.settings.DFP_SITE_CODE}`;
     baseUrl += '&impl=s';
     baseUrl += '&gdfp_req=1';
@@ -391,6 +395,7 @@ Revealed.propTypes = {
   autoplay: PropTypes.string,
   autoplayInView: PropTypes.string,
   autoplayNext: PropTypes.bool,
+  creativeSize: PropTypes.string,
   controller: PropTypes.object.isRequired,
   defaultCaptions: PropTypes.bool,
   disableAds: PropTypes.bool,

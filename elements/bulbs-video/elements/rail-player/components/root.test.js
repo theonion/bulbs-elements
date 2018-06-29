@@ -68,6 +68,7 @@ describe('<rail-player> <RailPlayerRoot>', () => {
             <Revealed
               muted={true}
               disableSharing={true}
+              creativeSize='400x300'
               targetHostChannel='right_rail'
               targetCampaignId='12345'
               targetSpecialCoverage='fun-special-coverage'
